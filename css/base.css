@@ -48,7 +48,7 @@ button,
 button::-moz-focus-inner {
   border: 0;
   padding: 0;
-  font:15px/20px sans-serif;
+  font:15px/20px Open Sans, sans-serif;
 }
 
 /* Inline Elements: Defaults
@@ -58,7 +58,7 @@ input,
 textarea {
   color:#404040;
   color:rgba(0,0,0,0.75);
-  font:15px/20px sans-serif;
+  font:15px/20px Open Sans, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -71,7 +71,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family:sans-serif;
+  font-family: Open Sans, sans-serif;
   font-weight:bold;
   margin:0;
   }

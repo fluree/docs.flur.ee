@@ -15,24 +15,9 @@ let languageOptions = [
   { title: 'cURL',
     short: 'cURL',
     value: 'curl' },
-  { title: 'CLI',
-    short: 'cli',
-    value: 'cli' },
-  { title: 'Python',
-    short: 'Python',
-    value: 'python' },
   { title: 'JavaScript',
     short: 'JS',
     value: 'javascript' },
-  { title: 'Java',
-    short: 'Java',
-    value: 'java' },
-  { title: 'Objective-C',
-    short: 'ObjC',
-    value: 'objc' },
-  { title: 'Swift',
-    short: 'Swift',
-    value: 'swift' }
 ];
 
 let defaultLanguage = languageOptions[0];
@@ -212,7 +197,8 @@ export default class App extends React.PureComponent {
 
       {/* Header */ }
       <div className={`fill-dark dark bottom-shadow fixed-top ${queryMatches.tablet ? 'pad1y pad2x col6' : 'pad0 width16'}`}>
-        <a href='/' className={`active space-top1 space-left1 pin-topleft icon round dark pad0 ${brandClasses}`} />
+        <a href='https://flur.ee' className={`active space-top1 space-left1 pin-topleft icon round dark pad0`}>
+        </a>
         <div className={`strong small pad0
           ${queryMatches.mobile ? 'space-left3' : ''}
           ${queryMatches.tablet ? 'space-left2' : 'space-left4 line-height15' }`}>

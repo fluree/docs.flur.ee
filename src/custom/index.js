@@ -5,9 +5,9 @@
  * media queries.
  */
 module.exports.brandNames = {
-  desktop: 'Wobble API Documentation',
-  tablet: 'Wobble API Docs',
-  mobile: 'API Docs'
+  desktop: 'Fluree API Documentation',
+  tablet: 'Fluree API Docs',
+  mobile: 'Fluree Docs'
 };
 
 /**
@@ -19,7 +19,7 @@ module.exports.brandClasses = 'fill-red';
 /**
  * Text for the link back to the linking website.
  */
-module.exports.backLink = 'Back to wobbles.com';
+module.exports.backLink = 'Back to flur.ee';
 
 /**
  * Runs after highlighting code samples. You can use this

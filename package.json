@@ -9,8 +9,8 @@
     "test": "npm run test-unit && eslint src && npm run prerender -- /dev/null && rm -rf lib",
     "test-unit": "mocha --compilers js:babel-register test",
     "prerender": "babel src --out-dir lib && node lib/render.js",
-    "build": "NODE_ENV=production browserify src/index.js | uglifyjs -c -m > bundle.js && npm run prerender -- index.html",
-    "release": "standard-version && git push --follow-tags origin master; npm publish"
+    "build": "mkdir -p dist && NODE_ENV=production browserify src/index.js | uglifyjs -c -m > dist/bundle.js && npm run prerender -- dist/index.html && cp -R css dist",
+    "release": "aws s3 sync dist/ s3://docs.flur.ee/ --cache-control max-age=300 --delete --profile fluree"
   },
   "browserify": {
     "transform": [

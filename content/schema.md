@@ -1,15 +1,20 @@
-## Wobble
+### Schema
 
-This is our high-quality wobbles API. You can use this API to request
-and remove different wobbles at a low wibble price.
+The `fluree.json` file defines the data schema (tables, columns, etc.), API endpoints, and
 
 ### List wobbles
 
 Lists all wobbles for a particular account.
 
+There is more information to the right.
+
 ```endpoint
 GET /wobbles/v1/{username} wobbles:read
 ```
+
+### Which side am I on?
+
+#### Whose side are you on?
 
 #### Example request
 

@@ -64,7 +64,7 @@ To run tests:
 The `npm run build` command builds a `bundle.js` file that contains all the JavaScript code and content needed to show the site, and creates an `index.html` file that already contains the site content. Note that this _replaces_ the existing `index.html` file, so it's best to run this only when deploying the site and to undo changes to `index.html` if you want to keep working on content.
 
 1. Clone this repository
-	2. `git clone https://github.com/mapbox/docbox.git`
+2. `git clone https://github.com/mapbox/docbox.git`
 2. `npm install`
 3. `npm run build`
 
