@@ -94,16 +94,14 @@ In this example, any request beginning with `https://{instance}.flur.ee/an-examp
 #### Instance endpoint
 
 ```endpoint
-GET http://{instance}.flur.ee/{route}/path/to/content
+GET https://${INSTANCE}.flur.ee/an-example-route/path/to/content
 ```
 
 ### Actions
 
-API actions, which generally require authentication via a JWT token, are listed under the `action` key.
+API actions, which require authentication via a JWT token to invoke, are listed under the `action` key in `fluree.json`.
 
-_TODO:_ Explain headers and JWT auth for action writers
-
-#### Sample action
+#### Sample action definition
 
 ```json
 {
@@ -120,23 +118,48 @@ _TODO:_ Explain headers and JWT auth for action writers
 }
 ```
 
-#### Instance endpoint
-
-```endpoint
-POST https://{instance}.flur.ee/api/fluree/example/echo
-```
-
 #### Example invoke
 
 ```curl
-$ curl -X POST -H 'Content-Type: application/json' -H 'Authorization: Bearer {token}' https://{instance}.flur.ee/api/fluree/example/echo
+$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${TOKEN}" -d '{"key": "value"}' "https://${INSTANCE}.flur.ee/api/fluree/example/echo"
 ```
+
+```javascript
+fetch(`https://${instance}.flur.ee/api/fluree/example/echo`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+  body: JSON.stringify({"key": "value"})
+});
+```
+
+When your action is invoked, it will be passed two headers containing JWTs that specify the instance and permissions of the user invoking your action.
+
+Header | Value | Description
+---|---|---
+`Authorization` | `Bearer {jwt}` | This is the JWT access token of the user invoking the action.<br>  You can use this header to call additional services on the user's behalf.
+`X-App-Token` | `{jwt}` | This token is for the same instance, but has all the permissions this application has been granted.<br> If you need to perform privileged actions on behalf of the user, use this token in subsequent calls to Fluree.
+
+Both tokens are in the standard JWT format with the following fields.  In most cases, your application will not need to parse these tokens and will treat them as opaque strings.
+
+Field | Description
+--- | ---
+`aud` | (required) The name of the instance this token is for.
+`exp` | (optional) Expiration time in seconds since January 1, 1970 GMT.
+`sub` | (optional) String identifier of user.
+`jti` | (optional) Unique identifier of JWT. Used for revocation purposes.
+`admin` | (optional) True if token grants unrestricted (administrator) access to this instance.
+
+You __do not__ need to verify any of the tokens passed to your application. The Fluree platform contains an API gateway which parses and verifies the tokens before invoking your action. Also, your application generally will not have access to the secret key used to sign the tokens and so will be unable to verify their authenticity.  Contact Fluree if your application needs to generate or verify tokens.
+
 
 ### Schema
 
 Database tables are defined under the `schema` key.  This allows Fluree to create your tables on any datastorage backend (SQL or not) and allows us to build permissions rules and automatic schema checking into the platform.  Furthermore, it serves to document your application's schema to other application writers.
 
-The top-level keys under `schema` are the names of your application's tables.  The event (column) definitions are under the `event` key.
+The top-level keys under `schema` are the names of your application's tables.  The event (a.k.a. column or attribute) definitions are under the `event` key.
 
 Event definitions can contain the following fields
 
@@ -211,28 +234,103 @@ Relational references to other tables are simply named by the table name.  Note 
 }
 ```
 
-#### Example query response using the sample schema
+#### Example query using the sample schema
+
+```curl
+$ cat << EOF > query.json
+{
+  "myQuery": {
+    "graph": {
+      "allPosts": [
+        "post",
+        [
+          "text",
+          "upvotes",
+          [
+            "comments",
+            [
+              "text",
+              [
+                "commenter",
+                [
+                  "username"
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    }
+  }
+}
+EOF
+
+$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${TOKEN}" -d @query.json "https://${INSTANCE}.flur.ee/api/fql"
+```
+
+```javascript
+var query = {
+  "myQuery": [
+    "graph",
+    {
+      "allPosts": [
+        "post",
+        [
+          "text",
+          "upvotes",
+          [
+            "comments",
+            [
+              "text",
+              [
+                "commenter",
+                [
+                  "username"
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    }
+  ]
+};
+
+fetch(`https://${instance}.flur.ee/api/fql`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`,
+  },
+  body: JSON.stringify(query);
+})
+```
+
+#### Example response using the sample schema
 
 ```json
 {
-  "post": [{
-    "_id": "F123",
-    "text": "This is a post",
-    "upvotes": 1,
-    "comments": [{
-      "text": "This is the first comment",
-      "commenter": {
+  "graph": {
+    "allPosts": [{
+      "_id": "F123",
+      "text": "This is a post",
+      "upvotes": 1,
+      "comments": [{
         "_id": "F456",
-        "username": "Alice"
-      }
-    }, {
-      "_id": "F000",
-      "text": "This is the second comment",
-      "commenter": {
+        "text": "This is the first comment",
+        "commenter": {
+          "_id": "F1011",
+          "username": "Alice"
+        }
+      }, {
         "_id": "F789",
-        "username": "Bob"
-      }
+        "text": "This is the second comment",
+        "commenter": {
+          "_id": "F1213",
+          "username": "Bob"
+        }
+      }]
     }]
-  }]
+  }
 }
 ```
