@@ -2,33 +2,34 @@
 
 ## Database Intro
 
-The Fluree Database is based on an immutable<sup>*</sup>, time-ordered event log. Each event represents a fact about a particular entity at a specific point in time, along with some cataloging metadata. We call this specially formatted event a Flake.
+FlureeDB is based on an immutable<sup>*</sup>, time-ordered blockchain of events. We call these events Flakes, and each represents a fact about a particular entity at a specific point in time.
 
 ```TODO - picture of flakes in order```
 
 The Fluree database supports the following capabilities:
-- Atomic transactions.
+- ACID transactions.
 - Database functions.
-- Rule-based permissions built in, allowing control down to the entity + attribute level.
+- Rule-based permissions built in, allowing control down to the entity + attribute level with custom predicate functions.
 - Ability act as multiple database types simultaneously: a graph database, document database, and an event log.
-- Automated change feed subscriptions. We examine your queries, and automatically know what data you are interested in.
-- Powerful datalog-based query language that supports unlimited recursion and can be represented fully in JSON, thus readily composable.
+- 
+- Automated change feed subscriptions for issued queries. We auto-detect the data a query would contain and can push notifications for those changes to keep user interfaces updated automatically.
 - A GraphQL query interface.
+- Powerful query language that supports unlimited recursion and can be represented fully in JSON, thus readily composable.
 - Scale-out writes by leveraging built-in partitioning.
-- Scale-out reads.
-- Point-in-time queries, leveraging the characteristics our immutable Flakes provide
+- Scale-out reads, by separating eventually consistent query engines from the core bockchain transactor. (Queries can optionally force consistency to a specific point-in-time or block)
+- Point-in-time queries, leveraging the characteristics our immutable blockchain core provides.
 - Eliminates database backup + recovery. Point in time queries allow you to query every version of your database throughough history instantly.
-- Zero management overhead.
+- Zero management overhead with Fluree's cloud-hosted, or our forthcoming fully decentralized databases. Operations such as traditional backup and restore are no longer needed (every version of your database exists ready to query at all times), and data syncronization activies become managaby with the ability to lock in points in time.
 
-<sup>*</sup>Immutability can be turned off for specific columns when desired, but by default everything is immutable.
+<sup>*</sup>Immutability can be turned off for specific attributes when desired.
 
 ## Quick Start
 
 ### Transacting Data
 
-Writing data to Fluree amounts to sending a collection of transaction statements to the transactor endpoint. All of the statements will be commited as a single transaction, or all fail together with the error reported back to you.
+To write data to the Fluree Database, you submit a collection of statements to the transactor endpoint. All of the statements will be successfully commited together, or all fail together with the error reported back to you.
 
-A sample chat message transaction is shown which creates a single new entity. Multiple entities could be created, updated, or deleted within a single atomic transaction. This sample transaction highlights several important concepts including how to identify an entity using the special `_id` attribute, using temporary ids for new entities, how an attribute can join to another entity, and a simple database function.
+A sample chat message transaction is shown which creates a single new entity. Multiple entities could be created, updated, or deleted within a single atomic transaction. This sample transaction highlights several important concepts, including how to identify an entity using the special `_id` attribute, using temporary ids for new entities, how an attribute can join to another entity, and a simple database function.
 
 #### Sample chat message transaction
 
@@ -45,6 +46,7 @@ A sample chat message transaction is shown which creates a single new entity. Mu
 
 ```json
 {
+  "tempids": 
 
 }
 ```
@@ -63,6 +65,12 @@ Now that we have stored a piece of data, let's query it.
 
 
 ### Querying Data
+
+Fluree allows you to specify queries using GraphQL or a simple JSON format, the JSON format designed to easily enable code to compose queries. For each query, permissions are checked, and permission rules can be expressed with a dependency on the user permissions checked against one or multiple rule sets, and those rules can automatically check relations in the current database, making every permission possibly unique to every user.
+
+
+
+Multiple queries can be issued at once
 
 ## Transactions
 
