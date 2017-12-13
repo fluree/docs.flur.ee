@@ -12,12 +12,11 @@ let slugger = new GithubSlugger();
 let slug = title => { slugger.reset(); return slugger.slug(title); };
 
 let languageOptions = [
-  { title: 'cURL',
-    short: 'cURL',
-    value: 'curl' },
-  { title: 'JavaScript',
-    short: 'JS',
-    value: 'javascript' },
+  {
+    title: 'FlureeQL/JSON',
+    short: 'json',
+    value: 'json'
+  }
 ];
 
 let defaultLanguage = languageOptions[0];
@@ -68,7 +67,7 @@ export default class App extends React.PureComponent {
       };
     } else {
       this.state = {
-        mqls: { },
+        mqls: {},
         queryMatches: {
           desktop: true
         },
@@ -149,12 +148,12 @@ export default class App extends React.PureComponent {
     let col1 = columnMode === 1 && queryMatches.desktop;
     return (<div className='container unlimiter'>
 
-      {/* Content background */ }
+      {/* Content background */}
       {(!col1 && !queryMatches.mobile) && <div className={`fixed-top fixed-right ${queryMatches.desktop && 'space-left16'}`}>
         <div className='fill-light col6 pin-right' />
       </div>}
 
-      {/* Desktop nav */ }
+      {/* Desktop nav */}
       {queryMatches.desktop && <div className='space-top5 scroll-styled overflow-auto pad1 width16 sidebar fixed-left fill-dark dark'>
         <Navigation
           navigationItemClicked={this.navigationItemClicked}
@@ -162,23 +161,23 @@ export default class App extends React.PureComponent {
           ast={ast} />
       </div>}
 
-      {/* Content */ }
+      {/* Content */}
       <div className={`${queryMatches.desktop && 'space-left16'}`}>
         <div className={col1 ? 'col8 margin1' : ''}>
           <Content
             leftClassname={col1 ? 'space-bottom4 pad2x prose clip' : 'space-bottom8 col6 pad2x prose clip'}
             rightClassname={col1 ? 'space-bottom2 pad2 prose clip fill-light space-top5' : 'space-bottom4 col6 pad2 prose clip fill-light space-top5'}
             ast={ast}
-            language={this.state.language}/>
+            language={this.state.language} />
         </div>
       </div>
 
-      {/* Language toggle */ }
+      {/* Language toggle */}
       <div className={`fixed-top ${queryMatches.desktop && 'space-left16'}`}>
         <div className={`events fill-light bottom-shadow pad1 ${col1 ? '' : 'col6 pin-topright'} ${queryMatches.tablet ? 'dark fill-blue' : ''} ${queryMatches.mobile ? 'space-top5 fixed-topright' : ''}`}>
           <div className='space-right1 small quiet inline'>
             Show examples in:
-          </div>
+        </div>
           <RoundedToggle
             short={!queryMatches.widescreen}
             options={languageOptions}
@@ -195,13 +194,13 @@ export default class App extends React.PureComponent {
         </div>
       </div>
 
-      {/* Header */ }
+      {/* Header */}
       <div className={`fill-dark dark bottom-shadow fixed-top ${queryMatches.tablet ? 'pad1y pad2x col6' : 'pad0 width16'}`}>
         <a href='https://flur.ee' className={`active space-top1 space-left1 pin-topleft icon round dark pad0`}>
         </a>
         <div className={`strong small pad0
           ${queryMatches.mobile ? 'space-left3' : ''}
-          ${queryMatches.tablet ? 'space-left2' : 'space-left4 line-height15' }`}>
+          ${queryMatches.tablet ? 'space-left2' : 'space-left4 line-height15'}`}>
           {queryMatches.desktop ? brandNames.desktop :
             queryMatches.mobile ? brandNames.mobile : brandNames.tablet}
         </div>
@@ -213,12 +212,12 @@ export default class App extends React.PureComponent {
           </button>
           {showNav && <div
             className='fixed-left keyline-top fill-dark pin-left col6 pad2 scroll-styled space-top5'>
-              <Navigation
-                navigationItemClicked={this.navigationItemClicked}
-                activeSection={activeSection}
-                ast={ast} />
-            </div>}
+            <Navigation
+              navigationItemClicked={this.navigationItemClicked}
+              activeSection={activeSection}
+              ast={ast} />
           </div>}
+        </div>}
       </div>
 
     </div>);

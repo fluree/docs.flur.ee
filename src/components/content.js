@@ -23,52 +23,54 @@ function chunkifyAST(ast, language) {
     }
     return chunks;
   }, [[]]).filter(chunk => chunk.length)
-  .map(chunk => {
-    var left = [], right = [], title;
-    if (language === 'cli') {
-      language = 'bash';
-    }
-    if (chunk[0].depth < 3) {
-      preview = false;
-    }
-    chunk.forEach(node => {
-      if (node.type === 'code') {
-        if (node.lang === 'json' || node.lang === 'http' || node.lang === 'html') {
-          right.push(node);
-        } else if (node.lang === language) {
-          if (language === 'curl') {
-            right.push({ ...node, lang: 'bash'  });
-          } else {
+    .map(chunk => {
+      var left = [], right = [], title;
+      if (language === 'cli') {
+        language = 'bash';
+      }
+      if (chunk[0].depth < 3) {
+        preview = false;
+      }
+      chunk.forEach(node => {
+        if (node.type === 'code') {
+          // if (node.lang === 'json' || node.lang === 'http' || node.lang === 'html') {
+          if (node.lang === 'http' || node.lang === 'html') {
+
             right.push(node);
+          } else if (node.lang === language) {
+            if (language === 'curl') {
+              right.push({ ...node, lang: 'bash' });
+            } else {
+              right.push(node);
+            }
+          } else if (node.lang === 'endpoint') {
+            right.push(transformURL(node.value));
+          } else if (node.lang === null) {
+            left.push(node);
           }
-        } else if (node.lang === 'endpoint') {
-          right.push(transformURL(node.value));
-        } else if (node.lang === null) {
+        } else if (node.type === 'heading' && node.depth >= 4) {
+          right.push(node);
+        } else if (node.type === 'blockquote') {
+          right.push(node);
+        } else if (node.type === 'heading' && node.depth < 4 && !title) {
+          title = node.children[0].value;
+          left.push(node);
+        } else if (node.type === 'html') {
+          if (node.value.indexOf('<!--') === 0) {
+            var content = node.value
+              .replace(/^<!--/, '')
+              .replace(/-->$/, '')
+              .trim();
+            if (content === 'preview') {
+              preview = true;
+            }
+          }
+        } else {
           left.push(node);
         }
-      } else if (node.type === 'heading' && node.depth >= 4) {
-        right.push(node);
-      } else if (node.type === 'blockquote') {
-        right.push(node);
-      } else if (node.type === 'heading' && node.depth < 4 && !title) {
-        title = node.children[0].value;
-        left.push(node);
-      } else if (node.type === 'html') {
-        if (node.value.indexOf('<!--') === 0) {
-          var content = node.value
-            .replace(/^<!--/, '')
-            .replace(/-->$/, '')
-            .trim();
-          if (content === 'preview') {
-            preview = true;
-          }
-        }
-      } else {
-        left.push(node);
-      }
+      });
+      return { left, right, title, preview, slug: slug(title) };
     });
-    return { left, right, title, preview, slug: slug(title) };
-  });
 }
 
 export default class Content extends React.PureComponent {
