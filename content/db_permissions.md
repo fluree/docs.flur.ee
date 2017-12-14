@@ -1,6 +1,6 @@
 # Permissions
 
-## Overview
+## Fluree Permissions
 
 Fluree allows very granular permissions to control exactly what data users can write and read, down to an entity + attribute level. When a user connects to a database, effectively their database is custom to them (and their requested point in time). Any data they do not have access to doesn't exist in their database. This means you can give direct access to the database to any user, and they can run ad-hoc queries without ever a concern that data might be leaked. This is a very powerful concept that can drastically simplify end-user applications.
 
@@ -15,7 +15,7 @@ Permissions are assigned to a role, and roles assigned to users. Every action in
 
 By default, users are disallowed access to all streams and allowed access to all attributes. This has the effect of not allowing a user access to anything, as both these access dimensions must allow access for anything to be seen/transacted.
 
-## Query / Read
+### Query / Read
 
 Every database that a query is executed against in Fluree can be thought of as a unique, custom database. This applies not only for historical (time travel) queries, but also the same concept applies for permissions. Effectively, every piece of data the user does not have access to does not exist in their database. This allows you to query at will.
 
@@ -24,7 +24,7 @@ When a query asks for attributes or entities that don't exist for them, the resu
 
 When reading, any data the user does not have access to see simply disappears, as though it never existed.
 
-## Transact / Write
+### Transact / Write
 
 When transacting, any attempts to transact data that the user does not have permission to write will throw an exception.
 It is entirely possible to have write access to data, but not read access.

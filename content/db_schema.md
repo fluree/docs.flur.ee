@@ -3,39 +3,13 @@
 
 The Fluree database is a collection of immutable Flake events. Much like a relational database, in Fluree you must first register event types (tables) and permissible attributes (columns).
 
-## Schema Overview
+## Fluree Schemas
 
 Fluree validates all Flakes being written against the database's schema, ensuring each Flake event type and attribute are registered and meet all of the defined restrictions (i.e. data type, multi-cardinality, uniqueness, required). This is analagous to a relational database's schema definition of table names and columns.
 
 Defining and updating schemas is done through JSON files, with each file possibly representing many types of events. A simple chat message schema example is shown here. Each event type (table name) has one or more defined attributes (columns).
 
 Each attribute has a type which can be one of several primitive types (i.e. string, integer), or it can be a reference to other event types. In the example here, the `sender` attribute refers to a User. Fluree makes it trivial to traverse the graph to obtain User attributes from the chat message, and further traverse any references the User type may have defined from there.
-
-### Example Chat Message Schema
-
-```json
-{
-  "ChatMessage": {
-    "doc": "A chat message schema.",
-    "attributes": {
-      "message": {
-        "doc": "The message content.",
-        "type": "string",
-        "required": true
-      },
-      "sender": {
-        "doc": "A reference to the user sending the message.",
-        "type": "User",
-        "required": true
-      },
-      "timestamp": {
-        "doc": "The time this message was sent.",
-        "type": "instant"
-      }
-    }
-  }
-}
-```
 
 
 ## Attribute Definitions

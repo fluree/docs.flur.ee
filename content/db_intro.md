@@ -170,13 +170,11 @@ Comments
 
 To write data to the Fluree Database, you submit a collection of statements to the transactor endpoint. All of the statements will be successfully commited together, or all fail together with the error reported back to you. Transactions have ACID guarantees.
 
-While everything transacted here could be done in a single atomic transaction, we split it up to illustrate a couple points.
-In the first transaction we add a couple of people. The second transaction adds a chat message. Note the value used for
-the `person` key is an `_id`, but this time instead of it being a tempid it refers to an attribute and its corresponding value, `["person/handle", "jdoe"]`. This method can be used for any attribute marked as `unique`.
+While everything transacted here could be done in a single atomic transaction, we split it up to illustrate a couple points. In the first transaction we add a couple of people. The second transaction adds a chat message. Note the value used for the `person` key is an `_id`, but this time instead of it being a tempid it refers to an attribute and its corresponding value, `["person/handle", "jdoe"]`. This method can be used for any attribute marked as `unique`.
 
 Also shown is what the result of this transaction will look like. The following table explains these response keys and their meaning. 
 
-A brief explanation of each key used in this transaction:
+A brief explanation of some of the return keys used in this transaction:
 
 Key | Description
 ---|---
@@ -218,11 +216,22 @@ Now that we have stored a piece of data, let's query it.
 
 ```json
 {
-  "tempids": {},
-  "block":   5,
-  "hash":    "sdfsdfsdf",
-  "flakes":  [],
-
+  "tempids": [
+     [ ["chat", -1], 4299262263302 ]
+  ],
+  "block": 10,
+  "hash": "b543846a6efe0422c67c1388eded5451c3a1af747ec92df58b76ebb7b184df38",
+  "status": 200,
+  "block-bytes": 355,
+  "flakes": [
+     [ 10, 1, "b543846a6efe0422c67c1388eded5451c3a1af747ec92df58b76ebb7b184df38", 10, true, 0 ],
+     [ 4299262263302, 1002, "This is a sample chat from Jane!", 10, true, 0 ],
+     [ 4299262263302, 1003, 4294967296001, 10, true, 0 ],
+     [ 4299262263302, 1004, 1513195974690, 10, true, 0 ],
+     [ 10, 2, "fcacd47a88e3ec4da19b42ddb44958c819f89d8b46efaa72ca3dc62016f05ace", 10, true, 0 ],
+     [ 10, 5, 1513195974647, 10, true, 0 ]
+  ],
+  "time": "66.18ms"
 }
 ```
 
@@ -233,3 +242,42 @@ Fluree allows you to specify queries using our FlureeQL JSON syntax or with Grap
 For each query, the user's permissions create a special filtered database that only contains what the user can see. You can safely issue any query, never having to worry about accidentally exposing permissioned data.
 
 Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request, this can be used to reduce round-trips for end-user applications.
+
+#### Simple query for all chat messages
+
+```json
+{
+  "select": ["*"],
+  "from": "chat"
+}
+```
+
+#### Limit results
+
+```json
+{
+  "select": ["*"],
+  "from": "chat",
+  "limit": 100
+}
+```
+
+#### Time travel by specifying a block number
+
+```json
+{
+  "select": ["*"],
+  "from": "chat",
+  "block": 2
+}
+```
+
+#### Time travel by specifying a time
+
+```json
+{
+  "select": ["*"],
+  "from": "chat",
+  "block": "2017-11-14T20:59:36.097Z"
+}
+```

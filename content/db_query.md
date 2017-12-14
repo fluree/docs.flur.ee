@@ -1,7 +1,7 @@
 
 # Query
 
-## Overview
+## Fluree Queries
 
 Fluree allows you to specify queries using our FlureeQL JSON syntax or with GraphQL. The FlureeQL format designed to easily enable code to compose queries, as the query is simply a data structure. 
 
