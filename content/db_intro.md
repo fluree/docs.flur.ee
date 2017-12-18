@@ -31,6 +31,10 @@ We'll follow these steps to give a sense of FlureeDB basics:
 5. Establish a user's permission
 6. Query permissioned DB
 
+**>> To begin, log in and select the database you'd like to perform this quick start on in the UI Header. Be sure to use the `root` user. The examples here are provied using FlureeQL, click the link in the header.**
+
+[FlureeDB Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee)
+
 ### Schema - Streams
 
 A Fluree schema consists of streams and attributes. These are similar to a relational database's tables and columns, however in Fluree both of these concepts are extended and more flexible. Streams organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new stream to hold it. Streams differ from tables in that they are an always-present stream of changes about those entities that can be queried at any point in time, not just the latest changes as a traditional database would do.
@@ -273,8 +277,44 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
 
 ### Permissions Introduction
 
-We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an expressive rule function.
+We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an expressive predicate rule function.
 
+Here we'll go through all the steps needed to add a permissions that accomplishes two main things:
+
+1. Users can only see `chat` and `person` stream data
+2. A user can only create or update a chat if they are the referenced `chat/person` (if it is their own chat messages)
+
+To accomplish this we need to do a few things:
+
+1. Create an actual database user for the chat user(s). Permissions are only applied for database users.
+2. Link the `person` entities we created to the datbase user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` database user entity.
+3. Create rules to enforce the above desired permissions.
+4. Create an assignable role that contains these rules so we can eassly add the role to our chat user(s).
+5. Assign the new role to the user(s).
+
+Permissions are controlled with database users, which are stored in `_user`. When we created a person account for `jdoe` and `zsmith` in the above transaction, these were within the `person` table we also created, and were not database users. 
+
+
+**>> Execute the example transaction to add a new attribute named `person/user` that allows a `ref` from any of our persons to a database user.**
+
+
+Next, we add a new role called `chatUser` that we can easily assign to all chat users. The role has three rules in it, the first, `viewAllChats`, allows `query` (read) permissions for every attribute in the stream `chat`. the second rule, `viewAllPeople` similarly allows `query` for every attribute in the stream `person`. The final rule, `editOwnChats`, will restrict `transact` (edit) to ensure only chats by the respective `person` can be created or edited.
+
+**>> Execute the example transaction to add the new role and these three rules.**
+
+The final step is to create a new database user, `_user`. Here we'll create one for `jdoe` and link her user record to the `person` entity we already created, and the `_role` we just created.
+
+The rule predicate function in `editOwnChats` follows the graph of a chat message's relationships to determine if the user can see it. In this case, the `get-all` function will take a chat message and traverse:
+
+`chat message ->> chat/person ->> person/user ->> database user`
+
+The rule stipulates, that if the database user found after following the graph is the current `?user`, then creating a new chat message or editing an existing one is allowed.
+
+**>> Execute the final transaction example.**
+
+Now, refresh the Fluree user interface (it does not automatically refresh with detected new user/roles). Select the database you were working on in the UI header, and you should now have a user listed of `jdoe`. If you select `jdoe`, you'll be using the custom database just for her that you created with the aforementioned rules. Try to query different streams, or create/update chat messages. The rules we've defined here will only allow the described behavior.
+
+**>> Quick Start is now complete. Please see the additional documentation provided here for added references.**
 
 #### Add a new attribute to link a person to a database user
 
@@ -300,15 +340,6 @@ We can enable permissions on both query and transaction operations, and the perm
   },
   {
     "_id": ["_rule", -10],
-    "id": "editOwnChats",
-    "doc": "Only allow users to edit their own chats",
-    "stream": "chat",
-    "attributes": ["chat/message"],
-    "predicate": "(contains? (follow ?e [\"chat/person\" \"person/user\"]) ?user)",
-    "ops": ["transact"]
-  },
-  {
-    "_id": ["_rule", -11],
     "id": "viewAllChats",
     "doc": "Can view all chats.",
     "stream": "chat",
@@ -317,13 +348,22 @@ We can enable permissions on both query and transaction operations, and the perm
     "ops": ["query"]
   },
   {
-    "_id": ["_rule", -12],
+    "_id": ["_rule", -11],
     "id": "viewAllPeople",
     "doc": "Can view all people",
     "stream": "person",
     "streamDefault": true,
     "predicate": "true",
     "ops": ["query"]
+  },
+  {
+    "_id": ["_rule", -12],
+    "id": "editOwnChats",
+    "doc": "Only allow users to edit their own chats",
+    "stream": "chat",
+    "attributes": ["chat/message"],
+    "predicate": "(contains? (follow ?e [\"chat/person\" \"person/user\"]) ?user)",
+    "ops": ["transact"]
   }
 ]
 ```
@@ -336,12 +376,7 @@ We can enable permissions on both query and transaction operations, and the perm
   {
     "_id":    ["_user", -1],
     "username": "jdoe",
-    "auth": [["_auth", -1]]
-  },
-  {
-    "_id": ["_auth", -1],
-    "roles": [["_role/id", "chatUser"]],
-    "type": "password"
+    "roles": [["_role/id", "chatUser"]]
   },
   {
     "_id": ["person/handle", "jdoe"],
