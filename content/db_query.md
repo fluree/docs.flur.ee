@@ -3,12 +3,13 @@
 
 ## Fluree Queries
 
-Fluree allows you to specify queries using the FlureeQL JSON syntax or with GraphQL. The FlureeQL format, being a JSON data structure, allows for queries to be easily composed within your programming code and is built to support some of Fluree's advanced capabilities like graph recursion. GraphQL supports a more limited set of query capability, but is robust enough for many applications.
+Fluree allows you to specify queries using the FlureeQL JSON syntax or with GraphQL. The FlureeQL format, being a JSON data structure, allows for queries to be easily composed within your programming code and is built to support Fluree's advanced capabilities like graph recursion. GraphQL supports a more limited set of query capability, but is robust enough for many applications.
 
-Fluree has permissions embedded within the database itself, and with the exception of a `root` priveledged user, a completely custom database is created for every user containing only data they can see. This capability allows more direct access to the database for front-end UIs or other applications, and means much less time spent creating custom API endpoints that simply modify select statements based on who the user is. In fact every data retrival operation for an application can be handled with a single API endpoint.
+Fluree has permissions embedded within the database itself, and with the exception of a `root` priveledged user, a completely custom database is created for every user containing only data they can see. This capability allows more direct access to the database for front-end UIs or other applications, and means less time spent creating custom API endpoints that simply modify select statements based on who the user is. Also multiple apps can share the same database with security consistency.
 
-Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request, this can be used to reduce round-trips for end-user applications. Both also support query *time travel*.
+The graph selection capability of FlureeDB allows query results to be returned as a nested graph as opposed to a standard SQL flat result set. This aligns more with how data is actually used in applications and makes it simpler to pass data to child components, UI tables, etc.
 
+Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request which reduces round-trips for end-user applications. Both also support query *time travel* queries, allowing you to issue any query at any point in history.
 
 #### Limit results
 
@@ -40,7 +41,7 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
 }
 ```
 
-## Reference and reverse references
+## References and reverse references
 
 Entities refer (join) to other entities via any attribute that is of type: `ref`.
 
