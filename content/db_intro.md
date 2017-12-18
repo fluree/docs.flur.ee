@@ -95,10 +95,10 @@ People
 
 Chats
 - `chat/message` - The actual message content.
-- `chat/person` - A reference to the person that made this chat (a join), and because it is a join that refers to a different entity, its `type` is marked as `_type/ref` .
-- `chat/instant` - The instant this chat message happened. Its `type` is `_type/intsant` and is indexed with `index` which
+- `chat/person` - A reference to the person that made this chat (a join), and because it is a join that refers to a different entity, its `type` is marked as `ref` .
+- `chat/instant` - The instant this chat message happened. Its `type` is `instant` and is indexed with `index` which
 will allow range queries on this attribute.
-- `chat/comments` - Comments about this message, which are alos joins (`_type/ref`). `multi` indicates multiple comments can be stored, and `component` indicates these referenced comment entities should be treated as part of this parent, and if the parent (in this case the chat message) is deleted, the comments will also be deleted.
+- `chat/comments` - Comments about this message, which are alos joins (`ref`). `multi` indicates multiple comments can be stored, and `component` indicates these referenced comment entities should be treated as part of this parent, and if the parent (in this case the chat message) is deleted, the comments will also be deleted.
 
 Comments
 - `comment/message` - A comment message.
@@ -112,40 +112,40 @@ Comments
   "name":   "person/handle",
   "doc":    "The person's unique handle",
   "unique": true,
-  "type":   "_type/string"
+  "type":   "string"
 },
 {
   "_id":   ["_attribute", -2],
   "name":  "person/fullName",
   "doc":   "The person's full name.",
-  "type":  "_type/string",
+  "type":  "string",
   "index": true
 },
 {
   "_id":  ["_attribute", -10],
   "name": "chat/message",
   "doc":  "A chat message",
-  "type": "_type/string"
+  "type": "string"
 },
 {
   "_id":  ["_attribute", -11],
   "name": "chat/person",
   "doc":  "A reference to the person that created the message",
-  "type": "_type/ref",
+  "type": "ref",
   "restrictStream": "person"
 },
 {
   "_id":   ["_attribute", -12],
   "name":  "chat/instant",
   "doc":   "The instant in time when this chat happened.",
-  "type":  "_type/instant",
+  "type":  "instant",
   "index": true
 },
 {
   "_id":       ["_attribute", -13],
   "name":      "chat/comments",
   "doc":       "A reference to comments about this message",
-  "type":      "_type/ref",
+  "type":      "ref",
   "component": true,
   "multi":     true,
   "restrictStream": "comment"
@@ -154,13 +154,13 @@ Comments
   "_id":  ["_attribute", -20],
   "name": "comment/message",
   "doc":  "A comment message.",
-  "type": "_type/string"
+  "type": "string"
 },
 {
   "_id":  ["_attribute", -21],
   "name": "comment/person",
   "doc":  "A reference to the person that made the comment",
-  "type": "_type/ref",
+  "type": "ref",
   "restrictStream": "person"
 }]
 ```
@@ -172,16 +172,32 @@ To write data to the Fluree Database, you submit a collection of statements to t
 
 While everything transacted here could be done in a single atomic transaction, we split it up to illustrate a couple points. In the first transaction we add a couple of people. The second transaction adds a chat message. Note the value used for the `person` key is an `_id`, but this time instead of it being a tempid it refers to an attribute and its corresponding value, `["person/handle", "jdoe"]`. This method can be used for any attribute marked as `unique`.
 
-Also shown is what the result of this transaction will look like. The following table explains these response keys and their meaning. 
+Here is what an abbreviated response will look like from this transaction, and a brief explanation of the keys:
 
-A brief explanation of some of the return keys used in this transaction:
+```
+{
+  "tempids": [[ ["chat", -1],  4299262263297 ] ],
+  "block": 5,
+  "hash": "65aeed23724595fa6c0f7b8d4d4d75712749dc12445a34f769636d300165871b",
+  "flakes": [
+     [ 5, 1, "65aeed23724595fa6c0f7b8d4d4d75712749dc12445a34f769636d300165871b", 5, true, 0 ],
+     [ 4299262263297, 1002, "This is a sample chat from Jane!", 5, true, 0 ],
+     [ 4299262263297, 1003, 4294967296001, 5, true, 0 ],
+     [ 4299262263297, 1004, 1513303413333, 5, true, 0 ],
+     [ 5, 2, "41bca4151469ed04b5f62800d8c98d023b792b030091686b590407c987425363", 5, true, 0 ],
+     [ 5, 5, 1513303413310, 5, true, 0 ]
+  ],
+  "time": "39.16ms"
+}
+```
 
 Key | Description
 ---|---
-`tempids` | A special identifier that allows you to reference an entity in a number of ways. In this case, we are creating new `chatMessage` and don't yet have a unique ID so we assign it a temporary ID (a negative integer). Once the transaction completes, a map of each temporary ID to its permanent ID will be provided, allowing you to refer to the entity in a subsequent query or transaction.
-`flakes` | A simple attribute of type `string`. All attributes must be pre-defined in the schema for a transaction to succeed.
-`block` | An attribute that references a specific `User` entity. Entities can always be referred to by their globally unique id, or by any attribute that the schema defines as `unique`. In this case `username` is a unique attribute and this transaction will succeed if a user with the specific username exists.
-`hash` | This attribute is using the database function `now` which will replace the value with the current instant in time according to the server.
+`tempids` | A mapping of any temporary id used in a transaction to its final id value that was assigned.
+`block` | The blockchain block number that was created with this transaction. These always increment by one.
+`hash` | The blockchain hash of this transaction, that can be cryptographically proven with the same `flakes` in the future, and linked to the previous block that creates the chain.
+`flakes` | Flakes are the state change of the database, and is the block data itself. Each is a six-tuple of information including the entity-id, attribute-id, value, block-id, true/false for add/delete, and expiration of this piece of data in epoch-milliseconds (0 indicates it never expires).
+
 
 Now that we have stored a piece of data, let's query it.
 
@@ -212,36 +228,16 @@ Now that we have stored a piece of data, let's query it.
 }]
 ```
 
-#### Successful chat transaction response
-
-```json
-{
-  "tempids": [
-     [ ["chat", -1], 4299262263302 ]
-  ],
-  "block": 10,
-  "hash": "b543846a6efe0422c67c1388eded5451c3a1af747ec92df58b76ebb7b184df38",
-  "status": 200,
-  "block-bytes": 355,
-  "flakes": [
-     [ 10, 1, "b543846a6efe0422c67c1388eded5451c3a1af747ec92df58b76ebb7b184df38", 10, true, 0 ],
-     [ 4299262263302, 1002, "This is a sample chat from Jane!", 10, true, 0 ],
-     [ 4299262263302, 1003, 4294967296001, 10, true, 0 ],
-     [ 4299262263302, 1004, 1513195974690, 10, true, 0 ],
-     [ 10, 2, "fcacd47a88e3ec4da19b42ddb44958c819f89d8b46efaa72ca3dc62016f05ace", 10, true, 0 ],
-     [ 10, 5, 1513195974647, 10, true, 0 ]
-  ],
-  "time": "66.18ms"
-}
-```
 
 ### Querying Data
 
-Fluree allows you to specify queries using our FlureeQL JSON syntax or with GraphQL. The FlureeQL format designed to easily enable code to compose queries, as the query is simply a data structure. 
+Fluree allows you to specify queries using our FlureeQL JSON syntax or with GraphQL. The FlureeQL format is designed to easily enable code to compose queries, as the query is simply a data structure. 
 
 For each query, the user's permissions create a special filtered database that only contains what the user can see. You can safely issue any query, never having to worry about accidentally exposing permissioned data.
 
-Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request, this can be used to reduce round-trips for end-user applications.
+These two example queries will return current chat messages. The second example follows the graph relationship to also include details about the refered person who posted the chat message.
+
+Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request, this can be used to reduce round-trips for applications.
 
 #### Simple query for all chat messages
 
@@ -252,32 +248,104 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
 }
 ```
 
-#### Limit results
+#### Same chat query, but follow the graph to reveal details about the person
 
 ```json
 {
-  "select": ["*"],
-  "from": "chat",
-  "limit": 100
+  "select": [
+    "*",
+    {"chat/person": ["*"]}
+  ],
+  "from": "chat"
+}
+```
+#### Person query, but follow chat relationship in reverse to find all thier chats (note the underscore `_`)
+
+```json
+{
+  "select": [
+    "*",
+    {"chat/_person": ["*"]}
+  ],
+  "from": "person"
 }
 ```
 
-#### Time travel by specifying a block number
+### Permissions Introduction
 
-```json
-{
-  "select": ["*"],
-  "from": "chat",
-  "block": 2
-}
+We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an expressive rule function.
+
+
+#### Add a new attribute to link a person to a database user
+
+```json 
+[{
+  "_id":    ["_attribute", -1],
+  "name":   "person/user",
+  "doc":    "Reference to a database user.",
+  "type":   "ref",
+  "restrictStream": "_user"
+}]
 ```
 
-#### Time travel by specifying a time
+#### Add a role, and a rule
+
+```json 
+[
+  {
+    "_id": [ "_role", -1 ],
+    "id": "chatUser",
+    "doc": "A standard chat user role",
+    "rules": [["_rule", -10], ["_rule", -11], ["_rule", -12]]
+  },
+  {
+    "_id": ["_rule", -10],
+    "id": "editOwnChats",
+    "doc": "Only allow users to edit their own chats",
+    "stream": "chat",
+    "attributes": ["chat/message"],
+    "predicate": "(contains? (follow ?e [\"chat/person\" \"person/user\"]) ?user)",
+    "ops": ["transact"]
+  },
+  {
+    "_id": ["_rule", -11],
+    "id": "viewAllChats",
+    "doc": "Can view all chats.",
+    "stream": "chat",
+    "streamDefault": true,
+    "predicate": "true",
+    "ops": ["query"]
+  },
+  {
+    "_id": ["_rule", -12],
+    "id": "viewAllPeople",
+    "doc": "Can view all people",
+    "stream": "person",
+    "streamDefault": true,
+    "predicate": "true",
+    "ops": ["query"]
+  }
+]
+```
+
+
+#### Create a new user with an auth record containing that role
 
 ```json
-{
-  "select": ["*"],
-  "from": "chat",
-  "block": "2017-11-14T20:59:36.097Z"
-}
+[
+  {
+    "_id":    ["_user", -1],
+    "username": "jdoe",
+    "auth": [["_auth", -1]]
+  },
+  {
+    "_id": ["_auth", -1],
+    "roles": [["_role/id", "chatUser"]],
+    "type": "password"
+  },
+  {
+    "_id": ["person/handle", "jdoe"],
+    "user": ["_user", -1]
+  }
+]
 ```
