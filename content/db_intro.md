@@ -2,7 +2,11 @@
 
 ## Capability
 
-FlureeDB is based on an immutable, time-ordered blockchain of events of database state changes. We call these events Flakes, and each represents a fact about a particular entity at a specific point in time.
+FlureeDB is an immutable, time-ordered blockchain database. The blockchain at the core is essentially a specially formatted log file of database updates grouped into blocks. Each block is an atomic update and is cryptographically signed to prevent tampering and linked to the previous block.
+
+We call these log entries Flakes, which have a special format optimized to power the graph database and its unique features. Each Flake is a specific fact at a specific point in time about a specific entity / asset / object. No two Flakes are the same.
+
+The query server(s) powering your applications leverage these Flakes in an optimized way to give you a very fast, and very powerful graph database. Your queries alway interact with an immutable version of your database at an exact moment in time. In fact you can query any point in time in history, instantly.
 
 The Fluree database features these capabilities:
 - ACID transactions.
@@ -20,7 +24,9 @@ The Fluree database features these capabilities:
 
 ## Quick Start
 
-Let's create a simple chat message database table with nested comments.
+This quick start is designed to utilize the FlureeDB interactive web console at [https://flureedb.flur.ee](https://flureedb.flur.ee). These transactions could also be performed via your code or REPL utilizing the JSON API, but would require a token. 
+
+This example creates several streams to store chat messages, comments, and people.
 
 We'll follow these steps to give a sense of FlureeDB basics:
 

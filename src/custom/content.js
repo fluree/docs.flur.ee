@@ -11,6 +11,7 @@ var fs = require('fs');
  */
 module.exports =
   fs.readFileSync('./content/db_intro.md', 'utf8') + '\n' +
+  fs.readFileSync('./content/using_from_app.md', 'utf8') + '\n' +
   fs.readFileSync('./content/db_query.md', 'utf8') + '\n' +
   fs.readFileSync('./content/db_schema.md', 'utf8') + '\n' +
   fs.readFileSync('./content/db_transactions.md', 'utf8') + '\n' +
