@@ -37,7 +37,7 @@ We'll follow these steps to give a sense of FlureeDB basics:
 5. Establish a user's permission
 6. Query permissioned DB
 
-**>> To begin, log in and select the database you'd like to perform this quick start on in the UI Header. Be sure to use the `root` user. The examples here are provied using FlureeQL - click the link in the header.**
+**>> To begin, log in and select the database you'd like to perform this quick start on in the UI Header. Be sure to use the `root` user. The examples here are provided using FlureeQL - click the link in the header.**
 
 [FlureeDB Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee)
 
@@ -178,7 +178,7 @@ Comments
 
 ### Transacting Data
 
-To write data to the Fluree Database, you submit a collection of statements to the transactor endpoint. All of the statements will be successfully commited together, or all fail together with the error reported back to you. Transactions have ACID guarantees.
+To write data to the Fluree Database, you submit a collection of statements to the transactor endpoint. All of the statements will be successfully committed together, or all fail together with the error reported back to you. Transactions have ACID guarantees.
 
 While everything transacted here could be done in a single atomic transaction, we split it up to illustrate a couple points. In the first transaction we add a couple of people. The second transaction adds a chat message. Note the value used for the `person` key is an `_id`, but this time instead of it being a tempid it refers to an attribute and its corresponding value, `["person/handle", "jdoe"]`. This method can be used for any attribute marked as `unique`.
 
@@ -293,7 +293,7 @@ Here we'll go through all the steps needed to add a permission that accomplishes
 To accomplish this we need to do a few things:
 
 1. Create an actual database user for the chat user(s). Permissions are only applied for database users.
-2. Link the `person` entities we created to the datbase user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` database user entity.
+2. Link the `person` entities we created to the database user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` database user entity.
 3. Create rules to enforce the above desired permissions.
 4. Create an assignable role that contains these rules so we can easily add the role to our chat user(s).
 5. Assign the new role to the user(s).

@@ -80,7 +80,7 @@ Attribute | Type | Description
 `_rule/errorMessage` | `string` | (optional) If this rule prevents a transaction from executing, this optional error message can be returned to the client instead of the default error message (which is intentionally generic to limit insights into the database configuration).
 
 
-## Definining Roles
+## Defining Roles
 
 Roles' purpose is simply to group a set of rules under a common name or ID that can be easily assigned to a user.
 
