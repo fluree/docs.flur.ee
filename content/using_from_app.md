@@ -24,16 +24,16 @@ Interacting with the hosted FlureeDB is done using secure tokens that have the a
 
 FlureeDB can be run in a manner similar to a traditional database server, 'behind' your application server. If you choose to utilize it in this way, you simply need to generate a token with the permissions you desire (likely full access) and pass it to your application. You provide the token to your application like you would any secret, typically via an environment variable.
 
-To get a permanent admin token follow these steps:
+To get a permanent admin token, follow these steps:
 
 1. Identify the authorization record (or create one) that you wish the token to utilize. A sample transaction is provided here if you need to create a new one.
 2. Generate a token tied to that authorization record either via the FlureeDB admin dashboard or via an API call
 
 If you need to create an authorization record, see the example provided.
 
-Remember authorization is governed by rules (stored in the `_rule` stream). Rules are grouped into roles (stored in the `_role` stream), and roles are assigned to auth entities (`_auth` stream) or default roles can be assigned to users (`_user` stream).
+Remember, authorization is governed by rules (stored in the `_rule` stream). Rules are grouped into roles (stored in the `_role` stream), and roles are assigned to auth entities (`_auth` stream) or default roles can be assigned to users (`_user` stream).
 
-#### Sample rule, role and auth record for admin privelidges
+#### Sample rule, role and auth record for admin privileges
 
 ```json
 [
@@ -81,8 +81,8 @@ Remember authorization is governed by rules (stored in the `_rule` stream). Rule
 
 FlureeDB is also designed to interact directly with front-end apps/UIs via a set of permissions tied to invidual users. The rules-based permissions will 'hide' any data the user is unable to view, and prevent unauthorized transactions. In this case, each user will need a unique token tied to them. There are two ways to generate these user-specific tokens:
 
-1. An API endpoint, `/api/auth/token`, can generate tokens assuming the user generating the token has permission to do so for the given user / auth record. You can roll your own authentication logic within your app server, and once satisfied use the API endpoint to generate the token and pass it to the client for subsequent use.
-2. For hosted FlureeDB, we provide an authentication service you can leverage if you like by having your end-user application POST username + password to the `/api/auth/signin` JSON endpoint, and assuming successful authentication a token will be returned. Additional options such as token expiration can also be provided. This service also handles password reset requests for you.
+1. An API endpoint, `/api/auth/token`, can generate tokens assuming the user generating the token has permission to do so for the given user / auth record. You can roll your own authentication logic within your app server, and once satisfied, use the API endpoint to generate the token and pass it to the client for subsequent use.
+2. For hosted FlureeDB, we provide an authentication service you can leverage if you like by having your end-user application POST username + password to the `/api/auth/signin` JSON endpoint, and assuming successful authentication, a token will be returned. Additional options such as token expiration can also be provided. This service also handles password reset requests for you.
 
 
 
@@ -93,7 +93,7 @@ Tokens become useless under two conditions:
 1. They reach their token expiration date (assuming one was provided when creating the token).
 2. The `_auth` entity the token is associated with no longer has permissions.
 
-A token is tied directly to a specific `_auth` entity, and with every request the roles + rules associated with that entity are retrieved. Therefore the way to make a token useless is to make the `_auth` entity it is tied to useless. To do so, employ one of these strategies:
+A token is tied directly to a specific `_auth` entity, and with every request the roles + rules associated with that entity are retrieved. Therefore, the way to make a token useless is to make the `_auth` entity it is tied to useless. To do so, employ one of these strategies:
 
 1. Delete the auth entity (ensure if it is referenced to a `_user` via the `_user/auth` attribute that the reference is also deleted. When an `_auth` has no roles, it uses the `_user` roles as a default if the relationship exists).
 2. Remove current roles referenced by the `_auth` entity, and associate a role that has no permission.
@@ -117,7 +117,7 @@ Key | Type | Description
 `db` | string | Only required if using your master authorization token from FlureeDB (from your username/password to flureedb.flur.ee). So long as you are using a token from your own database, it will automatically use the databse the token is coming from.
 
 
-If you are handling authentication for your application but still want users to connect direct to FlureeDB, your authentication code can utilize this endpoint to retrieve tokens on behalf of the user. The user can subsequently use this token to interact directly with FlureeDB from the respective application.
+If you are handling authentication for your application but still want users to connect directly to FlureeDB, your authentication code can utilize this endpoint to retrieve tokens on behalf of the user. The user can subsequently use this token to interact directly with FlureeDB from the respective application.
 
 In order to create a token, you must use a token that has the following permission:
 

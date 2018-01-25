@@ -2,24 +2,24 @@
 
 ## Capability
 
-FlureeDB is an immutable, time-ordered blockchain database. The blockchain at the core is essentially a specially formatted log file of database updates grouped into blocks. Each block is an atomic update and is cryptographically signed to prevent tampering and linked to the previous block.
+FlureeDB is an immutable, time-ordered blockchain database. The blockchain at the core is essentially a specially formatted log file of database updates grouped into blocks. Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
 
 We call these log entries Flakes, which have a special format optimized to power the graph database and its unique features. Each Flake is a specific fact at a specific point in time about a specific entity / asset / object. No two Flakes are the same.
 
-The query server(s) powering your applications leverage these Flakes in an optimized way to give you a very fast, and very powerful graph database. Your queries alway interact with an immutable version of your database at an exact moment in time. In fact you can query any point in time in history, instantly.
+The query server(s) powering your applications leverage these Flakes in an optimized way to give you a very fast and very powerful graph database. Your queries alway interact with an immutable version of your database at an exact moment in time. In fact, you can query any point in time in history, instantly.
 
 The Fluree database features these capabilities:
 - ACID transactions.
 - Database functions.
 - End-user permissions rules, allowing control down to the entity + attribute level with custom predicate functions.
-- Ability act as multiple database types simultaneously: a graph database, document database, and an event log (document db in beta soon).
+- Ability to act as multiple database types simultaneously: a graph database, document database, and an event log (document db in beta soon).
 - Automated change feed subscriptions for issued queries. We auto-detect the data a query would contain and can push notifications for those changes to keep user interfaces updated automatically (in beta soon).
 - A GraphQL query interface.
 - Powerful query language that supports unlimited recursion and can be represented fully in JSON, thus readily composable.
 - Scale-out writes by leveraging partitioning (in beta soon).
 - Scale-out reads, by separating eventually consistent query engines from the core bockchain transactor. Queries can optionally force consistency to a specific point-in-time or block.
 - Point-in-time queries, leveraging the characteristics our immutable blockchain core provides.
-- When leveraging Fluree's cloud-hosted private consensus, zero management overhead. Federated and fully decentralized consensus modes are in development.
+- When leveraging Fluree's cloud-hosted private consensus, there is zero management overhead. Federated and fully decentralized consensus modes are in development.
 - FlureeDB will become opensource as we move forward in development.
 
 ## Quick Start
@@ -37,7 +37,7 @@ We'll follow these steps to give a sense of FlureeDB basics:
 5. Establish a user's permission
 6. Query permissioned DB
 
-**>> To begin, log in and select the database you'd like to perform this quick start on in the UI Header. Be sure to use the `root` user. The examples here are provied using FlureeQL, click the link in the header.**
+**>> To begin, log in and select the database you'd like to perform this quick start on in the UI Header. Be sure to use the `root` user. The examples here are provied using FlureeQL - click the link in the header.**
 
 [FlureeDB Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee)
 
@@ -45,7 +45,7 @@ We'll follow these steps to give a sense of FlureeDB basics:
 
 A Fluree schema consists of streams and attributes. These are similar to a relational database's tables and columns, however in Fluree both of these concepts are extended and more flexible. Streams organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new stream to hold it. Streams differ from tables in that they are an always-present stream of changes about those entities that can be queried at any point in time, not just the latest changes as a traditional database would do.
 
-Everything is data in FlureeDB. The includes the schemas, permissions, etc. that actually govern how it works. To add new streams we'll do a transaction the exact way we'd add any new data. Here we'll add our new streams and attributes in two separate transactions to explain what is happening, but they could be done in one.
+Everything is data in FlureeDB. This includes the schemas, permissions, etc. that actually govern how it works. To add new streams we'll do a transaction the exact way we'd add any new data. Here we'll add our new streams and attributes in two separate transactions to explain what is happening, but they could be done in one.
 
 This transaction adds three streams:
 
@@ -53,7 +53,7 @@ This transaction adds three streams:
 - `chatMessage` - will hold the chat message content
 - `chatComment` - will hold comments about messages
 
-Every transaction item must have an `_id` attribute to refer to the entity we are attempting to create/update. And `_id` can either be an existing entity's unique numeric ID, or a two-tuple of a unique attribute+value, or a two-tuple of stream+tempid, where tempid is a negative integer. Here we use a tempid as we are creating new entities in the system stream named `_stream`. `_stream` is a system stream/table that holds the configured streams, and `_attribute` likewise for attributes.
+Every transaction item must have an `_id` attribute to refer to the entity we are attempting to create/update. An `_id` can either be an existing entity's unique numeric ID, a two-tuple of a unique attribute+value, or a two-tuple of stream+tempid, where tempid is a negative integer. Here we use a tempid as we are creating new entities in the system stream named `_stream`. `_stream` is a system stream/table that holds the configured streams, and `_attribute` likewise for attributes.
 
 #### Stream schema transaction
 
@@ -108,7 +108,7 @@ Chats
 - `chat/person` - A reference to the person that made this chat (a join), and because it is a join that refers to a different entity, its `type` is marked as `ref` .
 - `chat/instant` - The instant this chat message happened. Its `type` is `instant` and is indexed with `index` which
 will allow range queries on this attribute.
-- `chat/comments` - Comments about this message, which are alos joins (`ref`). `multi` indicates multiple comments can be stored, and `component` indicates these referenced comment entities should be treated as part of this parent, and if the parent (in this case the chat message) is deleted, the comments will also be deleted.
+- `chat/comments` - Comments about this message, which are also joins (`ref`). `multi` indicates multiple comments can be stored, and `component` indicates these referenced comment entities should be treated as part of this parent, and if the parent (in this case the chat message) is deleted, the comments will also be deleted.
 
 Comments
 - `comment/message` - A comment message.
@@ -245,9 +245,9 @@ Fluree allows you to specify queries using our FlureeQL JSON syntax or with Grap
 
 For each query, the user's permissions create a special filtered database that only contains what the user can see. You can safely issue any query, never having to worry about accidentally exposing permissioned data.
 
-These two example queries will return current chat messages. The second example follows the graph relationship to also include details about the refered person who posted the chat message.
+These two example queries will return current chat messages. The second example follows the graph relationship to also include details about the referred person who posted the chat message.
 
-Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request, this can be used to reduce round-trips for applications.
+Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request, which can be used to reduce round-trips for applications.
 
 #### Simple query for all chat messages
 
@@ -285,7 +285,7 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
 
 We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an expressive predicate rule function.
 
-Here we'll go through all the steps needed to add a permissions that accomplishes two main things:
+Here we'll go through all the steps needed to add a permission that accomplishes two main things:
 
 1. Users can only see `chat` and `person` stream data
 2. A user can only create or update a chat if they are the referenced `chat/person` (if it is their own chat messages)
@@ -295,7 +295,7 @@ To accomplish this we need to do a few things:
 1. Create an actual database user for the chat user(s). Permissions are only applied for database users.
 2. Link the `person` entities we created to the datbase user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` database user entity.
 3. Create rules to enforce the above desired permissions.
-4. Create an assignable role that contains these rules so we can eassly add the role to our chat user(s).
+4. Create an assignable role that contains these rules so we can easily add the role to our chat user(s).
 5. Assign the new role to the user(s).
 
 Permissions are controlled with database users, which are stored in `_user`. When we created a person account for `jdoe` and `zsmith` in the above transaction, these were within the `person` table we also created, and were not database users. 
@@ -304,7 +304,7 @@ Permissions are controlled with database users, which are stored in `_user`. Whe
 **>> Execute the example transaction to add a new attribute named `person/user` that allows a `ref` from any of our persons to a database user.**
 
 
-Next, we add a new role called `chatUser` that we can easily assign to all chat users. The role has three rules in it, the first, `viewAllChats`, allows `query` (read) permissions for every attribute in the stream `chat`. the second rule, `viewAllPeople` similarly allows `query` for every attribute in the stream `person`. The final rule, `editOwnChats`, will restrict `transact` (edit) to ensure only chats by the respective `person` can be created or edited.
+Next, we add a new role called `chatUser` that we can easily assign to all chat users. The role has three rules in it. The first, `viewAllChats`, allows `query` (read) permissions for every attribute in the stream `chat`. The second rule, `viewAllPeople` similarly allows `query` for every attribute in the stream `person`. The final rule, `editOwnChats`, will restrict `transact` (edit) to ensure only chats by the respective `person` can be created or edited.
 
 **>> Execute the example transaction to add the new role and these three rules.**
 
@@ -318,7 +318,7 @@ The rule stipulates, that if the database user found after following the graph i
 
 **>> Execute the final transaction example.**
 
-Now, refresh the Fluree user interface (it does not automatically refresh with detected new user/roles). Select the database you were working on in the UI header, and you should now have a user listed of `jdoe`. If you select `jdoe`, you'll be using the custom database just for her that you created with the aforementioned rules. Try to query different streams, or create/update chat messages. The rules we've defined here will only allow the described behavior.
+Now, refresh the Fluree user interface (it does not automatically refresh with detected new user/roles). Select the database you were working on in the UI header, and you should now have a user listed as `jdoe`. If you select `jdoe`, you'll be using the custom database just for her that you created with the aforementioned rules. Try to query different streams, or create/update chat messages. The rules we've defined here will only allow the described behavior.
 
 **>> Quick Start is now complete. Please see the additional documentation provided here for added references.**
 

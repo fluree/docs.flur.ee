@@ -17,25 +17,25 @@ By default, users are disallowed access to all streams and allowed access to all
 
 ## Query / Read Permissions
 
-Every database that a query is executed against in Fluree can be thought of as a unique, custom database. This applies not only for historical (time travel) queries, but also the same concept applies for permissions. Effectively, every piece of data the user does not have access to does not exist in their database. This allows you to query at will.
+Every database that a query is executed against in Fluree can be thought of as a unique, custom database. This concept applies not only for historical (time travel) queries, but also for permissions. Effectively, every piece of data the user does not have access to does not exist in their database. This allows you to query at will.
 
 When a query asks for attributes or entities that don't exist for them, the results are simply empty. An exception is not thrown in this case.
 
 
-When reading, any data the user does not have access to see simply disappears, as though it never existed.
+When reading, any data the user does not have access to simply disappears, as though it never existed.
 
 ## Transact / Write Permissions
 
 When transacting, any attempts to transact data that the user does not have permission to write will throw an exception.
 It is entirely possible to have write access to data, but not read access.
 
-Block stream can always be written, if permissions on certain metadata are desired the respective attributes must be excluded.
+Block stream can always be written: if permissions on certain metadata are desired, the respective attributes must be excluded.
 
 ## User and Auth Entities
 
-Permissions are always linked to the `_user` entity that is making the request via a valid authorization token. Users are authorized via a specific `_auth` entity record that referenced by the `_user` entity via the `_user/auth` attribute.
+Permissions are always linked to the `_user` entity that is making the request via a valid authorization token. Users are authorized via a specific `_auth` entity record that is referenced by the `_user` entity via the `_user/auth` attribute.
 
-Roles containing permission rules can either be referenced from the `_auth` entity used to authenticate (via the `_auth/roles` attribute), or if not specified the user's default roles will be used which are referened from the `_user` entity (via the `_user/roles` attribute).
+Roles containing permission rules can either be referenced from the `_auth` entity used to authenticate (via the `_auth/roles` attribute), or, if not specified, the user's default roles will be used which are referenced from the `_user` entity (via the `_user/roles` attribute).
 
 A user can be a human or app/system user.
 
@@ -59,8 +59,8 @@ Attribute | Type | Description
 `_auth/type` | `tag` | (optional) The type of authorization this is. Current type tags supported are: `password`. When a user uses the `/api/signin` endpoint, the password supplied will be compared to the auth entity containing the `password` type. If there isn't an auth entity of type `password`, the user will be unable to authenticate via that endpoint.
 `_auth/secret` | `string` | (optional) The hashed secret. When using this as a `password` `_auth/type`, it is the one-way encrypted password.
 `_auth/hashType` | `tag` | (optional) The type of hashing algorithm used on the `_auth/secret`. FlureeDB's API supports `scrypt`, `bcrypt` and `pbkdf2-sha256`.
-`_auth/resetToken` | `string` | (optional) If the user is currently trying to reset a password/secret, an indexed reset token can be stored here allowing quick access to the specific auth record that is being reset. Once used, it is recommended to delete this value so as it cannot be used again.
-`_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to used if authenticated via this auth record. If not provided, the user's default roles as specified on the `_user` entity in `_user/roles` will be used.
+`_auth/resetToken` | `string` | (optional) If the user is currently trying to reset a password/secret, an indexed reset token can be stored here allowing quick access to the specific auth record that is being reset. Once used, it is recommended to delete this value so it cannot be used again.
+`_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to use if authenticated via this auth record. If not provided, the user's default roles as specified on the `_user` entity in `_user/roles` will be used.
 
 ## Defining Rules
 
@@ -86,7 +86,7 @@ Roles' purpose is simply to group a set of rules under a common name or ID that 
 
 Roles assigned to the `_user` entity under the multi-cardinality attribute `_user/roles` act as default roles for the user. Roles may also be assigned to a specific `_auth` entity under the multi-cardinality attribute `_auth/roles`, in which case the specified roles are used instead of the default if a user authenticates via the respective auth record.
 
-The ability to over-riding roles at the auth entity allows a more limited (or possibly expanded) set of roles to the same user depending on how they authenticate. If, for example, a social media website authenticated as a user, it might only have access to read a limited set of data whereas if the user logged in, they may have their full set of access rights.
+The ability to over-ride roles at the auth entity allows a more limited (or possibly expanded) set of roles to the same user depending on how they authenticate. If, for example, a social media website authenticated as a user, it might only have access to read a limited set of data whereas if the user logged in, they may have their full set of access rights.
 
 ### Role attributes
 

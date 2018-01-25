@@ -72,15 +72,15 @@ Attribute | Type | Description
 ---|---|---
 `_attribute/name` | `string` | (required) Actual attribute name. Must be namespaced, and convention is to namespace it using the stream name you intend it to be used within. Technically any attribute can be placed on any entity, but using a `spec` can restrict this behavior.
 `_attribute/doc` | `string` | (optional) Doc string for this attribute describing its intention. This description is also used for GraphQL automated schema generation.
-`_attribute/type` | `tag` | (required) Data type of this event such as `string`, `integer`, or a reference (join) to another entity - `ref`. See table below for valid data types.
-`_attribute/unique` | `boolean` | (optional) True if this event acts as a primary key.  Inserts into this table with the same primary key as an existing entity become "upserts"; they update the existing entity.  (Default false.)
+`_attribute/type` | `tag` | (required) Data type of this attribute such as `string`, `integer`, or a reference (join) to another entity - `ref`. See table below for valid data types.
+`_attribute/unique` | `boolean` | (optional) True if this attribute acts as a primary key.  Unique attributes can be used for identity (as the `_id` value in a transaction or query).  (Default false.)
 `_attribute/multi` | `boolean` | (optional) If this is a multi-cardinality attribute (holds multiple values), set to `true`. (Default false.)
-`_attribute/index` | `boolean` | (optional) True if an index should be created on this event. An attribute marked as `unique` automatically will generate an index and will ignore the value specified here. (Default false.)
+`_attribute/index` | `boolean` | (optional) True if an index should be created on this attribute. An attribute marked as `unique` automatically will generate an index and will ignore the value specified here. (Default false.)
 `_attribute/upsert` | `boolean` | (optional) Only applicable to attributes marked as `unique`. If a new entity transaction using this attribute resolves to an existing entity, update that entity. By default the transaction will throw an exception if a conflict with a `unique` attribute exists.
 `_attribute/noHistory` | `boolean` | (optional) By default, all history is kept. If you wish to turn this off for a certain entity, set this flag to true. Queries, regardless of time travel, will always show the current value.
-`_attribute/component` | `boolean` | (optional) True if this event is a reference to another table and when this entity is deleted, the referenced entity should also be deleted. (Default false.)
+`_attribute/component` | `boolean` | (optional) True if this attribute is a reference to another table and when this entity is deleted, the referenced entity should also be deleted. (Default false.)
 `_attribute/spec` | `json` | (Not in beta yet, optional) Sets the specification rules for this attribute, enabling to you restrict its allowed values.
-`_attribute/deprecated` | `boolean` | (Not in beta yet, optional) True if this event is deprecated.  Reads and writes are still allowed, but might give warnings in the API.
+`_attribute/deprecated` | `boolean` | (Not in beta yet, optional) True if this v is deprecated.  Reads and writes are still allowed, but might give warnings in the API.
 `_attribute/restrictStream` | `string` | (optional) Only applicable to attributes of `ref` (reference) types. It will restrict references to only be allowed from the specified stream.
 `_attribute/encrypted` | `boolean` | (Not in beta yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and database functions won't be permitted on this value.
 
@@ -93,7 +93,7 @@ Type | Description
 ---|---
 `string` | Unicode string (`_type/string`)
 `ref` | Reference (join) to another stream (`_type/ref`)
-`tag` | A special tag attribute. Tags are auto-generated, and create auto-resolving referred entities. Ideal for use as enum values. Also they allows you to find all entities that use a specific tag.  (`_type/tag`)
+`tag` | A special tag attribute. Tags are auto-generated, and create auto-resolving referred entities. Ideal for use as enum values. Also they allow you to find all entities that use a specific tag.  (`_type/tag`)
 `int` | 32 bit signed integer (`_type/int`)
 `long` | 64 bit signed integer (`_type/long`)
 `bigint` | Arbitrary sized integer (more than 64 bits) (`_type/bigint`)
@@ -112,6 +112,6 @@ Type | Description
 
 References, `ref`, allow both forward and reverse traversal of graph queries. 
 
-GraphQL requires additional information to auto-generate a schema that shows relationships, and it forces strict typing. Fluree allows any reference attribute to point to any entity, regardless of stream type. If you wish to restrict a reference attribute to only a specific type of stream, also include `restrictStream` in your attribute definition. In addition to forcing an arribute to only allow a specific stream type, it also enables GraphQL to auto-generate its schema with the proper relationship.
+GraphQL requires additional information to auto-generate a schema that shows relationships, and it forces strict typing. Fluree allows any reference attribute to point to any entity, regardless of stream type. If you wish to restrict a reference attribute to only a specific type of stream, also include `restrictStream` in your attribute definition. In addition to forcing an attribute to only allow a specific stream type, it also enables GraphQL to auto-generate its schema with the proper relationship.
 
 
