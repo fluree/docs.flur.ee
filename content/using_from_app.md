@@ -47,7 +47,7 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
     "_id":   ["_role", -10],
     "id":    "db-admin",
     "doc":   "A role for full access to database.",
-    "rules": [["_rule", -100]]
+    "rules": [["_rule", -100], ["_rule", -101]]
   },
   {
     "_id":       ["_rule", -100],
@@ -131,7 +131,7 @@ Here is an example request using curl:
 ```
 curl \
    -H "Content-Type: application/json" \
-   -H "Authorization: Bearer INSERT_TOKEN_HERE" \
+   -H "Authorization: Bearer AUTH_TOKEN" \
    -d '{"auth": 25769804776, "expireSeconds": 3600}' \
-   http://localhost:8070/api/db/token
+   https://ACCOUNT_NAME.beta.flur.ee/api/db/token
 ```
