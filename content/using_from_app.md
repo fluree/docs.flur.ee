@@ -106,13 +106,155 @@ You should try to make tokens expire at a reasonable timeframe that balances sec
 
 ## API Endpoints
 
-### `/api/db/token`
+### `/api/db/query`
 
-The token endpoint allows new tokens to be generated on behalf of users. You post a JSON map/object containing the following keys:
+Main query interface for FlureeQL. Post a JSON map/object containing the following keys:
 
 Key | Type | Description
 -- | -- | -- 
-`auth` | identity |  Required auth identity you wish this token to be tied to. Can be the `_id` integer of the auth record,  or any identity value such as `["_auth/id", "my_auth_id"]`.
+`select` | select-spec |  Selection specification in the form of an array/vector. To select all attributes use `[ "*" ]`. If you were storing customers and wanted to select just the customer name and products they own, the select statement might look like: `[ "customer/name", "customer/products"]`.
+`from` | stream | Stream name (similar to a table) the selection is for. If selecting from customers as per the prior example, it would simply be `"from": "customer"`.
+`where` | where-spec | Optional. Can be in the simple SQL-like string format or more sophisticated queries can be specified in the datalog format. For the simple format, might include something like: `"where": "customer/name = 'ABC Corp'"` or `"where": "person/age >= 22 AND person/age <= 50"`.
+`block` | integer or ISO-8601 date string | Optional time-travel query, specified either by the block the query results should be of, or a wall-clock time in ISO-8601 fromat. When no block is specified, the most current database is always queried.
+`limit` | integer | Optional limit for result quantity.
+
+
+Curl example:
+
+```
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer AUTH_TOKEN" \
+   -d '{"select": ["*"], "from": "customer"}' \
+   https://ACCOUNT_NAME.beta.flur.ee/api/db/query
+```
+
+#### Query with a limit. Get all attributes from every entity in the `chat` stream
+
+```json
+{
+  "select": ["*"],
+  "from": "chat",
+  "limit": 100
+}
+```
+
+#### Time travel by specifying a block number
+
+```json
+{
+  "select": ["*"],
+  "from": "chat",
+  "block": 2
+}
+```
+
+#### Time travel by specifying a time
+
+```json
+{
+  "select": ["*"],
+  "from": "chat",
+  "block": "2017-11-14T20:59:36.097Z"
+}
+```
+
+#### Query with a where clause
+
+```json
+{
+  "select": ["*"],
+  "from": "chat",
+  "where": "chat/instant >= 1516051090000 AND chat/instant <= 1516051100000"
+}
+```
+
+### `/api/db/transact`
+
+Main transaction interface for FlureeQL. Post a JSON array/vector that contains entity maps to create, update, upsert or delete.
+
+Each map requires and `_id` as specified below along with key/value pairs containing the attributes and values you wish to modify. An `_action` key is always included, but typically inferred and thus optional for most operations.
+
+Key | Type | Description
+-- | -- | -- 
+`_id` | identity |  Any identity value which can include the numeric assigned permanent `_id` for an entity, any attribute marked as unique as a two-tuple, i.e. `["_user/username", "jdoe"]`, or a temporary id (for new entities), i.e. `["_user", -1]`.
+`_action` | string | Optional (if it can be inferred). One of: `add`, `update`, `upsert` or `delete`. When using a temporary id, `add` is always inferred. When using an existing identity, `update` is always inferred. `upsert` is inferred for new entities with a tempid if they include an attribute that was marked as `upsert`.
+
+To delete/retract an entire entity, use the `_id` key along with only `"_action": "delete"`. To delete only specific values within an entity, specify the key/value combinations.
+
+The keys can contain the full attribute name including the namespace, i.e. `chat/message` or you can leave off the namespace if it is the same as the stream the entity is within. i.e. when the entity is within the `chat` stream, just `message` can be used which is translated to `chat/message` by Fluree.
+
+
+Curl example:
+
+```
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer AUTH_TOKEN" \
+   -d '[{"_id": ["chat", -1], "message": "Hello, sample chat message."}]' \
+   https://ACCOUNT_NAME.beta.flur.ee/api/db/transact
+```
+
+#### Insert two new entities using temp-ids (note `"_action": "add"` is inferred)
+
+```json
+[{
+  "_id":      ["person", -1],
+  "handle":   "jdoe",
+  "fullName": "Jane Doe"
+},
+{
+  "_id":      ["person", -2],
+  "handle":   "zsmith",
+  "fullName": "Zach Smith"
+}]
+```
+
+#### Update an existing entity using an identity value (note `"_action": "update"` is inferred)
+
+```json
+[{
+  "_id":      ["person/handle", "jdoe"],
+  "fullName": "Jane Doe Updated By Identity"
+}]
+```
+
+#### Update an existing entity using internal `_id` value (note `"_action": "update"` is inferred)
+
+```json
+[{
+  "_id":      4294967296001,
+  "fullName": "Jane Doe Updated By Numeric _id"
+}]
+```
+
+#### Delete (retract) a single attribute
+
+```json
+[{
+  "_id":      ["person/handle", "jdoe"],
+  "_action":  "delete",
+  "handle":   "jdoe"
+}]
+```
+
+#### Delete (retract) all attributes for an entity
+
+```json
+[{
+  "_id":      ["person/handle", "jdoe"],
+  "_action":  "delete"
+}]
+```
+
+
+### `/api/db/token`
+
+The token endpoint allows new tokens to be generated on behalf of users. Post a JSON map/object containing the following keys:
+
+Key | Type | Description
+-- | -- | -- 
+`auth` | identity |  Required auth identity you wish this token to be tied to. Can be the `_id` integer of the auth record,  or any identity value such as `["_auth/id", "my_admin_auth_id"]`.
 `expireSeconds` | integer | Optional number of seconds until this token should expire. If not provided, token will never expire.
 `db` | string | Only required if using your master authorization token from FlureeDB (from your username/password to flureedb.flur.ee). So long as you are using a token from your own database, it will automatically use the database the token is coming from.
 
@@ -126,7 +268,7 @@ In order to create a token, you must use a token that has the following permissi
 
 For item #2, this allows a permission where someone can generate tokens only for certain user or auth records. Generally you'll use an admin-type rights that have visibility to the entire database in which case you simply need to make sure the `_rule/ops` contains the rights for `token`.
 
-Here is an example request using curl:
+Here is an example request using curl. Be sure to replace your auth token, account name and auth-id in the request:
 
 ```
 curl \
@@ -134,4 +276,22 @@ curl \
    -H "Authorization: Bearer AUTH_TOKEN" \
    -d '{"auth": 25769804776, "expireSeconds": 3600}' \
    https://ACCOUNT_NAME.beta.flur.ee/api/db/token
+```
+
+#### Token request using the `_id` numeric identifier for `auth`
+
+```json
+{
+  "auth": 25769804776,
+  "expireSeconds": 3600
+}
+```
+
+#### Token request using an identity value (an attribute marked as `unique`) for `auth`
+
+```json
+{
+  "auth": ["_auth/id", "my_unique_id"],
+  "expireSeconds": 3600
+}
 ```
