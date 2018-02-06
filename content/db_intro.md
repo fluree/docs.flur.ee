@@ -1,5 +1,17 @@
 # FlureeDB Intro
 
+## Beta
+
+Welcome to the FlureeDB beta! Thank you for participating. Please note the following during your participation:
+
+- FlureeDB is focused on typical enterprise applications and their respective workload characteristics. By this we mean we are optimized towards highly relational data that may have very high (and complex) query volume but does not have high transactional volume. While we will have support for some high transactional volume use cases, it is less likely a blockchain database will be an ideal fit for these, and therefore this is not a current focus for this beta.
+- The beta is on a shared infrastructure, and we have implemented some limits to ensure fair use. When we are looking for people to try and crash the system (which we will), we'll ask for that feedback. Currently we want feedback on general usage, i.e. does the syntax work well and are you able to query for data in all the ways you wish you could.
+- The core has been working well, and we are expanding into more complex analytical queries. This will be the next area of focus for us and you will find expanding information about this primarily in the 'Query' section of the documentation. 
+- If you have issues, please do report them! A simple email to support@flur.ee is much appreciated with a description of what happened, and when.
+- If you have a use case you'd like to discuss with us please also let us know. We are happy to discuss it on the phone, skype or over email to understand what you are looking to accomplish.
+- The following getting started guide begins with a blank database. Based on feedback, we'll soon allow you to fork some sample databases so you can begin with existing data.
+
+
 ## Capability
 
 FlureeDB is an immutable, time-ordered blockchain database. The blockchain at the core is essentially a specially formatted log file of database updates grouped into blocks. Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
@@ -20,7 +32,7 @@ The Fluree database features these capabilities:
 - Scale-out reads, by separating eventually consistent query engines from the core bockchain transactor. Queries can optionally force consistency to a specific point-in-time or block.
 - Point-in-time queries, leveraging the characteristics our immutable blockchain core provides.
 - When leveraging Fluree's cloud-hosted private consensus, there is zero management overhead. Federated and fully decentralized consensus modes are in development.
-- FlureeDB will become opensource as we move forward in development.
+- FlureeDB will be opensource as we move forward in development.
 
 ## Quick Start
 
