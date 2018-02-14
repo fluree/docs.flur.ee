@@ -299,8 +299,8 @@ We can enable permissions on both query and transaction operations, and the perm
 
 Here we'll go through all the steps needed to add a permission that accomplishes two main things:
 
-1. Users can only see `chat` and `person` stream data
-2. A user can only create or update a chat if they are the referenced `chat/person` (if it is their own chat messages)
+1. Users can only see `chat` and `person` stream data, but no other data in the database
+2. A user can only create or update a chats of their own (if they are the referenced `chat/person`)
 
 To accomplish this we need to do a few things:
 
