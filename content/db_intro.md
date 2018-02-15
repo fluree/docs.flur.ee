@@ -304,13 +304,14 @@ Here we'll go through all the steps needed to add a permission that accomplishes
 
 To accomplish this we need to do a few things:
 
-1. Create an actual database user for the chat user(s). Permissions are only applied for database users.
-2. Link the `person` entities we created to the database user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` database user entity.
+1. Create an actual database user for the chat user(s) along with at least one auth record. Permissions are governed by auth records, users are optional but a user can have multiple auth entities each giving different permissions.
+2. Link the `person` entities we created to the database user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` database user entity and then to the `_auth` record itself.
 3. Create rules to enforce the above desired permissions.
 4. Create an assignable role that contains these rules so we can easily add the role to our chat user(s).
 5. Assign the new role to the user(s).
+6. Execute commands with a token tied to the `_auth` record we create
 
-Permissions are controlled with database users, which are stored in `_user`. When we created a person account for `jdoe` and `zsmith` in the above transaction, these were within the `person` table we also created, and were not database users. 
+A token (which governs permissions) is tied to a specific `_auth` entity which can directly have roles assigned to it, or default roles can be assigned to a `_user` entity assuming the `_auth` entity is tied to a `_user` via the `_user/auth` attribute. An `_auth` entity can be independent, and is not required to be tied to a `_user`. Most applications we typically use don't work like this (but most cryptos do work like this). We'll get into different ways ot leveraging authentication later, but public/private key cryptography is used, however this is abstracted away with hosted FlureeDB.
 
 
 **>> Execute the example transaction to add a new attribute named `person/user` that allows a `ref` from any of our persons to a database user.**
@@ -320,13 +321,13 @@ Next, we add a new role called `chatUser` that we can easily assign to all chat 
 
 **>> Execute the example transaction to add the new role and these three rules.**
 
-The final step is to create a new database user, `_user`. Here we'll create one for `jdoe` and link her user record to the `person` entity we already created, and the `_role` we just created.
+The final step is to create a new database user, `_user`. Here we'll create one for `jdoe` and link her user record to the `person` entity we already created, and the `_role` we just created. Remember an `_auth` entity is what actually gets tied to a token, so we need to create one of those too. In this case our `_auth` doesn't do anything, it just acts as a stub for the moment.
 
 The rule predicate function in `editOwnChats` follows the graph of a chat message's relationships to determine if the user can see it. In this case, the `get-all` function will take a chat message and traverse:
 
 `chat message ->> chat/person ->> person/user ->> database user`
 
-The rule stipulates, that if the database user found after following the graph is the current `?user`, then creating a new chat message or editing an existing one is allowed.
+The rule stipulates, that if the database user found after following the graph equals the current `?user`, then creating a new chat message or editing an existing one is allowed.
 
 **>> Execute the final transaction example.**
 
@@ -394,11 +395,16 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
   {
     "_id":    ["_user", -1],
     "username": "jdoe",
-    "roles": [["_role/id", "chatUser"]]
+    "roles": [["_role/id", "chatUser"]],
+    "auth": [["_auth", -10]]
   },
   {
     "_id": ["person/handle", "jdoe"],
     "user": ["_user", -1]
+  },
+  {
+    "_id": ["_auth", -10],
+    "key": "tempAuthRecord"
   }
 ]
 ```

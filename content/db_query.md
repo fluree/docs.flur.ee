@@ -257,7 +257,7 @@ Fluree Analytical Queries are also structured as a JSON object/map and may conta
 
 Key | Required? | Description
 -- | -- | -- 
-`select` | yes | Analytical select statement, which can include aggregate functions, bound variables and descriptors for data return shape (single results, collections, tuples).
+`select` | yes | Analytical select statement, which can include aggregate functions, bound variables and descriptors for data return shape (single result, collection, tuple).
 `where` | yes | A collection of tuples which contain matching logic, variable binding or functions.
 `block` |  | Optional time-travel query specified by block number (integer) or wall-clock time as a ISO-8601 formatted string.
 
