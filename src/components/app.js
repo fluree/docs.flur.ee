@@ -16,6 +16,11 @@ let languageOptions = [
     title: 'FlureeQL/JSON',
     short: 'json',
     value: 'json'
+  },
+  {
+    title: 'curl',
+    short: 'curl',
+    value: 'curl'
   }
 ];
 
