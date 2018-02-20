@@ -121,7 +121,7 @@ API actions, which require authentication via a JWT token to invoke, are listed 
 #### Example invoke
 
 ```curl
-$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${TOKEN}" -d '{"key": "value"}' "https://${INSTANCE}.flur.ee/api/fluree/example/echo"
+$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $FLUREE_TOKEN" -d '{"key": "value"}' "https://$FLUREE_ACCOUNT.flur.ee/api/fluree/example/echo"
 ```
 
 ```javascript
@@ -265,7 +265,7 @@ $ cat << EOF > query.json
 }
 EOF
 
-$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${TOKEN}" -d @query.json "https://${INSTANCE}.flur.ee/api/fql"
+$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $FLUREE_TOKEN" -d @query.json "https://$FLUREE_ACCOUNT.flur.ee/api/fql"
 ```
 
 ```javascript

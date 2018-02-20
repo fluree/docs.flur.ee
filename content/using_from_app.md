@@ -124,9 +124,9 @@ Curl example:
 ```
 curl \
    -H "Content-Type: application/json" \
-   -H "Authorization: Bearer AUTH_TOKEN" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{"select": ["*"], "from": "customer"}' \
-   https://ACCOUNT_NAME.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 
 #### Query with a limit. Get all attributes from every entity in the `chat` stream
