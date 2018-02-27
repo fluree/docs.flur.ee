@@ -70,7 +70,7 @@ Every transaction item must have an `_id` attribute to refer to the entity we ar
 #### Stream schema transaction
 
 ```curl
-$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $FLUREE_TOKEN" -d '{"key": "value"}' "https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact"
+ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $FLUREE_TOKEN" -d '{"key": "value"}' "https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact"
 ```
 
 ```graphql
@@ -103,7 +103,30 @@ $ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $FL
   "version": "1"
 }]
 ```
-
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id":     ["_stream", -1],
+  "name":    "person",
+  "doc":     "A stream/table to hold our people",
+  "version": "1"
+},
+{
+  "_id":     ["_stream", -2],
+  "name":    "chat",
+  "doc":     "A stream/table to hold chat messages",
+  "version": "1"
+},
+{
+  "_id":     ["_stream", -3],
+  "name":    "comment",
+  "doc":     "A stream/table to hold comments to chat messages",
+  "version": "1"
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### Schema - Attributes
 
 Schema attributes are similar to relational database columns, however there are fewer restrictions.
@@ -187,7 +210,68 @@ Comments
 }]
 ```
 
-
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id":   ["_attribute", -1],
+  "name":   "person/handle",
+  "doc":    "The persons unique handle",
+  "unique": true,
+  "type":   "string"
+},
+{
+  "_id":   ["_attribute", -2],
+  "name":  "person/fullName",
+  "doc":   "The persons full name.",
+  "type":  "string",
+  "index": true
+},
+{
+  "_id":  ["_attribute", -10],
+  "name": "chat/message",
+  "doc":  "A chat message",
+  "type": "string"
+},
+{
+  "_id":  ["_attribute", -11],
+  "name": "chat/person",
+  "doc":  "A reference to the person that created the message",
+  "type": "ref",
+  "restrictStream": "person"
+},
+{
+  "_id":   ["_attribute", -12],
+  "name":  "chat/instant",
+  "doc":   "The instant in time when this chat happened.",
+  "type":  "instant",
+  "index": true
+},
+{
+  "_id":       ["_attribute", -13],
+  "name":      "chat/comments",
+  "doc":       "A reference to comments about this message",
+  "type":      "ref",
+  "component": true,
+  "multi":     true,
+  "restrictStream": "comment"
+},
+{
+  "_id":  ["_attribute", -20],
+  "name": "comment/message",
+  "doc":  "A comment message.",
+  "type": "string"
+},
+{
+  "_id":  ["_attribute", -21],
+  "name": "comment/person",
+  "doc":  "A reference to the person that made the comment",
+  "type": "ref",
+  "restrictStream": "person"
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### Transacting Data
 
 To write data to the Fluree Database, you submit a collection of statements to the transactor endpoint. All of the statements will be successfully committed together, or all fail together with the error reported back to you. Transactions have ACID guarantees.
@@ -238,6 +322,23 @@ Now that we have stored a piece of data, let's query it.
   "fullName": "Zach Smith"
 }]
 ```
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id":      ["person", -1],
+  "handle":   "jdoe",
+  "fullName": "Jane Doe"
+},
+{
+  "_id":      ["person", -2],
+  "handle":   "zsmith",
+  "fullName": "Zach Smith"
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact  
+```
+
 
 #### Sample chat message transaction
 
@@ -250,7 +351,18 @@ Now that we have stored a piece of data, let's query it.
 }]
 ```
 
-
+```curl
+    curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+    "_id":     ["chat", -1],
+    "message": "This is a sample chat from Jane!",
+    "person":  ["person/handle", "jdoe"],
+    "instant": "#(now)"
+    }]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### Querying Data
 
 Fluree allows you to specify queries using our FlureeQL JSON syntax or with GraphQL. The FlureeQL format is designed to easily enable code to compose queries, as the query is simply a data structure. 
@@ -269,7 +381,13 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
   "from": "chat"
 }
 ```
-
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{ "select": ["*"], "from": "chat"}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 #### Same chat query, but follow the graph to reveal details about the person
 
 ```json
@@ -280,6 +398,19 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
   ],
   "from": "chat"
 }
+```
+```curl
+curl  \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": [
+    "*",
+    {"chat/person": ["*"]}
+  ],
+  "from": "chat"
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 #### Person query, but follow chat relationship in reverse to find all thier chats (note the underscore `_`)
 
@@ -292,7 +423,19 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
   "from": "person"
 }
 ```
-
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": [
+    "*",
+    {"chat/_person": ["*"]}
+  ],
+  "from": "person"
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 ### Permissions Introduction
 
 We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an expressive predicate rule function.
@@ -346,7 +489,19 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
   "restrictStream": "_user"
 }]
 ```
-
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id":    ["_attribute", -1],
+  "name":   "person/user",
+  "doc":    "Reference to a database user.",
+  "type":   "ref",
+  "restrictStream": "_user"
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 #### Add a role, and a rule
 
 ```json 
@@ -387,7 +542,47 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
 ]
 ```
 
-
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[
+  {
+    "_id": [ "_role", -1 ],
+    "id": "chatUser",
+    "doc": "A standard chat user role",
+    "rules": [["_rule", -10], ["_rule", -11], ["_rule", -12]]
+  },
+  {
+    "_id": ["_rule", -10],
+    "id": "viewAllChats",
+    "doc": "Can view all chats.",
+    "stream": "chat",
+    "streamDefault": true,
+    "predicate": "true",
+    "ops": ["query"]
+  },
+  {
+    "_id": ["_rule", -11],
+    "id": "viewAllPeople",
+    "doc": "Can view all people",
+    "stream": "person",
+    "streamDefault": true,
+    "predicate": "true",
+    "ops": ["query"]
+  },
+  {
+    "_id": ["_rule", -12],
+    "id": "editOwnChats",
+    "doc": "Only allow users to edit their own chats",
+    "stream": "chat",
+    "attributes": ["chat/message"],
+    "predicate": "(contains? (follow ?e [\"chat/person\" \"person/user\"]) ?user)",
+    "ops": ["transact"]
+  }
+]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 #### Create a new user with an auth record containing that role
 
 ```json
@@ -407,4 +602,25 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
     "key": "tempAuthRecord"
   }
 ]
+```
+
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+     "_id":    ["_user", -1],
+    "username": "jdoe",
+    "roles": [["_role/id", "chatUser"]],
+    "auth": [["_auth", -10]]
+  },
+  {
+    "_id": ["person/handle", "jdoe"],
+    "user": ["_user", -1]
+  },
+  {
+    "_id": ["_auth", -10],
+    "key": "tempAuthRecord"
+  }]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```

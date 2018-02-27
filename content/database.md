@@ -77,7 +77,29 @@ configured streams, and `_attribute` likewise for attributes.
   "version": "1"
 }]
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d [{
+  "_id":       ["_stream", -1],
+  "name": "person",
+  "doc": "A stream/table to hold our people",
+  "version": "1"
+},
+{
+  "_id":       ["_stream", -2],
+  "name": "chat",
+  "doc": "A stream/table to hold chat messages",
+  "version": "1"
+},
+{
+  "_id":       ["_stream", -3],
+  "name": "comment",
+  "doc": "A stream/table to hold comments to chat messages",
+  "version": "1"
+}] \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### Schema - Attributes
 
 Schema attributes are similar to relational database columns, however there are fewer restrictions.
@@ -151,6 +173,125 @@ Comments
   "restrictStream": "person"
 }]
 ```
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d [{
+  "_id":       ["_stream", -1],
+  "name": "person",
+  "doc": "A stream/table to hold our people",
+  "version": "1"
+},
+{
+  "_id":       ["_stream", -2],
+  "name": "chat",
+  "doc": "A stream/table to hold chat messages",
+  "version": "1"
+},
+{
+  "_id":       ["_stream", -3],
+  "name": "comment",
+  "doc": "A stream/table to hold comments to chat messages",
+  "version": "1"
+}]
+```
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d [{
+  "_id":       ["_stream", -1],
+  "name": "person",
+  "doc": "A stream/table to hold our people",
+  "version": "1"
+},
+{
+  "_id":       ["_stream", -2],
+  "name": "chat",
+  "doc": "A stream/table to hold chat messages",
+  "version": "1"
+},
+{
+  "_id":       ["_stream", -3],
+  "name": "comment",
+  "doc": "A stream/table to hold comments to chat messages",
+  "version": "1"
+}] \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+### Schema - Attributes
+
+Schema attributes are similar to relational database columns, however there are fewer restrictions.
+Any attribute can be attached to any entity, unless a restriction is put in place using a `spec`.
+
+The transaction sample here adds the following attributes:
+
+People
+- `person/handle` - The person's unique handle. Being marked as `uniqe`, it can be used as an `_id`.
+- `person/fullName` - The person's full name. Because it is marked as `index`, it can be used in `where` clauses.
+
+Chats
+- `chat/message` - The actual message content.
+- `chat/person` - A reference to the person that made this chat (a join).
+- `chat/comments` - Comments about this message, which are a reference (join). `multi` indicates multiple comments can be stored, and `component` indicates these referenced comment entities should be treated as part of this parent, and if the parent (in this case the chat message) is deleted, the comments will also be deleted.
+
+Comments
+- `comment/message` - A comment message.
+- `comment/person` - A reference to the person who made the comment (a join).
+
+#### Attribute schema transaction
+
+```json
+[{
+  "_id":       ["_attribute", -1],
+  "name": "person/handle",
+  "doc": "The person's unique handle",
+  "unique": true,
+  "type": "_type/string"
+},
+{
+  "_id":       ["_attribute", -2],
+  "name": "person/fullName",
+  "doc": "The person's full name.",
+  "type": "_type/string",
+  "index": true
+},
+{
+  "_id":       ["_attribute", -3],
+  "name": "chat/message",
+  "doc": "A chat message",
+  "type": "_type/string"
+},
+{
+  "_id":       ["_attribute", -4],
+  "name": "chat/person",
+  "doc": "A reference to the person that created the message",
+  "type": "_type/ref",
+  "restrictStream": "person"
+},
+{
+  "_id":       ["_attribute", -5],
+  "name": "chat/comments",
+  "doc": "A reference to comments about this message",
+  "type": "_type/ref",
+  "component": true,
+  "multi": true,
+  "restrictStream": "comment"
+},
+{
+  "_id":       ["_attribute", -6],
+  "name": "comment/message",
+  "doc": "A comment message.",
+  "type": "_type/string"
+},
+{
+  "_id":       ["_attribute", -7],
+  "name": "comment/person",
+  "doc": "A reference to the person that made the comment",
+  "type": "_type/ref",
+  "restrictStream": "person"
+}]\
+```
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 
 
 ### Transacting Data
@@ -169,7 +310,17 @@ A sample chat message transaction is shown which creates a single new entity. Mu
   "timestamp": "#(now)"
 }]
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d [{
+  "_id":       ["chatMessage", -1],
+  "message":   "Please let me know the status of the NewCo account.",
+  "sender":    ["user/username", "jdoe@company.com"],
+  "timestamp": "#(now)"
+}] \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 #### Successful transaction response
 
 ```json
@@ -181,7 +332,18 @@ A sample chat message transaction is shown which creates a single new entity. Mu
 
 }
 ```
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "tempids": {},
+  "block": 5,
+  "hash": "sdfsdfsdf",
+  "flakes": [],
 
+}\
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 A brief explanation of each key used in this transaction:
 
 Key | Description
@@ -263,7 +425,32 @@ Each attribute has a type which can be one of several primitive types (i.e. stri
   }
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "ChatMessage": {
+    "doc": "A chat message schema.",
+    "attributes": {
+      "message": {
+        "doc": "The message content.",
+        "type": "string",
+        "required": true
+      },
+      "sender": {
+        "doc": "A reference to the user sending the message.",
+        "type": "User",
+        "required": true
+      },
+      "timestamp": {
+        "doc": "The time this message was sent.",
+        "type": "instant"
+      }
+    }
+  }
+} \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 
 ### Attribute Definitions
 

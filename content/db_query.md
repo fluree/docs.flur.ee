@@ -23,7 +23,17 @@ FlureeQL has two main approaches to creating queries that share much of the same
   "limit": 100
 }
 ```
-
+```curl
+curl\
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": ["*"],
+  "from": "chat",
+  "limit": 100
+}'\
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 #### FlureeQL Graph Query attribute selection and a `where` that does a range scan
 
 ```json
@@ -33,7 +43,17 @@ FlureeQL has two main approaches to creating queries that share much of the same
   "where": "chat/instant > 1517437000000 AND chat/instant < 1517438000000"
 }
 ```
-
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": ["chat/message", "chat/instant"],
+  "from": "chat",
+  "where": "chat/instant > 1517437000000 AND chat/instant < 1517438000000"
+}'\
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 #### FlureeQL Graph Query with time travel using a block number
 
 ```json
@@ -43,7 +63,13 @@ FlureeQL has two main approaches to creating queries that share much of the same
   "block": 2
 }
 ```
-
+```curl
+ curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{"select": ["*"], "from": "chat", "block": 2}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 #### FlureeQL Graph Query  with time travel using wall clock time
 
 ```json
@@ -53,7 +79,17 @@ FlureeQL has two main approaches to creating queries that share much of the same
   "block": "2017-11-14T20:59:36.097Z"
 }
 ```
-
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": ["*"],
+  "from": "chat",
+  "block": "2017-11-14T20:59:36.097Z"
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 ## FlureeQL Graph Queries
 
 FlureeQL Graph Queries are structured as a JSON object/map and may contain the following keys:
@@ -77,7 +113,17 @@ Key | Required? | Description
 }
 
 ```
-
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": ["*"],
+  "from": "chat",
+  "limit": 100
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 #### Abbreviated response
 
 ```json
@@ -123,7 +169,16 @@ The syntax isn't just a way to specify the data you'd like returned, but inheret
   "from": "chat"
 }
 ```
-
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": ["chat/message"],
+  "from": "chat"
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 #### Abbreviated response
 
 ```json 
@@ -164,7 +219,19 @@ For fun, you can add another sub-query to follow the chat message back to the pe
   "from": "chat"
 }
 ```
-
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": [
+    "*",
+    {"chat/person": ["*"]}
+  ],
+  "from": "chat"
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 #### Abbreviated response
 
 ```json
@@ -198,37 +265,18 @@ For fun, you can add another sub-query to follow the chat message back to the pe
   "from": "person"
 }
 ```
-
-#### Abbreviated response
-
-```json
-{
-  "block": 12,
-  "status": 200,
-  "time": "1.36ms",
-  "result": [
-    {
-      "_id": 4294967296002,
-      "person/handle": "zsmith",
-      "person/fullName": "Zach Smith"
-    },
-    {
-      "_id": 4294967296001,
-      "person/handle": "jdoe",
-      "person/fullName": "Jane Doe",
-      "chat/_person": [
-        {
-          "_id": 4299262263302,
-          "chat/message": "A sample chat message",
-          "chat/person": {
-            "_id": 4294967296001
-          }
-        },
-        {"..."}
-      ]
-    }
-  ]
-}
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": [
+    "*",
+    {"chat/_person": ["*"]}
+  ],
+  "from": "person"
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 
 ### "from" syntax

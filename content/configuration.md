@@ -51,7 +51,53 @@ The following sections will take you through the top-level keys of the `fluree.j
   }
 }
 ```
+```curl 
+curl 
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "organization": "fluree",
+  "application": "example",
+  "version": "1",
 
+  "doc": "An example of building a microservice on Fluree",
+  "url": "https://flur.ee",
+
+  "route": '{
+    "path": "/example"
+  },
+
+  "dependencies": [{
+    "id": "fluree.email",
+    "version": "1",
+    "tag": "release"
+  }],
+
+  "install": [],
+
+  "action": {
+    "echo": {
+      "doc": "Echoes back what you send it",
+      "input": "string",
+      "output": "string"
+    }
+  },
+
+  "schema": {
+    "post": {
+      "doc": "Forum post",
+      "event": {
+        "text": {
+          "doc": "Content of forum post",
+          "required": true,
+          "type": "string"
+        }
+      }
+    }
+  }
+}'
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   ```
 ### Metadata
 
 These top-level keys allow other application developers inside and outside your organization to quickly locate and install your application on an instance.
@@ -76,7 +122,12 @@ Key | Description
   "url": "https://flur.ee"
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{"select": ["*"], "from": "chat", "block": "2017-111-14T20:59:36.097Z"}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### Routes
 
 If your application serves up static content (i.e. HTML, CSS, images, etc.), that content will be available at a subdirectory on any instance it's installed on.  The CNAME is used to specify the instance, while the value of the `route` key is used to define the subdirectory.
@@ -90,7 +141,14 @@ In this example, any request beginning with `https://{instance}.flur.ee/an-examp
   "route": {"path": "/an-example-route"}
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "route": {"path": "/an-example-route"}
+}\
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 #### Instance endpoint
 
 ```endpoint
@@ -117,7 +175,23 @@ API actions, which require authentication via a JWT token to invoke, are listed 
   }]
 }
 ```
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d 
+  "organization": "fluree",
+  "application": "example",
 
+  "action": [{
+    "echo": {
+      "doc": "Echos back what you send it",
+      "input": "string",
+      "output": "string"
+    }
+  }]
+}\
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 #### Example invoke
 
 ```curl
@@ -233,40 +307,52 @@ Relational references to other tables are simply named by the table name.  Note 
   }
 }
 ```
-
-#### Example query using the sample schema
-
 ```curl
-$ cat << EOF > query.json
-{
-  "myQuery": {
-    "graph": {
-      "allPosts": [
-        "post",
-        [
-          "text",
-          "upvotes",
-          [
-            "comments",
-            [
-              "text",
-              [
-                "commenter",
-                [
-                  "username"
-                ]
-              ]
-            ]
-          ]
-        ]
-      ]
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "schema": {
+    "post": {
+      "doc": "Forum post",
+      "event": {
+        "text": {
+          "doc": "Content of forum post",
+          "required": true,
+          "type": "string"
+        },
+        "upvotes": {
+          "doc": "Number of upvotes this post has received",
+          "default": 0,
+          "type": "integer",
+          "history": false
+        },
+        "comments": {
+          "doc": "Reference to the comments on this post",
+          "type": ["comment"],
+          "component": true
+        }
+      }
+    },
+    "comment": {
+      "doc": "Comment on forum post",
+      "event": {
+        "text": {
+          "doc": "Comment text",
+          "required": true,
+          "type": "string"
+        },
+        "commenter": {
+          "doc": "User who commented on the post",
+          "type": "user"
+        }
+      }
     }
   }
-}
-EOF
-
-$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $FLUREE_TOKEN" -d @query.json "https://$FLUREE_ACCOUNT.flur.ee/api/fql"
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/status
 ```
+#### Example query using the sample schema
 
 ```javascript
 var query = {
@@ -334,3 +420,60 @@ fetch(`https://${instance}.flur.ee/api/fql`, {
   }
 }
 ```
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" -X PUT \
+   -d '{
+  "graph": {
+    "allPosts": [{
+      "_id": "F123",
+      "text": "This is a post",
+      "upvotes": 1,
+      "comments": [{
+        "_id": "F456",
+        "text": "This is the first comment",
+        "commenter": {
+          "_id": "F1011",
+          "username": "Alice"
+        }
+      }, {
+        "_id": "F789",
+        "text": "This is the second comment",
+        "commenter": {
+          "_id": "F1213",
+          "username": "Bob"
+        }
+      }]
+    }]
+  }
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" -X PUT \
+   -d '{
+  "graph": {
+    "allPosts": [{
+      "_id": "F123",
+      "text": "This is a post",
+      "upvotes": 1,
+      "comments": [{
+        "_id": "F456",
+        "text": "This is the first comment",
+        "commenter": {
+          "_id": "F1011",
+          "username": "Alice"
+        }
+      }, {
+        "_id": "F789",
+        "text": "This is the second comment",
+        "commenter": {
+          "_id": "F1213",
+          "username": "Bob"
+        }
+      }]
+    }]
+  }
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact

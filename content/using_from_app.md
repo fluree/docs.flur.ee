@@ -40,7 +40,7 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
   {
     "_id":    ["_auth", -1],
     "key":    "db-admin",
-    "doc":    "A db admin auth that has full data visibility and can generate tokens for other users.",
+    "doc":    "A db admin auth that has full data visibility " \ "and can generate tokens for other users.",
     "roles":  [["_role", -10]]
   },
   {
@@ -68,7 +68,53 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
 ]
 ```
 
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[
+  {
+    "_id":    ["_auth", -1], 
+    "key":    "db-admin", 
+    "doc":    "A db admin auth that has full data visibility and can generate tokens for other users.",
+    "roles":  [["_role", -10]] 
+  },
+  {
+    "_id":   ["_role", -10], 
+    "id":    "db-admin",
+    "doc":   "A role for full access to database.", 
+    "rules": [["_rule", -100], ["_rule", -101]] 
+  },
+  {
+    "_id":       ["_rule", -100], 
+    "id":        "db-admin", 
+    "doc":       "Rule that grants full access to all streams.", 
+    "stream":    "*", 
+    "streamDefault": true, 
+    "ops":       ["query", "transact"], 
+    "predicate": "true" 
+  },
+  {
+    "_id":       ["_rule", -101], 
+    "id":        "db-admin-token", 
+    "doc":       "Rule allows token generation for other users.", 
+    "ops":       ["token"], 
+    "predicate": "true" 
+  }
+]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+
+
 #### Query for all `_auth` records and their respective rules and roles
+
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{"select": [ "*", { "_auth/roles": [ "*", {"_role/rules": ["*"]} ] } ], "from": "_auth"}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 
 ```json
 {
@@ -76,6 +122,7 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
   "from": "_auth"
 }
 ```
+
 
 **Interacting with FlureeDB directly from your end-user apps**
 
@@ -125,7 +172,7 @@ Curl example:
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{"select": ["*"], "from": "customer"}' \
+   -d '{"select": ["*"], "from": "person"}' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 
@@ -138,6 +185,13 @@ curl \
   "limit": 100
 }
 ```
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{"select": ["*"], "from": "chat", "limit": 100}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 
 #### Time travel by specifying a block number
 
@@ -148,7 +202,13 @@ curl \
   "block": 2
 }
 ```
-
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{"select": ["*"], "from": "chat", "block": 2}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
 #### Time travel by specifying a time
 
 ```json
@@ -157,6 +217,13 @@ curl \
   "from": "chat",
   "block": "2017-11-14T20:59:36.097Z"
 }
+```
+```curl
+    curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{"select": ["*"], "from": "chat", "block": "2017-111-14T20:59:36.097Z"}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 
 #### Query with a where clause
@@ -167,6 +234,13 @@ curl \
   "from": "chat",
   "where": "chat/instant >= 1516051090000 AND chat/instant <= 1516051100000"
 }
+```
+```curl
+    curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{"select": ["*"], "from": "chat", "where": "chat/instant >= 1516051090000 AND chat/instant <= 1516051100000"}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 
 ### `/api/db/transact`
@@ -187,10 +261,10 @@ The keys can contain the full attribute name including the namespace, i.e. `chat
 
 Curl example:
 
-```
+```curl
 curl \
    -H "Content-Type: application/json" \
-   -H "Authorization: Bearer AUTH_TOKEN" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{"_id": ["chat", -1], "message": "Hello, sample chat message."}]' \
    https://ACCOUNT_NAME.beta.flur.ee/api/db/transact
 ```
@@ -209,7 +283,22 @@ curl \
   "fullName": "Zach Smith"
 }]
 ```
-
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id":      ["person", -1],
+  "handle":   "jdoe",
+  "fullName": "Jane Doe"
+},
+{
+  "_id":      ["person", -2],
+  "handle":   "zsmith",
+  "fullName": "Zach Smith"
+}]'\
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 #### Update an existing entity using an identity value (note `"_action": "update"` is inferred)
 
 ```json
@@ -218,7 +307,16 @@ curl \
   "fullName": "Jane Doe Updated By Identity"
 }]
 ```
-
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id":      ["person/handle", "jdoe"],
+  "fullName": "Jane Doe Updated By Identity"
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   ```
 #### Update an existing entity using internal `_id` value (note `"_action": "update"` is inferred)
 
 ```json
@@ -227,17 +325,35 @@ curl \
   "fullName": "Jane Doe Updated By Numeric _id"
 }]
 ```
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id":      4294967296001,
+  "fullName": "Jane Doe Updated By Numeric _id"
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   ```
 
 #### Delete (retract) a single attribute
 
 ```json
 [{
   "_id":      ["person/handle", "jdoe"],
-  "_action":  "delete",
-  "handle":   "jdoe"
+  "handle":   null
 }]
 ```
-
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id":      ["person/handle", "jdoe"],
+  "handle":   null
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   ```
 #### Delete (retract) all attributes for an entity
 
 ```json
@@ -246,8 +362,16 @@ curl \
   "_action":  "delete"
 }]
 ```
-
-
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id":      ["person/handle", "jdoe"],
+  "_action":  "delete"
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### `/api/db/token`
 
 The token endpoint allows new tokens to be generated on behalf of users. Post a JSON map/object containing the following keys:
@@ -270,13 +394,7 @@ For item #2, this allows a permission where someone can generate tokens only for
 
 Here is an example request using curl. Be sure to replace your auth token, account name and auth-id in the request:
 
-```
-curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer AUTH_TOKEN" \
-   -d '{"auth": 25769804776, "expireSeconds": 3600}' \
-   https://ACCOUNT_NAME.beta.flur.ee/api/db/token
-```
+
 
 #### Token request using the `_id` numeric identifier for `auth`
 
@@ -286,7 +404,17 @@ curl \
   "expireSeconds": 3600
 }
 ```
-
+```curl 
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "auth": 25769804776,
+  "expireSeconds": 3600
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
+```
+  
 #### Token request using an identity value (an attribute marked as `unique`) for `auth`
 
 ```json
@@ -295,3 +423,14 @@ curl \
   "expireSeconds": 3600
 }
 ```
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "auth": ["_auth/key", "db-admin"],
+  "expireSeconds": 3600
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
+  ```
+  

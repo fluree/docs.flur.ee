@@ -54,7 +54,25 @@ wobbles.list()
   }
 ]
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d [
+  {
+    "owner": "{username}",
+    "id": "{wobble_id}",
+    "created": "{timestamp}",
+    "modified": "{timestamp}"
+  },
+  {
+    "owner": "{username}",
+    "id": "{wobble_id}",
+    "created": "{timestamp}",
+    "modified": "{timestamp}"
+  }
+] \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### Create wobble
 
 Creates a new, empty wobble.
@@ -95,7 +113,15 @@ response = wobbles.create(
   "description": "bar"
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "name": "foo",
+  "description": "bar"
+} \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 Property | Description
 ---|---
 `name` | (optional) the name of the wobble
@@ -113,7 +139,19 @@ Property | Description
   "modified": "{timestamp}"
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "owner": "{username}",
+  "id": "{wobble_id}",
+  "name": null,
+  "description": null,
+  "created": "{timestamp}",
+  "modified": "{timestamp}"
+} \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### Retrieve a wobble
 
 Returns a single wobble.
@@ -155,7 +193,17 @@ client.readWobble('wobble-id',
   "modified": "{timestamp}"
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "owner": "{username}",
+  "id": "{wobble_id}",
+  "created": "{timestamp}",
+  "modified": "{timestamp}"
+} \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### Update a wobble
 
 Updates the properties of a particular wobble.
@@ -198,7 +246,15 @@ client.updateWobble('wobble-id', options, function(err, wobble) {
   "description": "bar"
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "name": "foo",
+  "description": "bar"
+}\
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 Property | Description
 ---|---
 `name` | (optional) the name of the wobble
@@ -216,7 +272,19 @@ Property | Description
   "modified": "{timestamp}"
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "owner": "{username}",
+  "id": "{wobble_id}",
+  "name": "foo",
+  "description": "bar",
+  "created": "{timestamp}",
+  "modified": "{timestamp}"
+} \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transat
+```
 ### Delete a wobble
 
 Deletes a wobble, including all wibbles it contains.
@@ -301,7 +369,30 @@ client.listWobbles('wobble-id', {}, function(err, collection) {
   ]
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "type": "Wobble",
+  "wibbles": [
+    {
+      "id": "{wibble_id}",
+      "type": "Wobble",
+      "properties": {
+        "prop0": "value0"
+      }
+    },
+    {
+      "id": "{wibble_id}",
+      "type": "Wobble",
+      "properties": {
+        "prop0": "value0"
+      }
+    }
+  ]
+} \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### Insert or update a wibble
 
 Inserts or updates a wibble in a wobble. If there's already a wibble
@@ -345,7 +436,18 @@ client.insertWobble(wibble, 'wobble-id', function(err, wibble) {
   }
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "id": "{wibble_id}",
+  "type": "Wobble",
+  "properties": {
+    "prop0": "value0"
+  }
+} \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 Property | Description
 --- | ---
 `id` | the id of an existing wibble in the wobble
@@ -361,7 +463,18 @@ Property | Description
   }
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "id": "{wibble_id}",
+  "type": "Wobble",
+  "properties": {
+    "prop0": "value0"
+  }
+} \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### Retrieve a wibble
 
 Retrieves a wibble in a wobble.
@@ -402,7 +515,18 @@ wibble = wobbles.read_wibble(wobble_id, '2').json()
   }
 }
 ```
-
+```curl
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d {
+  "id": "{wibble_id}",
+  "type": "Wobble",
+  "properties": {
+    "prop0": "value0"
+  }
+} \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
 ### Delete a wibble
 
 Removes a wibble from a wobble.
