@@ -69,10 +69,6 @@ Every transaction item must have an `_id` attribute to refer to the entity we ar
 
 #### Stream schema transaction
 
-```curl
- curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $FLUREE_TOKEN" -d '{"key": "value"}' "https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact"
-```
-
 ```graphql
 {
   graph {
@@ -103,6 +99,7 @@ Every transaction item must have an `_id` attribute to refer to the entity we ar
   "version": "1"
 }]
 ```
+
 ```curl
   curl \
    -H "Content-Type: application/json" \
