@@ -116,7 +116,7 @@ Every transaction item must have an `_id` attribute to refer to the entity we ar
 ```
 
 ```graphql
-transaction {
+mutation {
 
 }
 ```
@@ -268,7 +268,7 @@ Comments
 ```
 
 ```graphql
-transaction {
+mutation {
   
 }
 ```
@@ -341,7 +341,7 @@ Now that we have stored a piece of data, let's query it.
 ```
 
 ```graphql
-transaction {
+mutation {
   
 }
 ```
@@ -371,7 +371,7 @@ transaction {
 ```
 
 ```graphql
-transaction {
+mutation {
   
 }
 ```
@@ -552,7 +552,7 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
 ```
 
 ```graphql
-transaction {
+mutation {
   
 }
 ```
@@ -640,7 +640,7 @@ transaction {
 ```
 
 ```graphql
-transaction {
+mutation {
   
 }
 ```
@@ -689,7 +689,7 @@ curl \
 
 ```graphql
 
-transaction {
+mutation {
   
 }
 ```

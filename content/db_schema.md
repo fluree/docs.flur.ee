@@ -62,6 +62,13 @@ To create a new stream, submit a transaction against the system stream named `_s
 }] \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
+
+```graphql 
+mutation {
+
+}
+```
+
 An entity in a stream can have any defined attribute assigned to it, but convention is for attributes intended for a specific stream to have the attribute namespace be the same as the stream name (see documentation on attributes and namespaces). For example, if there were a `person` stream, an attribute intended to hold a person's email might be `person/email`.
 
 In places where there is no ambiguity, attributes containing the same namespace as the stream do not need to include the namespace portion of the attribute. For example, note that the full attribute name of `person/email` is shortened below because the entity is in the `person` stream. You can of course always include the full attribute name.

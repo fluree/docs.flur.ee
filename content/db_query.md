@@ -348,7 +348,15 @@ curl \
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
-
+```graphql
+query {
+  person {
+    chat/_person {
+      *
+    }
+  }
+}
+```
 ### "from" syntax
 
 FlureeDB allows you to select a collection from an entire stream, much like our examples thus far, or you can also specify a single entity.
