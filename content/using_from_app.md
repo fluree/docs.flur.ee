@@ -68,6 +68,12 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
 ]
 ```
 
+```graphql
+mutation {
+  
+}
+```
+
 ```curl
 curl \
    -H "Content-Type: application/json" \
@@ -123,6 +129,15 @@ curl \
 }
 ```
 
+```graphql
+query {
+  _auth {
+    _auth/roles, _roles/rules {
+      *
+    }
+  }
+}
+```
 
 **Interacting with FlureeDB directly from your end-user apps**
 
@@ -193,6 +208,15 @@ curl \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 
+```graphql
+query {
+  chat {
+    *
+  }
+}
+//Limit 100?
+```
+
 #### Time travel by specifying a block number
 
 ```json
@@ -200,6 +224,15 @@ curl \
   "select": ["*"],
   "from": "chat",
   "block": 2
+}
+```
+```graphql
+query {
+  chat {
+    * {
+      block: 2
+    }
+  }
 }
 ```
 ```curl
@@ -226,6 +259,15 @@ curl \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 
+```graphql
+query {
+  chat {
+    * {
+      block: 2017-11-14T20:59:36.097Z
+    }
+  }
+}
+```
 #### Query with a where clause
 
 ```json
@@ -243,6 +285,15 @@ curl \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 
+```graphql
+query {
+  chat {
+    * {
+      chat/instant >= 1516051090000 AND chat/instant <= 1516051100000
+    }
+  }
+}
+```
 ### `/api/db/transact`
 
 Main transaction interface for FlureeQL. Post a JSON array/vector that contains entity maps to create, update, upsert or delete.
@@ -261,7 +312,7 @@ The keys can contain the full attribute name including the namespace, i.e. `chat
 
 Curl example:
 
-```curl
+```
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -299,6 +350,13 @@ curl \
 }]'\
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
+
+```graphql
+mutation {
+
+}
+```
+
 #### Update an existing entity using an identity value (note `"_action": "update"` is inferred)
 
 ```json
@@ -316,7 +374,13 @@ curl \
   "fullName": "Jane Doe Updated By Identity"
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
-   ```
+```
+
+```graphql
+mutation {
+  
+}
+```
 #### Update an existing entity using internal `_id` value (note `"_action": "update"` is inferred)
 
 ```json
@@ -336,6 +400,12 @@ curl \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
    ```
 
+```graphql
+mutation {
+
+}
+```
+
 #### Delete (retract) a single attribute
 
 ```json
@@ -344,6 +414,12 @@ curl \
   "handle":   null
 }]
 ```
+```graphql
+mutation {
+
+}
+```
+
 ```curl
 curl \
    -H "Content-Type: application/json" \
@@ -361,6 +437,11 @@ curl \
   "_id":      ["person/handle", "jdoe"],
   "_action":  "delete"
 }]
+```
+```graphql
+mutation {
+
+}
 ```
 ```curl
 curl \
@@ -404,6 +485,11 @@ Here is an example request using curl. Be sure to replace your auth token, accou
   "expireSeconds": 3600
 }
 ```
+```graphql
+mutation {
+
+}
+```
 ```curl 
   curl \
    -H "Content-Type: application/json" \
@@ -421,6 +507,11 @@ Here is an example request using curl. Be sure to replace your auth token, accou
 {
   "auth": ["_auth/id", "my_unique_id"],
   "expireSeconds": 3600
+}
+```
+```graphql
+mutation {
+
 }
 ```
 ```curl

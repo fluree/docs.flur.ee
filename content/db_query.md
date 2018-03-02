@@ -23,6 +23,15 @@ FlureeQL has two main approaches to creating queries that share much of the same
   "limit": 100
 }
 ```
+```graphql
+query {
+  chat {
+    * {
+      //limit 100?
+    }
+  }
+}
+```
 ```curl
 curl\
    -H "Content-Type: application/json" \
@@ -41,6 +50,15 @@ curl\
   "select": ["chat/message", "chat/instant"],
   "from": "chat",
   "where": "chat/instant > 1517437000000 AND chat/instant < 1517438000000"
+}
+```
+```graphql
+query {
+  chat {
+    chat/message, chat/instant {
+      //WHERE chat/instant > 1517437000000 AND chat/instant < 1517438000000
+    }
+  }
 }
 ```
 ```curl
@@ -70,6 +88,15 @@ curl \
    -d '{"select": ["*"], "from": "chat", "block": 2}' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
+```graphql
+query {
+  chat {
+    * {
+      block: 2
+    }
+  }
+}
+```
 #### FlureeQL Graph Query  with time travel using wall clock time
 
 ```json
@@ -89,6 +116,15 @@ curl \
   "block": "2017-11-14T20:59:36.097Z"
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
+```graphql
+query {
+  chat {
+    * {
+      block: 2017-11-14T20:59:36.097Z
+    }
+  }
+}
 ```
 ## FlureeQL Graph Queries
 
@@ -113,6 +149,7 @@ Key | Required? | Description
 }
 
 ```
+
 ```curl
   curl \
    -H "Content-Type: application/json" \
@@ -123,6 +160,17 @@ Key | Required? | Description
   "limit": 100
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
+
+```graphql
+query {
+  chat {
+    * {
+      limit: 100
+    }
+  }
+}
+
 ```
 #### Abbreviated response
 
@@ -169,6 +217,7 @@ The syntax isn't just a way to specify the data you'd like returned, but inheret
   "from": "chat"
 }
 ```
+
 ```curl
   curl \
    -H "Content-Type: application/json" \
@@ -179,6 +228,15 @@ The syntax isn't just a way to specify the data you'd like returned, but inheret
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
+
+```graphql
+query {
+  chat {
+    chat/message
+  }
+}
+```
+
 #### Abbreviated response
 
 ```json 
@@ -219,6 +277,7 @@ For fun, you can add another sub-query to follow the chat message back to the pe
   "from": "chat"
 }
 ```
+
 ```curl
   curl \
    -H "Content-Type: application/json" \
@@ -232,6 +291,17 @@ For fun, you can add another sub-query to follow the chat message back to the pe
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
+
+```graphql 
+query {
+  chat {
+    chat/person {
+      *
+    }
+  }
+}
+```
+
 #### Abbreviated response
 
 ```json

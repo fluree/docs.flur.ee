@@ -69,20 +69,6 @@ Every transaction item must have an `_id` attribute to refer to the entity we ar
 
 #### Stream schema transaction
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 3b3f6cac83ec1857b71f7a5fb5c41201785dc09c
-```graphql
-{
-  graph {
-    _user {
-      username
-    }
-  }
-}
-```
-
 ```json
 [{
   "_id":     ["_stream", -1],
@@ -128,6 +114,13 @@ Every transaction item must have an `_id` attribute to refer to the entity we ar
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
+
+```graphql
+transaction {
+
+}
+```
+
 ### Schema - Attributes
 
 Schema attributes are similar to relational database columns, however there are fewer restrictions.
@@ -273,6 +266,13 @@ Comments
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
+
+```graphql
+transaction {
+  
+}
+```
+
 ### Transacting Data
 
 To write data to the Fluree Database, you submit a collection of statements to the transactor endpoint. All of the statements will be successfully committed together, or all fail together with the error reported back to you. Transactions have ACID guarantees.
@@ -340,6 +340,11 @@ Now that we have stored a piece of data, let's query it.
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact  
 ```
 
+```graphql
+transaction {
+  
+}
+```
 
 #### Sample chat message transaction
 
@@ -364,6 +369,13 @@ Now that we have stored a piece of data, let's query it.
     }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
+
+```graphql
+transaction {
+  
+}
+```
+
 ### Querying Data
 
 Fluree allows you to specify queries using our FlureeQL JSON syntax or with GraphQL. The FlureeQL format is designed to easily enable code to compose queries, as the query is simply a data structure. 
@@ -382,6 +394,7 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
   "from": "chat"
 }
 ```
+
 ```curl
   curl \
    -H "Content-Type: application/json" \
@@ -389,6 +402,15 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
    -d '{ "select": ["*"], "from": "chat"}' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
+
+```graphql
+query {
+  chat {
+    *
+  }
+}
+```
+
 #### Same chat query, but follow the graph to reveal details about the person
 
 ```json
@@ -400,6 +422,7 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
   "from": "chat"
 }
 ```
+
 ```curl
 curl  \
    -H "Content-Type: application/json" \
@@ -413,17 +436,18 @@ curl  \
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
-#### Person query, but follow chat relationship in reverse to find all thier chats (note the underscore `_`)
 
 ```graphql
-{
-  "select": [
-    "*",
-    {"chat/_person": ["*"]}
-  ],
-  "from": "person"
+query {
+  chat {
+    chat/person {
+      *
+    }
+  }
 }
 ```
+
+#### Person query, but follow chat relationship in reverse to find all thier chats (note the underscore `_`)
 
 ```json
 {
@@ -447,6 +471,16 @@ curl  \
   "from": "person"
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
+
+```graphql
+query {
+  chat {
+    chat/_person {
+      *
+    }
+  }
+}
 ```
 
 ### Permissions Introduction
@@ -502,6 +536,7 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
   "restrictStream": "_user"
 }]
 ```
+
 ```curl
   curl \
    -H "Content-Type: application/json" \
@@ -515,6 +550,13 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
+
+```graphql
+transaction {
+  
+}
+```
+
 #### Add a role, and a rule
 
 ```json 
@@ -596,6 +638,13 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
 ]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
+
+```graphql
+transaction {
+  
+}
+```
+
 #### Create a new user with an auth record containing that role
 
 ```json
@@ -636,4 +685,11 @@ curl \
     "key": "tempAuthRecord"
   }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+
+```graphql
+
+transaction {
+  
+}
 ```
