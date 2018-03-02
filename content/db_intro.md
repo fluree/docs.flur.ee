@@ -447,7 +447,7 @@ query {
 }
 ```
 
-#### Person query, but follow chat relationship in reverse to find all thier chats (note the underscore `_`)
+#### Person query, but follow chat relationship in reverse to find all their chats (note the underscore `_`)
 
 ```json
 {

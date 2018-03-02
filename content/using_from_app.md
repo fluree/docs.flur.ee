@@ -298,7 +298,7 @@ query {
 
 Main transaction interface for FlureeQL. Post a JSON array/vector that contains entity maps to create, update, upsert or delete.
 
-Each map requires and `_id` as specified below along with key/value pairs containing the attributes and values you wish to modify. An `_action` key is always included, but typically inferred and thus optional for most operations.
+Each map requires an `_id` as specified below along with key/value pairs containing the attributes and values you wish to modify. An `_action` key is always included, but typically inferred and thus optional for most operations.
 
 Key | Type | Description
 -- | -- | -- 
