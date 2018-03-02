@@ -415,6 +415,16 @@ curl  \
 ```
 #### Person query, but follow chat relationship in reverse to find all thier chats (note the underscore `_`)
 
+```graphql
+{
+  "select": [
+    "*",
+    {"chat/_person": ["*"]}
+  ],
+  "from": "person"
+}
+```
+
 ```json
 {
   "select": [
@@ -424,6 +434,7 @@ curl  \
   "from": "person"
 }
 ```
+
 ```curl
   curl \
    -H "Content-Type: application/json" \
@@ -437,6 +448,7 @@ curl  \
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
+
 ### Permissions Introduction
 
 We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an expressive predicate rule function.

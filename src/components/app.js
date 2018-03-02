@@ -21,10 +21,10 @@ let languageOptions = [
     title: 'curl',
     short: 'curl',
     value: 'curl'
-  }/*,
+  },
   {title: 'GraphQL',
   short: 'graphql',
-  value: 'graphql'}*/
+  value: 'graphql'}
 
   
 ];
