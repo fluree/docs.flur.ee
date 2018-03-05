@@ -404,9 +404,10 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
 ```
 
 ```graphql
-query {
+{ graph {
   chat {
-    *
+    message, person, instant, comments
+    }  
   }
 }
 ```
@@ -438,10 +439,11 @@ curl  \
 ```
 
 ```graphql
-query {
+{ graph {
   chat {
-    chat/person {
-      *
+    person {
+      handle, fullName
+      }
     }
   }
 }
@@ -474,10 +476,10 @@ query {
 ```
 
 ```graphql
-query {
-  chat {
-    chat/_person {
-      *
+Not supported yet (may end up being different)
+{ graph {
+    __chat__person {
+      handle, fullName
     }
   }
 }

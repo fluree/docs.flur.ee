@@ -387,3 +387,61 @@ Key | Required? | Description
 `where` | yes | A collection of tuples which contain matching logic, variable binding or functions.
 `block` |  | Optional time-travel query specified by block number (integer) or wall-clock time as a ISO-8601 formatted string.
 
+## Fluree Block Queries
+FlureeDB allows you to select data from an entire block or block range. 
+
+To query a single block, you simply need to provide the block number. 
+```{"block": 3}```
+
+To query a range of blocks, provide the first and last blocks you want to include. 
+```{"block": [3, 5]}```
+
+To query all of the blocks over a certain block number, provide the lower limit 
+```{"block": [3]}```
+
+#### Query a single block
+```json
+{
+  "block": 3
+}
+```
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+    "block": 3
+}' \
+```
+
+#### Query a range of blocks
+```json
+{
+  "block": [3,5]
+}
+```
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+    "block": [3, 5]
+}' \
+ https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
+
+#### Query a range of blocks starting from a lower limit
+```json
+{
+  "block": [3]
+}
+```
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+    "block": [3]
+}' \
+ https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
