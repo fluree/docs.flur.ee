@@ -116,8 +116,8 @@ Every transaction item must have an `_id` attribute to refer to the entity we ar
 ```
 
 ```graphql
-mutation addStreams ($myTx: JSON) {
-  transact(tx: $myTx)
+mutation addStreams ($myStreamTx: JSON) {
+  transact(tx: $myStreamTx)
 }
 
 
@@ -453,9 +453,13 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
 
 { graph {
   chat {
-    _id, message, person , instant, comments 
-    }  
-  }
+    _id
+    message
+    person
+    instant
+    comments 
+  }  
+}
 }
 ```
 
@@ -488,13 +492,16 @@ curl  \
 ```graphql
 { graph {
   chat {
-    _id, message, person {
+    _id
+    message
+    instant
+    person {
       _id
       fullName
       handle
-    }, instant
-  	}
-	}
+    }
+  }
+}
 }
 ```
 
@@ -527,10 +534,11 @@ curl  \
 ```graphql
 Not supported yet (revisit)
 { graph {
-    __chat__person {
-      handle, fullName
-    }
+  __chat__person {
+    handle
+    fullName
   }
+}
 }
 ```
 
@@ -603,8 +611,14 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
 ```
 
 ```graphql
-mutation {
-  
+mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
+  transact(tx: $myDBUserAttributeTx)
+}
+
+
+<!-- You can save transaction queries as JSON in a variable. Make sure your query is on one line, and escapes quotation marks. -->
+{
+  "$myDBUserAttributeTx": "[{ \"_id \": [ \"_attribute \", -1], \"name \": \"person/user \", \"doc \": \"Reference to a database user. \", \"type \": \"ref \", \"restrictStream \": \"_user \" }]"
 }
 ```
 
@@ -691,9 +705,20 @@ mutation {
 ```
 
 ```graphql
-mutation {
-  
+<!-- This doesn't work. There's an error at "\"predicate\": \"(contains? (follow ?e [\"chat/person\" \"person/user\"]) ?user)\","
+"Unexpected character ('c' (code 99)): was expecting comma to separate OBJECT entries\n at [Source: java.io.StringReader@6109efb4; line: 1, column: 652]" 
+Without this, the command runs fine-->
+
+mutation addRole ($myRoleTx: JSON) {
+  transact(tx: $myRoleTx)
 }
+
+
+<!-- You can save transaction queries as JSON in a variable. Make sure your query is on one line, and escapes quotation marks. -->
+{
+  "myRoleTx": "[ { \"_id\": [ \"_role\", -1 ], \"id\": \"chatUser\", \"doc\": \"A standard chat user role\", \"rules\": [[\"_rule\", -10], [\"_rule\", -11], [\"_rule\", -12]] }, { \"_id\": [\"_rule\", -10], \"id\": \"viewAllChats\", \"doc\": \"Can view all chats.\", \"stream\": \"chat\", \"streamDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, { \"_id\": [\"_rule\", -11], \"id\": \"viewAllPeople\", \"doc\": \"Can view all people\", \"stream\": \"person\", \"streamDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, { \"_id\": [\"_rule\", -12], \"id\": \"editOwnChats\", \"doc\": \"Only allow users to edit their own chats\", \"stream\": \"chat\", \"attributes\": [\"chat/message\"], \"predicate\": \"(contains? (follow ?e [\"chat/person\" \"person/user\"]) ?user)\", \"ops\": [\"transact\"] } ]"
+}
+
 ```
 
 #### Create a new user with an auth record containing that role
@@ -739,8 +764,13 @@ curl \
 ```
 
 ```graphql
+mutation addUserAuth($myUserAuthTx: JSON){
+  transact(tx: $myUserAuthTx)
+}
 
-mutation {
-  
+
+<!-- You can save transaction queries as JSON in a variable. Make sure your query is on one line, and escapes quotation marks. -->
+{
+  "myUserAuthTx": "[ { \"_id\": [\"_user\", -1], \"username\": \"jdoe\", \"roles\": [[\"_role/id\", \"chatUser\"]], \"auth\": [[\"_auth\", -10]] }, { \"_id\": [\"person/handle\", \"jdoe\"], \"user\": [\"_user\", -1] }, { \"_id\": [\"_auth\", -10], \"key\": \"tempAuthRecord\" } ]"
 }
 ```

@@ -68,12 +68,6 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
 ]
 ```
 
-```graphql
-mutation {
-  
-}
-```
-
 ```curl
 curl \
    -H "Content-Type: application/json" \
@@ -110,7 +104,17 @@ curl \
 ]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
+```graphql
+mutation addRoleRuleAuth($myAuthTx: JSON){
+  transact(tx: $myAuthTx)
+}
 
+
+<!-- You can save transaction queries as JSON in a variable. Make sure your query is on one line, and escapes quotation marks. -->
+{
+  "myAuthTx": "[ { \"_id\": [\"_auth\", -1], \"key\": \"db-admin\", \"doc\": \"A db admin auth that has full data visibility and can generate tokens for other users.\", \"roles\": [[\"_role\", -10]] }, { \"_id\": [\"_role\", -10], \"id\": \"db-admin\", \"doc\": \"A role for full access to database.\", \"rules\": [[\"_rule\", -100], [\"_rule\", -101]] }, { \"_id\": [\"_rule\", -100], \"id\": \"db-admin\", \"doc\": \"Rule that grants full access to all streams.\", \"stream\": \"*\", \"streamDefault\": true, \"ops\": [\"query\", \"transact\"], \"predicate\": \"true\" }, { \"_id\": [\"_rule\", -101], \"id\": \"db-admin-token\", \"doc\": \"Rule allows token generation for other users.\", \"ops\": [\"token\"], \"predicate\": \"true\" } ]"
+}
+```
 
 #### Query for all `_auth` records and their respective rules and roles
 
@@ -130,12 +134,28 @@ curl \
 ```
 
 ```graphql
-query {
+{ graph {
   _auth {
-    _auth/roles, _roles/rules {
-      *
+    _id
+    id
+    doc
+    key
+    roles {
+      id
+      _id
+      doc
+      rules {
+        id
+        _id
+        doc
+        stream
+        streamDefault
+        predicate
+        ops
+      }
     }
-  }
+  }  
+}
 }
 ```
 
@@ -209,12 +229,16 @@ curl \
 ```
 
 ```graphql
-query {
-  chat {
-    *
+{ graph {
+  chat(limit:100) {
+    _id
+    comments
+    instant
+    message
+    person
   }
 }
-//Limit 100?
+}
 ```
 
 #### Time travel by specifying a block number
@@ -227,12 +251,18 @@ query {
 }
 ```
 ```graphql
-query {
-  chat {
-    * {
-      block: 2
+<!-- Not yet supported - will be a different query type -->
+{ graph {
+  block(from:2, to:2) {
+    chat {
+      _id
+      comments
+      instant
+      message
+      person
     }
   }
+}
 }
 ```
 ```curl
@@ -260,12 +290,18 @@ query {
 ```
 
 ```graphql
-query {
-  chat {
-    * {
-      block: 2017-11-14T20:59:36.097Z
+<!-- Not yet supported - will be a different query type -->
+{ graph {
+  block(date:"2017-11-14T20:59:36.097Z") {
+    chat {
+      _id
+      comments
+      instant
+      message
+      person
     }
   }
+}
 }
 ```
 #### Query with a where clause
@@ -286,13 +322,16 @@ query {
 ```
 
 ```graphql
-query {
-  chat {
-    * {
-      chat/instant >= 1516051090000 AND chat/instant <= 1516051100000
-    }
+{ graph {
+  chat(where: "chat/instant >= 1516051090000 AND chat/instant <= 1516051100000"){
+    _id
+    instant 
+    message
   }
 }
+}
+
+
 ```
 ### `/api/db/transact`
 
@@ -352,8 +391,12 @@ curl \
 ```
 
 ```graphql
-mutation {
+mutation addNewPerson($myNewPersonTx: JSON) {
+  transact(tx: $myNewPersonTx)
+}
 
+{
+  "myNewPersonTx": "[{ \"_id\": [\"person\", -1], \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, { \"_id\": [\"person\", -2], \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
 }
 ```
 
@@ -377,8 +420,12 @@ curl \
 ```
 
 ```graphql
-mutation {
-  
+mutation updatePerson($myUpdatePersonTx: JSON) {
+  transact(tx: $myUpdatePersonTx)
+}
+
+{
+  "myUpdatePersonTx": "[{ \"_id\": [\"person/handle\", \"jdoe\"], \"fullName\": \"Jane Doe Updated By Identity\" }]"
 }
 ```
 #### Update an existing entity using internal `_id` value (note `"_action": "update"` is inferred)
@@ -401,8 +448,12 @@ curl \
    ```
 
 ```graphql
-mutation {
+mutation updateById ($myUpdateByIdTx: JSON) {
+  transact(tx: $myUpdateByIdTx)
+}
 
+{
+  "myUpdateByIdTx": "[{ \"_id\": 4294967296001, \"fullName\": \"Jane Doe Updated By Numeric _id\" }]"
 }
 ```
 
@@ -413,11 +464,6 @@ mutation {
   "_id":      ["person/handle", "jdoe"],
   "handle":   null
 }]
-```
-```graphql
-mutation {
-
-}
 ```
 
 ```curl
@@ -430,6 +476,17 @@ curl \
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
    ```
+
+```graphql
+mutation deleteAttribute ($myDeleteAttributeTx: JSON) {
+  transact(tx: $myDeleteAttributeTx)
+}
+
+{
+  "myDeleteAttributeTx": "[{ \"_id\": [\"person/handle\", \"jdoe\"], \"handle\": null }]"
+}
+```
+
 #### Delete (retract) all attributes for an entity
 
 ```json
@@ -437,11 +494,6 @@ curl \
   "_id":      ["person/handle", "jdoe"],
   "_action":  "delete"
 }]
-```
-```graphql
-mutation {
-
-}
 ```
 ```curl
 curl \
@@ -452,6 +504,15 @@ curl \
   "_action":  "delete"
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+```graphql
+mutation deleteAllAttributes ($myDeleteAllAttributesTx: JSON) {
+  transact(tx: $myDeleteAllAttributesTx)
+}
+
+{
+  "myDeleteAllAttributesTx": "[{ \"_id\": [\"person/handle\", \"jdoe\"], \"_action\": \"delete\" }]"
+}
 ```
 ### `/api/db/token`
 
@@ -475,19 +536,27 @@ For item #2, this allows a permission where someone can generate tokens only for
 
 Here is an example request using curl. Be sure to replace your auth token, account name and auth-id in the request:
 
+Curl example:
+
+```
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "auth": 25769804776,
+  "expireSeconds": 3600
+}' \
+https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
+```
 
 
 #### Token request using the `_id` numeric identifier for `auth`
 
 ```json
+<!-- This is giving me an error from the UX, "Every transaction item must have an _id. Provided: {:auth 25769804777, :expireSeconds 3600}" -->
 {
   "auth": 25769804776,
   "expireSeconds": 3600
-}
-```
-```graphql
-mutation {
-
 }
 ```
 ```curl 
@@ -500,18 +569,15 @@ mutation {
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
 ```
-  
+```graphql
+
+```
 #### Token request using an identity value (an attribute marked as `unique`) for `auth`
 
 ```json
 {
   "auth": ["_auth/id", "my_unique_id"],
   "expireSeconds": 3600
-}
-```
-```graphql
-mutation {
-
 }
 ```
 ```curl
@@ -524,4 +590,8 @@ mutation {
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
   ```
-  
+  ```graphql
+mutation {
+
+}
+```

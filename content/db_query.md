@@ -23,15 +23,6 @@ FlureeQL has two main approaches to creating queries that share much of the same
   "limit": 100
 }
 ```
-```graphql
-query {
-  chat {
-    * {
-      //limit 100?
-    }
-  }
-}
-```
 ```curl
 curl\
    -H "Content-Type: application/json" \
@@ -43,6 +34,18 @@ curl\
 }'\
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
+```graphql
+{ graph {
+  chat(limit:100) {
+    _id
+    comments
+    instant
+    message
+    person
+  }
+}
+}
+```
 #### FlureeQL Graph Query attribute selection and a `where` that does a range scan
 
 ```json
@@ -50,15 +53,6 @@ curl\
   "select": ["chat/message", "chat/instant"],
   "from": "chat",
   "where": "chat/instant > 1517437000000 AND chat/instant < 1517438000000"
-}
-```
-```graphql
-query {
-  chat {
-    chat/message, chat/instant {
-      //WHERE chat/instant > 1517437000000 AND chat/instant < 1517438000000
-    }
-  }
 }
 ```
 ```curl
@@ -71,6 +65,16 @@ curl \
   "where": "chat/instant > 1517437000000 AND chat/instant < 1517438000000"
 }'\
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
+```graphql
+{ graph {
+  chat(where: "chat/instant >= 1516051090000 AND chat/instant <= 1516051100000"){
+    _id
+    instant 
+    message
+  }
+}
+}
 ```
 #### FlureeQL Graph Query with time travel using a block number
 
@@ -89,12 +93,18 @@ curl \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
-query {
-  chat {
-    * {
-      block: 2
+<!-- Not yet supported - will be a different query type -->
+{ graph {
+  block(from:2, to:2) {
+    chat {
+      _id
+      comments
+      instant
+      message
+      person
     }
   }
+}
 }
 ```
 #### FlureeQL Graph Query  with time travel using wall clock time
@@ -117,13 +127,20 @@ query {
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
+
 ```graphql
-query {
-  chat {
-    * {
-      block: 2017-11-14T20:59:36.097Z
+<!-- Not yet supported - will be a different query type -->
+{ graph {
+  block(date:"2017-11-14T20:59:36.097Z") {
+    chat {
+      _id
+      comments
+      instant
+      message
+      person
     }
   }
+}
 }
 ```
 ## FlureeQL Graph Queries
@@ -163,15 +180,18 @@ Key | Required? | Description
 ```
 
 ```graphql
-query {
-  chat {
-    * {
-      limit: 100
-    }
+{ graph {
+  chat(limit:100) {
+    _id
+    comments
+    instant
+    message
+    person
   }
 }
-
+}
 ```
+
 #### Abbreviated response
 
 ```json
@@ -230,10 +250,11 @@ The syntax isn't just a way to specify the data you'd like returned, but inheret
 ```
 
 ```graphql
-query {
+{ graph {
   chat {
-    chat/message
+    message
   }
+}
 }
 ```
 
@@ -292,13 +313,19 @@ For fun, you can add another sub-query to follow the chat message back to the pe
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 
-```graphql 
-query {
+```graphql
+{ graph {
   chat {
-    chat/person {
-      *
-    }
+    _id
+    instant
+    message
+    person {
+      _id
+      fullName
+      handle
+    } 
   }
+}
 }
 ```
 
@@ -349,12 +376,13 @@ curl \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
-query {
-  person {
-    chat/_person {
-      *
-    }
+Not supported yet (revisit)
+{ graph {
+  __chat__person {
+    handle
+    fullName
   }
+}
 }
 ```
 ### "from" syntax
@@ -413,7 +441,21 @@ curl \
     "block": 3
 }' \
 ```
-
+```graphql
+<!-- Not yet supported - will be a different query type -->
+{ graph {
+  block(from:3, to:3) {
+    chat {
+      _id
+      comments
+      instant
+      message
+      person
+    }
+  }
+}
+}
+```
 #### Query a range of blocks
 ```json
 {
@@ -429,7 +471,21 @@ curl \
 }' \
  https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
-
+```graphql
+<!-- Not yet supported - will be a different query type -->
+{ graph {
+  block(from:3, to:5) {
+    chat {
+      _id
+      comments
+      instant
+      message
+      person
+    }
+  }
+}
+}
+```
 #### Query a range of blocks starting from a lower limit
 ```json
 {
@@ -444,4 +500,19 @@ curl \
     "block": [3]
 }' \
  https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
+```graphql
+<!-- Not yet supported - will be a different query type -->
+{ graph {
+  block(from:3) {
+    chat {
+      _id
+      comments
+      instant
+      message
+      person
+    }
+  }
+}
+}
 ```
