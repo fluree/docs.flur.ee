@@ -440,6 +440,7 @@ curl \
    -d '{
     "block": 3
 }' \
+ https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
 <!-- Not yet supported - will be a different query type -->
