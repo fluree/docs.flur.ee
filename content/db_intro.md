@@ -116,10 +116,18 @@ Every transaction item must have an `_id` attribute to refer to the entity we ar
 ```
 
 ```graphql
-mutation {
-
+mutation addStreams ($myTx: JSON) {
+  transact(tx: $myTx)
 }
+
+
+<!-- You can save transaction queries as JSON in a variable. Make sure your query is on one line, and escapes quotation marks. -->
+{
+  "myTx": "[{\"_id\": [\"_stream\", -1], \"name\": \"person\", \"doc\": \"A stream/table to hold our people\", \"version\": \"1\"},{ \"_id\": [\"_stream\", -2], \"name\": \"chat\", \"doc\": \"A stream/table to hold chat messages\", \"version\": \"1\"},{ \"_id\": [\"_stream\", -3], \"name\": \"comment\", \"doc\": \"A stream/table to hold comments to chat messages\", \"version\": \"1\"}]"
+}
+
 ```
+
 
 ### Schema - Attributes
 
@@ -268,9 +276,32 @@ Comments
 ```
 
 ```graphql
-mutation {
-  
+mutation addPeopleAttributes ($myPersonTx: JSON) {
+  transact(tx: $myPersonTx)
 }
+
+mutation addChatAttributes ($myChatTx: JSON) {
+  transact(tx: $myChatTx)
+}
+
+mutation addCommentAttributes ($myCommentTx: JSON) {
+  transact(tx: $myCommentTx)
+}
+
+<!-- You can save transaction queries as JSON in a variable. Make sure your query is on one line, and escapes quotation marks. -->
+{
+  "myPersonTx": "[{ \"_id\": [\"_attribute\", -1], \"name\": \"person/handle\", \"doc\": \"The person's unique handle\", \"unique\": true, \"type\": \"string\"},{ \"_id\": [\"_attribute\", -2], \"name\": \"person/fullName\", \"doc\": \"The person's full name.\", \"type\": \"string\", \"index\": true}]"
+}
+
+{
+  "myChatTx": "[{ \"_id\": [\"_attribute\", -10], \"name\": \"chat/message\", \"doc\": \"A chat message\", \"type\": \"string\"},{ \"_id\": [\"_attribute\", -11], \"name\": \"chat/person\", \"doc\": \"A reference to the person that created the message\", \"type\": \"ref\", \"restrictStream\": \"person\"},{ \"_id\": [\"_attribute\", -12], \"name\": \"chat/instant\", \"doc\": \"The instant in time when this chat happened.\", \"type\": \"instant\", \"index\": true},{ \"_id\": [\"_attribute\", -13], \"name\": \"chat/comments\", \"doc\": \"A reference to comments about this message\", \"type\": \"ref\", \"component\": true, \"multi\": true, \"restrictStream\": \"comment\"}]"
+}
+
+{
+  "myCommentTx": "[{ \"_id\": [\"_attribute\", -20], \"name\": \"comment/message\", \"doc\": \"A comment message.\", \"type\": \"string\"},{ \"_id\": [\"_attribute\", -21], \"name\": \"comment/person\", \"doc\": \"A reference to the person that made the comment\", \"type\": \"ref\", \"restrictStream\": \"person\"}]"
+}
+
+
 ```
 
 ### Transacting Data
@@ -341,9 +372,16 @@ Now that we have stored a piece of data, let's query it.
 ```
 
 ```graphql
-mutation {
-  
+mutation addPeopleAttributes ($myPersonAttributeTx: JSON) {
+  transact(tx: $myPersonAttributeTx)
 }
+
+
+<!-- You can save transaction queries as JSON in a variable. Make sure your query is on one line, and escapes quotation marks. -->
+{
+  "myPersonAttributeTx": "[{   \"_id \": [ \"person \", -1],   \"handle \":   \"jdoe \",   \"fullName \":   \"Jane Doe \" }, {   \"_id \": [ \"person \", -2],   \"handle \":   \"zsmith \",   \"fullName \":   \"Zach Smith \" }]"
+}
+
 ```
 
 #### Sample chat message transaction
@@ -371,9 +409,16 @@ mutation {
 ```
 
 ```graphql
-mutation {
-  
+mutation addChatAttributes ($myChatAttributeTx: JSON) {
+  transact(tx: $myChatAttributeTx)
 }
+
+
+<!-- You can save transaction queries as JSON in a variable. Make sure your query is on one line, and escapes quotation marks. -->
+{
+  "myChatAttributeTx": "[{   \"_id \": [ \"chat \", -1],   \"message \":   \"This is a sample chat from Jane! \",   \"person \": [ \"person/handle \",   \"jdoe \"],   \"instant \":   \"#(now) \" }]"
+}
+
 ```
 
 ### Querying Data
@@ -404,9 +449,11 @@ Both FlureeQL and GraphQL give the ability to issue multiple queries in the same
 ```
 
 ```graphql
+<!-- GraphQl does not have wildcard support. You need to list all columns you wish to view. -->
+
 { graph {
   chat {
-    message, person, instant, comments
+    _id, message, person , instant, comments 
     }  
   }
 }
@@ -441,11 +488,13 @@ curl  \
 ```graphql
 { graph {
   chat {
-    person {
-      handle, fullName
-      }
-    }
-  }
+    _id, message, person {
+      _id
+      fullName
+      handle
+    }, instant
+  	}
+	}
 }
 ```
 
@@ -476,7 +525,7 @@ curl  \
 ```
 
 ```graphql
-Not supported yet (may end up being different)
+Not supported yet (revisit)
 { graph {
     __chat__person {
       handle, fullName

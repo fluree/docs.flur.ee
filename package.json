@@ -72,6 +72,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tmcw/docbox.git"
+    "url": "git+https://github.com/tmcw/docbox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tmcw/docbox/issues"
+  },
+  "homepage": "https://github.com/tmcw/docbox#readme",
+  "directories": {
+    "test": "test"
   }
 }
