@@ -69,10 +69,6 @@ Every transaction item must have an `_id` attribute to refer to the entity we ar
 
 #### Stream schema transaction
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 3b3f6cac83ec1857b71f7a5fb5c41201785dc09c
 ```graphql
 {
   graph {
