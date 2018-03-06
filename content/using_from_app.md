@@ -109,8 +109,8 @@ mutation addRoleRuleAuth($myAuthTx: JSON){
   transact(tx: $myAuthTx)
 }
 
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
 
-<!-- You can save transaction queries as JSON in a variable. Make sure your query is on one line, and escapes quotation marks. -->
 {
   "myAuthTx": "[ { \"_id\": [\"_auth\", -1], \"key\": \"db-admin\", \"doc\": \"A db admin auth that has full data visibility and can generate tokens for other users.\", \"roles\": [[\"_role\", -10]] }, { \"_id\": [\"_role\", -10], \"id\": \"db-admin\", \"doc\": \"A role for full access to database.\", \"rules\": [[\"_rule\", -100], [\"_rule\", -101]] }, { \"_id\": [\"_rule\", -100], \"id\": \"db-admin\", \"doc\": \"Rule that grants full access to all streams.\", \"stream\": \"*\", \"streamDefault\": true, \"ops\": [\"query\", \"transact\"], \"predicate\": \"true\" }, { \"_id\": [\"_rule\", -101], \"id\": \"db-admin-token\", \"doc\": \"Rule allows token generation for other users.\", \"ops\": [\"token\"], \"predicate\": \"true\" } ]"
 }
@@ -250,21 +250,11 @@ curl \
   "block": 2
 }
 ```
+
 ```graphql
-<!-- Not yet supported - will be a different query type -->
-{ graph {
-  block(from:2, to:2) {
-    chat {
-      _id
-      comments
-      instant
-      message
-      person
-    }
-  }
-}
-}
+Not supported
 ```
+
 ```curl
   curl \
    -H "Content-Type: application/json" \
@@ -290,20 +280,9 @@ curl \
 ```
 
 ```graphql
-<!-- Not yet supported - will be a different query type -->
-{ graph {
-  block(date:"2017-11-14T20:59:36.097Z") {
-    chat {
-      _id
-      comments
-      instant
-      message
-      person
-    }
-  }
-}
-}
+Not supported
 ```
+
 #### Query with a where clause
 
 ```json
@@ -391,12 +370,14 @@ curl \
 ```
 
 ```graphql
-mutation addNewPerson($myNewPersonTx: JSON) {
-  transact(tx: $myNewPersonTx)
+mutation addPeople ($myPeopleTx: JSON) {
+  transact(tx: $myPeopleTx
 }
 
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
+
 {
-  "myNewPersonTx": "[{ \"_id\": [\"person\", -1], \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, { \"_id\": [\"person\", -2], \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
+  "mymyPeopleTx": "[{ \"_id\": [\"person\", -1], \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, { \"_id\": [\"person\", -2], \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
 }
 ```
 
@@ -553,7 +534,6 @@ https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
 #### Token request using the `_id` numeric identifier for `auth`
 
 ```json
-<!-- This is giving me an error from the UX, "Every transaction item must have an _id. Provided: {:auth 25769804777, :expireSeconds 3600}" -->
 {
   "auth": 25769804776,
   "expireSeconds": 3600
@@ -570,7 +550,7 @@ https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
 ```
 ```graphql
-
+Not supported
 ```
 #### Token request using an identity value (an attribute marked as `unique`) for `auth`
 
@@ -590,8 +570,6 @@ https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
   ```
-  ```graphql
-mutation {
-
-}
+```graphql
+Not supported
 ```

@@ -69,7 +69,7 @@ mutation addStreams ($myStreamTx: JSON) {
 }
 
 
-<!-- You can save transaction queries as JSON in a variable. Make sure your query is on one line, and escapes quotation marks. -->
+<!-- myStreamTx is saved as a variable. Learn more about using GraphQL in the section, 'GraphQL' -->
 {
   "myStreamTx": "[{\"_id\": [\"_stream\", -1], \"name\": \"person\", \"doc\": \"A stream/table to hold our people\", \"version\": \"1\"},{ \"_id\": [\"_stream\", -2], \"name\": \"chat\", \"doc\": \"A stream/table to hold chat messages\", \"version\": \"1\"},{ \"_id\": [\"_stream\", -3], \"name\": \"comment\", \"doc\": \"A stream/table to hold comments to chat messages\", \"version\": \"1\"}]"
 }

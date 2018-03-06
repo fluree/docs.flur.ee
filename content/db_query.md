@@ -93,19 +93,7 @@ curl \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
-<!-- Not yet supported - will be a different query type -->
-{ graph {
-  block(from:2, to:2) {
-    chat {
-      _id
-      comments
-      instant
-      message
-      person
-    }
-  }
-}
-}
+<!-- Not supported -->
 ```
 #### FlureeQL Graph Query  with time travel using wall clock time
 
@@ -129,19 +117,7 @@ curl \
 ```
 
 ```graphql
-<!-- Not yet supported - will be a different query type -->
-{ graph {
-  block(date:"2017-11-14T20:59:36.097Z") {
-    chat {
-      _id
-      comments
-      instant
-      message
-      person
-    }
-  }
-}
-}
+<!-- Not supported -->
 ```
 ## FlureeQL Graph Queries
 
@@ -213,6 +189,27 @@ Key | Required? | Description
 }
 ```
 
+```graphql 
+{
+  "data": {
+    "graph": {
+      "chat": 
+        [{
+          "_id": 4299262263298,
+          "comments": [],
+          "instant": 1520348922345,
+          "message": "This is a sample chat from Jane!",
+          "person": {...}
+        },
+        {...}]
+    }
+  },
+  "status": 200,
+  "time": "3.86ms"
+}
+```
+
+
 ### "select" syntax
 
 Select statements are placed in the `select` key of a FlureeQL statement take the format of either a graph selection syntax or one of variable binding for analytical queries. The graph selection syntax is the focus here, and is a declarative and powerful way of selecting hierarchical information.
@@ -274,6 +271,17 @@ The syntax isn't just a way to specify the data you'd like returned, but inheret
 }
 ```
 
+```graphql 
+{
+  "data": {
+    "graph": {
+      "chat": [{ "message": "This is a sample chat from Jane!"}]
+    }
+  },
+  "status": 200,
+  "time": "3.86ms"
+}
+```
 
 ### Crawling the Graph with select
 
@@ -351,7 +359,27 @@ For fun, you can add another sub-query to follow the chat message back to the pe
 }
 ```
 
-#### Person query, but follow chat relationship in reverse to find all their chats (note the underscore `_`)
+```graphql 
+{
+  "data": {
+    "graph": {
+      "chat": [
+        {
+          "_id": 4299262263298,
+          "instant": 1520348922345,
+          "message": "This is a sample chat from Jane!",
+          "person": {...}
+        },
+        {...}
+      ]
+    }
+  },
+  "status": 200,
+  "time": "32.11ms"
+}
+```
+
+#### Person query, but follow chat relationship in reverse to find all their chats (note the underscore `_` or `_Via_`)
 
 ```json
 {
@@ -376,11 +404,13 @@ curl \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
-Not supported yet (revisit)
 { graph {
-  __chat__person {
-    handle
-    fullName
+  person {
+    chat_Via_person {
+      _id
+      instant
+      message
+    }
   }
 }
 }
@@ -440,21 +470,10 @@ curl \
    -d '{
     "block": 3
 }' \
- https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
-<!-- Not yet supported - will be a different query type -->
-{ graph {
-  block(from:3, to:3) {
-    chat {
-      _id
-      comments
-      instant
-      message
-      person
-    }
-  }
-}
+query  {
+  block(from: 3, to: 3)
 }
 ```
 #### Query a range of blocks
@@ -473,18 +492,8 @@ curl \
  https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
-<!-- Not yet supported - will be a different query type -->
-{ graph {
-  block(from:3, to:5) {
-    chat {
-      _id
-      comments
-      instant
-      message
-      person
-    }
-  }
-}
+query  {
+  block(from: 3, to: 5)
 }
 ```
 #### Query a range of blocks starting from a lower limit
@@ -503,17 +512,7 @@ curl \
  https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
-<!-- Not yet supported - will be a different query type -->
-{ graph {
-  block(from:3) {
-    chat {
-      _id
-      comments
-      instant
-      message
-      person
-    }
-  }
-}
+query  {
+  block(from: 3)
 }
 ```
