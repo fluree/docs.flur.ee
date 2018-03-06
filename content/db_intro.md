@@ -120,7 +120,7 @@ mutation addStreams ($myStreamTx: JSON) {
   transact(tx: $myStreamTx)
 }
 
-/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
   "myStreamTx": "[{\"_id\": [\"_stream\", -1], \"name\": \"person\", \"doc\": \"A stream/table to hold our people\", \"version\": \"1\"},{ \"_id\": [\"_stream\", -2], \"name\": \"chat\", \"doc\": \"A stream/table to hold chat messages\", \"version\": \"1\"},{ \"_id\": [\"_stream\", -3], \"name\": \"comment\", \"doc\": \"A stream/table to hold comments to chat messages\", \"version\": \"1\"}]"
@@ -288,7 +288,7 @@ mutation addCommentAttributes ($myCommentTx: JSON) {
   transact(tx: $myCommentTx)
 }
 
-/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
   "myPersonTx": "[{ \"_id\": [\"_attribute\", -1], \"name\": \"person/handle\", \"doc\": \"The person's unique handle\", \"unique\": true, \"type\": \"string\"},{ \"_id\": [\"_attribute\", -2], \"name\": \"person/fullName\", \"doc\": \"The person's full name.\", \"type\": \"string\", \"index\": true}]"
@@ -374,10 +374,10 @@ Now that we have stored a piece of data, let's query it.
 
 ```graphql
 mutation addPeople ($myPeopleTx: JSON) {
-  transact(tx: $myPeopleTx
+  transact(tx: $myPeopleTx)
 }
 
-/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
   "myPeopleTx": "[{ \"_id\": [\"person\", -1], \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, { \"_id\": [\"person\", -2], \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
@@ -413,7 +413,7 @@ mutation addChatMessage ($myChatTx: JSON) {
   transact(tx: $myChatTx)
 }
 
-/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
   "myChatTx": "[{ \"_id\": [\"chat\", -1], \"message\": \"This is a sample chat from Jane!\", \"person\": [\"person/handle\", \"jdoe\"], \"instant\": \"#(now)\" }]"
@@ -618,7 +618,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
   transact(tx: $myDBUserAttributeTx)
 }
 
-/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
   "myDBUserAttributeTx": "[{ \"_id\": [\"_attribute\", -1], \"name\": \"person/user\", \"doc\": \"Reference to a database user.\", \"type\": \"ref\", \"restrictStream\": \"_user\" }]"
@@ -712,7 +712,7 @@ mutation addRole ($myRoleTx: JSON) {
   transact(tx: $myRoleTx)
 }
 
-/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
   "myRoleTx": "[ { \"_id\": [ \"_role\", -1 ], \"id\": \"chatUser\", \"doc\": \"A standard chat user role\", \"rules\": [[\"_rule\", -10], [\"_rule\", -11], [\"_rule\", -12]] }, { \"_id\": [\"_rule\", -10], \"id\": \"viewAllChats\", \"doc\": \"Can view all chats.\", \"stream\": \"chat\", \"streamDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, { \"_id\": [\"_rule\", -11], \"id\": \"viewAllPeople\", \"doc\": \"Can view all people\", \"stream\": \"person\", \"streamDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, { \"_id\": [\"_rule\", -12], \"id\": \"editOwnChats\", \"doc\": \"Only allow users to edit their own chats\", \"stream\": \"chat\", \"attributes\": [\"chat/message\"], \"ops\": [\"transact\"] } ]"
@@ -767,7 +767,7 @@ mutation addUserAuth($myUserAuthTx: JSON){
   transact(tx: $myUserAuthTx)
 }
 
-/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
   "myUserAuthTx": "[ { \"_id\": [\"_user\", -1], \"username\": \"jdoe\", \"roles\": [[\"_role/id\", \"chatUser\"]], \"auth\": [[\"_auth\", -10]] }, { \"_id\": [\"person/handle\", \"jdoe\"], \"user\": [\"_user\", -1] }, { \"_id\": [\"_auth\", -10], \"key\": \"tempAuthRecord\" } ]"

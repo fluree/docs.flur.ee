@@ -109,7 +109,7 @@ mutation addRoleRuleAuth($myAuthTx: JSON){
   transact(tx: $myAuthTx)
 }
 
-/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
   "myAuthTx": "[ { \"_id\": [\"_auth\", -1], \"key\": \"db-admin\", \"doc\": \"A db admin auth that has full data visibility and can generate tokens for other users.\", \"roles\": [[\"_role\", -10]] }, { \"_id\": [\"_role\", -10], \"id\": \"db-admin\", \"doc\": \"A role for full access to database.\", \"rules\": [[\"_rule\", -100], [\"_rule\", -101]] }, { \"_id\": [\"_rule\", -100], \"id\": \"db-admin\", \"doc\": \"Rule that grants full access to all streams.\", \"stream\": \"*\", \"streamDefault\": true, \"ops\": [\"query\", \"transact\"], \"predicate\": \"true\" }, { \"_id\": [\"_rule\", -101], \"id\": \"db-admin-token\", \"doc\": \"Rule allows token generation for other users.\", \"ops\": [\"token\"], \"predicate\": \"true\" } ]"
@@ -275,7 +275,7 @@ Not supported
     curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{"select": ["*"], "from": "chat", "block": "2017-111-14T20:59:36.097Z"}' \
+   -d '{"select": ["*"], "from": "chat", "block": "2017-11-14T20:59:36.097Z"}' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 
@@ -374,7 +374,7 @@ mutation addPeople ($myPeopleTx: JSON) {
   transact(tx: $myPeopleTx
 }
 
-/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
   "myPeopleTx": "[{ \"_id\": [\"person\", -1], \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, { \"_id\": [\"person\", -2], \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
