@@ -380,7 +380,7 @@ mutation addPeople ($myPeopleTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL'. */
 
 {
-  "mymyPeopleTx": "[{ \"_id\": [\"person\", -1], \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, { \"_id\": [\"person\", -2], \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
+  "myPeopleTx": "[{ \"_id\": [\"person\", -1], \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, { \"_id\": [\"person\", -2], \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
 }
 ```
 
