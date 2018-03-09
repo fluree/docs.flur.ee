@@ -93,7 +93,14 @@ curl \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
-<!-- Not supported -->
+{ graph (block: 2) {
+  chat {
+    _id
+    instant
+    message
+  }
+}
+}
 ```
 #### FlureeQL Graph Query  with time travel using wall clock time
 
@@ -117,7 +124,14 @@ curl \
 ```
 
 ```graphql
-<!-- Not supported -->
+{ graph (time: "2018-03-08T09:57:13.861Z") {
+  chat {
+    _id
+    instant
+    message
+  }
+}
+}
 ```
 ## FlureeQL Graph Queries
 
