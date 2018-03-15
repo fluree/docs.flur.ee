@@ -40,7 +40,7 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
   {
     "_id":    ["_auth", -1],
     "key":    "db-admin",
-    "doc":    "A db admin auth that has full data visibility " \ "and can generate tokens for other users.",
+    "doc":    "A db admin auth that has full data visibility and can generate tokens for other users.",
     "roles":  [["_role", -10]]
   },
   {
