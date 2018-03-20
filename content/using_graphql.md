@@ -120,7 +120,9 @@ query  {
 
 ### Sort By 
 
-GraphQL queries allow you to sort any field in ascending or descending order. In the below example, we are sorting chat messages in alphabetic order. 
+GraphQL queries allow you to sort any field at any level in the graph. In order to perform a sort, you need to specify both the attribute name and whether you would like to sort the values by ascending or descending values. 
+
+In the below example, we are sorting chat messages in alphabetical order. 
 
 ```
 { graph {
