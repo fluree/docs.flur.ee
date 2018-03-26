@@ -18,7 +18,7 @@ FlureeDB is an immutable, time-ordered blockchain database. The blockchain at th
 
 We call these log entries Flakes, which have a special format optimized to power the graph database and its unique features. Each Flake is a specific fact at a specific point in time about a specific entity / asset / object. No two Flakes are the same.
 
-The query server(s) powering your applications leverage these Flakes in an optimized way to give you a very fast and very powerful graph database. Your queries alway interact with an immutable version of your database at an exact moment in time. In fact, you can query any point in time in history, instantly.
+The query server(s) powering your applications leverage these Flakes in an optimized way to give you a very fast and very powerful graph database. Your queries always interact with an immutable version of your database at an exact moment in time. In fact, you can query any point in time in history, instantly.
 
 The Fluree database features these capabilities:
 - ACID transactions.
@@ -137,7 +137,7 @@ Any attribute can be attached to any entity, unless a restriction is put in plac
 The transaction sample here adds the following attributes:
 
 People
-- `person/handle` - The person's unique handle. Being marked as `uniqe`, it can be used as an `_id` in subsequent queries or transactions.
+- `person/handle` - The person's unique handle. Being marked as `unique`, it can be used as an `_id` in subsequent queries or transactions.
 - `person/fullName` - The person's full name. Because it is marked as `index`, it can be used in `where` clauses.
 
 Chats

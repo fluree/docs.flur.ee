@@ -108,7 +108,7 @@ Any attribute can be attached to any entity, unless a restriction is put in plac
 The transaction sample here adds the following attributes:
 
 People
-- `person/handle` - The person's unique handle. Being marked as `uniqe`, it can be used as an `_id`.
+- `person/handle` - The person's unique handle. Being marked as `unique`, it can be used as an `_id`.
 - `person/fullName` - The person's full name. Because it is marked as `index`, it can be used in `where` clauses.
 
 Chats
@@ -226,7 +226,7 @@ Any attribute can be attached to any entity, unless a restriction is put in plac
 The transaction sample here adds the following attributes:
 
 People
-- `person/handle` - The person's unique handle. Being marked as `uniqe`, it can be used as an `_id`.
+- `person/handle` - The person's unique handle. Being marked as `unique`, it can be used as an `_id`.
 - `person/fullName` - The person's full name. Because it is marked as `index`, it can be used in `where` clauses.
 
 Chats
