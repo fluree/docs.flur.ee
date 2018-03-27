@@ -47,7 +47,7 @@ Attribute | Type | Description
 -- | -- | -- 
 `_user/username` | `string` |  (optional) A unique username for this user.
 `_user/auth` | `[ref]` | (optional) Reference to auth entities available for this user to authenticate. Note if no auth entities exist, the user will be unable to authenticate.
-`_user/roles` | `[ref]` | (optional) References to the default roles that apply to this user. If roles are specified via the `_auth` entity the user is authenticated as, those roles will always over-ride (replace) any role specified here.
+`_user/roles` | `[ref]` | (optional) References to the default roles that apply to this user. If roles are specified via the `_auth` entity the user is authenticated as, those roles will always override (replace) any role specified here.
 
 
 
@@ -86,7 +86,7 @@ Roles' purpose is simply to group a set of rules under a common name or ID that 
 
 Roles assigned to the `_user` entity under the multi-cardinality attribute `_user/roles` act as default roles for the user. Roles may also be assigned to a specific `_auth` entity under the multi-cardinality attribute `_auth/roles`, in which case the specified roles are used instead of the default if a user authenticates via the respective auth record.
 
-The ability to over-ride roles at the auth entity allows a more limited (or possibly expanded) set of roles to the same user depending on how they authenticate. If, for example, a social media website authenticated as a user, it might only have access to read a limited set of data whereas if the user logged in, they may have their full set of access rights.
+The ability to override roles at the auth entity allows a more limited (or possibly expanded) set of roles to the same user depending on how they authenticate. If, for example, a social media website authenticated as a user, it might only have access to read a limited set of data whereas if the user logged in, they may have their full set of access rights.
 
 ### Role attributes
 

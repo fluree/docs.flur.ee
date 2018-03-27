@@ -32,7 +32,7 @@ The Fluree database features these capabilities:
 - Scale-out reads, by separating eventually consistent query engines from the core bockchain transactor. Queries can optionally force consistency to a specific point-in-time or block.
 - Point-in-time queries, leveraging the characteristics our immutable blockchain core provides.
 - When leveraging Fluree's cloud-hosted private consensus, there is zero management overhead. Federated and fully decentralized consensus modes are in development.
-- FlureeDB will be opensource as we move forward in development.
+- FlureeDB will be open source as we move forward in development.
 
 ## Quick Start
 

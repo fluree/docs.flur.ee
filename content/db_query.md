@@ -237,7 +237,7 @@ The graph selection syntax is a vector / array of selection attributes. They can
 
 Additional options can also allow recursion to specified depths (or infinite recursion).
 
-The syntax isn't just a way to specify the data you'd like returned, but inheretly represents **how** the data looks as it is returned. This can often remove complicated data transformation steps needed to deal with returned database data, and even negates the need for a fairly substantial role of client-side database drivers.
+The syntax isn't just a way to specify the data you'd like returned, but inherently represents **how** the data looks as it is returned. This can often remove complicated data transformation steps needed to deal with returned database data, and even negates the need for a fairly substantial role of client-side database drivers.
 
 
 #### FlureeQL Graph Query with specific attribute selection
