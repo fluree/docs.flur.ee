@@ -118,6 +118,62 @@ query  {
 }
 ```
 
+### Sort By 
+
+GraphQL queries allow you to sort any field at any level in the graph. In order to perform a sort, you need to specify both the attribute name and whether you would like to sort the values by ascending or descending values. 
+
+In the below example, we are sorting chat messages in alphabetical order. 
+
+```
+{ graph {
+  chat (sort: {attribute: "message", order: ASC}) {
+    _id
+    instant 
+    message
+  }
+}
+}
+```
+The below query sorts every person alphabetically by their full name, and then sorts all of their comments from oldest to newest. 
+
+```
+{ graph {
+   person (sort: {attribute: "fullName", order: ASC}) {
+    fullName
+    comment_Via_person (sort:{attribute: "instant", order: ASC}) {
+      message
+      instant
+    }
+  }
+}
+}
+```
+
+#### Query with sort. Get all chat messages sorted alphabetically by message. 
+```graphql
+{ graph {
+  chat (sort: {attribute: "message", order: ASC}) {
+    _id
+    instant 
+    message
+  }
+}
+}
+```
+
+#### Query with sort. Get all people, sorted alphabetically by full name, and get each person's chat messages sorted from oldest to newest.  
+```graphql
+{ graph {
+   person (sort: {attribute: "fullName", order: ASC}) {
+    fullName
+    comment_Via_person (sort:{attribute: "instant", order: ASC}) {
+      message
+      instant
+    }
+  }
+}
+}
+```
 ## GraphQL Transactions
 We can perform transactions in GraphQL by passing a variable to a GraphQL mutation. This variable should contain a JSON-formatted parcel of data without line breaks. 
 
@@ -136,3 +192,31 @@ mutation addPeople ($myPeopleTx: JSON) {
 ```
 
 If you are using the UI, you can place your variable in the "Query Variables" section on the lower left hand side of the GraphQL interface.
+
+## API Endpoint
+
+`/api/db/graphql`
+
+We can run both GraphQL queries and transactions using the same endpoint. Both queries and transactions are performed by sending a JSON map/object containing the following keys:
+
+Key | Required | Description
+-- | -- | -- 
+`operationName` | False |  The name of the GraphQl query or transaction 
+`query` | True | The GraphQL query or transaction. Note that transaction use the same endpoint, but in order to perform a transaction, you must specify the "mutation" root. See the 'GraphQL Transactions' section for more information. 
+`variables` | False | Variables that you are passing into your query. 
+
+
+```
+{
+  "query": "{ graph {chat { _id instant message}}}","variables": null,
+  "operationName": null
+  }
+```
+
+
+```graphql
+{
+  "query": "{ graph {chat { _id instant message}}}","variables": null,
+  "operationName": null
+  }
+```
