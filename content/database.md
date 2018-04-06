@@ -365,7 +365,7 @@ For each query, the user's permissions create a special filtered database that o
 
 Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request, this can be used to reduce round-trips for end-user applications.
 
-## Transactions
+### Transactions
 
 ### Database Functions
 
@@ -380,13 +380,6 @@ Function | Example | Description
 `now` | `$(now)` | Insert current server time. Works on `instant`.
 `cas` | `$(cas "brown" "blue")` | Will compare current value to the first argument, and if equal sets the value to the second argument. If not equal, transaction throws an exception. Works on all types.
 
-
-## Query
-
-### GraphQL
-
-### Limits
-### Sorting Results
 
 ## Schema
 
