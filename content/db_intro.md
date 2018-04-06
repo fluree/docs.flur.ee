@@ -556,7 +556,7 @@ Here we'll go through all the steps needed to add a permission that accomplishes
 
 To accomplish this we need to do a few things:
 
-1. Create an actual database user for the chat user(s) along with at least one auth record. Permissions are governed by auth records, users are optional but a user can have multiple auth entities each giving different permissions.
+1. Create an actual database user for the chat user(s) along with at least one auth record. Permissions are governed by auth records, users are optional but a user can have multiple auth entities each giving different permissions (the Permissions section explains this in more detail).
 2. Link the `person` entities we created to the database user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` database user entity and then to the `_auth` record itself.
 3. Create rules to enforce the above desired permissions.
 4. Create an assignable role that contains these rules so we can easily add the role to our chat user(s).
