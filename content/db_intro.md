@@ -49,7 +49,7 @@ We'll follow these steps to give a sense of FlureeDB basics:
 5. Establish a user's permission
 6. Query permissioned DB
 
-**>> To begin, log in and select the database you'd like to perform this quick start on in the UI Header. Be sure to use the `root` user. The examples here are provided using FlureeQL - click the link in the header.**
+**>> To begin, log in and select the database you'd like to perform this quick start on in the UI Sidebar. Be sure to use the `root` user.
 
 [FlureeDB Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee)
 
@@ -425,7 +425,7 @@ mutation addChatMessage ($myChatTx: JSON) {
 
 Fluree allows you to specify queries using our FlureeQL JSON syntax or with GraphQL. The FlureeQL format is designed to easily enable code to compose queries, as the query is simply a data structure. 
 
-For each query, the user's permissions create a special filtered database that only contains what the user can see. You can safely issue any query, never having to worry about accidentally exposing permissioned data.
+For each query, the user's permissions (determined according to `_auth` record through which they are authenticated - more on that in the [Fluree Permissions](#fluree-permissions) section) create a special filtered database that only contains what the user can see. You can safely issue any query, never having to worry about accidentally exposing permissioned data.
 
 These two example queries will return current chat messages. The second example follows the graph relationship to also include details about the referred person who posted the chat message.
 
@@ -556,7 +556,7 @@ Here we'll go through all the steps needed to add a permission that accomplishes
 
 To accomplish this we need to do a few things:
 
-1. Create an actual database user for the chat user(s) along with at least one auth record. Permissions are governed by auth records, users are optional but a user can have multiple auth entities each giving different permissions.
+1. Create an actual database user for the chat user(s) along with at least one auth record. Permissions are governed by auth records, users are optional but a user can have multiple auth entities each giving different permissions (the Permissions section explains this in more detail).
 2. Link the `person` entities we created to the database user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` database user entity and then to the `_auth` record itself.
 3. Create rules to enforce the above desired permissions.
 4. Create an assignable role that contains these rules so we can easily add the role to our chat user(s).
@@ -583,7 +583,7 @@ The rule stipulates, that if the database user found after following the graph e
 
 **>> Execute the final transaction example.**
 
-Now, refresh the Fluree user interface (it does not automatically refresh with detected new user/roles). Select the database you were working on in the UI header, and you should now have a user listed as `jdoe`. If you select `jdoe`, you'll be using the custom database just for her that you created with the aforementioned rules. Try to query different streams, or create/update chat messages. The rules we've defined here will only allow the described behavior.
+Now, refresh the Fluree user interface (it does not automatically refresh with detected new user/roles). Select the database you were working on in the UI sidebar, and you should now have a user listed as `jdoe`. If you select `jdoe`, you'll be using the custom database just for her that you created with the aforementioned rules. Try to query different streams, or create/update chat messages. The rules we've defined here will only allow the described behavior.
 
 **>> Quick Start is now complete. Please see the additional documentation provided here for added references.**
 

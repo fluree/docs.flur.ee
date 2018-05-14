@@ -361,11 +361,11 @@ Now that we have stored a piece of data, let's query it.
 
 Fluree allows you to specify queries using our FlureeQL JSON syntax or with GraphQL. The FlureeQL format designed to easily enable code to compose queries, as the query is simply a data structure. 
 
-For each query, the user's permissions create a special filtered database that only contains what the user can see. You can safely issue any query, never having to worry about accidentally exposing permissioned data.
+For each query, the user's permissions (determined according to `_auth` record through which they are authenticated - more on that in the [Fluree Permissions](#fluree-permissions) section) create a special filtered database that only contains what the user can see. You can safely issue any query, never having to worry about accidentally exposing permissioned data.
 
 Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request, this can be used to reduce round-trips for end-user applications.
 
-## Transactions
+### Transactions
 
 ### Database Functions
 
@@ -380,13 +380,6 @@ Function | Example | Description
 `now` | `$(now)` | Insert current server time. Works on `instant`.
 `cas` | `$(cas "brown" "blue")` | Will compare current value to the first argument, and if equal sets the value to the second argument. If not equal, transaction throws an exception. Works on all types.
 
-
-## Query
-
-### GraphQL
-
-### Limits
-### Sorting Results
 
 ## Schema
 
@@ -504,6 +497,5 @@ In Fluree, a traditional database table is simply a collection of Flake events o
 Database tables are defined under the `schema` key.  This allows Fluree to create your tables on any datastorage backend (SQL or not) and allows us to build permissions rules and automatic schema checking into the platform.  Furthermore, it serves to document your application's schema to other application writers.
 
 The top-level keys under `schema` are the names of your application's tables.  The event (column) definitions are under the `event` key.
-
 
 
