@@ -21,23 +21,6 @@ Another role, dbAdmin might include read and write access to all users, as well 
 
 ![Diagram shows a role, dbAdmin, that is comprised of two rules: read and write access for all users and the ability to generate and revoke tokens.](./images/roleDbAdmin.svg)
 
-<<<<<<< Updated upstream
-These roles are then assigned to different `_auth` entities (via the `_auth/roles` attribute). For instance, an administrator `_auth` entity and a standardUser `_auth` entity. The administrator `_auth` entity would need multiple roles, such as dbAdmin and chatUser. The standardUser `_auth` entity would only need the chatUser role.
-
-![Diagram shows two auth entities, adminstrator and standardUser. administrator is assigned two roles: dbAdmin and chatUser. standardUser is only assigned one role - chatUser.](./images/authEntities.svg)
-
-`_auth` entities govern access to a database. `_auth` entities are issued tokens, and that `_auth` entity's permissions are applied to every database action that they perform. 
-
-An `_auth` entity does not need to be tied a `_user`. All `_auth` entities can be used independently. However, a common use case is to assign `_auth` entities to database users (via the `_user/auth` attribute).
-
-For instance, in the below example, the users, janeDoe and bobBoberson, both have `_auth` assigned directly to their `_user` entities. bobBoberson's permissions are limited to the rules assigned to the standardUser `_auth` - namely read access for all chats and peopls, as well as read and write access to one's own chats. 
-
-janeDoe has been assigned two `_auth` entities, standardUser and dbAdmin. If janeDoe is authenticated as a standardUser, she will not be able to issue tokens, as per the dbAdmin role. In order to issue tokens, janeDoe has to make sure that she is using a token tied to the dbAdmin user. 
-
-Having mutliple `_auth` records tied to a `_user` allows for greater flexibility. Perhaps janeDoe no longers wants to be a dbAdmin, in which case we can simply remove that `_auth` record from her user. On the flip side, if bobBoberson does become an admin in the future, we can just add the appopriate `_auth` to his `_user` record. 
-
-![Diagram shows two user entities, janeDoe and bobBoberson. janeDoe is assigned two auth entities, dbAdmin and standardUser. bobBoberson is assigned one auth entity, standardUser.](./images/userEntities.svg)
-=======
 These roles are then assigned to different auth entities (via the `_auth/roles` attribute). For instance, an administrator auth entity and a standardUser auth entity. The administrator auth entity would need multiple roles, such as dbAdmin and chatUser. The standardUser auth entity would only need the chatUser role.
 
 ![Diagram shows two auth entities, adminstrator and standardUser. administrator is assigned two roles: dbAdmin and chatUser. standardUser is only assigned one role - chatUser.](./images/authEntities.svg)
@@ -51,7 +34,6 @@ For instance, in the below example, the users, janeDoe and bobBoberson, both hav
 janeDoe has the dbAdmin role assigned to her user. However, she also has been assigned an auth entity, standardUser. Auth entities assigned to a user (via the `_user/auth` attribute) automatically override any roles that are directly assigned to a user (via the `_user/roles` attribute. In janeDoe's case, she has the permissions associated with a standardUser auth entity. 
 
 ![Diagram shows two user entities, janeDoe and bobBoberson. janeDoe is assigned one role, dbAdmin, and one auth entity, standardUser. bobBoberson is assigned one role, chatUser.](./images/userEntities.svg)
->>>>>>> Stashed changes
 
 
 ## Query / Read Permissions
@@ -84,11 +66,8 @@ Attribute | Type | Description
 -- | -- | -- 
 `_user/username` | `string` |  (optional) A unique username for this user.
 `_user/auth` | `[ref]` | (optional) Reference to auth entities available for this user to authenticate. Note if no auth entities exist, the user will be unable to authenticate.
-<<<<<<< Updated upstream
-=======
 `_user/roles` | `[ref]` | (optional) References to the default roles that apply to this user. If roles are specified via the `_auth` entity the user is authenticated as, those roles will always over-ride (replace) any role specified here.
 
->>>>>>> Stashed changes
 
 
 ### Auth attributes
@@ -128,11 +107,7 @@ Roles are assigned to a specific `_auth` entity under the multi-cardinality attr
 
 Having roles be assigned to an `_auth` record, rather than to a `_user` allows a `_user` to have access to different data, based on which `_auth` they use to authenticate. Additionally, `_auth` records can be added or revoked from a `_user` without having to edit the actual `_auth` record. 
 
-<<<<<<< Updated upstream
-If, for example, a social media website authenticated as a guest, it might only have access to read a limited set of data whereas if the user logged in, they may have their full set of access rights.
-=======
 The ability to over-ride roles at the auth entity allows a more limited (or possibly expanded) set of roles to the same user depending on how they authenticate. If, for example, a social media website authenticated as a user, it might only have access to read a limited set of data whereas if the user logged in, they may have their full set of access rights.
->>>>>>> Stashed changes
 
 ### Role attributes
 
