@@ -563,11 +563,7 @@ To accomplish this we need to do a few things:
 5. Assign the new role to the user(s).
 6. Execute commands with a token tied to the `_auth` record we create
 
-<<<<<<< Updated upstream
-A token (which governs permissions) is tied to a specific `_auth` entity which can directly have roles assigned to it. An `_auth` entity can be independent, and is not required to be tied to a `_user`. Most applications we typically use don't work like this (but most cryptos do work like this). We'll get into different ways of leveraging authentication later, but public/private key cryptography is used, however this is abstracted away with hosted FlureeDB.
-=======
 A token (which governs permissions) is tied to a specific `_auth` entity which can directly have roles assigned to it, or default roles can be assigned to a `_user` entity assuming the `_auth` entity is tied to a `_user` via the `_user/auth` attribute. An `_auth` entity can be independent, and is not required to be tied to a `_user`. Most applications we typically use don't work like this (but most cryptos do work like this). We'll get into different ways ot leveraging authentication later, but public/private key cryptography is used, however this is abstracted away with hosted FlureeDB.
->>>>>>> Stashed changes
 
 
 **>> Execute the example transaction to add a new attribute named `person/user` that allows a `ref` from any of our persons to a database user.**
@@ -587,7 +583,7 @@ The rule stipulates, that if the database user found after following the graph e
 
 **>> Execute the final transaction example.**
 
-Now, refresh the Fluree user interface (it does not automatically refresh with detected new user/roles). Select the database you were working on in the UI header, and you should now have a user listed as `jdoe`. If you select `jdoe`, you'll be using the custom database just for her that you created with the aforementioned rules. Try to query different streams, or create/update chat messages. The rules we've defined here will only allow the described behavior.
+Now, refresh the Fluree user interface (it does not automatically refresh with detected new user/roles). Select the database you were working on in the UI sidebar, and you should now have a user listed as `jdoe`. If you select `jdoe`, you'll be using the custom database just for her that you created with the aforementioned rules. Try to query different streams, or create/update chat messages. The rules we've defined here will only allow the described behavior.
 
 **>> Quick Start is now complete. Please see the additional documentation provided here for added references.**
 
