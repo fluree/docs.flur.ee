@@ -31,7 +31,7 @@ To get a permanent admin token, follow these steps:
 
 If you need to create an authorization record, see the example provided.
 
-Remember, authorization is governed by rules (stored in the `_rule` stream). Rules are grouped into roles (stored in the `_role` stream), and roles are assigned to auth entities (`_auth` stream) or default roles can be assigned to users (`_user` stream).
+Remember, authorization is governed by rules (stored in the `_rule` stream). Rules are grouped into roles (stored in the `_role` stream), and roles are assigned to auth entities (`_auth` stream).
 
 #### Sample rule, role and auth record for admin privileges
 
@@ -177,7 +177,7 @@ Tokens become useless under two conditions:
 
 A token is tied directly to a specific `_auth` entity, and with every request the roles + rules associated with that entity are retrieved. Therefore, the way to make a token useless is to make the `_auth` entity it is tied to useless. To do so, employ one of these strategies:
 
-1. Delete the auth entity (ensure if it is referenced to a `_user` via the `_user/auth` attribute that the reference is also deleted. When an `_auth` has no roles, it uses the `_user` roles as a default if the relationship exists).
+1. Delete the auth entity (ensure if it is referenced to a `_user` via the `_user/auth` attribute that the reference is also deleted. 
 2. Remove current roles referenced by the `_auth` entity, and associate a role that has no permission.
 
 If you think the token was compromised but you still want the same roles + rules, you can copy the existing `_auth` attributes to a new `_auth` entity. Recall a `_user` can have many `_auth` entities. If using Fluree for authorization, the user will be prompted to log in again, and a new token will be issued.

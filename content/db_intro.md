@@ -49,7 +49,7 @@ We'll follow these steps to give a sense of FlureeDB basics:
 5. Establish a user's permission
 6. Query permissioned DB
 
-**>> To begin, log in and select the database you'd like to perform this quick start on in the UI Header. Be sure to use the `root` user. The examples here are provided using FlureeQL - click the link in the header.**
+**>> To begin, log in and select the database you'd like to perform this quick start on in the UI Sidebar. Be sure to use the `root` user.
 
 [FlureeDB Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee)
 
@@ -425,7 +425,7 @@ mutation addChatMessage ($myChatTx: JSON) {
 
 Fluree allows you to specify queries using our FlureeQL JSON syntax or with GraphQL. The FlureeQL format is designed to easily enable code to compose queries, as the query is simply a data structure. 
 
-For each query, the user's permissions create a special filtered database that only contains what the user can see. You can safely issue any query, never having to worry about accidentally exposing permissioned data.
+For each query, the user's permissions (determined according to `_auth` record through which they are authenticated - more on that in the [Fluree Permissions](#fluree-permissions) section) create a special filtered database that only contains what the user can see. You can safely issue any query, never having to worry about accidentally exposing permissioned data.
 
 These two example queries will return current chat messages. The second example follows the graph relationship to also include details about the referred person who posted the chat message.
 
@@ -563,7 +563,7 @@ To accomplish this we need to do a few things:
 5. Assign the new role to the user(s).
 6. Execute commands with a token tied to the `_auth` record we create
 
-A token (which governs permissions) is tied to a specific `_auth` entity which can directly have roles assigned to it, or default roles can be assigned to a `_user` entity assuming the `_auth` entity is tied to a `_user` via the `_user/auth` attribute. An `_auth` entity can be independent, and is not required to be tied to a `_user`. Most applications we typically use don't work like this (but most cryptos do work like this). We'll get into different ways ot leveraging authentication later, but public/private key cryptography is used, however this is abstracted away with hosted FlureeDB.
+A token (which governs permissions) is tied to a specific `_auth` entity which can directly have roles assigned to it. An `_auth` entity can be independent, and is not required to be tied to a `_user`. Most applications we typically use don't work like this (but most cryptos do work like this). We'll get into different ways of leveraging authentication later, but public/private key cryptography is used, however this is abstracted away with hosted FlureeDB.
 
 
 **>> Execute the example transaction to add a new attribute named `person/user` that allows a `ref` from any of our persons to a database user.**
