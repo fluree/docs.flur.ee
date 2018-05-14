@@ -499,4 +499,3 @@ Database tables are defined under the `schema` key.  This allows Fluree to creat
 The top-level keys under `schema` are the names of your application's tables.  The event (column) definitions are under the `event` key.
 
 
-

@@ -287,4 +287,3 @@ Function | Example | Description
 `-` | `#(- ?v 5)`| Decrement existing value by specific number. Works on `integer`, `float`.
 `now` | `#(now)` | Insert current server time. Works on `instant`.
 `cas` | `#(cas ?v "brown" "blue")` | Will compare current value to the first argument, and if equal, sets the value to the second argument. If not equal, transaction throws an exception. Works on all types.
-

@@ -149,4 +149,3 @@ References, `ref`, allow both forward and reverse traversal of graph queries.
 
 GraphQL requires additional information to auto-generate a schema that shows relationships, and it forces strict typing. Fluree allows any reference attribute to point to any entity, regardless of stream type. If you wish to restrict a reference attribute to only a specific type of stream, also include `restrictStream` in your attribute definition. In addition to forcing an attribute to only allow a specific stream type, it also enables GraphQL to auto-generate its schema with the proper relationship.
 
-
