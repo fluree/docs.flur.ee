@@ -40,6 +40,7 @@ To create a new stream, submit a transaction against the system stream named `_s
 }]
 ```
 ```curl
+curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d [{
