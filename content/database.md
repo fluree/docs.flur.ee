@@ -326,7 +326,7 @@ A sample chat message transaction is shown which creates a single new entity. Mu
 ```json
 {
   "tempids": {},
-  "block": 5,
+  "block": -5,
   "hash": "sdfsdfsdf",
   "flakes": [],
 
@@ -337,7 +337,7 @@ A sample chat message transaction is shown which creates a single new entity. Mu
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d {
   "tempids": {},
-  "block": 5,
+  "block": -5,
   "hash": "sdfsdfsdf",
   "flakes": [],
 

@@ -19,59 +19,65 @@ Streams are like relational database tables. We call them streams because they h
 
 To create a new stream, submit a transaction against the system stream named `_stream`. A sample stream transaction is provided here to create a new stream.
 
+
 ```json
 [{
-  "_id":     ["_stream", -1],
-  "name":    "person",
-  "doc":     "A stream/table to hold our people",
-  "version": "1"
+ "_id": "_stream",
+ "name": "person",
+ "doc": "A stream/table to hold our people",
+ "version": "1"
 },
 {
-  "_id":     ["_stream", -2],
-  "name":    "chat",
-  "doc":     "A stream/table to hold chat messages",
-  "version": "1"
+ "_id": "_stream",
+ "name": "chat",
+ "doc": "A stream/table to hold chat messages",
+ "version": "1"
 },
 {
-  "_id":     ["_stream", -3],
-  "name":    "comment",
-  "doc":     "A stream/table to hold comments to chat messages",
-  "version": "1"
+ "_id": "_stream",
+ "name": "comment",
+ "doc": "A stream/table to hold comments to chat messages",
+ "version": "1"
 }]
 ```
+
 ```curl
+  curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d [{
-  "_id":     ["_stream", -1],
+   -d '[{
+  "_id":     "_stream",
   "name":    "person",
   "doc":     "A stream/table to hold our people",
   "version": "1"
 },
 {
-  "_id":     ["_stream", -2],
+  "_id":     "_stream",
   "name":    "chat",
   "doc":     "A stream/table to hold chat messages",
   "version": "1"
 },
 {
-  "_id":     ["_stream", -3],
+  "_id":     "_stream",
   "name":    "comment",
   "doc":     "A stream/table to hold comments to chat messages",
   "version": "1"
-}] \
+}]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
 
-```graphql 
+```graphql
 mutation addStreams ($myStreamTx: JSON) {
   transact(tx: $myStreamTx)
 }
 
+/* myStreamTx is saved as a variable. Learn more about using GraphQL in the section, 'GraphQL' */
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
-<!-- myStreamTx is saved as a variable. Learn more about using GraphQL in the section, 'GraphQL' -->
 {
-  "myStreamTx": "[{\"_id\": [\"_stream\", -1], \"name\": \"person\", \"doc\": \"A stream/table to hold our people\", \"version\": \"1\"},{ \"_id\": [\"_stream\", -2], \"name\": \"chat\", \"doc\": \"A stream/table to hold chat messages\", \"version\": \"1\"},{ \"_id\": [\"_stream\", -3], \"name\": \"comment\", \"doc\": \"A stream/table to hold comments to chat messages\", \"version\": \"1\"}]"
+
+{
+  "myStreamTx": "[{\"_id\": \"_stream\", \"name\": \"person\", \"doc\": \"A stream/table to hold our people\", \"version\": \"1\"},{ \"_id\": \"_stream\", \"name\": \"chat\", \"doc\": \"A stream/table to hold chat messages\", \"version\": \"1\"},{ \"_id\": \"_stream\", \"name\": \"comment\", \"doc\": \"A stream/table to hold comments to chat messages\", \"version\": \"1\"}]"
 }
 ```
 
@@ -81,7 +87,7 @@ In places where there is no ambiguity, attributes containing the same namespace 
 
 ```
 {
-  "_id": ["person", -1],
+  "_id": "person",
   "email": "sample@email.com"
 }
 ```

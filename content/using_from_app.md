@@ -38,19 +38,19 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
 ```json
 [
   {
-    "_id":    ["_auth", -1],
-    "key":    "db-admin",
+    "_id":    "_auth",
+    "id":    "db-admin",
     "doc":    "A db admin auth that has full data visibility and can generate tokens for other users.",
-    "roles":  [["_role", -10]]
+    "roles":  ["_role$db-admin"] 
   },
   {
-    "_id":   ["_role", -10],
+    "_id":   "_role$db-admin", 
     "id":    "db-admin",
     "doc":   "A role for full access to database.",
-    "rules": [["_rule", -100], ["_rule", -101]]
+    "rules": ["_rule$db-admin",  "_rule$db-token"] 
   },
   {
-    "_id":       ["_rule", -100],
+    "_id":       "_rule$db-admin" ,
     "id":        "db-admin",
     "doc":       "Rule that grants full access to all streams.",
     "stream":    "*",
@@ -59,7 +59,7 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
     "predicate": "true"
   },
   {
-    "_id":       ["_rule", -101],
+    "_id":       "_rule$db-token" ,
     "id":        "db-admin-token",
     "doc":       "Rule allows token generation for other users.",
     "ops":       ["token"],
@@ -74,32 +74,32 @@ curl \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[
   {
-    "_id":    ["_auth", -1], 
-    "key":    "db-admin", 
-    "doc":    "A db admin auth that has full data visibility and can generate tokens for other users.",
-    "roles":  [["_role", -10]] 
-  },
-  {
-    "_id":   ["_role", -10], 
+    "_id":    "_auth",
     "id":    "db-admin",
-    "doc":   "A role for full access to database.", 
-    "rules": [["_rule", -100], ["_rule", -101]] 
+    "doc":    "A db admin auth that has full data visibility and can generate tokens for other users.",
+    "roles":  ["_role$db-admin"] 
   },
   {
-    "_id":       ["_rule", -100], 
-    "id":        "db-admin", 
-    "doc":       "Rule that grants full access to all streams.", 
-    "stream":    "*", 
-    "streamDefault": true, 
-    "ops":       ["query", "transact"], 
-    "predicate": "true" 
+    "_id":   "_role$db-admin", 
+    "id":    "db-admin",
+    "doc":   "A role for full access to database.",
+    "rules": ["_rule$db-admin",  "_rule$db-token"] 
   },
   {
-    "_id":       ["_rule", -101], 
-    "id":        "db-admin-token", 
-    "doc":       "Rule allows token generation for other users.", 
-    "ops":       ["token"], 
-    "predicate": "true" 
+    "_id":       "_rule$db-admin" ,
+    "id":        "db-admin",
+    "doc":       "Rule that grants full access to all streams.",
+    "stream":    "*",
+    "streamDefault": true,
+    "ops":       ["query", "transact"],
+    "predicate": "true"
+  },
+  {
+    "_id":       "_rule$db-token" ,
+    "id":        "db-admin-token",
+    "doc":       "Rule allows token generation for other users.",
+    "ops":       ["token"],
+    "predicate": "true"
   }
 ]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
@@ -112,7 +112,11 @@ mutation addRoleRuleAuth($myAuthTx: JSON){
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myAuthTx": "[ { \"_id\": [\"_auth\", -1], \"key\": \"db-admin\", \"doc\": \"A db admin auth that has full data visibility and can generate tokens for other users.\", \"roles\": [[\"_role\", -10]] }, { \"_id\": [\"_role\", -10], \"id\": \"db-admin\", \"doc\": \"A role for full access to database.\", \"rules\": [[\"_rule\", -100], [\"_rule\", -101]] }, { \"_id\": [\"_rule\", -100], \"id\": \"db-admin\", \"doc\": \"Rule that grants full access to all streams.\", \"stream\": \"*\", \"streamDefault\": true, \"ops\": [\"query\", \"transact\"], \"predicate\": \"true\" }, { \"_id\": [\"_rule\", -101], \"id\": \"db-admin-token\", \"doc\": \"Rule allows token generation for other users.\", \"ops\": [\"token\"], \"predicate\": \"true\" } ]"
+  "myAuthTx": "[ 
+    { \"_id\": \"_auth\", \"key\": \"db-admin\", \"doc\": \"A db admin auth that has full data visibility and can generate tokens for other users.\", \"roles\": [\"_role$db-admin\"] }, 
+    { \"_id\": \"_role$db-admin\", \"id\": \"db-admin\", \"doc\": \"A role for full access to database.\", \"rules\": [\"_rule$db-admin\", \"_rule$db-token\"] }, 
+    { \"_id\": \"_rule$db-admin\", \"id\": \"db-admin\", \"doc\": \"Rule that grants full access to all streams.\", \"stream\": \"*\", \"streamDefault\": true, \"ops\": [\"query\", \"transact\"], \"predicate\": \"true\" }, 
+    { \"_id\": \"_rule$db-token\", \"id\": \"db-admin-token\", \"doc\": \"Rule allows token generation for other users.\", \"ops\": [\"token\"], \"predicate\": \"true\" } ]"
 }
 ```
 
@@ -197,7 +201,7 @@ Key | Type | Description
 `select` | select-spec |  Selection specification in the form of an array/vector. To select all attributes use `[ "*" ]`. If you were storing customers and wanted to select just the customer name and products they own, the select statement might look like: `[ "customer/name", "customer/products"]`.
 `from` | from-spec | Can be an entity (represented as an identity or integer), or an entire stream of entities utilizing the stream name. If selecting from customers as per the prior example, it would simply be `"from": "customer"`. If selecting a specific customer, it would for example be `"from": 4299262263299` or `"from": "[\"customer/name\", \"Newco Inc.\"]"`. 
 `where` | where-spec | Optional. Can be in the simple SQL-like string format or more sophisticated queries can be specified in the datalog format. For the simple format, might include something like: `"where": "customer/name = 'ABC Corp'"` or `"where": "person/age >= 22 AND person/age <= 50"`.
-`block` | integer or ISO-8601 date string | Optional time-travel query, specified either by the block the query results should be of, or a wall-clock time in ISO-8601 fromat. When no block is specified, the most current database is always queried.
+`block` | negative integer or ISO-8601 date string | Optional time-travel query, specified either by the block the query results should be of, or a wall-clock time in ISO-8601 fromat. When no block is specified, the most current database is always queried.
 `limit` | integer | Optional limit for result quantity. Fluree uses a default of 1000.
 
 
@@ -247,7 +251,7 @@ curl \
 {
   "select": ["*"],
   "from": "chat",
-  "block": 2
+  "block": -2
 }
 ```
 
@@ -259,7 +263,7 @@ Not supported
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{"select": ["*"], "from": "chat", "block": 2}' \
+   -d '{"select": ["*"], "from": "chat", "block": -2}' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 #### Time travel by specifying a time
@@ -320,7 +324,7 @@ Each map requires an `_id` as specified below along with key/value pairs contain
 
 Key | Type | Description
 -- | -- | -- 
-`_id` | identity |  Any identity value which can include the numeric assigned permanent `_id` for an entity, any attribute marked as unique as a two-tuple, i.e. `["_user/username", "jdoe"]`, or a temporary id (for new entities), i.e. `["_user", -1]`.
+`_id` | identity |  Any identity value which can include the numeric assigned permanent `_id` for an entity, any attribute marked as unique as a two-tuple, i.e. `["_user/username", "jdoe"]`, or a temporary id (for new entities). See the "Temporary Ids" section in Transactions to learn more. 
 `_action` | string | Optional (if it can be inferred). One of: `add`, `update`, `upsert` or `delete`. When using a temporary id, `add` is always inferred. When using an existing identity, `update` is always inferred. `upsert` is inferred for new entities with a tempid if they include an attribute that was marked as `upsert`.
 
 To delete/retract an entire entity, use the `_id` key along with only `"_action": "delete"`. To delete only specific values within an entity, specify the key/value combinations.
@@ -334,7 +338,7 @@ Curl example:
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '[{"_id": ["chat", -1], "message": "Hello, sample chat message."}]' \
+   -d '[{"_id": "chat", "message": "Hello, sample chat message."}]' \
    https://ACCOUNT_NAME.beta.flur.ee/api/db/transact
 ```
 
@@ -342,12 +346,12 @@ curl \
 
 ```json
 [{
-  "_id":      ["person", -1],
+  "_id":      "person",
   "handle":   "jdoe",
   "fullName": "Jane Doe"
 },
 {
-  "_id":      ["person", -2],
+  "_id":      "person",
   "handle":   "zsmith",
   "fullName": "Zach Smith"
 }]
@@ -357,12 +361,12 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-  "_id":      ["person", -1],
+  "_id":      "person",
   "handle":   "jdoe",
   "fullName": "Jane Doe"
 },
 {
-  "_id":      ["person", -2],
+  "_id":      "person",
   "handle":   "zsmith",
   "fullName": "Zach Smith"
 }]'\
@@ -377,7 +381,9 @@ mutation addPeople ($myPeopleTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myPeopleTx": "[{ \"_id\": [\"person\", -1], \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, { \"_id\": [\"person\", -2], \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
+  "myPeopleTx": "[
+    { \"_id\": \"person\", \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, 
+    { \"_id\": \"person\", \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
 }
 ```
 
