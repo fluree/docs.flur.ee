@@ -65,28 +65,31 @@ This transaction adds three streams:
 - `chatMessage` - will hold the chat message content
 - `chatComment` - will hold comments about messages
 
-Every transaction item must have an `_id` attribute to refer to the entity we are attempting to create/update. An `_id` can either be an existing entity's unique numeric ID, a two-tuple of a unique attribute+value, or a two-tuple of stream+tempid, where tempid is a negative integer. Here we use a tempid as we are creating new entities in the system stream named `_stream`. `_stream` is a system stream/table that holds the configured streams, and `_attribute` likewise for attributes.
+Every transaction item must have an `_id` attribute to refer to the entity we are attempting to create/update. An `_id` can either be an existing entity's unique numeric ID, a two-tuple of a unique attribute+value, or a tempid. A tempid can simply be the stream name, i.e. `_stream` or it can
+be a stream name with unique reference. To make a unique tempid, just append the stream with any non-valid stream character (anything other than a-z, A-Z, 0-9, _) followed by anything else. For example, `_stream$1` or `_stream&stream-one`.
+
+Here we use a tempid as we are creating new entities in the system stream named `_stream`. `_stream` is a system stream/table that holds the configured streams, and `_attribute` likewise for attributes.
 
 #### Stream schema transaction
 
 ```json
 [{
-  "_id":     ["_stream", -1],
-  "name":    "person",
-  "doc":     "A stream/table to hold our people",
-  "version": "1"
+ "_id": "_stream",
+ "name": "person",
+ "doc": "A stream/table to hold our people",
+ "version": "1"
 },
 {
-  "_id":     ["_stream", -2],
-  "name":    "chat",
-  "doc":     "A stream/table to hold chat messages",
-  "version": "1"
+ "_id": "_stream",
+ "name": "chat",
+ "doc": "A stream/table to hold chat messages",
+ "version": "1"
 },
 {
-  "_id":     ["_stream", -3],
-  "name":    "comment",
-  "doc":     "A stream/table to hold comments to chat messages",
-  "version": "1"
+ "_id": "_stream",
+ "name": "comment",
+ "doc": "A stream/table to hold comments to chat messages",
+ "version": "1"
 }]
 ```
 
@@ -95,19 +98,19 @@ Every transaction item must have an `_id` attribute to refer to the entity we ar
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-  "_id":     ["_stream", -1],
+  "_id":     "_stream",
   "name":    "person",
   "doc":     "A stream/table to hold our people",
   "version": "1"
 },
 {
-  "_id":     ["_stream", -2],
+  "_id":     "_stream",
   "name":    "chat",
   "doc":     "A stream/table to hold chat messages",
   "version": "1"
 },
 {
-  "_id":     ["_stream", -3],
+  "_id":     "_stream",
   "name":    "comment",
   "doc":     "A stream/table to hold comments to chat messages",
   "version": "1"
@@ -123,7 +126,7 @@ mutation addStreams ($myStreamTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myStreamTx": "[{\"_id\": [\"_stream\", -1], \"name\": \"person\", \"doc\": \"A stream/table to hold our people\", \"version\": \"1\"},{ \"_id\": [\"_stream\", -2], \"name\": \"chat\", \"doc\": \"A stream/table to hold chat messages\", \"version\": \"1\"},{ \"_id\": [\"_stream\", -3], \"name\": \"comment\", \"doc\": \"A stream/table to hold comments to chat messages\", \"version\": \"1\"}]"
+  "myStreamTx": "[{\"_id\": \"_stream\", \"name\": \"person\", \"doc\": \"A stream/table to hold our people\", \"version\": \"1\"},{ \"_id\": \"_stream\", \"name\": \"chat\", \"doc\": \"A stream/table to hold chat messages\", \"version\": \"1\"},{ \"_id\": \"_stream\", \"name\": \"comment\", \"doc\": \"A stream/table to hold comments to chat messages\", \"version\": \"1\"}]"
 }
 
 ```
@@ -155,41 +158,41 @@ Comments
 
 ```json
 [{
-  "_id":    ["_attribute", -1],
+  "_id":    "_attribute",
   "name":   "person/handle",
   "doc":    "The person's unique handle",
   "unique": true,
   "type":   "string"
 },
 {
-  "_id":   ["_attribute", -2],
+  "_id":   "_attribute",
   "name":  "person/fullName",
   "doc":   "The person's full name.",
   "type":  "string",
   "index": true
 },
 {
-  "_id":  ["_attribute", -10],
+  "_id":  "_attribute",
   "name": "chat/message",
   "doc":  "A chat message",
   "type": "string"
 },
 {
-  "_id":  ["_attribute", -11],
+  "_id":  "_attribute",
   "name": "chat/person",
   "doc":  "A reference to the person that created the message",
   "type": "ref",
   "restrictStream": "person"
 },
 {
-  "_id":   ["_attribute", -12],
+  "_id":   "_attribute",
   "name":  "chat/instant",
   "doc":   "The instant in time when this chat happened.",
   "type":  "instant",
   "index": true
 },
 {
-  "_id":       ["_attribute", -13],
+  "_id":       "_attribute",
   "name":      "chat/comments",
   "doc":       "A reference to comments about this message",
   "type":      "ref",
@@ -198,13 +201,13 @@ Comments
   "restrictStream": "comment"
 },
 {
-  "_id":  ["_attribute", -20],
+  "_id":  "_attribute",
   "name": "comment/message",
   "doc":  "A comment message.",
   "type": "string"
 },
 {
-  "_id":  ["_attribute", -21],
+  "_id":  "_attribute",
   "name": "comment/person",
   "doc":  "A reference to the person that made the comment",
   "type": "ref",
@@ -217,41 +220,41 @@ Comments
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-  "_id":   ["_attribute", -1],
+  "_id":   "_attribute",
   "name":   "person/handle",
   "doc":    "The persons unique handle",
   "unique": true,
   "type":   "string"
 },
 {
-  "_id":   ["_attribute", -2],
+  "_id":   "_attribute",
   "name":  "person/fullName",
   "doc":   "The persons full name.",
   "type":  "string",
   "index": true
 },
 {
-  "_id":  ["_attribute", -10],
+  "_id":  "_attribute",
   "name": "chat/message",
   "doc":  "A chat message",
   "type": "string"
 },
 {
-  "_id":  ["_attribute", -11],
+  "_id":  "_attribute",
   "name": "chat/person",
   "doc":  "A reference to the person that created the message",
   "type": "ref",
   "restrictStream": "person"
 },
 {
-  "_id":   ["_attribute", -12],
+  "_id":   "_attribute",
   "name":  "chat/instant",
   "doc":   "The instant in time when this chat happened.",
   "type":  "instant",
   "index": true
 },
 {
-  "_id":       ["_attribute", -13],
+  "_id":       "_attribute",
   "name":      "chat/comments",
   "doc":       "A reference to comments about this message",
   "type":      "ref",
@@ -260,13 +263,13 @@ Comments
   "restrictStream": "comment"
 },
 {
-  "_id":  ["_attribute", -20],
+  "_id":  "_attribute",
   "name": "comment/message",
   "doc":  "A comment message.",
   "type": "string"
 },
 {
-  "_id":  ["_attribute", -21],
+  "_id":  "_attribute",
   "name": "comment/person",
   "doc":  "A reference to the person that made the comment",
   "type": "ref",
@@ -290,16 +293,23 @@ mutation addCommentAttributes ($myCommentTx: JSON) {
 
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
+{"myPersonTx": "[
+  
+  { \"_id\": \"_attribute\", \"name\": \"person/handle\", \"doc\": \"The person's unique handle\", \"unique\": true, \"type\": \"string\"},
+  { \"_id\": \"_attribute\", \"name\": \"person/fullName\", \"doc\": \"The person's full name.\", \"type\": \"string\", \"index\": true}]"}
+
 {
-  "myPersonTx": "[{ \"_id\": [\"_attribute\", -1], \"name\": \"person/handle\", \"doc\": \"The person's unique handle\", \"unique\": true, \"type\": \"string\"},{ \"_id\": [\"_attribute\", -2], \"name\": \"person/fullName\", \"doc\": \"The person's full name.\", \"type\": \"string\", \"index\": true}]"
+  "myChatTx": "[
+    { \"_id\": \"_attribute\", \"name\": \"chat/message\", \"doc\": \"A chat message\", \"type\": \"string\"},
+    { \"_id\": \"_attribute\", \"name\": \"chat/person\", \"doc\": \"A reference to the person that created the message\", \"type\": \"ref\", \"restrictStream\": \"person\"},
+    { \"_id\": \"_attribute\", -12], \"name\": \"chat/instant\", \"doc\": \"The instant in time when this chat happened.\", \"type\": \"instant\", \"index\": true},
+    { \"_id\": \"_attribute\", \"name\": \"chat/comments\", \"doc\": \"A reference to comments about this message\", \"type\": \"ref\", \"component\": true, \"multi\": true, \"restrictStream\": \"comment\"}]"
 }
 
 {
-  "myChatTx": "[{ \"_id\": [\"_attribute\", -10], \"name\": \"chat/message\", \"doc\": \"A chat message\", \"type\": \"string\"},{ \"_id\": [\"_attribute\", -11], \"name\": \"chat/person\", \"doc\": \"A reference to the person that created the message\", \"type\": \"ref\", \"restrictStream\": \"person\"},{ \"_id\": [\"_attribute\", -12], \"name\": \"chat/instant\", \"doc\": \"The instant in time when this chat happened.\", \"type\": \"instant\", \"index\": true},{ \"_id\": [\"_attribute\", -13], \"name\": \"chat/comments\", \"doc\": \"A reference to comments about this message\", \"type\": \"ref\", \"component\": true, \"multi\": true, \"restrictStream\": \"comment\"}]"
-}
-
-{
-  "myCommentTx": "[{ \"_id\": [\"_attribute\", -20], \"name\": \"comment/message\", \"doc\": \"A comment message.\", \"type\": \"string\"},{ \"_id\": [\"_attribute\", -21], \"name\": \"comment/person\", \"doc\": \"A reference to the person that made the comment\", \"type\": \"ref\", \"restrictStream\": \"person\"}]"
+  "myCommentTx": "[
+    { \"_id\": \"_attribute\", \"name\": \"comment/message\", \"doc\": \"A comment message.\", \"type\": \"string\"},
+    { \"_id\": \"_attribute\", \"name\": \"comment/person\", \"doc\": \"A reference to the person that made the comment\", \"type\": \"ref\", \"restrictStream\": \"person\"}]"
 }
 
 
@@ -315,26 +325,35 @@ Here is what an abbreviated response will look like from this transaction, and a
 
 ```
 {
-  "tempids": [[ ["chat", -1],  4299262263297 ] ],
-  "block": 5,
-  "hash": "65aeed23724595fa6c0f7b8d4d4d75712749dc12445a34f769636d300165871b",
+  "tempids": {
+    "chat$1": 4299262263297
+  },
+  "block": -5,
+  "hash": "40bc619be312251493788911cfe1ac6106803bc05166cc776d728b63b415b5c0",
+  "time": "17.32ms",
+  "status": 200,
+  "block-bytes": 400,
+  "timestamp": 1527611445038,
   "flakes": [
-     [ 5, 1, "65aeed23724595fa6c0f7b8d4d4d75712749dc12445a34f769636d300165871b", 5, true, 0 ],
-     [ 4299262263297, 1002, "This is a sample chat from Jane!", 5, true, 0 ],
-     [ 4299262263297, 1003, 4294967296001, 5, true, 0 ],
-     [ 4299262263297, 1004, 1513303413333, 5, true, 0 ],
-     [ 5, 2, "41bca4151469ed04b5f62800d8c98d023b792b030091686b590407c987425363", 5, true, 0 ],
-     [ 5, 5, 1513303413310, 5, true, 0 ]
-  ],
-  "time": "39.16ms"
+     [ 4299262263297, 1004, 1527611445050, -589824, true, 0 ],
+     [ 4299262263297, 1003, 4294967296001, -589824, true, 0 ],
+     [ 4299262263297, 1002, "This is a sample chat from Jane!", -589824, true, 0 ],
+     [ -589824, 5, 1527611445038, -589824, true, 0 ],
+     [ -589824, 2, "386cede775f6308cb48beaa9e9fac60c8d184db836194566412b798ab36a2cd6", -589824, true, 0 ],
+     [ -589824, 1, "40bc619be312251493788911cfe1ac6106803bc05166cc776d728b63b415b5c0", -589824, true, 0 ]
+  ]
 }
 ```
 
 Key | Description
 ---|---
 `tempids` | A mapping of any temporary id used in a transaction to its final id value that was assigned.
-`block` | The blockchain block number that was created with this transaction. These always increment by one.
+`block` | The blockchain block number that was created with this transaction. These are negative and will always decrease by one.
+`time` | The amount of time that the transaction took to complete.
+`status` | The status of the transactions. These map to HTML status codes, i.e. 200 is OK. 
 `hash` | The blockchain hash of this transaction, that can be cryptographically proven with the same `flakes` in the future, and linked to the previous block that creates the chain.
+`block-bytes` | The size of the block, in bytes.
+`timestamp` | A timestamp for the transaction. 
 `flakes` | Flakes are the state change of the database, and is the block data itself. Each is a six-tuple of information including the entity-id, attribute-id, value, block-id, true/false for add/delete, and expiration of this piece of data in epoch-milliseconds (0 indicates it never expires).
 
 
@@ -345,12 +364,12 @@ Now that we have stored a piece of data, let's query it.
 
 ```json
 [{
-  "_id":      ["person", -1],
+  "_id":      "person",
   "handle":   "jdoe",
   "fullName": "Jane Doe"
 },
 {
-  "_id":      ["person", -2],
+  "_id":      "person",
   "handle":   "zsmith",
   "fullName": "Zach Smith"
 }]
@@ -360,12 +379,12 @@ Now that we have stored a piece of data, let's query it.
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-  "_id":      ["person", -1],
+  "_id":      "person",
   "handle":   "jdoe",
   "fullName": "Jane Doe"
 },
 {
-  "_id":      ["person", -2],
+  "_id":      "person",
   "handle":   "zsmith",
   "fullName": "Zach Smith"
 }]' \
@@ -380,7 +399,9 @@ mutation addPeople ($myPeopleTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myPeopleTx": "[{ \"_id\": [\"person\", -1], \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, { \"_id\": [\"person\", -2], \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
+  "myPeopleTx": "[
+    { \"_id\": \"person\", \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, 
+    { \"_id\": \"person\", \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
 }
 ```
 
@@ -388,7 +409,7 @@ mutation addPeople ($myPeopleTx: JSON) {
 
 ```json
 [{
-  "_id":     ["chat", -1],
+  "_id":     "chat",
   "message": "This is a sample chat from Jane!",
   "person":  ["person/handle", "jdoe"],
   "instant": "#(now)"
@@ -400,7 +421,7 @@ mutation addPeople ($myPeopleTx: JSON) {
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-    "_id":     ["chat", -1],
+    "_id":     "chat",
     "message": "This is a sample chat from Jane!",
     "person":  ["person/handle", "jdoe"],
     "instant": "#(now)"
@@ -416,7 +437,8 @@ mutation addChatMessage ($myChatTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myChatTx": "[{ \"_id\": [\"chat\", -1], \"message\": \"This is a sample chat from Jane!\", \"person\": [\"person/handle\", \"jdoe\"], \"instant\": \"#(now)\" }]"
+  "myChatTx": "[
+    { \"_id\": \"chat\", \"message\": \"This is a sample chat from Jane!\", \"person\": [\"person/handle\", \"jdoe\"], \"instant\": \"#(now)\" }]"
 }
 
 ```
@@ -591,7 +613,7 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
 
 ```json 
 [{
-  "_id":    ["_attribute", -1],
+  "_id":    "_attribute",
   "name":   "person/user",
   "doc":    "Reference to a database user.",
   "type":   "ref",
@@ -604,7 +626,7 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-  "_id":    ["_attribute", -1],
+  "_id":    "_attribute",
   "name":   "person/user",
   "doc":    "Reference to a database user.",
   "type":   "ref",
@@ -621,7 +643,9 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myDBUserAttributeTx": "[{ \"_id\": [\"_attribute\", -1], \"name\": \"person/user\", \"doc\": \"Reference to a database user.\", \"type\": \"ref\", \"restrictStream\": \"_user\" }]"
+  "myDBUserAttributeTx": "[
+    { \"_id\": \"_attribute\", \"name\": \"person/user\", \"doc\": \"Reference to a database user.\", \"type\": \"ref\", \"restrictStream\": \"_user\" }
+    ]"
 }
 ```
 
@@ -630,13 +654,13 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
 ```json 
 [
   {
-    "_id": [ "_role", -1 ],
+    "_id": "_role",
     "id": "chatUser",
     "doc": "A standard chat user role",
-    "rules": [["_rule", -10], ["_rule", -11], ["_rule", -12]]
+    "rules": ["_rule$viewAllChats", "_rule$viewAllPeople", "_rule$editOwnChats"]
   },
   {
-    "_id": ["_rule", -10],
+    "_id": "_rule$viewAllChats",
     "id": "viewAllChats",
     "doc": "Can view all chats.",
     "stream": "chat",
@@ -645,7 +669,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "ops": ["query"]
   },
   {
-    "_id": ["_rule", -11],
+    "_id": "_rule$viewAllPeople",
     "id": "viewAllPeople",
     "doc": "Can view all people",
     "stream": "person",
@@ -654,7 +678,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "ops": ["query"]
   },
   {
-    "_id": ["_rule", -12],
+    "_id": "_rule$editOwnChats",
     "id": "editOwnChats",
     "doc": "Only allow users to edit their own chats",
     "stream": "chat",
@@ -670,14 +694,14 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[
-  {
-    "_id": [ "_role", -1 ],
+{
+    "_id": "_role",
     "id": "chatUser",
     "doc": "A standard chat user role",
-    "rules": [["_rule", -10], ["_rule", -11], ["_rule", -12]]
+    "rules": ["_rule$viewAllChats", "_rule$viewAllPeople", "_rule$editOwnChats"]
   },
   {
-    "_id": ["_rule", -10],
+    "_id": "_rule$viewAllChats",
     "id": "viewAllChats",
     "doc": "Can view all chats.",
     "stream": "chat",
@@ -686,7 +710,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "ops": ["query"]
   },
   {
-    "_id": ["_rule", -11],
+    "_id": "_rule$viewAllPeople",
     "id": "viewAllPeople",
     "doc": "Can view all people",
     "stream": "person",
@@ -695,7 +719,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "ops": ["query"]
   },
   {
-    "_id": ["_rule", -12],
+    "_id": "_rule$editOwnChats",
     "id": "editOwnChats",
     "doc": "Only allow users to edit their own chats",
     "stream": "chat",
@@ -715,7 +739,12 @@ mutation addRole ($myRoleTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myRoleTx": "[ { \"_id\": [ \"_role\", -1 ], \"id\": \"chatUser\", \"doc\": \"A standard chat user role\", \"rules\": [[\"_rule\", -10], [\"_rule\", -11], [\"_rule\", -12]] }, { \"_id\": [\"_rule\", -10], \"id\": \"viewAllChats\", \"doc\": \"Can view all chats.\", \"stream\": \"chat\", \"streamDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, { \"_id\": [\"_rule\", -11], \"id\": \"viewAllPeople\", \"doc\": \"Can view all people\", \"stream\": \"person\", \"streamDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, { \"_id\": [\"_rule\", -12], \"id\": \"editOwnChats\", \"doc\": \"Only allow users to edit their own chats\", \"stream\": \"chat\", \"attributes\": [\"chat/message\"], \"ops\": [\"transact\"] } ]"
+  "myRoleTx": "[ 
+    { \"_id\": \"_role\", \"id\": \"chatUser\", \"doc\": \"A standard chat user role\", \"rules\": [\"_rule$viewAllChats\", \"_rule$viewAllPeople\", \"_rule$editOwnChats\"] }, 
+    { \"_id\": \"_rule$viewAllChats\", \"id\": \"viewAllChats\", \"doc\": \"Can view all chats.\", \"stream\": \"chat\", \"streamDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, 
+    { \"_id\": \"_rule$viewAllPeople\", \"id\": \"viewAllPeople\", \"doc\": \"Can view all people\", \"stream\": \"person\", \"streamDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, 
+    { \"_id\": \"_rule$editOwnChats\", \"id\": \"editOwnChats\", \"doc\": \"Only allow users to edit their own chats\", \"stream\": \"chat\", \"attributes\": [\"chat/message\"], \"ops\": [\"transact\"] } 
+    ]"
 }
 
 ```
@@ -725,17 +754,17 @@ mutation addRole ($myRoleTx: JSON) {
 ```json
 [
   {
-    "_id":    ["_user", -1],
+    "_id":    "_user$jdoe",
     "username": "jdoe",
     "roles": [["_role/id", "chatUser"]],
-    "auth": [["_auth", -10]]
+    "auth": ["_auth$temp"]
   },
   {
     "_id": ["person/handle", "jdoe"],
-    "user": ["_user", -1]
+    "user": "_user$jdoe"
   },
   {
-    "_id": ["_auth", -10],
+    "_id": "_auth$temp",
     "key": "tempAuthRecord"
   }
 ]
@@ -746,17 +775,17 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-     "_id":    ["_user", -1],
+    "_id":    "_user$jdoe",
     "username": "jdoe",
     "roles": [["_role/id", "chatUser"]],
-    "auth": [["_auth", -10]]
+    "auth": ["_auth$temp"]
   },
   {
     "_id": ["person/handle", "jdoe"],
-    "user": ["_user", -1]
+    "user": "_user$jdoe"
   },
   {
-    "_id": ["_auth", -10],
+    "_id": "_auth$temp",
     "key": "tempAuthRecord"
   }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
@@ -770,6 +799,9 @@ mutation addUserAuth($myUserAuthTx: JSON){
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myUserAuthTx": "[ { \"_id\": [\"_user\", -1], \"username\": \"jdoe\", \"roles\": [[\"_role/id\", \"chatUser\"]], \"auth\": [[\"_auth\", -10]] }, { \"_id\": [\"person/handle\", \"jdoe\"], \"user\": [\"_user\", -1] }, { \"_id\": [\"_auth\", -10], \"key\": \"tempAuthRecord\" } ]"
+  "myUserAuthTx": "[ 
+    { \"_id\": \"_user$jdoe\", \"username\": \"jdoe\", \"roles\": [[\"_role/id\", \"chatUser\"]], \"auth\": [\"_auth$temp\"] }, 
+    { \"_id\": [\"person/handle\", \"jdoe\"], \"user\": \"_user\$jdoe" }, 
+    { \"_id\": \"_auth$temp\", \"key\": \"tempAuthRecord\" } ]"
 }
 ```

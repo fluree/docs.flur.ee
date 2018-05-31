@@ -98,7 +98,7 @@ Querying a single block
 
 ```
 query  {
-  block(from: 3, to: 3)
+  block(from: -3, to: -3)
 }
 ```
 
@@ -106,15 +106,15 @@ Querying a range of blocks
 
 ```
 query  {
-  block(from: 3, to: 5)
+  block(from: -3, to: -5)
 }
 ```
 
-Querying a range of blocks starting from a lower limit
+Querying a range of blocks starting from an upper limit
 
 ```
 query  {
-  block(from: 3)
+  block(from: -3)
 }
 ```
 
@@ -187,11 +187,25 @@ mutation addPeople ($myPeopleTx: JSON) {
 }
 
 {
-  "myPeopleTx": "[{ \"_id\": [\"person\", -1], \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, { \"_id\": [\"person\", -2], \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
+  "myPeopleTx": "[
+    { \"_id\": \"person\", \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, 
+  { \"_id\": \"person\", \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
 }
 ```
 
 If you are using the UI, you can place your variable in the "Query Variables" section on the lower left hand side of the GraphQL interface.
+
+```graphql
+mutation addPeople ($myPeopleTx: JSON) {
+  transact(tx: $myPeopleTx)
+}
+
+{
+  "myPeopleTx": "[
+    { \"_id\": \"person\", \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, 
+  { \"_id\": \"person\", \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
+}
+```
 
 ## API Endpoint
 

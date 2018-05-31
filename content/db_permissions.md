@@ -74,6 +74,7 @@ Attribute | Type | Description
 
 Attribute | Type | Description
 -- | -- | -- 
+`_auth/id` | `string` |  (optional) A unique identified for this rule.
 `_auth/key` | `string` |  (optional) A unique lookup key for this auth record.
 `_auth/type` | `tag` | (optional) The type of authorization this is. Current type tags supported are: `password`. When a user uses the `/api/signin` endpoint, the password supplied will be compared to the auth entity containing the `password` type. If there isn't an auth entity of type `password`, the user will be unable to authenticate via that endpoint.
 `_auth/secret` | `string` | (optional) The hashed secret. When using this as a `password` `_auth/type`, it is the one-way encrypted password.
