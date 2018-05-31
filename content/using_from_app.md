@@ -201,7 +201,7 @@ Key | Type | Description
 `select` | select-spec |  Selection specification in the form of an array/vector. To select all attributes use `[ "*" ]`. If you were storing customers and wanted to select just the customer name and products they own, the select statement might look like: `[ "customer/name", "customer/products"]`.
 `from` | from-spec | Can be an entity (represented as an identity or integer), or an entire stream of entities utilizing the stream name. If selecting from customers as per the prior example, it would simply be `"from": "customer"`. If selecting a specific customer, it would for example be `"from": 4299262263299` or `"from": "[\"customer/name\", \"Newco Inc.\"]"`. 
 `where` | where-spec | Optional. Can be in the simple SQL-like string format or more sophisticated queries can be specified in the datalog format. For the simple format, might include something like: `"where": "customer/name = 'ABC Corp'"` or `"where": "person/age >= 22 AND person/age <= 50"`.
-`block` | negative integer or ISO-8601 date string | Optional time-travel query, specified either by the block the query results should be of, or a wall-clock time in ISO-8601 fromat. When no block is specified, the most current database is always queried.
+`block` | integer or ISO-8601 date string | Optional time-travel query, specified either by the block the query results should be of, or a wall-clock time in ISO-8601 fromat. When no block is specified, the most current database is always queried.
 `limit` | integer | Optional limit for result quantity. Fluree uses a default of 1000.
 
 
@@ -251,7 +251,7 @@ curl \
 {
   "select": ["*"],
   "from": "chat",
-  "block": -2
+  "block": 2
 }
 ```
 
@@ -263,7 +263,7 @@ Not supported
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{"select": ["*"], "from": "chat", "block": -2}' \
+   -d '{"select": ["*"], "from": "chat", "block": 2}' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 #### Time travel by specifying a time
