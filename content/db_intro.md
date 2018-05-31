@@ -328,7 +328,7 @@ Here is what an abbreviated response will look like from this transaction, and a
   "tempids": {
     "chat$1": 4299262263297
   },
-  "block": -5,
+  "block": 5,
   "hash": "40bc619be312251493788911cfe1ac6106803bc05166cc776d728b63b415b5c0",
   "time": "17.32ms",
   "status": 200,
@@ -348,7 +348,7 @@ Here is what an abbreviated response will look like from this transaction, and a
 Key | Description
 ---|---
 `tempids` | A mapping of any temporary id used in a transaction to its final id value that was assigned.
-`block` | The blockchain block number that was created with this transaction. These are negative and will always decrease by one.
+`block` | The blockchain block number that was created with this transaction. These increment by one. 
 `time` | The amount of time that the transaction took to complete.
 `status` | The status of the transactions. These map to HTML status codes, i.e. 200 is OK. 
 `hash` | The blockchain hash of this transaction, that can be cryptographically proven with the same `flakes` in the future, and linked to the previous block that creates the chain.

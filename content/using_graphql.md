@@ -98,7 +98,7 @@ Querying a single block
 
 ```
 query  {
-  block(from: -3, to: -3)
+  block(from: 3, to: 3)
 }
 ```
 
@@ -106,15 +106,15 @@ Querying a range of blocks
 
 ```
 query  {
-  block(from: -3, to: -5)
+  block(from: 3, to: 5)
 }
 ```
 
-Querying a range of blocks starting from an upper limit
+Querying a range of blocks starting from a lower limit
 
 ```
 query  {
-  block(from: -3)
+  block(from: 3)
 }
 ```
 

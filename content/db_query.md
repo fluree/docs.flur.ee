@@ -82,18 +82,18 @@ curl \
 {
   "select": ["*"],
   "from": "chat",
-  "block": -2
+  "block": 2
 }
 ```
 ```curl
  curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{"select": ["*"], "from": "chat", "block": -2}' \
+   -d '{"select": ["*"], "from": "chat", "block": 2}' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
-{ graph (block: -2) {
+{ graph (block: 2) {
   chat {
     _id
     instant
@@ -143,7 +143,7 @@ Key | Required? | Description
 `from` | yes | Either a stream name or an individual identity via its `_id` number or identity (unique attribute) name + value.
 `where` | no | Optional where clause specified a SQL-like string.
 `limit` | no | Optional limit (integer) of results to include.
-`block` | no | Optional time-travel query specified by block number (negative integer) or wall-clock time as a ISO-8601 formatted string.
+`block` | no | Optional time-travel query specified by block number or wall-clock time as a ISO-8601 formatted string.
 
 
 #### A simple FlureeQL Graph Query that returns all direct attributes for last 100 chat messages
@@ -187,7 +187,7 @@ Key | Required? | Description
 ```json
 
 {
-  "block": -12,
+  "block": 12,
   "status": 200,
   "time": "0.93ms",
   "result": [
@@ -273,7 +273,7 @@ The syntax isn't just a way to specify the data you'd like returned, but inheren
 
 ```json 
 {
-  "block": -12,
+  "block": 12,
   "status": 200,
   "time": "0.57ms",
   "result": [
@@ -355,7 +355,7 @@ For fun, you can add another sub-query to follow the chat message back to the pe
 
 ```json
 {
-  "block": -12,
+  "block": 12,
   "status": 200,
   "time": "1.86ms",
   "result": [
@@ -457,24 +457,24 @@ Key | Required? | Description
 -- | -- | -- 
 `select` | yes | Analytical select statement, which can include aggregate functions, bound variables and descriptors for data return shape (single result, collection, tuple).
 `where` | yes | A collection of tuples which contain matching logic, variable binding or functions.
-`block` |  | Optional time-travel query specified by block number (negative integer) or wall-clock time as a ISO-8601 formatted string.
+`block` |  | Optional time-travel query specified by block number or wall-clock time as a ISO-8601 formatted string.
 
 ## Fluree Block Queries
 FlureeDB allows you to select data from an entire block or block range. 
 
 To query a single block, you simply need to provide the block number. 
-```{"block": -3}```
+```{"block": 3}```
 
 To query a range of blocks, provide the first and last blocks you want to include. 
-```{"block": [-3, -5]}```
+```{"block": [3, 5]}```
 
-To query all of the blocks after a certain block number, provide the upper limit. Remember, blocks decrease by one. If you are on block -7, to view all the blocks from -3 to -7, you could specify. 
-```{"block": [-3]}```
+To query all of the blocks after a certain block number, provide the lower limit.
+```{"block": [3]}```
 
 #### Query a single block
 ```json
 {
-  "block": -3
+  "block": 3
 }
 ```
 ```curl
@@ -482,18 +482,18 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
-    "block": -3
+    "block": 3
 }' \
 ```
 ```graphql
 query  {
-  block(from: -3, to: -3)
+  block(from: 3, to: 5)
 }
 ```
 #### Query a range of blocks
 ```json
 {
-  "block": [-3,-5]
+  "block": [3,5]
 }
 ```
 ```curl
@@ -501,19 +501,19 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
-    "block": [-3, -5]
+    "block": [3, 5]
 }' \
  https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
 query  {
-  block(from: -3, to: -5)
+  block(from: 3, to: 5)
 }
 ```
-#### Query a range of blocks starting from an upper limit
+#### Query a range of blocks starting from a lower limit
 ```json
 {
-  "block": [-3]
+  "block": [3]
 }
 ```
 ```curl
@@ -521,12 +521,12 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
-    "block": [-3]
+    "block": [3]
 }' \
  https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 ```graphql
 query  {
-  block(from: -3)
+  block(from: 3)
 }
 ```
