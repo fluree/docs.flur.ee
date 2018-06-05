@@ -683,7 +683,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Only allow users to edit their own chats",
     "stream": "chat",
     "attributes": ["chat/message"],
-    "predicate": "(contains? (follow ?e [\"chat/person\" \"person/user\"]) ?user)",
+    "predicate": "(contains? (get-all ?e [\"chat/person\" \"person/user\"]) ?user)",
     "ops": ["transact"]
   }
 ]
@@ -724,7 +724,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Only allow users to edit their own chats",
     "stream": "chat",
     "attributes": ["chat/message"],
-    "predicate": "(contains? (follow ?e [\"chat/person\" \"person/user\"]) ?user)",
+    "predicate": "(contains? (get-all ?e [\"chat/person\" \"person/user\"]) ?user)",
     "ops": ["transact"]
   }
 ]' \
