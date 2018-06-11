@@ -167,8 +167,8 @@ curl \
 
 FlureeDB is also designed to interact directly with front-end apps/UIs via a set of permissions tied to individual users. The rules-based permissions will 'hide' any data the user is unable to view, and prevent unauthorized transactions. In this case, each user will need a unique token tied to them. There are two ways to generate these user-specific tokens:
 
-1. An API endpoint, `/api/auth/token`, can generate tokens assuming the user generating the token has permission to do so for the given user / auth record. You can roll your own authentication logic within your app server, and once satisfied, use the API endpoint to generate the token and pass it to the client for subsequent use.
-2. For hosted FlureeDB, we provide an authentication service you can leverage if you like by having your end-user application POST username + password to the `/api/auth/signin` JSON endpoint, and assuming successful authentication, a token will be returned. Additional options such as token expiration can also be provided. This service also handles password reset requests for you.
+1. An API endpoint, `/api/db/token`, can generate tokens assuming the user generating the token has permission to do so for the given user / auth record. You can roll your own authentication logic within your app server, and once satisfied, use the API endpoint to generate the token and pass it to the client for subsequent use.
+2. For hosted FlureeDB, we provide an authentication service you can leverage if you like by having your end-user application POST username + password to the `/api/signin` JSON endpoint, and assuming successful authentication, a token will be returned. Additional options such as token expiration can also be provided. This service also handles password reset requests for you.
 
 
 

@@ -320,6 +320,14 @@ Function | Example | Description
 -- | -- | -- 
 `inc` | `#(inc)` |  Increment existing value by 1. Works on `integer`.
 `dec` | `#(dec)` | Decrement existing value by 1. Works on `integer`.
+`now` | `#(now)` | Insert current server time. Works on `instant`.
+`+` | `#(+ [1 2 3])` | Returns the sum of the provided values. Works on `integer` and `float`.
+`-` | `#(- [10 9 3])` | Returns the difference of the numbers. The first, as the minuend, the rest as the subtrahends. Works on `integer` and `float`.
+`*` | `#(* [90 10 2])` | Returns the product of the provided values. Works on `integer` and `float`.
+`/` | `#(/ [36 3 4])` | If only one argument supplied, returns 1/first argument, else returns first argument divided by all of the other arguments. Works on `integer` and `float`.
+`quot` | `#(quot 60 10)` | Returns the quotient of dividing the first argument by the second argument. Rounds the answer towards 0 to return the nearest integer. Works on `integer` and `float`.
+`rem` | `#(rem 64 10)` | Remainder of dividing the first argument by the second argument. Works on `integer` and `float`.
+`mod` | `#(mod 64 10)` | Modulus of the first argument divided by the second argument. The mod function takes the rem of the two arguments, and if the either the numerator or denominator are negative, it adds the denominator to the remainder, and returns that value. Works on `integer` and `float`.
 `max` | `#(max [1 2 3])`| Returns the max of the provided values. Works on `integer`, `float`.
 `max-attr-val` | `"#(max-attr-val \"person/age\")"`| Returns the max of the provided attribute. Works on `integer`, `float`.
 `now` | `#(now)` | Insert current server time. Works on `instant`.
