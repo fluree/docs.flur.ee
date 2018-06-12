@@ -649,7 +649,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
 }
 ```
 
-#### Add a role, and a rule
+#### Add a role and rules
 
 ```json 
 [
