@@ -234,3 +234,9 @@ Key | Required | Description
   "operationName": null
   }
 ```
+
+# Developer Resources
+
+## Fluree Slack
+
+Another way to engage with us is to join the [Fluree Slack](https://launchpass.com/flureedb). The Slack is a place to stay up-to-date with company announcements, discuss features, and get support from the Fluree team or fellow developers using Fluree. 

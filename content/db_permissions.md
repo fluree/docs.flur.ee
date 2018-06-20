@@ -16,7 +16,6 @@ Individual permissions, such as read and write access to a stream, are encoded i
 
 ![Diagram shows a role, chatUser, that is comprised of three rules: read access for all chats and people, as well as read and write access for own chats](./images/roleChatUser.svg)
 
-
 Another role, dbAdmin might include read and write access to all users, as well as token issuing permissions.
 
 ![Diagram shows a role, dbAdmin, that is comprised of two rules: read and write access for all users and the ability to generate and revoke tokens.](./images/roleDbAdmin.svg)

@@ -1,57 +1,536 @@
-# FlureeDB Intro
+# Intro
 
-## Beta
+## Welcome
 
-Welcome to the FlureeDB beta! Thank you for participating. Please note the following during your participation:
+Welcome to the FlureeDB documentation!
 
-- FlureeDB is focused on typical enterprise applications and their respective workload characteristics. By this we mean we are optimized towards highly relational data that may have very high (and complex) query volume but does not have high transactional volume. While we will have support for some high transactional volume use cases, it is less likely a blockchain database will be an ideal fit for these, and therefore this is not a current focus for this beta.
-- The beta is on a shared infrastructure, and we have implemented some limits to ensure fair use. When we are looking for people to try and crash the system (which we will), we'll ask for that feedback. Currently we want feedback on general usage, i.e. does the syntax work well and are you able to query for data in all the ways you wish you could.
-- The core has been working well, and we are expanding into more complex analytical queries. This will be the next area of focus for us and you will find expanding information about this primarily in the 'Query' section of the documentation. 
-- If you have issues, please do report them! A simple email to support@flur.ee is much appreciated with a description of what happened, and when.
-- If you have a use case you'd like to discuss with us please also let us know. We are happy to discuss it on the phone, skype or over email to understand what you are looking to accomplish.
-- The following getting started guide begins with a blank database. Based on feedback, we'll soon allow you to fork some sample databases so you can begin with existing data.
+**Where to Start?** 
 
+*Option 1*. To learn a little bit about how our database works, begin with the [What is FlureeDB?](#what-is-flureedb) section. 
 
-## Capability
+*Option 2*. To get your hands dirty right away, visit the [Quick Start](#quickstart) guide.
 
-FlureeDB is an immutable, time-ordered blockchain database. The blockchain at the core is essentially a specially formatted log file of database updates grouped into blocks. Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
+If you have issues, please do report them! A simple email to [support@flur.ee](mailto:support@flur.ee) is much appreciated with a description of what happened, and when. 
 
-We call these log entries Flakes, which have a special format optimized to power the graph database and its unique features. Each Flake is a specific fact at a specific point in time about a specific entity / asset / object. No two Flakes are the same.
+In addition, our [Fluree Slack](https://flureedb.slack.com/) is a great place to connect with other developers, ask questions, and chat about all things FlureeDB. If you are not already part of the Slack, please [join here](https://launchpass.com/flureedb).
 
-The query server(s) powering your applications leverage these Flakes in an optimized way to give you a very fast and very powerful graph database. Your queries always interact with an immutable version of your database at an exact moment in time. In fact, you can query any point in time in history, instantly.
+## What is FlureeDB?
+
+FlureeDB is an immutable, time-ordered blockchain database. 
+
+Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
+
+![A series of 5 blocks stacked on top of each other vertically. The middle block is deconstructed to show: the previous block's hash, the current block's hash, data, a timestamp, and the block index.](./images/blockContents.png)
+
+At its core, every block contains a group of specially formatted log files of database updates, as well as block meta-data. We call these log files Flakes. Each Flake is a specific fact at a specific point in time about a specific entity. No two Flakes are the same.
+
+Below is an example of database block. We will go into detail about the contents of the blocks in the (INSERT SECTION NAME HERE). However, below you can see that, among other things, every block contains a hash, a timestamp, and the size of the block data (block-bytes). This block also contains an array of six Flakes. These Flakes contain all the data that is added, updated, or deleted in block 5, as compared to block 4. 
+
+```
+{
+  "tempids": {
+    "chat$1": 4299262263297
+  },
+  "block": 5,
+  "hash": "40bc619be312251493788911cfe1ac6106803bc05166cc776d728b63b415b5c0",
+  "time": "17.32ms",
+  "status": 200,
+  "block-bytes": 400,
+  "timestamp": 1527611445038,
+  "flakes": [
+     [ 4299262263297, 1004, 1527611445050, -589824, true, 0 ],
+     [ 4299262263297, 1003, 4294967296001, -589824, true, 0 ],
+     [ 4299262263297, 1002, "This is a sample chat from Jane!", -589824, true, 0 ],
+     [ -589824, 5, 1527611445038, -589824, true, 0 ],
+     [ -589824, 2, "386cede775f6308cb48beaa9e9fac60c8d184db836194566412b798ab36a2cd6", -589824, true, 0 ],
+     [ -589824, 1, "40bc619be312251493788911cfe1ac6106803bc05166cc776d728b63b415b5c0", -589824, true, 0 ]
+  ]
+}
+```
+We can think of the database at any given point in time as the combination of all the Flakes up until that point. For example, the database at block 5 is the result of "playing all of the Flakes forward" from blocks 1 through 5. 
+
+We will go into detail about how to create schema and transact data in the database later. But for now, the below image shows you a simplified representation of five blocks worth of Flakes. In the first two blocks, we create our simple schema (a user with a user/handle and a user/chat). In block 3, we add a new user named 'bob' and a chat message for Bob. In block 4, we create a new user with the handle 'jane', and finally in block 5, we attribute a chat to 'jane'.
+
+![A table with the columns: "entity", "attribute", "value", "block", and "add." There are seven rows in this table, and each contains sample data, which is explained in the accompanying paragraph.](./images/flakeLogBlocks1-5.png)
+
+Rather than storing a copy of the entire database in each block, every block contains only Flakes, or facts about entities, that are different as of that block.
+
+## Capabilities
+
+We are focused on typical enterprise applications, which means we are optimized for:
+
+- Highly relational data
+- Very high (and complex) query volume
+
+While we will have support for some high transactional volume use cases, it is less likely a blockchain database will be an ideal fit for these, and therefore this is not a current focus.
 
 The Fluree database features these capabilities:
-- ACID transactions.
-- Database functions.
-- End-user permissions rules, allowing control down to the entity + attribute level with custom predicate functions.
-- Ability to act as multiple database types simultaneously: a graph database, document database, and an event log (document db in beta soon).
-- Automated change feed subscriptions for issued queries. We auto-detect the data a query would contain and can push notifications for those changes to keep user interfaces updated automatically (in beta soon).
-- A GraphQL query interface.
-- Powerful query language that supports unlimited recursion and can be represented fully in JSON, thus readily composable.
+
+- ACID transactions
+- Database functions
+- Granular user permissions
+- A GraphQL query interface
+- Powerful query language that supports unlimited recursion and can be represented fully in JSON
 - Scale-out writes by leveraging partitioning (in beta soon).
-- Scale-out reads, by separating eventually consistent query engines from the core bockchain transactor. Queries can optionally force consistency to a specific point-in-time or block.
-- Point-in-time queries, leveraging the characteristics our immutable blockchain core provides.
+- Scale-out reads, by separating eventually consistent query engines from the core blockchain transactor. Queries can optionally force consistency to a specific point-in-time or block.
+- Point-in-time queries (in other words, time-travel), allowing you to query the same information at different points in time
 - When leveraging Fluree's cloud-hosted private consensus, there is zero management overhead. Federated and fully decentralized consensus modes are in development.
 - FlureeDB will be open source as we move forward in development.
 
-## Quick Start
+# Quick Start
+## QuickStart
 
-This quick start is designed to utilize the FlureeDB interactive web console at [https://flureedb.flur.ee](https://flureedb.flur.ee). These transactions could also be performed via your code or REPL utilizing the JSON API, but would require a token. 
+This quick start is designed to utilize the [FlureeDB interactive web console](https://flureedb.flur.ee). These transactions could also be performed via your code or REPL utilizing the JSON API, but that would require a token.
 
-This example creates several streams to store chat messages, comments, and people.
+The first four topics in the Quick Start guide will show you how to query and transact using an already populated database. The next three topics will show you how to query and transact in a brand new database. 
 
-We'll follow these steps to give a sense of FlureeDB basics:
+Topic |   
+-- | -- 
+1 | [Forking a Database](#forking-a-database)
+2 | [Basic Movie Database Queries](#basic-movie-database-queries)
+3 | Nested Movie Database Queries
+4 | Basic Movie Database Transactions 
+5 | Schema Creation For a New Database
+6 | Time Travel Queries
+7 | Establishing User Permissions
 
-1. Create a schema for our database
-2. Transact chat messages
-3. Query for those messages
-4. Time Travel Query
-5. Establish a user's permission
-6. Query permissioned DB
+## Forking a Database
+To begin, log in to the [FlureeDB Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee) and click "Add Database" in the bottom left-hand side of the page. 
 
-**>> To begin, log in and select the database you'd like to perform this quick start on in the UI Sidebar. Be sure to use the `root` user.
+When you create a new database, you have the option of starting from a blank database or forking a sample database. For this portion of the Quick Start, select "Movie Database" from the "Database Templates" options.
 
-[FlureeDB Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee)
+![A form from the Admin Portal, heading is "Create New Database". There are two fields in the form, one with the label "Database Name" and the other with the label "Database Templates." "Movie Database" is selected as the option in "Database Templates."](./images/forkMovieDb.png)
+
+Refresh, and then select your new database and the user "root" from the sidebar of the administrative portal.  
+
+Now, select FlureeQL in the sidebar to go to the [FlureeQL interface](https://flureedb.flur.ee/flureeql). Make sure that the "Query" option is selected in the header. Now you are ready to start querying the database!
+
+## Basic Movie Database Queries 
+
+### Selecting All Actors, Movies, Genres
+
+A Fluree schema consists of streams and attributes. Streams are similar to a relational database's tables. Streams organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new stream to hold it. You can learn more about streams in the [Streams](#streams) section. 
+
+The movie database that we forked contains eight streams: actor, credit, keyword, genre, language, country, productionCompany, and movie. We can select all attributes (*) for all actors in the database with the following query:
+
+```
+{
+ "select": ["*"],
+ "from": "actor"
+}
+```
+
+Your result will look similiar to this. 
+
+```
+{
+  "block": 12,
+  "result": [
+    {
+      "_id": 4325032121660,
+      "actor/gender": 0,
+      "actor/name": "Skip P. Welch",
+      "actor/id": 1893207
+    },
+    {
+      "_id": 4325032121659,
+      "actor/gender": 0,
+      "actor/name": "Matthew Withers",
+      "actor/id": 1893206
+    }
+    .
+    .
+    .
+     ],
+  "status": 200,
+  "time": "3905.94ms"
+}
+```
+
+Although there are more than 1,000 actors, by default FlureeDB only returns 1,000 results, although this can be changed by setting the limit options [LINK HERE]().
+
+We can do the same thing for any other stream by just replacing "actor" with "movie" or "credit" for instance.
+
+```
+{
+ "select": ["*"],
+ "from": "anyStreamNameHere"
+}
+```
+
+Note that only the FlureeQL syntax will work on the FlureeQL page, but we have also provided the GraphQL and curl syntax here if you prefer to follow along with the Quick Start through those modes.
+
+#### Selecting All Actors 
+```json
+{
+ "select": ["*"],
+ "from": "actor"
+}
+```
+
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+ "select": ["*"],
+ "from": "actor"
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+
+```graphql
+{
+  graph {
+    actor {
+      /* Note that GraphQL does not support wildcards. */
+      gender
+      name
+      id
+    }
+  }
+}
+
+```
+#### Selecting All Movies
+```json
+{
+ "select": ["*"],
+ "from": "movie"
+}
+```
+
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+ "select": ["*"],
+ "from": "movie"
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+
+```graphql
+{
+  graph {
+    movie {
+      /* Note that GraphQL does not support wildcards. */
+      title
+      id
+      genres
+      budget
+      credits
+    }
+  }
+}
+
+```
+
+#### Selecting All Credits
+```json
+{
+ "select": ["*"],
+ "from": "credit"
+}
+```
+
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+ "select": ["*"],
+ "from": "credit"
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+
+```graphql
+{
+  graph {
+    credit {
+      /* Note that GraphQL does not support wildcards. */
+      id
+      actor
+      character
+      order
+    }
+  }
+}
+
+```
+
+### Selecting A Specific Actor, Movie, or Genre
+
+FlureeDB allows you to select a collection from an entire stream, much like our examples thus far, or you can also specify a single entity.
+
+An single entity can be selected using any valid identity, which includes the unique _id long integer if you know it, or any unique attribute's name and value.
+
+For example, if you knew an actor's _id, you could select them using "from": that _id.
+
+```
+{
+  "select": ["*"],
+  "from": 4325032071191
+}
+```
+
+You could also use a unique attribute like "from": ["actor/name", "Angelina Jolie"]. Both results will be identical. The results are a map/object in this case, and not a collection.
+
+```
+{
+  "select": ["*"],
+  "from": ["actor/name", "Angelina Jolie"]
+}
+```
+
+Try it yourself. First query all the movies, then note down the _id for the movie you would like to select, and use that _id to select only that single movie. 
+
+```
+{
+  "select": ["*"],
+  "from":  REMEMBER TO GET ID LATER
+}
+```
+
+You can do the same thing by select a movie by its title, for example:
+
+```
+{
+  "select": ["*"],
+  "from": ["movie/title", "Shawshank Redemption"]
+}
+```
+
+#### Selecting an Actor Using Their _id
+
+```json
+{
+  "select": ["*"],
+  "from": 4325032071191
+}
+```
+
+```curl 
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": ["*"],
+  "from": 4325032071191
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+
+```graphql
+{ graph {
+  actor (where: "_id = 4325032071191"){
+    _id
+    id
+    name
+  }
+}
+}
+```
+
+#### Selecting an Actor Using Their Name
+```json
+{
+  "select": ["*"],
+  "from": ["actor/name", "Angelina Jolie"]
+}
+```
+
+```curl 
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": ["*"],
+  "from": ["actor/name", "Angelina Jolie"]
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+
+```graphql
+{ graph {
+  actor (where: "actor/name = \"Angelina Jolie\""){
+    _id
+    id
+    name
+  }
+}
+}
+```
+
+## Nested Movie Database Queries
+
+### Selecting All Actors From A Movie
+FlureeDB support unlimited recursion in our queries. As a graph database, any FlureeDB query can follow a chain of relationships across multiple streams. 
+
+For instance, let's suppose that we want to get all the actors from the movie, "Shawshank Redemption." We can select all the attributes from `["movie/title", "Shawshank Redemption"]` using this query:
+
+```
+{
+  "select": ["*"],
+  "from": ["movie/title", "Shawshank Redemption"]
+}
+```
+However, the response only shows us the _id's for each movie/credit. 
+
+```
+RESPONSE HERE TO ADD
+```
+
+Each movie/credit attribute is a reference to the credit stream. In order to view other attributes from the credit stream, we need to specify that with a nested query.
+
+```
+{
+  "select": ["*", {
+    "movie/credits": ["*"]
+  }],
+  "from": ["movie/title", "Shawshank Redemption"]
+}
+```
+
+```
+RESPONSE HERE TO ADD
+```
+
+This query follows the relationship between the movie and the credit streams. It does not, however, show us actor names - only their _ids. In order to get actor names, we have to continue following the relationship from movie/credits to credit/actor. 
+
+```
+{
+  "select": ["*", {
+    "movie/credits": ["*", 
+    {
+      "credit/actor": ["*"]
+    }]
+  }],
+  "from": ["movie/title", "Shawshank Redemption"]
+}
+```
+
+```
+RESPONSE HERE TO ADD
+```
+
+#### Selecting All Attributes From Movie
+```json
+{
+  "select": ["*"],
+  "from": ["movie/title", "Shawshank Redemption"]
+}
+```
+```curl
+ curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": ["*"],
+  "from": ["movie/title", "Shawshank Redemption"]
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+```graphql
+{ graph {
+  movie (where: "movie/title = \"Shawshank Redemption\""){
+    title
+    _id
+    id
+    credits {
+      _id
+    }
+  }
+}
+}
+```
+
+#### Selecting All Attributes From Movie and Movie/Credits
+```json
+{
+  "select": ["*", {
+    "movie/credits": ["*"]
+  }],
+  "from": ["movie/title", "Shawshank Redemption"]
+}
+```
+```curl
+ curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": ["*", {
+    "movie/credits": ["*"]
+  }],
+  "from": ["movie/title", "Shawshank Redemption"]
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+```graphql
+{ graph {
+  movie (where: "movie/title = \"Shawshank Redemption\""){
+    title
+    _id
+    id
+    credits {
+      _id
+      actor {
+        _id
+      }
+    }
+  }
+}
+}
+```
+#### Selecting All Attributes From Movie and Movie/Credits and Credit/Actor
+```json
+{
+  "select": ["*", {
+    "movie/credits": ["*", 
+    {
+      "credit/actor": ["*"]
+    }]
+  }],
+  "from": ["movie/title", "Shawshank Redemption"]
+}
+```
+```curl
+ curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": ["*", {
+    "movie/credits": ["*", 
+    {
+      "credit/actor": ["*"]
+    }]
+  }],
+  "from": ["movie/title", "Shawshank Redemption"]
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+```graphql
+{ graph {
+  movie (where: "movie/title = \"Shawshank Redemption\""){
+    title
+    _id
+    id
+    credits {
+      _id
+      actor {
+        _id
+        name
+        gender
+        id
+      }
+    }
+  }
+}
+}
+```
+
 
 ### Schema - Streams
 
