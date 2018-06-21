@@ -1126,8 +1126,6 @@ mutation addChatMessage ($myChatTx: JSON) {
 
 These two example queries will return current chat messages. The second example follows the graph relationship to also include details about the referred person who posted the chat message.
 
-Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request, which can be used to reduce round-trips for applications.
-
 #### Simple query for all chat messages
 
 ```json
