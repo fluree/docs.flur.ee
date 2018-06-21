@@ -1,5 +1,6 @@
-
 # Transactions
+
+## Transactions
 Fluree allows you to specify transaction using FlureeQL JSON array/vector syntax that contains entity maps to create, update, upsert or delete. Transactions can also be done with GraphQL, for more information on on GraphQL transactions, reference the GraphQL Transactions section. 
 
 Each map requires an `_id` as specified below along with key/value pairs containing the attributes and values you wish to modify. An `_action` key is always included, but typically inferred and thus optional for most operations.
@@ -15,7 +16,7 @@ The keys can contain the full attribute name including the namespace, i.e. `chat
 
 ## Temporary Ids
 
-A tempid can simply be the stream name, i.e. `_user`. 
+Every transaction item must have an _id attribute to refer to the entity we are attempting to create/update. A tempid can simply be the stream name, i.e. `_user`. 
 
 FlureeQL example:
 
@@ -333,3 +334,19 @@ Function | Example | Description
 `now` | `#(now)` | Insert current server time. Works on `instant`.
 
 Database function can also be combined, for instance `#(inc (max [1.5 2 3]))` will return 4. 
+
+## Transaction Response
+
+After submitting a successful transaction, the response will have the following keys: 
+
+Key | Description
+---|---
+`tempids` | A mapping of any temporary id used in a transaction to its final id value that was assigned.
+`block` | The blockchain block number that was created with this transaction. These increment by one. 
+`time` | The amount of time that the transaction took to complete.
+`status` | The status of the transactions. These map to HTML status codes, i.e. 200 is OK. 
+`hash` | The blockchain hash of this transaction, that can be cryptographically proven with the same `flakes` in the future, and linked to the previous block that creates the chain.
+`block-bytes` | The size of the block, in bytes.
+`timestamp` | A timestamp for the transaction. 
+`flakes` | Flakes are the state change of the database, and is the block data itself. Each is a six-tuple of information including the entity-id, attribute-id, value, block-id, true/false for add/delete, and expiration of this piece of data in epoch-milliseconds (0 indicates it never expires).
+

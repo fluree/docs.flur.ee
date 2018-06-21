@@ -55,6 +55,8 @@ We will go into detail about how to create schema and transact data in the datab
 
 Rather than storing a copy of the entire database in each block, every block contains only Flakes, or facts about entities, that are different as of that block.
 
+The [FlureeDB Whitepaper](https://flur.ee/assets/pdf/flureedb_whitepaper_v1.pdf) goes into more depth about how FlureeDB works. 
+
 ## Capabilities
 
 We are focused on typical enterprise applications, which means we are optimized for:
@@ -77,24 +79,27 @@ The Fluree database features these capabilities:
 - When leveraging Fluree's cloud-hosted private consensus, there is zero management overhead. Federated and fully decentralized consensus modes are in development.
 - FlureeDB will be open source as we move forward in development.
 
-# Quick Start
 ## QuickStart
 
 This quick start is designed to utilize the [FlureeDB interactive web console](https://flureedb.flur.ee). These transactions could also be performed via your code or REPL utilizing the JSON API, but that would require a token.
 
-The first four topics in the Quick Start guide will show you how to query and transact using an already populated database. The next three topics will show you how to query and transact in a brand new database. 
+The first four topics in the Quick Start guide will show you how to query and transact using an already populated database. The next two topics will show you how to set up a brand new database. 
 
 Topic |   
 -- | -- 
 1 | [Forking a Database](#forking-a-database)
-2 | [Basic Movie Database Queries](#basic-movie-database-queries)
-3 | Nested Movie Database Queries
-4 | Basic Movie Database Transactions 
-5 | Schema Creation For a New Database
-6 | Time Travel Queries
-7 | Establishing User Permissions
+2 | [Selecting All Actors, Movies, Credits](#selecting-all-actors-movies-credits)
+3 | [Selecting a Specific Actor or Movie](#selecting-a-specific-actor-or-movie)
+4 | [Selecting All Actors From a Movie](#selecting-all-actors-from-a-movie)
+5 | [Selecting All Actor Names From a Movie](#selecting-all-actor-names-from-a-movie)
+6 | [Adding a Movie to the Database](#adding-a-movie-to-the-database)
+7 | [Creating Schema - Streams](#creating-schema---streams)
+8 | [Creating Schema - Attributes](#creating-schema---attributes)
+9 | [Transacting Data](#transacting-data) 
+5 | [Querying Data](#querying-data)
+6 | [Permissions Introduction](#permissions-introduction)
 
-## Forking a Database
+### Forking a Database
 To begin, log in to the [FlureeDB Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee) and click "Add Database" in the bottom left-hand side of the page. 
 
 When you create a new database, you have the option of starting from a blank database or forking a sample database. For this portion of the Quick Start, select "Movie Database" from the "Database Templates" options.
@@ -105,13 +110,17 @@ Refresh, and then select your new database and the user "root" from the sidebar 
 
 Now, select FlureeQL in the sidebar to go to the [FlureeQL interface](https://flureedb.flur.ee/flureeql). Make sure that the "Query" option is selected in the header. Now you are ready to start querying the database!
 
-## Basic Movie Database Queries 
-
-### Selecting All Actors, Movies, Genres
+### Selecting All Actors, Movies, Credits
 
 A Fluree schema consists of streams and attributes. Streams are similar to a relational database's tables. Streams organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new stream to hold it. You can learn more about streams in the [Streams](#streams) section. 
 
-The movie database that we forked contains eight streams: actor, credit, keyword, genre, language, country, productionCompany, and movie. We can select all attributes (*) for all actors in the database with the following query:
+The movie database that we forked contains eight streams: actor, credit, keyword, genre, language, country, productionCompany, and movie. 
+
+Fluree allows you to specify queries using our FlureeQL JSON syntax or with GraphQL. The FlureeQL format is designed to easily enable code to compose queries, as the query is simply a data structure.
+
+For each query, the user's permissions (determined according to _auth record through which they are authenticated - more on that in the [Fluree Permissions](#fluree-permissions) section) create a special filtered database that only contains what the user can see. You can safely issue any query, never having to worry about accidentally exposing permissioned data.
+
+We can select all attributes (*) for all actors in the database with the following query:
 
 ```
 {
@@ -147,7 +156,7 @@ Your result will look similiar to this.
 }
 ```
 
-Although there are more than 1,000 actors, by default FlureeDB only returns 1,000 results, although this can be changed by setting the limit options [LINK HERE]().
+Although there are more than 1,000 actors, by default FlureeDB only returns 1,000 results, although this can be changed by setting the [limit options](#apidbquery).
 
 We can do the same thing for any other stream by just replacing "actor" with "movie" or "credit" for instance.
 
@@ -261,7 +270,7 @@ curl \
 
 ```
 
-### Selecting A Specific Actor, Movie, or Genre
+### Selecting A Specific Actor or Movie
 
 FlureeDB allows you to select a collection from an entire stream, much like our examples thus far, or you can also specify a single entity.
 
@@ -364,10 +373,8 @@ You can do the same thing by select a movie by its title, for example:
 }
 ```
 
-## Nested Movie Database Queries
-
-### Selecting All Actors From A Movie
-FlureeDB support unlimited recursion in our queries. As a graph database, any FlureeDB query can follow a chain of relationships across multiple streams. 
+### Selecting All Actors From a Movie
+FlureeDB support unlimited recursion in our queries. As a graph database, any FlureeDB query can follow a chain of relationships across multiple streams (and back).
 
 For instance, let's suppose that we want to get all the actors from the movie, "Shawshank Redemption." We can select all the attributes from `["movie/title", "Shawshank Redemption"]` using this query:
 
@@ -531,10 +538,220 @@ RESPONSE HERE TO ADD
 }
 ```
 
+### Selecting All Actor Names From a Movie
+Suppose that instead of getting all of the attributes for every credit and actor from "Shawshank Redemption," we only wanted to see actor/name. We can do this by only including actor/name in our "select" clause. 
 
-### Schema - Streams
+```
+RESPONSE HERE
+```
 
-A Fluree schema consists of streams and attributes. These are similar to a relational database's tables and columns, however in Fluree both of these concepts are extended and more flexible. Streams organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new stream to hold it. Streams differ from tables in that they are an always-present stream of changes about those entities that can be queried at any point in time, not just the latest changes as a traditional database would do.
+#### Selecting All Actor Names From Movie and Movie/Credits and Credit/Actor
+```json
+{
+  "select": [{
+    "movie/credits": [
+    {
+      "credit/actor": ["actor/name"]
+    }]
+  }],
+  "from": ["movie/title", "Shawshank Redemption"]
+}
+```
+```curl
+ curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+  "select": [{
+    "movie/credits": [
+    {
+      "credit/actor": ["actor/name"]
+    }]
+  }],
+  "from": ["movie/title", "Shawshank Redemption"]
+}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+```graphql
+{ graph {
+  movie (where: "movie/title = \"Shawshank Redemption\""){
+    credits {
+      actor {
+        name
+      }
+    }
+  }
+}
+}
+```
+
+### Adding a Movie to the Database
+
+To write data to the Fluree Database, you submit a collection of statements to the transactor endpoint. All of the statements will be successfully committed together, or all fail together with the error reported back to you. Transactions have ACID guarantees.
+
+While everything transacted here could be done in a single atomic transaction, we split it up to illustrate a couple points. In the first transaction we add a couple of movies. 
+
+Every transaction item must have an `_id` attribute to refer to the entity we are attempting to create/update. An `_id` can either be an existing entity's unique numeric ID, a two-tuple of a unique attribute+value, or a [tempid](#temporary-ids). A tempid can simply be the stream name, i.e. `movie` or it can be a stream name with unique reference. To make a unique tempid, just append the stream with any non-valid stream character (anything other than a-z, A-Z, 0-9, _) followed by anything else. For example, `_movie$1` or `movie&movie-one`.
+
+```
+RESPONSE HERE
+```
+
+The second transaction adds two new credits. Note that the values used for the actor keys are `_id`s, but rather than being tempids or the resolved integer `_id`s, they refers to an attribute and a value, ["actor/name", "John Travolta"] and ["actor/name", "Samuel L. Jackson"]. This method can be used for any attribute marked as `unique`.
+
+```
+RESPONSE HERE
+```
+
+After the first and second transactions, we have two new movies in our database and two new credits in our database, but they are not connected. In the third transaction, we add a new attribute, `movie/credits` to one of our new movies. Note that `movie/credits` is an attribute that accepts multiple values (a movie has more than one credit after all!), so our we reference ["credit/id", 1234576] and ["credit/id", 1234577] inside an array, `[ ["credit/id", 1234576], ["credit/id", 1234576]]`.
+
+```
+RESPONSE HERE
+```
+
+Note that all transactions must be sent to the transactor endpoint as arrays, as seen in the previous examples. 
+
+#### Adding Movies
+```json
+[{
+  "_id": "movie",
+  "title": "Loudness of the Hams",
+  "budget": 1000,
+  "instant": 1529560800
+},
+{
+  "_id": "movie",
+  "title": "Less-Pulp Fiction",
+  "budget": 1,
+  "productionCompany": "The Big Important Production Company",
+  "overview": "A low-budget remake of 'Pulp Fiction.' With less pulp."
+}]
+```
+```curl
+ curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id": "movie",
+  "title": "Loudness of the Hams",
+  "budget": 1000,
+  "instant": 1529560800
+},
+{
+  "_id": "movie",
+  "title": "Less-Pulp Fiction",
+  "budget": 1,
+  "productionCompany": "The Big Important Production Company",
+  "overview": "A low-budget remake of 'Pulp Fiction.' With less pulp."
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+```graphql
+mutation addMovies ($myMovieTx: JSON) {
+  transact(tx: $myMovieTx)
+}
+
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
+
+{
+  "myMovieTx": "[
+    {\"_id\":\"movie\",\"title\":\"Loudness of the Hams\",\"budget\":1000,\"instant\":1529560800}, 
+    {\"_id\":\"movie\",\"title\":\"Less-Pulp Fiction\",\"budget\":1,\"productionCompany\": \"The Big Important Production Company\"},
+    \"overview\": \"A low-budget remake of 'Pulp Fiction.' With less pulp.\"
+    ]"
+}
+```
+
+#### Creating New Credits
+
+```json
+[{
+  "_id": "credit",
+  "character": "Mince Vega",
+  "actor": ["actor/name", "John Travolta"],
+  "id": 1234576
+},
+{
+  "_id": "credit",
+  "character": "Jewels Spinnfield",
+  "actor": ["actor/name", "Samuel L. Jackson"],
+  "id": 1234577
+}]
+```
+```curl
+ curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id": "credit",
+  "character": "Mince Vega",
+  "actor": ["actor/name", "John Travolta"],
+  "id": 1234576
+}, 
+{
+  "_id": "credit",
+  "character": "Jewels Spinnfield",
+  "actor": ["actor/name", "Samuel L. Jackson"],
+  "id": 1234577
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+```graphql
+mutation addCredit ($myCreditTx: JSON) {
+  transact(tx: $myCreditTx)
+}
+
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
+
+{
+  "myCreditTx": "[
+    {\"_id\":\"credit\",\"character\":\"Mince Vega\",\"actor\":[\"actor/name\",\"John Travolta\"],\"id\":1234576},
+    {\"_id\": \"credit\", \"character\": \"Jewels Spinnfield\", \"actor\": [\"actor/name\", \"Samuel L. Jackson\"],
+    \"id\": 1234577}
+  ]"
+}
+```
+
+#### Updating A Movie With Credit References
+
+```json
+[{
+  "_id": ["movie/title", "Less-Pulp Fiction"],
+  "credits": [["credit/id", 1234576], ["credit/id", 1234577]]
+}]
+```
+```curl
+ curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id": ["movie/title", "Less-Pulp Fiction"],
+  "credits": [["credit/id", 1234576], ["credit/id", 1234577]]
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+```graphql
+mutation addMovieCredit ($myMovieCreditTx: JSON) {
+  transact(tx: $myMovieCreditTx)
+}
+
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
+
+{
+  "myMovieCreditTx": "[{
+    \"_id\": [\"movie/title\", \"Less-Pulp Fiction\"],
+    \"credits\": [[\"credit/id\", 1234576], [\"credit/id\", 1234577]]
+  }]"
+}
+```
+
+### Creating Schema - Streams
+
+Up until this point, we have been using an already-populated database. Now, we will create and transact using our own schema. 
+
+To follow along with this portion of the Quick Start guide, create a new database and select "Blank Database" as your database template.
+
+Fluree schema consists of streams and attributes. These are similar to a relational database's tables and columns, however in Fluree both of these concepts are extended and more flexible. Streams organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new stream to hold it. Streams differ from tables in that they are an always-present stream of changes about those entities that can be queried at any point in time, not just the latest changes as a traditional database would do.
 
 Everything is data in FlureeDB. This includes the schemas, permissions, etc. that actually govern how it works. To add new streams we'll do a transaction the exact way we'd add any new data. Here we'll add our new streams and attributes in two separate transactions to explain what is happening, but they could be done in one.
 
@@ -543,9 +760,6 @@ This transaction adds three streams:
 - `person` - will hold names/handles for the people that are chatting
 - `chatMessage` - will hold the chat message content
 - `chatComment` - will hold comments about messages
-
-Every transaction item must have an `_id` attribute to refer to the entity we are attempting to create/update. An `_id` can either be an existing entity's unique numeric ID, a two-tuple of a unique attribute+value, or a tempid. A tempid can simply be the stream name, i.e. `_stream` or it can
-be a stream name with unique reference. To make a unique tempid, just append the stream with any non-valid stream character (anything other than a-z, A-Z, 0-9, _) followed by anything else. For example, `_stream$1` or `_stream&stream-one`.
 
 Here we use a tempid as we are creating new entities in the system stream named `_stream`. `_stream` is a system stream/table that holds the configured streams, and `_attribute` likewise for attributes.
 
@@ -611,7 +825,7 @@ mutation addStreams ($myStreamTx: JSON) {
 ```
 
 
-### Schema - Attributes
+### Creating Schema - Attributes
 
 Schema attributes are similar to relational database columns, however there are fewer restrictions.
 Any attribute can be attached to any entity, unless a restriction is put in place using a `spec`.
@@ -796,11 +1010,9 @@ mutation addCommentAttributes ($myCommentTx: JSON) {
 
 ### Transacting Data
 
-To write data to the Fluree Database, you submit a collection of statements to the transactor endpoint. All of the statements will be successfully committed together, or all fail together with the error reported back to you. Transactions have ACID guarantees.
+In the first transaction we add a couple of people. The second transaction adds a chat message. Note the value used for the `person` key is an `_id`, but this time instead of it being a tempid it refers to an attribute and its corresponding value, `["person/handle", "jdoe"]`. This method can be used for any attribute marked as `unique`.
 
-While everything transacted here could be done in a single atomic transaction, we split it up to illustrate a couple points. In the first transaction we add a couple of people. The second transaction adds a chat message. Note the value used for the `person` key is an `_id`, but this time instead of it being a tempid it refers to an attribute and its corresponding value, `["person/handle", "jdoe"]`. This method can be used for any attribute marked as `unique`.
-
-Here is what an abbreviated response will look like from this transaction, and a brief explanation of the keys:
+Here is what an abbreviated response will look like from this transaction:
 
 ```
 {
@@ -823,18 +1035,6 @@ Here is what an abbreviated response will look like from this transaction, and a
   ]
 }
 ```
-
-Key | Description
----|---
-`tempids` | A mapping of any temporary id used in a transaction to its final id value that was assigned.
-`block` | The blockchain block number that was created with this transaction. These increment by one. 
-`time` | The amount of time that the transaction took to complete.
-`status` | The status of the transactions. These map to HTML status codes, i.e. 200 is OK. 
-`hash` | The blockchain hash of this transaction, that can be cryptographically proven with the same `flakes` in the future, and linked to the previous block that creates the chain.
-`block-bytes` | The size of the block, in bytes.
-`timestamp` | A timestamp for the transaction. 
-`flakes` | Flakes are the state change of the database, and is the block data itself. Each is a six-tuple of information including the entity-id, attribute-id, value, block-id, true/false for add/delete, and expiration of this piece of data in epoch-milliseconds (0 indicates it never expires).
-
 
 Now that we have stored a piece of data, let's query it.
 
@@ -923,10 +1123,6 @@ mutation addChatMessage ($myChatTx: JSON) {
 ```
 
 ### Querying Data
-
-Fluree allows you to specify queries using our FlureeQL JSON syntax or with GraphQL. The FlureeQL format is designed to easily enable code to compose queries, as the query is simply a data structure. 
-
-For each query, the user's permissions (determined according to `_auth` record through which they are authenticated - more on that in the [Fluree Permissions](#fluree-permissions) section) create a special filtered database that only contains what the user can see. You can safely issue any query, never having to worry about accidentally exposing permissioned data.
 
 These two example queries will return current chat messages. The second example follows the graph relationship to also include details about the referred person who posted the chat message.
 
@@ -1057,7 +1253,7 @@ Here we'll go through all the steps needed to add a permission that accomplishes
 
 To accomplish this we need to do a few things:
 
-1. Create an actual database user for the chat user(s) along with at least one auth record. Permissions are governed by auth records, users are optional but a user can have multiple auth entities each giving different permissions (the Permissions section explains this in more detail).
+1. Create an actual database user for the chat user(s) along with at least one auth record. Permissions are governed by auth records, users are optional but a user can have multiple auth entities each giving different permissions (the [Fluree Permissions](#fluree-permissions) section explains this in more detail).
 2. Link the `person` entities we created to the database user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` database user entity and then to the `_auth` record itself.
 3. Create rules to enforce the above desired permissions.
 4. Create an assignable role that contains these rules so we can easily add the role to our chat user(s).

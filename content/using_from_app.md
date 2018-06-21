@@ -501,6 +501,33 @@ mutation deleteAllAttributes ($myDeleteAllAttributesTx: JSON) {
   "myDeleteAllAttributesTx": "[{ \"_id\": [\"person/handle\", \"jdoe\"], \"_action\": \"delete\" }]"
 }
 ```
+
+### `/api/db/graphql`
+
+We can run both GraphQL queries and transactions using the same endpoint. Both queries and transactions are performed by sending a JSON map/object containing the following keys:
+
+Key | Required | Description
+-- | -- | -- 
+`operationName` | False |  The name of the GraphQl query or transaction 
+`query` | True | The GraphQL query or transaction. Note that transaction use the same endpoint, but in order to perform a transaction, you must specify the "mutation" root. See the 'GraphQL Transactions' section for more information. 
+`variables` | False | Variables that you are passing into your query. 
+
+
+```
+{
+  "query": "{ graph {chat { _id instant message}}}","variables": null,
+  "operationName": null
+  }
+```
+
+
+```graphql
+{
+  "query": "{ graph {chat { _id instant message}}}","variables": null,
+  "operationName": null
+  }
+```
+
 ### `/api/db/token`
 
 The token endpoint allows new tokens to be generated on behalf of users. Post a JSON map/object containing the following keys:

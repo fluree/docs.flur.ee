@@ -2,7 +2,9 @@
 
 ## GraphQL
 
-Fluree supports queries and transactions using both the FlureeQL JSON format as well as GraphQL. Because FlureeQL is a JSON format, this allows queries to be more easily composed within your programming code and is built to support Fluree's advanced capabilities like graph recursion. 
+Fluree supports queries and transactions using both the FlureeQL JSON format as well as GraphQL. All GraphQL queries and transactions should be run through the [GraphQL endpoint](#apidbtoken) `/api/db/graphql`.
+
+Because FlureeQL is a JSON format, this allows queries to be more easily composed within your programming code and is built to support Fluree's advanced capabilities like graph recursion. 
 
 GraphQL supports a more limited set of query capability, but is robust enough for many applications. If you don't already know and want to use GraphQL, we definitely recommend using FlureeQL.
 
@@ -207,36 +209,12 @@ mutation addPeople ($myPeopleTx: JSON) {
 }
 ```
 
-## API Endpoint
-
-`/api/db/graphql`
-
-We can run both GraphQL queries and transactions using the same endpoint. Both queries and transactions are performed by sending a JSON map/object containing the following keys:
-
-Key | Required | Description
--- | -- | -- 
-`operationName` | False |  The name of the GraphQl query or transaction 
-`query` | True | The GraphQL query or transaction. Note that transaction use the same endpoint, but in order to perform a transaction, you must specify the "mutation" root. See the 'GraphQL Transactions' section for more information. 
-`variables` | False | Variables that you are passing into your query. 
-
-
-```
-{
-  "query": "{ graph {chat { _id instant message}}}","variables": null,
-  "operationName": null
-  }
-```
-
-
-```graphql
-{
-  "query": "{ graph {chat { _id instant message}}}","variables": null,
-  "operationName": null
-  }
-```
-
 # Developer Resources
 
 ## Fluree Slack
 
 Another way to engage with us is to join the [Fluree Slack](https://launchpass.com/flureedb). The Slack is a place to stay up-to-date with company announcements, discuss features, and get support from the Fluree team or fellow developers using Fluree. 
+
+## FlureeDB Whitepaper
+
+The [FlureeDB Whitepaper](https://flur.ee/assets/pdf/flureedb_whitepaper_v1.pdf) goes into depth about how FlureeDB works. 
