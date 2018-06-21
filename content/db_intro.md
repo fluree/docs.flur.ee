@@ -83,7 +83,7 @@ The Fluree database features these capabilities:
 
 This quick start is designed to utilize the [FlureeDB interactive web console](https://flureedb.flur.ee). These transactions could also be performed via your code or REPL utilizing the JSON API, but that would require a token.
 
-The first four topics in the Quick Start guide will show you how to query and transact using an already populated database. The next two topics will show you how to set up a brand new database. 
+The first six topics in the Quick Start guide will show you how to query and transact using an already populated database. The next five topics will show you how to set up a brand new database. 
 
 Topic |   
 -- | -- 
@@ -96,8 +96,8 @@ Topic |
 7 | [Creating Schema - Streams](#creating-schema---streams)
 8 | [Creating Schema - Attributes](#creating-schema---attributes)
 9 | [Transacting Data](#transacting-data) 
-5 | [Querying Data](#querying-data)
-6 | [Permissions Introduction](#permissions-introduction)
+10 | [Querying Data](#querying-data)
+11 | [Permissions Introduction](#permissions-introduction)
 
 ### Forking a Database
 To begin, log in to the [FlureeDB Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee) and click "Add Database" in the bottom left-hand side of the page. 
