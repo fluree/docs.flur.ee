@@ -299,7 +299,7 @@ Try it yourself. First query all the movies, then note down the _id for the movi
 ```
 {
   "select": ["*"],
-  "from":  REMEMBER TO GET ID LATER
+  "from":  4312147233082
 }
 ```
 
@@ -308,7 +308,7 @@ You can do the same thing by select a movie by its title, for example:
 ```
 {
   "select": ["*"],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }
 ```
 
@@ -332,16 +332,6 @@ You can do the same thing by select a movie by its title, for example:
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
 
-```graphql
-{ graph {
-  actor (where: "_id = 4325032071191"){
-    _id
-    id
-    name
-  }
-}
-}
-```
 
 #### Selecting an Actor Using Their Name
 ```json
@@ -376,33 +366,85 @@ You can do the same thing by select a movie by its title, for example:
 ### Selecting All Actors From a Movie
 FlureeDB support unlimited recursion in our queries. As a graph database, any FlureeDB query can follow a chain of relationships across multiple streams (and back).
 
-For instance, let's suppose that we want to get all the actors from the movie, "Shawshank Redemption." We can select all the attributes from `["movie/title", "Shawshank Redemption"]` using this query:
+For instance, let's suppose that we want to get all the actors from the movie, "Pulp Fiction". We can select all the attributes from `["movie/title", "Pulp Fiction"]` using this query:
 
 ```
 {
   "select": ["*"],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }
 ```
-However, the response only shows us the _id's for each movie/credit. 
+However, the response only shows us the _id's for each credit/actor. 
 
 ```
-RESPONSE HERE TO ADD
+Abbreviated Response: 
+
+{
+  "block": 182,
+  "result": {
+    "movie/credits": [
+      {
+        "_id": 4312147222525,
+        "credit/actor": {
+          "_id": 4316442169628
+        },
+        "credit/order": 51,
+        "credit/character": "Hopalong Cassidy (uncredited)",
+        "credit/id": "52fe426ac3a36847f801cbc7"
+      },
+      {
+        "_id": 4312147222596,
+        "credit/actor": {
+          "_id": 4316442156359
+        },
+        "credit/order": 39,
+        "credit/character": "Gawker #1",
+        "credit/id": "52fe426ac3a36847f801cba3"
+      }
+    ...
+  }
+}
+
 ```
 
-Each movie/credit attribute is a reference to the credit stream. In order to view other attributes from the credit stream, we need to specify that with a nested query.
+Each movie/credit attribute is a reference to the credit stream. We can follow this relationship with a nested query.
 
 ```
 {
   "select": ["*", {
     "movie/credits": ["*"]
   }],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }
 ```
 
 ```
-RESPONSE HERE TO ADD
+Abbreviated Response: 
+{
+  "block": 182,
+  "result": {
+    "movie/credits": [
+      {
+        "_id": 4312147222525,
+        "credit/actor": {
+          "_id": 4316442169628
+        },
+        "credit/order": 51,
+        "credit/character": "Hopalong Cassidy (uncredited)",
+        "credit/id": "52fe426ac3a36847f801cbc7"
+      },
+      {
+        "_id": 4312147222596,
+        "credit/actor": {
+          "_id": 4316442156359
+        },
+        "credit/order": 39,
+        "credit/character": "Gawker #1",
+        "credit/id": "52fe426ac3a36847f801cba3"
+      }
+      ...
+  }
+}
 ```
 
 This query follows the relationship between the movie and the credit streams. It does not, however, show us actor names - only their _ids. In order to get actor names, we have to continue following the relationship from movie/credits to credit/actor. 
@@ -415,19 +457,50 @@ This query follows the relationship between the movie and the credit streams. It
       "credit/actor": ["*"]
     }]
   }],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }
 ```
 
 ```
-RESPONSE HERE TO ADD
+Abbreviated Response: 
+{
+  "block": 182,
+  "result": {
+    "movie/credits": [
+      {
+        "_id": 4312147222525,
+        "credit/actor": {
+          "_id": 4316442169628,
+          "actor/gender": 0,
+          "actor/name": "Devan Richardson",
+          "actor/id": 1274298
+        },
+        "credit/order": 51,
+        "credit/character": "Hopalong Cassidy (uncredited)",
+        "credit/id": "52fe426ac3a36847f801cbc7"
+      },
+      {
+        "_id": 4312147222596,
+        "credit/actor": {
+          "_id": 4316442156359,
+          "actor/gender": 1,
+          "actor/name": "Karen Maruyama",
+          "actor/id": 157865
+        },
+        "credit/order": 39,
+        "credit/character": "Gawker #1",
+        "credit/id": "52fe426ac3a36847f801cba3"
+      }
+      ...
+  }
+}
 ```
 
 #### Selecting All Attributes From Movie
 ```json
 {
   "select": ["*"],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }
 ```
 ```curl
@@ -436,13 +509,13 @@ RESPONSE HERE TO ADD
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
   "select": ["*"],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
 ```graphql
 { graph {
-  movie (where: "movie/title = \"Shawshank Redemption\""){
+  movie (where: "movie/title = \"Pulp Fiction\""){
     title
     _id
     id
@@ -460,7 +533,7 @@ RESPONSE HERE TO ADD
   "select": ["*", {
     "movie/credits": ["*"]
   }],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }
 ```
 ```curl
@@ -471,13 +544,13 @@ RESPONSE HERE TO ADD
   "select": ["*", {
     "movie/credits": ["*"]
   }],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
 ```graphql
 { graph {
-  movie (where: "movie/title = \"Shawshank Redemption\""){
+  movie (where: "movie/title = \"Pulp Fiction\""){
     title
     _id
     id
@@ -500,7 +573,7 @@ RESPONSE HERE TO ADD
       "credit/actor": ["*"]
     }]
   }],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }
 ```
 ```curl
@@ -514,13 +587,13 @@ RESPONSE HERE TO ADD
       "credit/actor": ["*"]
     }]
   }],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
 ```graphql
 { graph {
-  movie (where: "movie/title = \"Shawshank Redemption\""){
+  movie (where: "movie/title = \"Pulp Fiction\""){
     title
     _id
     id
@@ -539,10 +612,32 @@ RESPONSE HERE TO ADD
 ```
 
 ### Selecting All Actor Names From a Movie
-Suppose that instead of getting all of the attributes for every credit and actor from "Shawshank Redemption," we only wanted to see actor/name. We can do this by only including actor/name in our "select" clause. 
+Suppose that instead of getting all of the attributes for every credit and actor from "Pulp Fiction," we only wanted to see actor/name. We can do this by only including actor/name in our "select" clause. 
 
 ```
-RESPONSE HERE
+Abbreviated Response:
+{
+  "block": 182,
+  "result": {
+    "movie/credits": [
+      {
+        "credit/actor": {
+          "actor/name": "Devan Richardson"
+        }
+      },
+      {
+        "credit/actor": {
+          "actor/name": "Karen Maruyama"
+        }
+      },
+      {
+        "credit/actor": {
+          "actor/name": "Emil Sitka"
+        }
+      }
+      ...
+  }
+}
 ```
 
 #### Selecting All Actor Names From Movie and Movie/Credits and Credit/Actor
@@ -554,7 +649,7 @@ RESPONSE HERE
       "credit/actor": ["actor/name"]
     }]
   }],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }
 ```
 ```curl
@@ -568,13 +663,13 @@ RESPONSE HERE
       "credit/actor": ["actor/name"]
     }]
   }],
-  "from": ["movie/title", "Shawshank Redemption"]
+  "from": ["movie/title", "Pulp Fiction"]
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
 ```graphql
 { graph {
-  movie (where: "movie/title = \"Shawshank Redemption\""){
+  movie (where: "movie/title = \"Pulp Fiction\""){
     credits {
       actor {
         name
@@ -589,24 +684,82 @@ RESPONSE HERE
 
 To write data to the Fluree Database, you submit a collection of statements to the transactor endpoint. All of the statements will be successfully committed together, or all fail together with the error reported back to you. Transactions have ACID guarantees.
 
-While everything transacted here could be done in a single atomic transaction, we split it up to illustrate a couple points. In the first transaction we add a couple of movies. 
+While everything transacted here could be done in a single atomic transaction, we split it up to illustrate a couple points.
 
 Every transaction item must have an `_id` attribute to refer to the entity we are attempting to create/update. An `_id` can either be an existing entity's unique numeric ID, a two-tuple of a unique attribute+value, or a [tempid](#temporary-ids). A tempid can simply be the stream name, i.e. `movie` or it can be a stream name with unique reference. To make a unique tempid, just append the stream with any non-valid stream character (anything other than a-z, A-Z, 0-9, _) followed by anything else. For example, `_movie$1` or `movie&movie-one`.
 
+In the first transaction we add a couple of movies. 
+
 ```
-RESPONSE HERE
+{
+  "tempids": {
+    "movie$1": 4294967300804,
+    "movie$2": 4294967300805
+  },
+  "block": 183,
+  "hash": "6cfc0b1de70cb9c6c437b2b045db9d985253ac6dcc03e1a6d50ccd1b3c3fb69f",
+  "time": "174.68ms",
+  "status": 200,
+  "block-bytes": 538,
+  "timestamp": 1529941815751,
+  "flakes": [
+     [ 4294967300805, 1010, 1, -11993088, true, 0 ],
+     [ 4294967300805, 1003, "A low-budget remake of 'Pulp Fiction.' With less pulp.", -11993088, true, 0 ],
+     [ 4294967300805, 1001, "Less-Pulp Fiction", -11993088, true, 0 ],
+     [ 4294967300804, 1010, 1000, -11993088, true, 0 ],
+     [ 4294967300804, 1001, "Loudness of the Hams", -11993088, true, 0 ],
+     [ -11993088, 5, 1529941815751, -11993088, true, 0 ],
+     [ -11993088, 2, "26d01a820a93a15dfed16c1394881a980ff37cc2ac79899b270e05748408251b", -11993088, true, 0 ],
+     [ -11993088, 1, "6cfc0b1de70cb9c6c437b2b045db9d985253ac6dcc03e1a6d50ccd1b3c3fb69f", -11993088, true, 0 ]
+  ]
+}
 ```
 
 The second transaction adds two new credits. Note that the values used for the actor keys are `_id`s, but rather than being tempids or the resolved integer `_id`s, they refers to an attribute and a value, ["actor/name", "John Travolta"] and ["actor/name", "Samuel L. Jackson"]. This method can be used for any attribute marked as `unique`.
 
 ```
-RESPONSE HERE
+{
+  "tempids": {
+    "credit$1": 4312147271442,
+    "credit$2": 4312147271443
+  },
+  "block": 184,
+  "hash": "f6880054df8b6bc6e49921a86efd78f0640f64321031f8a6dcf586ca64e6d7eb",
+  "time": "219.12ms",
+  "status": 200,
+  "block-bytes": 454,
+  "timestamp": 1529942472956,
+  "flakes": [
+     [ 4312147271443, 1032, 4316442133412, -12058624, true, 0 ],
+     [ 4312147271443, 1030, "Jewels Spinnfield", -12058624, true, 0 ],
+     [ 4312147271442, 1032, 4316442135748, -12058624, true, 0 ],
+     [ 4312147271442, 1030, "Mince Vega", -12058624, true, 0 ],
+     [ -12058624, 5, 1529942472956, -12058624, true, 0 ],
+     [ -12058624, 2, "6cfc0b1de70cb9c6c437b2b045db9d985253ac6dcc03e1a6d50ccd1b3c3fb69f", -12058624, true, 0 ],
+     [ -12058624, 1, "f6880054df8b6bc6e49921a86efd78f0640f64321031f8a6dcf586ca64e6d7eb", -12058624, true, 0 ]
+  ]
+}
 ```
 
-After the first and second transactions, we have two new movies in our database and two new credits in our database, but they are not connected. In the third transaction, we add a new attribute, `movie/credits` to one of our new movies. Note that `movie/credits` is an attribute that accepts multiple values (a movie has more than one credit after all!), so our we reference ["credit/id", 1234576] and ["credit/id", 1234577] inside an array, `[ ["credit/id", 1234576], ["credit/id", 1234576]]`.
+After the first and second transactions, we have two new movies in our database and two new credits in our database, but they are not connected. In the third transaction, we add a new attribute, `movie/credits` to one of our new movies. Note that `movie/credits` is an attribute that accepts multiple values (a movie has more than one credit after all!), so we reference the credit's _ids inside an array, `[4312147271442,  4312147271443]`.
 
 ```
-RESPONSE HERE
+{
+  "tempids": {},
+  "block": 185,
+  "hash": "4896f4b0dcc95a8dd590ae246e584549f434ec033333d77b9a5a47d09b1e71f8",
+  "time": "78.63ms",
+  "status": 200,
+  "block-bytes": 345,
+  "timestamp": 1529942605730,
+  "flakes": [
+     [ 4294967300805, 1019, 4312147271442, -12124160, true, 0 ],
+     [ 4294967300805, 1019, 4312147271443, -12124160, true, 0 ],
+     [ -12124160, 5, 1529942605730, -12124160, true, 0 ],
+     [ -12124160, 2, "f6880054df8b6bc6e49921a86efd78f0640f64321031f8a6dcf586ca64e6d7eb", -12124160, true, 0 ],
+     [ -12124160, 1, "4896f4b0dcc95a8dd590ae246e584549f434ec033333d77b9a5a47d09b1e71f8", -12124160, true, 0 ]
+  ]
+}
 ```
 
 Note that all transactions must be sent to the transactor endpoint as arrays, as seen in the previous examples. 
@@ -616,14 +769,12 @@ Note that all transactions must be sent to the transactor endpoint as arrays, as
 [{
   "_id": "movie",
   "title": "Loudness of the Hams",
-  "budget": 1000,
-  "instant": 1529560800
+  "budget": 1000
 },
 {
   "_id": "movie",
   "title": "Less-Pulp Fiction",
   "budget": 1,
-  "productionCompany": "The Big Important Production Company",
   "overview": "A low-budget remake of 'Pulp Fiction.' With less pulp."
 }]
 ```
@@ -634,14 +785,12 @@ Note that all transactions must be sent to the transactor endpoint as arrays, as
    -d '[{
   "_id": "movie",
   "title": "Loudness of the Hams",
-  "budget": 1000,
-  "instant": 1529560800
+  "budget": 1000
 },
 {
   "_id": "movie",
   "title": "Less-Pulp Fiction",
   "budget": 1,
-  "productionCompany": "The Big Important Production Company",
   "overview": "A low-budget remake of 'Pulp Fiction.' With less pulp."
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
@@ -655,9 +804,9 @@ mutation addMovies ($myMovieTx: JSON) {
 
 {
   "myMovieTx": "[
-    {\"_id\":\"movie\",\"title\":\"Loudness of the Hams\",\"budget\":1000,\"instant\":1529560800}, 
-    {\"_id\":\"movie\",\"title\":\"Less-Pulp Fiction\",\"budget\":1,\"productionCompany\": \"The Big Important Production Company\"},
-    \"overview\": \"A low-budget remake of 'Pulp Fiction.' With less pulp.\"
+    {\"_id\":\"movie\",\"title\":\"Loudness of the Hams\",\"budget\":1000}, 
+    {\"_id\":\"movie\",\"title\":\"Less-Pulp Fiction\",\"budget\":1,
+    \"overview\": \"A low-budget remake of 'Pulp Fiction.' With less pulp.\"}
     ]"
 }
 ```
@@ -668,14 +817,12 @@ mutation addMovies ($myMovieTx: JSON) {
 [{
   "_id": "credit",
   "character": "Mince Vega",
-  "actor": ["actor/name", "John Travolta"],
-  "id": 1234576
+  "actor": ["actor/name", "John Travolta"]
 },
 {
   "_id": "credit",
   "character": "Jewels Spinnfield",
-  "actor": ["actor/name", "Samuel L. Jackson"],
-  "id": 1234577
+  "actor": ["actor/name", "Samuel L. Jackson"]
 }]
 ```
 ```curl
@@ -685,14 +832,12 @@ mutation addMovies ($myMovieTx: JSON) {
    -d '[{
   "_id": "credit",
   "character": "Mince Vega",
-  "actor": ["actor/name", "John Travolta"],
-  "id": 1234576
-}, 
+  "actor": ["actor/name", "John Travolta"]
+},
 {
   "_id": "credit",
   "character": "Jewels Spinnfield",
-  "actor": ["actor/name", "Samuel L. Jackson"],
-  "id": 1234577
+  "actor": ["actor/name", "Samuel L. Jackson"]
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
@@ -705,9 +850,8 @@ mutation addCredit ($myCreditTx: JSON) {
 
 {
   "myCreditTx": "[
-    {\"_id\":\"credit\",\"character\":\"Mince Vega\",\"actor\":[\"actor/name\",\"John Travolta\"],\"id\":1234576},
-    {\"_id\": \"credit\", \"character\": \"Jewels Spinnfield\", \"actor\": [\"actor/name\", \"Samuel L. Jackson\"],
-    \"id\": 1234577}
+    {\"_id\":\"credit\",\"character\":\"Mince Vega\",\"actor\":[\"actor/name\",\"John Travolta\"]},
+    {\"_id\": \"credit\", \"character\": \"Jewels Spinnfield\", \"actor\": [\"actor/name\", \"Samuel L. Jackson\"]}
   ]"
 }
 ```
@@ -717,7 +861,7 @@ mutation addCredit ($myCreditTx: JSON) {
 ```json
 [{
   "_id": ["movie/title", "Less-Pulp Fiction"],
-  "credits": [["credit/id", 1234576], ["credit/id", 1234577]]
+  "credits": [4312147271442,  4312147271443]
 }]
 ```
 ```curl
@@ -726,7 +870,7 @@ mutation addCredit ($myCreditTx: JSON) {
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
   "_id": ["movie/title", "Less-Pulp Fiction"],
-  "credits": [["credit/id", 1234576], ["credit/id", 1234577]]
+  "credits": [4312147271442,  4312147271443]
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
@@ -740,7 +884,7 @@ mutation addMovieCredit ($myMovieCreditTx: JSON) {
 {
   "myMovieCreditTx": "[{
     \"_id\": [\"movie/title\", \"Less-Pulp Fiction\"],
-    \"credits\": [[\"credit/id\", 1234576], [\"credit/id\", 1234577]]
+    \"credits\": [[4312147271442,  4312147271443]]
   }]"
 }
 ```
