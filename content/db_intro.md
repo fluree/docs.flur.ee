@@ -24,7 +24,7 @@ Each block is an atomic update that is cryptographically signed to prevent tampe
 
 At its core, every block contains a group of specially formatted log files of database updates, as well as block meta-data. We call these log files Flakes. Each Flake is a specific fact at a specific point in time about a specific entity. No two Flakes are the same.
 
-Below is an example of database block. We will go into detail about the contents of the blocks in the (INSERT SECTION NAME HERE). However, below you can see that, among other things, every block contains a hash, a timestamp, and the size of the block data (block-bytes). This block also contains an array of six Flakes. These Flakes contain all the data that is added, updated, or deleted in block 5, as compared to block 4. 
+Below is an example of database block. We will go into detail about the contents of the blocks in the [Transaction Response](#transaction-response) section. However, below you can see that, among other things, every block contains a hash, a timestamp, and the size of the block data (block-bytes). This block also contains an array of six Flakes. These Flakes contain all the data that is added, updated, or deleted in block 5, as compared to block 4. 
 
 ```
 {
@@ -281,7 +281,7 @@ For example, if you knew an actor's _id, you could select them using "from": tha
 ```
 {
   "select": ["*"],
-  "from": 4325032071191
+  "from": 4316442136599
 }
 ```
 
@@ -299,7 +299,7 @@ Try it yourself. First query all the movies, then note down the _id for the movi
 ```
 {
   "select": ["*"],
-  "from":  4312147233082
+  "from":  4294967299233
 }
 ```
 
@@ -317,7 +317,7 @@ You can do the same thing by select a movie by its title, for example:
 ```json
 {
   "select": ["*"],
-  "from": 4325032071191
+  "from": 4316442136599
 }
 ```
 
@@ -327,7 +327,7 @@ You can do the same thing by select a movie by its title, for example:
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
   "select": ["*"],
-  "from": 4325032071191
+  "from": 4316442136599
 }' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
@@ -1408,7 +1408,7 @@ A token (which governs permissions) is tied to a specific `_auth` entity which c
 **>> Execute the example transaction to add a new attribute named `person/user` that allows a `ref` from any of our persons to a database user.**
 
 
-Next, we add a new role called `chatUser` that we can easily assign to all chat users. The role has three rules in it. The first, `viewAllChats`, allows `query` (read) permissions for every attribute in the stream `chat`. The second rule, `viewAllPeople` similarly allows `query` for every attribute in the stream `person`. The final rule, `editOwnChats`, will restrict `transact` (edit) to ensure only chats by the respective `person` can be created or edited.
+Next, we add a new role called `chatUser` that we can easily assign to all chat users. The role has three rules in it. The first, `viewAllChats`, allows `query` (read) permissions for every attribute in the stream `chat`. The second rule, `viewAllPeople` similarly allows `query` for every attribute in the stream `person`. The final rule, `editOwnChats`, will restrict `transact` to ensure only chats by the respective `person` can be created or edited.
 
 **>> Execute the example transaction to add the new role and these three rules.**
 
