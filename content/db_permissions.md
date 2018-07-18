@@ -96,7 +96,7 @@ Attribute | Type | Description
 `_rule/streamDefault` | `boolean` | Indicates if this rule is a default rule for the specified stream. Use either this or `_rule/attributes` on a rule, but not both. Default rules are only executed if a more specific rule does not apply, and can be thought of as a catch-all.
 `_rule/attributes` | `[string]`| (optional) A multi-cardinality list of attributes this rule applies to. The special glob character `*` can be used to indicate all attributes (wildcard).
 `_rule/predicate` | `string` | The predicate function to be applied. Can be `true`, `false`, or a predicate database function expression. Available predicate functions are listed in a subsequent table. `true` indicates the user always has access to this stream + attribute combination. `false` indicates the user is always denied access. Predicate functions will return a truthy or false value that has the same meanings.
-`_rule/ops` | `[tag]` | (required) Multi-cardinality tag of action(s) this rule applies to. Current tags supported are `query` for query/read access, `transact` for transact/write access, `token` to generate tokens, and `all` for all operations.
+`_rule/ops` | `[tag]` | (required) Multi-cardinality tag of action(s) this rule applies to. Current tags supported are `query` for query/read access, `transact` for transact/write access, `token` to generate tokens, `logs` to access database logs, and `all` for all operations.
 `_rule/errorMessage` | `string` | (optional) If this rule prevents a transaction from executing, this optional error message can be returned to the client instead of the default error message (which is intentionally generic to limit insights into the database configuration).
 
 

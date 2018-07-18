@@ -47,7 +47,7 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
     "_id":   "_role$db-admin", 
     "id":    "db-admin",
     "doc":   "A role for full access to database.",
-    "rules": ["_rule$db-admin",  "_rule$db-token"] 
+    "rules": ["_rule$db-admin",  "_rule$db-token", "_rule$db-logs"] 
   },
   {
     "_id":       "_rule$db-admin" ,
@@ -63,6 +63,13 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
     "id":        "db-admin-token",
     "doc":       "Rule allows token generation for other users.",
     "ops":       ["token"],
+    "predicate": "true"
+  },
+    {
+    "_id":       "_rule$db-logs" ,
+    "id":        "db-admin-logs",
+    "doc":       "Rule allows user to access account logs.",
+    "ops":       ["logs"],
     "predicate": "true"
   }
 ]
@@ -83,7 +90,7 @@ curl \
     "_id":   "_role$db-admin", 
     "id":    "db-admin",
     "doc":   "A role for full access to database.",
-    "rules": ["_rule$db-admin",  "_rule$db-token"] 
+    "rules": ["_rule$db-admin",  "_rule$db-token", "_rule$db-logs"] 
   },
   {
     "_id":       "_rule$db-admin" ,
@@ -100,6 +107,13 @@ curl \
     "doc":       "Rule allows token generation for other users.",
     "ops":       ["token"],
     "predicate": "true"
+  },
+  {
+    "_id":       "_rule$db-logs" ,
+    "id":        "db-admin-logs",
+    "doc":       "Rule allows user to access account logs.",
+    "ops":       ["logs"],
+    "predicate": "true"
   }
 ]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
@@ -114,9 +128,12 @@ mutation addRoleRuleAuth($myAuthTx: JSON){
 {
   "myAuthTx": "[ 
     { \"_id\": \"_auth\", \"key\": \"db-admin\", \"doc\": \"A db admin auth that has full data visibility and can generate tokens for other users.\", \"roles\": [\"_role$db-admin\"] }, 
-    { \"_id\": \"_role$db-admin\", \"id\": \"db-admin\", \"doc\": \"A role for full access to database.\", \"rules\": [\"_rule$db-admin\", \"_rule$db-token\"] }, 
+    { \"_id\": \"_role$db-admin\", \"id\": \"db-admin\", \"doc\": \"A role for full access to database.\", \"rules\": [\"_rule$db-admin\", \"_rule$db-token\", 
+    \"_rule$db-logs\"]}, 
     { \"_id\": \"_rule$db-admin\", \"id\": \"db-admin\", \"doc\": \"Rule that grants full access to all streams.\", \"stream\": \"*\", \"streamDefault\": true, \"ops\": [\"query\", \"transact\"], \"predicate\": \"true\" }, 
-    { \"_id\": \"_rule$db-token\", \"id\": \"db-admin-token\", \"doc\": \"Rule allows token generation for other users.\", \"ops\": [\"token\"], \"predicate\": \"true\" } ]"
+    { \"_id\": \"_rule$db-token\", \"id\": \"db-admin-token\", \"doc\": \"Rule allows token generation for other users.\", \"ops\": [\"token\"], \"predicate\": \"true\" },
+    { \"_id\": \"_rule$db-logs\", \"id\": \"db-admin-logs\", \"doc\": \"Rule allows user to access account logs.\", \"ops\": [\"logs\"], \"predicate\": \"true\" }
+    ]"
 }
 ```
 
