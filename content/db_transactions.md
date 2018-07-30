@@ -315,13 +315,29 @@ mutation deleteAllAttributes ($myDeleteAllAttributesTx: JSON) {
 
 ## Database Functions
 
-Database functions allow you to update an attribute's value based on the existing value. This allows features such as an atomic counter and timestamps. Database functions need to be provided to a transaction as a string. Fluree supports the following database functions, and is expanding the verstility of these functions in future releases.
+Database functions allow you to update an attribute's value based on the existing value. This allows features such as an atomic counter and timestamps. Database functions are always string. They are used in:
+
+* Transactions - Pass database functions into transactions with a #, for example, `	#(inc)`. Resolves to any type of value. 
+* `_attribute/spec` - Control the values that can be held in an attribute. Resolves to true or false. 
+* `_stream/spec` - Control the values of the attributes in a specific stream. Resolves to true or false. 
+* `_rule/predicate` - Controls whether an auth record can view a certain attribute or stream. Resolves to true or false. 
+
+In addition, `_rule/predicate`s and `_attribute/spec`s have access to certain variables. 
+
+Variable | Description | Availability
+---|---|---
+`?e` | Returns an object of the entity you are attempting to query or edit with all of that entity's attribute-values. | Available in `_rule/predicate`
+`?user` | Returns an object of the user making a request. | Available in `_rule/predicate`
+`?v` | 	This gives you access to the value of the attribute you are updating. | Available in `_attribute/spec`
+
+The below functions are available to use in any of the above listed usages, including transactions, schema specs, and rule predicate. Remember that all of the usages, with the exception of transactions require the function to return either true or false. 
 
 Function | Example | Description
 -- | -- | -- 
 `inc` | `#(inc)` |  Increment existing value by 1. Works on `integer`.
 `dec` | `#(dec)` | Decrement existing value by 1. Works on `integer`.
 `now` | `#(now)` | Insert current server time. Works on `instant`.
+`=` | `#(= [1 1 1 1])` | Returns true if all items within the vector are equal.  Works on `integer`, `string`, and `boolean`.
 `+` | `#(+ [1 2 3])` | Returns the sum of the provided values. Works on `integer` and `float`.
 `-` | `#(- [10 9 3])` | Returns the difference of the numbers. The first, as the minuend, the rest as the subtrahends. Works on `integer` and `float`.
 `*` | `#(* [90 10 2])` | Returns the product of the provided values. Works on `integer` and `float`.
@@ -331,7 +347,19 @@ Function | Example | Description
 `mod` | `#(mod 64 10)` | Modulus of the first argument divided by the second argument. The mod function takes the rem of the two arguments, and if the either the numerator or denominator are negative, it adds the denominator to the remainder, and returns that value. Works on `integer` and `float`.
 `max` | `#(max [1 2 3])`| Returns the max of the provided values. Works on `integer`, `float`.
 `max-attr-val` | `"#(max-attr-val \"person/age\")"`| Returns the max of the provided attribute. Works on `integer`, `float`.
-`now` | `#(now)` | Insert current server time. Works on `instant`.
+`str` | `#(str [\"flur.\" \"ee\"])` | Concatenates all strings in the vector. Works on `integer`, `string`, `float`, and `boolean`.
+`if-else` | `#(if-else (= [1 1]) \"John\" \"Jane\")` | Takes a test as a first argument. If the test succeeds, return the second argument, else return the third argument. 
+`?e` | `#(get (?e) \"_id\" )` | Returns an object with the entity being edited or queried. In this example, we extract the _id of the entity using get. 
+`?v` | `#(?v \"person/handle\")` | Returns the value of an attribute. In this case, it gets the `person/handle` of the entity being transacted on. 
+`and` | `#(and [(= [1 1]) (= [2 2]) ])` | Returns true if all objects within the vector are non-nil and non-false, else returns false. 
+`or` | `#(or [(= [1 1]) (= [2 3]) ])` | Returns true if any of the objects within the vector are non-nil and non-false, else returns false. 
+`boolean` | `#(boolean(1))` | Coerces any non-nil and non-false value to true, else returns false. 
+`count` | `#(count  \"Appleseed\")` | Returns the count of letters in a string or the number of items in a vector. 
+`get` | `#(get (?e) \"_id\" )` | Returns the value of an attribute within an object. In this example, we extract the _id of the entity using get. 
+`contains?` | `(contains? (get-all ?e [\"chat/person\" \"person/user\"]) ?user)` | Checks whether an object or vector contains a specific value. In this example, `get-all` follows the chat entity to `chat/person` and `chat/user`, and then `contains?` checks whether the chat user contains the current user. 
+`get-all` | `(contains? (get-all ?e [\"chat/person\" \"person/user\"]) ?user)` | Gets all of a certain attribute (or attribute-path from an entity. 
+`valid-email?` | `(valid-email? ?v)` | Checks whether a value is a valid email using the following pattern, "`[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`.
+`re-find` | `#(re-find "^[a-zA-Z0-9_][a-zA-Z0-9\.\-_]{0,254}" \"apples1\")` | Checks whether a string follows a given regex pattern. 
 
 Database function can also be combined, for instance `#(inc (max [1.5 2 3]))` will return 4. 
 

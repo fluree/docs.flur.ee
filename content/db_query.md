@@ -530,3 +530,131 @@ query  {
   block(from: 3)
 }
 ```
+
+## Multiple Queries
+
+Fluree allows you to submit multiple queries at once. In order to do this, create unique names for your queries, and set those as the keys of the your JSON query. The values of the keys should be the queries themselves. If you are using GraphQL, you can simply nest your second, third, etc requests within the `graph` level of the request.
+
+For example, this query selects all chats and people at once. 
+
+```
+{
+    "chatQuery": {
+        "select": ["*"],
+        "from": "chat"
+    },
+    "personQuery": {
+         "select": ["*"],
+        "from": "person"
+    }
+}
+```
+
+A sample response will look like the following, with each query's responses nested within the "result" value, with the provided query names as keys. 
+
+```
+
+{
+  "result": {
+    "chatQuery": [
+      { 
+        "_id": 4307852197898,
+        "chat/instant": 1532617367174
+      },
+       ...
+    ],
+    "personQuery": [
+      {
+        "_id": 4303557230594,
+        "person/handle": "zsmith",
+        "person/fullName": "Zach Smith",
+        "person/karma": 5
+      },
+      ...
+    ]
+  },
+  "status": 200,
+  "block": 463,
+  "time": "8.19ms"
+}
+```
+
+Any errors will be returned in a separate key, called errors. For example, incorrectQuery is attempting to query an id that does not exist. 
+
+```
+{
+    "incorrectID": {
+        "select": ["*"],
+        "from": 4307852198904
+    },
+    "personQuery": {
+         "select": ["*"],
+        "from": "person"
+    }
+}
+```
+
+Therefore, the response will look like the following with the error type for incorrectID listed under the key errors.
+
+```
+{
+  "errors": {
+    "incorrectID": "db/invalid-entity"
+  },
+  "result": {
+    "person": [
+      {
+        "_id": 4303557230594,
+        "person/handle": "zsmith",
+        "person/fullName": "Zach Smith",
+        "person/karma": 5
+      },
+      ...
+    ]
+  },
+  "status": 207,
+  "block": 463,
+  "time": "5.64ms"
+}
+```
+
+#### Submit Multiple Queries at Once
+
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{"chatQuery": {"select": ["*"],"from": "chat"},"personQuery": {"select": ["*"],"from": "person"}}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
+
+```json
+{
+    "chatQuery": {
+        "select": ["*"],
+        "from": "chat"
+    },
+    "personQuery": {
+         "select": ["*"],
+        "from": "person"
+    }
+}
+```
+
+```graphql
+{ graph {
+  chat {
+    _id
+    comments
+    person
+    instant
+    message
+  }  
+  person {
+    _id
+    handle
+    fullName
+  }
+}
+}
+```

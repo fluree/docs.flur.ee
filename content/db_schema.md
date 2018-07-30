@@ -11,7 +11,7 @@ Defining and updating schemas is done through regular database transactions (in 
 
 FlureeDB attributes can be of many different types documented in the types table (i.e. string, boolean). Being a graph database, the special type of `ref` (reference) is core to traversing through data. Any attribute of type `ref` refers (links/joins) to another entity. These relationships can be navigated in both directions. For example, listing all invoices from a customer record is trivial if the invoice is of type `ref`, and once established an invoice automatically links back to the customer.
 
-Beyond validating types, FlureeDB allows custom validation that can further restrict attribute values. This can be specific enum values, strings matching regular expressions, or even custom predicate functions. This level of validation is done by specifying an optional `spec` for a stream or attribute.
+Beyond validating types, FlureeDB allows custom validation that can further restrict attribute values. This level of validation is done by specifying an optional [`spec` for a stream or attribute](#schema-specs).
 
 ## Streams
 
@@ -103,7 +103,8 @@ Attribute | Type | Description
 ---|---|---
 `_stream/name` | `string` | (required) The name of the stream. Stream names are aliases to an underlying stream integer identifier, and therefore it is possible to change stream alias to a different stream ID.
 `_stream/doc` | `string` | (optional) Optional docstring describing this stream.
-`_stream/spec` | `json` | (optional) A `spec` that restricts what is allowed in this stream.
+`_stream/spec` | `string` | (optional) A `spec` that restricts what is allowed in this stream.
+`_stream/specDoc` | `string` | (optional) Option docstring to describe the spec. Is thrown when spec fails. 
 `_stream/version` | `string` | (optional) For your optional use, if a stream's spec or intended attributes change over time this version number can be used to determine which schema version a particular application may be using.
 
 ## Attribute Definitions
@@ -155,4 +156,85 @@ Type | Description
 References, `ref`, allow both forward and reverse traversal of graph queries. 
 
 GraphQL requires additional information to auto-generate a schema that shows relationships, and it forces strict typing. Fluree allows any reference attribute to point to any entity, regardless of stream type. If you wish to restrict a reference attribute to only a specific type of stream, also include `restrictStream` in your attribute definition. In addition to forcing an attribute to only allow a specific stream type, it also enables GraphQL to auto-generate its schema with the proper relationship.
+
+## Schema Specs
+
+Both _attribute and _stream specs allow you to specify the contents of an attribute or a stream with a high level of control. Specs may simply be true or false, or they can be statements, which resolve to true or false. They are evaluated for every entity that is updated within a stream or attribute. 
+
+Attribute and stream specs are built using [database functions](#database-functions). 
+
+Spec | Description
+---|---
+"(= [1 2 3])" | You will *not* be able to add or edit any values to this stream or attribute. 
+"(= [3 (max [1 2 3])]) | You will be able to add and edit any values to this stream or attribute. Given you have access to that attribute or stream.
+true | You will be able to add any values to this stream or attribute. Given you have access to that attribute or stream.
+false | You will *not* be able to add any values to this stream or attribute.
+
+Specs using just database functions or true/false, will allow users who have access to that attribute or stream edit or add values for any given attribute or stream. While this is possible, Fluree allows very [granular permissions](#fluree-permissions) through a system of auth records, roles, and rules. 
+
+Specs are best suited for controlling the actual values of attributes through either specs that govern a specific attribute, or through specs that govern an entire stream. In order to make this possible, `_attribute/spec` and `_stream/spec` both give you access to certain information about the entity you are updating through built-in variables and functions. The functions below are also listed in [Database Functions](#database-functions). 
+
+Symbol | Description | Type | Access
+---|---|---|---
+`?v` | This gives you access to the value of the attribute you are updating. | Variable | Only available through `_attribute/spec`
+(`?v` attribute) | Input a variable name into this function, and you will have access to that attribute's value. If you are attempting to edit that attribute's value, this function will return the value that you are attempting to add. | Function | Both specs
+(`?e`) | This function returns an object of the entity you are attempting to edit with all of that entity's attribute-values, including the ones you are attemping to add. | Function | Both specs
+
+
+There are many ways to use database functions to control the value of an attribute or attributes in a stream. Below is a small series of examples:
+
+### Ex: Check If an Email Is Valid
+
+Fluree has a built-in database function, `valid-email?` that checks whether an email is valid (using the following pattern, "`[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`". You can also create your own email pattern using the function, `re-find`). 
+
+Suppose we want to add a spec to `person/email`, which checks whether the syntax of an email is valid. The `specDoc` attribute is the error message that is thrown when a value does not pass the spec, so we want to make sure that it is descriptive. 
+
+```
+{
+  "_id": ["_attribute/name", "person/email"],
+  "spec": "(valid-email? ?v)",
+  "specDoc": "Please enter a valid email address."
+}
+```
+
+### Ex: Ensure a Password Has At Least One Letter, and One Number
+
+Let's say that we want to add an attribute, `person/password`, but we want to make sure that it has at least one letter and one number. We could do that using the following spec. 
+
+```
+{
+  "_id": "_attribute",
+  "name": "person/password",
+  "type": "string",
+  "spec": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" ?v)",
+  "specDoc": "Passwords must have at least one letter and one number"
+}
+```
+
+### Ex: Level Needs To Be Between 0 and 100. 
+
+Let's say that we want to add an attribute, `person/level`, but we want to make sure that their level is between 0 and 100. 
+
+```
+{
+  "_id": "_attribute",
+  "name": "person/level",
+  "type": "int",
+  "spec": "(and [(> [100 ?v]) (< [0 ?v])])",
+  "specDoc": "Levels must be between 0 and 100."
+}
+```
+
+### Ex: Both Person/Handle and Person/fullName are Required Attributes in a Stream
+
+The most common usage for stream specs is to require certain attributes within a stream. For instance, requiring both a `person/handle` and a `person/fullName`. The below spec first gets the handle and fullName from the entity in question, and then checks if both of them are not nil. 
+
+```
+{
+  "_id": ["_stream/name" "person"],
+  "spec": " (and [(get (?e) \"person/handle\") (get (?e) \"person/fullName\")]) ",
+  "specDoc": "A person is required to have both a fullName and a handle."
+}
+```
+
 

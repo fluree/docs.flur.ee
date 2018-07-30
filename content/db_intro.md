@@ -1386,7 +1386,7 @@ curl  \
 
 ### Permissions Introduction
 
-We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an expressive predicate rule function.
+We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an [expressive predicate rule function](#database-functions).
 
 Here we'll go through all the steps needed to add a permission that accomplishes two main things:
 
