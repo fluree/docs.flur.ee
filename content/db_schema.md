@@ -3,40 +3,40 @@
 
 ## Fluree Schemas
 
-Much like a relational database, before storing your records in a Fluree database, you must first register a schema which consists of streams (similar to tables) and permissible attributes (similar to columns).
+Much like a relational database, before storing your records in a Fluree database, you must first register a schema which consists of collections (similar to tables) and permissible attributes (similar to columns).
 
 Fluree validates all Flakes being written against the database's schema, ensuring each Flake event type and attribute are registered and meet all of the defined restrictions (i.e. data type, multi-cardinality, uniqueness, required).
 
-Defining and updating schemas is done through regular database transactions (in JSON) by writing to the special pre-defined system streams.
+Defining and updating schemas is done through regular database transactions (in JSON) by writing to the special pre-defined system collections.
 
 FlureeDB attributes can be of many different types documented in the types table (i.e. string, boolean). Being a graph database, the special type of `ref` (reference) is core to traversing through data. Any attribute of type `ref` refers (links/joins) to another entity. These relationships can be navigated in both directions. For example, listing all invoices from a customer record is trivial if the invoice is of type `ref`, and once established an invoice automatically links back to the customer.
 
-Beyond validating types, FlureeDB allows custom validation that can further restrict attribute values. This level of validation is done by specifying an optional [`spec` for a stream or attribute](#schema-specs).
+Beyond validating types, FlureeDB allows custom validation that can further restrict attribute values. This level of validation is done by specifying an optional [`spec` for a collection or attribute](#schema-specs).
 
-## Streams
+## Collections
 
-Streams are like relational database tables. We call them streams because they hold an event-stream of changes pertaining to a specific type of entity. For each type of entity/object you have, there should be a stream defined to hold it (i.e. customers, chat messages, addresses).
+Collections are like relational database tables. We call them collections because they hold an event-collection of changes pertaining to a specific type of entity. For each type of entity/object you have, there should be a collection defined to hold it (i.e. customers, chat messages, addresses).
 
-To create a new stream, submit a transaction against the system stream named `_stream`. A sample stream transaction is provided here to create a new stream.
+To create a new collection, submit a transaction against the system collection named `_collection`. A sample collection transaction is provided here to create a new collection.
 
 
 ```json
 [{
- "_id": "_stream",
+ "_id": "_collection",
  "name": "person",
- "doc": "A stream/table to hold our people",
+ "doc": "A collection/table to hold our people",
  "version": "1"
 },
 {
- "_id": "_stream",
+ "_id": "_collection",
  "name": "chat",
- "doc": "A stream/table to hold chat messages",
+ "doc": "A collection/table to hold chat messages",
  "version": "1"
 },
 {
- "_id": "_stream",
+ "_id": "_collection",
  "name": "comment",
- "doc": "A stream/table to hold comments to chat messages",
+ "doc": "A collection/table to hold comments to chat messages",
  "version": "1"
 }]
 ```
@@ -46,45 +46,45 @@ To create a new stream, submit a transaction against the system stream named `_s
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-  "_id":     "_stream",
+  "_id":     "_collection",
   "name":    "person",
-  "doc":     "A stream/table to hold our people",
+  "doc":     "A collection/table to hold our people",
   "version": "1"
 },
 {
-  "_id":     "_stream",
+  "_id":     "_collection",
   "name":    "chat",
-  "doc":     "A stream/table to hold chat messages",
+  "doc":     "A collection/table to hold chat messages",
   "version": "1"
 },
 {
-  "_id":     "_stream",
+  "_id":     "_collection",
   "name":    "comment",
-  "doc":     "A stream/table to hold comments to chat messages",
+  "doc":     "A collection/table to hold comments to chat messages",
   "version": "1"
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
 
 ```graphql
-mutation addStreams ($myStreamTx: JSON) {
-  transact(tx: $myStreamTx)
+mutation addCollections ($myCollectionTx: JSON) {
+  transact(tx: $myCollectionTx)
 }
 
-/* myStreamTx is saved as a variable. Learn more about using GraphQL in the section, 'GraphQL' */
+/* myCollectionTx is saved as a variable. Learn more about using GraphQL in the section, 'GraphQL' */
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
 
 
 {
-  "myStreamTx": "[{\"_id\": \"_stream\", \"name\": \"person\", \"doc\": \"A stream/table to hold our people\", \"version\": \"1\"},{ \"_id\": \"_stream\", \"name\": \"chat\", \"doc\": \"A stream/table to hold chat messages\", \"version\": \"1\"},{ \"_id\": \"_stream\", \"name\": \"comment\", \"doc\": \"A stream/table to hold comments to chat messages\", \"version\": \"1\"}]"
+  "myCollectionTx": "[{\"_id\": \"_collection\", \"name\": \"person\", \"doc\": \"A collection/table to hold our people\", \"version\": \"1\"},{ \"_id\": \"_collection\", \"name\": \"chat\", \"doc\": \"A collection/table to hold chat messages\", \"version\": \"1\"},{ \"_id\": \"_collection\", \"name\": \"comment\", \"doc\": \"A collection/table to hold comments to chat messages\", \"version\": \"1\"}]"
 }
 ```
 
-An entity in a stream can have any defined attribute assigned to it, but convention is for attributes intended for a specific stream to have the attribute namespace be the same as the stream name (see documentation on attributes and namespaces). For example, if there were a `person` stream, an attribute intended to hold a person's email might be `person/email`.
+An entity in a collection can have any defined attribute assigned to it, but convention is for attributes intended for a specific collection to have the attribute namespace be the same as the collection name (see documentation on attributes and namespaces). For example, if there were a `person` collection, an attribute intended to hold a person's email might be `person/email`.
 
-In places where there is no ambiguity, attributes containing the same namespace as the stream do not need to include the namespace portion of the attribute. For example, note that the full attribute name of `person/email` is shortened below because the entity is in the `person` stream. You can of course always include the full attribute name.
+In places where there is no ambiguity, attributes containing the same namespace as the collection do not need to include the namespace portion of the attribute. For example, note that the full attribute name of `person/email` is shortened below because the entity is in the `person` collection. You can of course always include the full attribute name.
 
 ```
 {
@@ -93,19 +93,19 @@ In places where there is no ambiguity, attributes containing the same namespace 
 }
 ```
 
-Streams can optionally have a `spec` defined that restricts the allowed attributes.
+Collections can optionally have a `spec` defined that restricts the allowed attributes.
 
-## Stream Attributes
+## Collection Attributes
 
-The following table shows all `_stream` attributes and their meaning.
+The following table shows all `_collection` attributes and their meaning.
 
 Attribute | Type | Description
 ---|---|---
-`_stream/name` | `string` | (required) The name of the stream. Stream names are aliases to an underlying stream integer identifier, and therefore it is possible to change stream alias to a different stream ID.
-`_stream/doc` | `string` | (optional) Optional docstring describing this stream.
-`_stream/spec` | `string` | (optional) A `spec` that restricts what is allowed in this stream.
-`_stream/specDoc` | `string` | (optional) Option docstring to describe the spec. Is thrown when spec fails. 
-`_stream/version` | `string` | (optional) For your optional use, if a stream's spec or intended attributes change over time this version number can be used to determine which schema version a particular application may be using.
+`_collection/name` | `string` | (required) The name of the collection. Collection names are aliases to an underlying collection integer identifier, and therefore it is possible to change collection alias to a different collection ID.
+`_collection/doc` | `string` | (optional) Optional docstring describing this collection.
+`_collection/spec` | `string` | (optional) A `spec` that restricts what is allowed in this collection.
+`_collection/specDoc` | `string` | (optional) Option docstring to describe the spec. Is thrown when spec fails. 
+`_collection/version` | `string` | (optional) For your optional use, if a collection's spec or intended attributes change over time this version number can be used to determine which schema version a particular application may be using.
 
 ## Attribute Definitions
 
@@ -113,7 +113,7 @@ The following table shows all `_attribute` attributes and their meaning
 
 Attribute | Type | Description
 ---|---|---
-`_attribute/name` | `string` | (required) Actual attribute name. Must be namespaced, and convention is to namespace it using the stream name you intend it to be used within. Technically any attribute can be placed on any entity, but using a `spec` can restrict this behavior.
+`_attribute/name` | `string` | (required) Actual attribute name. Must be namespaced, and convention is to namespace it using the collection name you intend it to be used within. Technically any attribute can be placed on any entity, but using a `spec` can restrict this behavior.
 `_attribute/doc` | `string` | (optional) Doc string for this attribute describing its intention. This description is also used for GraphQL automated schema generation.
 `_attribute/type` | `tag` | (required) Data type of this attribute such as `string`, `integer`, or a reference (join) to another entity - `ref`. See table below for valid data types.
 `_attribute/unique` | `boolean` | (optional) True if this attribute acts as a primary key.  Unique attributes can be used for identity (as the `_id` value in a transaction or query).  (Default false.)
@@ -124,7 +124,7 @@ Attribute | Type | Description
 `_attribute/component` | `boolean` | (optional) For type 'ref' attributes only. Mark true if this attribute refers to an entity which only exists as part of the parent entity. If true, and the parent entity is deleted, the entity referenced by this attribute will also be deleted automatically. (Default false.)
 `_attribute/spec` | `json` | (Not in beta yet, optional) Sets the specification rules for this attribute, enabling to you restrict its allowed values.
 `_attribute/deprecated` | `boolean` | (Not in beta yet, optional) True if this v is deprecated.  Reads and writes are still allowed, but might give warnings in the API.
-`_attribute/restrictStream` | `string` | (optional) Only applicable to attributes of `ref` (reference) types. It will restrict references to only be allowed from the specified stream.
+`_attribute/restrictCollection` | `string` | (optional) Only applicable to attributes of `ref` (reference) types. It will restrict references to only be allowed from the specified collection.
 `_attribute/encrypted` | `boolean` | (Not in beta yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and database functions won't be permitted on this value.
 
 
@@ -135,7 +135,7 @@ Supported attribute types are as follows:
 Type | Description
 ---|---
 `string` | Unicode string (`_type/string`)
-`ref` | Reference (join) to another stream (`_type/ref`)
+`ref` | Reference (join) to another collection (`_type/ref`)
 `tag` | A special tag attribute. Tags are auto-generated, and create auto-resolving referred entities. Ideal for use as enum values. Also they allow you to find all entities that use a specific tag.  (`_type/tag`)
 `int` | 32 bit signed integer (`_type/int`)
 `long` | 64 bit signed integer (`_type/long`)
@@ -155,24 +155,24 @@ Type | Description
 
 References, `ref`, allow both forward and reverse traversal of graph queries. 
 
-GraphQL requires additional information to auto-generate a schema that shows relationships, and it forces strict typing. Fluree allows any reference attribute to point to any entity, regardless of stream type. If you wish to restrict a reference attribute to only a specific type of stream, also include `restrictStream` in your attribute definition. In addition to forcing an attribute to only allow a specific stream type, it also enables GraphQL to auto-generate its schema with the proper relationship.
+GraphQL requires additional information to auto-generate a schema that shows relationships, and it forces strict typing. Fluree allows any reference attribute to point to any entity, regardless of collection type. If you wish to restrict a reference attribute to only a specific type of collection, also include `restrictCollection` in your attribute definition. In addition to forcing an attribute to only allow a specific collection type, it also enables GraphQL to auto-generate its schema with the proper relationship.
 
 ## Schema Specs
 
-Both _attribute and _stream specs allow you to specify the contents of an attribute or a stream with a high level of control. Specs may simply be true or false, or they can be statements, which resolve to true or false. They are evaluated for every entity that is updated within a stream or attribute. 
+Both _attribute and _collection specs allow you to specify the contents of an attribute or a collection with a high level of control. Specs may simply be true or false, or they can be statements, which resolve to true or false. They are evaluated for every entity that is updated within a collection or attribute. 
 
-Attribute and stream specs are built using [database functions](#database-functions). 
+Attribute and collection specs are built using [database functions](#database-functions). 
 
 Spec | Description
 ---|---
-"(= [1 2 3])" | You will *not* be able to add or edit any values to this stream or attribute. 
-"(= [3 (max [1 2 3])]) | You will be able to add and edit any values to this stream or attribute. Given you have access to that attribute or stream.
-true | You will be able to add any values to this stream or attribute. Given you have access to that attribute or stream.
-false | You will *not* be able to add any values to this stream or attribute.
+"(= [1 2 3])" | You will *not* be able to add or edit any values to this collection or attribute. 
+"(= [3 (max [1 2 3])]) | You will be able to add and edit any values to this collection or attribute. Given you have access to that attribute or collection.
+true | You will be able to add any values to this collection or attribute. Given you have access to that attribute or collection.
+false | You will *not* be able to add any values to this collection or attribute.
 
-Specs using just database functions or true/false, will allow users who have access to that attribute or stream edit or add values for any given attribute or stream. While this is possible, Fluree allows very [granular permissions](#fluree-permissions) through a system of auth records, roles, and rules. 
+Specs using just database functions or true/false, will allow users who have access to that attribute or collection edit or add values for any given attribute or collection. While this is possible, Fluree allows very [granular permissions](#fluree-permissions) through a system of auth records, roles, and rules. 
 
-Specs are best suited for controlling the actual values of attributes through either specs that govern a specific attribute, or through specs that govern an entire stream. In order to make this possible, `_attribute/spec` and `_stream/spec` both give you access to certain information about the entity you are updating through built-in variables and functions. The functions below are also listed in [Database Functions](#database-functions). 
+Specs are best suited for controlling the actual values of attributes through either specs that govern a specific attribute, or through specs that govern an entire collection. In order to make this possible, `_attribute/spec` and `_collection/spec` both give you access to certain information about the entity you are updating through built-in variables and functions. The functions below are also listed in [Database Functions](#database-functions). 
 
 Symbol | Description | Type | Access
 ---|---|---|---
@@ -181,7 +181,7 @@ Symbol | Description | Type | Access
 (`?e`) | This function returns an object of the entity you are attempting to edit with all of that entity's attribute-values, including the ones you are attemping to add. | Function | Both specs
 
 
-There are many ways to use database functions to control the value of an attribute or attributes in a stream. Below is a small series of examples:
+There are many ways to use database functions to control the value of an attribute or attributes in a collection. Below is a small series of examples:
 
 ### Ex: Check If an Email Is Valid
 
@@ -225,13 +225,13 @@ Let's say that we want to add an attribute, `person/level`, but we want to make 
 }
 ```
 
-### Ex: Both Person/Handle and Person/fullName are Required Attributes in a Stream
+### Ex: Both Person/Handle and Person/fullName are Required Attributes in a Collection
 
-The most common usage for stream specs is to require certain attributes within a stream. For instance, requiring both a `person/handle` and a `person/fullName`. The below spec first gets the handle and fullName from the entity in question, and then checks if both of them are not nil. 
+The most common usage for collection specs is to require certain attributes within a collection. For instance, requiring both a `person/handle` and a `person/fullName`. The below spec first gets the handle and fullName from the entity in question, and then checks if both of them are not nil. 
 
 ```
 {
-  "_id": ["_stream/name" "person"],
+  "_id": ["_collection/name" "person"],
   "spec": " (and [(get (?e) \"person/handle\") (get (?e) \"person/fullName\")]) ",
   "specDoc": "A person is required to have both a fullName and a handle."
 }

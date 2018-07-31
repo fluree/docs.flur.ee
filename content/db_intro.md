@@ -93,7 +93,7 @@ Topic |
 4 | [Selecting All Actors From a Movie](#selecting-all-actors-from-a-movie)
 5 | [Selecting All Actor Names From a Movie](#selecting-all-actor-names-from-a-movie)
 6 | [Adding a Movie to the Database](#adding-a-movie-to-the-database)
-7 | [Creating Schema - Streams](#creating-schema---streams)
+7 | [Creating Schema - Collections](#creating-schema---collections)
 8 | [Creating Schema - Attributes](#creating-schema---attributes)
 9 | [Transacting Data](#transacting-data) 
 10 | [Querying Data](#querying-data)
@@ -112,9 +112,9 @@ Now, select FlureeQL in the sidebar to go to the [FlureeQL interface](https://fl
 
 ### Selecting All Actors, Movies, Credits
 
-A Fluree schema consists of streams and attributes. Streams are similar to a relational database's tables. Streams organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new stream to hold it. You can learn more about streams in the [Streams](#streams) section. 
+A Fluree schema consists of collections and attributes. Collections are similar to a relational database's tables. Collections organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new collection to hold it. You can learn more about collections in the [Collections](#collections) section. 
 
-The movie database that we forked contains eight streams: actor, credit, keyword, genre, language, country, productionCompany, and movie. 
+The movie database that we forked contains eight collections: actor, credit, keyword, genre, language, country, productionCompany, and movie. 
 
 Fluree allows you to specify queries using our FlureeQL JSON syntax or with GraphQL. The FlureeQL format is designed to easily enable code to compose queries, as the query is simply a data structure.
 
@@ -158,12 +158,12 @@ Your result will look similiar to this.
 
 Although there are more than 1,000 actors, by default FlureeDB only returns 1,000 results, although this can be changed by setting the [limit options](#apidbquery).
 
-We can do the same thing for any other stream by just replacing "actor" with "movie" or "credit" for instance.
+We can do the same thing for any other collection by just replacing "actor" with "movie" or "credit" for instance.
 
 ```
 {
  "select": ["*"],
- "from": "anyStreamNameHere"
+ "from": "anyCollectionNameHere"
 }
 ```
 
@@ -272,7 +272,7 @@ curl \
 
 ### Selecting A Specific Actor or Movie
 
-FlureeDB allows you to select a collection from an entire stream, much like our examples thus far, or you can also specify a single entity.
+FlureeDB allows you to select a collection from an entire collection, much like our examples thus far, or you can also specify a single entity.
 
 An single entity can be selected using any valid identity, which includes the unique _id long integer if you know it, or any unique attribute's name and value.
 
@@ -364,7 +364,7 @@ You can do the same thing by select a movie by its title, for example:
 ```
 
 ### Selecting All Actors From a Movie
-FlureeDB support unlimited recursion in our queries. As a graph database, any FlureeDB query can follow a chain of relationships across multiple streams (and back).
+FlureeDB support unlimited recursion in our queries. As a graph database, any FlureeDB query can follow a chain of relationships across multiple collections (and back).
 
 For instance, let's suppose that we want to get all the actors from the movie, "Pulp Fiction". We can select all the attributes from `["movie/title", "Pulp Fiction"]` using this query:
 
@@ -407,7 +407,7 @@ Abbreviated Response:
 
 ```
 
-Each movie/credit attribute is a reference to the credit stream. We can follow this relationship with a nested query.
+Each movie/credit attribute is a reference to the credit collection. We can follow this relationship with a nested query.
 
 ```
 {
@@ -447,7 +447,7 @@ Abbreviated Response:
 }
 ```
 
-This query follows the relationship between the movie and the credit streams. It does not, however, show us actor names - only their _ids. In order to get actor names, we have to continue following the relationship from movie/credits to credit/actor. 
+This query follows the relationship between the movie and the credit collections. It does not, however, show us actor names - only their _ids. In order to get actor names, we have to continue following the relationship from movie/credits to credit/actor. 
 
 ```
 {
@@ -686,7 +686,7 @@ To write data to the Fluree Database, you submit a collection of statements to t
 
 While everything transacted here could be done in a single atomic transaction, we split it up to illustrate a couple points.
 
-Every transaction item must have an `_id` attribute to refer to the entity we are attempting to create/update. An `_id` can either be an existing entity's unique numeric ID, a two-tuple of a unique attribute+value, or a [tempid](#temporary-ids). A tempid can simply be the stream name, i.e. `movie` or it can be a stream name with unique reference. To make a unique tempid, just append the stream with any non-valid stream character (anything other than a-z, A-Z, 0-9, _) followed by anything else. For example, `_movie$1` or `movie&movie-one`.
+Every transaction item must have an `_id` attribute to refer to the entity we are attempting to create/update. An `_id` can either be an existing entity's unique numeric ID, a two-tuple of a unique attribute+value, or a [tempid](#temporary-ids). A tempid can simply be the collection name, i.e. `movie` or it can be a collection name with unique reference. To make a unique tempid, just append the collection with any non-valid collection character (anything other than a-z, A-Z, 0-9, _) followed by anything else. For example, `_movie$1` or `movie&movie-one`.
 
 In the first transaction we add a couple of movies. 
 
@@ -889,43 +889,43 @@ mutation addMovieCredit ($myMovieCreditTx: JSON) {
 }
 ```
 
-### Creating Schema - Streams
+### Creating Schema - Collections
 
 Up until this point, we have been using an already-populated database. Now, we will create and transact using our own schema. 
 
 To follow along with this portion of the Quick Start guide, create a new database and select "Blank Database" as your database template.
 
-Fluree schema consists of streams and attributes. These are similar to a relational database's tables and columns, however in Fluree both of these concepts are extended and more flexible. Streams organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new stream to hold it. Streams differ from tables in that they are an always-present stream of changes about those entities that can be queried at any point in time, not just the latest changes as a traditional database would do.
+Fluree schema consists of collections and attributes. These are similar to a relational database's tables and columns, however in Fluree both of these concepts are extended and more flexible. Collections organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new collection to hold it. Collections differ from tables in that they are an always-present collection of changes about those entities that can be queried at any point in time, not just the latest changes as a traditional database would do.
 
-Everything is data in FlureeDB. This includes the schemas, permissions, etc. that actually govern how it works. To add new streams we'll do a transaction the exact way we'd add any new data. Here we'll add our new streams and attributes in two separate transactions to explain what is happening, but they could be done in one.
+Everything is data in FlureeDB. This includes the schemas, permissions, etc. that actually govern how it works. To add new collections we'll do a transaction the exact way we'd add any new data. Here we'll add our new collections and attributes in two separate transactions to explain what is happening, but they could be done in one.
 
-This transaction adds three streams:
+This transaction adds three collections:
 
 - `person` - will hold names/handles for the people that are chatting
 - `chatMessage` - will hold the chat message content
 - `chatComment` - will hold comments about messages
 
-Here we use a tempid as we are creating new entities in the system stream named `_stream`. `_stream` is a system stream/table that holds the configured streams, and `_attribute` likewise for attributes.
+Here we use a tempid as we are creating new entities in the system collection named `_collection`. `_collection` is a system collection/table that holds the configured collections, and `_attribute` likewise for attributes.
 
-#### Stream schema transaction
+#### Collection schema transaction
 
 ```json
 [{
- "_id": "_stream",
+ "_id": "_collection",
  "name": "person",
- "doc": "A stream/table to hold our people",
+ "doc": "A collection/table to hold our people",
  "version": "1"
 },
 {
- "_id": "_stream",
+ "_id": "_collection",
  "name": "chat",
- "doc": "A stream/table to hold chat messages",
+ "doc": "A collection/table to hold chat messages",
  "version": "1"
 },
 {
- "_id": "_stream",
+ "_id": "_collection",
  "name": "comment",
- "doc": "A stream/table to hold comments to chat messages",
+ "doc": "A collection/table to hold comments to chat messages",
  "version": "1"
 }]
 ```
@@ -935,35 +935,35 @@ Here we use a tempid as we are creating new entities in the system stream named 
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-  "_id":     "_stream",
+  "_id":     "_collection",
   "name":    "person",
-  "doc":     "A stream/table to hold our people",
+  "doc":     "A collection/table to hold our people",
   "version": "1"
 },
 {
-  "_id":     "_stream",
+  "_id":     "_collection",
   "name":    "chat",
-  "doc":     "A stream/table to hold chat messages",
+  "doc":     "A collection/table to hold chat messages",
   "version": "1"
 },
 {
-  "_id":     "_stream",
+  "_id":     "_collection",
   "name":    "comment",
-  "doc":     "A stream/table to hold comments to chat messages",
+  "doc":     "A collection/table to hold comments to chat messages",
   "version": "1"
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
 
 ```graphql
-mutation addStreams ($myStreamTx: JSON) {
-  transact(tx: $myStreamTx)
+mutation addCollections ($myCollectionTx: JSON) {
+  transact(tx: $myCollectionTx)
 }
 
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myStreamTx": "[{\"_id\": \"_stream\", \"name\": \"person\", \"doc\": \"A stream/table to hold our people\", \"version\": \"1\"},{ \"_id\": \"_stream\", \"name\": \"chat\", \"doc\": \"A stream/table to hold chat messages\", \"version\": \"1\"},{ \"_id\": \"_stream\", \"name\": \"comment\", \"doc\": \"A stream/table to hold comments to chat messages\", \"version\": \"1\"}]"
+  "myCollectionTx": "[{\"_id\": \"_collection\", \"name\": \"person\", \"doc\": \"A collection/table to hold our people\", \"version\": \"1\"},{ \"_id\": \"_collection\", \"name\": \"chat\", \"doc\": \"A collection/table to hold chat messages\", \"version\": \"1\"},{ \"_id\": \"_collection\", \"name\": \"comment\", \"doc\": \"A collection/table to hold comments to chat messages\", \"version\": \"1\"}]"
 }
 
 ```
@@ -1019,7 +1019,7 @@ Comments
   "name": "chat/person",
   "doc":  "A reference to the person that created the message",
   "type": "ref",
-  "restrictStream": "person"
+  "restrictCollection": "person"
 },
 {
   "_id":   "_attribute",
@@ -1035,7 +1035,7 @@ Comments
   "type":      "ref",
   "component": true,
   "multi":     true,
-  "restrictStream": "comment"
+  "restrictCollection": "comment"
 },
 {
   "_id":  "_attribute",
@@ -1048,7 +1048,7 @@ Comments
   "name": "comment/person",
   "doc":  "A reference to the person that made the comment",
   "type": "ref",
-  "restrictStream": "person"
+  "restrictCollection": "person"
 }]
 ```
 
@@ -1081,7 +1081,7 @@ Comments
   "name": "chat/person",
   "doc":  "A reference to the person that created the message",
   "type": "ref",
-  "restrictStream": "person"
+  "restrictCollection": "person"
 },
 {
   "_id":   "_attribute",
@@ -1097,7 +1097,7 @@ Comments
   "type":      "ref",
   "component": true,
   "multi":     true,
-  "restrictStream": "comment"
+  "restrictCollection": "comment"
 },
 {
   "_id":  "_attribute",
@@ -1110,7 +1110,7 @@ Comments
   "name": "comment/person",
   "doc":  "A reference to the person that made the comment",
   "type": "ref",
-  "restrictStream": "person"
+  "restrictCollection": "person"
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
@@ -1138,15 +1138,15 @@ mutation addCommentAttributes ($myCommentTx: JSON) {
 {
   "myChatTx": "[
     { \"_id\": \"_attribute\", \"name\": \"chat/message\", \"doc\": \"A chat message\", \"type\": \"string\"},
-    { \"_id\": \"_attribute\", \"name\": \"chat/person\", \"doc\": \"A reference to the person that created the message\", \"type\": \"ref\", \"restrictStream\": \"person\"},
+    { \"_id\": \"_attribute\", \"name\": \"chat/person\", \"doc\": \"A reference to the person that created the message\", \"type\": \"ref\", \"restrictCollection\": \"person\"},
     { \"_id\": \"_attribute\", -12], \"name\": \"chat/instant\", \"doc\": \"The instant in time when this chat happened.\", \"type\": \"instant\", \"index\": true},
-    { \"_id\": \"_attribute\", \"name\": \"chat/comments\", \"doc\": \"A reference to comments about this message\", \"type\": \"ref\", \"component\": true, \"multi\": true, \"restrictStream\": \"comment\"}]"
+    { \"_id\": \"_attribute\", \"name\": \"chat/comments\", \"doc\": \"A reference to comments about this message\", \"type\": \"ref\", \"component\": true, \"multi\": true, \"restrictCollection\": \"comment\"}]"
 }
 
 {
   "myCommentTx": "[
     { \"_id\": \"_attribute\", \"name\": \"comment/message\", \"doc\": \"A comment message.\", \"type\": \"string\"},
-    { \"_id\": \"_attribute\", \"name\": \"comment/person\", \"doc\": \"A reference to the person that made the comment\", \"type\": \"ref\", \"restrictStream\": \"person\"}]"
+    { \"_id\": \"_attribute\", \"name\": \"comment/person\", \"doc\": \"A reference to the person that made the comment\", \"type\": \"ref\", \"restrictCollection\": \"person\"}]"
 }
 
 
@@ -1390,7 +1390,7 @@ We can enable permissions on both query and transaction operations, and the perm
 
 Here we'll go through all the steps needed to add a permission that accomplishes two main things:
 
-1. Users can only see `chat` and `person` stream data, but no other data in the database
+1. Users can only see `chat` and `person` collection data, but no other data in the database
 2. A user can only create or update a chats of their own (if they are the referenced `chat/person`)
 
 To accomplish this we need to do a few things:
@@ -1408,7 +1408,7 @@ A token (which governs permissions) is tied to a specific `_auth` entity which c
 **>> Execute the example transaction to add a new attribute named `person/user` that allows a `ref` from any of our persons to a database user.**
 
 
-Next, we add a new role called `chatUser` that we can easily assign to all chat users. The role has three rules in it. The first, `viewAllChats`, allows `query` (read) permissions for every attribute in the stream `chat`. The second rule, `viewAllPeople` similarly allows `query` for every attribute in the stream `person`. The final rule, `editOwnChats`, will restrict `transact` to ensure only chats by the respective `person` can be created or edited.
+Next, we add a new role called `chatUser` that we can easily assign to all chat users. The role has three rules in it. The first, `viewAllChats`, allows `query` (read) permissions for every attribute in the collection `chat`. The second rule, `viewAllPeople` similarly allows `query` for every attribute in the collection `person`. The final rule, `editOwnChats`, will restrict `transact` to ensure only chats by the respective `person` can be created or edited.
 
 **>> Execute the example transaction to add the new role and these three rules.**
 
@@ -1422,7 +1422,7 @@ The rule stipulates, that if the database user found after following the graph e
 
 **>> Execute the final transaction example.**
 
-Now, refresh the Fluree user interface (it does not automatically refresh with detected new user/roles). Select the database you were working on in the UI sidebar, and you should now have a user listed as `jdoe`. If you select `jdoe`, you'll be using the custom database just for her that you created with the aforementioned rules. Try to query different streams, or create/update chat messages. The rules we've defined here will only allow the described behavior.
+Now, refresh the Fluree user interface (it does not automatically refresh with detected new user/roles). Select the database you were working on in the UI sidebar, and you should now have a user listed as `jdoe`. If you select `jdoe`, you'll be using the custom database just for her that you created with the aforementioned rules. Try to query different collections, or create/update chat messages. The rules we've defined here will only allow the described behavior.
 
 **>> Quick Start is now complete. Please see the additional documentation provided here for added references.**
 
@@ -1434,7 +1434,7 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
   "name":   "person/user",
   "doc":    "Reference to a database user.",
   "type":   "ref",
-  "restrictStream": "_user"
+  "restrictCollection": "_user"
 }]
 ```
 
@@ -1447,7 +1447,7 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
   "name":   "person/user",
   "doc":    "Reference to a database user.",
   "type":   "ref",
-  "restrictStream": "_user"
+  "restrictCollection": "_user"
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
@@ -1461,7 +1461,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
 
 {
   "myDBUserAttributeTx": "[
-    { \"_id\": \"_attribute\", \"name\": \"person/user\", \"doc\": \"Reference to a database user.\", \"type\": \"ref\", \"restrictStream\": \"_user\" }
+    { \"_id\": \"_attribute\", \"name\": \"person/user\", \"doc\": \"Reference to a database user.\", \"type\": \"ref\", \"restrictCollection\": \"_user\" }
     ]"
 }
 ```
@@ -1480,8 +1480,8 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "_id": "_rule$viewAllChats",
     "id": "viewAllChats",
     "doc": "Can view all chats.",
-    "stream": "chat",
-    "streamDefault": true,
+    "collection": "chat",
+    "collectionDefault": true,
     "predicate": "true",
     "ops": ["query"]
   },
@@ -1489,8 +1489,8 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "_id": "_rule$viewAllPeople",
     "id": "viewAllPeople",
     "doc": "Can view all people",
-    "stream": "person",
-    "streamDefault": true,
+    "collection": "person",
+    "collectionDefault": true,
     "predicate": "true",
     "ops": ["query"]
   },
@@ -1498,7 +1498,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "_id": "_rule$editOwnChats",
     "id": "editOwnChats",
     "doc": "Only allow users to edit their own chats",
-    "stream": "chat",
+    "collection": "chat",
     "attributes": ["chat/message"],
     "predicate": "(contains? (get-all ?e [\"chat/person\" \"person/user\"]) ?user)",
     "ops": ["transact"]
@@ -1521,8 +1521,8 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "_id": "_rule$viewAllChats",
     "id": "viewAllChats",
     "doc": "Can view all chats.",
-    "stream": "chat",
-    "streamDefault": true,
+    "collection": "chat",
+    "collectionDefault": true,
     "predicate": "true",
     "ops": ["query"]
   },
@@ -1530,8 +1530,8 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "_id": "_rule$viewAllPeople",
     "id": "viewAllPeople",
     "doc": "Can view all people",
-    "stream": "person",
-    "streamDefault": true,
+    "collection": "person",
+    "collectionDefault": true,
     "predicate": "true",
     "ops": ["query"]
   },
@@ -1539,7 +1539,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "_id": "_rule$editOwnChats",
     "id": "editOwnChats",
     "doc": "Only allow users to edit their own chats",
-    "stream": "chat",
+    "collection": "chat",
     "attributes": ["chat/message"],
     "predicate": "(contains? (get-all ?e [\"chat/person\" \"person/user\"]) ?user)",
     "ops": ["transact"]
@@ -1558,9 +1558,9 @@ mutation addRole ($myRoleTx: JSON) {
 {
   "myRoleTx": "[ 
     { \"_id\": \"_role\", \"id\": \"chatUser\", \"doc\": \"A standard chat user role\", \"rules\": [\"_rule$viewAllChats\", \"_rule$viewAllPeople\", \"_rule$editOwnChats\"] }, 
-    { \"_id\": \"_rule$viewAllChats\", \"id\": \"viewAllChats\", \"doc\": \"Can view all chats.\", \"stream\": \"chat\", \"streamDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, 
-    { \"_id\": \"_rule$viewAllPeople\", \"id\": \"viewAllPeople\", \"doc\": \"Can view all people\", \"stream\": \"person\", \"streamDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, 
-    { \"_id\": \"_rule$editOwnChats\", \"id\": \"editOwnChats\", \"doc\": \"Only allow users to edit their own chats\", \"stream\": \"chat\", \"attributes\": [\"chat/message\"], \"ops\": [\"transact\"] } 
+    { \"_id\": \"_rule$viewAllChats\", \"id\": \"viewAllChats\", \"doc\": \"Can view all chats.\", \"collection\": \"chat\", \"collectionDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, 
+    { \"_id\": \"_rule$viewAllPeople\", \"id\": \"viewAllPeople\", \"doc\": \"Can view all people\", \"collection\": \"person\", \"collectionDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, 
+    { \"_id\": \"_rule$editOwnChats\", \"id\": \"editOwnChats\", \"doc\": \"Only allow users to edit their own chats\", \"collection\": \"chat\", \"attributes\": [\"chat/message\"], \"ops\": [\"transact\"] } 
     ]"
 }
 

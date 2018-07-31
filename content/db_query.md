@@ -140,7 +140,7 @@ FlureeQL Graph Queries are structured as a JSON object/map and may contain the f
 Key | Required? | Description
 -- | -- | -- 
 `select` | yes |  Select syntax.
-`from` | yes | Either a stream name or an individual identity via its `_id` number or identity (unique attribute) name + value.
+`from` | yes | Either a collection name or an individual identity via its `_id` number or identity (unique attribute) name + value.
 `where` | no | Optional where clause specified a SQL-like string.
 `limit` | no | Optional limit (integer) of results to include.
 `block` | no | Optional time-travel query specified by block number or wall-clock time as a ISO-8601 formatted string.
@@ -431,17 +431,17 @@ curl \
 ```
 ### "from" syntax
 
-FlureeDB allows you to select a collection from an entire stream, much like our examples thus far, or you can also specify a single entity.
+FlureeDB allows you to select a collection from an entire collection, much like our examples thus far, or you can also specify a single entity.
 
 An single entity can be selected using any valid identity, which includes the unique `_id` long integer if you know it, or any `unique` attribute's name and value.
 
-To select all chats as we previously have done, we used `"from": "chat"`. To select all people we used `"from": "person"`. The returned results is a collection (vector/array), and you simply need to utilize the stream.
+To select all chats as we previously have done, we used `"from": "chat"`. To select all people we used `"from": "person"`. The returned results is a collection (vector/array), and you simply need to utilize the collection.
 
 To select a specific person, we could use either `"from": 4294967296001` or a unique attribute like `"from": ["person/handle", "jdoe"]`. Both results will be identical. The results are a map/object in this case, and not a collection.
 
 In both cases, the `select` syntax and its rules are identical.
 
-We give you the ability to break out of stream-only or entity-only queries using Fluree's Analytical Query format which we'll cover next.
+We give you the ability to break out of collection-only or entity-only queries using Fluree's Analytical Query format which we'll cover next.
 
 
 

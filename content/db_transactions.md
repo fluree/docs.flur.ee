@@ -12,11 +12,11 @@ Key | Type | Description
 
 To delete/retract an entire entity, use the `_id` key along with only `"_action": "delete"`. To delete only specific values within an entity, specify the key/value combinations.
 
-The keys can contain the full attribute name including the namespace, i.e. `chat/message` or you can leave off the namespace if it is the same as the stream the entity is within. i.e. when the entity is within the `chat` stream, just `message` can be used which is translated to `chat/message` by Fluree.
+The keys can contain the full attribute name including the namespace, i.e. `chat/message` or you can leave off the namespace if it is the same as the collection the entity is within. i.e. when the entity is within the `chat` collection, just `message` can be used which is translated to `chat/message` by Fluree.
 
 ## Temporary Ids
 
-Every transaction item must have an _id attribute to refer to the entity we are attempting to create/update. A tempid can simply be the stream name, i.e. `_user`. 
+Every transaction item must have an _id attribute to refer to the entity we are attempting to create/update. A tempid can simply be the collection name, i.e. `_user`. 
 
 FlureeQL example:
 
@@ -29,7 +29,7 @@ FlureeQL example:
 ]
 ```
 
-However, if you would like to reference that tempid somewhere else in your transaction, it is helpful to create a unique tempid. To make a unique tempid, just append the stream with any non-valid stream character (anything other than a-z, A-Z, 0-9, _) followed by anything else. For example, `_user$jdoe` or `_user#1 `.
+However, if you would like to reference that tempid somewhere else in your transaction, it is helpful to create a unique tempid. To make a unique tempid, just append the collection with any non-valid collection character (anything other than a-z, A-Z, 0-9, _) followed by anything else. For example, `_user$jdoe` or `_user#1 `.
 
 FlureeQL example:
 ```
@@ -319,8 +319,8 @@ Database functions allow you to update an attribute's value based on the existin
 
 * Transactions - Pass database functions into transactions with a #, for example, `	#(inc)`. Resolves to any type of value. 
 * `_attribute/spec` - Control the values that can be held in an attribute. Resolves to true or false. 
-* `_stream/spec` - Control the values of the attributes in a specific stream. Resolves to true or false. 
-* `_rule/predicate` - Controls whether an auth record can view a certain attribute or stream. Resolves to true or false. 
+* `_collection/spec` - Control the values of the attributes in a specific collection. Resolves to true or false. 
+* `_rule/predicate` - Controls whether an auth record can view a certain attribute or collection. Resolves to true or false. 
 
 In addition, `_rule/predicate`s and `_attribute/spec`s have access to certain variables. 
 

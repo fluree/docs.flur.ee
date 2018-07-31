@@ -14,9 +14,9 @@
 },
 
 [{
-  "_id": ["_stream", -1],
+  "_id": ["_collection", -1],
   "name":   "product",
-  "doc": "A stream to hold product data",
+  "doc": "A collection to hold product data",
   "version": "1"
  },{
   "_id": ["_attribute", -1],
