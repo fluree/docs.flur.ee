@@ -11,7 +11,7 @@ Defining and updating schemas is done through regular database transactions (in 
 
 FlureeDB attributes can be of many different types documented in the types table (i.e. string, boolean). Being a graph database, the special type of `ref` (reference) is core to traversing through data. Any attribute of type `ref` refers (links/joins) to another entity. These relationships can be navigated in both directions. For example, listing all invoices from a customer record is trivial if the invoice is of type `ref`, and once established an invoice automatically links back to the customer.
 
-Beyond validating types, FlureeDB allows custom validation that can further restrict attribute values. This level of validation is done by specifying an optional [`spec` for a collection or attribute](#schema-specs).
+Beyond validating types, FlureeDB allows custom validation that can further restrict attribute values. This level of validation is done by specifying an optional [`spec` for a collection or attribute](#collection-and-attribute-specs).
 
 ## Collections
 
@@ -103,8 +103,8 @@ Attribute | Type | Description
 ---|---|---
 `_collection/name` | `string` | (required) The name of the collection. Collection names are aliases to an underlying collection integer identifier, and therefore it is possible to change collection alias to a different collection ID.
 `_collection/doc` | `string` | (optional) Optional docstring describing this collection.
-`_collection/spec` | `string` | (optional) A `spec` that restricts what is allowed in this collection.
-`_collection/specDoc` | `string` | (optional) Option docstring to describe the spec. Is thrown when spec fails. 
+`_collection/spec` | [`ref`] | (optional) A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. These specs restricts what is allowed in this collection. To learn more, visit the [Collection and Attribute Specs](#collection-and-attribute-specs) section. 
+`_collection/specDoc` | `string` | (optional) Optional docstring to describe the specs. Is thrown when any spec fails. 
 `_collection/version` | `string` | (optional) For your optional use, if a collection's spec or intended attributes change over time this version number can be used to determine which schema version a particular application may be using.
 
 ## Attribute Definitions
@@ -122,7 +122,8 @@ Attribute | Type | Description
 `_attribute/upsert` | `boolean` | (optional) Only applicable to attributes marked as `unique`. If a new entity transaction using this attribute resolves to an existing entity, update that entity. By default the transaction will throw an exception if a conflict with a `unique` attribute exists.
 `_attribute/noHistory` | `boolean` | (optional) By default, all history is kept. If you wish to turn this off for a certain entity, set this flag to true. Queries, regardless of time travel, will always show the current value.
 `_attribute/component` | `boolean` | (optional) For type 'ref' attributes only. Mark true if this attribute refers to an entity which only exists as part of the parent entity. If true, and the parent entity is deleted, the entity referenced by this attribute will also be deleted automatically. (Default false.)
-`_attribute/spec` | `json` | (Not in beta yet, optional) Sets the specification rules for this attribute, enabling to you restrict its allowed values.
+`_attribute/spec` | [`ref`] | (optional) A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. These specs restricts what is allowed in this _attribute. To learn more, visit the [Collection and Attribute Specs](#collection-and-attribute-specs) section. 
+`_attribute/specDoc` | `string` | (optional) Optional docstring to describe the specs. Is thrown when any spec fails. 
 `_attribute/deprecated` | `boolean` | (Not in beta yet, optional) True if this v is deprecated.  Reads and writes are still allowed, but might give warnings in the API.
 `_attribute/restrictCollection` | `string` | (optional) Only applicable to attributes of `ref` (reference) types. It will restrict references to only be allowed from the specified collection.
 `_attribute/encrypted` | `boolean` | (Not in beta yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and database functions won't be permitted on this value.
@@ -157,9 +158,9 @@ References, `ref`, allow both forward and reverse traversal of graph queries.
 
 GraphQL requires additional information to auto-generate a schema that shows relationships, and it forces strict typing. Fluree allows any reference attribute to point to any entity, regardless of collection type. If you wish to restrict a reference attribute to only a specific type of collection, also include `restrictCollection` in your attribute definition. In addition to forcing an attribute to only allow a specific collection type, it also enables GraphQL to auto-generate its schema with the proper relationship.
 
-## Schema Specs
+## Collection and Attribute Specs
 
-Both _attribute and _collection specs allow you to specify the contents of an attribute or a collection with a high level of control. Specs may simply be true or false, or they can be statements, which resolve to true or false. They are evaluated for every entity that is updated within a collection or attribute. 
+Both _attribute and _collection specs allow you to specify the contents of an attribute or a collection with a high level of control. Both attribute and collection specs are multi-cardinality references to `_fn`, and the `_fn/code` attribute may simply be true or false, or it can be statements, which resolves to true or false. Specs are evaluated for every entity that is updated within a collection or attribute. 
 
 Attribute and collection specs are built using [database functions](#database-functions). 
 
@@ -170,16 +171,18 @@ Spec | Description
 true | You will be able to add any values to this collection or attribute. Given you have access to that attribute or collection.
 false | You will *not* be able to add any values to this collection or attribute.
 
-Specs using just database functions or true/false, will allow users who have access to that attribute or collection edit or add values for any given attribute or collection. While this is possible, Fluree allows very [granular permissions](#fluree-permissions) through a system of auth records, roles, and rules. 
+Specs using just true/false or basic arithmetical database functions, will determine whether users have access to that attribute or collection may edit or add values for any given attribute or collection. While this is possible, Fluree allows very [granular permissions](#fluree-permissions) through a system of auth records, roles, and rules. 
 
-Specs are best suited for controlling the actual values of attributes through either specs that govern a specific attribute, or through specs that govern an entire collection. In order to make this possible, `_attribute/spec` and `_collection/spec` both give you access to certain information about the entity you are updating through built-in variables and functions. The functions below are also listed in [Database Functions](#database-functions). 
+Specs are best suited for controlling the actual values of attributes through either specs that govern a specific attribute, or through specs that govern an entire collection. In order to make this possible, `_attribute/spec` and `_collection/spec` both have access to special functions which can give you certain information about the entity you are editing or the database in general. The functions below are also listed in [Database Functions](#database-functions). 
 
-Symbol | Description | Type | Access
+Symbol | Description | Access
 ---|---|---|---
-`?v` | This gives you access to the value of the attribute you are updating. | Variable | Only available through `_attribute/spec`
-(`?v` attribute) | Input a variable name into this function, and you will have access to that attribute's value. If you are attempting to edit that attribute's value, this function will return the value that you are attempting to add. | Function | Both specs
-(`?e`) | This function returns an object of the entity you are attempting to edit with all of that entity's attribute-values, including the ones you are attemping to add. | Function | Both specs
-
+(`?v`) | The value of the attribute that you are adding or editing. | _attribute/spec
+(`?pV`) | The value of the attribute that you are adding or editing. | _attribute/spec
+(`?eid`) | - | -
+(`?e`) | - | -
+(`?user_id`) | - | -
+(`db`) | - | -
 
 There are many ways to use database functions to control the value of an attribute or attributes in a collection. Below is a small series of examples:
 
@@ -190,11 +193,63 @@ Fluree has a built-in database function, `valid-email?` that checks whether an e
 Suppose we want to add a spec to `person/email`, which checks whether the syntax of an email is valid. The `specDoc` attribute is the error message that is thrown when a value does not pass the spec, so we want to make sure that it is descriptive. 
 
 ```
-{
+[{
   "_id": ["_attribute/name", "person/email"],
-  "spec": "(valid-email? ?v)",
+  "spec": ["_fn$validEmail"],
   "specDoc": "Please enter a valid email address."
+},
+{
+  "_id": "_fn$validEmail",
+  "name": "validEmail?",
+  "code": "(valid-email? (?v))"
+}]
+```
+
+#### Ex: Check If an Email Is Valid
+
+```json 
+[{
+  "_id": ["_attribute/name", "person/email"],
+  "spec": ["_fn$validEmail"],
+  "specDoc": "Please enter a valid email address."
+},
+{
+  "_id": "_fn$validEmail",
+  "name": "validEmail?",
+  "code": "(valid-email? (?v))"
+}]
+```
+
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id": ["_attribute/name", "person/email"],
+  "spec": ["_fn$validEmail"],
+  "specDoc": "Please enter a valid email address."
+},
+{
+  "_id": "_fn$validEmail",
+  "name": "valid-email?",
+  "code": "(validEmail? (?v))"
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+
+```graphql
+mutation validEmail ($validEmailTx: JSON) {
+  transact(tx: $validEmailTx)
 }
+
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
+
+{
+  "validEmailTx": "[
+    {\"_id\":[\"_attribute/name\",\"person/email\"],\"spec\":[\"_fn$valid-email\"],\"specDoc\":\"Please enter a valid email address.\"},
+    {\"_id\":\"_fn$valid-email\",\"name\":\"valid-email?\",\"code\":\"(valid-email? (?v))\"}]"
+}
+
 ```
 
 ### Ex: Ensure a Password Has At Least One Letter, and One Number
@@ -202,13 +257,69 @@ Suppose we want to add a spec to `person/email`, which checks whether the syntax
 Let's say that we want to add an attribute, `person/password`, but we want to make sure that it has at least one letter and one number. We could do that using the following spec. 
 
 ```
-{
+[{
   "_id": "_attribute",
   "name": "person/password",
   "type": "string",
-  "spec": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" ?v)",
+  "spec": ["_fn$validPassword"],
   "specDoc": "Passwords must have at least one letter and one number"
+},
+{
+  "_id": "_fn$validPassword",
+  "name": "validPassword?",
+  "code": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" ?v)"
+}]
+```
+
+#### Ex: Ensure a Password Has At Least One Letter, and One Number
+
+```json 
+[{
+  "_id": "_attribute",
+  "name": "person/password",
+  "type": "string",
+  "spec": ["_fn$validPassword"],
+  "specDoc": "Passwords must have at least one letter and one number"
+},
+{
+  "_id": "_fn$validPassword",
+  "name": "validPassword?",
+  "code": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" ?v)"
+}]
+```
+
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id": "_attribute",
+  "name": "person/password",
+  "type": "string",
+  "spec": ["_fn$validPassword"],
+  "specDoc": "Passwords must have at least one letter and one number"
+},
+{
+  "_id": "_fn$validPassword",
+  "name": "validPassword?"
+  "code": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" ?v)"
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+
+```graphql
+mutation valid-password ($validPasswordTx: JSON) {
+  transact(tx: $validPasswordTx)
 }
+
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
+
+{
+  "validPasswordTx": "[
+    {\"_id\":\"_attribute\",\"name\":\"person/password\",\"type\":\"string\",\"spec\":[\"_fn$validPassword\"],\"specDoc\":\"Passwords must have at least one letter and one number\"},
+    {\"_id\":\"_fn$validPassword\",\"name\":\"validPassword?\",\"code\":\"(re-find \\\"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\\\" ?v)\"}]"
+}
+
 ```
 
 ### Ex: Level Needs To Be Between 0 and 100. 
@@ -216,25 +327,127 @@ Let's say that we want to add an attribute, `person/password`, but we want to ma
 Let's say that we want to add an attribute, `person/level`, but we want to make sure that their level is between 0 and 100. 
 
 ```
-{
+[{
   "_id": "_attribute",
   "name": "person/level",
   "type": "int",
-  "spec": "(and [(> [100 ?v]) (< [0 ?v])])",
+  "spec": ["_fn$checkLevel"],
   "specDoc": "Levels must be between 0 and 100."
-}
+},
+{
+  "_id": "_fn$checkLevel",
+  "name": "checkLevel",
+  "code": "(and [(> [100 ?v]) (< [0 ?v])])"
+}]
+```
+#### Ex: Level Needs To Be Between 0 and 100. 
+
+```json 
+[{
+  "_id": "_attribute",
+  "name": "person/level",
+  "type": "int",
+  "spec": ["_fn$checkLevel"],
+  "specDoc": "Levels must be between 0 and 100."
+},
+{
+  "_id": "_fn$checkLevel",
+  "name": "checkLevel",
+  "code": "(and [(> [100 ?v]) (< [0 ?v])])"
+}]
 ```
 
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id": "_attribute",
+  "name": "person/level",
+  "type": "int",
+  "spec": ["_fn$checkLevel"],
+  "specDoc": "Levels must be between 0 and 100."
+},
+{
+  "_id": "_fn$checkLevel",
+  "name": "checkLevel",
+  "code": "(and [(> [100 ?v]) (< [0 ?v])])"
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+
+```graphql
+mutation check-level ($checkLevelTx: JSON) {
+  transact(tx: $checkLevelTx)
+}
+
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
+
+{
+  "checkLevelTx": "[
+    {\"_id\":\"_attribute\",\"name\":\"person/level\",\"type\":\"int\",\"spec\":[\"_fn$checkLevel\"],\"specDoc\":\"Levels must be between 0 and 100.\"},{\"_id\":\"_fn$checkLevel\",\"name\":\"checkLevel\",\"code\":\"(and [(> [100 ?v]) (< [0 ?v])])\"}]"
+}
+
+```
 ### Ex: Both Person/Handle and Person/fullName are Required Attributes in a Collection
 
 The most common usage for collection specs is to require certain attributes within a collection. For instance, requiring both a `person/handle` and a `person/fullName`. The below spec first gets the handle and fullName from the entity in question, and then checks if both of them are not nil. 
 
 ```
-{
+[{
   "_id": ["_collection/name" "person"],
-  "spec": " (and [(get (?e) \"person/handle\") (get (?e) \"person/fullName\")]) ",
+  "spec": ["_fn$handleAndFullName"],
   "specDoc": "A person is required to have both a fullName and a handle."
-}
+},
+{
+  "_id": "_fn$handleAndFullName",
+  "name": "handleAndFullName",
+  "code": "(and [(get (?e) \"person/handle\") (get (?e) \"person/fullName\")])"
+}]
 ```
 
+#### Ex: Both Person/Handle and Person/fullName are Required Attributes in a Collection
 
+```json 
+[{
+  "_id": ["_collection/name", "person"],
+  "spec": ["_fn$handleAndFullName"],
+  "specDoc": "A person is required to have both a fullName and a handle."
+},
+{
+  "_id": "_fn$handleAndFullName",
+  "name": "handleAndFullName",
+  "code": "(and [(get (?e) \"person/handle\") (get (?e) \"person/fullName\")])"
+}]
+```
+
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+  "_id": ["_collection/name", "person"],
+  "spec": ["_fn$handleAndFullName"],
+  "specDoc": "A person is required to have both a fullName and a handle."
+},
+{
+  "_id": "_fn$handleAndFullName",
+  "name": "handleAndFullName",
+  "code": "(and [(get (?e) \"person/handle\") (get (?e) \"person/fullName\")])"
+}]' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+```
+
+```graphql
+mutation handle-and-full-name ($handleAndFullNameTx: JSON) {
+  transact(tx: $handleAndFullNameTx)
+}
+
+/* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
+
+{
+  "handleAndFullNameTx": "[
+    {\"_id\":[\"_collection/name\",\"person\"],\"spec\":[\"_fn$handleAndFullName\"],\"specDoc\":\"A person is required to have both a fullName and a handle.\"},{\"_id\":\"_fn$handleAndFullName\",\"name\":\"handleAndFullName\",\"code\":\"(and [(get (?e) \\\"person/handle\\\") (get (?e) \\\"person/fullName\\\")])\"}]"
+}
+
+```

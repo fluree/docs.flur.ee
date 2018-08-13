@@ -1386,7 +1386,7 @@ curl  \
 
 ### Permissions Introduction
 
-We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an [expressive predicate rule function](#database-functions).
+We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an [expressive predicate rule function](#database-functions) that resolves to either true or false. All permissions are stored in the `_fn` collection and are referenced via a `ref` attribute on `_rule/predicate`.
 
 Here we'll go through all the steps needed to add a permission that accomplishes two main things:
 
@@ -1397,7 +1397,7 @@ To accomplish this we need to do a few things:
 
 1. Create an actual database user for the chat user(s) along with at least one auth record. Permissions are governed by auth records, users are optional but a user can have multiple auth entities each giving different permissions (the [Fluree Permissions](#fluree-permissions) section explains this in more detail).
 2. Link the `person` entities we created to the database user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` database user entity and then to the `_auth` record itself.
-3. Create rules to enforce the above desired permissions.
+3. Create rules to enforce the above desired permissions, and connect them to the user using another `ref` attribute. 
 4. Create an assignable role that contains these rules so we can easily add the role to our chat user(s).
 5. Assign the new role to the user(s).
 6. Execute commands with a token tied to the `_auth` record we create
@@ -1418,7 +1418,7 @@ The rule predicate function in `editOwnChats` follows the graph of a chat messag
 
 `chat message ->> chat/person ->> person/user ->> database user`
 
-The rule stipulates, that if the database user found after following the graph equals the current `?user`, then creating a new chat message or editing an existing one is allowed.
+The rule stipulates, that if the database user found after following the graph equals the current `?user_id`, then creating a new chat message or editing an existing one is allowed.
 
 **>> Execute the final transaction example.**
 
@@ -1482,7 +1482,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Can view all chats.",
     "collection": "chat",
     "collectionDefault": true,
-    "predicate": "true",
+    "predicate": ["_fn$true"],
     "ops": ["query"]
   },
   {
@@ -1491,7 +1491,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Can view all people",
     "collection": "person",
     "collectionDefault": true,
-    "predicate": "true",
+    "predicate": ["_fn$true"],
     "ops": ["query"]
   },
   {
@@ -1500,8 +1500,18 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Only allow users to edit their own chats",
     "collection": "chat",
     "attributes": ["chat/message"],
-    "predicate": "(contains? (get-all ?e [\"chat/person\" \"person/user\"]) ?user)",
+    "predicate": ["_fn$editOwnChats"],
     "ops": ["transact"]
+  },
+  {
+    "_id": "_fn$true",
+    "name": "true",
+    "code": true
+  },
+  {
+    "_id": "_fn$editOwnChats",
+    "name": "true",
+    "code": "(contains? (get-all (?e \"[{chat/person  [{person/user [\"_id\"] }]\") [\"chat/person\" \"person/user\" \"_id\"]) ?user_id)"
   }
 ]
 ```
