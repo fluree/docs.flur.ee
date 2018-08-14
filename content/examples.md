@@ -4,21 +4,26 @@
 
 ```
 [{
-    "_id": "_stream",
+    "_id": "_collection",
     "name": "crypto"
 }, 
 {
     "_id": "_attribute",
     "name": "crypto/balance",
     "type": "int",
-    "spec": "(< [-1 ?v])",
+    "spec": ["_fn$nonNegative?"],
     "specDoc": "Balance cannot be negative."
 },
 {
     "_id": "_attribute",
     "name": "crypto/user",
     "type": "ref",
-    "restrictStream": "_user"
+    "restrictCollection": "_user"
+},
+{
+    "_id": "_fn$nonNegative?",
+    "name": "nonNegative?",
+    "code": "(< [-1 (?v)])"
 }]
 ```
 
@@ -40,15 +45,33 @@
     "_id": "_role$cryptoUser",
     "id": "cryptoUser",
     "doc": "Standard crypto user",
-    "rules": ["_rule$editOwnCrypto"]
+    "rules": ["_rule$viewOwnCrypto", "_rule$editAnyCrypto"]
     },
     {
-    "_id": "_rule$editOwnCrypto",
-    "id": "editOwnCrypto",
-    "predicate": "(== [?user (get ?e \"crypto/user\" )])",
-    "ops": ["query", "transact"],
-    "stream": "crypto",
-    "streamDefault": true
+    "_id": "_rule$editAnyCrypto",
+    "id": "editAnyCrypto",
+    "predicate": ["_fn$alwaysTrue"],
+    "ops": ["transact"],
+    "collection": "crypto",
+    "collectionDefault": true
+    },
+    {
+    "_id": "_rule$viewOwnCrypto",
+    "id": "viewOwnCrypto",
+    "predicate": ["_fn$ownCrypto"],
+    "ops": ["query"],
+    "collection": "crypto",
+    "collectionDefault": true
+    },
+    {
+        "_id": "_fn$ownCrypto",
+        "name": "ownCrypto?",
+        "code": "(contains? (get-all (?e) [\"crypto/user\" \"_id\"]) (?user_id))"
+    },
+    {
+        "_id": "_fn$alwaysTrue",
+        "name": "true",
+        "code": true
     },
     {
     "_id": "_user$cryptoWoman",
@@ -73,6 +96,31 @@
 ```
 
 
+``` Base currency
+CryptoWoman Id -> {
+    "select": [{"crypto/_user": ["*"]}],
+    "from": ["_user/username", "cryptoWoman"]
+}
+
+CryptoMan Id -> {
+    "select": [{"crypto/_user": ["*"]}],
+    "from": ["_user/username", "cryptoMan"]
+}
+
+>> CryptoMan -> 4294967296002
+>> CryptoWoman -> 4294967296001
+
+[{
+    "_id": 4294967296002,
+    "balance": 200
+},
+{
+    "_id": 4294967296001,
+    "balance": 200
+}]
+```
+
+
 
 Enable something like this:
 
@@ -87,5 +135,5 @@ For now -> if it's you, you can do 100, if it's not 0. but you can't edit anothe
 
 [{
     "_id": ["_attribute/name", "crypto/balance"],
-    "spec": "(if-else (== [(get-in (?e) [\"crypto/user\" \"_id\"]) (get (?user) \"_id\")]) (== [100 ?v]) (== [0 ?v]) )"
+    "spec": "(if-else (contains? (get-all (?e) [\"crypto/user\" \"_id\"]) (?user_id)) (> [?pV ?v]) (< [?pV ?v]) )"
 }]
