@@ -12,7 +12,7 @@ The following sections outline key differences when using GraphQL.
 
 ## GraphQL Queries 
 
-Using GraphQL, you can only retrieve attributes from within the namespace that you specify. In the below example, we indicate that we are looking in the `chat` stream. 
+Using GraphQL, you can only retrieve attributes from within the namespace that you specify. In the below example, we indicate that we are looking in the `chat` collection. 
 
 Therefore, we can only retrieve attributes like `_id`, `message`, `person`, or `comments`, which are in the `chat` namespace. 
 
@@ -26,9 +26,9 @@ Therefore, we can only retrieve attributes like `_id`, `message`, `person`, or `
 }
 ```
 
-Fluree allows any reference attribute to point to any entity, regardless of stream type. 
+Fluree allows any reference attribute to point to any entity, regardless of collection type. 
 
-However, in order to retrieve references using GraphQL, the `restrictStream` property of that attribute has to be set to a valid stream. This second example retrieves not only the `_id` and `message` for each chat, but the `_id` and `handle` attributes for the `person` associated with each `chat`. 
+However, in order to retrieve references using GraphQL, the `restrictCollection` property of that attribute has to be set to a valid collection. This second example retrieves not only the `_id` and `message` for each chat, but the `_id` and `handle` attributes for the `person` associated with each `chat`. 
 
 ```
 { graph {
@@ -47,7 +47,7 @@ However, in order to retrieve references using GraphQL, the `restrictStream` pro
 ### Wildcards
 GraphQL does not support the use of wildcards ( `*`). When performing a query using GraphQL, you need to list all of the attributes you would like included in the response.
 
-In the below example, we are retrieving the `_id` and `handle` attributes from the `person` stream.  
+In the below example, we are retrieving the `_id` and `handle` attributes from the `person` collection.  
 
 ```
 { graph {

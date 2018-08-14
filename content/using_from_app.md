@@ -31,7 +31,7 @@ To get a permanent admin token, follow these steps:
 
 If you need to create an authorization record, see the example provided.
 
-Remember, authorization is governed by rules (stored in the `_rule` stream). Rules are grouped into roles (stored in the `_role` stream), and roles are assigned to auth entities (`_auth` stream).
+Remember, authorization is governed by rules (stored in the `_rule` collection). Rule predicates (either true/false or more complicated [database functions](#database-functions)) are stored in the `_fn` collection, and listed in the multi-cardinality attribute, `_rule/predicate` as a `ref`. Rules are grouped into roles (stored in the `_role` collection), and roles are assigned to auth entities (`_auth` collection).
 
 #### Sample rule, role and auth record for admin privileges
 
@@ -52,25 +52,30 @@ Remember, authorization is governed by rules (stored in the `_rule` stream). Rul
   {
     "_id":       "_rule$db-admin" ,
     "id":        "db-admin",
-    "doc":       "Rule that grants full access to all streams.",
-    "stream":    "*",
-    "streamDefault": true,
+    "doc":       "Rule that grants full access to all collections.",
+    "collection":    "*",
+    "collectionDefault": true,
     "ops":       ["query", "transact"],
-    "predicate": "true"
+    "predicate": ["_fn$true"]
   },
   {
     "_id":       "_rule$db-token" ,
     "id":        "db-admin-token",
     "doc":       "Rule allows token generation for other users.",
     "ops":       ["token"],
-    "predicate": "true"
+    "predicate": ["_fn$true"]
   },
     {
     "_id":       "_rule$db-logs" ,
     "id":        "db-admin-logs",
     "doc":       "Rule allows user to access account logs.",
     "ops":       ["logs"],
-    "predicate": "true"
+    "predicate": ["_fn$true"]
+  },
+  {
+    "_id": "_fn$true",
+    "name": "true",
+    "code": true
   }
 ]
 ```
@@ -95,25 +100,30 @@ curl \
   {
     "_id":       "_rule$db-admin" ,
     "id":        "db-admin",
-    "doc":       "Rule that grants full access to all streams.",
-    "stream":    "*",
-    "streamDefault": true,
+    "doc":       "Rule that grants full access to all collections.",
+    "collection":    "*",
+    "collectionDefault": true,
     "ops":       ["query", "transact"],
-    "predicate": "true"
+    "predicate": ["_fn$true"]
   },
   {
     "_id":       "_rule$db-token" ,
     "id":        "db-admin-token",
     "doc":       "Rule allows token generation for other users.",
     "ops":       ["token"],
-    "predicate": "true"
+    "predicate": ["_fn$true"]
   },
-  {
+    {
     "_id":       "_rule$db-logs" ,
     "id":        "db-admin-logs",
     "doc":       "Rule allows user to access account logs.",
     "ops":       ["logs"],
-    "predicate": "true"
+    "predicate": ["_fn$true"]
+  },
+  {
+    "_id": "_fn$true",
+    "name": "true",
+    "code": true
   }
 ]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
@@ -126,13 +136,8 @@ mutation addRoleRuleAuth($myAuthTx: JSON){
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myAuthTx": "[ 
-    { \"_id\": \"_auth\", \"key\": \"db-admin\", \"doc\": \"A db admin auth that has full data visibility and can generate tokens for other users.\", \"roles\": [\"_role$db-admin\"] }, 
-    { \"_id\": \"_role$db-admin\", \"id\": \"db-admin\", \"doc\": \"A role for full access to database.\", \"rules\": [\"_rule$db-admin\", \"_rule$db-token\", 
-    \"_rule$db-logs\"]}, 
-    { \"_id\": \"_rule$db-admin\", \"id\": \"db-admin\", \"doc\": \"Rule that grants full access to all streams.\", \"stream\": \"*\", \"streamDefault\": true, \"ops\": [\"query\", \"transact\"], \"predicate\": \"true\" }, 
-    { \"_id\": \"_rule$db-token\", \"id\": \"db-admin-token\", \"doc\": \"Rule allows token generation for other users.\", \"ops\": [\"token\"], \"predicate\": \"true\" },
-    { \"_id\": \"_rule$db-logs\", \"id\": \"db-admin-logs\", \"doc\": \"Rule allows user to access account logs.\", \"ops\": [\"logs\"], \"predicate\": \"true\" }
+  "myAuthTx": "[{
+    \"_id\":\"_auth\",\"id\":\"db-admin\",\"doc\":\"A db admin auth that has full data visibility and can generate tokens for other users.\",\"roles\":[\"_role$db-admin\"]},{\"_id\":\"_role$db-admin\",\"id\":\"db-admin\",\"doc\":\"A role for full access to database.\",\"rules\":[\"_rule$db-admin\",\"_rule$db-token\",\"_rule$db-logs\"]},{\"_id\":\"_rule$db-admin\",\"id\":\"db-admin\",\"doc\":\"Rule that grants full access to all collections.\",\"collection\":\"*\",\"collectionDefault\":true,\"ops\":[\"query\",\"transact\"],\"predicate\":[\"_fn$true\"]},{\"_id\":\"_rule$db-token\",\"id\":\"db-admin-token\",\"doc\":\"Rule allows token generation for other users.\",\"ops\":[\"token\"],\"predicate\":[\"_fn$true\"]},{\"_id\":\"_rule$db-logs\",\"id\":\"db-admin-logs\",\"doc\":\"Rule allows user to access account logs.\",\"ops\":[\"logs\"],\"predicate\":[\"_fn$true\"]},{\"_id\":\"_fn$true\",\"name\":\"true\",\"code\":true}
     ]"
 }
 ```
@@ -169,8 +174,8 @@ curl \
         id
         _id
         doc
-        stream
-        streamDefault
+        collection
+        collectionDefault
         predicate
         ops
       }
@@ -216,7 +221,7 @@ Main query interface for FlureeQL. Post a JSON map/object containing the followi
 Key | Type | Description
 -- | -- | -- 
 `select` | select-spec |  Selection specification in the form of an array/vector. To select all attributes use `[ "*" ]`. If you were storing customers and wanted to select just the customer name and products they own, the select statement might look like: `[ "customer/name", "customer/products"]`.
-`from` | from-spec | Can be an entity (represented as an identity or integer), or an entire stream of entities utilizing the stream name. If selecting from customers as per the prior example, it would simply be `"from": "customer"`. If selecting a specific customer, it would for example be `"from": 4299262263299` or `"from": "[\"customer/name\", \"Newco Inc.\"]"`. 
+`from` | from-spec | Can be an entity (represented as an identity or integer), or an entire collection of entities utilizing the collection name. If selecting from customers as per the prior example, it would simply be `"from": "customer"`. If selecting a specific customer, it would for example be `"from": 4299262263299` or `"from": "[\"customer/name\", \"Newco Inc.\"]"`. 
 `where` | where-spec | Optional. Can be in the simple SQL-like string format or more sophisticated queries can be specified in the datalog format. For the simple format, might include something like: `"where": "customer/name = 'ABC Corp'"` or `"where": "person/age >= 22 AND person/age <= 50"`.
 `block` | integer or ISO-8601 date string | Optional time-travel query, specified either by the block the query results should be of, or a wall-clock time in ISO-8601 fromat. When no block is specified, the most current database is always queried.
 `limit` | integer | Optional limit for result quantity. Fluree uses a default of 1000.
@@ -232,7 +237,7 @@ curl \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
 ```
 
-#### Query with a limit. Get all attributes from every entity in the `chat` stream
+#### Query with a limit. Get all attributes from every entity in the `chat` collection
 
 ```json
 {
@@ -346,7 +351,7 @@ Key | Type | Description
 
 To delete/retract an entire entity, use the `_id` key along with only `"_action": "delete"`. To delete only specific values within an entity, specify the key/value combinations.
 
-The keys can contain the full attribute name including the namespace, i.e. `chat/message` or you can leave off the namespace if it is the same as the stream the entity is within. i.e. when the entity is within the `chat` stream, just `message` can be used which is translated to `chat/message` by Fluree.
+The keys can contain the full attribute name including the namespace, i.e. `chat/message` or you can leave off the namespace if it is the same as the collection the entity is within. i.e. when the entity is within the `chat` collection, just `message` can be used which is translated to `chat/message` by Fluree.
 
 
 Curl example:

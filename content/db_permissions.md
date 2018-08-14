@@ -4,11 +4,11 @@
 
 Fluree allows very granular permissions to control exactly what data users can write and read, down to an entity + attribute level. When a user connects to a database, effectively their database is custom to them (and their requested point in time). Any data they do not have access to doesn't exist in their database. This means you can give direct access to the database to any user, and they can run ad-hoc queries without ever a concern that data might be leaked. This is a very powerful concept that can drastically simplify end-user applications.
 
-Permissions are controlled by restricting (or allowing) access to either streams or attributes, and both of these dimensions of access must be true to allow access.
+Permissions are controlled by restricting (or allowing) access to either collections or attributes, and both of these dimensions of access must be true to allow access.
 
 ## Permission Structure
 
-Individual permissions, such as read and write access to a stream, are encoded in rules. Rules, in turn, are assigned to roles (via the `_role/rules` attribute). For instance, a chatUser role might include the following rules:
+Individual permissions, such as read and write access to a collection, are encoded in rules. Rules, in turn, are assigned to roles (via the `_role/rules` attribute). For instance, a chatUser role might include the following rules:
 
 - Read access for all chats
 - Read access for all people
@@ -49,7 +49,7 @@ When reading, any data the user does not have access to simply disappears, as th
 When transacting, any attempts to transact data that the user does not have permission to write will throw an exception.
 It is entirely possible to have write access to data, but not read access.
 
-Block stream can always be written: if permissions on certain metadata are desired, the respective attributes must be excluded.
+Block collection can always be written: if permissions on certain metadata are desired, the respective attributes must be excluded.
 
 ## User and Auth Entities
 
@@ -84,7 +84,7 @@ Attribute | Type | Description
 
 ## Defining Rules
 
-Rules control the actual permissions and are stored in the special system stream `_rule`. Like all FlureeDB functionality, it is defined as data that you can transact as you would any data.
+Rules control the actual permissions and are stored in the special system collection `_rule`. Like all FlureeDB functionality, it is defined as data that you can transact as you would any data. 
 
 ### Rule attributes
 
@@ -92,10 +92,10 @@ Attribute | Type | Description
 -- | -- | -- 
 `_rule/id` | `string` |  (optional) A unique identifier for this rule.
 `_rule/doc` | `string` | (optional) A docstring for this rule.
-`_rule/stream` | `string` | (required) The stream name this rule applies to. In addition to a stream name, the special glob character `*` can be used to indicate all streams (wildcard).
-`_rule/streamDefault` | `boolean` | Indicates if this rule is a default rule for the specified stream. Use either this or `_rule/attributes` on a rule, but not both. Default rules are only executed if a more specific rule does not apply, and can be thought of as a catch-all.
+`_rule/collection` | `string` | (required) The collection name this rule applies to. In addition to a collection name, the special glob character `*` can be used to indicate all collections (wildcard).
+`_rule/collectionDefault` | `boolean` | Indicates if this rule is a default rule for the specified collection. Use either this or `_rule/attributes` on a rule, but not both. Default rules are only executed if a more specific rule does not apply, and can be thought of as a catch-all.
 `_rule/attributes` | `[string]`| (optional) A multi-cardinality list of attributes this rule applies to. The special glob character `*` can be used to indicate all attributes (wildcard).
-`_rule/predicate` | `string` | The predicate function to be applied. Can be `true`, `false`, or a predicate database function expression. Available predicate functions are listed in a subsequent table. `true` indicates the user always has access to this stream + attribute combination. `false` indicates the user is always denied access. Predicate functions will return a truthy or false value that has the same meanings.
+`_rule/predicate` | `[ref]` | (required) Multi-cardinality reference to `_fn` entity. The actual predicate is stored in the `_fn/code` attribute. The predicate function to be applied. Can be `true`, `false`, or a predicate database function expression. Available predicate functions and variables are listed in [Database Functions](#database-functions). `true` indicates the user always has access to this collection + attribute combination. `false` indicates the user is always denied access. Predicate functions will return a truthy or false value that has the same meanings.
 `_rule/ops` | `[tag]` | (required) Multi-cardinality tag of action(s) this rule applies to. Current tags supported are `query` for query/read access, `transact` for transact/write access, `token` to generate tokens, `logs` to access all database logs (users always have access to their own logs), and `all` for all operations.
 `_rule/errorMessage` | `string` | (optional) If this rule prevents a transaction from executing, this optional error message can be returned to the client instead of the default error message (which is intentionally generic to limit insights into the database configuration).
 

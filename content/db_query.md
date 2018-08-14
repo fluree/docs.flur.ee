@@ -140,7 +140,7 @@ FlureeQL Graph Queries are structured as a JSON object/map and may contain the f
 Key | Required? | Description
 -- | -- | -- 
 `select` | yes |  Select syntax.
-`from` | yes | Either a stream name or an individual identity via its `_id` number or identity (unique attribute) name + value.
+`from` | yes | Either a collection name or an individual identity via its `_id` number or identity (unique attribute) name + value.
 `where` | no | Optional where clause specified a SQL-like string.
 `limit` | no | Optional limit (integer) of results to include.
 `block` | no | Optional time-travel query specified by block number or wall-clock time as a ISO-8601 formatted string.
@@ -431,17 +431,17 @@ curl \
 ```
 ### "from" syntax
 
-FlureeDB allows you to select a collection from an entire stream, much like our examples thus far, or you can also specify a single entity.
+FlureeDB allows you to select a collection from an entire collection, much like our examples thus far, or you can also specify a single entity.
 
 An single entity can be selected using any valid identity, which includes the unique `_id` long integer if you know it, or any `unique` attribute's name and value.
 
-To select all chats as we previously have done, we used `"from": "chat"`. To select all people we used `"from": "person"`. The returned results is a collection (vector/array), and you simply need to utilize the stream.
+To select all chats as we previously have done, we used `"from": "chat"`. To select all people we used `"from": "person"`. The returned results is a collection (vector/array), and you simply need to utilize the collection.
 
 To select a specific person, we could use either `"from": 4294967296001` or a unique attribute like `"from": ["person/handle", "jdoe"]`. Both results will be identical. The results are a map/object in this case, and not a collection.
 
 In both cases, the `select` syntax and its rules are identical.
 
-We give you the ability to break out of stream-only or entity-only queries using Fluree's Analytical Query format which we'll cover next.
+We give you the ability to break out of collection-only or entity-only queries using Fluree's Analytical Query format which we'll cover next.
 
 
 
@@ -528,5 +528,133 @@ curl \
 ```graphql
 query  {
   block(from: 3)
+}
+```
+
+## Multiple Queries
+
+Fluree allows you to submit multiple queries at once. In order to do this, create unique names for your queries, and set those as the keys of the your JSON query. The values of the keys should be the queries themselves. If you are using GraphQL, you can simply nest your second, third, etc requests within the `graph` level of the request.
+
+For example, this query selects all chats and people at once. 
+
+```
+{
+    "chatQuery": {
+        "select": ["*"],
+        "from": "chat"
+    },
+    "personQuery": {
+         "select": ["*"],
+        "from": "person"
+    }
+}
+```
+
+A sample response will look like the following, with each query's responses nested within the "result" value, with the provided query names as keys. 
+
+```
+
+{
+  "result": {
+    "chatQuery": [
+      { 
+        "_id": 4307852197898,
+        "chat/instant": 1532617367174
+      },
+       ...
+    ],
+    "personQuery": [
+      {
+        "_id": 4303557230594,
+        "person/handle": "zsmith",
+        "person/fullName": "Zach Smith",
+        "person/karma": 5
+      },
+      ...
+    ]
+  },
+  "status": 200,
+  "block": 463,
+  "time": "8.19ms"
+}
+```
+
+Any errors will be returned in a separate key, called errors. For example, incorrectQuery is attempting to query an id that does not exist. 
+
+```
+{
+    "incorrectID": {
+        "select": ["*"],
+        "from": 4307852198904
+    },
+    "personQuery": {
+         "select": ["*"],
+        "from": "person"
+    }
+}
+```
+
+Therefore, the response will look like the following with the error type for incorrectID listed under the key errors.
+
+```
+{
+  "errors": {
+    "incorrectID": "db/invalid-entity"
+  },
+  "result": {
+    "person": [
+      {
+        "_id": 4303557230594,
+        "person/handle": "zsmith",
+        "person/fullName": "Zach Smith",
+        "person/karma": 5
+      },
+      ...
+    ]
+  },
+  "status": 207,
+  "block": 463,
+  "time": "5.64ms"
+}
+```
+
+#### Submit Multiple Queries at Once
+
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{"chatQuery": {"select": ["*"],"from": "chat"},"personQuery": {"select": ["*"],"from": "person"}}' \
+   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+```
+
+```json
+{
+    "chatQuery": {
+        "select": ["*"],
+        "from": "chat"
+    },
+    "personQuery": {
+         "select": ["*"],
+        "from": "person"
+    }
+}
+```
+
+```graphql
+{ graph {
+  chat {
+    _id
+    comments
+    person
+    instant
+    message
+  }  
+  person {
+    _id
+    handle
+    fullName
+  }
+}
 }
 ```
