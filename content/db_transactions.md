@@ -330,16 +330,9 @@ Key | Description
 
 
 # Database Functions
+## Database Functions
 
-The `_fn` collection is where the code that governs `_rule/predicate`, `_attribute/spec`, and `_collection/spec` is used. In addition, any [custom functions](#custom-functions)
-
-Roles' purpose is simply to group a set of rules under a common name or ID that can be easily assigned to a user.
-
-Roles are assigned to a specific `_auth` entity under the multi-cardinality attribute `_auth/roles`.
-
-Having roles be assigned to an `_auth` record, rather than to a `_user` allows a `_user` to have access to different data, based on which `_auth` they use to authenticate. Additionally, `_auth` records can be added or revoked from a `_user` without having to edit the actual `_auth` record. 
-
-The ability to override roles at the auth entity allows a more limited (or possibly expanded) set of roles to the same user depending on how they authenticate. If, for example, a social media website authenticated as a user, it might only have access to read a limited set of data whereas if the user logged in, they may have their full set of access rights.
+The `_fn` collection is where the code that governs `_rule/predicate`, `_attribute/spec`, `_attribute/txSpec`, and `_collection/spec` is used. In addition, any [custom functions](#custom-functions) created can be used in transactions.
 
 ## Function Attributes
 
@@ -354,12 +347,13 @@ Attribute | Type | Description
 
 ## Function Syntax
 
-Database functions allow you to update an attribute's value based on the existing value. This allows features such as an atomic counter and timestamps. Database functions are stored in `_fn/code` and referenced by `_rule/predicate`, `_attribute/spec`, or `_collection/spec`. Database functions can also be used directly in transactions by prefacing the transaction with a `#`.
+Database functions allow you to update an attribute's value based on the existing value. This allows features such as an atomic counter and timestamps. Database functions are stored in `_fn/code` and referenced by `_rule/predicate`, `_attribute/spec`, `_attribute/txSpec`, or `_collection/spec`. Database functions can also be used directly in transactions by prefacing the transaction with a `#`.
 
 Using database functions in:
 
 * Transactions - Pass database functions into transactions with a #, for example, `	#(inc)`. Resolves to any type of value. 
 * `_attribute/spec` - A multi-cardinality ref attribute. Control the values that can be held in an attribute. Resolves to true or false. 
+* `_attribute/txSpec` - A multi-cardinality ref attribute. Controls all the flakes for a given attribute in a single transaction. Resolves to true or false. 
 * `_collection/spec` - A multi-cardinality ref attribute. Control the values of the attributes in a specific collection. Resolves to true or false. 
 * `_rule/predicate` - A multi-cardinality ref attribute. Controls whether an auth record can view a certain attribute or collection. Resolves to true or false. 
 
@@ -444,6 +438,31 @@ The below functions are available through some function interfaces, but not othe
 - Use: Allows you to access all the `_id` of the user that is currently in use, or nil if no user. In the example, the spec is checking whether the current entity _id is the same as the user_id.
 - Available in: `_attribute/spec`, `_collection/spec`, `_rule/predicate`, transactions
 - Cost: 10
+
+6. User _id: `flakes`
+- Arguments: None
+- Example: `(flakes)`
+- Use: Returns an array of all flakes in the current spec. For `_attribute/spec` and `_collection/spec` this is a single flake. For
+`_attribute/txSpec` this is all the flakes in a given transaction that pertain to the specified attribute. 
+- Available in: `_attribute/spec`, `_collection/spec`, `_attribute/txSpec`
+- Cost: 10
+
+
+7. User _id: `valT`
+- Arguments: None
+- Example: `(valT)`
+- Use: Sum of the value of all flakes being added in the current spec.
+- Available in: `_attribute/spec`, `_collection/spec`, `_attribute/txSpec`
+- Cost: 10
+
+
+8. User _id: `valF`
+- Arguments: None
+- Example: `(valF)`
+- Use: Sum of the value of all flakes being retracted in the current spec.
+- Available in: `_attribute/spec`, `_collection/spec`, `_attribute/txSpec`
+- Cost: 10
+
 
 
 ## Custom Functions
