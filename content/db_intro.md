@@ -8,7 +8,9 @@ Welcome to the FlureeDB documentation!
 
 *Option 1*. To learn a little bit about how our database works, begin with the [What is FlureeDB?](#what-is-flureedb) section. 
 
-*Option 2*. To get your hands dirty right away, visit the [Quick Start](#quickstart) guide.
+*Option 2*. To get your hands dirty right away, visit the [Quick Start](#quickstart) guide to use Fluree in the [FlureeDB interactive web console](#https://flureedb.flur.ee/). 
+
+*Option 3*. To launch a standalone version of FlureeDB, visit the [Standalone FlureeDB](#standalone-flureedb) section. 
 
 If you have issues, please do report them! A simple email to [support@flur.ee](mailto:support@flur.ee) is much appreciated with a description of what happened, and when. 
 
@@ -78,6 +80,64 @@ The Fluree database features these capabilities:
 - Point-in-time queries (in other words, time-travel), allowing you to query the same information at different points in time
 - When leveraging Fluree's cloud-hosted private consensus, there is zero management overhead. Federated and fully decentralized consensus modes are in development.
 - FlureeDB will be open source as we move forward in development.
+
+## Standalone FlureeDB
+
+To launch the standalone version of FlureeDB, download and unzip the [latest version of FlureeDB](). The contents of the folder are as follows:
+
+* flureeDB_transactor.sh - Shell script to launch FlureeDB.
+* flureeDB.jar - FlureeDB packaged into a JAR file. 
+* flureeDB.properties - File that specifies the customizeable FlureeDB properties. 
+* Version - The version number.
+
+### Setting the DB Configuration Options
+
+The following are the properties that you can set in the flureeDB.properties file. Java property flages (i.e. -Dfdb-mode=dev) take precedent over properties in the flureeDB.properties file. Additionally. environment variables take precedent over both Java property flags and properties specified in flureeDB.properties.
+
+
+Property | Options | Description   
+-- | -- | --
+fdb-mode | `dev` `query` `transactor` | Dev runs a standalone version of FlureeDB, which supports both queries and transaction. `Query` and `transactor` are for running FlureeDB as a query or transactor, respectively.
+fdb-license-key | `key` | (Optional) Required for enterprise version
+fdb-network | `string` | The name of the network the transactor group will operate in
+fdb-group-port | `int` | The communication port for the transactor group
+fdb-group-listen-addr | `ip address` | (Optional) Specify an ip address only if you want to bind listening to a specific IP address, otherwise FlureeDB will bind to: tcp://*:<fdb-group-port>
+fdb-group-transactors | `server`,`server`, etc | (Optional) A list of transactors that will participate in this transactor group. Include the protocool (tcp:// only supported currently), server name, and port. List multiple servers with comma separating them, i.e.: fdb-group-transactors=tcp://10.0.0.1:9790,tcp://10.0.0.2:9790,tcp://10.0.0.3:9790. Leave this field blank to run when running FlureeDB standalone.
+fdb-group-me | `server` | (Optional) "This" transactor must be in the list in fdb-group-transactors. Best practice is to pass this in as an environment variable. Leave this field blank to run when running FlureeDB standalone.
+fdb-storage-type | `file` `memory` `none` `Cassandra` | This option specifies the common storage for blocks and index segments. `file` stores in file directory. `none` stores on-disk, `memory` stores in-memory only and will disappear on server stop, and `Cassandra` allows you to use Apache Cassandra. If you chose Cassandra, there are additional options below you need to specify. 
+fdb-storage-file-directory | `directory name` | (Optional) When using the `file` storage-type, this is the name of the file directory. 
+fdb-memory-cache | `size` (i.e. 200mb) | The total memory cache of index segments across all databases. This can be changes per transactor. 
+fdb-memory-reindex | `size` | Specify the size of novelty held before reindexing. This setting applies for each database, therefore it is important to make sure that all transactors and query peers have at least this much memory multiplied by the number of databases you expect to be active on those servers. This setting must be consistent across the entire transactor group. 
+fdb-memory-reindex-max | `size` | Specify the size of the novelty held before reindexing during a database fork. See fdb-memory-reindex. 
+fdb-stats-report-frequency | `time` | How frequently to report out stats as a log entry. 
+fdb-port | `int` | The port in which query servers will respond to API calls from client. 
+
+The below options are only used if fdb-storage-type is set to 'Cassandra'
+Property | Options | Description   
+-- | -- | --
+fdb-storage-cassandra-servers | `server`,`server`, etc  | Cassandra cluster servers separated by commas
+fdb-storage-cassandra-table | `keyspace.table` | Always use `keyspace.table` format for table. Both the keyspace and the table will be created automatically if non-existing. 
+fdb-storage-cassandra-data-center | | See Cassandra for options
+fdb-storage-cassandra-replicas | | See Cassandra for options.
+
+### Launching FlureeDB
+
+Navigate to the directory where you downloaded FlureeDB in the terminal. The command to launch FlureeDB is:
+
+`./flureeDB_transactor.sh` 
+
+When you launch FlureeDB for the first time or if you choose `none` as your `fdb-storage-type`, FlureeDB will create the following databases:
+
+1. Master Database with username: `master` and password: `fluree`
+2. Test Database with username: `test` and password: `fluree`
+
+In order to set your own username and password for the master database, you can pass in a Java property flag at start-up with the keys: `username` and `password`. Username and password cannot be set in the flureeDB.properties file. 
+
+For example, if you want to set your own username and password, you could run:
+
+`./flureeDB_transactor.sh -Dusername=myusername -Dpassword=mypassword`
+
+The password that you set for the master database, by default, is the same password as the password for the test database. 
 
 ## QuickStart
 
