@@ -75,7 +75,7 @@ The Fluree database features these capabilities:
 - Granular user permissions
 - A GraphQL query interface
 - Powerful query language that supports unlimited recursion and can be represented fully in JSON
-- Scale-out writes by leveraging partitioning (in beta soon).
+- Scale-out writes by leveraging partitioning (in production soon).
 - Scale-out reads, by separating eventually consistent query engines from the core blockchain transactor. Queries can optionally force consistency to a specific point-in-time or block.
 - Point-in-time queries (in other words, time-travel), allowing you to query the same information at different points in time
 - When leveraging Fluree's cloud-hosted private consensus, there is zero management overhead. Federated and fully decentralized consensus modes are in development.
@@ -107,8 +107,8 @@ fdb-group-me | `server` | (Optional) "This" transactor must be in the list in fd
 fdb-storage-type | `file` `memory` `none` `Cassandra` | This option specifies the common storage for blocks and index segments. `file` stores in file directory. `none` stores on-disk, `memory` stores in-memory only and will disappear on server stop, and `Cassandra` allows you to use Apache Cassandra. If you chose Cassandra, there are additional options below you need to specify. 
 fdb-storage-file-directory | `directory name` | (Optional) When using the `file` storage-type, this is the name of the file directory. 
 fdb-memory-cache | `size` (i.e. 200mb) | The total memory cache of index segments across all databases. This can be changes per transactor. 
-fdb-memory-reindex | `size` | Specify the size of novelty held before reindexing. This setting applies for each database, therefore it is important to make sure that all transactors and query peers have at least this much memory multiplied by the number of databases you expect to be active on those servers. This setting must be consistent across the entire transactor group. 
-fdb-memory-reindex-max | `size` | Specify the size of the novelty held before reindexing during a database fork. See fdb-memory-reindex. 
+fdb-memory-reindex | `size` | Specify the size of novelty held before reindexing. Transactions will still be processed while reindexing occurs. This setting applies for each database, therefore it is important to make sure that all transactors and query peers have at least this much memory multiplied by the number of databases you expect to be active on those servers. This setting must be consistent across the entire transactor group. 
+fdb-memory-reindex-max | `size` | During reindexing transactions are still processed. Once the since of the novelty reaches `fdb-memory-reindex-max` is hit, however, all processing of new transactions stops.
 fdb-stats-report-frequency | `time` | How frequently to report out stats as a log entry. 
 fdb-port | `int` | The port in which query servers will respond to API calls from client. 
 
@@ -131,7 +131,7 @@ When you launch FlureeDB for the first time or if you choose `none` as your `fdb
 1. Master Database with username: `master` and password: `fluree`
 2. Test Database with username: `test` and password: `fluree`
 
-In order to set your own username and password for the master database, you can pass in a Java property flag at start-up with the keys: `username` and `password`. Username and password cannot be set in the flureeDB.properties file. 
+In order to set your own username and password for the master database, you can either create environment variables or pass in a Java property flag at start-up with the keys: `username` and `password`. Username and password cannot be set in the flureeDB.properties file. 
 
 For example, if you want to set your own username and password, you could run:
 
@@ -245,7 +245,7 @@ curl \
  "select": ["*"],
  "from": "actor"
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -277,7 +277,7 @@ curl \
  "select": ["*"],
  "from": "movie"
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -312,7 +312,7 @@ curl \
  "select": ["*"],
  "from": "credit"
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -389,7 +389,7 @@ You can do the same thing by select a movie by its title, for example:
   "select": ["*"],
   "from": 4316442136599
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 
@@ -409,7 +409,7 @@ You can do the same thing by select a movie by its title, for example:
   "select": ["*"],
   "from": ["actor/name", "Angelina Jolie"]
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -571,7 +571,7 @@ Abbreviated Response:
   "select": ["*"],
   "from": ["movie/title", "Pulp Fiction"]
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 ```graphql
 { graph {
@@ -606,7 +606,7 @@ Abbreviated Response:
   }],
   "from": ["movie/title", "Pulp Fiction"]
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 ```graphql
 { graph {
@@ -649,7 +649,7 @@ Abbreviated Response:
   }],
   "from": ["movie/title", "Pulp Fiction"]
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 ```graphql
 { graph {
@@ -725,7 +725,7 @@ Abbreviated Response:
   }],
   "from": ["movie/title", "Pulp Fiction"]
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 ```graphql
 { graph {
@@ -853,7 +853,7 @@ Note that all transactions must be sent to the transactor endpoint as arrays, as
   "budget": 1,
   "overview": "A low-budget remake of 'Pulp Fiction.' With less pulp."
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 ```graphql
 mutation addMovies ($myMovieTx: JSON) {
@@ -899,7 +899,7 @@ mutation addMovies ($myMovieTx: JSON) {
   "character": "Jewels Spinnfield",
   "actor": ["actor/name", "Samuel L. Jackson"]
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 ```graphql
 mutation addCredit ($myCreditTx: JSON) {
@@ -932,7 +932,7 @@ mutation addCredit ($myCreditTx: JSON) {
   "_id": ["movie/title", "Less-Pulp Fiction"],
   "credits": [4312147271442,  4312147271443]
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 ```graphql
 mutation addMovieCredit ($myMovieCreditTx: JSON) {
@@ -1012,7 +1012,7 @@ Here we use a tempid as we are creating new entities in the system collection na
   "doc":     "A collection/table to hold comments to chat messages",
   "version": "1"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -1172,7 +1172,7 @@ Comments
   "type": "ref",
   "restrictCollection": "person"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -1271,7 +1271,7 @@ Now that we have stored a piece of data, let's query it.
   "handle":   "zsmith",
   "fullName": "Zach Smith"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact  
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact  
 ```
 
 ```graphql
@@ -1309,7 +1309,7 @@ mutation addPeople ($myPeopleTx: JSON) {
     "person":  ["person/handle", "jdoe"],
     "instant": "#(now)"
     }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -1344,7 +1344,7 @@ These two example queries will return current chat messages. The second example 
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{ "select": ["*"], "from": "chat"}' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```graphql
@@ -1385,7 +1385,7 @@ curl  \
   ],
   "from": "chat"
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```graphql
@@ -1427,7 +1427,7 @@ curl  \
   ],
   "from": "person"
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```graphql
@@ -1509,7 +1509,7 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
   "type":   "ref",
   "restrictCollection": "_user"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -1571,7 +1571,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
   {
     "_id": "_fn$editOwnChats",
     "name": "true",
-    "code": "(contains? (get-all (?e \"[{chat/person  [{person/user [\"_id\"] }]\") [\"chat/person\" \"person/user\" \"_id\"]) ?user_id)"
+    "code": "(contains? (get-all (?e \"[{chat/person  [{person/user [_id] }]\") [\"chat/person\" \"person/user\" \"_id\"]) (?user_id))",
   }
 ]
 ```
@@ -1611,11 +1611,11 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Only allow users to edit their own chats",
     "collection": "chat",
     "attributes": ["chat/message"],
-    "predicate": "(contains? (get-all ?e [\"chat/person\" \"person/user\"]) ?user)",
+    "predicate":  "(contains? (get-all (?e \"[{chat/person  [{person/user [_id] }]\") [\"chat/person\" \"person/user\" \"_id\"]) (?user_id))", 
     "ops": ["transact"]
   }
 ]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -1626,12 +1626,7 @@ mutation addRole ($myRoleTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myRoleTx": "[ 
-    { \"_id\": \"_role\", \"id\": \"chatUser\", \"doc\": \"A standard chat user role\", \"rules\": [\"_rule$viewAllChats\", \"_rule$viewAllPeople\", \"_rule$editOwnChats\"] }, 
-    { \"_id\": \"_rule$viewAllChats\", \"id\": \"viewAllChats\", \"doc\": \"Can view all chats.\", \"collection\": \"chat\", \"collectionDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, 
-    { \"_id\": \"_rule$viewAllPeople\", \"id\": \"viewAllPeople\", \"doc\": \"Can view all people\", \"collection\": \"person\", \"collectionDefault\": true, \"predicate\": \"true\", \"ops\": [\"query\"] }, 
-    { \"_id\": \"_rule$editOwnChats\", \"id\": \"editOwnChats\", \"doc\": \"Only allow users to edit their own chats\", \"collection\": \"chat\", \"attributes\": [\"chat/message\"], \"ops\": [\"transact\"] } 
-    ]"
+  "myRoleTx": "[{\"_id\":\"_role\",\"id\":\"chatUser\",\"doc\":\"A standard chat user role\",\"rules\":[\"_rule$viewAllChats\",\"_rule$viewAllPeople\",\"_rule$editOwnChats\"]},{\"_id\":\"_rule$viewAllChats\",\"id\":\"viewAllChats\",\"doc\":\"Can view all chats.\",\"collection\":\"chat\",\"collectionDefault\":true,\"predicate\":[\"_fn$true\"],\"ops\":[\"query\"]},{\"_id\":\"_rule$viewAllPeople\",\"id\":\"viewAllPeople\",\"doc\":\"Can view all people\",\"collection\":\"person\",\"collectionDefault\":true,\"predicate\":[\"_fn$true\"],\"ops\":[\"query\"]},{\"_id\":\"_rule$editOwnChats\",\"id\":\"editOwnChats\",\"doc\":\"Only allow users to edit their own chats\",\"collection\":\"chat\",\"attributes\":[\"chat/message\"],\"predicate\":[\"_fn$editOwnChats\"],\"ops\":[\"transact\"]},{\"_id\":\"_fn$true\",\"name\":\"true\",\"code\":true},{\"_id\":\"_fn$editOwnChats\",\"name\":\"true\",\"code\":\"(contains? (get-all (?e \\\"[{chat/person  [{person/user [_id] }]\\\") [\\\"chat/person\\\" \\\"person/user\\\" \\\"_id\\\"]) (?user_id))\"}]"
 }
 
 ```
@@ -1675,7 +1670,7 @@ curl \
     "_id": "_auth$temp",
     "key": "tempAuthRecord"
   }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql

@@ -7,7 +7,7 @@ Interacting with FlureeDB from your application can be done in one of three ways
 
 1. The JSON API (i.e. FlureeQL)
 2. GraphQL
-3. An embeddable FlureeDB client (not yet in beta)
+3. An embeddable FlureeDB client (not yet in production)
 
 For any of these methods, a valid token must be supplied with the database requests (queries, transactions, etc.). 
 
@@ -126,7 +126,7 @@ curl \
     "code": true
   }
 ]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 ```graphql
 mutation addRoleRuleAuth($myAuthTx: JSON){
@@ -149,7 +149,7 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{"select": [ "*", { "_auth/roles": [ "*", {"_role/rules": ["*"]} ] } ], "from": "_auth"}' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```json
@@ -221,7 +221,7 @@ Main query interface for FlureeQL. Post a JSON map/object containing the followi
 Key | Type | Description
 -- | -- | -- 
 `select` | select-spec |  Selection specification in the form of an array/vector. To select all attributes use `[ "*" ]`. If you were storing customers and wanted to select just the customer name and products they own, the select statement might look like: `[ "customer/name", "customer/products"]`.
-`from` | from-spec | Can be an entity (represented as an identity or integer), or an entire collection of entities utilizing the collection name. If selecting from customers as per the prior example, it would simply be `"from": "customer"`. If selecting a specific customer, it would for example be `"from": 4299262263299` or `"from": "[\"customer/name\", \"Newco Inc.\"]"`. 
+`from` | from-spec | Optional. Can be an entity (represented as an identity or integer), or an entire collection of entities utilizing the collection name. If selecting from customers as per the prior example, it would simply be `"from": "customer"`. If selecting a specific customer, it would for example be `"from": 4299262263299` or `"from": "[\"customer/name\", \"Newco Inc.\"]"`. 
 `where` | where-spec | Optional. Can be in the simple SQL-like string format or more sophisticated queries can be specified in the datalog format. For the simple format, might include something like: `"where": "customer/name = 'ABC Corp'"` or `"where": "person/age >= 22 AND person/age <= 50"`.
 `block` | integer or ISO-8601 date string | Optional time-travel query, specified either by the block the query results should be of, or a wall-clock time in ISO-8601 fromat. When no block is specified, the most current database is always queried.
 `limit` | integer | Optional limit for result quantity. Fluree uses a default of 1000.
@@ -234,7 +234,7 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{"select": ["*"], "from": "person"}' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 #### Query with a limit. Get all attributes from every entity in the `chat` collection
@@ -251,7 +251,7 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{"select": ["*"], "from": "chat", "limit": 100}' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```graphql
@@ -286,7 +286,7 @@ Not supported
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{"select": ["*"], "from": "chat", "block": 2}' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 #### Time travel by specifying a time
 
@@ -302,7 +302,7 @@ Not supported
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{"select": ["*"], "from": "chat", "block": "2017-11-14T20:59:36.097Z"}' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```graphql
@@ -314,7 +314,6 @@ Not supported
 ```json
 {
   "select": ["*"],
-  "from": "chat",
   "where": "chat/instant >= 1516051090000 AND chat/instant <= 1516051100000"
 }
 ```
@@ -322,8 +321,8 @@ Not supported
     curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{"select": ["*"], "from": "chat", "where": "chat/instant >= 1516051090000 AND chat/instant <= 1516051100000"}' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   -d '{"select": ["*"], "where": "chat/instant >= 1516051090000 AND chat/instant <= 1516051100000"}' \
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```graphql
@@ -361,7 +360,7 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{"_id": "chat", "message": "Hello, sample chat message."}]' \
-   https://ACCOUNT_NAME.beta.flur.ee/api/db/transact
+   https://ACCOUNT_NAME.flur.ee/api/db/transact
 ```
 
 #### Insert two new entities using temp-ids (note `"_action": "add"` is inferred)
@@ -392,7 +391,7 @@ curl \
   "handle":   "zsmith",
   "fullName": "Zach Smith"
 }]'\
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -425,7 +424,7 @@ curl \
   "_id":      ["person/handle", "jdoe"],
   "fullName": "Jane Doe Updated By Identity"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -453,7 +452,7 @@ curl \
   "_id":      4294967296001,
   "fullName": "Jane Doe Updated By Numeric _id"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
    ```
 
 ```graphql
@@ -483,7 +482,7 @@ curl \
   "_id":      ["person/handle", "jdoe"],
   "handle":   null
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
    ```
 
 ```graphql
@@ -512,7 +511,7 @@ curl \
   "_id":      ["person/handle", "jdoe"],
   "_action":  "delete"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 ```graphql
 mutation deleteAllAttributes ($myDeleteAllAttributesTx: JSON) {
@@ -582,7 +581,7 @@ curl \
   "auth": 25769804776,
   "expireSeconds": 3600
 }' \
-https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
+https://$FLUREE_ACCOUNT.flur.ee/api/db/token
 ```
 
 
@@ -602,7 +601,7 @@ https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
   "auth": 25769804776,
   "expireSeconds": 3600
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/token
 ```
 ```graphql
 Not supported
@@ -623,7 +622,7 @@ Not supported
   "auth": ["_auth/key", "db-admin"],
   "expireSeconds": 3600
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/token
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/token
   ```
 ```graphql
 Not supported

@@ -32,7 +32,7 @@ curl\
   "from": "chat",
   "limit": 100
 }'\
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 ```graphql
 { graph {
@@ -51,7 +51,6 @@ curl\
 ```json
 {
   "select": ["chat/message", "chat/instant"],
-  "from": "chat",
   "where": "chat/instant > 1517437000000 AND chat/instant < 1517438000000"
 }
 ```
@@ -61,10 +60,9 @@ curl \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
   "select": ["chat/message", "chat/instant"],
-  "from": "chat",
   "where": "chat/instant > 1517437000000 AND chat/instant < 1517438000000"
 }'\
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 ```graphql
 { graph {
@@ -90,7 +88,7 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{"select": ["*"], "from": "chat", "block": 2}' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 ```graphql
 { graph (block: 2) {
@@ -120,7 +118,7 @@ curl \
   "from": "chat",
   "block": "2017-11-14T20:59:36.097Z"
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```graphql
@@ -141,10 +139,8 @@ Key | Required? | Description
 -- | -- | -- 
 `select` | yes |  Select syntax.
 `from` | yes | Either a collection name or an individual identity via its `_id` number or identity (unique attribute) name + value.
-`where` | no | Optional where clause specified a SQL-like string.
 `limit` | no | Optional limit (integer) of results to include.
 `block` | no | Optional time-travel query specified by block number or wall-clock time as a ISO-8601 formatted string.
-
 
 #### A simple FlureeQL Graph Query that returns all direct attributes for last 100 chat messages
 
@@ -166,7 +162,7 @@ Key | Required? | Description
   "from": "chat",
   "limit": 100
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```graphql
@@ -257,7 +253,7 @@ The syntax isn't just a way to specify the data you'd like returned, but inheren
   "select": ["chat/message"],
   "from": "chat"
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```graphql
@@ -332,7 +328,7 @@ For fun, you can add another sub-query to follow the chat message back to the pe
   ],
   "from": "chat"
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```graphql
@@ -415,7 +411,7 @@ curl \
   ],
   "from": "person"
 }' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 ```graphql
 { graph {
@@ -449,7 +445,7 @@ We give you the ability to break out of collection-only or entity-only queries u
 
 FlureeQL Analytical Queries are used to answer more sophisticated questions about your data. They can be used to calculate aggregates, have complicated joining rules and even incorporate custom logic. We utilized concepts of logic programming and variable binding to give an immense amount of query potential that can largely be designed by you.
 
-We are gradually making this capability available to beta users and will be expanding the available documentation shortly.
+We are gradually making this capability available to users and will be expanding the available documentation shortly.
 
 Fluree Analytical Queries are also structured as a JSON object/map and may contain the following keys:
 
@@ -457,7 +453,9 @@ Key | Required? | Description
 -- | -- | -- 
 `select` | yes | Analytical select statement, which can include aggregate functions, bound variables and descriptors for data return shape (single result, collection, tuple).
 `where` | yes | A collection of tuples which contain matching logic, variable binding or functions.
-`block` |  | Optional time-travel query specified by block number or wall-clock time as a ISO-8601 formatted string.
+`block` | no | Optional time-travel query specified by block number or wall-clock time as a ISO-8601 formatted string.
+`limit` | no | Optional limit (integer) of results to include.
+
 
 ## Fluree Block Queries
 FlureeDB allows you to select data from an entire block or block range. 
@@ -503,7 +501,7 @@ curl \
    -d '{
     "block": [3, 5]
 }' \
- https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+ https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 ```graphql
 query  {
@@ -523,7 +521,7 @@ curl \
    -d '{
     "block": [3]
 }' \
- https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+ https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 ```graphql
 query  {
@@ -625,7 +623,7 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{"chatQuery": {"select": ["*"],"from": "chat"},"personQuery": {"select": ["*"],"from": "person"}}' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
 ```json

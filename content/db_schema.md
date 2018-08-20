@@ -267,7 +267,7 @@ Let's say that we want to add an attribute, `person/password`, but we want to ma
 {
   "_id": "_fn$validPassword",
   "name": "validPassword?",
-  "code": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" ?v)"
+  "code": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" (?v))"
 }]
 ```
 
@@ -284,7 +284,7 @@ Let's say that we want to add an attribute, `person/password`, but we want to ma
 {
   "_id": "_fn$validPassword",
   "name": "validPassword?",
-  "code": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" ?v)"
+  "code": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" (?v))"
 }]
 ```
 
@@ -302,7 +302,7 @@ Let's say that we want to add an attribute, `person/password`, but we want to ma
 {
   "_id": "_fn$validPassword",
   "name": "validPassword?"
-  "code": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" ?v)"
+  "code": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" (?v))"
 }]' \
    https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
 ```
