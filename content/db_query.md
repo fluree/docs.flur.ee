@@ -425,6 +425,102 @@ curl \
 }
 }
 ```
+
+### Using Recursion with select
+
+We can also use recursion to follow `ref` attributes that reference another entity in the same collection. For example, we can add an attribute, `person/follows`, which is a `ref` attribute that is restricted to the `person` collection. 
+
+```
+[{
+  "_id": "_attribute",
+  "name": "person/follows",
+  "type": "ref",
+  "restrictCollection": "person"
+}]
+```
+
+```
+[{
+    "_id": ["person/fullName", "Zach Smith"],
+    "follows": ["person/fullName", "Jane Doe"]
+},
+{
+    "_id": ["person/fullName", "Jane Doe"],
+    "follows": ["person/fullName", "Zach Smith"]
+}]
+```
+
+
+Normally, if we want to query who a person follows, we would submit this query. 
+
+```
+{
+    "select":["*", {"person/follows": ["*"]}],
+    "from":"person"
+}
+```
+
+However, if you want to keep following the `person/follows` relationship, we can include the `{"_recur": some-integer}` option inside of the expanded `person/follows`
+map. The value we specify for the `_recur` key is the number of times to follow the given relationship. 
+
+```
+{
+    "select":["*", {"person/follows": ["*", {"_recur": 10}]}],
+    "from":"person"
+}
+```
+
+The results will only return recursions for as long as their new information in a given recursion. For example, the result of the above query only returns a recursion that is two entities deep. This is because after we follow the `person/follows` relationship twice (in this given example), it will start returning the same information.
+
+
+```
+{
+  "status": 200,
+  "result": [
+    {
+      "person/handle": "zsmith",
+      "person/fullName": "Zach Smith",
+      "person/follows": {
+        "person/handle": "jdoe",
+        "person/fullName": "Jane Doe",
+        "person/follows": {
+          "person/handle": "zsmith",
+          "person/fullName": "Zach Smith",
+          "person/follows": {
+            "_id": 4294967296001
+          },
+          "_id": 4294967296002
+        },
+        "_id": 4294967296001
+      },
+      "_id": 4294967296002
+    },
+    {
+      "person/handle": "jdoe",
+      "person/fullName": "Jane Doe",
+      "person/follows": {
+        "person/handle": "zsmith",
+        "person/fullName": "Zach Smith",
+        "person/follows": {
+          "person/handle": "jdoe",
+          "person/fullName": "Jane Doe",
+          "person/follows": {
+            "_id": 4294967296002
+          },
+          "_id": 4294967296001
+        },
+        "_id": 4294967296002
+      },
+      "_id": 4294967296001
+    }
+  ],
+  "fuel": 18,
+  "block": 8,
+  "time": "4.54ms"
+}
+
+```
+
 ### "from" syntax
 
 FlureeDB allows you to select a collection from an entire collection, much like our examples thus far, or you can also specify a single entity.
