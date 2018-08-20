@@ -62,7 +62,7 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{"_id": ["chat", -1], "message": "Hello, sample chat message."}]' \
-   https://ACCOUNT_NAME.beta.flur.ee/api/db/transact
+   https://ACCOUNT_NAME.flur.ee/api/db/transact
 ```
 
 #### Insert two new entities using temp-ids (note `"_action": "add"` is inferred)
@@ -93,7 +93,7 @@ curl \
   "handle":   "zsmith",
   "fullName": "Zach Smith"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact  
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact  
 ```
 
 ```graphql
@@ -126,7 +126,7 @@ curl \
   "_id":      ["person/handle", "jdoe"],
   "fullName": "Jane Doe Updated By Identity"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 #### Update an existing entity using an identity value (note `"_action": "update"` is inferred)
@@ -145,7 +145,7 @@ curl \
   "_id":      ["person/handle", "jdoe"],
   "fullName": "Jane Doe Updated By Identity"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -173,7 +173,7 @@ curl \
   "_id":      4294967296001,
   "fullName": "Jane Doe Updated By Numeric _id"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
    ```
 
 ```graphql
@@ -201,7 +201,7 @@ curl \
   "_id":    "person",
   "handle": "jdoe"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 #### Upsert into an existing entity (note `"_action": "upsert"` is inferred when a tempid resolves to an existing entity with a unique attribute)
@@ -220,7 +220,7 @@ curl \
   "_id":    "person",
   "handle": "jdoe"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
    ```
 
 ```graphql
@@ -248,7 +248,7 @@ curl \
   "_id":      ["person/handle", "jdoe"],
   "handle":   null
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
    
 ```
 
@@ -272,7 +272,7 @@ curl \
   "_id":      ["person/handle", "jdoe"],
   "handle":   null
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
    ```
 
 ```graphql
@@ -301,7 +301,7 @@ curl \
   "_id":      ["person/handle", "jdoe"],
   "_action":  "delete"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 ```graphql
 mutation deleteAllAttributes ($myDeleteAllAttributesTx: JSON) {

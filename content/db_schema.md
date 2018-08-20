@@ -63,7 +63,7 @@ To create a new collection, submit a transaction against the system collection n
   "doc":     "A collection/table to hold comments to chat messages",
   "version": "1"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -124,9 +124,9 @@ Attribute | Type | Description
 `_attribute/component` | `boolean` | (optional) For type 'ref' attributes only. Mark true if this attribute refers to an entity which only exists as part of the parent entity. If true, and the parent entity is deleted, the entity referenced by this attribute will also be deleted automatically. (Default false.)
 `_attribute/spec` | [`ref`] | (optional) A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. These specs restricts what is allowed in this _attribute. To learn more, visit the [Collection and Attribute Specs](#collection-and-attribute-specs) section. 
 `_attribute/specDoc` | `string` | (optional) Optional docstring to describe the specs. Is thrown when any spec fails. 
-`_attribute/deprecated` | `boolean` | (Not in beta yet, optional) True if this v is deprecated.  Reads and writes are still allowed, but might give warnings in the API.
+`_attribute/deprecated` | `boolean` | (Not in production yet, optional) True if this v is deprecated.  Reads and writes are still allowed, but might give warnings in the API.
 `_attribute/restrictCollection` | `string` | (optional) Only applicable to attributes of `ref` (reference) types. It will restrict references to only be allowed from the specified collection.
-`_attribute/encrypted` | `boolean` | (Not in beta yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and database functions won't be permitted on this value.
+`_attribute/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and database functions won't be permitted on this value.
 
 
 ### Attribute Types
@@ -234,7 +234,7 @@ Suppose we want to add a spec to `person/email`, which checks whether the syntax
   "name": "valid-email?",
   "code": "(validEmail? (?v))"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -304,7 +304,7 @@ Let's say that we want to add an attribute, `person/password`, but we want to ma
   "name": "validPassword?"
   "code": "(re-find \"^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$\" (?v))"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -373,7 +373,7 @@ Let's say that we want to add an attribute, `person/level`, but we want to make 
   "name": "checkLevel",
   "code": "(and [(> [100 ?v]) (< [0 ?v])])"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
@@ -435,7 +435,7 @@ The most common usage for collection specs is to require certain attributes with
   "name": "handleAndFullName",
   "code": "(and [(get (?e) \"person/handle\") (get (?e) \"person/fullName\")])"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/transact
+   https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
 
 ```graphql
