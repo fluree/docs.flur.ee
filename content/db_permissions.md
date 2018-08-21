@@ -110,6 +110,8 @@ Having roles be assigned to an `_auth` record, rather than to a `_user` allows a
 
 The ability to override roles at the auth entity allows a more limited (or possibly expanded) set of roles to the same user depending on how they authenticate. If, for example, a social media website authenticated as a user, it might only have access to read a limited set of data whereas if the user logged in, they may have their full set of access rights.
 
+ Note that, by default, all databases have a built-in `["_role/id", "root"]` role with access to everything inside a database.
+
 ### Role attributes
 
 Attribute | Type | Description

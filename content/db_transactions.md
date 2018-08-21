@@ -352,6 +352,8 @@ Attribute | Type | Description
 `_fn/spec` | `json` | (optional, not yet implemented) An optional spec for parameters. Spec should be structured as a map, parameter names are keys and the respective spec is the value.
 `_fn/language` | `tag` | (optional, not yet implemented) Programming language used.
 
+Note, that every database has two built-in functions, `["_fn$name", "true"]` and `["_fn$name", "false"]`, which either allow or block access, respectively, to a given collection or attribute.
+
 ## Function Syntax
 
 Database functions allow you to update an attribute's value based on the existing value. This allows features such as an atomic counter and timestamps. Database functions are stored in `_fn/code` and referenced by `_rule/predicate`, `_attribute/spec`, or `_collection/spec`. Database functions can also be used directly in transactions by prefacing the transaction with a `#`.

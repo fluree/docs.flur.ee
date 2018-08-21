@@ -1468,7 +1468,7 @@ A token (which governs permissions) is tied to a specific `_auth` entity which c
 **>> Execute the example transaction to add a new attribute named `person/user` that allows a `ref` from any of our persons to a database user.**
 
 
-Next, we add a new role called `chatUser` that we can easily assign to all chat users. The role has three rules in it. The first, `viewAllChats`, allows `query` (read) permissions for every attribute in the collection `chat`. The second rule, `viewAllPeople` similarly allows `query` for every attribute in the collection `person`. The final rule, `editOwnChats`, will restrict `transact` to ensure only chats by the respective `person` can be created or edited.
+Next, we add a new role called `chatUser` that we can easily assign to all chat users. The role has three rules in it. The first, `viewAllChats`, allows `query` (read) permissions for every attribute in the collection `chat`. The second rule, `viewAllPeople` similarly allows `query` for every attribute in the collection `person`. Note, that every database has two built-in functions, `["_fn$name", "true"]` and `["_fn$name", "false"]`, which either allow or block access, respectively, to a given collection or attribute. The final rule, `editOwnChats`, will restrict `transact` to ensure only chats by the respective `person` can be created or edited.
 
 **>> Execute the example transaction to add the new role and these three rules.**
 
@@ -1542,7 +1542,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Can view all chats.",
     "collection": "chat",
     "collectionDefault": true,
-    "predicate": ["_fn$true"],
+    "predicate": [["_fn$name", "true"]],
     "ops": ["query"]
   },
   {
@@ -1551,7 +1551,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Can view all people",
     "collection": "person",
     "collectionDefault": true,
-    "predicate": ["_fn$true"],
+    "predicate": [["_fn$name", "true"]],
     "ops": ["query"]
   },
   {
@@ -1564,14 +1564,9 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "ops": ["transact"]
   },
   {
-    "_id": "_fn$true",
-    "name": "true",
-    "code": true
-  },
-  {
     "_id": "_fn$editOwnChats",
     "name": "true",
-    "code": "(contains? (get-all (?e \"[{chat/person  [{person/user [_id] }]\") [\"chat/person\" \"person/user\" \"_id\"]) (?user_id))",
+    "code": "(contains? (get-all (?e \"[{chat/person  [{person/user [_id] }]\") [\"chat/person\" \"person/user\" \"_id\"]) (?user_id))"
   }
 ]
 ```
@@ -1581,7 +1576,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[
-{
+  {
     "_id": "_role",
     "id": "chatUser",
     "doc": "A standard chat user role",
@@ -1593,7 +1588,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Can view all chats.",
     "collection": "chat",
     "collectionDefault": true,
-    "predicate": "true",
+    "predicate": [["_fn$name", "true"]],
     "ops": ["query"]
   },
   {
@@ -1602,7 +1597,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Can view all people",
     "collection": "person",
     "collectionDefault": true,
-    "predicate": "true",
+    "predicate": [["_fn$name", "true"]],
     "ops": ["query"]
   },
   {
@@ -1611,8 +1606,13 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Only allow users to edit their own chats",
     "collection": "chat",
     "attributes": ["chat/message"],
-    "predicate":  "(contains? (get-all (?e \"[{chat/person  [{person/user [_id] }]\") [\"chat/person\" \"person/user\" \"_id\"]) (?user_id))", 
+    "predicate": ["_fn$editOwnChats"],
     "ops": ["transact"]
+  },
+  {
+    "_id": "_fn$editOwnChats",
+    "name": "true",
+    "code": "(contains? (get-all (?e \"[{chat/person  [{person/user [_id] }]\") [\"chat/person\" \"person/user\" \"_id\"]) (?user_id))"
   }
 ]' \
    https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
@@ -1626,7 +1626,7 @@ mutation addRole ($myRoleTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myRoleTx": "[{\"_id\":\"_role\",\"id\":\"chatUser\",\"doc\":\"A standard chat user role\",\"rules\":[\"_rule$viewAllChats\",\"_rule$viewAllPeople\",\"_rule$editOwnChats\"]},{\"_id\":\"_rule$viewAllChats\",\"id\":\"viewAllChats\",\"doc\":\"Can view all chats.\",\"collection\":\"chat\",\"collectionDefault\":true,\"predicate\":[\"_fn$true\"],\"ops\":[\"query\"]},{\"_id\":\"_rule$viewAllPeople\",\"id\":\"viewAllPeople\",\"doc\":\"Can view all people\",\"collection\":\"person\",\"collectionDefault\":true,\"predicate\":[\"_fn$true\"],\"ops\":[\"query\"]},{\"_id\":\"_rule$editOwnChats\",\"id\":\"editOwnChats\",\"doc\":\"Only allow users to edit their own chats\",\"collection\":\"chat\",\"attributes\":[\"chat/message\"],\"predicate\":[\"_fn$editOwnChats\"],\"ops\":[\"transact\"]},{\"_id\":\"_fn$true\",\"name\":\"true\",\"code\":true},{\"_id\":\"_fn$editOwnChats\",\"name\":\"true\",\"code\":\"(contains? (get-all (?e \\\"[{chat/person  [{person/user [_id] }]\\\") [\\\"chat/person\\\" \\\"person/user\\\" \\\"_id\\\"]) (?user_id))\"}]"
+  "myRoleTx": "[{\"_id\":\"_role\",\"id\":\"chatUser\",\"doc\":\"A standard chat user role\",\"rules\":[\"_rule$viewAllChats\",\"_rule$viewAllPeople\",\"_rule$editOwnChats\"]},{\"_id\":\"_rule$viewAllChats\",\"id\":\"viewAllChats\",\"doc\":\"Can view all chats.\",\"collection\":\"chat\",\"collectionDefault\":true,\"predicate\":[[\"_fn$name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$viewAllPeople\",\"id\":\"viewAllPeople\",\"doc\":\"Can view all people\",\"collection\":\"person\",\"collectionDefault\":true,\"predicate\":[[\"_fn$name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$editOwnChats\",\"id\":\"editOwnChats\",\"doc\":\"Only allow users to edit their own chats\",\"collection\":\"chat\",\"attributes\":[\"chat/message\"],\"predicate\":[\"_fn$editOwnChats\"],\"ops\":[\"transact\"]},{\"_id\":\"_fn$editOwnChats\",\"name\":\"true\",\"code\":\"(contains? (get-all (?e \\\"[{chat/person  [{person/user [_id] }]\\\") [\\\"chat/person\\\" \\\"person/user\\\" \\\"_id\\\"]) (?user_id))\"}]"
 }
 
 ```

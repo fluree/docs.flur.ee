@@ -26,7 +26,7 @@ FlureeDB can be run in a manner similar to a traditional database server, 'behin
 
 To get a permanent admin token, follow these steps:
 
-1. Identify the authorization record (or create one) that you wish the token to utilize. A sample transaction is provided here if you need to create a new one.
+1. Identify the authorization record (or create one) that you wish the token to utilize. A sample transaction is provided here if you need to create a new one. Note that, by default, all databases have a built-in `["_role/id", "root"]` role with access to everything inside a database.
 2. Generate a token tied to that authorization record either via the FlureeDB admin dashboard or via an API call
 
 If you need to create an authorization record, see the example provided.
@@ -41,41 +41,7 @@ Remember, authorization is governed by rules (stored in the `_rule` collection).
     "_id":    "_auth",
     "id":    "db-admin",
     "doc":    "A db admin auth that has full data visibility and can generate tokens for other users.",
-    "roles":  ["_role$db-admin"] 
-  },
-  {
-    "_id":   "_role$db-admin", 
-    "id":    "db-admin",
-    "doc":   "A role for full access to database.",
-    "rules": ["_rule$db-admin",  "_rule$db-token", "_rule$db-logs"] 
-  },
-  {
-    "_id":       "_rule$db-admin" ,
-    "id":        "db-admin",
-    "doc":       "Rule that grants full access to all collections.",
-    "collection":    "*",
-    "collectionDefault": true,
-    "ops":       ["query", "transact"],
-    "predicate": ["_fn$true"]
-  },
-  {
-    "_id":       "_rule$db-token" ,
-    "id":        "db-admin-token",
-    "doc":       "Rule allows token generation for other users.",
-    "ops":       ["token"],
-    "predicate": ["_fn$true"]
-  },
-    {
-    "_id":       "_rule$db-logs" ,
-    "id":        "db-admin-logs",
-    "doc":       "Rule allows user to access account logs.",
-    "ops":       ["logs"],
-    "predicate": ["_fn$true"]
-  },
-  {
-    "_id": "_fn$true",
-    "name": "true",
-    "code": true
+    "roles":  [["_role/id" "root"]]
   }
 ]
 ```
@@ -104,30 +70,26 @@ curl \
     "collection":    "*",
     "collectionDefault": true,
     "ops":       ["query", "transact"],
-    "predicate": ["_fn$true"]
+    "predicate": ["_fn$name", "true"]
   },
   {
     "_id":       "_rule$db-token" ,
     "id":        "db-admin-token",
     "doc":       "Rule allows token generation for other users.",
     "ops":       ["token"],
-    "predicate": ["_fn$true"]
+    "predicate": ["_fn$name", "true"]
   },
     {
     "_id":       "_rule$db-logs" ,
     "id":        "db-admin-logs",
     "doc":       "Rule allows user to access account logs.",
     "ops":       ["logs"],
-    "predicate": ["_fn$true"]
-  },
-  {
-    "_id": "_fn$true",
-    "name": "true",
-    "code": true
+    "predicate": ["_fn$name", "true"]
   }
 ]' \
    https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
+
 ```graphql
 mutation addRoleRuleAuth($myAuthTx: JSON){
   transact(tx: $myAuthTx)
@@ -136,9 +98,7 @@ mutation addRoleRuleAuth($myAuthTx: JSON){
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myAuthTx": "[{
-    \"_id\":\"_auth\",\"id\":\"db-admin\",\"doc\":\"A db admin auth that has full data visibility and can generate tokens for other users.\",\"roles\":[\"_role$db-admin\"]},{\"_id\":\"_role$db-admin\",\"id\":\"db-admin\",\"doc\":\"A role for full access to database.\",\"rules\":[\"_rule$db-admin\",\"_rule$db-token\",\"_rule$db-logs\"]},{\"_id\":\"_rule$db-admin\",\"id\":\"db-admin\",\"doc\":\"Rule that grants full access to all collections.\",\"collection\":\"*\",\"collectionDefault\":true,\"ops\":[\"query\",\"transact\"],\"predicate\":[\"_fn$true\"]},{\"_id\":\"_rule$db-token\",\"id\":\"db-admin-token\",\"doc\":\"Rule allows token generation for other users.\",\"ops\":[\"token\"],\"predicate\":[\"_fn$true\"]},{\"_id\":\"_rule$db-logs\",\"id\":\"db-admin-logs\",\"doc\":\"Rule allows user to access account logs.\",\"ops\":[\"logs\"],\"predicate\":[\"_fn$true\"]},{\"_id\":\"_fn$true\",\"name\":\"true\",\"code\":true}
-    ]"
+  "myAuthTx": "[{\"_id\":\"_auth\",\"id\":\"db-admin\",\"doc\":\"A db admin auth that has full data visibility and can generate tokens for other users.\",\"roles\":[\"_role$db-admin\"]},{\"_id\":\"_role$db-admin\",\"id\":\"db-admin\",\"doc\":\"A role for full access to database.\",\"rules\":[\"_rule$db-admin\",\"_rule$db-token\",\"_rule$db-logs\"]},{\"_id\":\"_rule$db-admin\",\"id\":\"db-admin\",\"doc\":\"Rule that grants full access to all collections.\",\"collection\":\"*\",\"collectionDefault\":true,\"ops\":[\"query\",\"transact\"],\"predicate\":[\"_fn$name\",\"true\"]},{\"_id\":\"_rule$db-token\",\"id\":\"db-admin-token\",\"doc\":\"Rule allows token generation for other users.\",\"ops\":[\"token\"],\"predicate\":[\"_fn$name\",\"true\"]},{\"_id\":\"_rule$db-logs\",\"id\":\"db-admin-logs\",\"doc\":\"Rule allows user to access account logs.\",\"ops\":[\"logs\"],\"predicate\":[\"_fn$name\",\"true\"]}]"
 }
 ```
 
