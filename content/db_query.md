@@ -137,8 +137,8 @@ FlureeQL Graph Queries are structured as a JSON object/map and may contain the f
 
 Key | Required? | Description
 -- | -- | -- 
-`select` | yes |  Select syntax.
-`from` | yes | Either a collection name or an individual identity via its `_id` number or identity (unique attribute) name + value.
+`select` | yes |  [Select syntax](#select-syntax)
+`from` | yes | [From syntax](#from-syntax)
 `limit` | no | Optional limit (integer) of results to include.
 `block` | no | Optional time-travel query specified by block number or wall-clock time as a ISO-8601 formatted string.
 
@@ -427,19 +427,67 @@ curl \
 ```
 ### "from" syntax
 
-FlureeDB allows you to select a collection from an entire collection, much like our examples thus far, or you can also specify a single entity.
 
-An single entity can be selected using any valid identity, which includes the unique `_id` long integer if you know it, or any `unique` attribute's name and value.
+FlureeDB allows you select from:
 
-To select all chats as we previously have done, we used `"from": "chat"`. To select all people we used `"from": "person"`. The returned results is a collection (vector/array), and you simply need to utilize the collection.
+1. A collection name:
 
-To select a specific person, we could use either `"from": 4294967296001` or a unique attribute like `"from": ["person/handle", "jdoe"]`. Both results will be identical. The results are a map/object in this case, and not a collection.
+```
+{
+  "select": ["*"],
+  "from": "movie"
+}
 
-In both cases, the `select` syntax and its rules are identical.
+```
+
+2. An Entity - Either an _id or any attribute marked as unique as a two-tuple. 
+
+For example, to select a specific person, we could use either "from": 4294967296001 or a unique attribute like "from": ["person/handle", "jdoe"]. Both results will be identical. The results are a map/object in this case, and not a collection.
+
+```
+{
+  "select": ["*"],
+  "from":  4294967296001
+}
+
+```
+
+```
+{
+  "select": ["*"],
+  "from":  ["person/handle", "jdoe"]
+}
+
+```
+
+3. A Sequence of Entity Identities
+
+Query results will be returned in the same order as we specify them. For example, we could do a query like:
+
+```
+{
+  "select": ["*"],
+  "from":  [4294967296001, ["person/handle", "jdoe"], 4299262263302,  ["person/handle", "zsmith"] ]
+}
+
+```
+
+4. Attribute Name
+
+Selecting from an attribute name will return all entities that contain that attribute. For example, the below transaction will return any entities that contain a `person/fullName` attribute.
+
+
+```
+{
+  "select": ["*"],
+  "from": "person/fullName"
+}
+
+```
+
+In all cases, the `select` syntax and its rules are identical.
 
 We give you the ability to break out of collection-only or entity-only queries using Fluree's Analytical Query format which we'll cover next.
-
-
 
 ## FlureeQL Analytical Queries
 
