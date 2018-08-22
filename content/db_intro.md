@@ -83,7 +83,7 @@ The Fluree database features these capabilities:
 
 ## Standalone FlureeDB
 
-To launch the standalone version of FlureeDB, download and unzip the [latest version of FlureeDB](). The contents of the folder are as follows:
+To launch the standalone version of FlureeDB, download and unzip the [latest version of FlureeDB](#https://flur.ee/). The contents of the folder are as follows:
 
 * flureeDB_transactor.sh - Shell script to launch FlureeDB.
 * flureeDB.jar - FlureeDB packaged into a JAR file. 
@@ -104,6 +104,7 @@ fdb-group-port | `int` | The communication port for the transactor group
 fdb-group-listen-addr | `ip address` | (Optional) Specify an ip address only if you want to bind listening to a specific IP address, otherwise FlureeDB will bind to: tcp://*:<fdb-group-port>
 fdb-group-transactors | `server`,`server`, etc | (Optional) A list of transactors that will participate in this transactor group. Include the protocool (tcp:// only supported currently), server name, and port. List multiple servers with comma separating them, i.e.: fdb-group-transactors=tcp://10.0.0.1:9790,tcp://10.0.0.2:9790,tcp://10.0.0.3:9790. Leave this field blank to run when running FlureeDB standalone.
 fdb-group-me | `server` | (Optional) "This" transactor must be in the list in fdb-group-transactors. Best practice is to pass this in as an environment variable. Leave this field blank to run when running FlureeDB standalone.
+fdb-group-open-api | `boolean` | Set to true if a signature is not required in order to access [signed endpoints](#signed-endpoints).
 fdb-storage-type | `file` `memory` `none` `Cassandra` | This option specifies the common storage for blocks and index segments. `file` stores in file directory. `none` stores on-disk, `memory` stores in-memory only and will disappear on server stop, and `Cassandra` allows you to use Apache Cassandra. If you chose Cassandra, there are additional options below you need to specify. 
 fdb-storage-file-directory | `directory name` | (Optional) When using the `file` storage-type, this is the name of the file directory. 
 fdb-memory-cache | `size` (i.e. 200mb) | The total memory cache of index segments across all databases. This can be changes per transactor. 

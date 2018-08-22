@@ -588,13 +588,14 @@ Not supported
 Not supported
 ```
 
-<!-- ### Signed Endpoints 
+### Signed Endpoints 
 
-As an alternative to using JSON Web Tokens, it is possible to hit all of the endpoints with a signature. See more information about signatures in the [Signing Transactions](#signing-transactions)
-section. 
+As an alternative to using JSON Web Tokens, it is possible to hit all of the endpoints with a signature. See more information about signatures in the [Signing Transactions](#signing-transactions) section. 
 
 The endpoints are:
 
-`/fdb/[NETWORK-NAME]/[ACTION]`
+`/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/[ACTION]`
 
-For example, if you are in the `dev` network, you could post a query to the `/fdb/dev/query` endpoint. -->
+For example, if you are in the `dev` network using the `test.one` database, you could post a query to the `/fdb/dev/test.one/query` endpoint. The signature needs to be included in the Authorization header. 
+
+A signature is not required is the option `fdb-group-open-api` is set to true (default for the downloaded version of FlureeDB, 0.8.8).
