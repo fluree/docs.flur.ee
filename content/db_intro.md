@@ -141,6 +141,10 @@ For example, if you want to set your own username and password, you could run:
 
 The password that you set for the master database, by default, is the same password as the password for the test database. 
 
+### Launching Packaged UI
+
+If FlureeDB is running on `fdb-group-port` 8080, then there is a built-in user interface that can be accessed at `localhost:8080/index.html`.
+
 ## QuickStart
 
 This quick start is designed to utilize the [FlureeDB interactive web console](https://flureedb.flur.ee). These transactions could also be performed via your code or REPL utilizing the JSON API, but that would require a token.

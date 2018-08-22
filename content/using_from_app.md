@@ -606,4 +606,4 @@ Delete DB | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/new-db`
 
 For example, if you are in the `test` network using the `test.one` database, you could post a query to the `/fdb/test/test.one/query` endpoint. For queries, the signature needs to be included in the Authorization header. For transactions, the signature can be included in the signature map. See [Signing Transactions](#signing-transactions).
 
-A signature is not required is the option `fdb-group-open-api` is set to true (default for the downloaded version of FlureeDB, 0.8.8). Deleting and adding a database only work is `fdb-group-open-api` is set to true. 
+A signature is not required is the option `fdb-group-open-api` is set to true (default for the downloaded version of FlureeDB). Deleting and adding a database only work is `fdb-group-open-api` is set to true. 
