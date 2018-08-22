@@ -125,6 +125,8 @@ Attribute | Type | Description
 `_attribute/spec` | [`ref`] | (optional) A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. These specs restricts what is allowed in this _attribute. To learn more, visit the [Collection and Attribute Specs](#collection-and-attribute-specs) section. 
 `_attribute/specDoc` | `string` | (optional) Optional docstring to describe the specs. Is thrown when any spec fails. 
 `_attribute/deprecated` | `boolean` | (Not in production yet, optional) True if this v is deprecated.  Reads and writes are still allowed, but might give warnings in the API.
+`_attribute/txSpec` | [`ref`] | (optional)  A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. This attribute allows you to set specifications for all of the flakes pertaining to a certain attribute. To learn more, visit the [Attribute Tx Specs](#attribute-tx-specs) section. 
+`_attribute/txSpecDoc` | `string` | (optional) Optional docstring to describe the txSpecs. Is thrown when any txSpec fails. 
 `_attribute/restrictCollection` | `string` | (optional) Only applicable to attributes of `ref` (reference) types. It will restrict references to only be allowed from the specified collection.
 `_attribute/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and database functions won't be permitted on this value.
 
@@ -173,16 +175,17 @@ false | You will *not* be able to add any values to this collection or attribute
 
 Specs using just true/false or basic arithmetical database functions, will determine whether users have access to that attribute or collection may edit or add values for any given attribute or collection. While this is possible, Fluree allows very [granular permissions](#fluree-permissions) through a system of auth records, roles, and rules. 
 
-Specs are best suited for controlling the actual values of attributes through either specs that govern a specific attribute, or through specs that govern an entire collection. In order to make this possible, `_attribute/spec` and `_collection/spec` both have access to special functions which can give you certain information about the entity you are editing or the database in general. The functions below are also listed in [Database Functions](#database-functions). 
+Specs are best suited for controlling the actual values of attributes through either specs that govern a specific attribute, or through specs that govern an entire collection. In order to make this possible, `_attribute/spec` and `_collection/spec` both have access to special functions which can give you certain information about the entity you are editing or the database in general. The functions below, as well as all general purpose database functions, are also listed in [Database Functions](#database-functions). 
 
-Symbol | Description | Access
----|---|---|---
+Function| Description | Access
+---|---|---
 (`?v`) | The value of the attribute that you are adding or editing. | _attribute/spec
-(`?pV`) | The value of the attribute that you are adding or editing. | _attribute/spec
-(`?eid`) | - | -
-(`?e`) | - | -
-(`?user_id`) | - | -
-(`db`) | - | -
+(`?pV`) | The previous value of the attribute that you are adding or editing. | _attribute/spec
+(`?eid`) | The `_id` of the entity you are currently transacting. | Both
+(`?e`) | All of the attributes of the entity you are currently transacting. | Both
+(`?auth_id`) | The `_id` of the current _auth, if any. | Both
+(`?user_id`) | The `_id` of the current user, if any. | Both
+(`db`) | Returns a database object with the following keys: dbid, block, and permissions. | Both
 
 There are many ways to use database functions to control the value of an attribute or attributes in a collection. Below is a small series of examples:
 
@@ -389,7 +392,7 @@ mutation check-level ($checkLevelTx: JSON) {
 }
 
 ```
-### Ex: Both Person/Handle and Person/fullName are Required Attributes in a Collection
+### Ex: Both Person/handle and Person/fullName are Required Attributes in a Collection
 
 The most common usage for collection specs is to require certain attributes within a collection. For instance, requiring both a `person/handle` and a `person/fullName`. The below spec first gets the handle and fullName from the entity in question, and then checks if both of them are not nil. 
 
@@ -451,3 +454,35 @@ mutation handle-and-full-name ($handleAndFullNameTx: JSON) {
 }
 
 ```
+
+## Attribute Tx Specs
+
+The attribute `_attribute/txSpec` allows you to set specifications for all of the flakes pertaining to a certain attribute. Flakes are accessed via the `(flakes)` function.  
+
+You can get the value of all the true flakes (flakes being added) with the `(valT)` function, as well as all of the false flakes (flakes being retracted) with the `(valF)` function. Like all other specs, `_attribute/txSpec` is a multi-cardinality ref attribute, which references entities in the `_fn` collection. 
+
+For example, the below `_attribute/txSpec` ensures that the `crypto/balance` being added is equal to the `crypto/balance` being retracted. View the full [cryptocurrency example](#cryptocurrency) to see this 
+
+```
+[{
+    "_id": ["_attribute/name", "crypto/balance"],
+    "txSpec": ["_fn$evenCryptoBalance"],
+    "txSpecDoc": "The values of added and retracted crypto/balance flakes need to be equal"
+},
+{
+    "_id": "_fn$evenCryptoBalance",
+    "name": "evenCryptoBalance?",
+    "code": "(== [(valT)  (valF) ] )",
+    "doc": "The values of added and retracted crypto/balance flakes need to be equal"
+}]
+```
+
+The following special database functions are available in `txSpec`, and give the user information about the group of flakes being edits. The functions below, as well as all general purpose database functions, are also listed in [Database Functions](#database-functions). 
+
+Function| Description 
+---|---
+(`?aid`) | The `_id` of the attribute you are currently transacting. 
+(`?auth_id`) | The `_id` of the current _auth, if any. 
+(`flakes`) | The transaction flakes that edit the specified attribute.  
+(`?user_id`) | The `_id` of the current user, if any. 
+(`db`) | Returns a database object with the following keys: dbid, block, and permissions. 
