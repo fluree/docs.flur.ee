@@ -1003,3 +1003,9 @@ mutation unevenSpend ($unevenSpendTx: JSON) {
   "unevenSpendTx": "[{\"_id\":[\"crypto/walletName\",\"cryptoMan's Wallet\"],\"balance\":\"#(+ [(?pV) 10])\"},{\"_id\":[\"crypto/walletName\",\"cryptoWoman's Wallet\"],\"balance\":\"#(- [(?pV) 10])\"}]"
 }
 ```
+
+<!-- ## Rule Governance
+
+This example outlines how a user can create a simple cryptocurrency using FlureeDB. The user will be able to check their own balance and add to other users' balances. 
+
+### Schema -->

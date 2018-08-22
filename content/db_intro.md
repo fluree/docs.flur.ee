@@ -113,12 +113,13 @@ fdb-stats-report-frequency | `time` | How frequently to report out stats as a lo
 fdb-port | `int` | The port in which query servers will respond to API calls from client. 
 
 The below options are only used if fdb-storage-type is set to 'Cassandra'
+
 Property | Options | Description   
 -- | -- | --
 fdb-storage-cassandra-servers | `server`,`server`, etc  | Cassandra cluster servers separated by commas
 fdb-storage-cassandra-table | `keyspace.table` | Always use `keyspace.table` format for table. Both the keyspace and the table will be created automatically if non-existing. 
-fdb-storage-cassandra-data-center | | See Cassandra for options
-fdb-storage-cassandra-replicas | | See Cassandra for options.
+fdb-storage-cassandra-data-center | See Cassandra for options | 
+fdb-storage-cassandra-replicas | See Cassandra for options. | 
 
 ### Launching FlureeDB
 

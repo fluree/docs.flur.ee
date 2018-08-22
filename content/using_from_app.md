@@ -587,3 +587,14 @@ Not supported
 ```graphql
 Not supported
 ```
+
+<!-- ### Signed Endpoints 
+
+As an alternative to using JSON Web Tokens, it is possible to hit all of the endpoints with a signature. See more information about signatures in the [Signing Transactions](#signing-transactions)
+section. 
+
+The endpoints are:
+
+`/fdb/[NETWORK-NAME]/[ACTION]`
+
+For example, if you are in the `dev` network, you could post a query to the `/fdb/dev/query` endpoint. -->
