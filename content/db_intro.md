@@ -1548,7 +1548,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Can view all chats.",
     "collection": "chat",
     "collectionDefault": true,
-    "predicate": [["_fn$name", "true"]],
+    "predicate": [["_fn/name", "true"]],
     "ops": ["query"]
   },
   {
@@ -1557,7 +1557,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Can view all people",
     "collection": "person",
     "collectionDefault": true,
-    "predicate": [["_fn$name", "true"]],
+    "predicate": [["_fn/name", "true"]],
     "ops": ["query"]
   },
   {
@@ -1571,7 +1571,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
   },
   {
     "_id": "_fn$editOwnChats",
-    "name": "true",
+    "name": "editOwnChats",
     "code": "(contains? (get-all (?e \"[{chat/person  [{person/user [_id] }]\") [\"chat/person\" \"person/user\" \"_id\"]) (?user_id))"
   }
 ]
@@ -1594,7 +1594,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Can view all chats.",
     "collection": "chat",
     "collectionDefault": true,
-    "predicate": [["_fn$name", "true"]],
+    "predicate": [["_fn/name", "true"]],
     "ops": ["query"]
   },
   {
@@ -1603,7 +1603,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
     "doc": "Can view all people",
     "collection": "person",
     "collectionDefault": true,
-    "predicate": [["_fn$name", "true"]],
+    "predicate": [["_fn/name", "true"]],
     "ops": ["query"]
   },
   {
@@ -1617,7 +1617,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
   },
   {
     "_id": "_fn$editOwnChats",
-    "name": "true",
+    "name": "editOwnChats",
     "code": "(contains? (get-all (?e \"[{chat/person  [{person/user [_id] }]\") [\"chat/person\" \"person/user\" \"_id\"]) (?user_id))"
   }
 ]' \
@@ -1632,7 +1632,7 @@ mutation addRole ($myRoleTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myRoleTx": "[{\"_id\":\"_role\",\"id\":\"chatUser\",\"doc\":\"A standard chat user role\",\"rules\":[\"_rule$viewAllChats\",\"_rule$viewAllPeople\",\"_rule$editOwnChats\"]},{\"_id\":\"_rule$viewAllChats\",\"id\":\"viewAllChats\",\"doc\":\"Can view all chats.\",\"collection\":\"chat\",\"collectionDefault\":true,\"predicate\":[[\"_fn$name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$viewAllPeople\",\"id\":\"viewAllPeople\",\"doc\":\"Can view all people\",\"collection\":\"person\",\"collectionDefault\":true,\"predicate\":[[\"_fn$name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$editOwnChats\",\"id\":\"editOwnChats\",\"doc\":\"Only allow users to edit their own chats\",\"collection\":\"chat\",\"attributes\":[\"chat/message\"],\"predicate\":[\"_fn$editOwnChats\"],\"ops\":[\"transact\"]},{\"_id\":\"_fn$editOwnChats\",\"name\":\"true\",\"code\":\"(contains? (get-all (?e \\\"[{chat/person  [{person/user [_id] }]\\\") [\\\"chat/person\\\" \\\"person/user\\\" \\\"_id\\\"]) (?user_id))\"}]"
+  "myRoleTx": "[{\"_id\":\"_role\",\"id\":\"chatUser\",\"doc\":\"A standard chat user role\",\"rules\":[\"_rule$viewAllChats\",\"_rule$viewAllPeople\",\"_rule$editOwnChats\"]},{\"_id\":\"_rule$viewAllChats\",\"id\":\"viewAllChats\",\"doc\":\"Can view all chats.\",\"collection\":\"chat\",\"collectionDefault\":true,\"predicate\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$viewAllPeople\",\"id\":\"viewAllPeople\",\"doc\":\"Can view all people\",\"collection\":\"person\",\"collectionDefault\":true,\"predicate\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$editOwnChats\",\"id\":\"editOwnChats\",\"doc\":\"Only allow users to edit their own chats\",\"collection\":\"chat\",\"attributes\":[\"chat/message\"],\"predicate\":[\"_fn$editOwnChats\"],\"ops\":[\"transact\"]},{\"_id\":\"_fn$editOwnChats\",\"name\":\"editOwnChats\",\"code\":\"(contains? (get-all (?e \\\"[{chat/person  [{person/user [_id] }]\\\") [\\\"chat/person\\\" \\\"person/user\\\" \\\"_id\\\"]) (?user_id))\"}]"
 }
 
 ```
@@ -1653,7 +1653,7 @@ mutation addRole ($myRoleTx: JSON) {
   },
   {
     "_id": "_auth$temp",
-    "key": "tempAuthRecord"
+    "id": "tempAuthRecord"
   }
 ]
 ```
@@ -1674,7 +1674,7 @@ curl \
   },
   {
     "_id": "_auth$temp",
-    "key": "tempAuthRecord"
+    "id": "tempAuthRecord"
   }]' \
    https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
 ```
@@ -1690,6 +1690,6 @@ mutation addUserAuth($myUserAuthTx: JSON){
   "myUserAuthTx": "[ 
     { \"_id\": \"_user$jdoe\", \"username\": \"jdoe\", \"roles\": [[\"_role/id\", \"chatUser\"]], \"auth\": [\"_auth$temp\"] }, 
     { \"_id\": [\"person/handle\", \"jdoe\"], \"user\": \"_user\$jdoe" }, 
-    { \"_id\": \"_auth$temp\", \"key\": \"tempAuthRecord\" } ]"
+    { \"_id\": \"_auth$temp\", \"id\": \"tempAuthRecord\" } ]"
 }
 ```
