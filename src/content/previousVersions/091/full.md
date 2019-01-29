@@ -22,7 +22,9 @@ FlureeDB is an immutable, time-ordered blockchain database.
 
 Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
 
-![A series of 5 blocks stacked on top of each other vertically. The middle block is deconstructed to show: the previous block's hash, the current block's hash, data, a timestamp, and the block index.](./images/blockContents.png)
+<p class="float-left">
+    <img style="height: 400px; width: 600px; margin-bottom: 10px;" src="https://s3.amazonaws.com/fluree-docs/091/blockContents.png" alt="A series of 5 blocks stacked on top of each other vertically. The middle block is deconstructed to show: the previous block's hash, the current block's hash, data, a timestamp, and the block index.">
+</p>
 
 At its core, every block contains a group of specially formatted log files of database updates, as well as block meta-data. We call these log files Flakes. Each Flake is a specific fact at a specific point in time about a specific entity. No two Flakes are the same.
 
@@ -65,7 +67,9 @@ We can think of the database at any given point in time as the combination of al
 
 We will go into detail about how to create schema and transact data in the database later. But for now, the below image shows you a simplified representation of five blocks worth of Flakes. In the first two blocks, we create our simple schema (a user with a user/handle and a user/chat). In block 3, we add a new user named 'bob' and a chat message for Bob. In block 4, we create a new user with the handle 'jane', and finally in block 5, we attribute a chat to 'jane'.
 
-![A table with the columns: "entity", "attribute", "value", "block", and "add." There are seven rows in this table, and each contains sample data, which is explained in the accompanying paragraph.](./images/flakeLogBlocks1-5.png)
+<p class="text-center">
+    <img style="height: 190px; width: 550px; margin-bottom: 10px;" src="https://s3.amazonaws.com/fluree-docs/091/flakeLogBlocks1-5.png" alt="A table with the columns: 'entity', 'attribute', 'value', 'block', and 'add.' There are seven rows in this table, and each contains sample data, which is explained in the accompanying paragraph">
+</p>
 
 Rather than storing a copy of the entire database in each block, every block contains only Flakes, or facts about entities, that are different as of that block.
 
@@ -182,7 +186,10 @@ To begin, log in to the [FlureeDB Admin Portal (https://flureedb.flur.ee)](https
 
 When you create a new database, you have the option of starting from a blank database or forking a sample database. For this portion of the Quick Start, select "Movie Database" from the "Database Templates" options.
 
-![A form from the Admin Portal, heading is "Create New Database". There are two fields in the form, one with the label "Database Name" and the other with the label "Database Templates." "Movie Database" is selected as the option in "Database Templates."](./images/forkMovieDb.png)
+<p class="text-center">
+    <img style="height: 345px; width: 550px; margin-bottom: 10px;" src="https://s3.amazonaws.com/fluree-docs/091/forkMovieDb.png" alt='A form from the Admin Portal, heading is "Create New Database". There are two fields in the form, one with the label "Database Name" and the other with the label "Database Templates." "Movie Database" is selected as the option in "Database Templates.'>
+</p>
+
 
 Refresh, and then select your new database and the user "root" from the sidebar of the administrative portal.  
 
@@ -4371,15 +4378,21 @@ Individual permissions, such as read and write access to a collection, are encod
 - Read access for all people
 - Read and write access for own chats
 
-![Diagram shows a role, chatUser, that is comprised of three rules: read access for all chats and people, as well as read and write access for own chats](./images/roleChatUser.svg)
+<p class="text-center">
+    <img style="height: 250px; width: 310px; margin-bottom: 10px;" src="https://s3.amazonaws.com/fluree-docs/091/roleChatUser.svg" alt="Diagram shows a role, chatUser, that is comprised of three rules: read access for all chats and people, as well as read and write access for own chats.">
+</p>
 
 Another role, dbAdmin might include read and write access to all users, as well as token issuing permissions.
 
-![Diagram shows a role, dbAdmin, that is comprised of two rules: read and write access for all users and the ability to generate and revoke tokens.](./images/roleDbAdmin.svg)
+<p class="text-center">
+    <img style="height: 200px; width: 300px; margin-bottom: 10px;" src="https://s3.amazonaws.com/fluree-docs/091/roleDbAdmin.svg" alt="Diagram shows a role, dbAdmin, that is comprised of two rules: read and write access for all users and the ability to generate and revoke tokens.">
+</p>
 
 These roles are then assigned to different auth entities (via the `_auth/roles` attribute). For instance, an administrator auth entity and a standardUser auth entity. The administrator auth entity would need multiple roles, such as dbAdmin and chatUser. The standardUser auth entity would only need the chatUser role.
 
-![Diagram shows two auth entities, adminstrator and standardUser. administrator is assigned two roles: dbAdmin and chatUser. standardUser is only assigned one role - chatUser.](./images/authEntities.svg)
+<p class="text-center">
+    <img style="height: 140px; width: 520px; margin-bottom: 10px;" src="https://s3.amazonaws.com/fluree-docs/091/authEntities.svg" alt="Diagram shows two auth entities, adminstrator and standardUser. administrator is assigned two roles: dbAdmin and chatUser. standardUser is only assigned one role - chatUser.">
+</p>
 
 Auth entities govern access to a database. Auth entities are issued tokens, and that auth entity's permissions are applied to every database action that they perform. 
 
@@ -4389,8 +4402,9 @@ For instance, in the below example, the users, janeDoe and bobBoberson, both hav
 
 janeDoe has the dbAdmin role assigned to her user. However, she also has been assigned an auth entity, standardUser. Auth entities assigned to a user (via the `_user/auth` attribute) automatically override any roles that are directly assigned to a user (via the `_user/roles` attribute. In janeDoe's case, she has the permissions associated with a standardUser auth entity. 
 
-![Diagram shows two user entities, janeDoe and bobBoberson. janeDoe is assigned one role, dbAdmin, and one auth entity, standardUser. bobBoberson is assigned one role, chatUser.](./images/userEntities.svg)
-
+<p class="text-center">
+    <img style="height: 150px; width: 500px; margin-bottom: 10px;" src="https://s3.amazonaws.com/fluree-docs/091/userEntities.svg" alt="Diagram shows two user entities, janeDoe and bobBoberson. janeDoe is assigned one role, dbAdmin, and one auth entity, standardUser. bobBoberson is assigned one role, chatUser.">
+</p>
 
 ## Query / Read Permissions
 
