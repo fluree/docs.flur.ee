@@ -1,82 +1,44 @@
-# Docbox :blue_book:
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-[![Circle CI](https://circleci.com/gh/tmcw/docbox.svg?style=shield)](https://circleci.com/gh/tmcw/docbox)
-[![Greenkeeper badge](https://badges.greenkeeper.io/tmcw/docbox.svg)](https://greenkeeper.io/)
+## Available Scripts
 
-**Docbox is an open source version of [Mapbox](https://mapbox.com/)'s REST API documentation system.** It takes structured Markdown files and generates a friendly two-column layout with navigation, permalinks, and examples. The documentation source files that Docbox uses are friendly for documentation authors and free of presentational code: it's Markdown.
+In the project directory, you can run:
 
-[![](https://farm2.staticflickr.com/1534/24963539843_e26a00b3e1_b.jpg)](https://67-53007065-gh.circle-artifacts.com/0/tmp/circle-artifacts.NCC9T6a/index.html#our-api)
+### `npm start`
 
-_[Demo documentation](https://67-53007065-gh.circle-artifacts.com/0/tmp/circle-artifacts.NCC9T6a/index.html#our-api)_
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-**Docbox is a JavaScript application written with React.** The core magic is thanks to the [remark](http://remark.js.org/) Markdown parser, which enables the layout: after parsing a file into an [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree), we can move examples to the right, prose to the left, and build the navigation system.
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
 
-**It has a supercharged test suite**. Our tests check for everything from broken links to invalid examples and structure problems: this way, the application is only concerned with output and you can proactively enforce consistency and correctness. We even extract JavaScript examples from documentation and test them with [eslint](http://eslint.org/)
+### `npm test`
 
-**When you're ready to ship**, Docbox's `build` task minifies JavaScript and uses React's server rendering code to make documentation indexable for search engines and viewable without JavaScript.
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-_Docbox is a [Mapbox](http://mapbox.com/) community open source project. We built an awesome system for our REST API documentation and wanted to share it with you. Not a Mapbox product, so there's no guaranteed support and may have some rough edges._
+### `npm run build`
 
-## Writing Documentation
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Documentation is written as Markdown files in the `content` directory, and is organized by the `src/custom/content.js` file - that file requires each documentation page and puts them in order. This demo has a little bit of content - [content/example.md](content/example.md) and [content/introduction.md](content/introduction.md), so that there's an example to follow.
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
 
-## Testing-driven
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Docbox's test suite is an integral part of the design: it's designed to catch any error that would produce invalid documentation and also designed to be extended with custom rules for your documentation standards. Remember to run `npm test` if anything looks funky, and if you have a standard you want to enforce, to enforce it automatically by writing a test!
+### `npm run eject`
 
-## Customization
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-All custom code - code that relates to brands and specifics of APIs - is in the `./src/custom` directory. Content is [src/custom/content.js](custom/content.js) and brand names & tweaks are in [src/custom/index.js](src/custom/index.js), with inline documentation for both.
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-## Development
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-We care about the ease of writing documentation. Docbox comes with batteries included: after you `npm install` the project, you can run `npm start` and its development server, [budo](https://github.com/mattdesl/budo), will serve the website locally and update automatically.
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-### Requirements
+## Learn More
 
-* Node v4 or higher
-* NPM
-* Git
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To run the site locally:
-
-1. Clone this repository
-	2. `git clone https://github.com/mapbox/docbox.git`
-2. `npm install`
-3. `npm start`
-4. Open http://localhost:9966/
-
-## Tests
-
-Tests cover both the source code of Docbox as well as the content in the `content/` directory.
-
-To run tests:
-
-1. Clone this repository
-	2. `git clone https://github.com/mapbox/docbox.git`
-2. `npm install`
-3. `npm test`
-
-
-## Deployment
-
-The `npm run build` command builds a `bundle.js` file that contains all the JavaScript code and content needed to show the site, and creates an `index.html` file that already contains the site content. Note that this _replaces_ the existing `index.html` file, so it's best to run this only when deploying the site and to undo changes to `index.html` if you want to keep working on content.
-
-1. Clone this repository
-2. `git clone https://github.com/mapbox/docbox.git`
-2. `npm install`
-3. `npm run build`
-
----
-
-### Companies using docbox
-
-* [Mapbox API Documentation](https://www.mapbox.com/api-documentation/)
-* Mapillary uses docbox for [API Documentation](https://www.mapillary.com/developer/api-documentation/) and [Tiles Documentation](https://www.mapillary.com/developer/tiles-documentation/)
-* _[do you use docbox? let us know!](https://github.com/tmcw/docbox/issues/new?title=I%27m%20using%20docbox!)_
-
-### [FAQ & See Also](https://github.com/mapbox/docbox/wiki)
-
-Props to [Tripit's Slate project](https://github.com/tripit/slate), which served
-as the inspiration for Docbox's layout. We also maintain a [list of similar projects](https://github.com/mapbox/docbox/wiki).
+To learn React, check out the [React documentation](https://reactjs.org/).

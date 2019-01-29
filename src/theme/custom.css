@@ -1,0 +1,243 @@
+.docs-section tr:nth-child(even), article tr:nth-child(even) {background-color: #f2f2f2;}
+.docs-section tr:nth-child(odd), article tr:nth-child(odd) {background-color: #FFF}
+
+.docs-section th, article th {
+  padding: 5px;
+  color: white;
+  background-color: black;
+}
+
+.docs-section td {
+    padding: 5px;
+}
+
+.docs-section h1, h2, h3 {
+  padding: 20px 0px;
+}
+
+.docs-section h3 {
+    border-top: 1px solid #d3d3d3;
+}
+
+.docs-section p, ul, pre {
+    padding-bottom: 10px;
+}
+
+.docs-section p {
+    line-height: 1.4em;
+}
+
+.docs-section table {
+  margin: 30px;
+}
+
+.docs-section code {
+    color: rgb(127, 81, 31);
+    background-color: rgb(252, 252, 252);
+}
+
+.docs-section table td > code {
+    color: rgb(127, 81, 31);
+    background-color: rgba(245, 245, 245, 0);
+}
+
+.docs-section pre > code {
+    color: #4d4c4c;
+    background-color: rgba(245, 245, 245);
+}
+
+.top-level-nav > a {
+    font-weight: 800;
+    color: black;
+}
+
+.top-level-nav {
+    margin-bottom: 5px;
+}
+
+.second-level-nav > div {
+    padding-left: 20px;
+    color: #5e5d5d;
+    cursor: pointer;
+}
+
+.third-level-nav, .second-level-nav > a {
+    padding-top: 5px;
+}
+
+.third-level-nav > a, .second-level-nav > a{
+    color: #969393;
+}
+
+.second-level-nav div {
+    padding-left: 10px;
+}
+
+.third-level-nav > a > p{
+    padding-left: 10px;
+    color: #969393;
+    border-left: 1px solid #969393;
+    margin: 0px 0px 0px 40px;
+    cursor: pointer;
+}
+
+.chosen > div {
+    color: #d8418c;
+}
+
+.lesson-square {
+    width: 200px;
+    height: 200px;
+    background-color: lightblue;
+    box-shadow: 2px 5px #6d8b94;
+    display: "block";
+    margin: 20px auto;
+}
+
+.lesson-square-header {
+    font-size: 20px;
+    margin-bottom: 25px;
+}
+
+.lesson-square-icon {
+    font-size: 20px;
+    padding-top: 20px;
+}
+
+.lesson-square-description {
+    text-align: center;
+    font-size: 16px;
+    margin: 0px 10px;
+}
+
+.beginner {
+    background-color: #C1DD8E;
+    box-shadow: 2px 5px #7d8e5d;
+    color: #505b3c;
+}
+
+.beginner:hover{
+    background-color: #7d8e5d;
+    cursor: pointer;
+    box-shadow: 2px 5px #505b3c;
+    color: #cad8af;
+    text-decoration: none;
+}
+
+.intermediate {
+    background-color: #8dd1ed;
+    box-shadow: 2px 5px #509fb7;
+    color: #1c353d;
+}
+
+.intermediate:hover{
+    background-color: #509fb7;
+    cursor: pointer;
+    box-shadow: 2px 5px #1c353d;
+    color: #c1e2ef;
+    text-decoration: none;
+}
+
+.example {
+    background-color: #e6a9c7;
+    box-shadow: 2px 5px #a85981;
+    color:#792b52;
+}
+
+.example:hover{
+    background-color: #792b52;
+    cursor: pointer;
+    box-shadow: 2px 5px #a85981;
+    color: #e8c8d8;
+}
+
+.lessons-home{
+    border: 1px solid #d8418c;
+    box-shadow: 1px 1px #d8418c;
+    padding: 10px;
+    color: #792b52; 
+}
+
+.lessons-home:hover{
+    background-color: #e8c8d8;
+    cursor: pointer;
+}
+
+.no-underline{
+    text-decoration: none !important;
+}
+
+.challenge{
+    margin-top: 20px;
+    padding: 0px 20px 20px;
+    border: 5px solid #a6a3a3;
+    background-color: #3f3b3b;
+    color: white;
+}
+
+.challenge li{
+    padding-bottom: 5px;
+}
+
+.fixedSidebar {
+    top: 20px;
+    left: 20px; 
+    bottom: 20px;
+    overflow-y: scroll;
+}
+
+
+@media only screen and (max-width: 995px){
+    .fixedSidebar {
+        position: inherit;
+        padding-bottom: 5px;
+        border-bottom: 1px solid black;
+    }
+    .sidebar {
+        padding-bottom: 5px;
+        border-bottom: 1px solid black;
+    }
+    .docs-section {
+        padding: 5px 20px;
+    }
+    
+} 
+
+@media only screen and (min-width: 996px){
+    .fixedSidebar {
+        position: fixed; 
+    }
+} 
+
+.sidebar {
+    padding-left: 20px;
+}
+
+.medium-img {
+    height: 400px;
+    width: 400px;
+}
+
+.float-left {
+    float: left;
+    margin-right: 15px;
+}
+
+.float-right {
+    float: right;
+    margin-left: 15px;
+}
+
+.search-results {
+    width: 50%;
+    border: 1px solid #a6a3a3;
+    padding-left: 5px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.search-results h2 {
+    color: #d8418c;
+    text-decoration: underline;
+}
+
