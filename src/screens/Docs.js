@@ -170,19 +170,6 @@ export const docNav = {
             }
         }
     },
-    "network-setup": {
-        "pageName": "Network Set-up",
-        "subTopics": {
-            "network-settings": {
-                "headerName": "Network Settings",
-                "file": "nw-setup/network-settings"
-            },
-            "consensus-algorithms": {
-                "headerName": "Consensus Algorithms",
-                "file": "nw-setup/consensus"
-            }
-        }
-    },
     "infrastructure": {
         "pageName": "Infrastructure",
         "subTopics": {

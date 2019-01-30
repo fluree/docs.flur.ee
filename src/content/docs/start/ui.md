@@ -18,7 +18,7 @@ If your email is attached to more than one account, you will be asked to choose 
 
 ### Configure
 
-On later downloadable versions of FlureeDB, there is no built-in username and password. When you go to the interface, you will need to specify a network, master database, and port. ß
+On later downloadable versions of FlureeDB, there is no built-in username and password. When you go to the interface, you will need to specify a network, master database, and port.
 
 <p class="text-center">
 <img  style="height: 400px; width: 650px"  src="https://s3.amazonaws.com/fluree-docs/config_options.png" alt="Form with the heading, 'Config Settings', and three fields: 'network', 'master database', and 'port'.">

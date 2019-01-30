@@ -3,7 +3,7 @@ import AceEditor from 'react-ace';
 import 'brace/mode/json';
 import 'brace/theme/xcode'
 import { Button } from 'react-bootstrap';
-import { signedFlureeFetch, parseJSON } from '../flureeFetch';
+// import { signedFlureeFetch, parseJSON } from '../flureeFetch';
 
 class Editor extends React.Component {
     state = {
@@ -29,21 +29,21 @@ class Editor extends React.Component {
         this.setState({result: JSON.stringify(this.state.solution, null, 2)})
     }
 
-    issueQuery = () => {
-        const query = this.state.value
-        const parsedQuery = JSON.parse(query)
-        const fullUri = `http://localhost:8080/fdb/dev/$network/query`
-        signedFlureeFetch(fullUri, parsedQuery)
-        .then(response => parseJSON(response))
-        .then(response => {
-            const formattedResult = JSON.stringify(response.json, null, 2);
-            this.setState({result: formattedResult})
-        })
-        .catch(err => {
-            let formattedErr = JSON.stringify(err, null, 2)
-            this.setState({result: formattedErr})
-        })
-    }
+    // issueQuery = () => {
+    //     const query = this.state.value
+    //     const parsedQuery = JSON.parse(query)
+    //     const fullUri = `http://localhost:8080/fdb/dev/$network/query`
+    //     signedFlureeFetch(fullUri, parsedQuery)
+    //     .then(response => parseJSON(response))
+    //     .then(response => {
+    //         const formattedResult = JSON.stringify(response.json, null, 2);
+    //         this.setState({result: formattedResult})
+    //     })
+    //     .catch(err => {
+    //         let formattedErr = JSON.stringify(err, null, 2)
+    //         this.setState({result: formattedErr})
+    //     })
+    // }
 
     render() {
         return (

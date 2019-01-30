@@ -1,25 +1,14 @@
 ## Creating a Database
 
+When creating a new database, you must specify a `db/id`. This id must be unique in your network and cannot be changed. A `db/id` begins with your network name followed by `/`. If a network already exists with that name, and you have permissions to add to that network, a new database will be created. 
+
+If a network does not already exist with that name, a new network and new database will be created. 
+
+The process for doing this is different, depending on your version. 
+
 ### Downloaded Version
 
-This applies to any FlureeDB version after 0.9.1. For previous versions, look at the [Hosted Version](#hosted-version) section.
-
-To create a new database, we need to go to the [master database in the network](/docs/infrastructure/network-infrastructure#master-database), and issue a transaction creating a new subject in the `db` collection. We can also perform this action through the user interface in the same manner as the [hosted version](#hosted-version).
-
-You will also want to add your database to a [relevant network](/docs/network-setup/network-settings). For example:
-
-```all
-[{
-    "_id": "db$fluree",
-    "id": "fluree",
-    "alias": "deebee",
-    "doc": "This database is called `fluree`, but we also call it `deebee`"
-},
-{
-    "_id": ["network/id", "myNet"],
-    "dbs": ["dbs$fluree"]
-}]
-```
+----- NEED TO ADD NEW INFO HERE ~~
 
 All of the `db` predicates are listed below.
 

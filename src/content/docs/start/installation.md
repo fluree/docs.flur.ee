@@ -9,7 +9,7 @@ Download and unzip: [latest version of FlureeDB](https://s3.amazonaws.com/fluree
 The contents of the folder are as follows:
 
 ```all
-flureeDB-VERSION/
+flureeDB-0.9.5/
 ├── flureeDB.properties
 ├── VERSION
 ├── flureeDB_transactor.sh
@@ -58,21 +58,12 @@ To restart FlureeDB, navigate to the folder that contains your Fluree instance a
 After FlureeDB successfully starts for the first time, if you are using the default `fdb-storage-type` set to `file`, there will be additional items in your FlureeDB instance folder. Your folder will look something like the below: 
 
 ```all
-flureeDB-VERSION/
-├── fdbdata/
-│   ├── test/
-│   ├── 1/
-│   ├── 2/
-│   ├── 3/
-│   │   ├── root.fdbd
-│   │   ├── garbage/
-│   │   ├── root/
-│   │   ├── vaeb/
-│   │   ├── aveb/
-│   │   ├── aevb/
-│   │   ├── aevb/
-│   │   ├── eavb/
-│   │   ├── block/
+flureeDB-0.9.5/
+├── data/
+│   ├── TRANSACTORNAME/
+│   │   ├── raft
+│   │   │   ├── snapshots
+│   │   │   │   ├── 0.raft
 ├── flureeDB.properties
 ├── VERSION
 ├── flureeDB_transactor.sh
@@ -84,11 +75,11 @@ flureeDB-VERSION/
 
 #### New Items
 
-- `fdb/` 
+- `data/` 
 - `default_private_key.txt`
 
 #### fdbdata/
-The new `fdbdata` folder contains all of your block data, as well as database indexes. This folder can be moved or copied to a different FlureeDB instance folder and run from the folder if you choose. This is a good option if you want to use a newer FlureeDB version, but to keep all of your previous databases. 
+The new `data` folder will contain all of your block data, consensus logs, as well as database indexes. This folder can be moved or copied to a different FlureeDB instance folder and run from the folder if you choose. This is a good option if you want to use a newer FlureeDB version, but to keep all of your previous databases. 
 
 #### default_private_key.txt
 This file contains the default private key for your databases. A new (and unique) private key is generated every time you start up a new network, unless you already have a valid private key in `default_private_key.txt`. 
@@ -101,8 +92,6 @@ For example, if you want to set `fdb-port` and `fdb-mode` when starting up Flure
 ```all
 ./flureeDB_transactor.sh -Dfdb-mode=transactor -Dfdb-port=8081
 ```
-
-The password that you set for the master database, by default, is the same password as the password for the test database. 
 
 You can set various configuration options as either environment variables, Java property flags, or in the `flureeDB.properties` file. `flureeDB.properties` has all of the default configuration settings. 
 
@@ -142,11 +131,11 @@ fdb-storage-cassandra-replicas | See Cassandra for options. |
 
 ### User Interface
 
-There is a built-in user interface that can be accessed at `localhost:[port]/`. If you did not change the port, it will be on `localhost:8080/`.
+There is a built-in user interface that can be accessed at `localhost:[port]/`. If you did not change the port or IP address, it will be on `localhost:8080/`.
 
 For help using the user interface, read the [Navigating the User Interface](/docs/user-interface) section.
 
-Note that as of version 1.0, downloadable FlureeDB databases do not have a username and password. If you are using an older version of FlureeDB, you can log into the Master database with username, `master` and password, `fluree` or into the Test database with username, `test`, and password, `fluree`.
+Note that as of version 0.9.5, downloadable FlureeDB databases do not have a username and password. If you are using an older version of FlureeDB, you can log into the Master database with username, `master` and password, `fluree` or into the Test database with username, `test`, and password, `fluree`.
 
 ### Fluree with Docker
 

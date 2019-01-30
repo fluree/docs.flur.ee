@@ -21,14 +21,7 @@ Collection | Description
 [_db](#_db) | Database settings
 [_block](#_block) | Block metadata
 [_tx](#_block) | Database transactions
-
-The master database in a network additionally contains two other collections:
-
-Collection | Description
---- | ---
-[db](#db) | Databases
-[network](#network) | Network information
-
+[_setting](#setting) | Database settings
 
 ### _collection
 
@@ -195,28 +188,12 @@ Key | Description
 `authority` | If this transaction utilized an authority, reference to it.
 `auth` | Reference to the auth id for this transaction.
 
-### db
-
-More information about the [`db` collection](/docs/infrastructure/network-infrastructure#master-database).
+### _setting
 
 Key | Description
 ---|---
-`id` | Main database id, should never be changed.
-`alias` | Alias name for this db, can be changed but must be unique.
-`root` | Root auth id
-`fork` | If this database is a fork of an existing db, include the db identity.
-`forkBlock` | If this database is a fork of an existing db, the block at which the fork happened (inclusive).
-`doc` | Optional docstring describing this database.
-`active` | If active is set to false, will not allow any new transactions/updates to this db. Default is true.
-`archived` | If true, this database is archived and only blocks can be retrieved. Defaults false.
-
-### network
-
-More information about the [`network` collection](/docs/infrastructure/network-infrastructure#master-database).
-
-Key | Description
----|---
-`dbs` | Reference to databases on this network.
-`transactors` | Transactors auth identities for this network.
-`consensus` | Consensus type for this network. Currently only `raft` available.
-`id` | Unique network name.
+`txMax` | Maximum transaction size in bytes. Will default to the network db's value if not present.
+`anonymous` | Reference to auth identity to use for anonymous requests to this db.
+`consensus` | Consensus type for this db. Currently only 'Raft' supported.
+`ledgers` | Reference to auth identities that are allowed to act as ledgers for this database.
+`doc` | Optional docstring for the db.

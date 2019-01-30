@@ -18,6 +18,12 @@ import "../node_modules/video-react/dist/video-react.css";
 export const currentVersion = "0.9.5"
 
 class Wrapper extends React.Component {
+
+    componentDidMount(){
+        let location = this.props.location.pathname
+        this.props.history.push(location)
+    }
+
     render() {
         return (
             <>

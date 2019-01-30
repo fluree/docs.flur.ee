@@ -137,7 +137,7 @@ export function getPreviousTopic(topic, subtopic, nav, page){
     }
 
 export function PreviousSidebarNav(props) {
-    let { nav, robust } = props;
+    let { nav } = props;
     let hash = props.location.hash;
     let keys = Object.keys(nav)
     let headers = keys.map((key, idx) => get(nav, [idx , "headerName"]))
@@ -165,9 +165,7 @@ export function PreviousSidebarNav(props) {
                                                 {get(subTopicObj, [idx, "headerName"])}
                                             </div>
                                             </a>
-                                        </div>)
-                            return null;
-                        })}
+                                        </div>)})}
                     </div>
             )
             })}
