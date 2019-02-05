@@ -1,31 +1,34 @@
 ## Overview
 
-Signed endpoints can be used in both the downloadable and the hosted versions of FlureeDB. All requests, except requests to `/storage`, should be POST requests. The main signed endpoints are below, and they are all structured as follows:
+Signed endpoints can be used in both the downloadable and the hosted versions of FlureeDB. All requests,unless otherwise specified, should be POST requests. The main signed endpoints are below, and they are all structured as follows:
 
-`/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/[ACTION]`
+`/fdb/[NETWORK-NAME]/[DBID]/[ACTION]`
 
-- For the hosted version, the network is "dev", and the full URL is `https://[ACCOUNTNAME].beta.flur.ee/fdb/dev/[DBNAME]/[ACTION]`.
+- For the hosted version, the network is "dev", and the full URL is `https://[ACCOUNTNAME].beta.flur.ee/fdb/dev/[DBID]/[ACTION]`.
 <br/>
 <br/>
-- For the downloadable version, unless you changed the default `fdb-port` or `fdb-network`, the full URL is `http://localhost:8080/fdb/dev/[DBNAME]/[ACTION]`
+- For the downloadable version, unless you changed the default `fdb-port` or `fdb-network`, the full URL is `http://localhost:8080/fdb/dev/[DBID]/[ACTION]`
 
 Action | Endpoint | Explanation 
 -- | -- | --
-Query | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` | Queries in FlureeQL syntax
-Multi-Query | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/multi-query` | Multi-Queries in FlureeQL syntax
-Block | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/block` | Block queries in FlureeQL syntax
-History |  `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/history`| History queries in FlureeQL syntax
-Transact | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact` | Transactions in FlureeQL syntax
-GraphQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` | Queries or transactions in GraphQL syntax, as a string
-SPARQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` | Queries in SPARQL syntax, as a string
+Query | `/fdb/[NETWORK-NAME]/[DBID]/query` | Queries in FlureeQL syntax
+Multi-Query | `/fdb/[NETWORK-NAME]/[DBID]/multi-query` | Multi-Queries in FlureeQL syntax
+Block | `/fdb/[NETWORK-NAME]/[DBID]/block` | Block queries in FlureeQL syntax
+History |  `/fdb/[NETWORK-NAME]/[DBID]/history`| History queries in FlureeQL syntax
+Transact | `/fdb/[NETWORK-NAME]/[DBID]/transact` | Transactions in FlureeQL syntax
+GraphQL | `/fdb/[NETWORK-NAME]/[DBID]/graphql` | Queries or transactions in GraphQL syntax, as a string
+SPARQL | `/fdb/[NETWORK-NAME]/[DBID]/sparql` | Queries in SPARQL syntax, as a string
 
 Other endpoints:
 
 Action | Verb | Endpoint | Description
 -- | -- | -- | --
+New Keys | GET | `/fdb/new-keys` | Returns a valid public key, private key, and auth-id.
+Dbs | POST | `/fdb/dbs` | Returns all the dbs in the transactor group.
+New DB | POST |`/fdb/new-db` | Creates a new database.
 Health | ANY | `/fdb/health` | Returns whether or not the server is ready. 
-Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]` | Get all key-value pairs of a certain type
-Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]` | Get a the value for the provided key
+Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBID]/[TYPE]` | Get all key-value pairs of a certain type
+Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBID]/[TYPE]/[KEY]` | Get a the value for the provided key
 Sub | POST | `/fdb/sub` | Handles subscriptions
 
 

@@ -3,7 +3,7 @@
 In this section, we show you how to perform basic queries. All of these queries can be issued to an API endpoint ending in `/query`. 
 
 
-### Select Clauses
+### Query Keys
 
 Below are all the possible keys that you can include in a basic select query. Usage examples are in subsequent sections on this page.
 

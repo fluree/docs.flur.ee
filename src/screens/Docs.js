@@ -201,7 +201,11 @@ export const docNav = {
             "voting": {
                 "headerName": "Voting",
                 "file": "examples/voting"
-            }
+            },
+            "supply-chain": {
+                "headerName": "Supply Chain",
+                "file": "examples/supply-chain"
+            },
         }
     }
 }

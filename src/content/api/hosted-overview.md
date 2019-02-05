@@ -6,6 +6,8 @@ Hosted endpoints can only be used in the hosted versions of FlureeDB. All reques
 
 These endpoints are NOT available in the downloadable version.
 
+The following endpoint require a token (retrievable from `/api/signin`) in the header:
+
 Action | Endpoint | Explanation 
 -- | -- | --
 Query | `/api/db/query` | Queries in FlureeQL syntax
@@ -15,8 +17,15 @@ History |  `/api/db/history`| History queries in FlureeQL syntax
 Transact | `/api/db/transact` | Transactions in FlureeQL syntax
 GraphQL | `/api/db/graphql` | Queries or transactions in GraphQL syntax, as a string
 SPARQL | `/api/db/sparql` | Queries in SPARQL syntax, as a string
-Token | `/api/db/token` | Retrieve a token for a given database. Syntax in [Getting Tokens](/api/hosted-endpoints/getting-tokens) and [Examples](/api/hosted-endpoints/hosted-examples)
-Logs | `/api/action` | Retrieve the logs for a given database. Syntax in [Examples](/api/hosted-endpoints/hosted-examples)
-Signin | `/api/signin` | Retrieve a token for your account for the master database. Syntax in [Getting Tokens](/api/hosted-endpoints/getting-tokens) and [Examples](/api/hosted-endpoints/hosted-examples)
+Dbs | `/api/dbs` | Get all of the databases for an account.
+Accounts | `/api/action` | Get all of the accounts for a given username and password.
+Logs | `/api/fdb/logs/[network]` | Retrieve the logs for a given database. Syntax in [Examples](/api/hosted-endpoints/hosted-examples)
 
-Requests to all of the above endpoints require you to provide a token in the header, with the exception of `/api/signin`. See [Getting Tokens](/api/hosted-endpoints/getting-tokens) to find out how to get the correct token.
+The following endpoints do not require a token in the header:
+
+Action | Endpoint | Explanation 
+-- | -- | --
+Signin | `/api/signin` | Retrieve a token for your account for the master database. Syntax in [Getting Tokens](/api/hosted-endpoints/getting-tokens) and [Examples](/api/hosted-endpoints/hosted-examples)
+Reset Password | `/api/reset-pw` | Sends a reset-token to your email, so that you can reset your password.
+New Password | `/api/new-pw` | Given a reset token, allows you to reset your password. 
+Activate Account | `/api/activate-account` | Given a token (emailed to you after signing up), can activate new account. 

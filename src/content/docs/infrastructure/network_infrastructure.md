@@ -40,36 +40,10 @@ For framework users, we will be offering a React wrapper and intend to release a
 
 The transactor server type handles updates. You can run a single server or set of servers in the role of transactor. If you run a set of transactors as a transactor group, they will act as a single node, as far as consensus is concerned. You can scale transactors in your transactor group as necessary. 
 
-### Master Database
-
-Every network has a master database. Upon creation of a new network, the master database is automatically created, amd it has two special collections, `db` and `network`. `db` contains information about each database in the network, and `network` contains network settings. 
-
-The following are the built-in predicates for the `db` collection. 
-
-Key | Description
----|---
-`id` | Main database id, should never be changed.
-`alias` | Alias name for this db, can be changed but must be unique.
-`root` | Root auth id
-`fork` | If this database is a fork of an existing db, include the db identity.
-`forkBlock` | If this database is a fork of an existing db, the block at which the fork happened (inclusive).
-`doc` | Optional docstring describing this database.
-`active` | If active is set to false, will not allow any new transactions/updates to this db. Default is true.
-`archived` | If true, this database is archived and only blocks can be retrieved. Defaults false.
-
-The following are the built-in predicates for the `network` collection.
-
-Key | Description
----|---
-`dbs` | Reference to databases on this network.
-`transactors` | Transactors auth identities for this network.
-`consensus` | Consensus type for this network. Currently only `raft` available.
-`id` | Unique network name.
-
 ### Consensus Algorithms
 
 If running FlureeDB in a decentralized manner, you need to choose a consensus algorithm. The consensus algorithm determines how each node in your network agrees upon a series of states (blocks). 
 
-The consensus algorithm for a network is specified in the master database in the `network/consensus` predicate. 
+The consensus algorithm for a network is specified in each database in the `_setting/consensus` predicate. 
 
-We currently support Raft and PBFT, and you can learn more in the [Consensus Algorithm](/docs/network-setup/consensus-algorithms) section. 
+We currently support Raft and PBFT, and you can learn more in the [Consensus Algorithm](/docs/database-setup/consensus-algorithms) section. 

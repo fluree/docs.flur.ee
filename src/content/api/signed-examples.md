@@ -8,7 +8,7 @@ All single queries in FlureeQL syntax that include a `select` key should be issu
 An example of an unsigned request to `/query`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/query
+Endpoint: http://localhost:8080/fdb/dev/main/query
 Headers: None
 Body: { "select": ["*"], "from": "_collection"}
 ```
@@ -16,7 +16,7 @@ Body: { "select": ["*"], "from": "_collection"}
 An example of a signed request to `/query`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/query
+Endpoint: http://localhost:8080/fdb/dev/main/query
 Headers: {"Authorization": "Bearer [SIGNATURE]"}
 Body: { "select": ["*"], "from": "_collection"}
 ```
@@ -27,7 +27,7 @@ If you are submitting multiple FlureeQL queries at once (using the [multi-query 
 An example of an unsigned request to `/multi-query`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/multi-query
+Endpoint: http://localhost:8080/fdb/dev/main/multi-query
 Headers: None
 Body: { "query1": { "select": ["*"], "from": "_collection"}, 
         "query2": { "select": ["*"], "from": "_predicate"}}
@@ -36,7 +36,7 @@ Body: { "query1": { "select": ["*"], "from": "_collection"},
 An example of a signed request to `/multi-query`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/multi-query
+Endpoint: http://localhost:8080/fdb/dev/main/multi-query
 Headers: {"Authorization": "Bearer [SIGNATURE]"}
 Body: { "query1": { "select": ["*"], "from": "_collection"}, 
         "query2": { "select": ["*"], "from": "_predicate"}}
@@ -48,7 +48,7 @@ FlureeQL [block queries](/docs/query/block-query) should be submitted to the `/b
 An example of an unsigned request to `/block`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/block
+Endpoint: http://localhost:8080/fdb/dev/main/block
 Headers: None
 Body: { "block": 5 }
 ```
@@ -56,7 +56,7 @@ Body: { "block": 5 }
 An example of a signed request to `/block`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/multi-query
+Endpoint: http://localhost:8080/fdb/dev/main/multi-query
 Headers: {"Authorization": "Bearer [SIGNATURE]"}
 Body: { "block": 5}
 ```
@@ -68,7 +68,7 @@ FlureeQL [history queries](/docs/query/history-query) should be submitted to the
 An example of an unsigned request to `/history`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/history
+Endpoint: http://localhost:8080/fdb/dev/main/history
 Headers: None
 Body: {
   "history": ["person/handle", "zsmith"],
@@ -79,7 +79,7 @@ Body: {
 An example of a signed request to `/block`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/multi-query
+Endpoint: http://localhost:8080/fdb/dev/main/multi-query
 Headers: {"Authorization": "Bearer [SIGNATURE]"}
 Body: {
   "history": ["person/handle", "zsmith"],
@@ -94,7 +94,7 @@ All transactions, except transaction issued through the GraphQL syntax, should b
 An example of an unsigned request to `/transact`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/transact
+Endpoint: http://localhost:8080/fdb/dev/main/transact
 Headers: None
 Body: [{
     "_id":    "_user",
@@ -105,7 +105,7 @@ Body: [{
 An example of a signed request to `/transact`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/query
+Endpoint: http://localhost:8080/fdb/dev/main/query
 Headers: None
 Body: [{
     "_id":    "_user",
@@ -124,7 +124,7 @@ All queries and transactions in GraphQL syntax should be issued through the `/fd
 An example of an unsigned request to `/graphql`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/graphql
+Endpoint: http://localhost:8080/fdb/dev/main/graphql
 Headers: None
 Body: "{ graph {
   chat {
@@ -141,7 +141,7 @@ Body: "{ graph {
 An example of a signed request to `/graphql`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/query
+Endpoint: http://localhost:8080/fdb/dev/main/query
 Headers: {"Authorization": "Bearer [SIGNATURE]"}
 Body: {"query": "{ graph {
   chat {
@@ -162,7 +162,7 @@ All queries and transactions in GraphQL syntax should be issued through the `/fd
 An example of an unsigned request to `/graphql`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/graphql
+Endpoint: http://localhost:8080/fdb/dev/main/graphql
 Headers: None
 Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
   transact(tx: $myPeopleTx)
@@ -177,7 +177,7 @@ Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
 An example of an signed request to `/graphql`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/graphql
+Endpoint: http://localhost:8080/fdb/dev/main/graphql
 Headers: {"Authorization": "Bearer [SIGNATURE]"}
 Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
   transact(tx: $myPeopleTx)
@@ -196,7 +196,7 @@ All queries in SPARQL syntax, regardless of type, should be issued through the `
 An example of an unsigned request to `/sparql`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/sparql
+Endpoint: http://localhost:8080/fdb/dev/main/sparql
 Headers: None
 Body: "SELECT ?chat ?message ?person ?instant ?comments
  WHERE {
@@ -210,7 +210,7 @@ Body: "SELECT ?chat ?message ?person ?instant ?comments
 An example of a signed request to `/sparql`:
 ```
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/$network/sparql
+Endpoint: http://localhost:8080/fdb/dev/main/sparql
 Headers: {"Authorization": "Bearer [SIGNATURE]"}
 Body: "SELECT ?chat ?message ?person ?instant ?comments
  WHERE {
@@ -249,3 +249,28 @@ Endpoint: http://localhost:8080/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYP
 ### /sub
 
 A POST request to `/fdb/sub` handles subscriptions. More documentation on this feature coming soon. You are not able to test this endpoint in the sidebar. 
+
+
+### /new-keys
+
+A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/docs/identity/public-private-keys).
+
+#### /dbs
+
+A POST request with an empty object or a GET request to `/fdb/dbs` returns all the dbs in the transactor group.
+
+### /new-db
+
+A database id must begin with a network name followed by a `/` and a dbid. Network names and dbids may only contain letters and numbers. In your request, you must specify `db/id`. No other options are currently supported. 
+
+For example, `test/one` is the `one` database in the `one` network. If you specify a network that doesn't exist, then Fluree will create a new network for you, as well as the new database.
+
+An example of a signed request to `/new-db`:
+```
+Action: POST
+Endpoint: http://localhost:8080/fdb/new-db
+Headers: {"Authorization": "Bearer [SIGNATURE]"}
+Body: {
+  "db/id": "test.one"
+}
+```

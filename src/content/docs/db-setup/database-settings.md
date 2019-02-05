@@ -14,7 +14,7 @@ Key | Description
 
 Consensus algorithms decide how new blocks are committed to a chain, as well as who can commit those blocks. Consensus algorithms have to balance the need for speed with the need for security. The choice of consensus algorithm depends on your use case, and whether your network is more or less trusted. 
 
-Currently, FlureeDB supports the Raft consensus algorithm. The next algorithm we will release is the PBFT (Practical Byzantine Fault Tolerance) algorithm. The consensus algorithm you use is specified in the `network/consensus` predicate in the master database (look at [network settings](/docs/network-setup/network-settings) for more information).
+Currently, FlureeDB supports the Raft consensus algorithm. The next algorithm we will release is the PBFT (Practical Byzantine Fault Tolerance) algorithm. The consensus algorithm you use is specified in the `_setting/consensus` predicate in each database (look at [database settings](/docs/database-setup/database-settings) for more information).
 
 ### Raft
 

@@ -10,7 +10,7 @@ class Help extends React.Component {
                 </div>
             </div>
             <div className="row text-center">
-                <div className="col-sm-4 text-center">
+                <div className="col-sm-6 text-center">
                         <div className="lesson-square">
                             <div className="lesson-square-icon">
                                 <i className="fas fa-at"/>
@@ -22,8 +22,9 @@ class Help extends React.Component {
                             </div>
                         </div>
                 </div>
-                <div className="col-sm-4 text-center">
-                    <a className="no-underline" href="https://launchpass.com/flureedb" rel="noopener noreferrer" target="_blank">
+                <div className="col-sm-6 text-center">
+                    <a className="no-underline" href="https://join.slack.com/t/flureedb/shared_invite/enQtNTM1NzI4MTEzODA4LWEzNTMzN2VmYjBiODQ5MDUzODg1M2E3OTBjNGVmM2EwNmZhMGMwNTg2ZmJiZjk2MjA5NDkwYTk0OTVhODQ1Y2U" 
+                    rel="noopener noreferrer" target="_blank">
                         <div className="lesson-square beginner">
                             <div className="lesson-square-icon">
                                 <i className="fab fa-slack"/>
@@ -32,20 +33,6 @@ class Help extends React.Component {
                             Join Our Slack</div>
                             <div className="lesson-square-description">
                             Enter your email address to get a Slack invitation. 
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div className="col-sm-4 text-center">
-                    <a className="no-underline" href="https://flureedb.slack.com" rel="noopener noreferrer" target="_blank">
-                        <div className="lesson-square example">
-                            <div className="lesson-square-icon">
-                                <i className="fab fa-slack"/>
-                            </div>
-                            <div className="lesson-square-header">
-                            Post on Our Slack</div>
-                            <div className="lesson-square-description">
-                            Already on our Slack? Post a question or comment. 
                             </div>
                         </div>
                     </a>

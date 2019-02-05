@@ -37,9 +37,7 @@ For Mac or Linux systems:
 
 Note that for Windows systems, you have to download a Bash emulator, like [Git For Windows](https://gitforwindows.org/) to properly run Fluree. In your Bash emulator, you can run `./flureeDB_transactor.sh` to start Fluree. Alternatively on Windows, you can [download FlureeDB with Chocolatey](#download-fluree-with-chocolatey).
 
-When you launch FlureeDB for the first time or if you choose `none` as your `fdb-storage-type` (see [config options](#config-options) for all options), FlureeDB will create start-up databases.
-
-Creating these databases may take a few minutes. When Fluree is done starting up, your terminal will log: 
+When you launch FlureeDB for the first time or if you choose `none` as your `fdb-storage-type` (see [config options](#config-options) for all options), FlureeDB will create a new network. When Fluree is done starting up, your terminal will log: 
 
 ```all
 Starting web server on port:   [PORT NUMBER]
@@ -47,7 +45,9 @@ Starting web server on port:   [PORT NUMBER]
 
 If the above message is not displaying in your terminal, the terminal should print out a relevant error message. Common errors include your chosen port already being in use and not having Java 8 installed. 
 
-You can interact with FlureeDB either through the [API](/api) or through the [user interface](#user-interface).
+After you launch Fluree for the first time, you will not have any databases. You will need to create a database to begin. 
+
+Creating a database and any other interaction with FlureeDB can happen either through the [API](/api/signed-endpoints/signed-examples#-new-db) or through the [user interface](#user-interface).
 
 ### Exiting and Restarting FlureeDB
 

@@ -25,31 +25,55 @@ In the version 0.9.5, by default, you will not have any databases by default.
 
 ### Toolbar - Hosted
 
-Select "Hosted" on the top of the toolbar. In order to submit any queries or transactions, you'll first need to get a token for the relevant database you want to use. This takes two steps:
+Select "Hosted" on the top of the toolbar. In order to submit any queries or transactions, you'll need to make sure your password is set up, and then signin. 
 
-1. Get a token for your account in the master database. 
-2. Get a token for the relevant database in your account.
+1. Set up your password.
+2. Signin to get a token for the relevant account.
 
 <br/>
 
-**1. Get a token for your account in the master database.**
+**1. Make sure your username and password are set up.**
 <br/>
-This first token will allow you to query the master database. In the master database, you are only able to view your account information and your database information. This token will also allow you to issue tokens for any databases within your account. 
-
-In order to get this token, you need to specify the following information. Only change the information that is in all caps. Do not change the database or the account. 
+If you do not have a password, you can request to reset your password. 
 
 ```
 Account: f
-Endpoint: signin
+Endpoint: reset-pw
 Request: {
-            "db":"f.master",
-            "user":["_user/username", "YOUR EMAIL ADDRESS HERE"],
-            "password": "YOUR PASSWORD HERE",
-            "expireSeconds":86400
+            "email": "YOUR EMAIL ADDRESS HERE"
         }
 ```
 
-When you issue that request, if the username and password is correct, the response will be:
+If the email supplied corresponds to a valid account, you will receive an email with a link to reset your password. You can either follow that link or send a request to `new-pw` to set or reset your password.
+
+```
+Account: f
+Endpoint: new-pw
+Request: {
+            "resetToken": "TOKEN FROM THE EMAIL YOU RECEIVED",
+            "password": "YOUR PASSWORD HERE"
+        }
+```
+
+<br/>
+
+
+
+**2. Signin to get a token for the relevant account.**
+
+If you know the name of the account you want to use to sign in, you can issue the following request:
+
+```
+Account: f
+Endpoint: sign-in
+Request: {
+            "user":     ["_user/username" "YOUR EMAIL HERE"],
+            "password": "YOUR PASSWORD HERE",
+            "account": "YOUR ACCOUNT NAME HERE"
+        }
+```
+
+When you issue that request, if the username, password, and account name are correct, the response will be:
 
 ```
 { "token": "SOME TOKEN HERE" }
@@ -57,26 +81,24 @@ When you issue that request, if the username and password is correct, the respon
 
 Copy the token (only the token). You'll have to paste it into the "Token" section for the next query. You will need to paste the token in without quotation marks. 
 
-<br/>
-
-**2. Get a token for the relevant database in your account.**
-<br/>
-
-Next you will have to issue the below request. Only change the information that is in all caps. The account that you use should be your account name, not your email address. 
-
-All of your database begins with your account name followed by a period. For example, "john.mydatabase". Unless you have deleted it, all hosted accounts come with a "default" database, so you can use "youraccountname.default" for these example if you wish. 
+If you don't know the names of the account(s) associated with your username and password, you can issue:
 
 ```
-Account: "YOUR ACCOUNT NAME"
-Token: TOKEN FROM PART ONE HERE
-Endpoint: token
-Request: {"db":"YOUR DB NAME HERE","root":true,"expireSeconds":3599}
+Account: f
+Endpoint: accounts
+Request: {
+            "user":     ["_user/username" "YOUR EMAIL HERE"],
+            "password": "YOUR PASSWORD HERE"
+}
+Action: POST
 ```
 
-When you issue that request, the response will be:
+If you don't know the names of the database(s) asssociated with an account, you can issue:
 
 ```
-{ "token": "SOME TOKEN HERE" }
+Account: f
+Endpoint: dbs
+Header:  {"Authorization": "Bearer [TOKEN]"}
+Request: { }
+Action: POST or GET
 ```
-
-Save that token, and use it for all subsequent requests. It will be valid for an hour. 
