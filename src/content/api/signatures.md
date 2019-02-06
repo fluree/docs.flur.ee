@@ -1,6 +1,6 @@
 ## Signatures
 
-For both queries and transactions, a signature is not required if the option `fdb-group-open-api` is set to true (default for the downloaded version of FlureeDB). 
+For both queries and transactions, a signature is not required if the option `fdb-group-open-api` is set to true (default for the downloaded version of Fluree). 
 
 If you do need to specify a signature, the signature may either be in the Authorization header (for all queries submitted) or in the signature map (for all transactions).
 

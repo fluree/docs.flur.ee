@@ -5,7 +5,7 @@ FlureeQL Analytical Queries are used to answer more sophisticated questions abou
 Analytical Queries can: 
 
 - Query across multiple internal and external datasets
-- Query across the same FlureeDB at different points in time
+- Query across the same Fluree at different points in time
 - Calculate aggregates
 - Create complicated joins
 
@@ -30,7 +30,7 @@ Key | Required? | Description
 ### Where Clause
 We suggest reading the [Where Clause](#where-clause) section before reading the [Select or Select One Clauses](#select-or-select-one-clauses) section.  
 
-Where clauses are a collection of five-tuples. Each tuple is comprised of a source, subject, predicate, object, and options. Multiple five-tuples strung together allow us to finely filter data, and connect our FlureeDB to outside triple-store databases. 
+Where clauses are a collection of five-tuples. Each tuple is comprised of a source, subject, predicate, object, and options. Multiple five-tuples strung together allow us to finely filter data, and connect our Fluree to outside triple-store databases. 
 
 Value | Description
 -- | -- 
@@ -337,12 +337,12 @@ or | `(or (> 10 ?nums1) (< 100 ?nums2))` | <a href="https://clojuredocs.org/cloj
 
 ### Queries Across Sources
 
-Each tuple in a where clause is essentially a triple with an added piece of information at the beginning (source) and at the end (options). This tuple structure allows users to query across multiple points in time and across data sources. Currently, we support querying across FlureeDB and Wikidata. In the future, we will support additional data sources, as well as the ability to query across multiple Fluree databases. 
+Each tuple in a where clause is essentially a triple with an added piece of information at the beginning (source) and at the end (options). This tuple structure allows users to query across multiple points in time and across data sources. Currently, we support querying across Fluree and Wikidata. In the future, we will support additional data sources, as well as the ability to query across multiple Fluree databases. 
 
 Source | Description 
 -- | --
-`$fdb` | Default source. The current version of a given FlureeDB. Can be omitted. 
-`$fdb3` | FlureeDB at a specified block, for example `$fdb10` is a given database at block 10. 
+`$fdb` | Default source. The current version of a given Fluree. Can be omitted. 
+`$fdb3` | Fluree at a specified block, for example `$fdb10` is a given database at block 10. 
 `$wd` | Wikidata 
 
 For example, if we wanted to see whether "zsmith" as of block 8 shared a favorite number with "jdoe" as of block 9.
@@ -380,7 +380,7 @@ WHERE {
 
 ### WikiData Example
 
-Using the [Basic Schema](/docs/getting-started/basic-schema), we will be able to use analytical queries to connect up a `person/favArtists` (stored in FlureeDB) to their artworks (stored in Wikidata).
+Using the [Basic Schema](/docs/getting-started/basic-schema), we will be able to use analytical queries to connect up a `person/favArtists` (stored in Fluree) to their artworks (stored in Wikidata).
 
 
 We can retrieve the names of artworks created by jdoe's favorite artists. Our full query is below. We will discuss each of the where clause tuples individually. 

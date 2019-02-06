@@ -1,12 +1,12 @@
 ## SPARQL
 
-This section details how to use SPARQL to query a FlureeDB. If you don't already know SPARQL, we recommend you use [Analytical Queries](/docs/query/analytical-queries), as they have the same capabilities as SPARQL queries. 
+This section details how to use SPARQL to query a Fluree. If you don't already know SPARQL, we recommend you use [Analytical Queries](/docs/query/analytical-queries), as they have the same capabilities as SPARQL queries. 
 
 All of the examples below display SPARQL syntax, regardless of the language selected in the top-left. In addition, all queries on this page can be submitted to endpoints ending in `/sparql`.
 
 ### What is SPARQL?
 
-SPARQL (pronounced "sparkle") is a query-langauge for RDF databases. RDF databases are also known as triple-store databases, and every fact in a triple-store database is stored a triple composed of a subject-predicate-object (SPO). The first three elements of a flake (subject, predicate, object) align exactly to triple-store databases' SPO triples. This lends itself to connection across FlureeDB and RDF databases. 
+SPARQL (pronounced "sparkle") is a query-langauge for RDF databases. RDF databases are also known as triple-store databases, and every fact in a triple-store database is stored a triple composed of a subject-predicate-object (SPO). The first three elements of a flake (subject, predicate, object) align exactly to triple-store databases' SPO triples. This lends itself to connection across Fluree and RDF databases. 
 
 You can use SPARQL to:
 
@@ -78,7 +78,7 @@ WHERE {
 Triple-Part | Example | Explanation
 -- | -- | --
 subject | `?person` | The subject is a variable: `?person`. We could have just as easily called this variable `?people` or `?elephant`- the name does not matter here. 
-predicate | `fd:person/handle` | This predicate is comprised of a prefix, `fd:` and an predicate name `person/handle`. `fd:` stands for `FlureeDB` (see [sources](#sources) for more info).
+predicate | `fd:person/handle` | This predicate is comprised of a prefix, `fd:` and an predicate name `person/handle`. `fd:` stands for `Fluree` (see [sources](#sources) for more info).
 object | `jdoe` | We are looking for results where the subject can be anything, the predicate is `person/handle`, and the object is `jdoe`. 
 
 We can combine this simple triple, `?person fd:person/handle "jdoe"` with additional triples, for example:
@@ -93,7 +93,7 @@ WHERE {
 Triple-Part | Example | Explanation
 -- | -- | --
 subject | `?person` | The same variable as in the first tuple
-predicate | `fd:person/fullName` | The predicate `person/fullName` in FlureeDB
+predicate | `fd:person/fullName` | The predicate `person/fullName` in Fluree
 object| `?fullName` | Because the object is a variable, we are not looking for any particular fullName. 
 
 Both the first and the second triples use the `?person` variable, which means that only entities that match both of the triples will be returned. For example, if an subject does not have a `person/fullName` predicate, then it will not be included in the results (to include it in the results, you must include an [OPTIONAL](#optional-clause) clause).
@@ -143,14 +143,14 @@ SELECT DISTINCT ?horse ?horseLabel ?mother
 
 ### Sources
 
-Prefixes, like `wdt:`, `fd:`, `wd:` tell us where to look for the data in a given clause. If we specify a number as an subject, it is assumed that we are referring to the current FlureeDB. 
+Prefixes, like `wdt:`, `fd:`, `wd:` tell us where to look for the data in a given clause. If we specify a number as an subject, it is assumed that we are referring to the current Fluree. 
 
 The following are all the currently available prefixes:
 
 Prefix | Source 
 --|--
-`fd`, `fdb`, `fluree`, or `flureedb` | Any of these prefixes indicate the current FlureeDB. 
-`fd#`, `fdb#`, `fluree#`, or `flureedb#` | The current FlureeDB at a specified block, for example `fd3:person/handle` is the `person/handle` at block 3. 
+`fd`, `fdb`, `fluree`, or `flureedb` | Any of these prefixes indicate the current Fluree. 
+`fd#`, `fdb#`, `fluree#`, or `flureedb#` | The current Fluree at a specified block, for example `fd3:person/handle` is the `person/handle` at block 3. 
 `wdt`, `bd`, etc | Wikidata-supported prefix, [see all here](https://en.wikibooks.org/wiki/SPARQL/Prefixes). See also [introduction to SPARQL](https://en.wikibooks.org/wiki/SPARQL).
 
 Note that if you are including a prefix that is supported by Wikidata, but external to it, i.e. `rdfs`, then you need to add a PREFIX clause to the top of your query. For example:
@@ -165,11 +165,11 @@ WHERE {
 
 Each triple in a query refers to a particular dataset. A single triple cannot reference multiple datasets. 
 
-Additionally, if a clause contains no prefixes, for example `?creator ?label ?name.`, then we assume that the clause is referring to the current FlureeDB. However, if the clause is referring to an outside source, such as Wikidata, then you can simply add a prefix to any of the variables, for example `?creator wd:?label ?name.`
+Additionally, if a clause contains no prefixes, for example `?creator ?label ?name.`, then we assume that the clause is referring to the current Fluree. However, if the clause is referring to an outside source, such as Wikidata, then you can simply add a prefix to any of the variables, for example `?creator wd:?label ?name.`
 
 ### Additional Options
 
-In addition to the items listed here, SPARQL supports additional options, such as additional aggregate functions, UNIONs, nested SELECT clauses, and FILTER and OPTIONAL clauses. While submitting a SPARQL query to FlureeDB with these additional options may not throw an error, these options will be ignored. We will expand SPARQL support in subsequent releases. 
+In addition to the items listed here, SPARQL supports additional options, such as additional aggregate functions, UNIONs, nested SELECT clauses, and FILTER and OPTIONAL clauses. While submitting a SPARQL query to Fluree with these additional options may not throw an error, these options will be ignored. We will expand SPARQL support in subsequent releases. 
 
 
 Key | Format | Explanation

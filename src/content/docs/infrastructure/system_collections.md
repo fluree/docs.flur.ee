@@ -1,6 +1,6 @@
 ## System Collections
 
-When a new database is created, the first transaction, issued automatically by FlureeDB, initializes system collections and predicates. 
+When a new database is created, the first transaction, issued automatically by Fluree, initializes system collections and predicates. 
 
 These system collections govern various database behaviors, such as schema, user rules, smart functions. Each of these system collections and their predicates is discussed in its respective section. The below list compiles all of the built-in collections in one place, and you can follow the link to any particular section for more information.
 
@@ -122,7 +122,7 @@ Predicate | Type | Description
 `_auth/resetToken` | `string` | (optional) If the user is currently trying to reset a password/secret, an indexed reset token can be stored here allowing quick access to the specific auth record that is being reset. This predicate is not used anywhere in the database, but you can create an application using logins and passwords with the help of this predicate. 
 `_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to use if authenticated via this auth record. If not provided, this `_auth` record will not be able to view or change anything in the database. 
 `_auth/authority` | `[ref]` | (optional) Authorities for this auth record. References another _auth record. Any auth records referenced in `_auth/authority` can sign a transaction in place of this auth record. To use an authority, you must sign your transaction using the authority's auth record. See more about signing transactions and authorities in the [Signed Transactions](/api/signed-endpoints/signatures#signed-transactions) section. 
-`_auth/fuel` | `long` | Fuel this auth record has. [Fuel](/docs/infrastructure/db-infrastructure#fuel) is used to meter usage in the hosted version of FlureeDB, but an application can use this predicate to meter fuel usage in the downloadable version as well. 
+`_auth/fuel` | `long` | Fuel this auth record has. [Fuel](/docs/infrastructure/db-infrastructure#fuel) is used to meter usage in the hosted version of Fluree, but an application can use this predicate to meter fuel usage in the downloadable version as well. 
 
 ### _role
 

@@ -6,11 +6,11 @@ In a traditional application, there are three layers:
 2. Business Logic
 3. Database
 
-In the case of FlureeDB, some of the business logic can be located in the database layer.
+In the case of Fluree, some of the business logic can be located in the database layer.
 
 In a decentralized database, before any given block is committed, the network confirms the validity of the proposed transaction. A transaction is only valid if the syntax is correct, the types (i.e. string, int, long) for each predicate are correct, and all triggered [smart functions](/docs/infrastructure/smart-functions) return true. The exact method that the network reaches an agreed upon shared state is determined by rsch database's [consensus algorithm](/docs/database-setup/database-settings).
 
-Because smart functions restrict what you can transact at the database level, it is important to build up your FlureeDB application layer-by-layer. Specifically: 
+Because smart functions restrict what you can transact at the database level, it is important to build up your Fluree application layer-by-layer. Specifically: 
 
 **1. Create a Schema**
 

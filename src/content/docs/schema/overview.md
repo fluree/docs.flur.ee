@@ -9,9 +9,9 @@ Most examples in the documentation use the [Basic Schema](/docs/getting-started/
 ### Validation
 Fluree validates all updates written against the database's schema, ensuring each change meets all of the defined restrictions (i.e. data type, multi-cardinality, uniqueness).
 
-FlureeDB predicates can be of many different types documented in the [types table](/docs/infrastructure/system-collections#_predicate-types) (i.e. string, boolean). 
+Fluree predicates can be of many different types documented in the [types table](/docs/infrastructure/system-collections#_predicate-types) (i.e. string, boolean). 
 
-Beyond validating types, FlureeDB allows custom validation that can further restrict predicate values. This level of validation is done by specifying an optional [spec for a collection](/docs/smart-functions/collection-spec) or [predicate](/docs/smart-functions/predicate-spec).
+Beyond validating types, Fluree allows custom validation that can further restrict predicate values. This level of validation is done by specifying an optional [spec for a collection](/docs/smart-functions/collection-spec) or [predicate](/docs/smart-functions/predicate-spec).
 
 ### References 
 Being a graph database, the special type of ref (reference) is core to traversing through data. Any attribute of type ref refers (links/joins) to another entity. These relationships can be navigated in both directions. For example, listing all invoices from a customer record is trivial if the invoice is of type ref, and once established an invoice automatically links back to the customer.

@@ -9,10 +9,7 @@ export default {
     "2. When `fdb-group-open-api` is true. ",
 "3. False, the default auth record", "signs the transaction."],
     "5": "C",
-    "6": ["A master token.",
-    "This gives you access",
-    "to the master database"],
-    "7": "No challenge here! You're all done."
+    "6": "api/signin"
 }
 
                     

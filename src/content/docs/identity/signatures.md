@@ -1,8 +1,8 @@
 ## Signatures
 
-In FlureeDB, we take the SHA3-256 of the original transaction, and sign it with the issuer's private key. This signature conforms to [RFC 6979](https://tools.ietf.org/html/rfc6979).
+In Fluree, we take the SHA3-256 of the original transaction, and sign it with the issuer's private key. This signature conforms to [RFC 6979](https://tools.ietf.org/html/rfc6979).
 
-For both queries and transactions, a signature is not required if the option `fdb-group-open-api` is set to true (default [config option](/docs/getting-started/installation#config-options) for the downloaded version of FlureeDB). 
+For both queries and transactions, a signature is not required if the option `fdb-group-open-api` is set to true (default [config option](/docs/getting-started/installation#config-options) for the downloaded version of Fluree). 
 
 If you do need to specify a signature, the signature may either be in the Authorization header (for all queries submitted) or in the signature map (for all transactions).
 
@@ -51,7 +51,7 @@ For example, I could specify a  `_tx/id`, `_tx/auth`, `_tx/nonce` in my transact
 
 The private key that signs is not determined by the auth record that you may or may not specify in the transaction. Rather it is determined by your network and database configuration.
 
-Every node of FlureeDB can either specify a private key or private key file location (as [configured at start-up](/docs/getting-started/installation#config-option)). If neither is specified, a `default-private-key.txt` file will be created when an instance of FlureeDB starts up for the first time, and an assocatied auth record that corresponds to the private key will be added to the master database with root access.  
+Every node of Fluree can either specify a private key or private key file location (as [configured at start-up](/docs/getting-started/installation#config-option)). If neither is specified, a `default-private-key.txt` file will be created when an instance of Fluree starts up for the first time, and an assocatied auth record that corresponds to the private key will be added to the master database with root access.  
 
 If a particular [auth is specified in the transaction](/api/signed-endpoints/signatures#signed-transactions), then the default auth record signs the transaction and is listed as the [authority](/docs/identity/auth-records#authority), while the specified auth is listed as the transaction `_auth`. 
 

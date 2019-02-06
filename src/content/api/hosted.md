@@ -414,7 +414,7 @@ All SPARQL queries can be sent to this endpoint. Simply send a string of the SPA
 
 ### `/api/db/signin`
 
-The signin endpoint is only available in the hosted version of FlureeDB. This endpoint will return a token for the master database. Using this token, you will be able to see information about your account, your databases, and you will be able to issue tokens for any databases within your account. 
+The signin endpoint is only available in the hosted version of Fluree. This endpoint will return a token for the master database. Using this token, you will be able to see information about your account, your databases, and you will be able to issue tokens for any databases within your account. 
 
 Post a JSON map/object containing the following keys:
 
@@ -432,10 +432,10 @@ Key | Type | Description
 -- | -- | -- 
 `auth` | idsubject |  Required auth idsubject you wish this token to be tied to. Can be the `_id` integer of the auth record,  or any idsubject value such as `["_auth/id", "my_admin_auth_id"]`.
 `expireSeconds` | integer | Optional number of seconds until this token should expire. If not provided, token will never expire.
-`db` | string | Only required if using your master authorization token from FlureeDB (from your username/password to flureedb.flur.ee). So long as you are using a token from your own database, it will automatically use the database the token is coming from.
+`db` | string | Only required if using your master authorization token from Fluree (from your username/password to flureedb.flur.ee). So long as you are using a token from your own database, it will automatically use the database the token is coming from.
 
 
-If you are handling authentication for your application but still want users to connect directly to FlureeDB, your authentication code can utilize this endpoint to retrieve tokens on behalf of the user. The user can subsequently use this token to interact directly with FlureeDB from the respective application.
+If you are handling authentication for your application but still want users to connect directly to Fluree, your authentication code can utilize this endpoint to retrieve tokens on behalf of the user. The user can subsequently use this token to interact directly with Fluree from the respective application.
 
 In order to create a token, you must use a token that has the following permission:
 

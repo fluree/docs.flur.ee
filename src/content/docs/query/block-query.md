@@ -1,6 +1,6 @@
 ## Block Query 
 
-In this section, we show you how to select all flakes from a block or a selection of blocks. FlureeDB allows you to select data from an entire block or block range. 
+In this section, we show you how to select all flakes from a block or a selection of blocks. Fluree allows you to select data from an entire block or block range. 
 
 All FlureeQL queries in this section can be issued to an API endpoint ending in `/block`.
 

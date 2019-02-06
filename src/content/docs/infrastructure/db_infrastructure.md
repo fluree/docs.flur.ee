@@ -1,10 +1,10 @@
 ## Database Infrastructure
 
-This section is background on the infrastructure of a single database in FlureeDB. This includes flakes, blocks, and the subject-predicate-object model. 
+This section is background on the infrastructure of a single database in Fluree. This includes flakes, blocks, and the subject-predicate-object model. 
 
 ### Overview 
 
-FlureeDB is an immutable, time-ordered blockchain database.
+Fluree is an immutable, time-ordered blockchain database.
 
 Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
 
@@ -59,21 +59,21 @@ A [collection](/docs/schema/overview#collections) is analogous to a relational d
 
 Every collection has [predicates](/docs/schema/overview#predicates). Predicates are analogous to relational database columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. 
 
-Together, collections, and predicates make up a FlureeDB schema. 
+Together, collections, and predicates make up a Fluree schema. 
 
 ### Subject-Predicate-Object Model
 
-In a FlureeDB, every item in the database is called a `subject`. When you create a new subject, you need to specify what collection it belongs to (for example, a person). When you create that subject, we automatically generate an `_id` for it. This `_id` is a long integer, which uniquely references that subject in the database. 
+In a Fluree, every item in the database is called a `subject`. When you create a new subject, you need to specify what collection it belongs to (for example, a person). When you create that subject, we automatically generate an `_id` for it. This `_id` is a long integer, which uniquely references that subject in the database. 
 
 In addition to an `_id`, subject can have an unlimited number of `predicate`s. For example, when you create your person, you might give them a person/firstName, person/lastName, and person/age - those are the predicates. 
 
-In addition to subjects and predicates, we have something called objects in FlureeDB. The object is the value of the subject-predicate combination. So, a subject could be `17592186044440` (a subject `_id`), a corresponding predicate could be `person/firstName`, and a corresponding object could be `Mike`. 
+In addition to subjects and predicates, we have something called objects in Fluree. The object is the value of the subject-predicate combination. So, a subject could be `17592186044440` (a subject `_id`), a corresponding predicate could be `person/firstName`, and a corresponding object could be `Mike`. 
 
-All together, a subject, predicate, and object together is called a triple. These triples, or [RDF triples](https://www.w3.org/TR/rdf-concepts/), are a standard structure for data, which allows FlureeDB to be compatible with other triple-store databases. You can also take the triples created by the Fluree transactor and ingest them into a query engine that can interpret triples. 
+All together, a subject, predicate, and object together is called a triple. These triples, or [RDF triples](https://www.w3.org/TR/rdf-concepts/), are a standard structure for data, which allows Fluree to be compatible with other triple-store databases. You can also take the triples created by the Fluree transactor and ingest them into a query engine that can interpret triples. 
 
 ### Flakes
 
-Flakes are modified RDF triples. Because each block in a FlureeDB represents the database at a different point in time, flakes not only contain a subject-object-predicate, but also  a time `t`, and a boolean (true/false). The sixth element of a flake is a JSON-object for metadata. It is not fully implemented. 
+Flakes are modified RDF triples. Because each block in a Fluree represents the database at a different point in time, flakes not only contain a subject-object-predicate, but also  a time `t`, and a boolean (true/false). The sixth element of a flake is a JSON-object for metadata. It is not fully implemented. 
 
 The `t` is a negative integer. `t` is a more granular notion of time than a block. A block with multiple transactions will have multiple `t`s. Each block has a [metadata flake](#block-metadata) with the predicate `_block/number` that links a `t` with a positive block integer. 
 
@@ -157,7 +157,7 @@ FlureeQL example:
 
 Block files and indexes are stored in the `fdbdata` folder inside the folder that contains your Fluree instance. 
 
-This folder can be moved or copied to a different FlureeDB instance folder and run from the folder if you choose. This is a good option if you want to use a newer FlureeDB version, but to keep all of your previous databases. 
+This folder can be moved or copied to a different Fluree instance folder and run from the folder if you choose. This is a good option if you want to use a newer Fluree version, but to keep all of your previous databases. 
 
 Block files are never overwritten. Once the file for block 1 is written, it is never overwritten. When the transactions for block 2 are issued, they will be written to a file for block 2. 
 
@@ -185,10 +185,10 @@ Key | Description
 
 ### Fuel
 
-In the hosted version of FlureeDB, fuel is used to meter usage. Every query and transaction accumulates a certain amount of "fuel." The amount of fuel used is returned in the query or transaction results. 
+In the hosted version of Fluree, fuel is used to meter usage. Every query and transaction accumulates a certain amount of "fuel." The amount of fuel used is returned in the query or transaction results. 
 
-In the downloadable version of FlureeDB, fuel is returned as supplemental information.
+In the downloadable version of Fluree, fuel is returned as supplemental information.
 
 ### More Info
 
-The <a href="https://flur.ee/assets/pdf/flureedb_whitepaper_v1.pdf" target="_blank">FlureeDB Whitepaper</a> goes into more depth about how FlureeDB works.
+The <a href="https://flur.ee/assets/pdf/flureedb_whitepaper_v1.pdf" target="_blank">Fluree Whitepaper</a> goes into more depth about how Fluree works.

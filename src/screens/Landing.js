@@ -28,7 +28,7 @@ class Splash extends React.Component {
                     </div>
                 </div>
                 <div className="col-md s-8">
-                    <img style={{height: "300px"}} alt="FlureeDB" src={require('../theme/assets/splashimage.png')} />
+                    <img style={{height: "300px"}} alt="Fluree" src={require('../theme/assets/splashimage.png')} />
                 </div>
             </div>
         )

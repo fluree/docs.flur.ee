@@ -2,23 +2,23 @@
 
 ## Welcome
 
-Welcome to the FlureeDB documentation!
+Welcome to the Fluree documentation!
 
 **Where to Start?** 
 
-*Option 1*. To learn a little bit about how our database works, begin with the [What is FlureeDB?](#what-is-flureedb-) section. 
+*Option 1*. To learn a little bit about how our database works, begin with the [What is Fluree?](#what-is-flureedb-) section. 
 
-*Option 2*. To get your hands dirty right away, visit the [Quick Start](#quickstart) guide to use Fluree in the [FlureeDB interactive web console](#https://flureedb.flur.ee/). 
+*Option 2*. To get your hands dirty right away, visit the [Quick Start](#quickstart) guide to use Fluree in the [Fluree interactive web console](#https://flureedb.flur.ee/). 
 
-*Option 3*. To launch a standalone version of FlureeDB, visit the [Standalone FlureeDB](#standalone-flureedb) section. 
+*Option 3*. To launch a standalone version of Fluree, visit the [Standalone Fluree](#standalone-flureedb) section. 
 
 If you have issues, please do report them! A simple email to [support@flur.ee](mailto:support@flur.ee) is much appreciated with a description of what happened, and when. 
 
-In addition, our [Fluree Slack](https://flureedb.slack.com/) is a great place to connect with other developers, ask questions, and chat about all things FlureeDB. If you are not already part of the Slack, please [join here](https://launchpass.com/flureedb).
+In addition, our [Fluree Slack](https://flureedb.slack.com/) is a great place to connect with other developers, ask questions, and chat about all things Fluree. If you are not already part of the Slack, please [join here](https://launchpass.com/flureedb).
 
-## What is FlureeDB?
+## What is Fluree?
 
-FlureeDB is an immutable, time-ordered blockchain database. 
+Fluree is an immutable, time-ordered blockchain database. 
 
 Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
 
@@ -73,7 +73,7 @@ We will go into detail about how to create schema and transact data in the datab
 
 Rather than storing a copy of the entire database in each block, every block contains only Flakes, or facts about entities, that are different as of that block.
 
-The [FlureeDB Whitepaper](https://flur.ee/assets/pdf/flureedb_whitepaper_v1.pdf) goes into more depth about how FlureeDB works. 
+The [Fluree Whitepaper](https://flur.ee/assets/pdf/flureedb_whitepaper_v1.pdf) goes into more depth about how Fluree works. 
 
 ## Capabilities
 
@@ -95,15 +95,15 @@ The Fluree database features these capabilities:
 - Scale-out reads, by separating eventually consistent query engines from the core blockchain transactor. Queries can optionally force consistency to a specific point-in-time or block.
 - Point-in-time queries (in other words, time-travel), allowing you to query the same information at different points in time
 - When leveraging Fluree's cloud-hosted private consensus, there is zero management overhead. Federated and fully decentralized consensus modes are in development.
-- FlureeDB will be open source as we move forward in development.
+- Fluree will be open source as we move forward in development.
 
-## Standalone FlureeDB
+## Standalone Fluree
 
-To launch the standalone version of FlureeDB, download and unzip the [latest version of FlureeDB](#https://flur.ee/). The contents of the folder are as follows:
+To launch the standalone version of Fluree, download and unzip the [latest version of Fluree](#https://flur.ee/). The contents of the folder are as follows:
 
-* flureeDB_transactor.sh - Shell script to launch FlureeDB.
-* flureeDB.jar - FlureeDB packaged into a JAR file. 
-* flureeDB.properties - File that specifies the customizeable FlureeDB properties. 
+* flureeDB_transactor.sh - Shell script to launch Fluree.
+* flureeDB.jar - Fluree packaged into a JAR file. 
+* flureeDB.properties - File that specifies the customizeable Fluree properties. 
 * Version - The version number.
 
 ### Setting the DB Configuration Options
@@ -113,13 +113,13 @@ The following are the properties that you can set in the flureeDB.properties fil
 
 Property | Options | Description   
 -- | -- | --
-fdb-mode | `dev` `query` `transactor` | Dev runs a standalone version of FlureeDB, which supports both queries and transaction. `Query` and `transactor` are for running FlureeDB as a query or transactor, respectively.
+fdb-mode | `dev` `query` `transactor` | Dev runs a standalone version of Fluree, which supports both queries and transaction. `Query` and `transactor` are for running Fluree as a query or transactor, respectively.
 fdb-license-key | `key` | (Optional) Required for enterprise version
 fdb-network | `string` | The name of the network the transactor group will operate in
 fdb-group-port | `int` | The communication port for the transactor group
-fdb-group-listen-addr | `ip address` | (Optional) Specify an ip address only if you want to bind listening to a specific IP address, otherwise FlureeDB will bind to: tcp://*:<fdb-group-port>
-fdb-group-transactors | `server`,`server`, etc | (Optional) A list of transactors that will participate in this transactor group. Include the protocool (tcp:// only supported currently), server name, and port. List multiple servers with comma separating them, i.e.: fdb-group-transactors=tcp://10.0.0.1:9790,tcp://10.0.0.2:9790,tcp://10.0.0.3:9790. Leave this field blank to run when running FlureeDB standalone.
-fdb-group-me | `server` | (Optional) "This" transactor must be in the list in fdb-group-transactors. Best practice is to pass this in as an environment variable. Leave this field blank to run when running FlureeDB standalone.
+fdb-group-listen-addr | `ip address` | (Optional) Specify an ip address only if you want to bind listening to a specific IP address, otherwise Fluree will bind to: tcp://*:<fdb-group-port>
+fdb-group-transactors | `server`,`server`, etc | (Optional) A list of transactors that will participate in this transactor group. Include the protocool (tcp:// only supported currently), server name, and port. List multiple servers with comma separating them, i.e.: fdb-group-transactors=tcp://10.0.0.1:9790,tcp://10.0.0.2:9790,tcp://10.0.0.3:9790. Leave this field blank to run when running Fluree standalone.
+fdb-group-me | `server` | (Optional) "This" transactor must be in the list in fdb-group-transactors. Best practice is to pass this in as an environment variable. Leave this field blank to run when running Fluree standalone.
 fdb-group-open-api | `boolean` | Set to true if a signature is not required in order to access [signed endpoints](#signed-endpoints).
 fdb-storage-type | `file` `memory` `none` `Cassandra` | This option specifies the common storage for blocks and index segments. `file` stores in file directory. `none` stores on-disk, `memory` stores in-memory only and will disappear on server stop, and `Cassandra` allows you to use Apache Cassandra. If you chose Cassandra, there are additional options below you need to specify. 
 fdb-storage-file-directory | `directory name` | (Optional) When using the `file` storage-type, this is the name of the file directory. 
@@ -138,13 +138,13 @@ fdb-storage-cassandra-table | `keyspace.table` | Always use `keyspace.table` for
 fdb-storage-cassandra-data-center | See Cassandra for options | 
 fdb-storage-cassandra-replicas | See Cassandra for options. | 
 
-### Launching FlureeDB
+### Launching Fluree
 
-Navigate to the directory where you downloaded FlureeDB in the terminal. The command to launch FlureeDB is:
+Navigate to the directory where you downloaded Fluree in the terminal. The command to launch Fluree is:
 
 `./flureeDB_transactor.sh` 
 
-When you launch FlureeDB for the first time or if you choose `none` as your `fdb-storage-type`, FlureeDB will create the following databases:
+When you launch Fluree for the first time or if you choose `none` as your `fdb-storage-type`, Fluree will create the following databases:
 
 1. Master Database with username: `master` and password: `fluree`
 2. Test Database with username: `test` and password: `fluree`
@@ -159,11 +159,11 @@ The password that you set for the master database, by default, is the same passw
 
 ### Launching Packaged UI
 
-If FlureeDB is running on `fdb-group-port` 8080, then there is a built-in user interface that can be accessed at `localhost:8080/index.html`.
+If Fluree is running on `fdb-group-port` 8080, then there is a built-in user interface that can be accessed at `localhost:8080/index.html`.
 
 ## QuickStart
 
-This quick start is designed to utilize the [FlureeDB interactive web console](https://flureedb.flur.ee). These transactions could also be performed via your code or REPL utilizing the JSON API, but that would require a token.
+This quick start is designed to utilize the [Fluree interactive web console](https://flureedb.flur.ee). These transactions could also be performed via your code or REPL utilizing the JSON API, but that would require a token.
 
 The first six topics in the Quick Start guide will show you how to query and transact using an already populated database. The next five topics will show you how to set up a brand new database. 
 
@@ -182,7 +182,7 @@ The first six topics in the Quick Start guide will show you how to query and tra
 11 | [Permissions Introduction](#permissions-introduction)
 
 ### Forking a Database
-To begin, log in to the [FlureeDB Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee) and click "Add Database" in the bottom left-hand side of the page. 
+To begin, log in to the [Fluree Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee) and click "Add Database" in the bottom left-hand side of the page. 
 
 When you create a new database, you have the option of starting from a blank database or forking a sample database. For this portion of the Quick Start, select "Movie Database" from the "Database Templates" options.
 
@@ -242,7 +242,7 @@ Your result will look similiar to this.
 }
 ```
 
-Although there are more than 1,000 actors, by default FlureeDB only returns 1,000 results, although this can be changed by setting the [limit options](#apidbquery).
+Although there are more than 1,000 actors, by default Fluree only returns 1,000 results, although this can be changed by setting the [limit options](#apidbquery).
 
 We can do the same thing for any other collection by just replacing "actor" with "movie" or "credit" for instance.
 
@@ -358,7 +358,7 @@ curl \
 
 ### Selecting A Specific Actor or Movie
 
-FlureeDB allows you to select a collection from an entire collection, much like our examples thus far, or you can also specify a single entity.
+Fluree allows you to select a collection from an entire collection, much like our examples thus far, or you can also specify a single entity.
 
 An single entity can be selected using any valid identity, which includes the unique _id long integer if you know it, or any unique attribute's name and value.
 
@@ -450,7 +450,7 @@ You can do the same thing by select a movie by its title, for example:
 ```
 
 ### Selecting All Actors From a Movie
-FlureeDB support unlimited recursion in our queries. As a graph database, any FlureeDB query can follow a chain of relationships across multiple collections (and back).
+Fluree support unlimited recursion in our queries. As a graph database, any Fluree query can follow a chain of relationships across multiple collections (and back).
 
 For instance, let's suppose that we want to get all the actors from the movie, "Pulp Fiction". We can select all the attributes from `["movie/title", "Pulp Fiction"]` using this query:
 
@@ -983,7 +983,7 @@ To follow along with this portion of the Quick Start guide, create a new databas
 
 Fluree schema consists of collections and attributes. These are similar to a relational database's tables and columns, however in Fluree both of these concepts are extended and more flexible. Collections organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new collection to hold it. Collections differ from tables in that they are an always-present collection of changes about those entities that can be queried at any point in time, not just the latest changes as a traditional database would do.
 
-Everything is data in FlureeDB. This includes the schemas, permissions, etc. that actually govern how it works. To add new collections we'll do a transaction the exact way we'd add any new data. Here we'll add our new collections and attributes in two separate transactions to explain what is happening, but they could be done in one.
+Everything is data in Fluree. This includes the schemas, permissions, etc. that actually govern how it works. To add new collections we'll do a transaction the exact way we'd add any new data. Here we'll add our new collections and attributes in two separate transactions to explain what is happening, but they could be done in one.
 
 This transaction adds three collections:
 
@@ -1488,7 +1488,7 @@ To accomplish this we need to do a few things:
 5. Assign the new role to the user(s).
 6. Execute commands with a token tied to the `_auth` record we create
 
-A token (which governs permissions) is tied to a specific `_auth` entity which can directly have roles assigned to it, or default roles can be assigned to a `_user` entity assuming the `_auth` entity is tied to a `_user` via the `_user/auth` attribute. An `_auth` entity can be independent, and is not required to be tied to a `_user`. Most applications we typically use don't work like this (but most cryptos do work like this). We'll get into different ways of leveraging authentication later, but public/private key cryptography is used, however this is abstracted away with hosted FlureeDB.
+A token (which governs permissions) is tied to a specific `_auth` entity which can directly have roles assigned to it, or default roles can be assigned to a `_user` entity assuming the `_auth` entity is tied to a `_user` via the `_user/auth` attribute. An `_auth` entity can be independent, and is not required to be tied to a `_user`. Most applications we typically use don't work like this (but most cryptos do work like this). We'll get into different ways of leveraging authentication later, but public/private key cryptography is used, however this is abstracted away with hosted Fluree.
 
 
 **>> Execute the example transaction to add a new attribute named `person/user` that allows a `ref` from any of our persons to a database user.**
@@ -1715,35 +1715,35 @@ mutation addUserAuth($myUserAuthTx: JSON){
 ```
 
 
-# Your App + FlureeDB
+# Your App + Fluree
 
 ## Overview
 
-Interacting with FlureeDB from your application can be done in one of three ways:
+Interacting with Fluree from your application can be done in one of three ways:
 
 1. The JSON API (i.e. FlureeQL)
 2. GraphQL
-3. An embeddable FlureeDB client (not yet in production)
+3. An embeddable Fluree client (not yet in production)
 
 For any of these methods, a valid token must be supplied with the database requests (queries, transactions, etc.). 
 
 Tokens are tied to a specific authorization record stored in the database and govern the permission of the requests. There are several ways to get a token which are subsequently explained.
 
-It is worth noting that transactions are signed using public/private key cryptography. The hosted FlureeDB abstracts this from your application so that a more common username/password authentication scheme can be utilized.
+It is worth noting that transactions are signed using public/private key cryptography. The hosted Fluree abstracts this from your application so that a more common username/password authentication scheme can be utilized.
 
 
 ## Getting Tokens
 
-Interacting with the hosted FlureeDB is done using secure tokens that have the authorization identity encoded directly in them. There are several ways to get tokens, and the method you choose is influenced by how you'd like to run FlureeDB.
+Interacting with the hosted Fluree is done using secure tokens that have the authorization identity encoded directly in them. There are several ways to get tokens, and the method you choose is influenced by how you'd like to run Fluree.
 
-**Interacting with FlureeDB only from your app server**
+**Interacting with Fluree only from your app server**
 
-FlureeDB can be run in a manner similar to a traditional database server, 'behind' your application server. If you choose to utilize it in this way, you simply need to generate a token with the permissions you desire (likely full access) and pass it to your application. You provide the token to your application like you would any secret, typically via an environment variable.
+Fluree can be run in a manner similar to a traditional database server, 'behind' your application server. If you choose to utilize it in this way, you simply need to generate a token with the permissions you desire (likely full access) and pass it to your application. You provide the token to your application like you would any secret, typically via an environment variable.
 
 To get a permanent admin token, follow these steps:
 
 1. Identify the authorization record (or create one) that you wish the token to utilize. A sample transaction is provided here if you need to create a new one. Note that, by default, all databases have a built-in `["_role/id", "root"]` role with access to everything inside a database.
-2. Generate a token tied to that authorization record either via the FlureeDB admin dashboard or via an API call
+2. Generate a token tied to that authorization record either via the Fluree admin dashboard or via an API call
 
 If you need to create an authorization record, see the example provided.
 
@@ -1861,12 +1861,12 @@ curl \
 }
 ```
 
-**Interacting with FlureeDB directly from your end-user apps**
+**Interacting with Fluree directly from your end-user apps**
 
-FlureeDB is also designed to interact directly with front-end apps/UIs via a set of permissions tied to individual users. The rules-based permissions will 'hide' any data the user is unable to view, and prevent unauthorized transactions. In this case, each user will need a unique token tied to them. There are two ways to generate these user-specific tokens:
+Fluree is also designed to interact directly with front-end apps/UIs via a set of permissions tied to individual users. The rules-based permissions will 'hide' any data the user is unable to view, and prevent unauthorized transactions. In this case, each user will need a unique token tied to them. There are two ways to generate these user-specific tokens:
 
 1. An API endpoint, `/api/db/token`, can generate tokens assuming the user generating the token has permission to do so for the given user / auth record. You can roll your own authentication logic within your app server, and once satisfied, use the API endpoint to generate the token and pass it to the client for subsequent use.
-2. For hosted FlureeDB, we provide an authentication service you can leverage if you like by having your end-user application POST username + password to the `/api/signin` JSON endpoint, and assuming successful authentication, a token will be returned. Additional options such as token expiration can also be provided. This service also handles password reset requests for you.
+2. For hosted Fluree, we provide an authentication service you can leverage if you like by having your end-user application POST username + password to the `/api/signin` JSON endpoint, and assuming successful authentication, a token will be returned. Additional options such as token expiration can also be provided. This service also handles password reset requests for you.
 
 
 
@@ -2233,10 +2233,10 @@ Key | Type | Description
 -- | -- | -- 
 `auth` | identity |  Required auth identity you wish this token to be tied to. Can be the `_id` integer of the auth record,  or any identity value such as `["_auth/id", "my_admin_auth_id"]`.
 `expireSeconds` | integer | Optional number of seconds until this token should expire. If not provided, token will never expire.
-`db` | string | Only required if using your master authorization token from FlureeDB (from your username/password to flureedb.flur.ee). So long as you are using a token from your own database, it will automatically use the database the token is coming from.
+`db` | string | Only required if using your master authorization token from Fluree (from your username/password to flureedb.flur.ee). So long as you are using a token from your own database, it will automatically use the database the token is coming from.
 
 
-If you are handling authentication for your application but still want users to connect directly to FlureeDB, your authentication code can utilize this endpoint to retrieve tokens on behalf of the user. The user can subsequently use this token to interact directly with FlureeDB from the respective application.
+If you are handling authentication for your application but still want users to connect directly to Fluree, your authentication code can utilize this endpoint to retrieve tokens on behalf of the user. The user can subsequently use this token to interact directly with Fluree from the respective application.
 
 In order to create a token, you must use a token that has the following permission:
 
@@ -2322,7 +2322,7 @@ Delete DB | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/delete-db`
 
 For example, if you are in the `test` network using the `test.one` database, you could post a query to the `/fdb/test/test.one/query` endpoint. For queries, the signature needs to be included in the Authorization header. For transactions, the signature can be included in the signature map. See [Signing Transactions](#signing-transactions).
 
-A signature is not required is the option `fdb-group-open-api` is set to true (default for the downloaded version of FlureeDB). Deleting and adding a database only works if `fdb-group-open-api` is set to true. 
+A signature is not required is the option `fdb-group-open-api` is set to true (default for the downloaded version of Fluree). Deleting and adding a database only works if `fdb-group-open-api` is set to true. 
 
 
 # Query
@@ -2333,9 +2333,9 @@ Fluree allows you to specify queries using the FlureeQL JSON syntax or with Grap
 
 Fluree has permissions embedded within the database itself, which has the effect that every database for every user is potentially customized and contains only data they can view. This capability allows more direct access to the database for front-end UIs or other applications, and means less time spent creating custom API endpoints that simply modify select statements based on who the user is. In addition, multiple apps can share the same database with security consistency.
 
-The graph selection capability of FlureeDB allows query results to be returned as a nested graph instead of 'flat' result sets. This aligns with how data is actually used in applications and makes it simpler to pass data around to various UI components, etc. This also means the role of a client database library is substantially reduced, and for many applications may be unnecessary.
+The graph selection capability of Fluree allows query results to be returned as a nested graph instead of 'flat' result sets. This aligns with how data is actually used in applications and makes it simpler to pass data around to various UI components, etc. This also means the role of a client database library is substantially reduced, and for many applications may be unnecessary.
 
-Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request which reduces round-trips for end-user applications. Both also support *time travel* queries, allowing you to issue any query at any point in history. Any place you might have written code or created extra tables to store a historical log of changes becomes unnecessary when using FlureeDB. It also gives your apps the ability to 'rewind' to any point in time.
+Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request which reduces round-trips for end-user applications. Both also support *time travel* queries, allowing you to issue any query at any point in history. Any place you might have written code or created extra tables to store a historical log of changes becomes unnecessary when using Fluree. It also gives your apps the ability to 'rewind' to any point in time.
 
 FlureeQL has two main approaches to creating queries that share much of the same syntax, we call these *Graph Queries* and *Analytical Queries*. Graph Queries closely resembles SQL but allows your results to 'crawl the graph' and return nested data sets. This approach is very simple and works well for most application-based queries. Analytical Queries enables concepts of logic programming embedded directly into the query. This allows very powerful query constructs and exposes analytical features like aggregates, and more. It is also simple, but the approach may not be familiar to those with SQL-only exposure. It is worth learning, and won't take long to get used to.
 
@@ -2638,7 +2638,7 @@ In order to also include the person details, we add to our select cause with a s
 
 As mentioned, these relationships can also be traversed in reverse. If instead of listing the person for every chat, what if we wanted to find all chats for a  person? Instead of selecting from `chat`, lets select from `person` and follow the same `chat/person` attribute but in the reverse direction. This query looks like: `{"select": ["*", {"chat/_person": ["*"]}], "from": "person"}`. Note the underscore `_` that was added to `chat/person`, making it instead `chat/_person`. This special syntax indicates the same relationship, but in reverse. You'll now see all people, with all their chat messages.
 
-For fun, you can add another sub-query to follow the chat message back to the person. Even though in this case it is redundant, and circular, FlureeDB exists happily in this paradox: `{"select": ["*", {"chat/_person": ["*", {"chat/person": ["*"]}]}], "from": "person"}`. Keep it going if you'd like.
+For fun, you can add another sub-query to follow the chat message back to the person. Even though in this case it is redundant, and circular, Fluree exists happily in this paradox: `{"select": ["*", {"chat/_person": ["*", {"chat/person": ["*"]}]}], "from": "person"}`. Keep it going if you'd like.
 
 #### Query for all chat messages, following reference to user that posted message.
 
@@ -2864,7 +2864,7 @@ The results will only return recursions for as long as their new information in 
 ### "from" syntax
 
 
-FlureeDB allows you select from:
+Fluree allows you select from:
 
 1. A collection name:
 
@@ -3042,7 +3042,7 @@ If we want to see a sample of size, 10, from all the favorite numbers in the dat
 While, it is possible to bind multiple variables in the where clause, i.e. `[ [["person/handle", "zsmith"], "person/favNums", "?nums1"], [["person/handle", "jdoe"], "person/favNums", "?nums2"] ]`, it is not currently possible to use multiple variables in a select clause. We are expanding this feature and will expand the documentation accordingly. 
 
 ## Fluree Block Queries
-FlureeDB allows you to select data from an entire block or block range. 
+Fluree allows you to select data from an entire block or block range. 
 
 To query a single block, you simply need to provide the block number. 
 ```{"block": 3}```
@@ -3253,9 +3253,9 @@ Fluree validates all Flakes being written against the database's schema, ensurin
 
 Defining and updating schemas is done through regular database transactions (in JSON) by writing to the special pre-defined system collections.
 
-FlureeDB attributes can be of many different types documented in the types table (i.e. string, boolean). Being a graph database, the special type of `ref` (reference) is core to traversing through data. Any attribute of type `ref` refers (links/joins) to another entity. These relationships can be navigated in both directions. For example, listing all invoices from a customer record is trivial if the invoice is of type `ref`, and once established an invoice automatically links back to the customer.
+Fluree attributes can be of many different types documented in the types table (i.e. string, boolean). Being a graph database, the special type of `ref` (reference) is core to traversing through data. Any attribute of type `ref` refers (links/joins) to another entity. These relationships can be navigated in both directions. For example, listing all invoices from a customer record is trivial if the invoice is of type `ref`, and once established an invoice automatically links back to the customer.
 
-Beyond validating types, FlureeDB allows custom validation that can further restrict attribute values. This level of validation is done by specifying an optional [`spec` for a collection or attribute](#collection-and-attribute-specs).
+Beyond validating types, Fluree allows custom validation that can further restrict attribute values. This level of validation is done by specifying an optional [`spec` for a collection or attribute](#collection-and-attribute-specs).
 
 ## Collections
 
@@ -4449,14 +4449,14 @@ Attribute | Type | Description
 `_auth/key` | `string` |  (optional) A unique lookup key for this auth record.
 `_auth/type` | `tag` | (optional) The type of authorization this is. Current type tags supported are: `password`. When a user uses the `/api/signin` endpoint, the password supplied will be compared to the auth entity containing the `password` type. If there isn't an auth entity of type `password`, the user will be unable to authenticate via that endpoint.
 `_auth/secret` | `string` | (optional) The hashed secret. When using this as a `password` `_auth/type`, it is the one-way encrypted password.
-`_auth/hashType` | `tag` | (optional) The type of hashing algorithm used on the `_auth/secret`. FlureeDB's API supports `scrypt`, `bcrypt` and `pbkdf2-sha256`.
+`_auth/hashType` | `tag` | (optional) The type of hashing algorithm used on the `_auth/secret`. Fluree's API supports `scrypt`, `bcrypt` and `pbkdf2-sha256`.
 `_auth/resetToken` | `string` | (optional) If the user is currently trying to reset a password/secret, an indexed reset token can be stored here allowing quick access to the specific auth record that is being reset. Once used, it is recommended to delete this value so it cannot be used again.
 `_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to use if authenticated via this auth record. If not provided, this `_auth` record will not be able to view or change anything in the database. 
 `_auth/authority` | `[ref]` | (optional) Authorities for this auth record. References another _auth record. Any auth records referenced in `_auth/authority` can sign a transaction in place of this auth record. To use and authority, you must include it in your transaction. See more in the [Authority](#authority) section. 
 
 ## Defining Rules
 
-Rules control the actual permissions and are stored in the special system collection `_rule`. Like all FlureeDB functionality, it is defined as data that you can transact as you would any data. 
+Rules control the actual permissions and are stored in the special system collection `_rule`. Like all Fluree functionality, it is defined as data that you can transact as you would any data. 
 
 ### Rule attributes
 
@@ -4709,15 +4709,15 @@ mutation addPeople ($myPeopleTx: JSON) {
 
 Another way to engage with us is to join the [Fluree Slack](https://launchpass.com/flureedb). The Slack is a place to stay up-to-date with company announcements, discuss features, and get support from the Fluree team or fellow developers using Fluree. 
 
-## FlureeDB Whitepaper
+## Fluree Whitepaper
 
-The [FlureeDB Whitepaper](https://flur.ee/assets/pdf/flureedb_whitepaper_v1.pdf) goes into depth about how FlureeDB works. 
+The [Fluree Whitepaper](https://flur.ee/assets/pdf/flureedb_whitepaper_v1.pdf) goes into depth about how Fluree works. 
 
 # Examples
 
 ## Cryptocurrency
 
-This example outlines how a user can create a simple cryptocurrency using FlureeDB. The user will be able to check their own balance and add to other users' balances. 
+This example outlines how a user can create a simple cryptocurrency using Fluree. The user will be able to check their own balance and add to other users' balances. 
 
 ### Schema
 

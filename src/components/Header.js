@@ -73,7 +73,7 @@ class Header extends React.Component {
                 <div className="col-md-4 col-sm-12">
                     <div className="row">
                         <LinkContainer to="/" onClick={() => this.setState({version: currentVersion})} style={{display: 'inline-block', height: "80px", margin: "12.5px 25px"}}>
-                            <img style={{height: "50px"}} alt="FlureeDB" src={require('../theme/assets/logo_horizontal_white.png')} />
+                            <img style={{height: "50px"}} alt="Fluree" src={require('../theme/assets/logo_horizontal_white.png')} />
                         </LinkContainer>
                         <div className="version-toggle" style={{display: 'inline-block', margin: "37.5px 0px"}}>
                             <DropdownButton

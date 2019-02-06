@@ -1,6 +1,6 @@
 ## Auth Records
 
-Auth records control identity in FlureeDB and can be tied to specific public-private key pairs. 
+Auth records control identity in Fluree and can be tied to specific public-private key pairs. 
 As mentioned in the previous section, once you have a public-private key-pair, you can generate an auth id by hashing the public key with SHA3-256 and then RIPEMD-160. You then need to add this auth id to the database. If it is not added to the database, any transactions signed with the relevant public key are invalid.
 
 Adding a new auth to the database, with an id derived from the public key:
@@ -17,11 +17,11 @@ Note: This is not necessary if `fdb-group-open-api` is set to true (which is the
 
 ### Authority
 
-Authority is a feature of FlureeDB that allows one entity, an authority, to act on behalf of another entity, an auth. This feature adds convenience at the expense of security, and should only be used if this trade-off is well understood. 
+Authority is a feature of Fluree that allows one entity, an authority, to act on behalf of another entity, an auth. This feature adds convenience at the expense of security, and should only be used if this trade-off is well understood. 
 
 Any given transaction can be signed by the `_auth` issuing that transaction (if they have a private key), or by another `_auth` that is listed in the original auth record's `_auth/authority`. 
 
-For example, a company may only want their IT team to have private keys. All other employees in the company can still transact with FlureeDB, but they do not have their own private keys. 
+For example, a company may only want their IT team to have private keys. All other employees in the company can still transact with Fluree, but they do not have their own private keys. 
 
 Let's say an employee, Alba, in the Finance Department want to issue a transaction. The IT team would first have to create an `_auth` for Alba and add the IT Team's auth record to the Alba's `_auth/authority`. 
 
@@ -54,4 +54,4 @@ Additionally, the rules that apply to whether the above transaction is valid is 
 
 Furthermore, there is no proof, other than the Authority's protocols that the person who issued the transactions is who they say they are. 
 
-Authorities can be a very useful tool to allow users of FlureeDB to issue transactions without maintaining private keys, but this approach is less secure and does not provide cryptographic proof that a particular individual issued a given transaction.
+Authorities can be a very useful tool to allow users of Fluree to issue transactions without maintaining private keys, but this approach is less secure and does not provide cryptographic proof that a particular individual issued a given transaction.

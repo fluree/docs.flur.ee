@@ -1,12 +1,12 @@
 ## Network Infrastructure
 
-This section is background on the infrastructure of each network in FlureeDB. This section isn't necessary for using FlureeDB, but will give you a deeper understanding of the how transactors and query engines work in FlureeDB, as well as how networks achieve consensus.
+This section is background on the infrastructure of each network in Fluree. This section isn't necessary for using Fluree, but will give you a deeper understanding of the how transactors and query engines work in Fluree, as well as how networks achieve consensus.
 
-To jump right in working with FlureeDB, you can go to the [Creating a Schema](/docs/basic-schema) section. 
+To jump right in working with Fluree, you can go to the [Creating a Schema](/docs/basic-schema) section. 
 
 ### Overview
 
-When running FlureeDB, you are typically running a single 'network' and you have a transactor group configured to operate that network. Each network can have millions of databases, and you can think of a network like a top-level domain name, i.e. .com, .net, .org. it is the most coarse type of segmentation available in Fluree.
+When running Fluree, you are typically running a single 'network' and you have a transactor group configured to operate that network. Each network can have millions of databases, and you can think of a network like a top-level domain name, i.e. .com, .net, .org. it is the most coarse type of segmentation available in Fluree.
 
 ### Benefits of Different Server Types
 
@@ -34,7 +34,7 @@ To meet slightly different goals, we have two flavors of query engines. The main
 
 The second flavor is lighter-weight and we call it a query 'client'. The client is designed to run in-process in the client tier and will be available in JavaScript. This allows it to run embedded in your web apps, web sites, as well as the JavaScript engines in iOS/Android for your mobile apps. A query client is typically talking to a single database as a single user, and getting streamed only the permissioned updates that pertain to what the user is looking at through our built-in query introspection. Your apps get new features, essentially for ‘free’, of real-time updates, rewind/time-travel and a development pattern that greatly simplifies client app development. 
 
-For framework users, we will be offering a React wrapper and intend to release an Angular wrapper along with others. Reactive extensions can be used, but are essentially rendered redundant and unnecessary by FlureeDB, which just 'handles it' transparently for you.
+For framework users, we will be offering a React wrapper and intend to release an Angular wrapper along with others. Reactive extensions can be used, but are essentially rendered redundant and unnecessary by Fluree, which just 'handles it' transparently for you.
 
 ### Transactors and Transactor Groups
 
@@ -42,7 +42,7 @@ The transactor server type handles updates. You can run a single server or set o
 
 ### Consensus Algorithms
 
-If running FlureeDB in a decentralized manner, you need to choose a consensus algorithm. The consensus algorithm determines how each node in your network agrees upon a series of states (blocks). 
+If running Fluree in a decentralized manner, you need to choose a consensus algorithm. The consensus algorithm determines how each node in your network agrees upon a series of states (blocks). 
 
 The consensus algorithm for a network is specified in each database in the `_setting/consensus` predicate. 
 

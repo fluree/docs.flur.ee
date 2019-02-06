@@ -18,7 +18,7 @@ Predicate | Type | Description
 
 ### Creating Collections
 
-Creating collections is done in the same way as creating any other type of subject in the database. In the below example, we create four new collections: person, chat, comment, and artist. We strongly discourage adding smart functions to your `_collection/spec` when you initially create a collection. If you would like a `_collection/spec`, you should follow [FlureeDB Best Practices](/docs/infrastructure/application-best-practices) and read the [Smart Functions](/docs/smart-functions/smart-functions) section in full to understand how to incorporate smart functions into your schema. 
+Creating collections is done in the same way as creating any other type of subject in the database. In the below example, we create four new collections: person, chat, comment, and artist. We strongly discourage adding smart functions to your `_collection/spec` when you initially create a collection. If you would like a `_collection/spec`, you should follow [Fluree Best Practices](/docs/infrastructure/application-best-practices) and read the [Smart Functions](/docs/smart-functions/smart-functions) section in full to understand how to incorporate smart functions into your schema. 
 
 ```flureeql
 [{
@@ -246,7 +246,7 @@ The default features of `_collection` name are:
   "_predicate/doc": "Schema collection name",
   "_predicate/type": "string",
   "_predicate/unique": true,
-  "_id": 40             // id depends on FlureeDB version
+  "_id": 40             // id depends on Fluree version
 }
 ```
 

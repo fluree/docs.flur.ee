@@ -76,7 +76,7 @@ class LearnHomePage extends React.Component {
                             <div className="lesson-square-header">
                             Basics: API</div>
                             <div className="lesson-square-description">
-                            Make requests to API endpoints in FlureeDB.</div>
+                            Make requests to API endpoints in Fluree.</div>
                         </div>
                     </LinkContainer>
                 </div>
@@ -89,7 +89,7 @@ class LearnHomePage extends React.Component {
                             <div className="lesson-square-header">
                             Basics: Infrastructure</div>
                             <div className="lesson-square-description">
-                           Understand flakes, triples, and general FlureeDB infrastructure.</div>
+                           Understand flakes, triples, and general Fluree infrastructure.</div>
                         </div>
                     </LinkContainer>
                 </div>
@@ -146,7 +146,7 @@ class LearnHomePage extends React.Component {
                             <div className="lesson-square-header">
                             Intermediate: Cryptography</div>
                             <div className="lesson-square-description">
-                            Learn about the cryptography behind FlureeDB. 
+                            Learn about the cryptography behind Fluree. 
                             </div>
                         </div>
                     </LinkContainer>

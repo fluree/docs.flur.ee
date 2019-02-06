@@ -118,84 +118,105 @@ Body: "SELECT ?chat ?message ?person ?instant ?comments
  }"
 ```
 
-### `/api/db/token`
+### `/api/dbs`
 
-The token endpoint allows new tokens to be generated on behalf of users. For more information on how tokens work, see [Getting Tokens](/api/hosted-endpoints/getting-tokens).
+To view all the databases attached to a particular account, you can either send the following as a GET request or a POST request with an empty body. 
 
-Post a JSON map/object containing the following keys:
+```
+Action: POST or GET
+Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/dbs
+Headers: {"Authorization": "Bearer [TOKEN]"}
+Body: { }
+```
 
-Key | Type | Description
--- | -- | -- 
-`auth` | id |  Auth id you wish this token to be tied to. Can be the `_id` integer of the auth record,  or any unique two-tuple such as `["_auth/id", "my_admin_auth_id"]`.
-`expireSeconds` | integer | Optional number of seconds until this token should expire. If not provided, token will never expire. If, `root` is `true`, then `expireSeconds` needs to be 3599 or less. 
-`db` | string | Only required if using your master authorization token from FlureeDB (from your username/password to flureedb.flur.ee). So long as you are using a token from your own database, it will automatically use the database the token is coming from.
-`root` | boolean | If you do not specify an auth in your request, you can specify root is `true` to get a token with root access. 
+### `/api/action` - New Database
 
-You can get a token for your databases using either a token from the master db (what you get from `/api/db/signin` or from one of your databases. 
-
-An example using the token from `/api/db/signin` as [MASTER  TOKEN]: 
+To create a new database, send the following request to `api/action`. Your `db/id` should begin with your account name and a forward slash, followed by a database name (any combination of letters and numbers).
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNT NAME].beta.flur.ee/api/db/token
-Headers: {"Authorization": "Bearer [MASTER TOKEN]"}
-Body: {
-  "root": true,
-  "expireSeconds": 3599
-  "db": "[ACCOUNT].[DBNAME]"
-}
+Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/action
+Headers: {"Authorization": "Bearer [TOKEN]"}
+Body: ["new-db", {
+  "db/id": [NETWORK NAME]/[DATABASE NAME]
+ }]
 ```
 
-An example using a token from the database (i.e. the token from the above request):
+
+### `/api/action` - New User
+
+To create a new user, send the following request to `api/action`. 
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNT NAME].beta.flur.ee/api/db/token
-Headers: {"Authorization": "Bearer [DB TOKEN]"}
-Body: {
-  "root": true,
-  "expireSeconds": 3599
-}
+Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/action
+Headers: {"Authorization": "Bearer [TOKEN]"}
+Body: ["new-user", {
+  "db/id": [NETWORK NAME]/[DATABASE NAME]
+ }]
 ```
-As you can see, if you are already using a token from a given database, you don't need to specify the database name. 
 
+### `/api/action` - Archive Database
 
-### `/api/action` (Logs)
+Not yet supported.
+
+### `/api/fdb/logs/[account]`
 
 To retrieve the logs for a given database, you would post an array where the first item is "logs", and the second item is a JSON map/object containing the following keys:
 
 Key | Type | Description
 -- | -- | --
-`db` | database name | Required. Should be the `[ACCOUNT NAME].[DBNAME]`
+`db` | Database name | Required. Should be `[ACCOUNT NAME]/[DBNAME]`
 `limit` | `int` | (optional) Number of logs to retrieve
-`after` | | 
-`before` | | 
+`status` | `ok` or `error` | To view just successful requests or just errors, specify `status`. 
 
 
-You should use the token associated with the master database (as in, the token you receive from `/api/db/signin`).
+
+<!-- `operation` | | 
+`from` | |  -->
 
 For example, to get the 25 most recent logs from `example.default`:
 
 ```
 Action: POST
-Endpoint: https://example.beta.flur.ee/api/db/logs
+Endpoint: https://example.beta.flur.ee/api/fdb/logs/example
 Headers: {"Authorization": "Bearer [MASTER TOKEN]"}
 Body: ["logs",{"db":"example.default","limit": 25}]
+```
+
+### `/api/accounts`
+
+To view all the accounts associated with a particular username and password, you can send a GET request with a token in the header, like below:
+
+```
+Action: GET
+Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/accounts
+Headers: {"Authorization": "Bearer [TOKEN]"}
+```
+
+Alternatively, you can send a POST request with the username and password and NO token:
+
+```
+Action: POST
+Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/accounts
+Headers: {"Authorization": "Bearer [TOKEN]"}
+Body: {
+  "user": ["_user/username", "YOUR EMAIL"],
+  "password": "YOUR PASSWORD"
+}
 ```
 
 ### `/api/db/signin`
 
 This is a POST request issued to `https://f.beta.flur.ee/api/db/signin`, and it does not require a token. 
 
-This endpoint will return a token for the master database. You will not be able to issue queries or transactions to any of the databases in your account using this token. This token will allow you to query and transaction the **master database** only, which means you will be able to see information about your account and your databases. 
-
-Most usefully, this token will allow you to issue tokens for any databases within your account. 
+This endpoint will return a token for your account. You will be able to issue queries or transactions to all of the databases in your account using this token. 
 
 Post a JSON map/object containing the following keys:
 
 Key | Type | Description
 -- | -- | --
-`db` | `f.master` | Required. You must use `f.master`. 
+`account` | string | Required. Your account name. Send a request to `/api/accounts` if you don't know the names of your accounts. 
 `user` | idsubject | The user idsubject you are logging in with. This can be the `_id` integer of the user record, or any idsubject value, such as `["_user/username", "my_username"]`.
 `password` | string | Your password
 
@@ -206,5 +227,29 @@ Body: {
   "user": ["_user/username", "YOUR EMAIL"],
   "password": "YOUR PASSWORD",
   "db": "f.master"
+}
+```
+
+### `/api/db/reset-pw`
+
+Submit a request to `api/db/reset-pw` to get a reset token emailed to your email. The email must be a valid username for an account. 
+
+```
+Action: POST
+Endpoint: https://f.beta.flur.ee/api/db/reset-pw
+Body: {
+  "username": "YOUR EMAIL"
+}
+```
+
+### `/api/db/new-pw`
+
+After you receive a reset token in your email, you can set a new password by specifying the reset token and new password. 
+```
+Action: POST
+Endpoint: https://f.beta.flur.ee/api/db/new-pw
+Body: {
+  "password": "NEW PASSWORD",
+  "resetToken": "RESET TOKEN"
 }
 ```

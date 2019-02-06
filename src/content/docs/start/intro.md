@@ -1,7 +1,7 @@
 ## Intro to Fluree Docs
 
-### What is FlureeDB?
-FlureeDB is an immutable, time-ordered blockchain database. 
+### What is Fluree?
+Fluree is an immutable, time-ordered blockchain database. 
 
 Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
 
@@ -10,24 +10,24 @@ Each block is an atomic update that is cryptographically signed to prevent tampe
 
 You can run Fluree privately or as part of a federated network.  
 
-A private FlureeDB is a database run on a single server, either by you or hosted for you by Fluree. A private FlureeDB gives you access to features such as time-travel queries and rich permission logic.
+A private Fluree is a database run on a single server, either by you or hosted for you by Fluree. A private Fluree gives you access to features such as time-travel queries and rich permission logic.
 
-A federated FlureeDB is a group of databases shared by network. In addition to all the features of a private instance of FlureeDB, having a federated group of databases provides additional data integrity. With a federated blockchain, the network uses an agreed-upon consensus algorithm to reach a shared state.  
+A federated Fluree is a group of databases shared by network. In addition to all the features of a private instance of Fluree, having a federated group of databases provides additional data integrity. With a federated blockchain, the network uses an agreed-upon consensus algorithm to reach a shared state.  
 
 You can find more in-depth information about both invididual [datasebase infrastructure](/docs/infrastructure/db-infrastructure) and [network infrastructure](/docs/infrastructure/network-infrastructure) in later sections. 
 
-This documentation covers all the information you need in order to run either a private or federated version of FlureeDB. 
+This documentation covers all the information you need in order to run either a private or federated version of Fluree. 
 
 ### How Can I Get Started?
 
-There are three main options to start learning about FlureeDB:
+There are three main options to start learning about Fluree:
 
 - Documentation
 - [Guided Lessons](/lesson)
 - [Videos](/video)
 
 #### Documentation
-This documentation is the most comprehensize source of information on FlureeDB.
+This documentation is the most comprehensize source of information on Fluree.
 
 To view the documentation examples in different languages, you can toggle the language options in the sidebar on the top right. In that same sidebar, you can also jump to other sections.
 
@@ -36,10 +36,10 @@ To view the documentation examples in different languages, you can toggle the la
 </p>
 
 #### Guided Lessons
-The [Guided Lessons](/lesson) on this site guides you through key concepts in FlureeDB and let you try queries and transaction directly from this site. While the lessons are a good introduction, they are not comprehensive. It is a good idea to work through the lessons and then reference the docs for any additional information you need. 
+The [Guided Lessons](/lesson) on this site guides you through key concepts in Fluree and let you try queries and transaction directly from this site. While the lessons are a good introduction, they are not comprehensive. It is a good idea to work through the lessons and then reference the docs for any additional information you need. 
 
 #### Videos
-The [Videos](/video) on this site show screen captures of how-to-use FlureeDB combined with relevant narration (we are working on closed caption and video transcripts as well).
+The [Videos](/video) on this site show screen captures of how-to-use Fluree combined with relevant narration (we are working on closed caption and video transcripts as well).
 The videos are not comprehensive, but are a good reference for particular topics. 
 
 ### Where Can I Get Help?

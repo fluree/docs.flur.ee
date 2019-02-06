@@ -2,7 +2,7 @@
 
 Schema predicates are similar to relational database columns, however there are fewer restrictions (any predicate can be attached to any subject, unless a restriction is put in place using a spec).
 
-Remember that FlureeDB schema are stored in the database in the same way as any other type of information. This means that because `_predicate` is a type of thing in our database, there is a `_predicate` collection (similar to a relational database table). Furthermore, the `_predicate` collection has its own predicates. 
+Remember that Fluree schema are stored in the database in the same way as any other type of information. This means that because `_predicate` is a type of thing in our database, there is a `_predicate` collection (similar to a relational database table). Furthermore, the `_predicate` collection has its own predicates. 
 
 ### _predicate Predicates
 
@@ -55,7 +55,7 @@ Notice there is no `array` type. If you want a predicate to have multiple object
 
 In order to create a predicate, you only need to specify what type of subject you are creating (`_predicate`), a name, and a type. The name for a predicate should be name-spaced with the relevant collection (as in all predicates in the `person` collection should begin with `person/`). There are also a host of other [predicate predicates](#_predicate-predicates), which are listed in the linked section, but they are not required. 
 
-If you would like a `_predicate/spec`, you should follow [FlureeDB Best Practices](/docs/infrastructure/application-best-practices) and read the [Smart Functions](/docs/smart-functions/smart-functions) section in full to understand how to incorporate smart functions into your schema. 
+If you would like a `_predicate/spec`, you should follow [Fluree Best Practices](/docs/infrastructure/application-best-practices) and read the [Smart Functions](/docs/smart-functions/smart-functions) section in full to understand how to incorporate smart functions into your schema. 
 
 ```flureeql
 [{
@@ -277,7 +277,7 @@ The default features of `_predicate/name` are:
   "_predicate/doc": "Predicate name",
   "_predicate/type": "string",
   "_predicate/unique": true,
-  "_id": 10             // id depends on FlureeDB version
+  "_id": 10             // id depends on Fluree version
 }
 ```
 

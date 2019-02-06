@@ -50,7 +50,7 @@ const apiNav = {
     }
 }
 
-const endpoints = [ "block", "graphql", "history", "multi-query", "query", "signin", "sparql", "token", "transact"] 
+const endpoints = [ "block", "graphql", "history", "multi-query", "query", "signin", "sparql", "transact"] 
 
 class API extends React.Component {
     state = {
@@ -262,7 +262,7 @@ class APITest extends React.Component {
                                 <ControlLabel>DBID</ControlLabel>
                                 <FormControl
                                     type="text"
-                                    placeholder="$network"
+                                    placeholder="test"
                                     value={dbid}
                                     onChange={(e) => this.setState({dbid: e.target.value})}>
                                     </FormControl>

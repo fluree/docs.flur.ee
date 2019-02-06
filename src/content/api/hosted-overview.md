@@ -1,6 +1,6 @@
 ## Overview
 
-Hosted endpoints can only be used in the hosted versions of FlureeDB. All requests should be POST requests. The signed endpoints are below, and they are all structured as follows:
+Hosted endpoints can only be used in the hosted versions of Fluree. All requests should be POST requests. The signed endpoints are below, and they are all structured as follows:
 
 `https://[ACCOUNTNAME].beta.flur.ee/[ENDPOINT]`.
 
@@ -18,14 +18,16 @@ Transact | `/api/db/transact` | Transactions in FlureeQL syntax
 GraphQL | `/api/db/graphql` | Queries or transactions in GraphQL syntax, as a string
 SPARQL | `/api/db/sparql` | Queries in SPARQL syntax, as a string
 Dbs | `/api/dbs` | Get all of the databases for an account.
-Accounts | `/api/action` | Get all of the accounts for a given username and password.
-Logs | `/api/fdb/logs/[network]` | Retrieve the logs for a given database. Syntax in [Examples](/api/hosted-endpoints/hosted-examples)
+Actions | `/api/action` | Actions, such as a a new database, a new user, or archiving a database (not yet supported).
+Logs | `/api/fdb/logs/[account]` | Retrieve the logs for a given database. Syntax in [Examples](/api/hosted-endpoints/hosted-examples)
 
 The following endpoints do not require a token in the header:
 
 Action | Endpoint | Explanation 
 -- | -- | --
+Accounts | `/api/accounts` | Get all of the account associated with a particular account.
 Signin | `/api/signin` | Retrieve a token for your account for the master database. Syntax in [Getting Tokens](/api/hosted-endpoints/getting-tokens) and [Examples](/api/hosted-endpoints/hosted-examples)
 Reset Password | `/api/reset-pw` | Sends a reset-token to your email, so that you can reset your password.
 New Password | `/api/new-pw` | Given a reset token, allows you to reset your password. 
-Activate Account | `/api/activate-account` | Given a token (emailed to you after signing up), can activate new account. 
+
+Each account in the hosted environment is its own network.

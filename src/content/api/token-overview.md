@@ -5,19 +5,19 @@ TOKEN
 
 Tokens are tied to a specific authorization record stored in the database and govern the permission of the requests. There are several ways to get a token which are subsequently explained.
 
-It is worth noting that transactions are signed using public/private key cryptography. The hosted FlureeDB abstracts this from your application so that a more common username/password authentication scheme can be utilized.
+It is worth noting that transactions are signed using public/private key cryptography. The hosted Fluree abstracts this from your application so that a more common username/password authentication scheme can be utilized.
 
 
-Interacting with the hosted FlureeDB is done using secure tokens that have the authorization idsubject encoded directly in them. There are several ways to get tokens, and the method you choose is influenced by how you'd like to run FlureeDB.
+Interacting with the hosted Fluree is done using secure tokens that have the authorization idsubject encoded directly in them. There are several ways to get tokens, and the method you choose is influenced by how you'd like to run Fluree.
 
-**Interacting with FlureeDB only from your app server**
+**Interacting with Fluree only from your app server**
 
-FlureeDB can be run in a manner similar to a traditional database server, 'behind' your application server. If you choose to utilize it in this way, you simply need to generate a token with the permissions you desire (likely full access) and pass it to your application. You provide the token to your application like you would any secret, typically via an environment variable.
+Fluree can be run in a manner similar to a traditional database server, 'behind' your application server. If you choose to utilize it in this way, you simply need to generate a token with the permissions you desire (likely full access) and pass it to your application. You provide the token to your application like you would any secret, typically via an environment variable.
 
 To get a permanent admin token, follow these steps:
 
 1. Identify the authorization record (or create one) that you wish the token to utilize. A sample transaction is provided here if you need to create a new one. Note that, by default, all databases have a built-in `["_role/id", "root"]` role with access to everything inside a database.
-2. Generate a token tied to that authorization record either via the FlureeDB admin dashboard or via an API call
+2. Generate a token tied to that authorization record either via the Fluree admin dashboard or via an API call
 
 If you need to create an authorization record, see the example provided.
 

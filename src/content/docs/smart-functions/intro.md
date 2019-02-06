@@ -1,6 +1,6 @@
 ## Smart Functions
 
-Smart functions are the engine for setting permissions in FlureeDB. This section details the role of smart functions and lists all of the built-in smart functions. We also have a <a href="https://github.com/fluree/smart-function-library" target="_blank">Github repo</a> with basic smart functions you can add to your applications.
+Smart functions are the engine for setting permissions in Fluree. This section details the role of smart functions and lists all of the built-in smart functions. We also have a <a href="https://github.com/fluree/smart-function-library" target="_blank">Github repo</a> with basic smart functions you can add to your applications.
 
 ### Role of Smart Functions
 
@@ -37,7 +37,7 @@ Clojure is the only language that is currently supported for writing smart funct
 
 The below functions are available for any smart functions, regardless of where those smart functions are deployed (i.e. `_predicate/spec` versus `_rule/fns`). In addition, `true` and `false` are valid keywords in your function code.
 
-Note: Each function accrues a certain amount of [fuel](/docs/infrastructure/db-infrastructure#fuel). Fuel is used to limit usage in the hosted version of FlureeDB.
+Note: Each function accrues a certain amount of [fuel](/docs/infrastructure/db-infrastructure#fuel). Fuel is used to limit usage in the hosted version of Fluree.
 
 Function | Arguments | Example | Description | Cost (in fuel)
 -- | -- | -- | -- | -- 

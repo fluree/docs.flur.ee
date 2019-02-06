@@ -8,7 +8,7 @@ export const LessonAmount = {
     "bg-query2": 6,
     "bg-schema": 7,
     "bg-transact": 9,
-    "bg-api": 7,
+    "bg-api": 6,
     "bg-infra": 7,
     "im-query": 10,
     "im-smart-functions": 11,

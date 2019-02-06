@@ -19,7 +19,7 @@ export default {
     "5": "True! They are immutable ",
     "6": ["1. C", "2. False! The first block", "is flakes, like all",
 "other information in a ",
-"FlureeDB"],
+"Fluree"],
     "7": ["@}}>-----", 
 "A rose to celebrate your victory"]
 }

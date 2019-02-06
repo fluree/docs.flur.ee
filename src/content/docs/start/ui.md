@@ -1,6 +1,6 @@
 ## User Interface
 
-If you are using the hosted version of FlureeDB, the interface is located at <https://flureedb.flur.ee>. 
+If you are using the hosted version of Fluree, the interface is located at <https://flureedb.flur.ee>. 
 
 In the hosted version, the interace is at `http://localhost:[PORT]`. If you did not change your port configuration, this will be port <http://localhost:8080>.
 
@@ -8,7 +8,7 @@ Note: There are slight differences in the appearance in the user interface depen
 
 ### Log-In and Switching Accounts
 
-On the hosted version of FlureeDB or in earlier downloadable versions of Fluree, you will first have to log in first. There is an option to reset your password if needed.
+On the hosted version of Fluree or in earlier downloadable versions of Fluree, you will first have to log in first. There is an option to reset your password if needed.
 
 If your email is attached to more than one account, you will be asked to choose the relevant account. You can always switch account by clicking on your account circle in the top right of the user interface and clicking "Switch Accounts". This isn't an option unless you belong to more than one account. 
 
@@ -18,7 +18,7 @@ If your email is attached to more than one account, you will be asked to choose 
 
 ### Configure
 
-On later downloadable versions of FlureeDB, there is no built-in username and password. When you go to the interface, you will need to specify a network, master database, and port.
+On later downloadable versions of Fluree, there is no built-in username and password. When you go to the interface, you will need to specify a network, master database, and port.
 
 <p class="text-center">
 <img  style="height: 400px; width: 650px"  src="https://s3.amazonaws.com/fluree-docs/config_options.png" alt="Form with the heading, 'Config Settings', and three fields: 'network', 'master database', and 'port'.">
@@ -30,10 +30,10 @@ The account page lists all the databases in your account. You have the option to
 
 In the hosted version and older downloadable versions, you will also be able to see all the users in your account, as well as to add, and remove users. 
 
-When you create a new database or new user, you will have to refresh the UI in order to have those database or users appear in the sidebar. 
+When you create a new database or new user, you may have to refresh the UI in order to have those database or users appear in the sidebar. 
 
 ### Sidebar
-In the sidebar, you can select the database you want to use. The hosted and earlier downloadable versions of FlureeDB also allow you to select a particular user. 
+In the sidebar, you can select the database you want to use. Earlier downloadable versions of Fluree also allow you to select a particular user. 
 
 Use the sidebar to navigate to different pages in user interface. 
 
@@ -43,7 +43,7 @@ Use the sidebar to navigate to different pages in user interface.
 
 ### FlureeQL
 
-The FlureeQL page allows you to issue FlureeQL style queries and transactions. Note that you need to specify whether you are issuing a query or transaction. In later versions of FlureeDB, you will also need to specify the type of query. 
+The FlureeQL page allows you to issue FlureeQL style queries and transactions. Note that you need to specify whether you are issuing a query or transaction. In later versions of Fluree, you will also need to specify the type of query. 
 
 In later versions of the UI, you will have the option to sign your transactions as different auth records.
 

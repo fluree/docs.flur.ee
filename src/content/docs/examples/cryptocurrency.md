@@ -1,6 +1,6 @@
 ## Cryptocurrency
 
-This example outlines how a user can create a simple cryptocurrency using FlureeDB. The user will be able to check their own balance and add to other users' balances. 
+This example outlines how a user can create a simple cryptocurrency using Fluree. The user will be able to check their own balance and add to other users' balances. 
 
 ### Create a Schema
 

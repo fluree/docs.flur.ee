@@ -8,6 +8,10 @@ If you are using the user interface, you can issue all of the code on this page 
 
 If you are using the API, you can issue all these transactions to endpoints ending with `/transact`. 
 
+### New Database
+
+Make sure that you have a new database. You can either create a new database through the [user interface](/docs/getting-started/user-interface#account-page), through the API for the [downloadable version](/api/signed-endpoints/signed-examples#-new-db), or through the API for the [hosted version](/api/hosted-endpoints/hosted-examples#-api-action-new-database). 
+
 ### Overview
 
 In Fluree, schema are comprised of collections and predicates. A [collection](/docs/schema/overview#collections) is analogous to a relational database table. Every time you want a new type of item in your database, you would create a new collection. For example, collections in your database might be person, company, and city. 

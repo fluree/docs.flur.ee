@@ -8,15 +8,15 @@ For example, a user can be connected to a rule regarding the `person` collection
 
 - If at least one of the smart functions returns false, then the transaction is rejected, or, in the case of a query, the results are returned without `person/handle`. 
 
-This section goes into detail on the user-auth-role-rule structure. The [next section on Identity](/docs/identity) goes into how rules are connected to identity in FlureeDB, as well as the role of public and private keys.
+This section goes into detail on the user-auth-role-rule structure. The [next section on Identity](/docs/identity) goes into how rules are connected to identity in Fluree, as well as the role of public and private keys.
 
 ### Rules Usage
 
-Predicate and collection specs apply exclusively to transactions, and are universal for everyone in the database. Rules, as explained above, can be used for queries as well as transactions. Rules can control what end users* in a database see and do. They cannot control what a node-operator or administrator of a hosted FlureeDB database can see, but they can control what those individual can do (transact). Anyone who is running their own node in FlureeDB, or who is the administrator of a hosted FlureeDB database, always has full access to **view** any item in any database in their network. 
+Predicate and collection specs apply exclusively to transactions, and are universal for everyone in the database. Rules, as explained above, can be used for queries as well as transactions. Rules can control what end users* in a database see and do. They cannot control what a node-operator or administrator of a hosted Fluree database can see, but they can control what those individual can do (transact). Anyone who is running their own node in Fluree, or who is the administrator of a hosted Fluree database, always has full access to **view** any item in any database in their network. 
 
 When an end user connects to a database, effectively their database is custom to them (and their requested point in time). Any data they do not have access to doesn't exist in their database. This means you can give direct access to the database to any user, and they can run ad-hoc queries without concern that data might be leaked. This is a very powerful concept that can drastically simplify end-user applications.
 
-For example, if a supply chain is running a federated FlureeDB, database administrators who manage each supply chain member's transactor group will have root access to view all databases. Individuals within each company, however, can all have direct access to the database. Those individuals however, will effectively see different databases, depending on their permissions.
+For example, if a supply chain is running a federated Fluree, database administrators who manage each supply chain member's transactor group will have root access to view all databases. Individuals within each company, however, can all have direct access to the database. Those individuals however, will effectively see different databases, depending on their permissions.
 
 Rules are useful for the following purposes:
 
@@ -40,7 +40,7 @@ Individual permissions, such as read and write access to a collection, are encod
     <img src="https://s3.amazonaws.com/fluree-docs/roleChatUser.svg" alt="Diagram shows a role, chatUser, that is comprised of three rules: read access for all chats and people, as well as read and write access for own chats.">
 </p>
 
-Another role, dbAdmin might include read and write access to all users, as well as token issuing permissions (tokens are only relevant to the hosted FlureeDB).
+Another role, dbAdmin might include read and write access to all users, as well as token issuing permissions (tokens are only relevant to the hosted Fluree).
 
 <p class="text-center">
     <img src="https://s3.amazonaws.com/fluree-docs/roleDbAdmin.svg" alt="Diagram shows a role, dbAdmin, that is comprised of two rules: read and write access for all users and the ability to generate and revoke tokens.">
@@ -94,7 +94,7 @@ Predicate | Type | Description
 `_auth/resetToken` | `string` | (optional) If the user is currently trying to reset a password/secret, an indexed reset token can be stored here allowing quick access to the specific auth record that is being reset. This predicate is not used anywhere in the database, but you can create an application using logins and passwords with the help of this predicate. 
 `_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to use if authenticated via this auth record. If not provided, this `_auth` record will not be able to view or change anything in the database. 
 `_auth/authority` | `[ref]` | (optional) Authorities for this auth record. References another _auth record. Any auth records referenced in `_auth/authority` can sign a transaction in place of this auth record. To use an authority, you must sign your transaction using the authority's auth record. See more about signing transactions and authorities in the [Signed Transactions](/api/signed-endpoints/signatures#signed-transactions) section. 
-`_auth/fuel` | `long` | Fuel this auth record has. [Fuel](/docs/infrastructure/db-infrastructure#fuel) is used to meter usage in the hosted version of FlureeDB, but an application can use this predicate to meter fuel usage in the downloadable version as well. 
+`_auth/fuel` | `long` | Fuel this auth record has. [Fuel](/docs/infrastructure/db-infrastructure#fuel) is used to meter usage in the hosted version of Fluree, but an application can use this predicate to meter fuel usage in the downloadable version as well. 
 
 ### Roles
 
@@ -118,7 +118,7 @@ Predicate | Type | Description
 
 ### Rule Predicates
 
-Rules control the actual permissions and are stored in the special system collection `_rule`. Like all FlureeDB functionality, it is defined as data that you can transact as you would any data. 
+Rules control the actual permissions and are stored in the special system collection `_rule`. Like all Fluree functionality, it is defined as data that you can transact as you would any data. 
 
 Predicate | Type | Description
 -- | -- | -- 

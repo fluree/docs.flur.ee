@@ -255,7 +255,7 @@ A POST request to `/fdb/sub` handles subscriptions. More documentation on this f
 
 A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/docs/identity/public-private-keys).
 
-#### /dbs
+### /dbs
 
 A POST request with an empty object or a GET request to `/fdb/dbs` returns all the dbs in the transactor group.
 

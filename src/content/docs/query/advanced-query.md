@@ -118,7 +118,7 @@ In FlureeQl and SPARQL, note the underscore `_` that was added to `chat/person`,
 
 This special syntax indicates the same relationship, but in reverse. You'll now see all people, with all their chat messages.
 
-For fun, you can add another sub-query to follow the chat message back to the person. Even though in this case it is redundant, and circular, FlureeDB exists happily in this paradox: 
+For fun, you can add another sub-query to follow the chat message back to the person. Even though in this case it is redundant, and circular, Fluree exists happily in this paradox: 
 
 
 ```flureeql

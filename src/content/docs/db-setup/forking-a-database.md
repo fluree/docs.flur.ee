@@ -1,11 +1,13 @@
 
 ## Forking a Database
 
-Forking a database is creating a copy of a certain database up to a point in time. 
+COMING SOON
+
+<!-- Forking a database is creating a copy of a certain database up to a point in time. 
 
 ### Downloaded Version
 
-This applies to any FlureeDB version after 0.9.1. Forking was not enabled in downloadable versions 0.9.1 and earlier. 
+This applies to any Fluree version after 0.9.1. Forking was not enabled in downloadable versions 0.9.1 and earlier. 
 
 To fork a database, we need to go to the [master database in the network](/docs/infrastructure/network-infrastructure#master-database), and issue a transaction creating a new subject in the `db` collection. 
 
@@ -43,7 +45,7 @@ You will also want to add your forked database to a [relevant network](/docs/net
 
 ### Hosted Version
 
-To create a blank database, login to the user interface on your localhost or the [FlureeDB Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee) online and click "Add Database" in the bottom left-hand side of the page. 
+To create a blank database, login to the user interface on your localhost or the [Fluree Admin Portal (https://flureedb.flur.ee)](https://flureedb.flur.ee) online and click "Add Database" in the bottom left-hand side of the page. 
 
 You can fork any database in the "Database Templates" section. As of December 2018, only one database is available to fork, "Movie Database", which contains about 5,000 movies with accompanying credit, actor, etc information.
 
@@ -53,4 +55,4 @@ You can fork any database in the "Database Templates" section. As of December 20
 
 
 Refresh, and then select your new database and the user "root" from the sidebar of the administrative portal.  
-
+ -->
