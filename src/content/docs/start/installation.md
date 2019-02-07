@@ -92,7 +92,7 @@ If you have a valid private key, encoded with [Base58Check Encoding](/docs/ident
 You can also run `./fluree_start.sh :keygen` to generate a public key, private key, and account id. This will not start Fluree, it will just return those three pieces of information.
 
 ### Setting Up a Transactor Group
-Currently, transactor groups only support the Raft consensus algorithm to agree on a shared state for a network of databases. With Raft, a total of `n` servers can support `f`` failures: n = 2f + 1. This means that anything less than 3 servers can sustain no failures, 5 servers can sustain two failures. 
+Currently, transactor groups only support the Raft consensus algorithm to agree on a shared state for a network of databases. With Raft, a total of `n` servers can support `f` failures: n = 2f + 1. This means that anything less than 3 servers can sustain no failures, 5 servers can sustain two failures. 
 
 You can test a decentralized Fluree on a single computer (different ports) or on multiple computers. Each member of Fluree needs to have its own folder containing `fluree_server.jar`, `fluree_sample.properties`, and `fluree_start.sh`. 
 
@@ -108,7 +108,11 @@ Other configuration options that are relevant to setting up a transactor group a
 
 `fdb-group-timeout`, `fdb-group-heartbeat`, `fdb-group-log-directory`, `fdb-group-snapshot-threshhold`, `fdb-group-log-history`.
 
-See the full explanation for those settings below. 
+See the full explanation for those settings in [config options](#config-options). 
+
+### Changing Transactor Group Config
+
+In order to add or remove transactor group servers, you need to bring down all of the servers, reset the the configuration options in `fluree_sample.properties`, and restart the servers. Note that, if you have 3 or fewer servers running Raft, none of them can fail. With Raft, a total of `n` servers can support `f` failures: n = 2f + 1.
 
 ### Config Options
 Note: not all of these configuration options are currently being used. Some options are ignored for the time being, because the related features aren't yet released. We are working on updating this section.
