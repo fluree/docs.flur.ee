@@ -43,7 +43,7 @@ When you launch Fluree for the first time or if you choose `none` as your `fdb-s
 Starting web server on port:   [PORT NUMBER]
 ```
 
-If the above message is not displaying in your terminal, the terminal should print out a relevant error message. Common errors include your chosen port already being in use and not having Java 8 installed. 
+If the above message is not displaying in your terminal, the terminal should print out a relevant error message. Common errors include your chosen port already being in use and not having Java 8 or above installed. 
 
 After you launch Fluree for the first time, you will not have any databases. You will need to create a database to begin. 
 
@@ -84,50 +84,98 @@ The new `data` folder will contain all of your block data, consensus logs, as we
 #### default_private_key.txt
 This file contains the default private key for your databases. A new (and unique) private key is generated every time you start up a new network, unless you already have a valid private key in `default_private_key.txt`. 
 
+### Setting Your Own Private Key
+To use your own private key, first please see the section on [public and private keys](/docs/identity/public-private-keys) to see what is and isn't valid as a private key. 
+
+If you have a valid private key, encoded with [Base58Check Encoding](/docs/identity/public-private-keys#base58check-encoding), then you can add your private key to a `default_private_key.txt`. You can also change the name of the file that holds the private key by changing the `fdb-group-private-key-file` config option (see below).
+
+You can also run `./fluree_start.sh :keygen` to generate a public key, private key, and account id. This will not start Fluree, it will just return those three pieces of information.
+
+### Setting Up a Transactor Group
+Currently, transactor groups only support the Raft consensus algorithm to agree on a shared state for a network of databases. With Raft, a total of `n` servers can support `f`` failures: n = 2f + 1. This means that anything less than 3 servers can sustain no failures, 5 servers can sustain two failures. 
+
+You can test a decentralized Fluree on a single computer (different ports) or on multiple computers. Each member of Fluree needs to have its own folder containing `fluree_server.jar`, `fluree_sample.properties`, and `fluree_start.sh`. 
+
+Before starting any of the servers, make sure to set `fdb-group-servers` and `fdb-group-this-server`.
+
+All the members of the transactor group need to have the same `fdb-group-servers`. All of the servers participating in ledger-group should be listed in the format of server-id@host:port, for example to run them all on one machine, you would list:
+
+`fdb-group-servers=myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792`
+
+Each server should have a different `fdb-group-this-server`, which should be the server-id (from `fdb-group-servers`). 
+
+Other configuration options that are relevant to setting up a transactor group are:
+
+`fdb-group-timeout`, `fdb-group-heartbeat`, `fdb-group-log-directory`, `fdb-group-snapshot-threshhold`, `fdb-group-log-history`.
+
+See the full explanation for those settings below. 
+
 ### Config Options
 Note: not all of these configuration options are currently being used. Some options are ignored for the time being, because the related features aren't yet released. We are working on updating this section.
 
-For example, if you want to set `fdb-port` and `fdb-mode` when starting up Fluree, you would run: 
+For example, if you want to set `fdb-api-port` and `fdb-mode` when starting up Fluree, you would run: 
 
 ```all
-./flureeDB_transactor.sh -Dfdb-mode=transactor -Dfdb-port=8081
+./fluree_start.sh -Dfdb-mode=transactor -Dfdb-api-port=8081
 ```
 
 You can set various configuration options as either environment variables, Java property flags, or in the `fluree_sample.properties` file. `fluree_sample.properties` has all of the default configuration settings. 
 
 Environment variables take precedent over both configuration options listed as Java property flags and those in the `fluree_sample.properties` file. Java property flags, in turn, take precedent over config options listed in the `fluree_sample.properties` file. 
 
+Base Settings
+
 Property | Options | Description   
 -- | -- | --
-fdb-mode | `dev` `query` `transactor` | Dev runs a standalone version of Fluree, which supports both queries and transaction. `Query` and `transactor` are for running Fluree as a query or transactor, respectively.
-fdb-consensus-type | `raft` | Currently `raft` is the default, and the only consensus algorithm supported. `pbft` will be supported soon.
-fdb-license-key | `key` | (Optional) Required for enterprise version
-fdb-network | `string` | The name of the network the transactor group will operate in
-fdb-group-port | `int` | The communication port for the transactor group
-fdb-group-listen-addr | `ip address` | (Optional) Specify an ip address only if you want to bind listening to a specific IP address, otherwise Fluree will bind to: tcp://*:<fdb-group-port>
-fdb-group-transactors | `server`,`server`, etc | (Optional) A list of transactors that will participate in this transactor group. Include the protocool (tcp:// only supported currently), server name, and port. List multiple servers with comma separating them, i.e.: fdb-group-transactors=tcp://10.0.0.1:9790,tcp://10.0.0.2:9790,tcp://10.0.0.3:9790. Leave this field blank to run when running Fluree standalone.
-fdb-group-me | `server` | (Optional) "This" transactor must be in the list in fdb-group-transactors. Best practice is to pass this in as an environment variable. Leave this field blank to run when running Fluree standalone.
-fdb-group-open-api | `boolean` | Set to true if a signature is not required in order to access [signed endpoints](#signed-endpoints).
-fdb-storage-type | `file` `memory` `none` `Cassandra` | This option specifies the common storage for blocks and index segments. `file` stores in file directory. `none` stores on-disk, `memory` stores in-memory only and will disappear on server stop, and `Cassandra` allows you to use Apache Cassandra. If you chose Cassandra, there are additional options below you need to specify. 
-fdb-storage-file-directory | `directory name` | (Optional) When using the `file` storage-type, this is the name of the file directory. Default is 'fdbdata'
-fdb-memory-cache | `size` (i.e. 200mb) | The total memory cache of index segments across all databases. This can be changed per transactor. 
-fdb-memory-reindex | `size` | Specify the size of novelty held before reindexing. Transactions will still be processed while reindexing occurs. This setting applies for each database, therefore it is important to make sure that all transactors and query peers have at least this much memory multiplied by the number of databases you expect to be active on those servers. This setting must be consistent across the entire transactor group. 
-fdb-memory-reindex-max | `size` | During reindexing transactions are still processed. Once the since of the novelty reaches `fdb-memory-reindex-max` is hit, however, all processing of new transactions stops.
-fdb-stats-report-frequency | `time` | How frequently to report out stats as a log entry. 
-fdb-port | `int` | The port in which query servers will respond to API calls from client.
-fdb-group-private-key | Base58 encoded 256 bit key | (Optional) [Private Key](/docs/identity). Can only be set via environmental variable. 
-fdb-group-private-key-file | `string` | (Optional) file location of private key. Can only be set via environmental variable. 
+`fdb-mode` | `dev` `query` `ledger` | Dev runs a standalone version of Fluree, which supports both queries and transaction. `Query` and `transactor` are for running Fluree as a query or transactor, respectively.
+`fdb-license-key` | `key` | (Optional) Required for enterprise version
 
+
+Transactor Group Options
+
+Property | Options | Description   
+-- | -- | --
+`fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. 
+`fdb-group-private-key-file` | `file path` | If fdb-group-private-key is not provided, we'll look for it in this file. If not found in this file, we'll generate a default one and place it in this file.
+`fdb-group-servers` | `server-id@host:port, server-id@host:port` | List all servers participating in ledger-group with format of server-id@host:port. All tx-group servers should have this same config.
+`fdb-group-this-server` | `server-id` | Specify which of the above listed server-ids is this server. Note this must be unique for every server in the tx-group, and is likely easiest to supply this setting via environment variable.
+`fdb-group-timeout` | `int` | Tx group's internal communication timeout threshold. Will initiate a leader election between this value and 2x this value if the leader hasn't been heard from. Specify as number of milliseconds, or can use units as well such as 1000ms or 1s. Assuming your tx-group network is local, 1000-3000 ms is a good range. Adjust as needed to avoid unintended leader elections.
+`fdb-group-hearbeat` | `int` | Tx group leader will send out a heartbeat at this interval. By default, will be 1/2 of fdb-group-timeout. This can never be less than fdb-group-timeout, and ideally should be 1/3 to 1/2 of that value. A number in milliseconds can be provided, or can be used with units such as 1000ms or 1s.
+`fdb-group-log-directory` | `file path` | Where to store tx-group raft log files and snapshots. These logs have fairly frequent disk access.
+`fdb-group-snapshot-threshold` | `int` | A snapshot of the current group state will be taken after this many new commits. Larger values mean larger log files, small values mean lots of snapshots which can be time consuming for large networks. Ideally somewhere in the range of 100 to 1000.
+`fdb-group-log-history` | `int` | Number of historic tx-group raft logs to keep around. Can be as low as 1. Historic logs take up disk space but can be useful for debugging if something goes wrong. High transactional volume servers may want to retain extra logs as there will be more frequent rotation.
+`fdb-storage-type` | `file`, `memory`, `cassandra` |  Where to store index/block segments. Can be replicated on every machine or in a common location all local/group ledgers and FlureeDB library/peers. Current options are: `file`: on-disk and replicated on every ledger, `memory` - replicated on every ledger, but only stored in memory (useful for testing), `cassandra` - our only common storage currently available - all ledgers store blocks and indexes on a common cassandra cluster. Setup cassandra options below.
+`fdb-storage-file-directory` | `file path` | For file storage, specify directory to place ledger (blockchain) and db indexes
+`fdb-memory-cache` | `size` | Total memory cache of index segments across all databases. This setting can be changed per-ledger.
+`fdb-memory-reindex` and `fdb-memory-reindex-max` | `size` | These settings apply per-database, make sure all ledgers and query peers have at least this much memory * number of databases you expect to be active on those servers. This setting must be consistent across the entire ledger group.
+`fdb-stats-report-frequency` | `time` | How frequently to report out stats as a log entry in milliseconds, or can use shorthand like 2m for two minutes, 45s for 45 seconds.
+
+HTTP API Settings
+
+Property | Options | Description   
+-- | -- | --
+`fdb-api-port` | `int` | Port in which the query peers will respond to API calls from clients
+`fdb-api-open` | `boolean` | If fdb-open-api is true, will allow full access on above port for any request and will utilize default auth identity to regulate query/read permissions. If false, every request must be signed, and the auth id associated with the signature will determine query/read permissions.
+
+Decentralized Ledger Settings
+
+Property | Options | Description   
+-- | -- | --
+`fdb-ledger-port`| `int` | External port to expose for external ledger communication. If using a ledger group behind a load balancer then this should be consistent across the ledger group, i.e. fdb-ledger-port=9795
+`fdb-ledger-private-keys` | `key@network/dbname,key@network/dbname` | List each auth identity private key at each network and/or database you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be  used as a default for all databases on that network and it is assumed this server is participating with every database, i.e. fdb-ledger-private-keys=53ab638dd26d02d95214f58eb5df0b086baba584c66f6ae5b8574d722c6bc3f3@networka/dbname 
+`fdb-ledger-servers` | `networka@some-domain.com:9795,networka@10.1.1.2:9795,networkb/dbname@external.dot.com:9795` | List of seed servers to contact for each network/db. Like fdb-ledger-identities, the db is optional. Every network/db + server address combination should be separated by a comma, i.e. fdb-ledger-servers=networka@some-domain.com:9795,networka@10.1.1.2:9795,networkb/dbname@external.dot.com:9795
+
+
+Cassandra Storage Options
 
 The below options are only used if `fdb-storage-type` is set to 'Cassandra'
 
-
 Property | Options | Description   
 -- | -- | --
-fdb-storage-cassandra-servers | `server`,`server`, etc  | Cassandra cluster servers separated by commas
-fdb-storage-cassandra-table | `keyspace.table` | Always use `keyspace.table` format for table. Both the keyspace and the table will be created automatically if non-existing. 
-fdb-storage-cassandra-data-center | See Cassandra for options | 
-fdb-storage-cassandra-replicas | See Cassandra for options. | 
+`fdb-storage-cassandra-servers` | `server`,`server`, etc  | Cassandra cluster servers separated by commas
+`fdb-storage-cassandra-table` | `keyspace.table` | Always use `keyspace.table` format for table. Both the keyspace and the table will be created automatically if non-existing. 
+`fdb-storage-cassandra-data-center` | See Cassandra for options | 
+`fdb-storage-cassandra-replicas` | See Cassandra for options. | 
 
 ### User Interface
 

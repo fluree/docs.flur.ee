@@ -2341,7 +2341,7 @@ Now that our database is populated with several purchase orders, we can issue a 
 Now let’s take a step back and review the steps of a simple supply chain order for *Supply Chain on the Block*:
 
 <p class="text-center">
-    <img style="width: 95%" src="https://s3.amazonaws.com/fluree-docs/final+predicate+table.png" alt="Long description of table in link" />
+    <img style="width: 95%" src="https://s3.amazonaws.com/fluree-docs/coffee-overview.png" alt="Long description of table in link" />
     <p class="text-center"><a href="https://s3.amazonaws.com/fluree-docs/coffee-overview.png" target="_blank">Full table description available on request.</a></p>
 </p>
 

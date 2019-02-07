@@ -17,7 +17,7 @@ Make sure that you have a local version of Fluree running.
 
 Select "Downloaded" on the toolbar. 
 
-If you haven't changed your `fdb-port` or the IP address, your IP Address will be http://localhost:8080. 
+If you haven't changed your `fdb-api-port` or the IP address, your IP Address will be http://localhost:8080. 
 If you haven't changed your `fdb-network`, your network will be `dev`. 
 
 In downloaded versions, 0.9.1 and earlier, by default you will have the databases: "test.default" or "f.master". 
