@@ -2,46 +2,46 @@
 
 All requests should be POST requests, and all requests, with the exception of requests to `/api/signin` 
 
-### `/api/db/query`
-All single queries in FlureeQL syntax that include a `select` key should be issued through the `/api/db/query` endpoint. 
+### `/api/db/NETWORK/DB/query`
+All single queries in FlureeQL syntax that include a `select` key should be issued through the `/query` endpoint. 
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/db/query
+Endpoint: https://db.flur.ee/api/db/NETWORK/DB/query
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: { "select": ["*"], "from": "_collection"}
 ```
 
-### `/api/db/multi-query`
+### `/api/db/NETWORK/DB/multi-query`
 
 If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/docs/query/advanced-query#multiple-queries)), that should be done through the `/multi-query` endpoint. 
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/db/multi-query
+Endpoint: https://db.flur.ee/api/db/NETWORK/DB/multi-query
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: { "query1": { "select": ["*"], "from": "_collection"}, 
         "query2": { "select": ["*"], "from": "_predicate"}}
 ```
 
-### `/api/db/block`
+### `/api/db/NETWORK/DB/block`
 
 FlureeQL [block queries](/docs/query/block-query) should be submitted to the `/block` endpoint. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries like those in the linked section - queries that are returning flakes from a block or set of blocks. 
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/db/block
+Endpoint: https://db.flur.ee/api/db/NETWORK/DB/block
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: { "block": 5 }
 ```
 
-### `/api/db/history`
+### `/api/db/NETWORK/DB/history`
 
 FlureeQL [history queries](/docs/query/history-query) should be submitted to the `/history` endpoint. This only includes queries like those in the linked section.
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/db/history
+Endpoint: https://db.flur.ee/api/db/NETWORK/DB/history
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: {
   "history": ["person/handle", "zsmith"],
@@ -49,13 +49,13 @@ Body: {
 }
 ```
 
-### `/api/db/transact`
+### `/api/db/NETWORK/DB/transact`
 
 All transactions, except transaction issued through the GraphQL syntax, should be issued to the `/api/db/transact` endpoint.
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/db/history
+Endpoint: https://db.flur.ee/api/db/NETWORK/DB/history
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: [{
     "_id":    "_user",
@@ -63,7 +63,7 @@ Body: [{
   }]
 ```
 
-### `/api/db/graphql`
+### `/api/db/NETWORK/DB/graphql`
 
 All queries and transactions in GraphQL syntax should be issued through the `/api/db/graphql` endpoint. 
 
@@ -71,7 +71,7 @@ An example of a GraphQL query:
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/db/graphql
+Endpoint: https://db.flur.ee/api/db/NETWORK/DB/graphql
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: {"query": "{ graph {
   chat {
@@ -89,7 +89,7 @@ An example of a GraphQL transaction:
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/db/graphql
+Endpoint: https://db.flur.ee/api/db/NETWORK/DB/graphql
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
   transact(tx: $myPeopleTx)
@@ -101,13 +101,13 @@ Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
 }}
 ```
 
-### `/api/db/sparql`
+### `/api/db/NETWORK/DB/sparql`
 
 All queries in SPARQL syntax, regardless of type, should be issued through the `/api/db/sparql` endpoint. 
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/db/sparql
+Endpoint: https://db.flur.ee/api/db/NETWORK/DB/sparql
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: "SELECT ?chat ?message ?person ?instant ?comments
  WHERE {
@@ -124,7 +124,7 @@ To view all the databases attached to a particular account, you can either send 
 
 ```
 Action: POST or GET
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/dbs
+Endpoint: https://db.flur.ee/api/dbs
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: { }
 ```
@@ -135,7 +135,7 @@ To create a new database, send the following request to `api/action`. Your `db/i
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/action
+Endpoint: https://db.flur.ee/api/action
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: ["new-db", {
   "db/id": [NETWORK NAME]/[DATABASE NAME]
@@ -149,7 +149,7 @@ To create a new user, send the following request to `api/action`.
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/action
+Endpoint: https://db.flur.ee/api/action
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: ["new-user", {
   "db/id": [NETWORK NAME]/[DATABASE NAME]
@@ -179,7 +179,7 @@ For example, to get the 25 most recent logs from `example.default`:
 
 ```
 Action: POST
-Endpoint: https://example.beta.flur.ee/api/fdb/logs/example
+Endpoint: https://db.flur.ee/api/fdb/logs/example
 Headers: {"Authorization": "Bearer [MASTER TOKEN]"}
 Body: ["logs",{"db":"example.default","limit": 25}]
 ```
@@ -190,7 +190,7 @@ To view all the accounts associated with a particular username and password, you
 
 ```
 Action: GET
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/accounts
+Endpoint: https://db.flur.ee/api/accounts
 Headers: {"Authorization": "Bearer [TOKEN]"}
 ```
 
@@ -198,7 +198,7 @@ Alternatively, you can send a POST request with the username and password and NO
 
 ```
 Action: POST
-Endpoint: https://[ACCOUNTNAME].beta.flur.ee/api/accounts
+Endpoint: https://db.flur.ee/api/accounts
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: {
   "user": ["_user/username", "YOUR EMAIL"],
@@ -206,9 +206,9 @@ Body: {
 }
 ```
 
-### `/api/db/signin`
+### `/api/signin`
 
-This is a POST request issued to `https://f.beta.flur.ee/api/db/signin`, and it does not require a token. 
+This is a POST request issued to `https://db.flur.ee/api/signin`, and it does not require a token. 
 
 This endpoint will return a token for your account. You will be able to issue queries or transactions to all of the databases in your account using this token. 
 
@@ -219,35 +219,36 @@ Key | Type | Description
 `account` | string | Required. Your account name. Send a request to `/api/accounts` if you don't know the names of your accounts. 
 `user` | idsubject | The user idsubject you are logging in with. This can be the `_id` integer of the user record, or any idsubject value, such as `["_user/username", "my_username"]`.
 `password` | string | Your password
-
+`expireSeconds` | integer | How many seconds token is valid for. Must be between 1 and 2592000 (30 days).
 ```
 Action: POST
-Endpoint: https://f.beta.flur.ee/api/db/signin
+Endpoint: https://db.flur.ee/api/signin
 Body: {
+  "account": "YOUR ACCOUNT",
   "user": ["_user/username", "YOUR EMAIL"],
   "password": "YOUR PASSWORD",
-  "db": "f.master"
+  "expireSeconds": 300
 }
 ```
 
-### `/api/db/reset-pw`
+### `/api/reset-pw`
 
-Submit a request to `api/db/reset-pw` to get a reset token emailed to your email. The email must be a valid username for an account. 
+Submit a request to `api/reset-pw` to get a reset token emailed to your email. The email must be a valid username for an account. 
 
 ```
 Action: POST
-Endpoint: https://f.beta.flur.ee/api/db/reset-pw
+Endpoint: https://db.flur.ee/api/reset-pw
 Body: {
   "username": "YOUR EMAIL"
 }
 ```
 
-### `/api/db/new-pw`
+### `/api/new-pw`
 
 After you receive a reset token in your email, you can set a new password by specifying the reset token and new password. 
 ```
 Action: POST
-Endpoint: https://f.beta.flur.ee/api/db/new-pw
+Endpoint: https://db.flur.ee/api/new-pw
 Body: {
   "password": "NEW PASSWORD",
   "resetToken": "RESET TOKEN"

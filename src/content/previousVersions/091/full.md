@@ -4799,7 +4799,7 @@ curl \
     "type": "string",
     "unique": true
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -4862,7 +4862,7 @@ curl \
     "name": "nonNegative?",
     "code": "(< [-1 (?v)])"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -4969,7 +4969,7 @@ curl \
     "name": "ownCrypto?",
     "code": "(contains? (get-all (?e) [\"crypto/user\" \"_id\"]) (?user_id))"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -5103,7 +5103,7 @@ curl \
     "predicate": [["_fn/name", "false"]],
     "errorMessage": "You cannot change a crypto/user. "
   }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -5208,7 +5208,7 @@ curl \
     "balance": 200,
     "user": ["_user/username", "cryptoMan"]
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -5310,7 +5310,7 @@ curl \
     "spec": ["_fn$subtractOwnAddOthers?"],
     "specDoc": "You can only add to others balances, and only subtract from your own balance."
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -5390,7 +5390,7 @@ curl \
    -d '[{
     "_id": ["crypto/walletName", "cryptoWoman's Wallet"],
     "balance": 205 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db//$FLUREE_ACCOUNT/$FLUREE_DBquery
 ```
 
 ```graphql
@@ -5420,7 +5420,7 @@ curl \
    -d '[{
     "_id": ["crypto/walletName", "cryptoWoman's Wallet"],
     "balance": 195 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -5450,7 +5450,7 @@ curl \
    -d '[{
     "_id": ["crypto/walletName", "cryptoWoman's Wallet"],
     "balance": "#(- [(?pV) 5])" }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -5480,7 +5480,7 @@ curl \
    -d '[{
     "_id": ["crypto/walletName", "cryptoMan's Wallet"],
     "balance": "#(+ [(?pV) 5])"}]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -5510,7 +5510,7 @@ curl \
    -d '[{
     "_id": ["crypto/walletName", "cryptoMan's Wallet"],
     "balance": "#(- [(?pV) 5])"}]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -5576,7 +5576,7 @@ curl \
     "code": "(== [(valT)  (valF)])",
     "doc": "The values of added and retracted crypto/balance flakes need to be equal"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -5649,7 +5649,7 @@ curl \
     "_id": ["crypto/walletName", "cryptoWoman's Wallet"],
     "balance": "#(- [(?pV) 5])"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql
@@ -5687,7 +5687,7 @@ curl \
     "_id": ["crypto/walletName", "cryptoWoman's Wallet"],
     "balance": "#(- [(?pV) 10])"
 }]' \
-   https://$FLUREE_ACCOUNT.beta.flur.ee/api/db/query
+   https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
 ```
 
 ```graphql

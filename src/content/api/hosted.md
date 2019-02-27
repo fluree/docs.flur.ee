@@ -412,7 +412,7 @@ All SPARQL queries can be sent to this endpoint. Simply send a string of the SPA
 ```
 
 
-### `/api/db/signin`
+### `/api/signin`
 
 The signin endpoint is only available in the hosted version of Fluree. This endpoint will return a token for the master database. Using this token, you will be able to see information about your account, your databases, and you will be able to issue tokens for any databases within your account. 
 
@@ -420,91 +420,7 @@ Post a JSON map/object containing the following keys:
 
 Key | Type | Description
 -- | -- | --
+`account` | string | Your account name
 `user` | idsubject | The user idsubject you are logging in with. This can be the `_id` integer of the user record, or any idsubject value, such as `["_user/username", "my_username"]`.
 `password` | string | Your password
-
-### `/api/db/token`
-
-
-The token endpoint allows new tokens to be generated on behalf of users. Post a JSON map/object containing the following keys:
-
-Key | Type | Description
--- | -- | -- 
-`auth` | idsubject |  Required auth idsubject you wish this token to be tied to. Can be the `_id` integer of the auth record,  or any idsubject value such as `["_auth/id", "my_admin_auth_id"]`.
-`expireSeconds` | integer | Optional number of seconds until this token should expire. If not provided, token will never expire.
-`db` | string | Only required if using your master authorization token from Fluree (from your username/password to flureedb.flur.ee). So long as you are using a token from your own database, it will automatically use the database the token is coming from.
-
-
-If you are handling authentication for your application but still want users to connect directly to Fluree, your authentication code can utilize this endpoint to retrieve tokens on behalf of the user. The user can subsequently use this token to interact directly with Fluree from the respective application.
-
-In order to create a token, you must use a token that has the following permission:
-
-1. A role with a rule that grants `token` within the `_rule/ops` predicate.
-2. The permission to query the `_auth` record required to generate the token.
-
-For item #2, this allows a permission where someone can generate tokens only for certain user or auth records. Generally you'll use an admin-type rights that have visibility to the entire database in which case you simply need to make sure the `_rule/ops` contains the rights for `token`.
-
-Here is an example request using curl. Be sure to replace your auth token, account name and auth-id in the request:
-
-Curl example:
-
-```
-curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "auth": 25769804776,
-  "expireSeconds": 3600
-}' \
-https://$FLUREE_ACCOUNT.flur.ee/api/db/token
-```
-
-
-#### Token request using the `_id` numeric identifier for `auth`
-
-```json
-{
-  "auth": 25769804776,
-  "expireSeconds": 3600
-}
-```
-```curl 
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "auth": 25769804776,
-  "expireSeconds": 3600
-}' \
-   https://$FLUREE_ACCOUNT.flur.ee/api/db/token
-```
-```graphql
-Not supported
-```
-```sparql
-Not supported
-```
-#### Token request using an idsubject value (an predicate marked as `unique`) for `auth`
-
-```json
-{
-  "auth": ["_auth/id", "my_unique_id"],
-  "expireSeconds": 3600
-}
-```
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "auth": ["_auth/key", "db-admin"],
-  "expireSeconds": 3600
-}' \
-   https://$FLUREE_ACCOUNT.flur.ee/api/db/token
-  ```
-```graphql
-Not supported
-```
-```sparql
-Not supported
-```
+`expireSeconds` | integer | Number of seconds until token expiration, maximum of 2592000 (30 days)

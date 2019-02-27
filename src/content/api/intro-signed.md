@@ -4,7 +4,7 @@ Signed endpoints can be used in both the downloadable and the hosted versions of
 
 `/fdb/[NETWORK-NAME]/[DBID]/[ACTION]`
 
-- For the hosted version, the network is "dev", and the full URL is `https://[ACCOUNTNAME].beta.flur.ee/fdb/dev/[DBID]/[ACTION]`.
+- For the hosted version, the network is "dev", and the full URL is `https://db.flur.ee/api/db/[NETWORK]/[DBID]/[ACTION]`.
 <br/>
 <br/>
 - For the downloadable version, unless you changed the default `fdb-api-port` or `fdb-network`, the full URL is `http://localhost:8080/fdb/dev/[DBID]/[ACTION]`

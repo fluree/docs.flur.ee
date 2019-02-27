@@ -2,7 +2,7 @@
 
 Hosted endpoints can only be used in the hosted versions of Fluree. All requests should be POST requests. The signed endpoints are below, and they are all structured as follows:
 
-`https://[ACCOUNTNAME].beta.flur.ee/[ENDPOINT]`.
+`https://db.flur.ee/[ENDPOINT]`.
 
 These endpoints are NOT available in the downloadable version.
 
@@ -10,13 +10,13 @@ The following endpoint require a token (retrievable from `/api/signin`) in the h
 
 Action | Endpoint | Explanation 
 -- | -- | --
-Query | `/api/db/query` | Queries in FlureeQL syntax
-Multi-Query | `/api/db/multi-query` | Multi-Queries in FlureeQL syntax
-Block | `/api/db/block` | Block queries in FlureeQL syntax
-History |  `/api/db/history`| History queries in FlureeQL syntax
-Transact | `/api/db/transact` | Transactions in FlureeQL syntax
-GraphQL | `/api/db/graphql` | Queries or transactions in GraphQL syntax, as a string
-SPARQL | `/api/db/sparql` | Queries in SPARQL syntax, as a string
+Query | `/api/db/NETWORK/DB/query` | Queries in FlureeQL syntax
+Multi-Query | `/api/db/NETWORK/DB/multi-query` | Multi-Queries in FlureeQL syntax
+Block | `/api/db/NETWORK/DB/block` | Block queries in FlureeQL syntax
+History |  `/api/db/NETWORK/DB/history`| History queries in FlureeQL syntax
+Transact | `/api/db/NETWORK/DB/transact` | Transactions in FlureeQL syntax
+GraphQL | `/api/db/NETWORK/DB/graphql` | Queries or transactions in GraphQL syntax, as a string
+SPARQL | `/api/db/NETWORK/DB/sparql` | Queries in SPARQL syntax, as a string
 Dbs | `/api/dbs` | Get all of the databases for an account.
 Actions | `/api/action` | Actions, such as a a new database, a new user, or archiving a database (not yet supported).
 Logs | `/api/fdb/logs/[account]` | Retrieve the logs for a given database. Syntax in [Examples](/api/hosted-endpoints/hosted-examples)
