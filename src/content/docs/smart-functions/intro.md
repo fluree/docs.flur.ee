@@ -133,8 +133,8 @@ Fn | Args | Example | Available In | Usage | Fuel
 `?auth_id` | None | `(== (?auth_id) (?sid))` | `_predicate/spec`, `_collection/spec`, `_rule/fns`, transactions | The `_id` of the auth that is querying or transacting | 10
 `?user_id` | None | `(== (?user_id) (?sid))` | `_predicate/spec`, `_collection/spec`, `_rule/fns`, transactions | The `_id` of the user, if any, that is querying or transacting | 10
 `flakes` | None | `(flakes)` | `_predicate/spec`, `_collection/spec`, `_predicate/txSpec` | Returns an array of all flakes in the current proposed transaction. For `_predicate/spec` and `_collection/spec` this is a single flake. For `_predicate/txSpec` this is all the flakes in a given transaction that pertain to the specified predicate.| 10
-`valT` | None | `(valT)` | `_predicate/spec`, `_collection/spec`, `_predicate/txSpec` | Sum of the value of all flakes being added in the current spec. | 10
-`valF` | None | `(valF)` | `_predicate/spec`, `_collection/spec`, `_predicate/txSpec` | Sum of the value of all flakes being retracted in the current spec. | 10
+`objT` | None | `(objT)` | `_predicate/spec`, `_collection/spec`, `_predicate/txSpec` | Sum of the value of all flakes being added in the current spec. | 10
+`objF` | None | `(objF)` | `_predicate/spec`, `_collection/spec`, `_predicate/txSpec` | Sum of the value of all flakes being retracted in the current spec. | 10
 
 
 \* Optional `string` of additional-select-parameters. By default, this function will query `{"select": ["*"], from: [SUBJECT]}`, however, if you would like to follow the subject's relationships further, you can optionally include an additional select string. You do not need to include the glob character, `*`, in your select string. You can either not include any quotes in the select string, or doubly-escape them, for example: `"[{person/user [*]}]"` or `"[{\\\"person/user\\\" [\\\"*\\\"]}]"`. Your select string needs to be inside of a vector, `[]`.

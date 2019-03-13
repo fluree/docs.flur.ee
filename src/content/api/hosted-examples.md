@@ -118,6 +118,10 @@ Body: "SELECT ?chat ?message ?person ?instant ?comments
  }"
 ```
 
+### `/api/db/NETWORK/DB/command`
+
+To see examples of sending a request to the `/command` endpoint, see [signed transactions](/docs/identity/signatures#signed-transactions).
+
 ### `/api/dbs`
 
 To view all the databases attached to a particular account, you can either send the following as a GET request or a POST request with an empty body. 

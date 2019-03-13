@@ -18,7 +18,6 @@ Collection | Description
 [_auth](#_auth) | Auth records. Every db interaction is performed by an auth record which governs permissions.
 [_role](#_role) | Roles group multiple permission rules to an assignable category, like 'employee', 'customer'.
 [_rule](#_rule) | Permission rules
-[_db](#_db) | Database settings
 [_block](#_block) | Block metadata
 [_tx](#_block) | Database transactions
 [_setting](#setting) | Database settings
@@ -121,7 +120,7 @@ Predicate | Type | Description
 `_auth/hashType` | `tag` | (optional) The type of hashing algorithm used on the `_auth/secret`. 
 `_auth/resetToken` | `string` | (optional) If the user is currently trying to reset a password/secret, an indexed reset token can be stored here allowing quick access to the specific auth record that is being reset. This predicate is not used anywhere in the database, but you can create an application using logins and passwords with the help of this predicate. 
 `_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to use if authenticated via this auth record. If not provided, this `_auth` record will not be able to view or change anything in the database. 
-`_auth/authority` | `[ref]` | (optional) Authorities for this auth record. References another _auth record. Any auth records referenced in `_auth/authority` can sign a transaction in place of this auth record. To use an authority, you must sign your transaction using the authority's auth record. See more about signing transactions and authorities in the [Signed Transactions](/api/signed-endpoints/signatures#signed-transactions) section. 
+`_auth/authority` | `[ref]` | (optional) Authorities for this auth record. References another _auth record. Any auth records referenced in `_auth/authority` can sign a transaction in place of this auth record. To use an authority, you must sign your transaction using the authority's auth record. See more about signing transactions and authorities in the [Signed Transactions](/docs/identity/signatures#signed-transactions) section. 
 `_auth/fuel` | `long` | Fuel this auth record has. [Fuel](/docs/infrastructure/db-infrastructure#fuel) is used to meter usage in the hosted version of Fluree, but an application can use this predicate to meter fuel usage in the downloadable version as well. 
 
 ### _role
@@ -148,16 +147,6 @@ Predicate | Type | Description
 `_rule/fns` | `[ref]` | (required) Multi-cardinality reference to `_fn` subject. The actual function is stored in the `_fn/code` predicate. `_fn/code` can be `true`, `false`, or a database function expression. Built-in functions and variables are listed in [Database Functions](#database-functions). `true` indicates the user always has access to this collection + predicate combination. `false` indicates the user is always denied access. Functions will return a truthy or false value that has the same meanings.
 `_rule/ops` | `[tag]` | (required) Multi-cardinality tag of action(s) this rule applies to. Current tags supported are `query` for query/read access, `transact` for transact/write access, `token` to generate tokens, `logs` to access all database logs (users always have access to their own logs), and `all` for all operations.
 `_rule/errorMessage` | `string` | (optional) If this rule prevents a transaction from executing, this optional error message can be returned to the client instead of the default error message (which is intentionally generic to limit insights into the database configuration).
-
-### _db
-
-More information about the [`_db` collection](/docs/infrastructure/db-infrastructure#database-settings).
-
-Key | Description
----|---
-`txMax` | Maximum transaction size in bytes. Will default to the network db's value if not present.
-`transactors` | Reference to auth identities that are allowed to act as transactors/miners for this database.
-`anonymous` | Reference to auth identity to use for anonymous requests to this db.
 
 ### _block
 

@@ -321,7 +321,7 @@ Now, we allow upsert for the `_predicate/name` predicate.
 
 To see all of the predicates in a collection, you can use an analytical query with a filter, like below. To see all the predicates from any given collection, just replace `_collection` with the name of any collection. 
 
-```graphql
+```flureeql
 {
     "select": {"?predicate": ["*"]},
     "where": [

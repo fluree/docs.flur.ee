@@ -47,7 +47,7 @@ If the above message is not displaying in your terminal, the terminal should pri
 
 After you launch Fluree for the first time, you will not have any databases. You will need to create a database to begin. 
 
-Creating a database and any other interaction with Fluree can happen either through the [API](/api/signed-endpoints/signed-examples#-new-db) or through the [user interface](#user-interface).
+Creating a database and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the [user interface](#user-interface).
 
 ### Exiting and Restarting Fluree
 
@@ -163,12 +163,14 @@ Property | Options | Description
 
 Decentralized Ledger Settings
 
+
 Property | Options | Description   
 -- | -- | --
 `fdb-ledger-port`| `int` | External port to expose for external ledger communication. If using a ledger group behind a load balancer then this should be consistent across the ledger group, i.e. fdb-ledger-port=9795
-`fdb-ledger-private-keys` | `key@network/dbname,key@network/dbname` | List each auth identity private key at each network and/or database you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be  used as a default for all databases on that network and it is assumed this server is participating with every database, i.e. fdb-ledger-private-keys=53ab638dd26d02d95214f58eb5df0b086baba584c66f6ae5b8574d722c6bc3f3@networka/dbname 
-`fdb-ledger-servers` | `networka@some-domain.com:9795,networka@10.1.1.2:9795,networkb/dbname@external.dot.com:9795` | List of seed servers to contact for each network/db. Like fdb-ledger-identities, the db is optional. Every network/db + server address combination should be separated by a comma, i.e. fdb-ledger-servers=networka@some-domain.com:9795,networka@10.1.1.2:9795,networkb/dbname@external.dot.com:9795
+`fdb-ledger-private-keys` | `key@network/dbname,` `key@network/dbname` | List each auth identity private key at each network and/or database you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be  used as a default for all databases on that network and it is assumed this server is participating with every database, i.e. `fdb-ledger-private-keys=5...3@networka/dbname`
+`fdb-ledger-servers` | `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,` `networkb/dbname@external.dot.com:9795` | List of seed servers to contact for each network/db. Like fdb-ledger-identities, the db is optional. Every network/db + server address combination should be separated by a comma, i.e. `fdb-ledger-servers=` `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,networkb/` `dbname@external.dot.com:9795`
 
+</div>
 
 Cassandra Storage Options
 

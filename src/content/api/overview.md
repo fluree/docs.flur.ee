@@ -1,11 +1,9 @@
 ## Intro
 
-There are two types of endpoints in Fluree: 
+There are two sets of endpoints in Fluree, depending on whether you are using the downloaded or the hosted version of Fluree. 
 
-- Signed Endpoints 
+- Downloaded Endpoints 
 - Hosted Endpoints
-
-The signed endpoints are accessible to both hosted and downloaded versions of Fluree. The hosted endpoints are only available through the hosted version of Fluree. Most requests (exceptions are noted in the relevant sections) should be POST requests.
 
 As you read through the API documentation, you can test the endpoints using the tool on the right-hand side of the page (or bottom on small screens). Below, you can learn how to use this toolbar for either the [hosted](#using-the-toolbar-hosted) or [downloaded](#using-the-toolbar-downloaded) versions.
 

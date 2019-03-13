@@ -6,18 +6,18 @@ export default {
         "name": "wallet"
     }, 
     {
-        "_id": "_attribute",
+        "_id": "_predicate",
         "name": "wallet/balance",
         "type": "int"
     },
     {
-        "_id": "_attribute",
+        "_id": "_predicate",
         "name": "wallet/user",
         "type": "ref",
         "restrictCollection": "_user"
     },
     {
-        "_id": "_attribute",
+        "_id": "_predicate",
         "name": "wallet/name",
         "type": "string",
         "unique": true
@@ -110,7 +110,7 @@ export default {
         "spec": ["_fn$subtractOwnAddOthers?"],
         "specDoc": "You can only add to others balances, and only subtract from your own balance. No balances may be negative"
     }],
-    "10": "(== (valT)  (valF))",
+    "10": "(== (objT)  (objF))",
     "11":[  "Ƹ̵̡Ӝ̵̨̄Ʒ", "No challenge here!",
     "You're all done with this section!", "You rock!"],
 }

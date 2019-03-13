@@ -549,56 +549,105 @@ The `purchaseOrder` will become the central collection in our database. Coffee o
 
 ### Add Sample Data
 
-After creating a schema, you should add in your sample data or initial data. In block 3, we add in four different organizations, and connect each of those organizations to auth records with root access. 
+After creating a schema, you should add in your sample data or initial data. 
+
+First, we'll create a new predicate, `_auth/descId` (short for descriptive id), which will help us easily identify auth records.
+
+FlureeQL:
+
+```all
+[{
+  "_id": "_predicate",
+  "name": "_auth/descId",
+  "type": "string",
+  "unique": true
+}]
+```
+
+In block 3, we add in four different organizations, and connect each of those organizations to auth records with root access. 
 
 - Coffee on The Block, a cafe
 - Ship Shape, a shipper
 - McDonald’s Farm, a grower
 - The Roastery, a coffee roaster
 
+Before we do this, however, we'll create 4 public-private key/auth id triples. For the example, you can use the below triples, but in production, you'll want to [generate your own](/docs/identity/public-private-keys#generating-a-public-private-key-auth-id-triple).
+
+Private Key, Public Key, and Account Id (`_auth/id`) for `Coffee on the Block`.
+```all
+Private: 8a9077ab011fb152b5a043abc24c535810b5dd1d87ecd6ace7cb454dd046670b
+Public: 034adf54d9ef5ca8988c1ba289a7c08513af00e3d92aad63da08cc1c4af8c20478
+Account id: Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD
+```
+
+Private Key, Public Key, and Account Id (`_auth/id`) for `Ship Shape`.
+```all
+Private: 9ba0454eab8057f4e69a27e8ea9ab6344c73f4f1a7a829a9b521869073e92cb7
+Public: 03f1906e157e1acd2b947638b1517c32415200caea4076d3ec9dd619305c57fd25
+Account id: TfBq3t6AZ6ibCs3uxVAkW6CtPaWy7isrcRG
+```
+
+Private Key, Public Key, and Account Id (`_auth/id`) for `McDonald's Farm`.
+```all
+Private: 5ce7259de6397b6dbdd727fc62e9a920f41fe3017dbd76cba3f8d0c1f0275113
+Public: 030f931408d64cae77e4efaefdcc8b85d125269d3d30fe01fabffc5394fd5f40d8
+Account id: Tf2hxnc1FzAXtmk8ptwQ5V68zJjfd4tLwXL
+```
+
+Private Key, Public Key, and Account Id (`_auth/id`) for `The Roastery`.
+```all
+Private: 36abfcd2da19781550d6c9296ada95e11ef0ebfe9acdf3723e59098dc41fe8a5
+Public: 02bfe178879cabc527d38475c4061b22fc6a00c9a80a8b3af00ac600703216e8a8
+Account id: TfA6vquJMH65oQttpuURWvGnMdPPdAA69PF
+```
+
 ```flureeql
 [{
     "_id": "organization",
     "name": "Coffee on the Block",
     "type": "cafe",
-    "auth": "_auth$1"
+    "auth": "_auth$coffee"
 },
 {
     "_id": "organization",
     "name": "Ship Shape",
     "type": "shipper",
-    "auth": "_auth$2"
+    "auth": "_auth$ship"
 },
 {
     "_id": "organization",
     "name": "McDonald's Farm",
     "type": "grower",
-    "auth": "_auth$3"
+    "auth": "_auth$mcdonalds"
 },
 {
     "_id": "organization",
     "name": "The Roastery",
     "type": "roaster",
-    "auth": "_auth$4"
+    "auth": "_auth$roastery"
 },
 {
-    "_id": "_auth$1",
-    "id": "coffeeOnTheBlock",
+    "_id": "_auth$coffee",
+    "id": "Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD",
+    "descId": "coffeeOnTheBlock",
     "roles": [["_role/id", "root"]]
 },
 {
-    "_id": "_auth$2",
-    "id": "shipShape",
+    "_id": "_auth$ship",
+    "id": "TfBq3t6AZ6ibCs3uxVAkW6CtPaWy7isrcRG",
+    "descId": "shipShape",
     "roles": [["_role/id", "root"]]
 },
 {
-    "_id": "_auth$3",
-    "id": "mcDonaldsFarm",
+    "_id": "_auth$mcdonalds",
+    "id": "Tf2hxnc1FzAXtmk8ptwQ5V68zJjfd4tLwXL",
+    "descId": "mcDonaldsFarm",
     "roles": [["_role/id", "root"]]
 },
 {
-    "_id": "_auth$4",
-    "id": "roastery",
+    "_id": "_auth$roastery",
+    "id": "TfA6vquJMH65oQttpuURWvGnMdPPdAA69PF",
+    "descId": "roastery",
     "roles": [["_role/id", "root"]]
 }]
 ```
@@ -611,44 +660,48 @@ curl \
     "_id": "organization",
     "name": "Coffee on the Block",
     "type": "cafe",
-    "auth": "_auth$1"
+    "auth": "_auth$coffee"
 },
 {
     "_id": "organization",
     "name": "Ship Shape",
     "type": "shipper",
-    "auth": "_auth$2"
+    "auth": "_auth$ship"
 },
 {
     "_id": "organization",
     "name": "McDonald's Farm",
     "type": "grower",
-    "auth": "_auth$3"
+    "auth": "_auth$mcdonalds"
 },
 {
     "_id": "organization",
     "name": "The Roastery",
     "type": "roaster",
-    "auth": "_auth$4"
+    "auth": "_auth$roastery"
 },
 {
-    "_id": "_auth$1",
-    "id": "coffeeOnTheBlock",
+    "_id": "_auth$coffee",
+    "id": "Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD",
+    "descId": "coffeeOnTheBlock",
     "roles": [["_role/id", "root"]]
 },
 {
-    "_id": "_auth$2",
-    "id": "shipShape",
+    "_id": "_auth$ship",
+    "id": "TfBq3t6AZ6ibCs3uxVAkW6CtPaWy7isrcRG",
+    "descId": "shipShape",
     "roles": [["_role/id", "root"]]
 },
 {
-    "_id": "_auth$3",
-    "id": "mcDonaldsFarm",
+    "_id": "_auth$mcdonalds",
+    "id": "Tf2hxnc1FzAXtmk8ptwQ5V68zJjfd4tLwXL",
+    "descId": "mcDonaldsFarm",
     "roles": [["_role/id", "root"]]
 },
 {
-    "_id": "_auth$4",
-    "id": "roastery",
+    "_id": "_auth$roastery",
+    "id": "TfA6vquJMH65oQttpuURWvGnMdPPdAA69PF",
+    "descId": "roastery",
     "roles": [["_role/id", "root"]]
 }]' \
    [HOST]/transact
@@ -660,8 +713,7 @@ mutation addSampleData ($addSampleDataTx: JSON) {
 }
 
 {
-  "addSampleDataTx": "[
-      {\"_id\":[\"_predicate/name\",\"crypto/balance\"],\"spec\":[\"_fn$nonNegative?\"],\"specDoc\":\"Balance cannot be negative.\"},{\"_id\":\"_fn$nonNegative?\",\"name\":\"nonNegative?\",\"code\":\"(< -1 (?o))\"}]"
+  "addSampleDataTx": "[{\"_id\":\"organization\",\"name\":\"Coffee on the Block\",\"type\":\"cafe\",\"auth\":\"_auth$coffee\"},{\"_id\":\"organization\",\"name\":\"Ship Shape\",\"type\":\"shipper\",\"auth\":\"_auth$ship\"},{\"_id\":\"organization\",\"name\":\"McDonald's Farm\",\"type\":\"grower\",\"auth\":\"_auth$mcdonalds\"},{\"_id\":\"organization\",\"name\":\"The Roastery\",\"type\":\"roaster\",\"auth\":\"_auth$roastery\"},{\"_id\":\"_auth$coffee\",\"id\":\"Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD\",\"descId\":\"coffeeOnTheBlock\",\"roles\":[[\"_role/id\",\"root\"]]},{\"_id\":\"_auth$ship\",\"id\":\"TfBq3t6AZ6ibCs3uxVAkW6CtPaWy7isrcRG\",\"descId\":\"shipShape\",\"roles\":[[\"_role/id\",\"root\"]]},{\"_id\":\"_auth$mcdonalds\",\"id\":\"Tf2hxnc1FzAXtmk8ptwQ5V68zJjfd4tLwXL\",\"descId\":\"mcDonaldsFarm\",\"roles\":[[\"_role/id\",\"root\"]]},{\"_id\":\"_auth$roastery\",\"id\":\"TfA6vquJMH65oQttpuURWvGnMdPPdAA69PF\",\"descId\":\"roastery\",\"roles\":[[\"_role/id\",\"root\"]]}]"
 }
 ```
 
@@ -683,7 +735,7 @@ First, we need to create smart functions in the `_fn` collection, and then we ne
 
 * **OnlySelf**: You can only add a value if your auth is connected to that organization. 
 
-The smart functions in this example can be issued in five separate transactions, which can be found here (<a href="https://github.com/fluree/supply-chain/blob/master/Block-04-Smart-Funs1.js" target="_blank">Block 4</a>, <a href="https://github.com/fluree/supply-chain/blob/master/Block-05-Smart-Funs2.js" target="_blank">Block 5</a>, <a href="https://github.com/fluree/supply-chain/blob/master/Block-06-Smart-Funs3.js" target="_blank">Block 6</a>, <a href="https://github.com/fluree/supply-chain/blob/master/Block-07-Smart-Funs4.js" target="_blank">Block 7</a>,  <a href="https://github.com/fluree/supply-chain/blob/master/Block-08-Smart-Funs5.js" target="_blank">Block 8</a>). 
+The smart functions in this example can be issued in five separate transactions, which we go over below, and which can also be found on GitHub (<a href="https://github.com/fluree/supply-chain/blob/master/Block-04-Smart-Funs1.js" target="_blank">Block 4</a>, <a href="https://github.com/fluree/supply-chain/blob/master/Block-05-Smart-Funs2.js" target="_blank">Block 5</a>, <a href="https://github.com/fluree/supply-chain/blob/master/Block-06-Smart-Funs3.js" target="_blank">Block 6</a>, <a href="https://github.com/fluree/supply-chain/blob/master/Block-07-Smart-Funs4.js" target="_blank">Block 7</a>,  <a href="https://github.com/fluree/supply-chain/blob/master/Block-08-Smart-Funs5.js" target="_blank">Block 8</a>). 
 
 Below is an overview of all the smart functions that we will be adding.
 
@@ -1254,6 +1306,8 @@ intentionally or accidentally going around the allowed steps.  */
 // Step 1. A roaster creates a purchase order.
 
 // Doesn't work - not a cafe
+// Signed with The Roastery's _auth/id: TfA6vquJMH65oQttpuURWvGnMdPPdAA69PF 
+// And private key: 36abfcd2da19781550d6c9296ada95e11ef0ebfe9acdf3723e59098dc41fe8a5
 
 [{
     "_id": "purchaseOrder",
@@ -1271,13 +1325,11 @@ intentionally or accidentally going around the allowed steps.  */
         "quantity": 100,
         "unitOfMeasure": "lb"
     }
-},
-{
-    "_id": "_tx",
-    "auth": "roastery"
 }]
 
 // Doesn't work - attempting to list purchaseOrder issuer as someone other than themselves
+// Signed with McDonald's Farm's _auth/id: Tf2hxnc1FzAXtmk8ptwQ5V68zJjfd4tLwXL 
+// And private key: 5ce7259de6397b6dbdd727fc62e9a920f41fe3017dbd76cba3f8d0c1f0275113
 
 [{
     "_id": "purchaseOrder",
@@ -1295,13 +1347,11 @@ intentionally or accidentally going around the allowed steps.  */
         "quantity": 100,
         "unitOfMeasure": "lb"
     }
-},
-{
-    "_id": "_tx",
-    "auth": "mcDonaldsFarm"
 }]
 
 // Doesn't work - not all necessary predicates
+// Signed with Coffee on the Block's _auth/id: Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD 
+// And private key: 8a9077ab011fb152b5a043abc24c535810b5dd1d87ecd6ace7cb454dd046670b
 
 [{
     "_id": "purchaseOrder",
@@ -1318,13 +1368,11 @@ intentionally or accidentally going around the allowed steps.  */
         "quantity": 100,
         "unitOfMeasure": "lb"
     }
-},
-{
-    "_id": "_tx",
-    "auth": "coffeeOnTheBlock"
 }]
 
 // Doesn't work - Can't create a shipment without connecting it to a purchase order
+// Signed with McDonald's Farm's _auth/id: Tf2hxnc1FzAXtmk8ptwQ5V68zJjfd4tLwXL 
+// And private key: 5ce7259de6397b6dbdd727fc62e9a920f41fe3017dbd76cba3f8d0c1f0275113
 
 [{
     "_id": "shipment$1",
@@ -1336,16 +1384,15 @@ intentionally or accidentally going around the allowed steps.  */
     "itemDescription": "Got the beans harvested!",
     "intendedRecipient": ["organization/name", "The Roastery"],
     "intendedReceiptLocation": "Miami, FL"
-},
-{
-    "_id": "_tx",
-    "auth": "mcDonaldsFarm"
 }]
 </code></pre>
 
 ### Block 9- Valid Transactions
 
 It is valid, at this time, for a cafe to create a purchaseOrder, as long as they declare themselves to be the issuer, and all the required predicates are included:
+
+This should be signed with Coffee on the Block's `_auth/id`: `Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD` and their private key `8a9077ab011fb152b5a043abc24c535810b5dd1d87ecd6ace7cb454dd046670b`.
+
 
 ```all
 [{
@@ -1365,20 +1412,7 @@ It is valid, at this time, for a cafe to create a purchaseOrder, as long as they
         "quantity": 100, 
         "unitOfMeasure": "lb"
     }
-},
-{
-    "_id": "_tx", 
-    "auth": "coffeeOnTheBlock"
 }]
-```
-
-If you are running FlureeDB privately to test out this application, the below portion of the above transaction is required. This allows you to sign a transaction as a particular entity. If you are running this application decentralized, you would need to make sure that this transaction is signed by Coffee on the Block's private key, and that their private key is attached to a valid auth record in the database. 
-
-```all
-{
-    "_id": "_tx", 
-    "auth": "coffeeOnTheBlock"
-}
 ```
 
 ### Block 10 - Invalid Transactions
@@ -1406,18 +1440,18 @@ intentionally or accidentally going around the allowed steps.  */
 cannot be issued: */
 
 // Can't add a grower to the purchaseOrder
+// Signed with McDonald's Farm's _auth/id: Tf2hxnc1FzAXtmk8ptwQ5V68zJjfd4tLwXL 
+// And private key: 5ce7259de6397b6dbdd727fc62e9a920f41fe3017dbd76cba3f8d0c1f0275113
 
 [{
     "_id": ["purchaseOrder/id", "123"],
     "grower": ["organization/name", "McDonald's Farm"]
-},
-{
-    "_id": "_tx",
-    "auth": "mcDonaldsFarm"
 }]
 
-
 // Can't create a shipment
+// Signed with Coffee on the Block's _auth/id: Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD 
+// And private key: 8a9077ab011fb152b5a043abc24c535810b5dd1d87ecd6ace7cb454dd046670b
+
 
 [{
     "_id": "shipment$1",
@@ -1433,10 +1467,6 @@ cannot be issued: */
 {
     "_id": ["purchaseOrder/id", "123"],
     "shipments": ["shipment$1"]
-},
-{
-    "_id": "_tx",
-    "auth": "mcDonaldsFarm"
 }]
 </code></pre>
 

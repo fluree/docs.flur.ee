@@ -1,7 +1,7 @@
 ## Auth Records
 
 Auth records control identity in Fluree and can be tied to specific public-private key pairs. 
-As mentioned in the previous section, once you have a public-private key-pair, you can generate an auth id by hashing the public key with SHA3-256 and then RIPEMD-160. You then need to add this auth id to the database. If it is not added to the database, any transactions signed with the relevant public key are invalid.
+As mentioned in the previous section, once you have a public-private key-pair, you can generate an auth id by hashing the public key with SHA3-256 and then RIPEMD-160. You then need to add this auth id to the database. If it is not added to the database, any transactions signed with the relevant private key are invalid.
 
 Adding a new auth to the database, with an id derived from the public key:
 
@@ -12,6 +12,8 @@ Adding a new auth to the database, with an id derived from the public key:
     "doc": "My temporary auth record"
 }]
 ```
+
+Any roles that you add to this auth record set permissions for transactions that are signed with this auth record. 
 
 Note: This is not necessary if `fdb-group-open-api` is set to true (which is the default in the downloadable version). 
 
@@ -34,21 +36,19 @@ Let's say an employee, Alba, in the Finance Department want to issue a transacti
 }]
 ```
 
-Now, when Alba wants to issue a transaction, she may send the following transaction to the IT Team:
+Now, when Alba wants to issue a transaction, she may send the following transaction to the IT Team, maybe with additional metadata, such as what the auth issuing this transaction is (`["_auth/id", "alba"]`).
 
 ```all
 [{
     "_id": "invoice",
     "name": "my_invoice",
     "amount": 140
-},
-{
-    "_id": "_tx",
-    "auth": ["_auth/id", "alba"]
 }]
 ```
 
-The transaction contains the relevant auth record, `["_auth/id", "alba"]`, that is issuing this transaction, but Alba does not have a private key and is not providing a signature to the IT team. It is the IT team's job to make sure that it is, in fact, Alba who is issuing the transaction. The IT team could do this by asking Alba face-to-face or by making sure that only Alba could have sent them the above transaction (i.e. through an interface accessible through username and password). How (and whether) they determine that Alba is really the one issuing the transaction is up to the IT Team (the authority in this case). 
+Since Alba does not have a private key, she cannot issue a transaction directly to the Fluree transactor. The IT Team needs to sign the transaction and send the signed transaction to a Fluree server. 
+
+It is the IT team's job to make sure that it is, in fact, Alba who is issuing the transaction. The IT team could do this by asking Alba face-to-face or by making sure that only Alba could have sent them the above transaction (i.e. through an interface accessible through username and password). How (and whether) they determine that Alba is really the one issuing the transaction is up to the IT Team (the authority in this case). 
 
 Additionally, the rules that apply to whether the above transaction is valid is based on the rules attached to issuing auth record (Alba, in this case), and NOT to the rules issued to the authority (the IT team). 
 

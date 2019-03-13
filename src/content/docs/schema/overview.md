@@ -14,6 +14,6 @@ Fluree predicates can be of many different types documented in the [types table]
 Beyond validating types, Fluree allows custom validation that can further restrict predicate values. This level of validation is done by specifying an optional [spec for a collection](/docs/smart-functions/collection-spec) or [predicate](/docs/smart-functions/predicate-spec).
 
 ### References 
-Being a graph database, the special type of ref (reference) is core to traversing through data. Any attribute of type ref refers (links/joins) to another entity. These relationships can be navigated in both directions. For example, listing all invoices from a customer record is trivial if the invoice is of type ref, and once established an invoice automatically links back to the customer.
+Being a graph database, the special type of ref (reference) is core to traversing through data. Any predicate of type ref refers (links/joins) to another entity. These relationships can be navigated in both directions. For example, listing all invoices from a customer record is trivial if the invoice is of type ref, and once established an invoice automatically links back to the customer.
 
 

@@ -100,63 +100,121 @@ Subjects in the `change` collection contains all the details about the change th
 
 ### Adding Sample Data
 
+First, we'll create a new predicate, `_auth/descId` (short for descriptive id), which will help us easily identify auth records.
+
+```flureeql
+[{
+  "_id": "_predicate",
+  "name": "_auth/descId",
+  "type": "string",
+  "unique": true
+}]
+```
+
 Before doing any additional work on schema, such as adding smart functions and rules, we should add in sample data. We are going to create 5 users, connect those records to 5 new auth records, and connect those auth records to a role, `voter` (which doesn't have any rules connected to it yet!).
+
+We've generated 5 public-private key and `_auth/id` pairs for each of the users. You can use the ones that we've generated or <a href="/docs/identity/public-private-keys#generating-a-public-private-key-auth-id-triple" target="_blank">generate your own</a> . Note that, in production, you will definitely want to generate your own. 
+
+Public/Private Key and Account Id (`_auth/id`) for `_auth$losDelRio`.
+
+```all
+Private: 327d945d99d2e942adfa531f10e672bdb7659751afdb40de2c9f34bf78b1e9
+Public: 0228f38b3bc765abb4359b225b77de08c7a2ac3d2c5c4188fdb92b5068f79173e1
+Account id: TfFSDSb61p6oqJkKPXk9XPaQS7PdH7xvHup
+```
+
+Public/Private Key and Account Id (`_auth/id`) for `_auth$softCell`.
+
+```all
+Private: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
+Public: 03aa3595daa834eefc3b0f8c121c94a7b5a3cb01e8568a8652d7c73ed73710d1c1
+Account id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
+```
+
+Public/Private Key and Account Id (`_auth/id`) for `_auth$dexysMidnightRunners`.
+
+```all
+Private: 46e37823bfe73ac2b5e440238cb2b65a1cb4115721f23202e543c454faab8449
+Public: 02218aaeac6df98dfde22b84335d362e2c6b858cbdf3176b12de16f5400f0cfa01
+Account id: TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH
+```
+
+Public/Private Key and Account Id (`_auth/id`) for `_auth$rightSaidFred`.
+
+```all
+Private: afa6b042a342845c3bf4ea5fd2690d8548d5169fd18d18081ac8ac9093c2e43c
+Public: 035d50a5921d905769258e069315e54896cf30b44dbb4be37708a1be9a84c199c0
+Account id: TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK
+```
+
+Public/Private Key and Account Id (`_auth/id`) for `_auth$toniBasil`.
+
+```all
+Private: 8df78c97264ce67261143b57faec1528b0941dd4f26f8712491312913e7521c0
+Public: 03198c829bc66e98bd7fdd9533766c2ac1053e36181025453a55d69520be10c28b
+Account id: Tf31KGiwsqnw1TWTWPspxi3AoHTCA1wJNaE
+```
 
 FlureeQL:
 ```all
 [{
-    "_id": "_user$1",
+    "_id": "_user$losDelRio",
     "username": "losDelRio",
-    "auth": ["_auth$1"]
+    "auth": ["_auth$losDelRio"]
 },
 {
-    "_id": "_user$2",
+    "_id": "_user$softCell",
     "username": "softCell",
-    "auth": ["_auth$2"]
+    "auth": ["_auth$softCell"]
 },
 {
-    "_id": "_user$3",
+    "_id": "_user$dexysMidnightRunners",
     "username": "dexysMidnightRunners",
-    "auth": ["_auth$3"]
+    "auth": ["_auth$dexysMidnightRunners"]
 },
 {
-    "_id": "_user$4",
+    "_id": "_user$rightSaidFred",
     "username": "rightSaidFred",
-    "auth": ["_auth$4"]
+    "auth": ["_auth$rightSaidFred"]
 },
 {
-    "_id": "_user$5",
+    "_id": "_user$toniBasil",
     "username": "toniBasil",
-    "auth": ["_auth$5"]
+    "auth": ["_auth$toniBasil"]
 },
 {
-    "_id": "_auth$1",
-    "id": "auth1",
-    "doc": "Basic auth records",
+    "_id": "_auth$losDelRio",
+    "id": "TfFSDSb61p6oqJkKPXk9XPaQS7PdH7xvHup",
+    "descId": "losDelRioAuth",
+    "doc": "losDelRio's auth record",
     "roles": ["_role$voter"]
 },
 {
-    "_id": "_auth$2",
-    "id": "auth2",
-    "doc": "Basic auth records",
+    "_id": "_auth$softCell",
+    "id": "TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK",
+    "descId": "softCellAuth",
+    "doc": "softCell's auth record",
     "roles": ["_role$voter"]
 },
 {
-    "_id": "_auth$3",
-    "id": "auth3",
-    "doc": "Basic auth records",
+    "_id": "_auth$dexysMidnightRunners",
+    "id": "TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH",
+    "descId": "dexysMidnightRunnersAuth",
+    "doc": "dexysMidnightRunners' auth record",
     "roles": ["_role$voter"]
 },
 {
-    "_id": "_auth$4",
-    "id": "auth4",
-    "doc": "Basic auth records",
+    "_id": "_auth$rightSaidFred",
+    "id": "TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK",
+    "descId": "rightSaidFredAuth",
+    "doc": "rightSaidFred's auth record",
     "roles": ["_role$voter"]
 },
 {
-    "_id": "_auth$5",
-    "id": "auth5",
-    "doc": "Basic auth record",
+    "_id": "_auth$toniBasil",
+    "id": "Tf31KGiwsqnw1TWTWPspxi3AoHTCA1wJNaE",
+    "descId": "toniBasilAuth",
+    "doc": "toniBasil auth record",
     "roles": ["_role$voter"]
 },
 {
@@ -175,6 +233,7 @@ All of the permissions transactions can be added at once, but we break them up h
 First, we add four rules that will allow users to transact and view votes and changes. The rules only allow users to view, but not edit, auth records and users. 
 
 FlureeQL:
+
 ```all
 [{
     "_id": "_rule$editVotes",
@@ -188,7 +247,7 @@ FlureeQL:
     "_id": "_rule$editChanges",
     "fns": [["_fn/name", "true"]],
     "id": "editChanges",
-    "collection": "vote",
+    "collection": "change",
     "collectionDefault": true,
     "ops": ["transact", "query"]
 },
@@ -221,11 +280,10 @@ FlureeQL:
     "collectionDefault": true,
     "ops": ["transact"]
 },
-
 {
     "_id": "_fn$editOwnUser",
     "name": "editOwnUser",
-    "code": "(== (?o) (?user_id))"
+    "code": "(contains? (get-all (query  \"[{_user/_auth [*]}]\" (?auth_id) nil nil nil) [\"_user/_auth\" \"_id\"]) (?sid))"
 }]
 ```
 
@@ -269,7 +327,35 @@ When working this into a real-life application, you may also add a rule that a u
 
 ### Proposing a Change 
 
-Now that we've done our part to prevent voter fraud, we can propose a change. `["_user/username", "softCell"]` wants to change their username to "hardCell", so they propose a change, and create a vote. Soft Cell also adds their auth record to the `vote/yesVotes` predicate, and includes an object in their transaction (with `"_id": "_tx"`) that signs their transaction as them.
+Now that we've done our part to prevent voter fraud, we can propose a change. `["_user/username", "softCell"]` wants to change their username to "hardCell", so they propose a change, and create a vote. 
+
+When we submit a transaction without a signature, it is signed with the default auth record. However, in order to use `softCell`'s auth, we need to sign our transactions with their auth record. We do this by submitting a request to the `/command` endpoint.
+
+ ~ ~ TO DO ADD LINK AFTER SECTION ADDED ~ ~
+
+We can also use a tool in the user interface to sign transactions as a particular private key. To access this tool, we need to go to `/flureeql`, select "Transact", and then select "Own Private Key" from the dropdown. 
+
+If using the user interface, you need to include the private key in the form. If you're not using the user interface, you will need to sign the following transaction with the private key. You will also need to specify softCell's auth in either the form or the signed transaction.
+
+ ~ ~ TO DO ADD LINK AFTER SECTION ADDED ~ ~
+
+The private key for softCell is `4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4`
+and the `_auth/id` is `TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK`.
+
+A request to `/command` will return a `_tx/id`. The `_tx/id` is the unique SHA2-256 of the 'cmd' submitted to the `/command` endpoint. In order to see if the transaction went through successfully, you will need to query: 
+
+```all
+{
+  "select": ["*"],
+  "from": ["_tx/id", TRANSACTION ID HERE ]
+}
+```
+
+If there is an error in the transaction, that will appear in `_tx/error`. If the transaction was submitted successfully, there will not be a `_tx/error`. 
+
+If you are using the user interace, the "Results" editor will automatically show you the results of issuing the above query after submitting a command. 
+
+Soft Cell also adds their auth record to the `vote/yesVotes` predicate.
 
 FlureeQL:
 ```all
@@ -285,11 +371,7 @@ FlureeQL:
 {
     "_id": "vote$softCell",
     "name": "softCellNameVote",
-    "yesVotes": [["_auth/id", "auth3"]]
-},
-{
-    "_id": "_tx",
-    "auth": ["_auth/id", "auth3"]
+    "yesVotes": [["_auth/id", "TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK"]]
 }]
 ```
 
@@ -297,98 +379,105 @@ FlureeQL:
 
 Currently, there is nothing stopping Soft Cell from issuing a transaction to change their `_user/username` from `softCell` to `hardCell`. In order to prevent users from editing their usernames without a vote, we need to create a set of smart functions ([database functions](#database-functions-1)) that we can add to the `_user/username` predicate specification. 
 
-Given an subject id, we can see all the votes related to that subject with a single query. 
+We can see all the votes related to that subject with a single query. 
 
 FlureeQL:
 ```all
 {
-    "select": [ { "change/vote": ["*"]}],
-    "where": "change/subject = 21474837482"
+    "select": [{"?change": ["*", {"change/vote": ["*"]}]}],
+    "where": [["?change", "change/subject", "?subject"],
+    ["?subject", "_user/username", "softCell"]]
 }
 ```
 
-Note: Currently, two-tuple references to entities, i.e. `["_user/username", "softCell"]`, are not supported in where clauses. In the case of our database, `["_user/username", "softCell"]` resolves to the id `21474837482`. You can find out this information for your own database by querying, `{"select": ["_id"],"from": ["_user/username", "softCell"]}`.
+The above query returns *every* change that might have been proposed for `["change/name", "softCellNameChange"]`, including changes to other predicates, such as Soft Cell's `_user/auth` or their `_user/roles`. It also might return other changes proposed for their `_user/username` other than `hardCell`.
 
-The above query returns *every* change that might have been proposed for `21474837482`, including changes to other predicates, such as Soft Cell's `_user/auth` or their `_user/roles`. It also might return other changes proposed for their `_user/username` other than `hardCell`.
-
-We want to make sure that we are only looking at votes for a given subject that also pertain to the proper predicate and the relevant object. In order to do this, we need to query the following, where `50` is the subject id for the `_user/username` predicate (you can see this in your database with the query: `{"select": ["_id"],"from": ["_predicate/name", "_user/username"]})`.
+We want to make sure that we are only looking at votes for a given subject that also pertain to the proper predicate and the relevant object. In order to do this, we need add that `change/predicate` is `["_predicate/name", "_user/username"]` and `change/object` is `hardCell`. 
 
 FlureeQL:
 ```all
 {
-    "select": [ { "change/vote": ["*"]}],
-    "where": "change/subject = 21474837482 AND change/predicate = 50 AND change/value = \"hardCell\""
+    "select": [{"?vote": ["*"]}],
+    "where": [["?change", "change/subject", "?subject"],
+    ["?subject", "_user/username", "softCell"]
+    ["?change", "change/predicate", "?predicate"],
+    ["?predicate", "_predicate/name", "_user/username"],
+    ["?change", "change/object", "hardCell"],
+    ["?change", "change/vote", "?vote"]]
 }
 ```
 
 Sample result in FlureeQL:
 ```all
-{
-  "status": 200,
-  "result": [
-    {
-      "change/vote": {
-        "vote/name": "softCellNameVote",
-        "vote/yesVotes": [
-          {
-            "_id": 25769804775
-          }
-        ],
-        "_id": 4294967296001
+[[
+  {
+    "vote/name": "softCellNameVote",
+    "vote/yesVotes": [
+      {
+        "_id": 105553116267497
       }
-    }
-  ],
-  "fuel": 8,
-  "block": 11,
-  "time": "3.18ms",
-  "fuel-remaining": 99999962775
-}
+    ],
+    "_id": 351843720888321
+  }
+]]
 ```
 
-The first two functions we create build and issue the above query. We will then use these functions to count votes, and eventually decide whether or not changes should be approved. If, at this point, you cannot understand how these functions fit into the larger applications, do not worry, we will see the entire voting mechanism working in short order. At this point, the most important part is to try and understand the syntax of the individual smart functions.
+The first two functions we will create build and issue the above query. We will then use these functions to count votes, and eventually decide whether or not changes should be approved. 
+
+If, at this point, you cannot understand how these functions fit into the larger applications, do not worry, we will see the entire voting mechanism working in short order. At this point, the most important part is to try and understand the syntax of the individual smart functions.
 
 The function, `voteWhere` constructs the where clause using the `str` function, which concatenates all strings in a given array (all available database or smart functions are detailed in [database functions](#database-functions-1)). 
 
 When we are editing a given subject's predicate in a transaction, we have access to the value we are attempting to input `(?o)`, the id of the subject we are editing `(?sid)`, and the id of the predicate we are editing `(?pid)`, which is all of the information we need in order to compose our where clause. 
 
-```
-[ 
-    {
-        "_id": "_fn",
-        "name": "voteWhere",
-        "code": "(str \"change/subject = \\\"\" (?sid) \"\\\"\"  \" AND change/predicate = \" (?pid) \" AND change/object = \" (?o))"
-    }
+Without escaped quotation marks, our where clause will be: 
+
+```all
+[
+    ["?change", "change/subject", (?sid)],
+    ["?change", "change/predicate", (?pid)],
+    ["?change", "change/object", (?o)],
+    ["?change", "change/vote", "?vote"]
 ]
+```
+
+FlureeQL:
+```all
+[{
+    "_id": "_fn",
+    "name": "voteWhere",
+    "code": "(str \"[[\\\"?change\\\", \\\"change/subject\\\", \" (?sid) \"],[\\\"?change\\\", \\\"change/predicate\\\", \" (?pid) \"],[\\\"?change\\\", \\\"change/object\\\", \\\"\" (?o) \"\\\"], [\\\"?change\\\", \\\"change/vote\\\", \\\"?vote\\\"]]\")"
+}]
 ```
 
 One of the most useful features of smart functions is that we can put them together. The second function we create issues a query using the `query` smart function. The arguments or parameters for the `query` function are: `select-string`, `from-string`, `where-string`, `block-string`, `limit-string`.
 
-For `select-string`, we use `[{change/vote [*]}]`. `from-string` is nil. For `where-string`, rather than composing the `where-string` from scratch, we can simply use `(voteWhere)`. `block-string` and `limit-string` are both set to nil.
+For `select-string`, we use `[{?vote [*]}]`. `from-string` is nil. For `where-string`, rather than composing the `where-string` from scratch, we can simply use `(voteWhere)`. `block-string` and `limit-string` are both set to nil.
 
 FlureeQL:
 ```all
 [{
         "_id": "_fn",
         "name": "vote",
-        "code": "(query \"[{change/vote [*]}]\" nil (voteWhere) nil nil)"
+        "code": "(query \"[{?vote [*]}]\" nil (voteWhere) nil nil)"
 }]
 ```
 
-Using the `(vote)` function, we can access the `vote/yesVotes` and `vote/noVotes`. We use the `get-all` function, and we specify path that we want to follow in order to get the `vote/noVotes` and `vote/yesVotes` (`["change/vote", "vote/noVotes"])`. 
+Using the `(vote)` function, we can access the `vote/yesVotes` and `vote/noVotes`. We first need to use `(nth (vote) 0)` to get the first result in the array.
 
-If you're uncertain where we got this path from, issue the query: `{ "select": [ { "change/vote": ["*"]}], "where": "change/subject = 21474837482 AND change/predicate = 50 AND change/object = \"hardCell\"" }`.
+Then, we can use the `get-all` function, and we specify path that we want to follow in order to get the `vote/noVotes` and `vote/yesVotes` (`["vote/noVotes" \"_id\"]` and `["vote/yesVotes" \"_id\"]`, respectively)`. 
 
 FlureeQL:
 ```all
 [{
     "_id": "_fn",
     "name": "noVotes",
-    "code": "(get-all (vote) [\"change/vote\" \"vote/noVotes\"] )"
+    "code": "(get-all (nth (vote) 0) [\"vote/noVotes\" \"_id\"] )"
 },
 {
     "_id": "_fn",
     "name": "yesVotes",
-    "code": "(get-all (vote) [\"change/vote\" \"vote/yesVotes\"] )"
+    "code": "(get-all (nth (vote) 0) [\"vote/yesVotes\" \"_id\"] )"
 }]
 ```
 
@@ -414,7 +503,7 @@ FlureeQL:
     "_id": "_fn", 
     "name": "minVotes",
     "params": ["n"],
-    "code": "(> (+ (count (yesVotes))  (count (noVotes))))"
+    "code": "(> (+ (count (yesVotes))  (count (noVotes))) n)"
 }]
 ```
 
@@ -443,58 +532,61 @@ FlureeQL:
 
 ### Testing
 
-The only vote that we have so far is `softCell` voting for their own name change. That means that if we attempt to change Soft Cell's username, it should fail.
+The only vote that we have so far is `softCell` voting for their own name change. That means that if we attempt to change Soft Cell's username, it should fail. We should sign this transaction as Soft Cell with the `_auth/id`, `TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK` and private key `4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4`. 
 
 FlureeQL:
 ```all
 [{
     "_id": ["_user/username", "softCell"],
-    "username": "softCell"
+    "username": "hardCell"
 }]
 ```
 
 Response:
 ```all
 {
-  "status": 400,
-  "message": " Value hardCell does not conform to spec: (and (minVotes 2) (minWinPercentage 0.5))",
-  "error": "db/invalid-tx",
-  "time": "40.73ms",
-  "fuel-remaining": 99999949452
+  "_tx/id": "6b9f5fe96564289e267bc5d1611c61021053e8de4e95f0777247239a8b9ca1cd",
+  "_tx/auth": {
+    "_id": 105553116267497
+  },
+  "_tx/nonce": 5,
+  "_tx/error": "400 db/invalid-tx  Object hardCell does not conform to spec: (and (minVotes 2) (minWinPercentage 0.5))",
+  "_id": -55
 }
 ```
 
-We would need at least two more yes votes in order to successfully make this change. 
+We would need at least two more yes votes in order to successfully make this change. We can add two more votes for this name change.
 
-We can add two more votes for this name change (if we have access to `auth1` and `auth2`).
-
-FlureeQL:
-```all
-[{
-    "_id": ["vote/name", "ahaNameVote"],
-    "yesVotes": [["_auth/id", "auth1"]]
-},
-{
-    "_id": "_tx",
-    "auth": ["_auth/id", "auth1"]
-}]
-```
+The first transaction should be issued with `_auth/id` `TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH` and private key, `46e37823bfe73ac2b5e440238cb2b65a1cb4115721f23202e543c454faab8449`.
 
 FlureeQL:
 ```all
 [{
-    "_id": ["vote/name", "ahaNameVote"],
-    "yesVotes": [["_auth/id", "auth2"]]
-},
-{
-    "_id": "_tx",
-    "auth": ["_auth/id", "auth2"]
+    "_id": ["vote/name", "softCellNameVote"],
+    "yesVotes": [["_auth/id", "TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH"]]
 }]
 ```
 
-After adding more yes votes, the transaction, `[{ "_id": ["_user/username", "softCell"], "username": "hardCell" }]` passes. 
+The second transaction should be issued with `_auth/id` `TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK` and private key, `afa6b042a342845c3bf4ea5fd2690d8548d5169fd18d18081ac8ac9093c2e43c`.
 
-We now have a fully operational voting system. If we want to add a voting requirement to any other predicates, we would simply have to issue a transaction specifying a new function (or re-using `2VotesMajority`), and adding that function to any `_predicate`. The below transction would require at least 10 votes with more than 75% voting yes in order to change smart function code. 
+FlureeQL:
+```all
+[{
+    "_id": ["vote/name", "softCellNameVote"],
+    "yesVotes": [["_auth/id", "TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK"]]
+}]
+```
+
+After adding more votes, the following transaction will pass. We should sign this transaction as Soft Cell with the `_auth/id`, `TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK` and private key `4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4`. 
+
+```all
+[{
+    "_id": ["_user/username", "softCell"], 
+    "username": "hardCell" 
+}]
+``` 
+
+We now have a fully operational voting system. If we want to add a voting requirement to any other predicates, we would simply have to issue a transaction specifying a new function (or re-using `2VotesMajority`), and adding that function to any `_predicate`. For example, the below transction would require at least 10 votes with more than 75% voting yes in order to change smart function code. 
 
 ```
 [{
@@ -506,5 +598,4 @@ We now have a fully operational voting system. If we want to add a voting requir
     "_id": ["_predicate/name", "_fn/code"],
     "spec": ["_fn$voteReqs"]
 }]
-
 ```

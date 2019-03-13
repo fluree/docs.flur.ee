@@ -3703,7 +3703,7 @@ mutation handle-and-full-name ($handleAndFullNameTx: JSON) {
 
 The attribute `_attribute/txSpec` allows you to set specifications for all of the flakes pertaining to a certain attribute. Flakes are accessed via the `(flakes)` function.  
 
-You can get the value of all the true flakes (flakes being added) with the `(valT)` function, as well as all of the false flakes (flakes being retracted) with the `(valF)` function. Like all other specs, `_attribute/txSpec` is a multi-cardinality ref attribute, which references entities in the `_fn` collection. 
+You can get the value of all the true flakes (flakes being added) with the `(objT)` function, as well as all of the false flakes (flakes being retracted) with the `(objF)` function. Like all other specs, `_attribute/txSpec` is a multi-cardinality ref attribute, which references entities in the `_fn` collection. 
 
 For example, the below `_attribute/txSpec` ensures that the `crypto/balance` being added is equal to the `crypto/balance` being retracted. View the full [cryptocurrency example](#cryptocurrency) to see this 
 
@@ -3716,7 +3716,7 @@ For example, the below `_attribute/txSpec` ensures that the `crypto/balance` bei
 {
     "_id": "_fn$evenCryptoBalance",
     "name": "evenCryptoBalance?",
-    "code": "(== [(valT)  (valF) ] )",
+    "code": "(== [(objT)  (objF) ] )",
     "doc": "The values of added and retracted crypto/balance flakes need to be equal"
 }]
 ```
@@ -4190,17 +4190,17 @@ The below functions are available through some function interfaces, but not othe
 - Cost: 10
 
 
-7. User _id: `valT`
+7. User _id: `objT`
 - Arguments: None
-- Example: `(valT)`
+- Example: `(objT)`
 - Use: Sum of the value of all flakes being added in the current spec.
 - Available in: `_attribute/spec`, `_collection/spec`, `_attribute/txSpec`
 - Cost: 10
 
 
-8. User _id: `valF`
+8. User _id: `objF`
 - Arguments: None
-- Example: `(valF)`
+- Example: `(objF)`
 - Use: Sum of the value of all flakes being retracted in the current spec.
 - Available in: `_attribute/spec`, `_collection/spec`, `_attribute/txSpec`
 - Cost: 10
@@ -5529,7 +5529,7 @@ mutation removeCryptoMan ($removeCryptoManTx: JSON) {
 Now, we can add a spec, which makes sure that the total balance added to one (or several accounts) is equal to the amount subtracted from another account. For this purpose, we can use the `txSpec` attribute. `_attribute/spec`, which we used to ensure that balances are non-negative, checks every flakes in a transaction that contains a given attribute. On the other hand `_attribute/txSpec` is run once *per attribute* in a transaction. For example, if we create an `_attribute/txSpec` for `crypto/balance`, our transactor will group together every flake that changes the `crypto/balance` attribute and only run the `txSpec`
 *once*. `txSpec` allows use to do things like sum all the crypto/balance values in a transaction.
 
-The function `(valT)` takes no arguments, and sums all the true flakes in a transaction for the given `_attribute`. Likewise, the function `(valF)` takes no arguments, and sums all the false flakes in a transaction for the given `_attribute`. We want to make sure that the sum of all of the `crypto/balance`s being retracted equals the sum of those being added. 
+The function `(objT)` takes no arguments, and sums all the true flakes in a transaction for the given `_attribute`. Likewise, the function `(objF)` takes no arguments, and sums all the false flakes in a transaction for the given `_attribute`. We want to make sure that the sum of all of the `crypto/balance`s being retracted equals the sum of those being added. 
 
 ```all
 [{
@@ -5540,7 +5540,7 @@ The function `(valT)` takes no arguments, and sums all the true flakes in a tran
 {
     "_id": "_fn$evenCryptoBalance",
     "name": "evenCryptoBalance?",
-    "code": "(== [(valT)  (valF)])",
+    "code": "(== [(objT)  (objF)])",
     "doc": "The values of added and retracted crypto/balance flakes need to be equal"
 }]
 ```
@@ -5556,7 +5556,7 @@ The function `(valT)` takes no arguments, and sums all the true flakes in a tran
 {
     "_id": "_fn$evenCryptoBalance",
     "name": "evenCryptoBalance?",
-    "code": "(== [(valT)  (valF)])",
+    "code": "(== [(objT)  (objF)])",
     "doc": "The values of added and retracted crypto/balance flakes need to be equal"
 }]
 ```
@@ -5573,7 +5573,7 @@ curl \
 {
     "_id": "_fn$evenCryptoBalance",
     "name": "evenCryptoBalance?",
-    "code": "(== [(valT)  (valF)])",
+    "code": "(== [(objT)  (objF)])",
     "doc": "The values of added and retracted crypto/balance flakes need to be equal"
 }]' \
    https://db.flur.ee/api/db/$FLUREE_ACCOUNT/$FLUREE_DB/query
@@ -5585,7 +5585,7 @@ mutation cryptoSpentReceived ($cryptoSpentReceivedTx: JSON) {
 }
 
 {
-  "cryptoSpentReceivedTx": "[{\"_id\":[\"_attribute/name\",\"crypto/balance\"],\"txSpec\":[\"_fn$evenCryptoBalance\"],\"txSpecDoc\":\"The values of added and retracted crypto/balance flakes need to be equal\"},{\"_id\":\"_fn$evenCryptoBalance\",\"name\":\"evenCryptoBalance?\",\"code\":\"(== [(valT) (valF)])\",\"doc\":\"The values of added and retracted crypto/balance flakes need to be equal\"}]"
+  "cryptoSpentReceivedTx": "[{\"_id\":[\"_attribute/name\",\"crypto/balance\"],\"txSpec\":[\"_fn$evenCryptoBalance\"],\"txSpecDoc\":\"The values of added and retracted crypto/balance flakes need to be equal\"},{\"_id\":\"_fn$evenCryptoBalance\",\"name\":\"evenCryptoBalance?\",\"code\":\"(== [(objT) (objF)])\",\"doc\":\"The values of added and retracted crypto/balance flakes need to be equal\"}]"
 }
 ```
 

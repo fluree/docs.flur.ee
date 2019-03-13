@@ -1,12 +1,9 @@
 ## Overview
 
-Signed endpoints can be used in both the downloadable and the hosted versions of Fluree. All requests, except requests to `/storage` and `/health`, should be POST requests. The main signed endpoints are below, and they are all structured as follows:
+Downloaded endpoints can only be used in the downloadable versions of Fluree. All requests, except requests to `/storage` and `/health`, should be POST requests. The main downloaded endpoints are below, and they are all structured as follows:
 
 `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/[ACTION]`
 
-- For the hosted version, the network is "dev", and the full URL is `https://db.flur.ee/fdb/dev/[DBNAME]/[ACTION]`.
-<br/>
-<br/>
 - For the downloadable version, unless you changed the default `fdb-api-port` or `fdb-network`, the full URL is `http://localhost:8080/fdb/dev/[DBNAME]/[ACTION]`
 
 Action | Endpoint | Explanation 
@@ -18,6 +15,7 @@ History |  `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/history`| History queries in Fl
 Transact | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact` | Transactions in FlureeQL syntax
 GraphQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` | Queries or transactions in GraphQL syntax, as a string
 SPARQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` | Queries in SPARQL syntax, as a string
+Command | `/fdb/[NETWORK-NAME]/[DBID]/command` | Commands, such as transactions, with a signature in the body. See [signing transactions](/docs/identity/signatures#signed-transactions).
 
 Other endpoints:
 
@@ -31,6 +29,6 @@ Sub | POST | `/fdb/sub` | Handles subscriptions
 
 For both queries and transactions, a signature is not required if the option `fdb-group-open-api` is set to true (default for the downloaded version of Fluree). 
 
-Any requests sent to `/query`, `/multi-query`, `/block`, `/history`, `/sparql`, and any queries submitted through `/graphql` should have a signature in Authorization header (if `fdb-group-open-api` is set to false) - see [signed queries](/docs/identity/signatures#signed-queries). Any transactions submitted, either through `/transact` or `/graphql`, should include a signature in the transaction map - see [signed transactions](/docs/identity/signatures#signed-transactions).
+More information on [signing queries](/docs/identity/signatures#signed-queries) and [signing transactions](/docs/identity/signatures#signed-transactions) can be found in the linked sections. 
 
-See [Signed Endpoint Examples](/api/signed-endpoints/signed-examples) for examples of how to use each of the endpoints.
+See [Downloaded Endpoint Examples](/api/downloaded-endpoints/downloaded-examples) for examples of how to use each of the endpoints.

@@ -1,6 +1,6 @@
 ## GraphQL
 
-Fluree supports queries and transactions using both the FlureeQL JSON format as well as GraphQL. All GraphQL queries and transactions should be run through the [hosted endpoints](/api/hosted-endpoints/endpoints#-api-db-graphql) or [signed endpoints](/api/signed-endpoints/signed-examples#-graphql-query) ending in `/graphql`.
+Fluree supports queries and transactions using both the FlureeQL JSON format as well as GraphQL. All GraphQL queries and transactions should be run through the [hosted endpoints](/api/hosted-endpoints/endpoints#-api-db-graphql) or [downloaded endpoints](/api/downloaded-endpoints/downloaded-examples#-graphql-query) ending in `/graphql`.
 
 GraphQL supports a more limited set of query capability, but is robust enough for many applications. Fluree's version of GraphQL supports a wide-range of GraphQL features, but not all of them. 
 
@@ -164,7 +164,7 @@ mutation addPeople ($myPeopleTx: JSON) {
 }
 ```
 
-If you are using the UI, you can place your variable in the "Query Variables" section on the lower left hand side of the GraphQL interface. If you are using the API, you should add a new key, "variables" to your request body and include your variables (more information in the API sections on [hosted](/api/hosted-endpoints/endpoints#-api-db-graphql) and [signed](/api/signed-endpoints/signed-examples#-graphql-transaction) GraphQL endpoints.
+If you are using the UI, you can place your variable in the "Query Variables" section on the lower left hand side of the GraphQL interface. If you are using the API, you should add a new key, "variables" to your request body and include your variables (more information in the API sections on [hosted](/api/hosted-endpoints/endpoints#-api-db-graphql) and [downloaded](/api/downloaded-endpoints/downloaded-examples#-graphql-transaction) GraphQL endpoints.
 
 ```all
 mutation addPeople ($myPeopleTx: JSON) {

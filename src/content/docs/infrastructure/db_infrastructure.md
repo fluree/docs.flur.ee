@@ -123,7 +123,7 @@ Key | Description
 `instant` | Instant this block was created, per the transactor.
 `sigs` | List of transactor signatures that signed this block (signature of _block/hash). Not included in block hash.
 
-`_tx` is a built-in database collection with the following predicates. `_tx` flakes, like `_block` flakes are automatically generated after a transaction is issued. While automatically generated, users can specify certain predicates if they choose. 
+`_tx` is a built-in database collection with the following predicates. `_tx` flakes, like `_block` flakes are automatically generated after a transaction is issued. While automatically generated, users can specify certain predicates when using the `/cmd` endpoint if they choose. 
 
 Key | Description
 ---|---
@@ -136,7 +136,7 @@ Key | Description
 `authority` | If this transaction utilized an authority, reference to it.
 `auth` | Reference to the auth id for this transaction.
 
-#### Specifying Metadata
+<!-- #### Specifying Metadata
 
 When issuing a transaction, you can specify the following pieces of metadata: `nonce`, `auth`, `authority`, `altId`, and `doc`. This is done by including a map in your transaction with a key-value pair of {`_id`: `_tx`}, and adding any metadata predicates you want to specify in that map. For example,
 
@@ -151,7 +151,7 @@ FlureeQL example:
   "auth": "root",
   "nonce": 100
 }]
-```
+``` -->
 
 ### Block Files
 
@@ -173,22 +173,8 @@ There are four different types of indexes that are written to file. These indexe
 
 The frequency at which new index files are written depends on your [database configuration](/docs/getting-started/installation#config-options), specifically, the `fdb-memory-reindex` option.
 
-### Database Settings
-
-There is a built-in `_db` collection that defines several database configurations.
-
-Key | Description
----|---
-`txMax` | Maximum transaction size in bytes. Will default to the network db's value if not present.
-`transactors` | Reference to auth identities that are allowed to act as transactors/miners for this database.
-`anonymous` | Reference to auth identity to use for anonymous requests to this db.
-
 ### Fuel
 
 In the hosted version of Fluree, fuel is used to meter usage. Every query and transaction accumulates a certain amount of "fuel." The amount of fuel used is returned in the query or transaction results. 
 
 In the downloadable version of Fluree, fuel is returned as supplemental information.
-
-### More Info
-
-The <a href="https://flur.ee/assets/pdf/flureedb_whitepaper_v1.pdf" target="_blank">Fluree Whitepaper</a> goes into more depth about how Fluree works.

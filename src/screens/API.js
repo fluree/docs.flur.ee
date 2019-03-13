@@ -18,16 +18,16 @@ const apiNav = {
             }
         }
     },
-    "signed-endpoints": {
-        "pageName": "Signed Endpoints",
+    "downloaded-endpoints": {
+        "pageName": "Downloaded Endpoints",
         "subTopics": {
             "overview": {
                 "headerName": "Overview",
-                "file": "signed-overview"
+                "file": "downloaded-overview"
             },
-            "signed-examples": {
+            "downloaded-examples": {
                 "headerName": "Examples",
-                "file": "signed-examples"
+                "file": "downloaded-examples"
             }
         }
     },

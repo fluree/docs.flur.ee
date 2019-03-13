@@ -9,6 +9,7 @@
 
 .docs-section td {
     padding: 5px;
+    word-wrap: break-word;
 }
 
 .docs-section h1, h2, h3 {
@@ -29,6 +30,7 @@
 
 .docs-section table {
   margin: 30px;
+  table-layout: fixed;
 }
 
 .docs-section code {

@@ -1,63 +1,101 @@
 ## Signatures
 
-In Fluree, we take the SHA3-256 of the original transaction, and sign it with the issuer's private key. This signature conforms to [RFC 6979](https://tools.ietf.org/html/rfc6979).
+In Fluree, you can sign both queries and transactions. The signature proves that the issuer of a given query or transaction has access to the private key associated with the signature. See [Public and Private Keys](/docs/identity/public-private-keys) for a primer on public-private key cryptography.  
 
-For both queries and transactions, a signature is not required if the option `fdb-group-open-api` is set to true (default [config option](/docs/getting-started/installation#config-options) for the downloaded version of Fluree). 
+Fluree signatures comply to [RFC 6979](https://tools.ietf.org/html/rfc6979) standards.
 
-If you do need to specify a signature, the signature may either be in the Authorization header (for all queries submitted) or in the signature map (for all transactions).
+### `fdb-group-open-api`
+For both queries and transactions, a signature is not required if the option `fdb-group-open-api` is set to true (default [config option](/docs/getting-started/installation#config-options) for the downloaded version of Fluree). In fact, the signature in signed query will be ignored if `fdb-group-open-api` is set to true. 
+
+In the case of transactions, if you send a transaction to `/transact` or to `/graphql`, the transaction will be signed with a default private key. 
+
+If you do need to specify a signature, such as in the case of testing out user permissions, you can submit a [signed transaction](#signed-transactions) to the `/command` endpoint.  
+
+### NPM Package
+
+Fluree has published a Javascript library that contains helper functions to help users sign queries and transactions. This an be downloaded via npm, `npm install fluree-cryptography`. 
+
+The documentation (available on <a href="https://github.com/fluree/cryptography" target="_blank">GitHub</a>), guides you through how to generate keys, sign queries, and sign transactions. 
+
+We recommend using the Javascript library or the [user interface](#user-interface) for ease of use, but you can read more about how to sign queries and transactions manually below. 
+
+### User Interface
+
+Fluree also has a user interface to help users submit signed queries and transactions.
+
+This can be found in the user interface by navigating to `/flureeql`. By clicking the "sign" button, you can toggle whether or not there is an option to sign queries and transactions. Note that the hosted version of Fluree does not allow you to sign queries, because `fdb-group-open-api` is set to true for all hosted accounts, so a signed query would be ignored regardless.
 
 ### Signed Queries
-If `fdb-group-open-api` is set to true, then you do not need to sign your queries. If you do need to sign your queries, you should have access to your private key. Your private key needs to be [connected to a valid auth record](/docs/identity/auth-records) in the database.
+If `fdb-group-open-api` is set to true, then you do not need to sign your queries. In fact, the signature in a signed query will be ignored if `fdb-group-open-api` is set to true. 
 
-You should include the following header in your request (using the API): 
+If you do need to sign your queries, you should have access to your private key. Your private key needs to be [connected to a valid auth record](/docs/identity/auth-records) in the database.
+
+#### Headers
+
+You should submit a POST request should have the following headers: `content-type`, `mydate`, `digest`, `signature`.
+
+- `content-type`: `application/json`
+- `mydate`: An RFC 1123 formatted date, i.e. Mon, 11 Mar 2019 12:23:01 GMT
+- `digest`: The SHA256 hash of the stringified query body, formatted as follows: `SHA256={hashHere}`
+- `signature`: A string containing the algorithm and signature, including other information, formatted as follows: `keyId="na",headers="(request-target) host mydate digest",algorithm="ecdsa-sha256",signature="{sigHere}"`. 
+
+In order to get the actual signature (labelled `sig` above) that goes into the larger signature value, you need to first create a signing string. Formatted as follows: `(request-target): post {uri}\nhost: {host}\nmydate: {formattedDate}\ndigest: SHA-256={digest}`. 
+
+Then, you should get the SHA3-256 hash of that signing string, and sign it using Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the `secp256k1 curve`. The resulting signature is DER encoded and returned as a hex-string. In addition, after adding 27 to the recoveryByte, that number is converted into a hex string, and prepended to the rest of the signature. 
+
+#### Body
+
+The body of a signed query is same query as would be submitted in an unsigned query. 
+
+#### Example
 
 ```all
-"Authorization": "Bearer [RFC 6979 SIGNATURE]"
+ {
+      method: 'POST',
+      headers: {
+                content-type:       application/json,
+                mydate:             Thu, 13 Mar 2019 19:24:22 GMT,
+                digest:             SHA-256=ujfvlBjQBa9MNHebH8WpQWP7qQO1L+cI+JH//YvWTq4=,
+                signature:          keyId="na",headers="(request-target) host mydate digest",algorithm="ecdsa-sha256",signature="1c3046022100da65438f46df2950b3c6cb931a73031a9dee9faaf1ea8d8dd1d83d5ac026635f022100aabe5483c7bd10c3a468fe720d0fbec256fa3e904e16ff9f330ef13f7921700b"
+            },
+      body: { "select": ["*"], "from": "_collection"}
+ }
 ```
-
-The signature should be the SHA3-256 of the original query, signed with your private key, according to [RFC 6979](https://tools.ietf.org/html/rfc6979) standards.
 
 ### Signed Transactions
-If `fdb-group-open-api` is set to true, then you do not need to sign your transactions.
+If `fdb-group-open-api` is set to true, then you do not need to sign your transactions. Each database comes with a default auth record, which is either provided by you or automatically generated (see [config options](/docs/getting-started/installation#config-options)). If `fdb-group-open-api` is set to true, then all transactions submitted to `/transact` will be signed with this default private key unless otherwise specified. 
 
-Each database comes with a default auth record, which is stored in the `_db/anonymous` predicate in that database.
+All signed transactions need to be submitted to the [`/command` endpoint](/api/downloaded-endpoints/overview). Transactions can be sent to the `/command` endpoint, regardless of whether `fdb-group-open-api` is true or not. All transactions submitted will be attributed to the auth record that signs the transactions, not the default auth record (if there is one).
 
-Optionally, in a given transaction, you can include an alternate auth record with which to sign your transaction. This is done by passing in an additional map with your transaction. The additional map should be in the `_tx` collection. The predicates in the `_tx` collection are specified below:
+The `/command` endpoint takes a map with two keys:
 
-Predicate | Type | Description
--- | -- | -- 
-`_tx/id` | `string` |  (optional) A unique identifier for this tx.
-`_tx/auth` | `ref` | (optional) A reference to the `_auth` for this transaction. This auth signs the transaction.
-`_tx/authority` | `ref` | (optional) A reference to an `_auth` record that acts as an authority for this transaction. 
-`_tx/nonce` | `long` | (optional) A nonce that helps ensure identical transactions have unique txids, and also can be used for logic within smart functions (not yet implemented). . Note this nonce does not enforce uniqueness, use _tx/altId if uniqueness must be enforced.
-`_tx/altId` | `string` | (optional) Alternative Unique ID for the transaction that the user can supply.
+Key | Description
+--- | ---
+cmd | SHA3-256 hash of the stringified command map
+sig | ECDSA signature of the value of the cmd key. 
 
-For example, I could specify a  `_tx/id`, `_tx/auth`, `_tx/nonce` in my transaction as follows. 
+When submitting a transaction, the command map of type `tx` (transaction) needs to have the following keys in the following order. Documentation on command of type `new-db` and `default-key` is forthcoming. 
 
-```all
-[{
-    "_id": "_collection",
-    "name": "movie"
-},
-{
-    "_id": "_tx",
-    "auth": ["_auth/id", "8ykdsldf329433"]
-    "id": "moviesColl",
-    "nonce": 123456789
-}]
-```
+#### Command Map
 
-### Private Key
+Key | Description
+--- | ---
+type | `tx`, `new-db`, or `default-key`. 
+db | `network/dbid`
+tx | The body of the transaction
+auth | `_auth/id` of the auth
+fuel | Max integer for the amount of fuel to use for this transaction
+nonce | Integer nonce, to ensure that the command map is unique.
+expire | Epoch milliseconds after which point this transaction can no longer be submitted. 
 
-The private key that signs is not determined by the auth record that you may or may not specify in the transaction. Rather it is determined by your network and database configuration.
+#### Sig
 
-Every node of Fluree can either specify a private key or private key file location (as [configured at start-up](/docs/getting-started/installation#config-option)). If neither is specified, a `default-private-key.txt` file will be created when an instance of Fluree starts up for the first time, and an assocatied auth record that corresponds to the private key will be added to the master database with root access.  
-
-If a particular [auth is specified in the transaction](/api/signed-endpoints/signatures#signed-transactions), then the default auth record signs the transaction and is listed as the [authority](/docs/identity/auth-records#authority), while the specified auth is listed as the transaction `_auth`. 
-
-Even if no auth record is specified, the transaction will be signed by the default auth or anonymous auth. All transactions are signed, regardless of the database or network configuration.
+In order to get the `sig`, you need to get the SHA3-256 hash of the stringified command. That hash is then signed using Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the `secp256k1 curve`. The resulting signature is DER encoded and returned as a hex-string. In addition, after adding 27 to the recoveryByte, that number is converted into a hex string, and prepended to the rest of the signature. 
 
 ### Verifying Signatures
 
-ECDSA allows for recovery of the public key from a signature, so the original transaction and signature are the only two things required in order to verify that a signature is valid. There are online tools that allow you to independently verify a signature based on the signature + original transaction. 
+ECDSA allows for recovery of the public key from a signature, so the original transaction and signature are the only two things required in order to verify that a signature is valid. There are online tools that allow you to independently verify a signature based on the signature + original transaction. <a href="https://github.com/fluree/cryptography" target="_blank">Our cryptography GitHub repo</a> also has functions that allow you to verify any signatures.
 
+### Examples
+
+You can see examples of how to use signed transaction in the [Cryptocurrency](/docs/examples/cryptocurrency), [Voting](/docs/examples/voting), and [Supply Chain](/docs/examples/supply-chain) sample apps. 

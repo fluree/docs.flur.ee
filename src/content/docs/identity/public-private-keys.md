@@ -4,7 +4,15 @@ In Fluree, identity is established through 256 bit public and private key pairs.
 
 Fluree uses the Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the [`secp256k1` curve](http://www.secg.org/sec2-v2.pdf), with [Base58Check encoding](https://en.bitcoin.it/wiki/Base58Check_encoding#Background). 
 
-ECDSA keys are used by most blockchains, including Ethereum and Bitcoin, and are preferable to RSA (Rivest-Shamir-Adleman) keys, because ECDSA 256 bit keys are as secure as 3072 bit RSA keys. 
+ECDSA keys are used by most blockchains, including Ethereum and Bitcoin, and are preferable to RSA (Rivest-Shamir-Adleman) keys, because 256 bit ECDSA keys are as secure as 3072 bit RSA keys. 
+
+### Generating a Public-Private Key/Auth Id Triple
+
+There are many ways to generate a public-private key/auth id triple:
+
+1. In the downloadable version of Fluree, you can run the following command to generate a public key, private key, and auth id. `./fluree_start.sh :keygen`
+2. In the user interface, in either the hosted or the downloadable version, you can go to Permissions and View Permissions by Auth. From there, you can click, "Generate Keys" to generate valid keys. You can also do so from FlureeQL -> Transact. 
+3. We provide Javascript functions to generate these triples in the <a href="https://github.com/fluree/cryptography" target="_blank">cryptography repo</a>.
 
 ### Intro to Public-Private Keys
 
@@ -30,3 +38,9 @@ Base58Check encoding is the same encoding used in Bitcoin, and was developed by 
 ### Auth Id
 
 Once you have a public-private key-pair, you can generate an auth id by hashing the public key with SHA3-256 and then RIPEMD-160. An auth record with this id needs to be in the database in order for a transaction signed with the corresponding private key to be valid.
+
+### Default Private Key
+
+Every node of Fluree can either specify a private key or private key file location (as [configured at start-up](/docs/getting-started/installation#config-option)). If neither is specified, a `default-private-key.txt` file will be created when an instance of Fluree starts up for the first time, and an assocatied auth record that corresponds to the private key will be added to the master database with root access. 
+
+If `fdb-group-open-api`, anyone can issue a query without signing it, and unsigned transactions will be signed with the default private key. 
