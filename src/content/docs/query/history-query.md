@@ -137,3 +137,32 @@ curl \
 ```sparql
 Not supported
 ```
+
+### Pretty-Print History Query
+
+In FlureeQL, you can pretty print the results of a history query by adding `"pretty-print": true` to your query map. Any format of history query can be pretty-printed. 
+
+```flureeql
+{
+  "history": [null, "person/handle", "jdoe"]
+  "pretty-print": true
+}
+```
+
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -d '{
+  "history": [null, "person/handle", "jdoe"]
+  "pretty-print": true
+}' \
+ [HOST]/api/db/block
+```
+
+```graphql
+Not supported
+```
+
+```sparql
+Not supported
+```

@@ -122,7 +122,6 @@ To query a range of block, starting with a lower limit, specify just the lower l
 ```curl
 curl \
    -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
     "block": [3]
 }' \
@@ -132,6 +131,35 @@ curl \
 query  {
   block(from: 3)
 }
+```
+
+```sparql
+Not supported
+```
+
+### Pretty-Print Block Query
+
+In FlureeQL, you can pretty print the results of a block query by adding `"pretty-print": true` to your query map. Any format of block query can be pretty-printed. 
+
+```flureeql
+{
+  "block": [3],
+  "pretty-print": true
+}
+```
+
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -d '{
+  "block": [3],
+  "pretty-print": true
+}' \
+ [HOST]/api/db/block
+```
+
+```graphql
+Not supported
 ```
 
 ```sparql
