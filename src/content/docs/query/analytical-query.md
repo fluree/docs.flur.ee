@@ -343,6 +343,8 @@ Source | Description
 -- | --
 `$fdb` | Default source. The current version of a given Fluree. Can be omitted. 
 `$fdb3` | Fluree at a specified block, for example `$fdb10` is a given database at block 10. 
+`$fdb2019-03-14T20:59:36.097Z` | Fluree at a specified ISO-8601 formatted wall clock time. 
+`$fdbPT5M` | Fluree as of a specified ISO-8601 formatted duration ago. For example, `$fdbPT5M` is as of 5 minutes ago.  
 `$wd` | Wikidata 
 
 For example, if we wanted to see whether "zsmith" as of block 8 shared a favorite number with "jdoe" as of block 9.
