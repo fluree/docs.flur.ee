@@ -329,15 +329,11 @@ When working this into a real-life application, you may also add a rule that a u
 
 Now that we've done our part to prevent voter fraud, we can propose a change. `["_user/username", "softCell"]` wants to change their username to "hardCell", so they propose a change, and create a vote. 
 
-When we submit a transaction without a signature, it is signed with the default auth record. However, in order to use `softCell`'s auth, we need to sign our transactions with their auth record. We do this by submitting a request to the `/command` endpoint.
-
- ~ ~ TO DO ADD LINK AFTER SECTION ADDED ~ ~
+When we submit a transaction without a signature, it is signed with the default auth record. However, in order to use `softCell`'s auth, we need to sign our transactions with their auth record. We do this by submitting a request to the [`/command` endpoint](/api/downloaded-endpoints/downloaded-examples).
 
 We can also use a tool in the user interface to sign transactions as a particular private key. To access this tool, we need to go to `/flureeql`, select "Transact", and then select "Own Private Key" from the dropdown. 
 
-If using the user interface, you need to include the private key in the form. If you're not using the user interface, you will need to sign the following transaction with the private key. You will also need to specify softCell's auth in either the form or the signed transaction.
-
- ~ ~ TO DO ADD LINK AFTER SECTION ADDED ~ ~
+If using the user interface, you need to include the private key in the form. If you're not using the user interface, you will need to sign the following transaction with the private key. You will also need to specify softCell's auth in either the form or the [signed transaction](/docs/identity/signatures#signed-transactions).
 
 The private key for softCell is `4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4`
 and the `_auth/id` is `TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK`.

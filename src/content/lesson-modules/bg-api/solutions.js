@@ -5,8 +5,8 @@ export default {
     "Both GraphQL queries AND",
      "GraphQL transactions should",
      "be POSTed to the /graphql endpoint."],
-    "4": ["1. When `fdb-group-open-api` is true. ",
-    "2. When `fdb-group-open-api` is true. ",
+    "4": ["1. When `fdb-api-open` is true. ",
+    "2. When `fdb-api-open` is true. ",
 "3. False, the default auth record", "signs the transaction."],
     "5": "C",
     "6": "api/signin"

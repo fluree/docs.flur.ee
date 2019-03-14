@@ -4,8 +4,8 @@ In Fluree, you can sign both queries and transactions. The signature proves that
 
 Fluree signatures comply to [RFC 6979](https://tools.ietf.org/html/rfc6979) standards.
 
-### `fdb-group-open-api`
-For both queries and transactions, a signature is not required if the option `fdb-group-open-api` is set to true (default [config option](/docs/getting-started/installation#config-options) for the downloaded version of Fluree). In fact, the signature in signed query will be ignored if `fdb-group-open-api` is set to true. 
+### `fdb-api-open`
+For both queries and transactions, a signature is not required if the option `fdb-api-open` is set to true (default [config option](/docs/getting-started/installation#config-options) for the downloaded version of Fluree). In fact, the signature in signed query will be ignored if `fdb-api-open` is set to true. 
 
 In the case of transactions, if you send a transaction to `/transact` or to `/graphql`, the transaction will be signed with a default private key. 
 
@@ -23,10 +23,10 @@ We recommend using the Javascript library or the [user interface](#user-interfac
 
 Fluree also has a user interface to help users submit signed queries and transactions.
 
-This can be found in the user interface by navigating to `/flureeql`. By clicking the "sign" button, you can toggle whether or not there is an option to sign queries and transactions. Note that the hosted version of Fluree does not allow you to sign queries, because `fdb-group-open-api` is set to true for all hosted accounts, so a signed query would be ignored regardless.
+This can be found in the user interface by navigating to `/flureeql`. By clicking the "sign" button, you can toggle whether or not there is an option to sign queries and transactions. Note that the hosted version of Fluree does not allow you to sign queries, because `fdb-api-open` is set to true for all hosted accounts, so a signed query would be ignored regardless.
 
 ### Signed Queries
-If `fdb-group-open-api` is set to true, then you do not need to sign your queries. In fact, the signature in a signed query will be ignored if `fdb-group-open-api` is set to true. 
+If `fdb-api-open` is set to true, then you do not need to sign your queries. In fact, the signature in a signed query will be ignored if `fdb-api-open` is set to true. 
 
 If you do need to sign your queries, you should have access to your private key. Your private key needs to be [connected to a valid auth record](/docs/identity/auth-records) in the database.
 
@@ -63,9 +63,9 @@ The body of a signed query is same query as would be submitted in an unsigned qu
 ```
 
 ### Signed Transactions
-If `fdb-group-open-api` is set to true, then you do not need to sign your transactions. Each database comes with a default auth record, which is either provided by you or automatically generated (see [config options](/docs/getting-started/installation#config-options)). If `fdb-group-open-api` is set to true, then all transactions submitted to `/transact` will be signed with this default private key unless otherwise specified. 
+If `fdb-api-open` is set to true, then you do not need to sign your transactions. Each database comes with a default auth record, which is either provided by you or automatically generated (see [config options](/docs/getting-started/installation#config-options)). If `fdb-api-open` is set to true, then all transactions submitted to `/transact` will be signed with this default private key unless otherwise specified. 
 
-All signed transactions need to be submitted to the [`/command` endpoint](/api/downloaded-endpoints/overview). Transactions can be sent to the `/command` endpoint, regardless of whether `fdb-group-open-api` is true or not. All transactions submitted will be attributed to the auth record that signs the transactions, not the default auth record (if there is one).
+All signed transactions need to be submitted to the [`/command` endpoint](/api/downloaded-endpoints/overview). Transactions can be sent to the `/command` endpoint, regardless of whether `fdb-api-open` is true or not. All transactions submitted will be attributed to the auth record that signs the transactions, not the default auth record (if there is one).
 
 The `/command` endpoint takes a map with two keys:
 

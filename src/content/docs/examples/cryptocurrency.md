@@ -305,15 +305,11 @@ mutation restrictCrypto ($restrictCryptoTx: JSON) {
 
 We are not quite done with our example yet, but we can test it to this point. 
 
-When we submit a transaction without a signature, it is signed with the default auth record. However, to add or subtract balance from a wallet, we need to sign our transactions as a particular auth record. We do this by submitting a request to the `/command` endpoint.
-
- ~ ~ TO DO ADD LINK AFTER SECTION ADDED ~ ~
+When we submit a transaction without a signature, it is signed with the default auth record. However, to add or subtract balance from a wallet, we need to sign our transactions as a particular auth record. We do this by submitting a request to the [`/command` endpoint](/api/downloaded-endpoints/downloaded-examples).
 
 We can also use a tool in the user interface to sign transactions as a particular private key. To access this tool, we need to go to `/flureeql`, select "Transact", and then select "Own Private Key" from the dropdown. 
 
-The first item we will attempt is cryptoMan adding 5 to cryptoMan's own `wallet/balance`. If using the user interface, you need to include the private key in the form. If you're not using the user interface, you will need to sign the following transaction with the private key. You will also need to specify cryptoMan's auth in either the form or the signed transaction.
-
- ~ ~ TO DO ADD LINK AFTER SECTION ADDED ~ ~
+The first item we will attempt is cryptoMan adding 5 to cryptoMan's own `wallet/balance`. If using the user interface, you need to include the private key in the form. If you're not using the user interface, you will need to sign the following transaction with the private key. You will also need to specify cryptoMan's auth in either the form or the [signed transaction](/docs/identity/signatures#signed-transactions).
 
 The private key for cryptoMan is `745f3040cbfba59ba158fc4ab295d95eb4596666c4c275380491ac658cf8b60c`. His `_auth/id` is `TfDao2xAPN1ewfoZY6BJS16NfwZ2QYJ2cF2`.
 

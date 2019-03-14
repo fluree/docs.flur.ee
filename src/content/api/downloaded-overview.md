@@ -27,7 +27,7 @@ Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]` | Ge
 Sub | POST | `/fdb/sub` | Handles subscriptions
 
 
-For both queries and transactions, a signature is not required if the option `fdb-group-open-api` is set to true (default for the downloaded version of Fluree). 
+For both queries and transactions, a signature is not required if the option `fdb-api-open` is set to true (default for the downloaded version of Fluree). 
 
 More information on [signing queries](/docs/identity/signatures#signed-queries) and [signing transactions](/docs/identity/signatures#signed-transactions) can be found in the linked sections. 
 
