@@ -186,7 +186,7 @@ We will need to create two new rules, `viewAllPeople` and `viewAllComments`.
     "_id": "_role",
     "id": "level2User",
     "doc": "A level 2 user. Can view all chats, edit own chats, and view all people.",
-    "rules": [["_rule/id", "viewAllChats"], ["_rule/id", "editOwnChats"], "_rule$viewAllPeople", "_role$viewAllComments"]
+    "rules": [["_rule/id", "viewAllChats"], ["_rule/id", "editOwnChats"], "_rule$viewAllPeople", "_rule$viewAllComments"]
   },
   {
     "_id": "_rule$viewAllPeople",
