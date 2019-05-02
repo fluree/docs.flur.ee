@@ -351,7 +351,7 @@ Transactions not supported in SPARQL.
 
 ### Testing Our Rules
 
-If [`fdb-api-open`](/docs/getting-started/installation#config-options) is set to true, then that means that all queries are performed as a root auth. This means that any signatures in your queries will be ignored, and thus hyou will not be able to test the permissioned queries. In the hosted version, you cannot change this option. 
+If [`fdb-api-open`](/docs/getting-started/installation#config-options) is set to true, then that means that all queries are performed as a root auth. This means that any signatures in your queries will be ignored, and thus you will not be able to test the permissioned queries. In the hosted version, you cannot change this option. 
 
 If you are using the downloaded FlureeDB, and then you can stop your server, change the `fdb-api-open` setting, and you will be able to test out the signed queries. 
 
@@ -383,14 +383,14 @@ Results:
     },
     "chat/instant": 1552654461783,
     "chat/comments": [
-      null
+      {"_id": 387028092977153}
     ],
     "_id": 369435906932737
   }
 ]
 ```
 
-You can see that, `jdoe` cannot view comments, so `chat/comments` returns null. 
+You can see that, `jdoe` cannot view comments, so `chat/comments` returns no details. 
 
 When we query all people:
 
