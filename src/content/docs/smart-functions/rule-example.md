@@ -379,7 +379,7 @@ Results:
     },
     "chat/instant": 1552654461783,
     "chat/comments": [
-      {"_id": 387028092977153}
+      null
     ],
     "_id": 369435906932737
   }
