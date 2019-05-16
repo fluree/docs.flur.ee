@@ -4,6 +4,17 @@ In this section, we show you how to select all flakes from a block or a selectio
 
 All FlureeQL queries in this section can be issued to an API endpoint ending in `/block`.
 
+### Block Clauses
+
+A block query requires a `block` key, which specifies a block or range of blocks to return. There are a variety of options for how to format this value. They are listed below. 
+
+A block query can also optionally include a `pretty-print` key, which pretty prints the results if `true`.
+
+Key | Required? | Description
+-- | -- | -- 
+`block` | yes | A block or range of blocks to return, options for the format of this value are listed below.
+`pretty-print` | no | Optional, `true` or `false`, whether to pretty-print results. Default `false`
+
 ### Query Single block
 
 To query a single block, you specify the block number, an ISO-8601 formatted wall clock time, or an ISO-8601 formatted duration. 

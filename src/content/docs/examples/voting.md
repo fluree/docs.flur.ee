@@ -349,7 +349,7 @@ A request to `/command` will return a `_tx/id`. The `_tx/id` is the unique SHA2-
 
 If there is an error in the transaction, that will appear in `_tx/error`. If the transaction was submitted successfully, there will not be a `_tx/error`. 
 
-If you are using the user interace, the "Results" editor will automatically show you the results of issuing the above query after submitting a command. 
+If you are using the user interface, the "Results" editor will automatically show you the results of issuing the above query after submitting a command (unless the auth record you are using cannot view subjects in the `_tx` collection).
 
 Soft Cell also adds their auth record to the `vote/yesVotes` predicate.
 
@@ -395,7 +395,7 @@ FlureeQL:
 {
     "select": [{"?vote": ["*"]}],
     "where": [["?change", "change/subject", "?subject"],
-    ["?subject", "_user/username", "softCell"]
+    ["?subject", "_user/username", "softCell"],
     ["?change", "change/predicate", "?predicate"],
     ["?predicate", "_predicate/name", "_user/username"],
     ["?change", "change/object", "hardCell"],
@@ -582,7 +582,7 @@ After adding more votes, the following transaction will pass. We should sign thi
 }]
 ``` 
 
-We now have a fully operational voting system. If we want to add a voting requirement to any other predicates, we would simply have to issue a transaction specifying a new function (or re-using `2VotesMajority`), and adding that function to any `_predicate`. For example, the below transction would require at least 10 votes with more than 75% voting yes in order to change smart function code. 
+We now have a fully operational voting system. If we want to add a voting requirement to any other predicates, we would simply have to issue a transaction specifying a new function (or re-using `2VotesMajority`), and adding that function to any `_predicate`. For example, the below transaction would require at least 10 votes with more than 75% voting yes in order to change smart function code. 
 
 ```
 [{

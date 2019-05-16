@@ -44,7 +44,7 @@ Transactions not supported in SPARQL
 Update using subject id: 
 ```flureeql
 [{
-  "_id":      4294967296001,
+  "_id":      351843720888321,
   "fullName": "Jane Doe Updated By Numeric _id"
 }]
 ```
@@ -53,7 +53,7 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-  "_id":      4294967296001,
+  "_id":      351843720888321,
   "fullName": "Jane Doe Updated By Numeric _id"
 }]' \
   [HOST]/api/db/transact
@@ -65,7 +65,7 @@ mutation updateById ($myUpdateByIdTx: JSON) {
 }
 
 {
-  "myUpdateByIdTx": "[{ \"_id\": 4294967296001, \"fullName\": \"Jane Doe Updated By Numeric _id\" }]"
+  "myUpdateByIdTx": "[{ \"_id\": 351843720888321, \"fullName\": \"Jane Doe Updated By Numeric _id\" }]"
 }
 ```
 

@@ -97,6 +97,7 @@ The below transaction creates the following predicates:
 - `person/follows`
 - `person/favNums`
 - `person/favArtists`
+- `person/user`
 - `chat/message`
 - `chat/person`
 - `chat/instant`
@@ -141,6 +142,12 @@ The below transaction creates the following predicates:
   "type":   "ref",
   "restrictCollection": "artist",
   "multi":  true
+},
+{
+  "_id":  "_predicate",
+  "name": "person/user",
+  "type": "ref",
+  "restrictCollection": "_user"
 },
 {
   "_id":  "_predicate",
@@ -234,6 +241,12 @@ The below transaction creates the following predicates:
 },
 {
   "_id":  "_predicate",
+  "name": "person/user",
+  "type": "ref",
+  "restrictCollection": "_user"
+},
+{
+  "_id":  "_predicate",
   "name": "chat/message",
   "doc":  "A chat message",
   "type": "string"
@@ -303,10 +316,7 @@ mutation addArtistPredicates ($myArtistTx: JSON) {
 
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
-{"myPersonTx": "[{\"_id\":\"_predicate\",\"name\":\"person/handle\",\"doc\":\"The persons unique handle\",\"unique\":true,\"type\":\"string\"},{\"_id\":\"_predicate\",\"name\":\"person/fullName\",\"doc\":\"The persons full name.\",\"type\":\"string\",\"index\":true},{\"_id\":\"_predicate\",\"name\":\"person/follows\",\"doc\":\"Any persons this subject follows\",\"type\":\"ref\",\"restrictCollection\":\"person\"},{\"_id\":\"_predicate\",\"name\":\"person/favNums\",\"doc\":\"The person's favorite numbers\",\"type\":\"int\",\"multi\":true},{\"_id\":\"_predicate\",\"name\":\"person/favArtists\",\"doc\":\"The person's favorite artists\",\"type\":\"ref\",\"restrictCollection\":\"artist\",\"multi\":true}]",
-  "myChatTx": "[{ \"_id\": \"_predicate\", \"name\": \"chat/message\", \"doc\": \"A chat message\", \"type\": \"string\"},{ \"_id\": \"_predicate\", \"name\": \"chat/person\", \"doc\": \"A reference to the person that created the message\", \"type\": \"ref\", \"restrictCollection\": \"person\"},{ \"_id\": \"_predicate\", \"name\": \"chat/instant\", \"doc\": \"The instant in time when this chat happened.\", \"type\": \"instant\", \"index\": true},{ \"_id\": \"_predicate\", \"name\": \"chat/comments\", \"doc\": \"A reference to comments about this message\", \"type\": \"ref\", \"component\": true, \"multi\": true, \"restrictCollection\": \"comment\"}]",
-  "myCommentTx": "[{ \"_id\": \"_predicate\", \"name\": \"comment/message\", \"doc\": \"A comment message.\", \"type\": \"string\"},{ \"_id\": \"_predicate\", \"name\": \"comment/person\", \"doc\": \"A reference to the person that made the comment\", \"type\": \"ref\", \"restrictCollection\": \"person\"}]",
-  "myArtistTx": "[{\"_id\":\"_predicate\",\"name\":\"artist/name\",\"type\":\"string\",\"unique\":true}]"
+{"myPersonTx": "[{\"_id\":\"_predicate\",\"name\":\"person/handle\",\"doc\":\"The persons unique handle\",\"unique\":true,\"type\":\"string\"},{\"_id\":\"_predicate\",\"name\":\"person/fullName\",\"doc\":\"The persons full name.\",\"type\":\"string\",\"index\":true},{\"_id\":\"_predicate\",\"name\":\"person/follows\",\"doc\":\"Any persons this subject follows\",\"type\":\"ref\",\"restrictCollection\":\"person\"},{\"_id\":\"_predicate\",\"name\":\"person/favNums\",\"doc\":\"The person's favorite numbers\",\"type\":\"int\",\"multi\":true},{\"_id\":\"_predicate\",\"name\":\"person/favArtists\",\"doc\":\"The person's favorite artists\",\"type\":\"ref\",\"restrictCollection\":\"artist\",\"multi\":true},{\"_id\":\"_predicate\",\"name\":\"person/user\",\"type\":\"ref\",\"restrictCollection\":\"_user\"},{\"_id\":\"_predicate\",\"name\":\"chat/message\",\"doc\":\"A chat message\",\"type\":\"string\"},{\"_id\":\"_predicate\",\"name\":\"chat/person\",\"doc\":\"A reference to the person that created the message\",\"type\":\"ref\",\"restrictCollection\":\"person\"},{\"_id\":\"_predicate\",\"name\":\"chat/instant\",\"doc\":\"The instant in time when this chat happened.\",\"type\":\"instant\",\"index\":true},{\"_id\":\"_predicate\",\"name\":\"chat/comments\",\"doc\":\"A reference to comments about this message\",\"type\":\"ref\",\"component\":true,\"multi\":true,\"restrictCollection\":\"comment\"},{\"_id\":\"_predicate\",\"name\":\"comment/message\",\"doc\":\"A comment message.\",\"type\":\"string\"},{\"_id\":\"_predicate\",\"name\":\"comment/person\",\"doc\":\"A reference to the person that made the comment\",\"type\":\"ref\",\"restrictCollection\":\"person\"},{\"_id\":\"_predicate\",\"name\":\"artist/name\",\"type\":\"string\",\"unique\":true}]"
 }
 
 ```

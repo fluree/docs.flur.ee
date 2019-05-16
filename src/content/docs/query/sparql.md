@@ -29,19 +29,11 @@ SPARQL queries, as supported in FlureeQL are comprised of a:
 ### SELECT Clause
 In the SELECT clause, list all the variables that you want returned in your results. Variables must begin with a `?`. It does not matter what you call each variable, as long as you list those variables in your WHERE clause. 
 
-An example SELECT clause: 
-
-```all
- SELECT ?chat ?message ?instant ?person ?handle ?fullName
-```
+An example SELECT clause `SELECT ?chat ?message ?instant ?person ?handle ?fullName`
 
 If you are submitting a query that uses any of the prefixes supported by Wikidata, you can optionally add the labels for the variables you are returning by just adding an addition variable with the name + `Label`. More on this in [SPARQL with Outside Sources](#sparql-with-outside-sources).
 
-For example, in the below example, the variable `?horse` must be included in your WHERE clause, but `?horseLabel` does not. 
-
-```all
- SELECT ?horse ?horseLabel
-```
+For example, with the select clause `SELECT ?horse ?horseLabel`, the variable `?horse` must be included in your WHERE clause, but `?horseLabel` does not. 
 
 You can use the following aggregate functions in your SELECT clause. Note that because of the way the results are displayed, while the `AS ?varName` of each aggregate function is required, the variable name is not shown in the results. You can also combine multiple aggregate and non-aggregate items in the same SELECT clause. 
 
@@ -67,13 +59,8 @@ WHERE clauses are comprised of a series of triples, which correspond to subject-
 
 Note: If you have already looked at [FlureeQL Analytical Queries](/docs/query/analytical-queries), then this section will look very familiar. FlureeQL Analytical Queries use the same concept of binding variables across triples, although the syntax is slightly different. In addition, the source of the data in a given triple is specified as a prefix, rather than as the first item in a five-tuple. We'll explain this fully later. 
 
-The basic building block of WHERE clause is the triple. To start, let's take a look at a WHERE clause with a single triple:
+The basic building block of WHERE clause is the triple. To start, let's take a look at a WHERE clause with a single triple `WHERE { ?person fd:person/handle "jdoe".}`.
 
-```all
-WHERE {
-  ?person fd:person/handle "jdoe".
-}
-```
 
 Triple-Part | Example | Explanation
 -- | -- | --
@@ -84,6 +71,7 @@ object | `jdoe` | We are looking for results where the subject can be anything, 
 We can combine this simple triple, `?person fd:person/handle "jdoe"` with additional triples, for example:
 
 ```all
+SELECT ?person
 WHERE {
   ?person fd:person/handle "jdoe".
   ?person fd:person/fullName ?fullName.
@@ -102,6 +90,7 @@ Both the first and the second triples use the `?person` variable, which means th
 If two triples contain the same subject, then we can shorten the triples by using a semicolon `;` after the first clause and omitting the subject in all subsequent triples that share a subject. Make sure that the final clause in the group is has a period `.` at the end. 
 
 ```all
+SELECT ?person ?fullName ?favNums
 WHERE {
   ?person fd:person/handle "jdoe";
           fd:person/fullName ?fullName;
@@ -109,9 +98,10 @@ WHERE {
 }
 ```
 
-If two triples contain the same subject and the same predicate, then we can shorten the triples by using a comma `,` after the first clause and omitting both the subject and predicate in all subsequent clauses that share both a subject and a predicate. Spacing, tabs, and new-lines do not effect the result of the query. In the examples, we write both objects on the same line for readability. 
+If two triples contain the same subject and the same predicate, then we can shorten the triples by using a comma `,` after the first clause and omitting both the subject and predicate in all subsequent clauses that share both a subject and a predicate. Spacing, tabs, and new-lines do not effect the result of the query. In the examples, we write both objects on the same line for readability. The below query won't return anything, because no person has two different handles.
 
 ```all
+SELECT ?person
 WHERE {
   ?person fd:person/handle "jdoe", "zsmith".
 }
@@ -120,6 +110,7 @@ WHERE {
 We can also combine semicolons `;` and commas `,`. In the below example, we moved `fd:person/handle "jdoe", "zsmith"` to the bottom of the group of clauses for readability- it does not change the results of the query. 
 
 ```all
+SELECT ?person ?fullName ?favNums
 WHERE {
   ?person fd:person/fullName ?fullName;
           fd:person/favNums  ?favNums;

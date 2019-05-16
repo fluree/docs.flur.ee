@@ -69,7 +69,7 @@ FlureeQL example:
 {
   "_id":    "person$alana",
   "handle": "adean",
-  "fullName": "alanaDean"
+  "fullName": "Alana Dean"
 }]
 
 ```
@@ -80,11 +80,11 @@ FlureeQL example:
 ```all
 [{
   "_id":     "chat",
-  "message": "This is my first comment ever! So smart.",
+  "message": "I have something to say!",
   "person":  {
-    "_id":    "person$alana",
-    "handle": "adean",
-    "fullName": "alanaDean"
+    "_id":    "person$bBolton",
+    "handle": "bbolton",
+    "fullName": "Bob Bolton"
     },
   "instant": "#(now)"
 }]

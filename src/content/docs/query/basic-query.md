@@ -69,7 +69,7 @@ Using a Subject Id:
 ```flureeql
 {
   "select": ["*"],
-  "from": 4299262263302
+  "from": 369435906932737
 }
 ```
 ```curl
@@ -78,7 +78,7 @@ curl\
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
   "select": ["*"],
-  "from": 4299262263302
+  "from": 369435906932737
 }'\
    [HOST]/api/db/query
 ```
@@ -89,7 +89,7 @@ Not supported
 ```sparql 
  SELECT ?message ?person ?instant ?comments
  WHERE {
-    4299262263302   fd:chat/message  ?message;
+    369435906932737   fd:chat/message  ?message;
                     fd:chat/person   ?person;
                     fd:chat/comments ?comments;
                     fd:chat/instant  ?instant.
@@ -145,7 +145,7 @@ In your "from" clause, list subject ids and unique-two tuples. Query results wil
 ```flureeql
 {
   "select": ["*"],
-  "from":  [4294967296001, ["person/handle", "jdoe"], 4299262263302,  ["person/handle", "zsmith"] ]
+  "from":  [369435906932737, ["person/handle", "jdoe"], 387028092977153,  ["person/handle", "zsmith"] ]
 }
 ```
 
@@ -157,7 +157,7 @@ curl \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
   "select": ["*"],
-  "from":  [4294967296001, ["person/handle", "jdoe"], 4299262263302,  ["person/handle", "zsmith"] ]
+  "from":  [369435906932737, ["person/handle", "jdoe"], 387028092977153,  ["person/handle", "zsmith"] ]
 }' \
    [HOST]/api/db/query
 ```
@@ -270,7 +270,7 @@ To limit the subjects returned, we can specify a where clause. A query cannot ha
 Where clauses can filter predicates using the following operations:
 `>`, `>=`, `<`, `<=`, and `=`.
 
-You can link multiple specifications with `AND`s or `OR`s. You cannot submit a 
+You can link multiple specifications with `AND`s or `OR`s. You cannot submit a where clause with both an `AND` and an `OR`.
 
 ```flureeql
 {

@@ -13,7 +13,7 @@ If you do need to specify a signature, such as in the case of testing out user p
 
 ### NPM Package
 
-Fluree has published a Javascript library that contains helper functions to help users sign queries and transactions. This an be downloaded via npm, `npm install fluree-cryptography`. 
+Fluree has published a Javascript library that contains helper functions to help users sign queries and transactions. This can be downloaded via npm, `npm install fluree-cryptography`. 
 
 The documentation (available on <a href="https://github.com/fluree/cryptography" target="_blank">GitHub</a>), guides you through how to generate keys, sign queries, and sign transactions. 
 

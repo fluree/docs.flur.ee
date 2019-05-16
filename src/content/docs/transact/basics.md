@@ -36,7 +36,6 @@ FlureeQL example:
   {
     "_id":    "_user$jdoe",
     "username": "jdoe",
-    "roles": [["_role/id", "chatUser"]],
     "auth": ["_auth$temp"]
   },
   {
@@ -45,7 +44,7 @@ FlureeQL example:
   },
   {
     "_id": "_auth$temp",
-    "key": "tempAuthRecord"
+    "id": "tempAuthRecord"
   }
 ]
 ```

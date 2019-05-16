@@ -324,7 +324,7 @@ A request to `/command` will return a `_tx/id`. In order to see if the transacti
 
 If there is an error in the transaction, that will appear in `_tx/error`. If the transaction was submitted successfully, there will not be a `_tx/error`. 
 
-If you are using the user interace, the "Results" editor will automatically show you the results of issuing the above query after submitting a command. 
+If you are using the user interface, the "Results" editor will automatically show you the results of issuing the above query after submitting a command (unless the auth record you are using cannot view subjects in the `_tx` collection).
 
 ```flureeql
 [{
@@ -361,7 +361,7 @@ Transactions not supported
 
 In the following transaction, cryptoMan will attempt to add balance to his OWN wallet. The transaction should fail with the error message, "You can only add to others balances, and only subtract from your own balance."
 
-If you are using the user interace, the error message will appear in the "Results" editor. If you're not using the user interface, remember that a request to `/command` will only return `_tx/id`, and you need to query `{ "select": ["*"],"from": ["_tx/id", TRANSACTION ID HERE ] }` in order to see the error. 
+If you are using the user interface, the error message will appear in the "Results" editor. If you're not using the user interface, remember that a request to `/command` will only return `_tx/id`, and you need to query `{ "select": ["*"],"from": ["_tx/id", TRANSACTION ID HERE ] }` in order to see the error. 
 
 The private key for cryptoMan is `745f3040cbfba59ba158fc4ab295d95eb4596666c4c275380491ac658cf8b60c`. His `_auth/id` is `TfDao2xAPN1ewfoZY6BJS16NfwZ2QYJ2cF2`.
 
@@ -572,7 +572,7 @@ Now, all the pieces of our cryptocurrency are in place. We have created a crypto
 
 For example, with our final function in place, no user can perform the following transaction, because it violates feature #4, as listed about. 
 
-We can try submitting the following transaction with cryptoWoman's private key. The following transaction adds to cryptoMan's wallet and subtracts from cryptoWoman's wallet. If we hadn't added the last function (crypto spent = crypto received), the following transction would have been valid. Now, if signed as cryptoWoman, it will return the error, "The values of added and retracted wallet/balance flakes need to be equal".
+We can try submitting the following transaction with cryptoWoman's private key. The following transaction adds to cryptoMan's wallet and subtracts from cryptoWoman's wallet. If we hadn't added the last function (crypto spent = crypto received), the following transaction would have been valid. Now, if signed as cryptoWoman, it will return the error, "The values of added and retracted wallet/balance flakes need to be equal".
 
 CryptoWoman's private key is `65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19`, and her `_auth/id` is `Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP`.
 
@@ -621,8 +621,6 @@ The following transaction spends as much cryptocurrency as it receives. However,
 The private key for cryptoWoman is `65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19`. Her `_auth/id` is `Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP`.
 
 But if we sign it as cryptoWoman, it will return an error. 
-
-CryptoWoman's private key is `745f3040cbfba59ba158fc4ab295d95eb4596666c4c275380491ac658cf8b60c`, and her `_auth/id` is `TfDao2xAPN1ewfoZY6BJS16NfwZ2QYJ2cF2`.
 
 ```flureeql
 [{

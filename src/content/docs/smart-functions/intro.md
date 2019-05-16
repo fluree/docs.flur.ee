@@ -58,11 +58,11 @@ Function | Arguments | Example | Description | Cost (in fuel)
 `mod` | `n` `d` | `(mod 64 10)` | Modulus of the first argument divided by the second argument. The mod function takes the rem of the two arguments, and if the either the numerator or denominator are negative, it adds the denominator to the remainder, and returns that value. Works on `integer` and `float`. | 10
 `max` | `arg1 arg2 ...` |  `(max 1 2 3)`| Returns the max of the provided values. Works on `integer`, `float`.  | 9 + count of objects in max
 `min` | `arg1 arg2 ...` |  `(min 1 2 3)`| Returns the min of the provided values. Works on `integer`, `float`.  | 9 + count of objects in min
-`max-attr-val` | `(max-attr-val \"person/age\")`| Returns the max of the provided predicate. Works on `integer`, `float`.  | 10 + cost of fuel to query max-attr-val
+`max-pred-val` | `predicate-name` | `(max-pred-val \"person/age\")`| Returns the max of the provided predicate. Works on `integer`, `float`.  | 10 + cost of fuel to query max-pred-val
 `str` | `arg1 arg2 ...` | `(str \"flur.\" \"ee\")` | Concatenates all strings in the vector. Works on `integer`, `string`, `float`, and `boolean`. | 10
-`if-else` | `test` `true` `false` | `(if-else (= 1 1) \"John\" \"Jane\")` | Takes a test as a first argument. If the test succeeds, return the second argument, else return the third argument. | 10
-`and` | `arg1 arg2 ...` | `(and (= 1 1) (= 2 2) )` | Returns true if all objects within the vector are non-nil and non-false, else returns false. | 9 + count of objects in and
-`or` | `arg1 arg2 ...` | `(or (= 1 1) (= 2 3))` | Returns true if any of the objects within the vector are non-nil and non-false, else returns false. | 9 + count of objects in or
+`if-else` | `test` `true` `false` | `(if-else (== 1 1) \"John\" \"Jane\")` | Takes a test as a first argument. If the test succeeds, return the second argument, else return the third argument. | 10
+`and` | `arg1 arg2 ...` | `(and (== 1 1) (== 2 2) )` | Returns true if all objects within the vector are non-nil and non-false, else returns false. | 9 + count of objects in and
+`or` | `arg1 arg2 ...` | `(or (== 1 1) (== 2 3))` | Returns true if any of the objects within the vector are non-nil and non-false, else returns false. | 9 + count of objects in or
 `boolean` | `x` | `(boolean 1)` | Coerces any non-nil and non-false value to true, else returns false. | 10
 `nil?` | `x` | `(nil? 2)` | If nil, returns true, else returns false. | 10
 `count` | `[s]` or `string` | `(count  \"Appleseed\")`, `#(count  [1 2 3])` | Returns the count of letters in a string or the number of items in a vector. | 9 + count of objects in count
@@ -73,7 +73,7 @@ Function | Arguments | Example | Description | Cost (in fuel)
 `lower-case` | `str.` | `(lower-case \"pear\")` | Returns lower-case version of string. | 10
 `nth` | `collection integer` | `(nth [1 2 3] 0)` | Returns the `nth` element in a collection, for example `(nth [1 2 3] 0)` returns `1`. | 9 + count of objects in the collection
 `get-all` | `subject` `[path]` | `(contains? (get-all ?s [\"chat/person\" \"person/user\"]) ?user)` | Returns nil or a set of all of a certain predicate (or predicate-path) from an subject. | 9 + length of path
-`valid-email?` | `x` | `(valid-email? (?o))` | Checks whether a value is a valid email using the following pattern, "`[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`. | 10
+`valid-email?` | `x` | `(valid-email? (?o))` | Checks whether a value is a valid email using the following pattern, `[a-z0-9!#$%&'*+/=?^_{\|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_{\|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`. | 10
 `re-find` | `pattern` `string` | `(re-find "^[a-zA-Z0-9_][a-zA-Z0-9\.\-_]{0,254}" \"apples1\")` | Checks whether a string follows a given regex pattern. | 10 
 `db` | none | `(== (get db \"dbid\") 2)` | Returns a database object with the following keys: dbid, block, and permissions. | 10
 `query` | `select-string` `from-string` `where-string` `block-string` `limit-string` |  `(get (query \"[*]\" [\"book/editor\" \"Penguin\"] nil nil nil) \"book/year\")` | Allows you to query the current database. The select-string should be inputted without any commas. The select-string and can be inputted without any quotation marks, for example, `"[* {person/user [*]}]"`, or you can optionally doubly-escape those strings `"[\\\"*\\\" {\\\"person/user\\\" [\\\"*\\\"]}]"`. | Fuel required for the query.  

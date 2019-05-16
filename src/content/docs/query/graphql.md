@@ -158,25 +158,11 @@ mutation addPeople ($myPeopleTx: JSON) {
 }
 
 {
-  "myPeopleTx": "[
-    { \"_id\": \"person\", \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, 
-  { \"_id\": \"person\", \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
+  "myPeopleTx": "[{ \"_id\": \"person\", \"handle\": \"aSmith\", \"fullName\": \"Alice Smith\" }, { \"_id\": \"person\", \"handle\": \"aVargas\", \"fullName\": \"Alex Vargas\" }]"
 }
 ```
 
 If you are using the UI, you can place your variable in the "Query Variables" section on the lower left hand side of the GraphQL interface. If you are using the API, you should add a new key, "variables" to your request body and include your variables (more information in the API sections on [hosted](/api/hosted-endpoints/endpoints#-api-db-graphql) and [downloaded](/api/downloaded-endpoints/downloaded-examples#-graphql-transaction) GraphQL endpoints.
-
-```all
-mutation addPeople ($myPeopleTx: JSON) {
-  transact(tx: $myPeopleTx)
-}
-
-{
-  "myPeopleTx": "[
-    { \"_id\": \"person\", \"handle\": \"jdoe\", \"fullName\": \"Jane Doe\" }, 
-  { \"_id\": \"person\", \"handle\": \"zsmith\", \"fullName\": \"Zach Smith\" }]"
-}
-```
 
 ### Other Features
 

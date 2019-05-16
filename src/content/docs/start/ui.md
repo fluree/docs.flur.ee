@@ -2,7 +2,7 @@
 
 If you are using the hosted version of Fluree, the interface is located at <https://flureedb.flur.ee>. 
 
-In the hosted version, the interace is at `http://localhost:[PORT]`. If you did not change your port configuration, this will be port <http://localhost:8080>.
+In the hosted version, the interface is at `http://localhost:[PORT]`. If you did not change your port configuration, this will be port <http://localhost:8080>.
 
 Note: There are slight differences in the appearance in the user interface depending on which version you are using. 
 

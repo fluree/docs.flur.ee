@@ -186,7 +186,7 @@ We will need to create two new rules, `viewAllPeople` and `viewAllComments`.
     "_id": "_role",
     "id": "level2User",
     "doc": "A level 2 user. Can view all chats, edit own chats, and view all people.",
-    "rules": [["_rule/id", "viewAllChats"], ["_rule/id", "editOwnChats"], "_rule$viewAllPeople", "_role$viewAllComments"]
+    "rules": [["_rule/id", "viewAllChats"], ["_rule/id", "editOwnChats"], "_rule$viewAllPeople", "_rule$viewAllComments"]
   },
   {
     "_id": "_rule$viewAllPeople",
@@ -217,7 +217,7 @@ We will need to create two new rules, `viewAllPeople` and `viewAllComments`.
     "_id": "_role",
     "id": "level2User",
     "doc": "A level 2 user. Can view all chats, edit own chats, and view all people.",
-    "rules": [["_rule/id", "viewAllChats"], ["_rule/id", "editOwnChats"], "_rule$viewAllPeople", "_role$viewAllComments"]
+    "rules": [["_rule/id", "viewAllChats"], ["_rule/id", "editOwnChats"], "_rule$viewAllPeople", "_rule$viewAllComments"]
   },
   {
     "_id": "_rule$viewAllPeople",
@@ -249,7 +249,7 @@ mutation addRole ($level2RoleTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "level1RoleTx": "[{\"_id\":\"_role\",\"id\":\"level2User\",\"doc\":\"A level 2 user. Can view all chats, edit own chats, and view all people.\",\"rules\":[[\"_rule/id\",\"viewAllChats\"],[\"_rule/id\",\"editOwnChats\"],\"_rule$viewAllPeople\",\"_role$viewAllComments\"]},{\"_id\":\"_rule$viewAllPeople\",\"id\":\"viewAllPeople\",\"doc\":\"Can view all people.\",\"collection\":\"person\",\"collectionDefault\":true,\"fns\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$viewAllComments\",\"id\":\"viewAllComments\",\"doc\":\"Can view all comments.\",\"collection\":\"comment\",\"collectionDefault\":true,\"fns\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]}]"
+  "level1RoleTx": "[{\"_id\":\"_role\",\"id\":\"level2User\",\"doc\":\"A level 2 user. Can view all chats, edit own chats, and view all people.\",\"rules\":[[\"_rule/id\",\"viewAllChats\"],[\"_rule/id\",\"editOwnChats\"],\"_rule$viewAllPeople\",\"_rule$viewAllComments\"]},{\"_id\":\"_rule$viewAllPeople\",\"id\":\"viewAllPeople\",\"doc\":\"Can view all people.\",\"collection\":\"person\",\"collectionDefault\":true,\"fns\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$viewAllComments\",\"id\":\"viewAllComments\",\"doc\":\"Can view all comments.\",\"collection\":\"comment\",\"collectionDefault\":true,\"fns\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]}]"
 }
 
 ```
@@ -351,11 +351,7 @@ Transactions not supported in SPARQL.
 
 ### Testing Our Rules
 
-If [`fdb-api-open`](/docs/getting-started/installation#config-options) is set to true, then that means that all queries are performed as a root auth. This means that any signatures in your queries will be ignored, and thus hyou will not be able to test the permissioned queries. In the hosted version, you cannot change this option. 
-
-If you are using the downloaded FlureeDB, and then you can stop your server, change the `fdb-api-open` setting, and you will be able to test out the signed queries. 
-
-Regardless of whether you are running the hosted or the downloaded version, you will still be able to test all the signed transactions.  
+To test these rules, you will need to submit signed queries and transactions. You can do this either through the user interface or by through the API. More information is in the [signatures section](/docs/identity/signatures).
 
 #### Testing The Level 1 Roles
 

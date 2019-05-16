@@ -173,16 +173,9 @@ curl \
 ```
 
 ### Sub-Selection Options
-Within a given select statement, there may be multiple nested select statements in the FlureeQL syntax. GraphQL, by design, is entirely comprised of nested statements. For example in the FlureeQL statement: 
+Within a given select statement, there may be multiple nested select statements in the FlureeQL syntax. GraphQL, by design, is entirely comprised of nested statements. For example in the FlureeQL statement: `"select": ["*", {"chat/_person": ["*"]}]`
 
-```all
-"select": ["*", {"chat/_person": ["*"]}]
-```
-The nested select, or sub-select, statement is:
-
-```all
-{"chat/_person": ["*"]}
-```
+The nested select, or sub-select, statement is `{"chat/_person": ["*"]}`.
 
 In both FlureeQL and GraphQL, You can optionally add an additional map of specification to a given sub-select. 
 

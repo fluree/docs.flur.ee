@@ -88,3 +88,39 @@ mutation addFn ($addFnTx: JSON) {
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+If you try to issue the following transaction, it will fail, because -4 is negative.
+
+```flureeql
+[{
+    "_id": "person",
+    "handle": "aJay",
+    "favNums": [12, -4, 57]
+}]
+```
+
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+    "_id": "person",
+    "handle": "aJay",
+    "favNums": [12, -4, 57]
+}]' \
+   [HOST]/api/db/transact
+```
+
+```graphql
+mutation addPerson ($addPersonTx: JSON) {
+  transact(tx: $addPersonTx)
+}
+
+{
+  "addPersonTx": "[{\"_id\":\"person\",\"handle\":\"aJay\",\"favNums\":[12,-4,57]}]"
+}
+```
+
+```sparql
+Transactions not supported in SPARQL
+```

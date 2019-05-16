@@ -6163,7 +6163,7 @@ For the purposes of this tutorial, we allow the root user (auth id = 0) to edit 
 
 After adding more yes votes, the transaction, `[{ "_id": ["_user/username", "a-ha"], "username": "Eureka!" }]` passes. 
 
-We now have a fully operational voting system. If we want to add a voting requirement to any other attributes, we would simply have to issue a transaction specifying a new function (or re-using `2VotesMajority`), and adding that function to any `_attribute`. The below transction would require at least 10 votes with more than 75% voting yes in order to change smart function code. 
+We now have a fully operational voting system. If we want to add a voting requirement to any other attributes, we would simply have to issue a transaction specifying a new function (or re-using `2VotesMajority`), and adding that function to any `_attribute`. The below transaction would require at least 10 votes with more than 75% voting yes in order to change smart function code. 
 
 ```all
 [{

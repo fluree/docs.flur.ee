@@ -165,7 +165,7 @@ If we bind more than one variable in our where clause, we can list multiple sele
 
 ```flureeql
 {
-  "select": ["?nums1" "?nums2],
+  "select": ["?nums1", "?nums2"],
   "where": [ [["person/handle", "zsmith"], "person/favNums", "?nums1"], [["person/handle", "jdoe"], "person/favNums", "?nums2"] ]
 }
 ```
@@ -176,7 +176,7 @@ If we bind more than one variable in our where clause, we can list multiple sele
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
-    "select": ["?nums1" "?nums2],
+    "select": ["?nums1", "?nums2"],
     "where": [  ["$fdb", ["person/handle", "zsmith"], "person/favNums", "?nums1"], 
                 ["$fdb", ["person/handle", "jdoe"], "person/favNums", "?nums2"] ]
 }' \
@@ -222,7 +222,7 @@ In order to see the average of all of Zach Smith's favorite numbers, we could qu
 ```flureeql
 {
   "selectOne": "(sum ?nums)",
-  "where": [ [["person/handle", "zsmith"], "person/favNums", "?nums1"]] 
+  "where": [ [["person/handle", "zsmith"], "person/favNums", "?nums"]] 
 }
 ```
 ```curl
@@ -231,7 +231,7 @@ In order to see the average of all of Zach Smith's favorite numbers, we could qu
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
   "selectOne": "(sum ?nums)",
-  "where": [ [["person/handle", "zsmith"], "person/favNums", "?nums1"]] 
+  "where": [ [["person/handle", "zsmith"], "person/favNums", "?nums"]] 
 }' \
    [HOST]/api/db/query
 ```
@@ -470,7 +470,7 @@ For example, if we want to run the same query as the [Wikidata Example](#wikidat
    -d '{
     "select": ["?name", "?artist", "?artwork"],
     "where": [
-        [["person/handle", "artLuvr"], "person/favArtists", "?artist"],
+        [["person/handle", "jdoe"], "person/favArtists", "?artist"],
         ["?artist", "artist/name", "?name"],
         ["$wd", "?artwork", "wdt:P170", "?creator", {"limit": 5, "distinct": false}],
         ["$wd", "?creator", "?label", "?name"]

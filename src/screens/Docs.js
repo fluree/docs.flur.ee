@@ -352,6 +352,7 @@ class Docs extends React.Component {
                     <div className="col-md-4 mt20 mb20">
                     <div className={fixedSidebar ? "fixedSidebar" : "sidebar" }>
                             <div>
+                                <p>Display Examples in:</p>
                                 <ToggleButtonGroup 
                                     name="language" 
                                     type="radio" 

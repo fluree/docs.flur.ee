@@ -78,3 +78,37 @@ mutation reqFullName ($reqFullNameTx: JSON) {
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+After we add this `_collection/spec`, the following transaction should fail:
+
+```flureeql
+[{
+    "_id": "person",
+    "handle": "noFullName"
+}]
+```
+
+```curl
+curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '[{
+    "_id": "person",
+    "handle": "noFullName"
+}]' \
+   [HOST]/api/db/transact
+```
+
+```graphql
+mutation addPersonNoFullName ($addPersonNoFullNameTx: JSON) {
+  transact(tx: $addPersonNoFullNameTx)
+}
+
+{
+  "addPersonNoFullNameTx": "[{\"_id\":\"person\",\"handle\":\"noFullName\"}]"
+}
+```
+
+```sparql
+Transactions not supported in SPARQL
+```

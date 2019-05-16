@@ -12,6 +12,7 @@ Key | Required? | Description
 -- | -- | -- 
 `history` | yes |  Subject id, unique two-tuple, or flake-format
 `block` | no | Optional most recent block (integer) for which to list history
+`pretty-print` | no | Optional, `true` or `false`, whether to pretty-print results. Default `false`
 
 ### History of Subject
 
@@ -21,7 +22,7 @@ For example, to query the history up to block 4 of an subject using an subject i
 
 ```flureeql
 {
-  "history": 4299262263302,
+  "history": 369435906932737,
   "block": 4
 }
 ```
@@ -30,14 +31,14 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
-  "history": 4299262263302,
+  "history": 369435906932737,
   "block": 4
 }' \
 [HOST]/api/db/history
 ```
 ```graphql
 {
-  history(subject: "4299262263302", block: 4)
+  history(subject: "369435906932737", block: 4)
 }
 ```
 
@@ -144,7 +145,7 @@ In FlureeQL, you can pretty print the results of a history query by adding `"pre
 
 ```flureeql
 {
-  "history": [null, "person/handle", "jdoe"]
+  "history": [null, "person/handle", "jdoe"],
   "pretty-print": true
 }
 ```
@@ -165,4 +166,20 @@ Not supported
 
 ```sparql
 Not supported
+```
+
+The pretty-printed results look as follows:
+
+```all
+{
+  "4": {
+    "asserted": [
+      {
+        "person/handle": "jdoe",
+        "_id": 351843720888321
+      }
+    ],
+    "retracted": []
+  }
+}
 ```
