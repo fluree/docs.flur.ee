@@ -379,14 +379,14 @@ Results:
     },
     "chat/instant": 1552654461783,
     "chat/comments": [
-      null
+      {"_id": 387028092977153}
     ],
     "_id": 369435906932737
   }
 ]
 ```
 
-You can see that, `jdoe` cannot view comments, so `chat/comments` returns null. 
+You can see that, `jdoe` cannot view comments, so `chat/comments` returns no details. 
 
 When we query all people:
 
