@@ -20,31 +20,29 @@ Every transaction item must have an _id predicate to refer to the subject we are
 FlureeQL example:
 
 ```all
-[
-  {
+[{
     "_id":    "_user",
-    "username": "jdoe",
-  }
-]
+    "username": "eWasswa"
+}]
 ```
 
-However, if you would like to reference that tempid somewhere else in your transaction, it is necessary to create a unique tempid. To make a unique tempid, just append the collection with any non-valid collection character (anything other than a-z, A-Z, 0-9, _) followed by anything else. For example, `_user$jdoe` or `_user#1 `.
+However, if you would like to reference that tempid somewhere else in your transaction, it is necessary to create a unique tempid. To make a unique tempid, just append the collection with any non-valid collection character (anything other than a-z, A-Z, 0-9, _) followed by anything else. For example, `_user$lEliasz` or `_user#1 `.
 
 FlureeQL example:
 ```all
-[
-  {
-    "_id":    "_user$jdoe",
-    "username": "jdoe",
+[{
+    "_id":    "_user$lEliasz",
+    "username": "lEliasz",
     "auth": ["_auth$temp"]
   },
   {
-    "_id": ["person/handle", "jdoe"],
-    "user": "_user$jdoe"
+    "_id": "person",
+    "handle": "lEliasz",
+    "fullName": "Louis Eliasz",
+    "user": "_user$lEliasz"
   },
   {
     "_id": "_auth$temp",
     "id": "tempAuthRecord"
-  }
-]
+}]
 ```

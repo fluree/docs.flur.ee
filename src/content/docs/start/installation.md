@@ -4,7 +4,7 @@ If you already have a hosted version of Fluree, you can jump to [User Interface]
 
 ### Installing Fluree
 
-Download and unzip: [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/flureeDB-latest.zip).
+Download and unzip: [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip).
 
 The contents of the folder are as follows:
 

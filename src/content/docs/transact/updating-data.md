@@ -77,7 +77,7 @@ Transactions not supported in SPARQL
 
 When a transaction with a tempid resolves to an existing subject, `"_action": "upsert"` is inferred. This is only applicable to predicates marked as unique. By default the transaction will throw an exception if a conflict with a unique predicate exists.
 
-If "person/handle" is marked as unique and `["person/handle", "jdoe"]` is already in our database, this transaction will simply update `["person/handle", "jdoe"]`. If `["person/handle", "jdoe"]` is not yet in the database, it will add the new subject.  
+If `person/handle` is marked as unique and `["person/handle", "jdoe"]` is already in our database, this transaction will simply update `["person/handle", "jdoe"]`. If `["person/handle", "jdoe"]` is not yet in the database, it will add the new subject.  
 
 ```flureeql
 [{
