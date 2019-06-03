@@ -2,15 +2,15 @@
 
 If you are using the hosted version of Fluree, the interface is located at <https://flureedb.flur.ee>. 
 
-In the hosted version, the interface is at `http://localhost:[PORT]`. If you did not change your port configuration, this will be port <http://localhost:8080>.
+In the downloaded version, the interface is at `http://localhost:[PORT]`. If you did not change your port configuration, this will be port <http://localhost:8080>.
 
 Note: There are slight differences in the appearance in the user interface depending on which version you are using. 
 
-### Log-In and Switching Accounts
+### Log-In 
 
 On the hosted version of Fluree or in earlier downloadable versions of Fluree, you will first have to log in first. There is an option to reset your password if needed.
 
-If your email is attached to more than one account, you will be asked to choose the relevant account. You can always switch account by clicking on your account circle in the top right of the user interface and clicking "Switch Accounts". This isn't an option unless you belong to more than one account. 
+If your email is attached to more than one account, you will be asked to choose the relevant account. You can always switch accounts by logging out and in again. 
 
 <p class="text-center">
     <img style="height: 190px; width: 250px; margin-bottom: 10px;" src="https://s3.amazonaws.com/fluree-docs/switchAccounts.png" alt="A Circle with an L inside of it. A form underneath the circle has links to: `Account Info`, `Switch Accounts`, and `Logout`">
@@ -18,10 +18,12 @@ If your email is attached to more than one account, you will be asked to choose 
 
 ### Configure
 
-On later downloadable versions of Fluree, there is no built-in username and password. When you go to the interface, you will need to specify a network, master database, and port.
+In downloadable versions of Fluree, there is no built-in username and password. When you go to the interface, you will need to specify a network and IP address.
+
+You can also select whether there is an open API or not (if not, you'll be asked to put in a default private key).
 
 <p class="text-center">
-<img  style="height: 400px; width: 650px"  src="https://s3.amazonaws.com/fluree-docs/config_options.png" alt="Form with the heading, 'Config Settings', and three fields: 'network', 'master database', and 'port'.">
+<img  style="height: 400px; width: 650px"  src="https://s3.amazonaws.com/fluree-docs/config_options.png" alt="Form with the heading, 'Config Settings', and three fields: 'network', 'Open API?', and 'Default Private Key'.">
 </p>
 
 

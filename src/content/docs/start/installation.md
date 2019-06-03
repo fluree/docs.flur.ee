@@ -1,6 +1,6 @@
 ## Installing Fluree
 
-If you already have a hosted version of Fluree, you can jump to [User Interface](#user-interface). To request a hosted version of Fluree, you can sign up on [our site](https://www.flur.ee/), but note that free hosted versions may be limited. 
+If you already have a hosted version of Fluree, you can jump to [User Interface](/docs/getting-started/user-interface). To request a hosted version of Fluree, you can sign up on [our site](https://www.flur.ee/), but note that free hosted versions may be limited. 
 
 ### Installing Fluree
 
@@ -10,7 +10,7 @@ The contents of the folder are as follows:
 
 ```all
 flureeDB-0.9.5/
-├── fluree_sample_.properties
+├── fluree_sample.properties
 ├── VERSION
 ├── fluree_start.sh
 ├── fluree_server.jar
@@ -35,7 +35,7 @@ To run Fluree with all the default options, navigate to the directory where you 
 For Mac or Linux systems:
 `./fluree_start.sh` 
 
-Note that for Windows systems, you have to download a Bash emulator, like [Git For Windows](https://gitforwindows.org/) to properly run Fluree. In your Bash emulator, you can run `./fluree_start.sh` to start Fluree. Alternatively on Windows, you can [download Fluree with Chocolatey](#download-fluree-with-chocolatey).
+Note that for Windows systems, you have to download a Bash emulator, like [Git For Windows](https://gitforwindows.org/) to properly run Fluree. In your Bash emulator, you can run `./fluree_start.sh` to start Fluree. Alternatively on Windows, you will be able to [download Fluree with Chocolatey](#download-fluree-with-chocolatey).
 
 When you launch Fluree for the first time or if you choose `none` as your `fdb-storage-type` (see [config options](#config-options) for all options), Fluree will create a new network. When Fluree is done starting up, your terminal will log: 
 

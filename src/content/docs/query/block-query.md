@@ -69,29 +69,6 @@ Not supported
 Not supported
 ```
 
-Using a ISO-8601 formatted duration (as of 1 hour ago):
-
-```flureeql
-{
-  "block": "PT1H"
-}
-```
-```curl
-curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "block": "PT1H"
-}' \
-[HOST]/api/db/block
-```
-```graphql
-Not supported
-```
-
-```sparql
-Not supported
-```
 
 ### Query Block Range
 
