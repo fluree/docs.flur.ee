@@ -1,6 +1,6 @@
 ## SPARQL
 
-This section details how to use SPARQL to query a Fluree. If you don't already know SPARQL, we recommend you use [Analytical Queries](/docs/query/analytical-queries), as they have the same capabilities as SPARQL queries. 
+This section details how to use SPARQL to query a Fluree. If you don't already know SPARQL, we recommend you use [Analytical Queries](/docs/query/analytical-query), as they have the same capabilities as SPARQL queries. 
 
 All of the examples below display SPARQL syntax, regardless of the language selected in the top-left. In addition, all queries on this page can be submitted to endpoints ending in `/sparql`.
 

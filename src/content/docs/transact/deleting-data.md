@@ -5,7 +5,7 @@ To delete/retract an entire subject, use the `_id` key along with only `"_action
 
 ```flureeql
 [{
-  "_id":      ["person/handle", "jdoe"],
+  "_id":      ["person/handle", "zsmith"],
   "_action":  "delete"
 }]
 ```
@@ -14,7 +14,7 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-  "_id":      ["person/handle", "jdoe"],
+  "_id":      ["person/handle", "zsmith"],
   "_action":  "delete"
 }]' \
    [HOST]/api/db/transact
@@ -25,7 +25,7 @@ mutation deleteAllPredicates ($myDeleteAllPredicatesTx: JSON) {
 }
 
 {
-  "myDeleteAllPredicatesTx": "[{ \"_id\": [\"person/handle\", \"jdoe\"], \"_action\": \"delete\" }]"
+  "myDeleteAllPredicatesTx": "[{ \"_id\": [\"person/handle\", \"zsmith\"], \"_action\": \"delete\" }]"
 }
 ```
 
@@ -42,7 +42,7 @@ You can delete (retract) a single predicate by setting the value of `_id` to a t
 ```flureeql
 [{
   "_id":      ["person/handle", "jdoe"],
-  "handle":   null
+  "age":   null
 }]
 ```
 
@@ -52,7 +52,7 @@ curl \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
   "_id":      ["person/handle", "jdoe"],
-  "handle":   null
+  "age":   null
 }]' \
    [HOST]/api/db/transact
 ```
@@ -63,7 +63,7 @@ mutation deletePredicate ($myDeletePredicateTx: JSON) {
 }
 
 {
-  "myDeletePredicateTx": "[{ \"_id\": [\"person/handle\", \"jdoe\"], \"handle\": null }]"
+  "myDeletePredicateTx": "[{ \"_id\": [\"person/handle\", \"jdoe\"], \"age\": null }]"
 }
 ```
 

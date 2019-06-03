@@ -114,37 +114,6 @@ query  {
 }
 ```
 
-### Sort By 
-
-GraphQL queries allow you to sort any field at any level in the graph. In order to perform a sort, you need to specify both the predicate name and whether you would like to sort the values by ascending or descending values. 
-
-In the below example, we are sorting chat messages in alphabetical order. 
-
-```all
-{ graph {
-  chat (sort: {predicate: "message", order: ASC}) {
-    _id
-    instant 
-    message
-  }
-}
-}
-```
-The below query sorts every person alphabetically by their full name, and then sorts all of their comments from oldest to newest. 
-
-```all
-{ graph {
-   person (sort: {predicate: "fullName", order: ASC}) {
-    fullName
-    comment_Via_person (sort:{predicate: "instant", order: ASC}) {
-      message
-      instant
-    }
-  }
-}
-}
-```
-
 ### Transactions
 We can perform transactions in GraphQL by passing a variable to a GraphQL mutation. This variable should contain a JSON-formatted parcel of data without line breaks. 
 

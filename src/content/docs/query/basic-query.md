@@ -270,12 +270,12 @@ To limit the subjects returned, we can specify a where clause. A query cannot ha
 Where clauses can filter predicates using the following operations:
 `>`, `>=`, `<`, `<=`, and `=`.
 
-You can link multiple specifications with `AND`s or `OR`s. You cannot submit a where clause with both an `AND` and an `OR`.
+You can link multiple specifications with `AND`s or `OR`s, for example `chat/instant > 1517437000000 AND chat/instant < 1517438000000`. You cannot submit a where clause with both an `AND` and an `OR`.
 
 ```flureeql
 {
   "select": ["chat/message", "chat/instant"],
-  "where": "chat/instant > 1517437000000 AND chat/instant < 1517438000000"
+  "where": "chat/instant > 1517437000000"
 }
 ```
 ```curl
@@ -284,13 +284,13 @@ curl \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
   "select": ["chat/message", "chat/instant"],
-  "where": "chat/instant > 1517437000000 AND chat/instant < 1517438000000"
+  "where": "chat/instant > 1517437000000"
 }'\
    [HOST]/api/db/query
 ```
 ```graphql
 { graph {
-  chat(where: "chat/instant >= 1516051090000 AND chat/instant <= 1516051100000"){
+  chat(where: "chat/instant >= 1516051090000"){
     _id
     instant 
     message

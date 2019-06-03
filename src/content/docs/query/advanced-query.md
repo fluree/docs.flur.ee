@@ -125,7 +125,7 @@ For fun, you can add another sub-query to follow the chat message back to the pe
 {
   "select": [
     "*",
-    {"chat/_person": ["*"]}
+    {"chat/_person": ["*", {"chat/person": ["*"]}]}
   ],
   "from": "person"
 }
@@ -173,24 +173,53 @@ curl \
 ```
 
 ### Sub-Selection Options
-Within a given select statement, there may be multiple nested select statements in the FlureeQL syntax. GraphQL, by design, is entirely comprised of nested statements. For example in the FlureeQL statement: `"select": ["*", {"chat/_person": ["*"]}]`
 
-The nested select, or sub-select, statement is `{"chat/_person": ["*"]}`.
+When issuing a FlureeQL query, you can specify granular options that only apply to certain predicates. To do this, you need to use sub-select options. 
 
-In both FlureeQL and GraphQL, You can optionally add an additional map of specification to a given sub-select. 
+A basic select clause may look something like this: `["handle", "fullName"]`. Sub-select options are specified when any of those predicate names are turned into a map with the predicate name as the key, and an array as the value. For example, to give "handle" sub-select options, it would look like: `[ { "options": [OPTIONS HERE] }, "fullName"]`.
+
+You have already seen a similar pattern with ref predicates. For example in the FlureeQL statement: `"select": ["*", {"chat/_person": ["*"]}]`. The nested select, or sub-select, statement is `{"chat/_person": ["*"]}`.
+
+
+Within a given select statement, there may be multiple nested select statements in the FlureeQL syntax. GraphQL, by design, is entirely comprised of nested statements.  
 
 **In FlureeQL**
 
-This map should be listed in the array, alongside either that wildcard `*` or the list of predicates you would like returned. For example, if we wanted to limit the number of chats returned per person, we could specify: `{"chat/_person": ["*", {"_limit": 10}]}`
+There are several sub-select options you specify. Certain options, such as `_recur` are only relevant for refs. While other options, such as `_limit` are only relevant for `multi` predicates.
 
-Available options for sub-select statements are:
-
-Key | Description
+Key | Description 
 -- | -- 
-`_limit` | Limit (integer) of results to include.
-`_recur` | Number of times (integer) to follow a relationship. See [Recursion](#recursion).
-`_component` | Whether to automatically crawl the graph for component entities. Overrides the top-level option. 
+`_limit` | Limit (integer) of results to include. For `multi` predicates. 
+`_recur` | Number of times (integer) to follow a relationship. See [Recursion](#recursion). For `ref` predicates.
+`_component` | Whether to automatically crawl the graph for component entities. Overrides the top-level option. For `ref` predicates.
 `_as` | An alternate name for the predicate that is being referenced.
+
+For example, you can issue the following query: 
+
+```all
+{
+    "select": ["handle", "fullName"], 
+    "from": "person"
+}
+```
+
+However, if you want to return `fullName` as `name`, you can issue the following query:
+
+```all
+{
+    "select": ["handle", {"fullName": [{"_as": "name"}]}], 
+    "from": "person"
+}
+```
+
+If you have a `ref` predicate, you can include any relevant sub-select options directly in the array where you specified any predicates you wanted to include:
+
+```all
+{
+    "select": ["handle", {"comment/_person": ["*", {"_as": "comment", "_limit": 1}]}], 
+    "from": "person"
+}
+```
 
 **In GraphQL** 
 
@@ -200,28 +229,11 @@ Note that in GraphQL, the options do not have a leading underscore. In GraphQL, 
 
 Key | Description
 -- | -- 
-`limit` | Limit (integer) of results to include.
-`recur` | Number of times (integer) to follow a relationship. See [Recursion](#recursion)
+`limit` | Limit (integer) of results to include. Only for `multi` and `ref` predicates.
+`recur` | Number of times (integer) to follow a relationship. See [Recursion](#recursion). Only for `ref` predicates.
+`as` | Alternate name for a predicate. Only for `ref` predicates.
 
-```flureeql
-{ 
-  "select": {"chat/_person": ["*", {"_limit": 10}]},
-  "from": "person"
-}
-```
-
-```curl
-curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{ 
-  "select": {"chat/_person": ["*", {"_limit": 10}]},
-  "from": "person"
-}' \
-   https://$FLUREE_ACCOUNT.flur.ee/api/db/query
-```
-
-```graphql
+```all
 { graph {
   person {
     _id
@@ -237,11 +249,6 @@ curl \
 }}
 ```
 
-```sparql
-Not supported
-```
-
-
 ### Recursion
 
 Recur is a sub-select option, which uses recursion to follow `ref` predicates that reference another subject in the same collection. For example, in the [Basic Schema](/docs/getting-started/basic-schema), we have a predicate, `person/follows`, which is a `ref` that points to another person. 
@@ -250,7 +257,7 @@ Normally, if we want to query who a person follows, we would submit this query.
 
 ```flureeql
 {
-    "select":["*", {"person/follows": ["*"]}],
+    "select":["handle", {"person/follows": ["handle"]}],
     "from":"person"
 }
 ```
@@ -260,7 +267,7 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
-    "select":["*", {"person/follows": ["*"]}],
+    "select":["handle", {"person/follows": ["handle"]}],
     "from":"person"
 }' \
    [HOST]/api/db/query
@@ -269,12 +276,10 @@ curl \
 ```graphql
 { graph {
   person {
-    _id
     handle
-    fullName
     follows {
         _id
-
+        handle
       }
     }
   }
@@ -282,7 +287,7 @@ curl \
 ```
 
 ```sparql
- SELECT ?person ?instant ?fullName ?handle ?follows
+ SELECT ?person ?handle ?follows
  WHERE {
     ?person fd:person/fullName ?fullName;
             fd:person/handle ?handle.
@@ -293,7 +298,7 @@ However, if you want to keep following the `person/follows` relationship, we can
 
 ```flureeql
 {
-    "select":["*", {"person/follows": ["*", {"_recur": 10}]}],
+    "select":["handle", {"person/follows": ["handle", {"_recur": 10}]}],
     "from":"person"
 }
 ```
@@ -303,7 +308,7 @@ curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
-    "select":["*", {"person/follows": ["*", {"_recur": 10}]}],
+    "select":["handle", {"person/follows": ["handle", {"_recur": 10}]}],
     "from":"person"
 }' \
    [HOST]/api/db/query
@@ -314,14 +319,13 @@ curl \
   person {
     _id
     handle
-    fullName
     follows (recur: 10) {
         _id
 
       }
     }
   }
-}}
+}
 ```
 
 ```sparql
@@ -390,13 +394,13 @@ curl \
 ```
 
 
-Any errors will be returned in a separate key, called errors. For example, incorrectQuery is attempting to query an id that does not exist. 
+Any errors will be returned in a header, called `X-Fdb-Errors`. For example, incorrectCollection is attempting to query a collection that does not exist. 
 
 ```all
 {
-    "incorrectID": {
+    "incorrectCollection": {
         "select": ["*"],
-        "from": 4307852198904
+        "from": "apples"
     },
     "personQuery": {
          "select": ["*"],
@@ -405,15 +409,11 @@ Any errors will be returned in a separate key, called errors. For example, incor
 }
 ```
 
-In FlureeQL, the response will have the error type for incorrectID listed under the key errors.
+In FlureeQL, the response will have a status of 207, and it will only return the response for `personQuery`.
 
 ```flureeql
 {
-  "errors": {
-    "incorrectID": "db/invalid-subject"
-  },
-  "result": {
-    "person": [
+    "personQuery": [
       {
         "_id": 4303557230594,
         "person/handle": "zsmith",
@@ -422,9 +422,5 @@ In FlureeQL, the response will have the error type for incorrectID listed under 
       },
       ...
     ]
-  },
-  "status": 207,
-  "block": 463,
-  "time": "5.64ms"
 }
 ```

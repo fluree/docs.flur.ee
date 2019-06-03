@@ -95,6 +95,7 @@ The below transaction creates the following predicates:
 - `person/handle`
 - `person/fullName`
 - `person/follows`
+- `person/age`
 - `person/favNums`
 - `person/favArtists`
 - `person/user`
@@ -119,6 +120,13 @@ The below transaction creates the following predicates:
   "name":  "person/fullName",
   "doc":   "The person's full name.",
   "type":  "string",
+  "index": true
+},
+{
+  "_id": "_predicate",
+  "name": "person/age",
+  "doc": "The person's age in years",
+  "type": "int",
   "index": true
 },
 {
@@ -204,17 +212,24 @@ The below transaction creates the following predicates:
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
-  "_id":   "_predicate",
+  "_id":    "_predicate",
   "name":   "person/handle",
-  "doc":    "The persons unique handle",
+  "doc":    "The person's unique handle",
   "unique": true,
   "type":   "string"
 },
 {
   "_id":   "_predicate",
   "name":  "person/fullName",
-  "doc":   "The persons full name.",
+  "doc":   "The person's full name.",
   "type":  "string",
+  "index": true
+},
+{
+  "_id": "_predicate",
+  "name": "person/age",
+  "doc": "The person's age in years",
+  "type": "int",
   "index": true
 },
 {
@@ -316,7 +331,7 @@ mutation addArtistPredicates ($myArtistTx: JSON) {
 
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
-{"myPersonTx": "[{\"_id\":\"_predicate\",\"name\":\"person/handle\",\"doc\":\"The persons unique handle\",\"unique\":true,\"type\":\"string\"},{\"_id\":\"_predicate\",\"name\":\"person/fullName\",\"doc\":\"The persons full name.\",\"type\":\"string\",\"index\":true},{\"_id\":\"_predicate\",\"name\":\"person/follows\",\"doc\":\"Any persons this subject follows\",\"type\":\"ref\",\"restrictCollection\":\"person\"},{\"_id\":\"_predicate\",\"name\":\"person/favNums\",\"doc\":\"The person's favorite numbers\",\"type\":\"int\",\"multi\":true},{\"_id\":\"_predicate\",\"name\":\"person/favArtists\",\"doc\":\"The person's favorite artists\",\"type\":\"ref\",\"restrictCollection\":\"artist\",\"multi\":true},{\"_id\":\"_predicate\",\"name\":\"person/user\",\"type\":\"ref\",\"restrictCollection\":\"_user\"},{\"_id\":\"_predicate\",\"name\":\"chat/message\",\"doc\":\"A chat message\",\"type\":\"string\"},{\"_id\":\"_predicate\",\"name\":\"chat/person\",\"doc\":\"A reference to the person that created the message\",\"type\":\"ref\",\"restrictCollection\":\"person\"},{\"_id\":\"_predicate\",\"name\":\"chat/instant\",\"doc\":\"The instant in time when this chat happened.\",\"type\":\"instant\",\"index\":true},{\"_id\":\"_predicate\",\"name\":\"chat/comments\",\"doc\":\"A reference to comments about this message\",\"type\":\"ref\",\"component\":true,\"multi\":true,\"restrictCollection\":\"comment\"},{\"_id\":\"_predicate\",\"name\":\"comment/message\",\"doc\":\"A comment message.\",\"type\":\"string\"},{\"_id\":\"_predicate\",\"name\":\"comment/person\",\"doc\":\"A reference to the person that made the comment\",\"type\":\"ref\",\"restrictCollection\":\"person\"},{\"_id\":\"_predicate\",\"name\":\"artist/name\",\"type\":\"string\",\"unique\":true}]"
+{"myPersonTx": "[{\"_id\":\"_predicate\",\"name\":\"person/handle\",\"doc\":\"The person's unique handle\",\"unique\":true,\"type\":\"string\"},{\"_id\":\"_predicate\",\"name\":\"person/fullName\",\"doc\":\"The person's full name.\",\"type\":\"string\",\"index\":true},{\"_id\":\"_predicate\",\"name\":\"person/age\",\"doc\":\"The person's age in years\",\"type\":\"int\",\"index\":true},{\"_id\":\"_predicate\",\"name\":\"person/follows\",\"doc\":\"Any persons this subject follows\",\"type\":\"ref\",\"restrictCollection\":\"person\"},{\"_id\":\"_predicate\",\"name\":\"person/favNums\",\"doc\":\"The person's favorite numbers\",\"type\":\"int\",\"multi\":true},{\"_id\":\"_predicate\",\"name\":\"person/favArtists\",\"doc\":\"The person's favorite artists\",\"type\":\"ref\",\"restrictCollection\":\"artist\",\"multi\":true},{\"_id\":\"_predicate\",\"name\":\"person/user\",\"type\":\"ref\",\"restrictCollection\":\"_user\"},{\"_id\":\"_predicate\",\"name\":\"chat/message\",\"doc\":\"A chat message\",\"type\":\"string\"},{\"_id\":\"_predicate\",\"name\":\"chat/person\",\"doc\":\"A reference to the person that created the message\",\"type\":\"ref\",\"restrictCollection\":\"person\"},{\"_id\":\"_predicate\",\"name\":\"chat/instant\",\"doc\":\"The instant in time when this chat happened.\",\"type\":\"instant\",\"index\":true},{\"_id\":\"_predicate\",\"name\":\"chat/comments\",\"doc\":\"A reference to comments about this message\",\"type\":\"ref\",\"component\":true,\"multi\":true,\"restrictCollection\":\"comment\"},{\"_id\":\"_predicate\",\"name\":\"comment/message\",\"doc\":\"A comment message.\",\"type\":\"string\"},{\"_id\":\"_predicate\",\"name\":\"comment/person\",\"doc\":\"A reference to the person that made the comment\",\"type\":\"ref\",\"restrictCollection\":\"person\"},{\"_id\":\"_predicate\",\"name\":\"artist/name\",\"type\":\"string\",\"unique\":true}]"
 }
 
 ```
@@ -327,13 +342,14 @@ Transactions not supported in SPARQL.
 
 ### Adding Sample Data
 
-You can issue the below transaction to add some sample data into your database. The below transaction adds two users, one chat, one comment, and three artists. 
+You can issue the below transaction to add some sample data into your database. The below transaction adds four users, three chats, four comments, and three artists. 
 
 <pre style="height: 200px;overflow-y: scroll"><code class="language-flureeql">
 [{
   "_id":      "person$jdoe",
   "handle":   "jdoe",
   "fullName": "Jane Doe",
+  "age": 25,
   "favNums":  [1223, 12, 98, 0, -2],
   "favArtists": ["artist$1", "artist$2", "artist$3"],
   "follows": "person$zsmith"
@@ -342,21 +358,68 @@ You can issue the below transaction to add some sample data into your database. 
   "_id":      "person$zsmith",
   "handle":   "zsmith",
   "fullName": "Zach Smith",
+  "age": 63,
   "favNums": [5, 645, 28, -1, 1223],
   "favArtists": ["artist$1"],
   "follows": "person$jdoe"
 },
 {
+  "_id":      "person$anguyen",
+  "handle":   "anguyen",
+  "fullName": "Amy Nguyen",
+  "age": 34,
+  "favNums": [7,  98, 0, 2],
+  "favArtists": ["artist$2", "artist$3"],
+  "follows": "person$jdoe"
+},
+{
+  "_id":      "person$dsanchez",
+  "handle":   "dsanchez",
+  "fullName": "Diana Sanchez",
+  "age": 70,
+  "favNums": [9, 1950],
+  "favArtists": ["artist$2"],
+  "follows": "person$anguyen"
+},
+{
   "_id":     "chat",
-  "message": "This is a sample chat from Jane!",
+  "message": "Hi! I'm chat from Jane.",
   "person":  "person$jdoe",
-  "instant": "#(now)",
-  "comments": ["comment$zsmith"]
+  "instant": "#(- (now) 20000)",
+  "comments": ["comment$zsmith", "comment$anguyen"]
+},
+{
+  "_id":     "chat",
+  "message": "Hi! I'm a chat from Diana.",
+  "person":  "person$dsanchez",
+  "instant": "#(- (now) 5000)",
+  "comments": ["comment$zsmithagain", "comment$anguyenagain"]
+},
+{
+  "_id":     "chat",
+  "message": "Hi! I'm a chat from Zach.",
+  "person":  "person$zsmith",
+  "instant": "#(now)"
 },
 {
   "_id":     "comment$zsmith",
   "message": "Zsmith is responding!",
   "person": "person$zsmith"
+},
+{
+  "_id":     "comment$anguyen",
+  "message": "Hi Jane!",
+  "person": "person$anguyen"
+},
+{
+    "_id": "comment$zsmithagain",
+    "message": "Welcome Diana!",
+    "person": "person$zsmith"
+},
+{
+    "_id": "comment$anguyenagain",
+    "message": "Welcome Diana! This is Amy.",
+    "person": "person$anguyen"
 },
 {
   "_id": "artist$1",
@@ -381,6 +444,7 @@ curl \
   "_id":      "person$jdoe",
   "handle":   "jdoe",
   "fullName": "Jane Doe",
+  "age": 25,
   "favNums":  [1223, 12, 98, 0, -2],
   "favArtists": ["artist$1", "artist$2", "artist$3"],
   "follows": "person$zsmith"
@@ -389,21 +453,68 @@ curl \
   "_id":      "person$zsmith",
   "handle":   "zsmith",
   "fullName": "Zach Smith",
+  "age": 63,
   "favNums": [5, 645, 28, -1, 1223],
   "favArtists": ["artist$1"],
   "follows": "person$jdoe"
 },
 {
+  "_id":      "person$anguyen",
+  "handle":   "anguyen",
+  "fullName": "Amy Nguyen",
+  "age": 34,
+  "favNums": [7,  98, 0, 2],
+  "favArtists": ["artist$2", "artist$3"],
+  "follows": "person$jdoe"
+},
+{
+  "_id":      "person$dsanchez",
+  "handle":   "dsanchez",
+  "fullName": "Diana Sanchez",
+  "age": 70,
+  "favNums": [9, 1950],
+  "favArtists": ["artist$2"],
+  "follows": "person$anguyen"
+},
+{
   "_id":     "chat",
-  "message": "This is a sample chat from Jane!",
+  "message": "Hi! I'm chat from Jane.",
   "person":  "person$jdoe",
-  "instant": "#(now)",
-  "comments": ["comment$zsmith"]
+  "instant": "#(- (now) 20000)",
+  "comments": ["comment$zsmith", "comment$anguyen"]
+},
+{
+  "_id":     "chat",
+  "message": "Hi! I'm a chat from Diana.",
+  "person":  "person$dsanchez",
+  "instant": "#(- (now) 5000)",
+  "comments": ["comment$zsmithagain", "comment$anguyenagain"]
+},
+{
+  "_id":     "chat",
+  "message": "Hi! I'm a chat from Zach.",
+  "person":  "person$zsmith",
+  "instant": "#(now)"
 },
 {
   "_id":     "comment$zsmith",
   "message": "Zsmith is responding!",
   "person": "person$zsmith"
+},
+{
+  "_id":     "comment$anguyen",
+  "message": "Hi Jane!",
+  "person": "person$anguyen"
+},
+{
+    "_id": "comment$zsmithagain",
+    "message": "Welcome Diana!",
+    "person": "person$zsmith"
+},
+{
+    "_id": "comment$anguyenagain",
+    "message": "Welcome Diana! This is Amy.",
+    "person": "person$anguyen"
 },
 {
   "_id": "artist$1",
@@ -429,7 +540,7 @@ mutation addSampleData ($mySampleDataTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "mySampleDataTx": "[{\"_id\":\"person\\$jdoe\",\"handle\":\"jdoe\",\"fullName\":\"Jane Doe\",\"favNums\":[1223,12,98,0,-2],\"favArtists\":[\"artist\\$1\",\"artist\\$2\",\"artist\\$3\"], \"follows\": \"person\\$zsmith\" },{\"_id\":\"person\\$zsmith\",\"handle\":\"zsmith\",\"fullName\":\"Zach Smith\",\"favNums\":[5,645,28,-1,1223],\"favArtists\":[\"artist\\$1\"], \"follows\": \"person\\$jdoe\"},{\"_id\":\"chat\",\"message\":\"This is a sample chat from Jane!\",\"person\":\"person\\$jdoe\",\"instant\":\"#(now)\",\"comments\":[\"comment\\$zsmith\"]},{\"_id\":\"comment\\$zsmith\",\"message\":\"Zsmith is responding!\",\"person\":\"person\\$zsmith\"},{\"_id\":\"artist\\$1\",\"name\":\"Gustav Klimt\"},{\"_id\":\"artist\\$2\",\"name\":\"Augusta Savage\"},{\"_id\":\"artist\\$3\",\"name\":\"Jean-Michel Basquiat\"}]"
+  "mySampleDataTx": "[{\"_id\":\"person$jdoe\",\"handle\":\"jdoe\",\"fullName\":\"Jane Doe\",\"age\":25,\"favNums\":[1223,12,98,0,-2],\"favArtists\":[\"artist$1\",\"artist$2\",\"artist$3\"],\"follows\":\"person$zsmith\"},{\"_id\":\"person$zsmith\",\"handle\":\"zsmith\",\"fullName\":\"Zach Smith\",\"age\":63,\"favNums\":[5,645,28,-1,1223],\"favArtists\":[\"artist$1\"],\"follows\":\"person$jdoe\"},{\"_id\":\"person$anguyen\",\"handle\":\"anguyen\",\"fullName\":\"Amy Nguyen\",\"age\":34,\"favNums\":[7,98,0,2],\"favArtists\":[\"artist$2\",\"artist$3\"],\"follows\":\"person$jdoe\"},{\"_id\":\"person$dsanchez\",\"handle\":\"dsanchez\",\"fullName\":\"Diana Sanchez\",\"age\":70,\"favNums\":[9,1950],\"favArtists\":[\"artist$2\"],\"follows\":\"person$anguyen\"},{\"_id\":\"chat\",\"message\":\"Hi! I'm chat from Jane.\",\"person\":\"person$jdoe\",\"instant\":\"#(- (now) 20000)\",\"comments\":[\"comment$zsmith\",\"comment$anguyen\"]},{\"_id\":\"chat\",\"message\":\"Hi! I'm a chat from Diana.\",\"person\":\"person$dsanchez\",\"instant\":\"#(- (now) 5000)\",\"comments\":[\"comment$zsmithagain\",\"comment$anguyenagain\"]},{\"_id\":\"chat\",\"message\":\"Hi! I'm a chat from Zach.\",\"person\":\"person$zsmith\",\"instant\":\"#(now)\"},{\"_id\":\"comment$zsmith\",\"message\":\"Zsmith is responding!\",\"person\":\"person$zsmith\"},{\"_id\":\"comment$anguyen\",\"message\":\"Hi Jane!\",\"person\":\"person$anguyen\"},{\"_id\":\"comment$zsmithagain\",\"message\":\"Welcome Diana!\",\"person\":\"person$zsmith\"},{\"_id\":\"comment$anguyenagain\",\"message\":\"Welcome Diana! This is Amy.\",\"person\":\"person$anguyen\"},{\"_id\":\"artist$1\",\"name\":\"Gustav Klimt\"},{\"_id\":\"artist$2\",\"name\":\"Augusta Savage\"},{\"_id\":\"artist$3\",\"name\":\"Jean-Michel Basquiat\"}]"
 }
 ```
 ```sparql

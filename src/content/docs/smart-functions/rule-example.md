@@ -104,7 +104,8 @@ The full function is: `(contains? (get-all (?s \"[{chat/person  [{person/auth [_
   {
     "_id": "_fn$ownChats",
     "name": "ownChats",
-    "code": "(contains? (get-all (?s \"[{chat/person  [{person/auth [_id] }] }]\") [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))"
+    "code": "(contains? (get-all (query (str \"{\\\"select\\\": \\\"[{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")) [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))"
+
   }
 ]
 ```
@@ -363,7 +364,7 @@ Query All Chats
 
 ```all
 {
-  "select": ["*"],
+  "select": ["*", {"chat/comments": ["*"]}],
   "from": "chat"
 }
 ```

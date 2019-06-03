@@ -347,12 +347,23 @@ Source | Description
 `$fdbPT5M` | Fluree as of a specified ISO-8601 formatted duration ago. For example, `$fdbPT5M` is as of 5 minutes ago.  
 `$wd` | Wikidata 
 
-For example, if we wanted to see whether "zsmith" as of block 8 shared a favorite number with "jdoe" as of block 9.
+For example, if we wanted to see whether "zsmith" as of block 5 shared a favorite number with "zsmith" as of block 4.
+
+We are currently at block 4, so we would first need to issue a transaction. We can give `zsmith` an additional favorite number. 
+
+```all
+[{
+  "_id": ["person/handle", "zsmith"],
+  "favNums": [100]
+}]
+```
+
+Now, we can issue a query showing which numbers were his favorites in BOTH block 4 and block 5. This means the results should exclude the number 100. 
 
 ```flureeql
 {
     "select": "?nums",
-    "where": [ ["$fdb8", ["person/handle", "zsmith"], "person/favNums", "?nums"], ["$fdb9", ["person/handle", "jdoe"], "person/favNums", "?nums"] ]
+    "where": [ ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], ["$fdb5", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
 }
 ```
 ```curl
@@ -361,7 +372,7 @@ For example, if we wanted to see whether "zsmith" as of block 8 shared a favorit
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
     "select": "?nums",
-    "where": [ ["$fdb8", ["person/handle", "zsmith"], "person/favNums", "?nums"], ["$fdb9", ["person/handle", "jdoe"], "person/favNums", "?nums"] ]
+    "where": [ ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], ["$fdb5", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
 }' \
    [HOST]/api/db/query
 ```
@@ -373,10 +384,9 @@ Not supported
 ```sparql
 SELECT ?nums
 WHERE {
-    ?person     fd9:person/handle   "jdoe";
-                fd9:person/favNums  ?nums.
-    ?person     fd8:person/handle   "zsmith";
-                fd8:person/favNums  ?nums.
+    ?person     fd4:person/handle   "jdoe";
+                fd4:person/favNums  ?nums.
+                fd5:person/favNums  ?nums.
 }
 ```
 
@@ -455,7 +465,7 @@ For example, if we want to run the same query as the [Wikidata Example](#wikidat
 {
     "select": ["?name", "?artist", "?artwork"],
     "where": [
-        [["person/handle", "artLuvr"], "person/favArtists", "?artist"],
+        [["person/handle", "jdoe"], "person/favArtists", "?artist"],
         ["?artist", "artist/name", "?name"],
         ["$wd", "?artwork", "wdt:P170", "?creator", {"limit": 5, "distinct": false}],
         ["$wd", "?creator", "?label", "?name"]
@@ -486,7 +496,7 @@ Not supported
 ```sparql
 SELECT DISTINCT ?name ?artist ?artwok ?artworkLabel
 WHERE {
-    ?person     fd:person/handle        "artLuvr";
+    ?person     fd:person/handle        "jdoe";
                 fd:person/favArtists    ?artist.
     ?artist     fd:artist/name          ?name.
     ?artwork    wdt:P170                ?creator.

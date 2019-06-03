@@ -32,7 +32,7 @@ It might be tempting to think that, because this smart function pertains to one 
 
 The above transaction should not be allowed if we want to require full names, but it would not trigger any smart functions attached to the `person/fullName` `_predicate/spec`. This is because the `fullName` predicate does not appear anywhere in the transaction. Instead, we need to put the smart function on the `_collection/spec` for `person/fullName`.
 
-Not, in our smart function, we first check whether our subject, `?s` contains a `person/fullName`, and then we coerce the result to a boolean (`true` or `false`), so that any non-nil value will return `true` and `nil` will return `false`. 
+Note, in our smart function, we first use our `?sid` to find the `person/fullName`. We retrieve the `person/fullName` using `get`, and then we coerce the result to a boolean (`true` or `false`), so that any non-nil value will return `true` and `nil` will return `false`. 
 
 In the below transaction, we first attach the `_fn$fullNameReq` to the `person` collection, and write a `specDoc`. The `specDoc` is the custom error message that will display when this smart function returns false. In the second part of the transaction, we create the relevant smart function, `fullNameReq`. 
 
@@ -45,7 +45,7 @@ In the below transaction, we first attach the `_fn$fullNameReq` to the `person` 
 {
   "_id": "_fn$fullNameReq",
   "name": "fullNameReq",
-  "code": "(boolean (get (?s) \"person/fullName\"))"
+  "code": "(boolean (get (query (str \"{\\\"selectOne\\\": [\\\"*\\\"], \\\"from\\\": \" (?sid) \"}\")) \"person/fullName\"))"
 }]
 ```
 
@@ -61,7 +61,7 @@ curl \
 {
   "_id": "_fn$fullNameReq",
   "name": "fullNameReq",
-  "code": "(boolean (get (?s) \"person/fullName\"))"
+  "code": "(boolean (get (query (str \"{\\\"selectOne\\\": [\\\"*\\\"], \\\"from\\\": \" (?sid) \"}\")) \"person/fullName\"))"
 }]' \
    [HOST]/api/db/transact
 ```
@@ -71,7 +71,7 @@ mutation reqFullName ($reqFullNameTx: JSON) {
 }
 
 {
-  "reqFullNameTx": "[{\"_id\":[\"_collection/name\",\"person\"],\"spec\":[\"_fn$fullNameReq\"],\"specDoc\":\"A person is required to have a fullName.\"},{\"_id\":\"_fn$fullNameReq\",\"name\":\"fullNameReq\",\"code\":\"(boolean (get (?s) \\\"person/fullName\\\"))\"}]"
+  "reqFullNameTx": "[{\"_id\":[\"_collection/name\",\"person\"],\"spec\":[\"_fn$fullNameReq\"],\"specDoc\":\"A person is required to have a fullName.\"},{\"_id\":\"_fn$fullNameReq\",\"name\":\"fullNameReq\",\"code\":\"(boolean (get (query (str \\\"{\\\\\\\"selectOne\\\\\\\": [\\\\\\\"*\\\\\\\"], \\\\\\\"from\\\\\\\": \\\" (?sid) \\\"}\\\")) \\\"person/fullName\\\"))\"}]"
 }
 ```
 
