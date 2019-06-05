@@ -111,15 +111,26 @@ We're going to place the following restrictions on the predicates in the `wallet
 - `wallet/balance` - anyone can edit
 - `wallet/user` - no one can edit. 
 
-First, we're going to create a function, which checks to see if the user attempting to make the update `(?user_id)` is the owner of the wallet. The full function is: `(contains? (get-all (?s \"[{wallet/user [{_user/auth [_id]}] }]\") [\"wallet/user\" \"_user/auth\" \"_id\"]) (?auth_id))`. This function starts with `(?s \"[{wallet/user [{_user/auth [_id]}] }]\")`, which is the subject being updated (a wallet), and following the subject to get the `wallet/user` and that `_user/auth`. 
+First, we're going to create a function, which checks to see if the user attempting to make the update `(?user_id)` is the owner of the wallet. The full function is: `"(contains? (get-all (query (str \"{\\\"select\\\": [{\\\"wallet/user\\\": [{\\\"_user/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" }\")) [\"wallet/user\" \"_user/auth\" \"_id\"]) (?auth_id))"`, 
 
-We `get-all` the `_id`s from the `_user/auth`s for that `wallet/user`. `get-all` returns a set. In this case, it is a set of one, single `_id`. Then we see if the set of `_id`s for the current `wallet/user`s contains the `_id` of the `_auth` currently making the update `(?auth_id)`. 
+First, we use `str` to create a query-string, `(str \"{\\\"select\\\": [{\\\"wallet/user\\\": [{\\\"_user/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" }\")`. The resulting query will be:
 
-```flureeql
+```all
+{
+  "select": [{"wallet/user": [{"_user/auth": ["_id]}]}],
+  "from": SUBJECT-ID
+}
+```
+
+The subject-id will belong to the wallet in question, and we access that `_id` via the `(?sid)` function. We issue that query using the `query` function, and then use `get-all` to retrieve the `_id` of the `_user/auth`. 
+
+`get-all` returns a set. In this case, it is a set of one, single `_id`. Then we see if the set of `_id`s for the current `wallet/user`s contains the `_id` of the `_auth` currently making the update `(?auth_id)`. 
+
+```all
 [{
     "_id": "_fn$ownWallet",
     "name": "ownWallet?",
-    "code": "(contains? (get-all (?s \"[{wallet/user [{_user/auth [_id]}] }]\") [\"wallet/user\" \"_user/auth\" \"_id\"]) (?auth_id))"
+    "code": "(contains? (get-all (query (str \"{\\\"select\\\": [{\\\"wallet/user\\\": [{\\\"_user/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" }\")) [\"wallet/user\" \"_user/auth\" \"_id\"]) (?auth_id))"
 },
    {
     "_id": "_rule$editOwnWalletName",
@@ -134,7 +145,7 @@ We `get-all` the `_id`s from the `_user/auth`s for that `wallet/user`. `get-all`
 
 Then, we'll use the built-in smart functions, `true` and `false` to make sure `wallet/balance` can be updated by anyone, and the `wallet/user` cannot be edited by anyone. 
 
-```flureeql
+```all
 [{
     "_id": "_rule$editAnyCryptoBalance",
     "id": "editAnyCryptoBalance",

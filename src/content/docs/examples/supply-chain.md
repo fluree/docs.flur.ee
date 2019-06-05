@@ -4,7 +4,7 @@ In this example, we’ll walk through setting up a custom blockchain for Cafe on
 
 ### Create a Schema
 
-Our first step will be to create collections and predicates. We will be creating `purchaseOrder`, `organization`, `shipment`, `product`, and `event` collections, as wekk as accompanying predicates. 
+Our first step will be to create collections and predicates. We will be creating `purchaseOrder`, `organization`, `shipment`, `product`, and `event` collections, as well as accompanying predicates. 
 
 At this point, we will not add any smart functions to the schema; that comes later according to Fluree [best practices](/docs/infrastructure/application-best-practices).
 
@@ -763,22 +763,18 @@ The first smart function that we create is `required`. Required can be added to 
     "_id": "_fn$required",
     "name": "required",
     "params": ["predicate"],
-    "code": "(boolean (get (?s) predicate))",
+    "code": "(boolean (get (query (str \"{\\\"select\\\": [\\\"*\\\"], \\\"from\\\": \" (?sid) \"}\")) predicate))",
     "doc": "This predicate is required. Add to collection spec"
 }]
 ```
 
 Later on in this example, we will be adding required to `purchaseOrder` and require the predicate `purchaseOrder/id`. In order to do this, we wouldd attached a function, `(required \"purchaseOrder/id\")`, to the `_collection/spec` for `purchaseOrder`. 
 
-With this smart function, every time a transaction contains the `purchaseOrder` collection, the following code will run `(boolean (get (?s) predicate))` with `purchaseOrder/id` instead of "predicate":
+With this smart function, every time a transaction contains the `purchaseOrder` collection, the following code will run `(boolean (get (query (str \"{\\\"select\\\": [\\\"*\\\"], \\\"from\\\": \" (?sid) \"}\")) predicate))` with `purchaseOrder/id` instead of "predicate":
 
-`(boolean (get (?s) \"purchaseOrder/id\"))`
+`(boolean (get (query (str \"{\\\"select\\\": [\\\"*\\\"], \\\"from\\\": \" (?sid) \"}\")) \"purchaseOrder/id\"))`
 
-The above code will first get all the predicate for relevant subject - `(?s)`. 
-
-Then, it will specifically try and retrieve the value for `purchaseOrder/id` - `(get (?s) \"purchaseOrder/id\")`. If the subject does not contain a `purchaseOrder/id`, this will return `nil`, otherwise it will return the `id`. 
-
-Finally, the code will coerce the result of `get` to a boolean (true or false). If we got `nil` from the `get`, then this smart function will return `false`, and stop the transaction from going through. Otherwise, it will return `true`, and the transaction will go through. 
+The code in required first selects `*` from the subject, `(query(str \"{\\\"select\\\": [\\\"*\\\"], \\\"from\\\": \" (?sid) \"}\")))`, then attempts to `get` the predicate in question. If `get` returns `nil`, `boolean` will coerce the result to `false`, and this will stop the transaction from going through. Else, `boolean` will return `true`, and the transaction will go through. 
 
 #### New?
 
@@ -801,11 +797,11 @@ This function looks up the organization type of the auth issuing a given transac
 [{
     "_id": "_fn$authOrganizationType",
     "name": "authOrganizationType", 
-    "code": "(query \"[{organization/_auth [{organization/type [_tag/id] }]}]\" (?auth_id) nil nil nil)"
+    "code": "(query (str \"{ \\\"select\\\": [{\\\"organization/_auth\\\": [{ \\\"organization/type\\\": [\\\"_tag/id\\\"]}]}], \\\"from\\\": \" (?auth_id) \"}\"))"
 }]
 ```
 
-The following code `"(query \"[{organization/_auth [{organization/type [_tag/id] }]}]\" (?auth_id) nil nil nil)"` translates to the following query:
+The following code `(query (str \"{ \\\"select\\\": [{\\\"organization/_auth\\\": [{ \\\"organization/type\\\": [\\\"_tag/id\\\"]}]}], \\\"from\\\": \" (?auth_id) \"}\"))` translates to the following query:
 
 ```all
 {
@@ -822,11 +818,11 @@ This function looks up the organization type of the organization being transacte
 [{
     "_id": "_fn$organizationType",
     "name": "organizationType", 
-    "code": "(query \"[{organization/type [_tag/id]}]\" (?o) nil nil nil)"
+    "code": "(query (str \"{\\\"select\\\": [{\\\"organization/type\\\": [\\\"_tag/id\\\"]}], \\\"from\\\": \" (?o) \"}\"))"
 }]
 ```
 
-The following code `"(query \"[{organization/type [_tag/id]}]\" (?o) nil nil nil)"` translates to the following query:
+The following code `"(query (str \"{\\\"select\\\": [{\\\"organization/type\\\": [\\\"_tag/id\\\"]}], \\\"from\\\": \" (?o) \"}\"))"` translates to the following query:
 
 ```all
 {
@@ -843,11 +839,11 @@ This function looks up the organization auth of the organization being transacte
 [{
     "_id": "_fn$organizationAuth",
     "name": "organizationAuth", 
-    "code": "(query \"[{organization/auth  [_id]}]\" (?o) nil nil nil)"
+    "code": "(query (str \"{\\\"select\\\": [{\\\"organization/auth\\\": [\\\"_id\\\"]}], \\\"from\\\": \" (?o) \"}\"))"
 }]
 ```
 
-The following code `"(query \"[{organization/auth  [_id]}]\" (?o) nil nil nil)"` translates to the following query:
+The following code `"(query (str \"{\\\"select\\\": [{\\\"organization/type\\\": [\\\"_id\\\"]}], \\\"from\\\": \" (?o) \"}\"))"` translates to the following query:
 
 ```all
 {
@@ -864,14 +860,21 @@ The following smart function will follow the shipment being transacted on and re
 [{
     "_id": "_fn$shipmentPOApproved",
     "name": "shipmentPOApproved",
-    "code": "(get-all (?s \"[{purchaseOrder/_shipments [{purchaseOrder/approved [_id]}] }]\") [\"purchaseOrder/_shipments\" \"purchaseOrder/approved\" \"_id\"])",
+    "code": "(get-all (query (str \"{\\\"select\\\": [{\\\"purchaseOrder/_shipments\\\": [{\\\"purchaseOrder/approved\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \"}\")) [\"purchaseOrder/_shipments\" \"purchaseOrder/approved\" \"_id\"])",
     "doc": "Gets all of the PO approved from the PO a shipment is connected to."
 }]
 ```
 
-This code `(?s \"[{purchaseOrder/_shipments [{purchaseOrder/approved [_id]}] }]\")` gets all of the predicates from the subject being transacted (will be a shipment), and follows the graph to get the `purchaseOrders` via `purchaseOrder/_shipments`, and then continues following the graph to `purchaseOrder/approved`.
+This code `(query (str \"{\\\"select\\\": [{\\\"purchaseOrder/_shipments\\\": [{\\\"purchaseOrder/approved\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \"}\"))` translates to the query:
 
-The `get-all` function, then gets all the organizations in `purchaseOrder/approved`.
+```all
+{
+    "select": [{"purchaseOrder/_shipments": [{"purchaseOrder/approved": ["_id"]}]],
+    "from": [SUBJECT BEING TRANSACTED ON]
+}
+```
+
+We then `get all` of the `_id` of the organizations who have approved this purchase order. 
 
 #### Approved Organization Types
 
@@ -881,13 +884,20 @@ From a `purchaseOrder`, this smart function will get all the organizations that 
 [{
     "_id": "_fn$approvedOrgTypes",
     "name": "approvedOrgTypes",
-    "code": "(get-all (?s \"[{purchaseOrder/approved [{organization/type [_tag/id] }] }]\") [\"purchaseOrder/approved\" \"organization/type\" \"_tag/id\"] )"
+    "code": "(get-all (query (str \"{\\\"select\\\": [{\\\"purchaseOrder/approved\\\": [{\\\"organization/type\\\": [\\\"_tag/id\\\"]}]}], \\\"from\\\":\" (?sid) \"}\")) [\"purchaseOrder/approved\" \"organization/type\" \"_tag/id\"])"
 }]
 ```
 
-This code `(?s \"[{purchaseOrder/approved [{organization/type [_tag/id] }] }]\")` gets all of the predicates from the purchase order being transacted, and follows the graph to get the `purchaseOrders` via `purchaseOrder/approved`, and then continues following the graph to `organization/type`.
+This code `(query (str \"{\\\"select\\\": [{\\\"purchaseOrder/approved\\\": [{\\\"organization/type\\\": [\\\"_tag/id\\\"]}]}], \\\"from\\\":\" (?sid) \"}\"))` translates to the following query:
 
-The `get-all` function, then returns all the organization types.
+```all
+{
+    "select": [{"purchaseOrder/approved": [{"organization/type": ["_tag/id"]}]}],
+    "from": [SUBJECT BEING TRANSACTED ON]
+}
+```
+
+We then `get all` of the `organization/type`s of the organizations who have approved this purchase order. 
 
 #### Shipment Connected to PO?
 
@@ -897,38 +907,88 @@ This smart function checks whether a shipment is connected to a purchaseOrder.
 [{
     "_id": "_fn$shipmentConnectedToPO?",
     "name": "shipmentConnectedToPO?",
-    "code": "(boolean (get-all (?s \"[{purchaseOrder/_shipments [*]}]\") [\"purchaseOrder/_shipments\" \"_id\"]))"
+    "code": "(boolean (get-all (query (str \"{\\\"select\\\": [{\\\"purchaseOrder/_shipments\\\": [\\\"*\\\"]}], \\\"from\\\":\" (?sid) \"}\")) [\"purchaseOrder/_shipments\" \"_id\"]))"
 }]
 ```
 
-The code `(?s \"[{purchaseOrder/_shipments [*]}]\")` first gets all the predicates from the subject (a shipment), and follows the graph from the shipment to get all purchase orders
+The code `(query (str \"{\\\"select\\\": [{\\\"purchaseOrder/_shipments\\\": [\"*\"]}], \\\"from\\\":\" (?sid) \"}\"))` translates to the query:
 
-The `get-all` function then pulls out only the ids for the purchase orders. 
+```all
+{
+    "select": [{"purchaseOrder/_shipments": ["*"]}],
+    "from": [SUBJECT BEING TRANSACTED ON]
+}
+```
 
-If there are no purchase orders, `get-all` will return `nil`. 
+Then the `get-all` function pulls out the `_id`s for any purchase orders. If there are no purchase orders, `get-all` will return `nil`. `boolean` coerces the result to a true or false.
 
-`boolean` coerces the result to a true or false.
+### Shipment Sent By and Sent Signature
+
+The following function gets the `_id` of the organization that sent a shipment. 
+
+```all
+[{
+    "_id": "_fn$shipmentSentBy",
+    "name": "shipmentSentBy",
+    "code": "(get-all (query (str \"{\\\"select\\\": [{\\\"shipment/sentBy\\\": [\\\"_id\\\"]}], \\\"from\\\":\" (?sid) \"}\")) [\"shipment/sentBy\" \"_id\"])",
+    "doc": "Gets shipment/sentBy."
+}]
+```
+
+The following function gets the `_id` of the organization that signed that they sent a shipment. 
+
+```all
+[{
+    "_id": "_fn$shipmentSentSignature",
+    "name": "shipmentSentSignature",
+    "code": "(get-all (query (str \"{\\\"select\\\": [{\\\"shipment/sentSignature\\\": [\\\"_id\\\"]}], \\\"from\\\":\" (?sid) \"}\")) [\"shipment/sentSignature\" \"_id\"])",
+    "doc": "Gets shipment/signature."
+}]
+```
+
+The following function gets the `_id` of the organization that signed that they received a shipment. 
+
+```all
+[{
+    "_id": "_fn$shipmentReceivedSignature",
+    "name": "shipmentReceivedSignature",
+    "code": "(get-all (query (str \"{\\\"select\\\": [{\\\"shipment/receivedSignature\\\": [\"_id\"]}], \\\"from\\\":\" (?sid) \"}\")) [\"shipment/receivedSignature\" \"_id\"])",
+    "doc": "Gets shipment/receivedSignature."
+}]
+```
+
+The following function gets the `_id` of the organization that was the intended recipient of the shipment. 
+
+```all
+[{
+    "_id": "_fn$shipmentIntendedRecipient",
+    "name": "shipmentIntendedRecipient",
+    "code": "(get-all (query (str \"{\\\"select\\\": [{\\\"shipment/intendedRecipient\\\": [\"_id\"]}], \\\"from\\\":\" (?sid) \"}\")) [\"shipment/intendedRecipient\" \"_id\"])",
+    "doc": "Gets shipment/intendedRecipient."
+}]
+```
 
 #### Does Subject Contain Predicates?
 
-The follows smart functions, check if a given subject (going to be used for shipments), and checks whether that subject contains a particular predicate. 
+The following smart functions, checks if a given subject contains a particular predicate. 
 
-`boolean` coerces the result to true (if the predicates exists) or false (if the predicate is `nil`).
+For the first one, we check if a `shipment` contains a `shipment/sentSignature`.
 
 ```all
 [{
     "_id": "_fn$sentSignature?",
     "name": "sentSignature?",
-    "code": "(boolean (get-all (?s) [\"shipment/sentSignature\" \"_id\"]))"
+    "code": "(boolean (shipmentSentSignature))"
 }]
 ```
 
+For the next ones, we check use the `required` function to check if a `shipment` contains a `shipment/GPSLocation` and `shipment/shipper`, respectively.
 
 ```all
 [{
     "_id": "_fn$GPSLocation?",
     "name": "GPSLocation?",
-    "code": "(boolean (get (?s) \"shipment/GPSLocation\"))"
+    "code": "(required \"shipment/GPSLocation\")"
 }]
 ```
 
@@ -936,19 +996,19 @@ The follows smart functions, check if a given subject (going to be used for ship
 [{
     "_id": "_fn$shipper?",
     "name": "shipper?",
-    "code": "(boolean (get (?s) \"shipment/shipper\"))"
+    "code": "(required \"shipment/shipper\")"
 }]
 ```
 
 #### Purchase Order Received Signature Auth
 
-The following smart function is meant to be used for subjects that are purchase orders. It follows the purchase orders to get shipments, gets the `shipment/receivedSignature`, and then gets the `_id` for the organizations that signed `shipment/receivedSignature`. 
+The following smart function retrieves all the `auth` records, who have signed that they received a given purchase order. 
 
 ```all
 [{
     "_id": "_fn$purchaseOrderReceivedSignaturesAuth",
     "name": "purchaseOrderReceivedSignaturesAuth",
-    "code": "(get-all (?s \"[{purchaseOrder/shipments [{shipment/receivedSignature [{ organization/auth [_id ]}]}]}]\") [\"purchaseOrder/shipments\" \"shipment/receivedSignature\" \"organization/auth\" \"_id\"]))",
+    "code": "(get-all (query (str \"{\\\"select\\\": [{\\\"purchaseOrder/shipments\\\": [{\"shipment/receivedSignature\": [{\"organization/auth\": [\"_id\"]}]}]}], \\\"from\\\":\" (?sid) \"}\")) [\"purchaseOrder/shipments\" \"shipment/receivedSignature\" \"organization/auth\" \"_id\"]))",
     "doc": "Gets all the auth records from the receivedSignatures from purchaseOrder/shipments."
 }]
 ```
@@ -1136,7 +1196,7 @@ If the `purchaseOrder/id` has a previous value, then the smart function will alw
 [{
     "_id": "_fn$onlyCafeCreate",
     "name": "onlyCafeCreate",
-    "code": "(if-else (new?) (authIsCafe?) false)",
+    "code": "(and (new?) (authIsCafe?))",
     "doc": "When creating a new purchaseOrder, if the auth record is connected to a cafe, allow, else return false."
 }]
 ```
@@ -1149,13 +1209,13 @@ The below smart functions check that certain fields match each other, namely tha
 [{
     "_id": "_fn$sentSignatureEqualsSentBy",
     "name": "sentSignatureEqualsSentBy",
-    "code": "(== (get (?s) \"shipment/sentBy\") (get (?s) \"shipment/sentSignature\"))",
+    "code": "(== (shipmentSentBy) (shipmentSentSignature))",
     "doc": "shipment/sentSignature has to be same person as shipment/sentBy"
 },
 {
     "_id": "_fn$recipientIsIntended",
     "name": "recipientIsIntended",
-    "code": "(== (get (?s) \"shipment/intendedRecipient \") (get (?s) \"shipment/receivedSignature\"))",
+    "code": "(== (shipmentIntendedRecipient) (shipmentReceivedSignature))",
     "doc": "shipment/intendedRecipient has to be same person as shipment/receivedSignature."
 }]
 ```
@@ -1181,7 +1241,7 @@ The chain of approval is as followers: If no one has approved the purchaseOrder,
     "_id": "_fn$chainOfApproval",
     "name": "chainOfApproval",
     "doc": "Checks who what type of auth org is, and enforces chain of approval",
-    "code": "(if-else (authIsCafe?) (not (growerApprovedPO?)) (if-else (authIsGrower?) (and (cafeApprovedPO?) (not (roasterApprovedPO?))) (if-else (authIsRoaster?) (growerApprovedPO?) false))))"
+    "code": "(if-else (authIsCafe?) (not (growerApprovedPO?)) (if-else (authIsGrower?) (and (cafeApprovedPO?) (not (roasterApprovedPO?))) (if-else (authIsRoaster?) (growerApprovedPO?) false)))"
 }]
 ```
 
@@ -1475,13 +1535,12 @@ cannot be issued: */
 Once the cafe is happy with their purchaseOrder, they can add their name to purchaseOrder/approved, and this moves the purchaseOrder down the chain of approval, allowing a grower to make changes to the purchaseOrder. 
 
 ```all
+Auth:               Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD
+Private Key:        8a9077ab011fb152b5a043abc24c535810b5dd1d87ecd6ace7cb454dd046670b
+
 [{
     "_id": ["purchaseOrder/id", "123"],
     "approved": [["organization/name", "Coffee on the Block"]]
-},
-{
-    "_id": "_tx",
-    "auth": "coffeeOnTheBlock"
 }]
 ```
 
@@ -1496,30 +1555,31 @@ as they are portrayed below, sequentially. */
 // Block 11
 // Grower adds info to purchaseOrder/grower
 
+Auth Id:            Tf2hxnc1FzAXtmk8ptwQ5V68zJjfd4tLwXL
+Private Key:        5ce7259de6397b6dbdd727fc62e9a920f41fe3017dbd76cba3f8d0c1f0275113
+
 [{
     "_id": ["purchaseOrder/id", "123"],
     "grower": ["organization/name", "McDonald's Farm"]
-},
-{
-    "_id": "_tx",
-    "auth": "mcDonaldsFarm"
 }]
 
 // Block 12
 // Grower adds info to purchaseOrder/harvestDate and approved
 
+Auth Id:            Tf2hxnc1FzAXtmk8ptwQ5V68zJjfd4tLwXL
+Private Key:        5ce7259de6397b6dbdd727fc62e9a920f41fe3017dbd76cba3f8d0c1f0275113
+
 [{
     "_id": ["purchaseOrder/id", "123"],
     "harvestDate": "#(now)",
     "approved": [["organization/name", "McDonald's Farm"]]
-},
-{
-    "_id": "_tx",
-    "auth": "mcDonaldsFarm"
 }]
 
 // Block 13
 // Grower creates a shipment and links to purchaseOrder
+
+Auth Id:            Tf2hxnc1FzAXtmk8ptwQ5V68zJjfd4tLwXL
+Private Key:        5ce7259de6397b6dbdd727fc62e9a920f41fe3017dbd76cba3f8d0c1f0275113
 
 [{
     "_id": ["purchaseOrder/id", "123"],
@@ -1536,10 +1596,6 @@ as they are portrayed below, sequentially. */
     "intendedRecipient": ["organization/name", "The Roastery"],
     "intendedReceiptLocation": "Miami, FL",
     "sentSignature": ["organization/name", "McDonald's Farm"]
-},
-{
-    "_id": "_tx",
-    "auth": "mcDonaldsFarm"
 }]
 </code></pre>
 
@@ -1548,13 +1604,12 @@ as they are portrayed below, sequentially. */
 While the shipper is in control of the package, they might have IoT that automatically updates the GPSLocation at certain intervals. They could issue transactions like this one:
 
 ```all
+Auth Id:        TfBq3t6AZ6ibCs3uxVAkW6CtPaWy7isrcRG
+Private Key:    9ba0454eab8057f4e69a27e8ea9ab6344c73f4f1a7a829a9b521869073e92cb7
+
 [{
     "_id": ["shipment/id", "growShip123"],
     "GPSLocation": "25.7825453,-80.2994987"
-},
-{
-    "_id": "_tx",
-    "auth": "shipShape"
 }]
 ```
 
@@ -1580,6 +1635,9 @@ A good end user application will listen for these types of updates, and notify t
 For example, the below event was added by the cafe. In Portland, where the cafe is located, there was a big rain storm, so the cafe wants both the roaster and the shipper to know about this, as well as to have the event recorded in the blockchain.
 
 ```all
+Auth Id:        Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD
+Private Key:    8a9077ab011fb152b5a043abc24c535810b5dd1d87ecd6ace7cb454dd046670b
+
 [{
      "_id": "purchaseOrder",
      "events": [{
@@ -1589,11 +1647,7 @@ For example, the below event was added by the cafe. In Portland, where the cafe 
          "date": "#(now)",
          "notify": [["organization/name", "Ship Shape"],
          ["organization/name", "The Roastery"]]
-        }]
-},
-{
-     "_id": "_tx",
-     "auth": "coffeeOnTheBlock"
+    }]
 }]
 ```
 
@@ -1609,31 +1663,33 @@ but they are portrayed separately here for clarity. */
 
 // Block 18
 // Roaster signs for the package.
+
+Auth Id:            TfA6vquJMH65oQttpuURWvGnMdPPdAA69PF
+Private Key:        36abfcd2da19781550d6c9296ada95e11ef0ebfe9acdf3723e59098dc41fe8a5
+
 [{
     "_id": ["shipment/id", "growShip123"],
     "receivedSignature": ["organization/name", "The Roastery"]
-},
-{
-    "_id": "_tx",
-    "auth": "roastery"
 }]
 
 // Block 19
 // Roaster adds info to purchaseOrder/roaster, /roastDate, and /approved
+
+Auth Id:            TfA6vquJMH65oQttpuURWvGnMdPPdAA69PF
+Private Key:        36abfcd2da19781550d6c9296ada95e11ef0ebfe9acdf3723e59098dc41fe8a5
 
 [{
     "_id": ["purchaseOrder/id", "123"],
     "roaster": ["organization/name", "The Roastery"],
     "roastDate": "#(now)",
     "approved": [["organization/name", "The Roastery"]]
-},
-{
-    "_id": "_tx",
-    "auth": "roastery"
 }]
 
 // Block 21
 // Roaster creates shipment
+
+Auth Id:            TfA6vquJMH65oQttpuURWvGnMdPPdAA69PF
+Private Key:        36abfcd2da19781550d6c9296ada95e11ef0ebfe9acdf3723e59098dc41fe8a5
 
 [{
     "_id": ["purchaseOrder/id", "123"],
@@ -1649,54 +1705,47 @@ but they are portrayed separately here for clarity. */
         "intendedRecipient": ["organization/name", "Coffee on the Block"],
         "intendedReceiptLocation": "Portland, OR"
     }]
-},
-{
-    "_id": "_tx",
-    "auth": "roastery"
 }]
 
 // Blocks 22 - 25, Shipper updates location
 
 // Block 22
+Auth Id:        TfBq3t6AZ6ibCs3uxVAkW6CtPaWy7isrcRG
+Private Key:    9ba0454eab8057f4e69a27e8ea9ab6344c73f4f1a7a829a9b521869073e92cb7
+
 [{
     "_id": ["shipment/id", "roasterShip123"],
     "shipper": ["organization/name", "Ship Shape"],
     "GPSLocation": "32.8205865,-96.8716267"
-},
-{
-    "_id": "_tx",
-    "auth": "shipShape"
 }]
 
 
 // Block 23
+Auth Id:        TfBq3t6AZ6ibCs3uxVAkW6CtPaWy7isrcRG
+Private Key:    9ba0454eab8057f4e69a27e8ea9ab6344c73f4f1a7a829a9b521869073e92cb7
+
 [{
     "_id": ["shipment/id", "roasterShip123"],
     "GPSLocation": "38.9764554,-107.7937101"
-},
-{
-    "_id": "_tx",
-    "auth": "shipShape"
 }]
 
 // Block 24
+
+Auth Id:        TfBq3t6AZ6ibCs3uxVAkW6CtPaWy7isrcRG
+Private Key:    9ba0454eab8057f4e69a27e8ea9ab6344c73f4f1a7a829a9b521869073e92cb7
+
 [{
     "_id": ["shipment/id", "roasterShip123"],
     "GPSLocation": "38.4162652,-121.5129772"
-},
-{
-    "_id": "_tx",
-    "auth": "shipShape"
 }]
 
 // Block 25
+Auth Id:        TfBq3t6AZ6ibCs3uxVAkW6CtPaWy7isrcRG
+Private Key:    9ba0454eab8057f4e69a27e8ea9ab6344c73f4f1a7a829a9b521869073e92cb7
+
 [{
     "_id": ["shipment/id", "roasterShip123"],
     "GPSLocation": "45.5426225,-122.7944694"
-},
-{
-    "_id": "_tx",
-    "auth": "shipShape"
 }]
 </code></pre>
 
@@ -1707,6 +1756,9 @@ Once the cafe receives the package, they can sign for it and close the purchase 
 The purchase order can be closed at any time at the cafe’s discretion; the cafe does not have to wait until receiving the package. For example, the cafe may cancel the order while it is being roasted if they receive notice that the beans were contaminated. In a real application, a more robust cancellation policy is appropriate. 
 
 ```all
+Auth Id:        Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD
+Private Key:    8a9077ab011fb152b5a043abc24c535810b5dd1d87ecd6ace7cb454dd046670b
+
 [{
     "_id": ["shipment/id", "roasterShip123"],
     "receivedSignature": ["organization/name", "Coffee on the Block"]
@@ -1714,10 +1766,6 @@ The purchase order can be closed at any time at the cafe’s discretion; the caf
 {
    "_id": ["purchaseOrder/id", "123"],
    "closed": ["organization/name", "Coffee on the Block"]
-},
-{
-    "_id": "_tx",
-    "auth": "coffeeOnTheBlock"
 }]
 ```
 
@@ -1755,6 +1803,9 @@ Transaction Set 1:
 // Create five purchaseOrders
 
 // PO 1
+Auth Id:        Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD
+Private Key:    8a9077ab011fb152b5a043abc24c535810b5dd1d87ecd6ace7cb454dd046670b
+
 [{
     "_id": "purchaseOrder",
     "id": "124",
@@ -1772,10 +1823,6 @@ Transaction Set 1:
         "unitOfMeasure": "lb"
     },
     "approved": [["organization/name", "Coffee on the Block"]]
-},
-{
-    "_id": "_tx",
-    "auth": "coffeeOnTheBlock"
 }]
 
 //PO 2

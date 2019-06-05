@@ -60,11 +60,22 @@ The smart function attached to `viewAllChats` and `viewAllPeopleHandles` is just
 
 For `editOwnChats`, we needed to write a new function, which checks whether the subject being updated (a chat) belongs to the auth record doing the updating. 
 
-The full function is: `(contains? (get-all (?s \"[{chat/person  [{person/auth [_id] }] }]\") [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))`. We break it down below:
+The full function is: `(contains? (get-all (query (str \"{\\\"select\\\": \\\"[{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")) [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))`. We break it down below:
 
-1. First, we get the chat's, `chat/person`, and retrieve that person's `person/auth`, and finally get the `_auth`'s `_id`:  `(?s \"[{chat/person  [{person/auth [_id] }] }]\")`. 
-2. Then, we retrieve all (just one in this case) of the `_auth` `_id`s by again crawling the results from step 1. `(get-all [\"chat/person\" \"person/auth\" \"_id\"]) `.
-3. Finally, we ask, does the set (of one) `_id` contain the `(?auth_id)` who is currently making this update. `(contains? (get-all (?s \"[{chat/person  [{person/auth [_id] }] }]\") [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))`.
+1. First, we use `str` to create a query string `(str \"{\\\"select\\\": \\\"[{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")`. The resulting string is:
+
+```all
+{
+  "select": [{"chat/person": [{"person/auth": ["_id"]}]}],
+  "from": SUBJECT-ID
+}
+```
+
+2. We then use `query` to issue that query. 
+
+3. Then, we retrieve all (just one in this case) of the `_id`s belonging to `person/auth` by crawling the results from step 2. `(get-all [\"chat/person\" \"person/auth\" \"_id\"]) `. `get-all` always returns a set. In this case, it is a set containing a single `_id`. 
+
+3. Finally, we ask does the set of `_id`s we got in step 3 contain the `(?auth_id)` who is currently making this update?
 
 ```flureeql
 [
@@ -151,7 +162,7 @@ The full function is: `(contains? (get-all (?s \"[{chat/person  [{person/auth [_
   {
     "_id": "_fn$ownChats",
     "name": "ownChats",
-    "code": "(contains? (get-all (?s \"[{chat/person  [{person/auth [_id] }] }]\") [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))"
+    "code": "(contains? (get-all (query (str \"{\\\"select\\\": \\\"[{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")) [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))"
   }
 ]' \
    [HOST]/transact

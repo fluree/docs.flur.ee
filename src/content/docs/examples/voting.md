@@ -283,7 +283,7 @@ FlureeQL:
 {
     "_id": "_fn$editOwnUser",
     "name": "editOwnUser",
-    "code": "(contains? (get-all (query  \"[{_user/_auth [*]}]\" (?auth_id) nil nil nil) [\"_user/_auth\" \"_id\"]) (?sid))"
+    "code": "(contains? (get-all (query (str \"{\\\"select\\\": [{\\\"_user/_auth\\\": [\\\"_id\\\"]}], \\\"from\\\": \" (?auth_id) \"}\")) [\"_user/_auth\" \"_id\"]) (?sid))"
 }]
 ```
 
@@ -380,7 +380,7 @@ We can see all the votes related to that subject with a single query.
 FlureeQL:
 ```all
 {
-    "select": [{"?change": ["*", {"change/vote": ["*"]}]}],
+    "select": {"?change": ["*", {"change/vote": ["*"]}]},
     "where": [["?change", "change/subject", "?subject"],
     ["?subject", "_user/username", "softCell"]]
 }
@@ -393,7 +393,7 @@ We want to make sure that we are only looking at votes for a given subject that 
 FlureeQL:
 ```all
 {
-    "select": [{"?vote": ["*"]}],
+    "select": {"?vote": ["*"]},
     "where": [["?change", "change/subject", "?subject"],
     ["?subject", "_user/username", "softCell"],
     ["?change", "change/predicate", "?predicate"],
@@ -405,7 +405,7 @@ FlureeQL:
 
 Sample result in FlureeQL:
 ```all
-[[
+[
   {
     "vote/name": "softCellNameVote",
     "vote/yesVotes": [
@@ -415,7 +415,7 @@ Sample result in FlureeQL:
     ],
     "_id": 351843720888321
   }
-]]
+]
 ```
 
 The first two functions we will create build and issue the above query. We will then use these functions to count votes, and eventually decide whether or not changes should be approved. 
@@ -446,16 +446,26 @@ FlureeQL:
 }]
 ```
 
-One of the most useful features of smart functions is that we can put them together. The second function we create issues a query using the `query` smart function. The arguments or parameters for the `query` function are: `select-string`, `from-string`, `where-string`, `block-string`, `limit-string`.
+One of the most useful features of smart functions is that we can put them together. The second function we create issues a query using the `query` smart function. The `query` function takes a string of the query. 
 
-For `select-string`, we use `[{?vote [*]}]`. `from-string` is nil. For `where-string`, rather than composing the `where-string` from scratch, we can simply use `(voteWhere)`. `block-string` and `limit-string` are both set to nil.
+The query in our smart function resolves to:
+
+```all
+{
+    "select": {"?vote": ["*"]},
+    "where": [["?change", "change/subject", (?sid)], 
+    ["?change", "change/predicate", (?pid)], 
+    ["?change", "change/object", (?o)], 
+    ["?change", "change/vote", "?vote"]]
+}
+```
 
 FlureeQL:
 ```all
 [{
         "_id": "_fn",
         "name": "vote",
-        "code": "(query \"[{?vote [*]}]\" nil (voteWhere) nil nil)"
+        "code": "(query (str \"{\\\"select\\\": {\\\"?vote\\\": [\\\"*\\\"] }, \\\"where\\\":\" (voteWhere) \"}\"))"
 }]
 ```
 
