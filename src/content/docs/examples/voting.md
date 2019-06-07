@@ -335,9 +335,6 @@ We can also use a tool in the user interface to sign transactions as a particula
 
 If using the user interface, you need to include the private key in the form. If you're not using the user interface, you will need to sign the following transaction with the private key. You will also need to specify softCell's auth in either the form or the [signed transaction](/docs/identity/signatures#signed-transactions).
 
-The private key for softCell is `4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4`
-and the `_auth/id` is `TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK`.
-
 A request to `/command` will return a `_tx/id`. The `_tx/id` is the unique SHA2-256 of the 'cmd' submitted to the `/command` endpoint. In order to see if the transaction went through successfully, you will need to query: 
 
 ```all
@@ -355,6 +352,9 @@ Soft Cell also adds their auth record to the `vote/yesVotes` predicate.
 
 FlureeQL:
 ```all
+Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
+Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
+
 [{
     "_id": "change",
     "name": "softCellNameChange",
@@ -538,10 +538,13 @@ FlureeQL:
 
 ### Testing
 
-The only vote that we have so far is `softCell` voting for their own name change. That means that if we attempt to change Soft Cell's username, it should fail. We should sign this transaction as Soft Cell with the `_auth/id`, `TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK` and private key `4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4`. 
+The only vote that we have so far is `softCell` voting for their own name change. That means that if we attempt to change Soft Cell's username, it should fail. We should sign this transaction as Soft Cell. 
 
 FlureeQL:
 ```all
+Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
+Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
+
 [{
     "_id": ["_user/username", "softCell"],
     "username": "hardCell"
@@ -563,29 +566,36 @@ Response:
 
 We would need at least two more yes votes in order to successfully make this change. We can add two more votes for this name change.
 
-The first transaction should be issued with `_auth/id` `TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH` and private key, `46e37823bfe73ac2b5e440238cb2b65a1cb4115721f23202e543c454faab8449`.
-
 FlureeQL:
 ```all
+Private Key: 46e37823bfe73ac2b5e440238cb2b65a1cb4115721f23202e543c454faab8449
+Auth id: TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH
+
 [{
     "_id": ["vote/name", "softCellNameVote"],
     "yesVotes": [["_auth/id", "TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH"]]
 }]
 ```
 
-The second transaction should be issued with `_auth/id` `TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK` and private key, `afa6b042a342845c3bf4ea5fd2690d8548d5169fd18d18081ac8ac9093c2e43c`.
+The second transaction should be signed as a different auth record.
 
 FlureeQL:
 ```all
+Private Key: afa6b042a342845c3bf4ea5fd2690d8548d5169fd18d18081ac8ac9093c2e43c
+Auth id: TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK
+
 [{
     "_id": ["vote/name", "softCellNameVote"],
     "yesVotes": [["_auth/id", "TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK"]]
 }]
 ```
 
-After adding more votes, the following transaction will pass. We should sign this transaction as Soft Cell with the `_auth/id`, `TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK` and private key `4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4`. 
+After adding more votes, the following transaction will pass. We should sign this transaction as Soft Cell's auth record.
 
 ```all
+Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
+Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
+
 [{
     "_id": ["_user/username", "softCell"], 
     "username": "hardCell" 

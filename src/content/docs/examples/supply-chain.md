@@ -1451,10 +1451,12 @@ intentionally or accidentally going around the allowed steps.  */
 
 It is valid, at this time, for a cafe to create a purchaseOrder, as long as they declare themselves to be the issuer, and all the required predicates are included:
 
-This should be signed with Coffee on the Block's `_auth/id`: `Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD` and their private key `8a9077ab011fb152b5a043abc24c535810b5dd1d87ecd6ace7cb454dd046670b`.
-
+This is signed with Coffee on the Block private key and auth. 
 
 ```all
+Private Key: 8a9077ab011fb152b5a043abc24c535810b5dd1d87ecd6ace7cb454dd046670b
+Auth id: Tf2j3SoemdjeTfi8t1CxjaYNmUZpWT3A8RD
+
 [{
     "_id": 
     "purchaseOrder", 
