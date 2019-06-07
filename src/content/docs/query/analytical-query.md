@@ -390,10 +390,11 @@ WHERE {
 }
 ```
 
-### WikiData Example
+### WikiData Examples
+
+#### Artist Example 
 
 Using the [Basic Schema](/docs/getting-started/basic-schema), we will be able to use analytical queries to connect up a `person/favArtists` (stored in Fluree) to their artworks (stored in Wikidata).
-
 
 We can retrieve the names of artworks created by jdoe's favorite artists. Our full query is below. We will discuss each of the where clause tuples individually. 
 
@@ -442,6 +443,54 @@ Tuple | Explanation
 `["?artist", "artist/name", "?name"]` | Looks up `artist/name` and binds to the variable `?name`.
 `["$wd", "?artwork", "wdt:P170", "?creator"]` | Use the [Wikidata property, creator](#https://www.wikidata.org/wiki/Property:P170) to bind `?artwork` and `?creator`
 `["$wd", "?creator", "?label", "?name"]` | Limits the scope of our `?creator`s (and thus `?artworks`) based on `?creator`s whose `?label` matches `?name`
+
+#### Movie Example
+
+We can also use Wikidata to retrieve the narrative locations of users' favorite movies with the following query:
+
+```flureeql
+{
+"select": ["?handle", "?title", "?narrative_location"],
+"where": [ ["?user", "user/favMovies", "?movie"],
+["?movie", "movie/title", "?title"],
+["$wd", "?wdMovie", "?label", "?title"],
+["$wd", "?wdMovie", "wdt:P840", "?narrative_location"],
+["$wd", "?wdMovie", "wdt:P31", "wd:Q11424"],
+["?user", "user/handle", "?handle"]]
+}
+```
+
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{
+"select": ["?handle", "?title", "?narrative_location"],
+"where": [ ["?user", "user/favMovies", "?movie"],
+["?movie", "movie/title", "?title"],
+["$wd", "?wdMovie", "?label", "?title"],
+["$wd", "?wdMovie", "wdt:P840", "?narrative_location"],
+["$wd", "?wdMovie", "wdt:P31", "wd:Q11424"],
+["?user", "user/handle", "?handle"]]
+}' \
+   [HOST]/api/db/query
+```
+
+```graphql
+Not supported
+```
+
+```sparql
+SELECT ?handle ?title ?narrative_location
+WHERE {
+  ?user     fdb:user/favMovies    ?movie.
+  ?movie    fdb:movie/title       ?title.
+  ?wdMovie  wd:?label             ?title;
+            wd:P840               ?narrative_location;
+            wdt:P31               wd:Q11424.
+  ?user     fdb:user/handle       ?handle.
+}
+```
 
 To learn more about querying Wikidata, visit their [documentation](#https://www.wikidata.org/wiki/Wikidata:Introduction). Also, stay tuned for our [analytical query lessons](/lessons) coming soon!
 
