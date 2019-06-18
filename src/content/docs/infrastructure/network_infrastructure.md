@@ -46,4 +46,4 @@ If running Fluree in a decentralized manner, you need to choose a consensus algo
 
 The consensus algorithm for a network is specified in each database in the `_setting/consensus` predicate. 
 
-We currently support Raft and PBFT, and you can learn more in the [Consensus Algorithm](/docs/database-setup/consensus-algorithms) section. 
+We currently support Raft and PBFT, and you can learn more in the [Consensus Algorithm](/docs/database-setup/database-settings#consensus-algorithms) section. 

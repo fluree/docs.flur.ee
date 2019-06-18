@@ -23,35 +23,52 @@ Authority is a feature of Fluree that allows one entity, an authority, to act on
 
 Any given transaction can be signed by the `_auth` issuing that transaction (if they have a private key), or by another `_auth` that is listed in the original auth record's `_auth/authority`. 
 
-For example, a company may only want their IT team to have private keys. All other employees in the company can still transact with Fluree, but they do not have their own private keys. 
+For example, we might have two parties: the IT Team and Alba. The IT team has a public-private key pair, but employees do not. Rather than make employees keep track of (and secure) a private key, employees might just use a username and password. The IT Team's public-private key pair is below. 
 
-Let's say an employee, Alba, in the Finance Department want to issue a transaction. The IT team would first have to create an `_auth` for Alba and add the IT Team's auth record to the Alba's `_auth/authority`. 
+```all
+IT Team
+
+Auth Id:                Tf5q9TVMoJ2MSATxN5XhAizBMSBEUGuy8aU
+Public Key:             023f5b5873e70988dcc91cef76e13402888a0d51c8d68eea6976a8b0fab4a05c43
+Private Key:            a12f89d64f966d431ea4fff850baf01f501438ccea53b6f6bb041e9eed559a76
+```
+
+To test this out, we can add two auth records:
 
 ```all
 [{
+    "_id": "_auth$IT",
+    "id": "Tf5q9TVMoJ2MSATxN5XhAizBMSBEUGuy8aU",
+    "doc": "IT Team's auth",
+    "roles": [[ "_role/id", "root" ]]
+},
+{
     "_id": "_auth",
-    "id": "alba",
-    "doc": "Alba's auth record",
-    "authority": ["_auth/id", "lpij34gfdjkdfg"]         // The IT team's auth id. 
+    "id": "Alba",
+    "doc": "Alba's auth",
+    "authority": ["_auth$IT"],
+    "roles": [[ "_role/id", "root" ]]
 }]
 ```
 
-Now, when Alba wants to issue a transaction, she may send the following transaction to the IT Team, maybe with additional metadata, such as what the auth issuing this transaction is (`["_auth/id", "alba"]`).
+Now, let's say Alba wants to issue a transaction creating a new person. She cannot sign her own transaction, because she does not have a private key. However, she can send transaction to the IT Team, who can sign it for her. 
+
+The IT Team (the authority in this case) has to verify whether or not the person who sent them is, in fact, Alba. Fluree does not control how or whether you do this. The IT Team may have an app that uses a username/password schema for authentication, they can require Alba to write her transaction on a piece of paper and hand deliver it to IT. From Fluree's perspective, it doesn't matter. The IT Team then can issue Alba's transaction (for example `[{"_id": "person", "handle": "aJohnson", "fullName": "Aimee Johnson" }]`) signed with the following information (you can sign a transaction using the UI by selecting `Transact` and `Sign`).
+
 
 ```all
+Auth Record:    Alba
+Private Key:    a12f89d64f966d431ea4fff850baf01f501438ccea53b6f6bb041e9eed559a76
+
 [{
-    "_id": "invoice",
-    "name": "my_invoice",
-    "amount": 140
+    "_id": "person", 
+    "handle": "aJohnson", 
+    "fullName": "Aimee Johnson" 
 }]
 ```
-
-Since Alba does not have a private key, she cannot issue a transaction directly to the Fluree transactor. The IT Team needs to sign the transaction and send the signed transaction to a Fluree server. 
-
-It is the IT team's job to make sure that it is, in fact, Alba who is issuing the transaction. The IT team could do this by asking Alba face-to-face or by making sure that only Alba could have sent them the above transaction (i.e. through an interface accessible through username and password). How (and whether) they determine that Alba is really the one issuing the transaction is up to the IT Team (the authority in this case). 
 
 Additionally, the rules that apply to whether the above transaction is valid is based on the rules attached to issuing auth record (Alba, in this case), and NOT to the rules issued to the authority (the IT team). 
 
 Furthermore, there is no proof, other than the Authority's protocols that the person who issued the transactions is who they say they are. 
 
-Authorities can be a very useful tool to allow users of Fluree to issue transactions without maintaining private keys, but this approach is less secure and does not provide cryptographic proof that a particular individual issued a given transaction.
+Authorities can be a very useful tool to allow users of Fluree to issue transactions without maintaining private keys, but this approach is less secure and does not provide cryptographic proof that a particular individual issued a given transaction. There is, however, a record of when a transaction is issued by an authority in the `_tx/authority` predicate.

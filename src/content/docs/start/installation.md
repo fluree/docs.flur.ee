@@ -26,7 +26,7 @@ Key Files:
 
 ### Dependencies
 
-Fluree requires Java 8 (Java 1.8) or above.
+Fluree requires Java 8 (Java 1.8) or above. To verify that your version of Java, you can type `java -version` in the terminal.
 
 ### Launching Fluree
 
@@ -53,7 +53,7 @@ Creating a database and any other interaction with Fluree can happen either thro
 
 To exit Fluree, simply click `ctrl + c` to quit the current process on your terminal. This will not delete any of the information that was successfully added to your databases (in other words, if you received a 200 response from your transactions, that means it was added to your database). 
 
-To restart Fluree, navigate to the folder that contains your Fluree instance and run `./flureeDB_transactor.sh`.
+To restart Fluree, navigate to the folder that contains your Fluree instance and run `./flureeDB_start.sh`.
 
 After Fluree successfully starts for the first time, if you are using the default `fdb-storage-type` set to `file`, there will be additional items in your Fluree instance folder. Your folder will look something like the below: 
 
@@ -131,7 +131,7 @@ Base Settings
 
 Property | Options | Description   
 -- | -- | --
-`fdb-mode` | `dev` `query` `ledger` | Dev runs a standalone version of Fluree, which supports both queries and transaction. `Query` and `transactor` are for running Fluree as a query or transactor, respectively.
+`fdb-mode` | `dev` `query` `ledger` | Dev runs a standalone version of Fluree, with a query engine and ledger running together. Currently only `dev` is supported. `query` and `ledger` are for running Fluree as a query engine or ledger, respectively.
 `fdb-license-key` | `key` | (Optional) Required for enterprise version
 
 
@@ -139,7 +139,7 @@ Transactor Group Options
 
 Property | Options | Description   
 -- | -- | --
-`fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. 
+`fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. Must be a [valid private key](/docs/identity/public-private-keys). This takes precedent over `fdb-group-private-key-file`.
 `fdb-group-private-key-file` | `file path` | If fdb-group-private-key is not provided, we'll look for it in this file. If not found in this file, we'll generate a default one and place it in this file.
 `fdb-group-servers` | `server-id@host:port, server-id@host:port` | List all servers participating in ledger-group with format of server-id@host:port. All tx-group servers should have this same config.
 `fdb-group-this-server` | `server-id` | Specify which of the above listed server-ids is this server. Note this must be unique for every server in the tx-group, and is likely easiest to supply this setting via environment variable.
@@ -148,7 +148,7 @@ Property | Options | Description
 `fdb-group-log-directory` | `file path` | Where to store tx-group raft log files and snapshots. These logs have fairly frequent disk access.
 `fdb-group-snapshot-threshold` | `int` | A snapshot of the current group state will be taken after this many new commits. Larger values mean larger log files, small values mean lots of snapshots which can be time consuming for large networks. Ideally somewhere in the range of 100 to 1000.
 `fdb-group-log-history` | `int` | Number of historic tx-group raft logs to keep around. Can be as low as 1. Historic logs take up disk space but can be useful for debugging if something goes wrong. High transactional volume servers may want to retain extra logs as there will be more frequent rotation.
-`fdb-storage-type` | `file`, `memory`, `cassandra` |  Where to store index/block segments. Can be replicated on every machine or in a common location all local/group ledgers and FlureeDB library/peers. Current options are: `file`: on-disk and replicated on every ledger, `memory` - replicated on every ledger, but only stored in memory (useful for testing), `cassandra` - our only common storage currently available - all ledgers store blocks and indexes on a common cassandra cluster. Setup cassandra options below.
+`fdb-storage-type` | `file`, `memory` |  This is where to store index/block segments. Can be replicated on every machine or in a common location all local/group ledgers and FlureeDB library/peers. Currently only `file` is supported. `file` storage is on-disk and replicated on every ledger, `memory` is not currently supported, but this is is replicated on every ledger, but only stored in memory (useful for testing; not currently implemented).
 `fdb-storage-file-directory` | `file path` | For file storage, specify directory to place ledger (blockchain) and db indexes
 `fdb-memory-cache` | `size` | Total memory cache of index segments across all databases. This setting can be changed per-ledger.
 `fdb-memory-reindex` and `fdb-memory-reindex-max` | `size` | These settings apply per-database, make sure all ledgers and query peers have at least this much memory * number of databases you expect to be active on those servers. This setting must be consistent across the entire ledger group.
@@ -171,17 +171,6 @@ Property | Options | Description
 `fdb-ledger-servers` | `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,` `networkb/dbname@external.dot.com:9795` | List of seed servers to contact for each network/db. Like fdb-ledger-identities, the db is optional. Every network/db + server address combination should be separated by a comma, i.e. `fdb-ledger-servers=` `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,networkb/` `dbname@external.dot.com:9795`
 
 </div>
-
-Cassandra Storage Options
-
-The below options are only used if `fdb-storage-type` is set to 'Cassandra'
-
-Property | Options | Description   
--- | -- | --
-`fdb-storage-cassandra-servers` | `server`,`server`, etc  | Cassandra cluster servers separated by commas
-`fdb-storage-cassandra-table` | `keyspace.table` | Always use `keyspace.table` format for table. Both the keyspace and the table will be created automatically if non-existing. 
-`fdb-storage-cassandra-data-center` | See Cassandra for options | 
-`fdb-storage-cassandra-replicas` | See Cassandra for options. | 
 
 ### User Interface
 

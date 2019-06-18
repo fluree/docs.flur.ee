@@ -155,9 +155,13 @@ const videoNav = {
                     "headerName": "Updating Data",
                     "file": "transact/4.5-updating-data"
                 },
+                "upserting-data": {
+                    "headerName": "Upserting Data",
+                    "file": "transact/4.6-upserting-data"
+                },
                 "deleting-data": {
                     "headerName": "Deleting Data",
-                    "file": "transact/4.6-deleting-data"
+                    "file": "transact/4.7-deleting-data"
                 }
             }
         }
