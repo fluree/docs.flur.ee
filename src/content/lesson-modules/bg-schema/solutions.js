@@ -33,6 +33,7 @@ export default {
         "_id": "_predicate", 
         "name": "person/follows", 
          "type": "ref",
+         "multi": true,
         "restrictCollection": "person"},
         {
         "_id": "_predicate", 
@@ -63,7 +64,7 @@ export default {
         {
             "_id": "_predicate", 
             "name": "comment/message", 
-            "type": "message"},
+            "type": "string"},
             {
                 "_id": "_predicate", 
                 "name": "comment/person", 
