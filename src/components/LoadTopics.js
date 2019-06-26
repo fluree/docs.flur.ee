@@ -1,6 +1,7 @@
 import React from 'react';
 import get from 'lodash.get';
 import { LinkContainer } from 'react-router-bootstrap';
+import { HashLink as Link } from 'react-router-hash-link';
 
 class SectionNav extends React.Component {
     state = {
