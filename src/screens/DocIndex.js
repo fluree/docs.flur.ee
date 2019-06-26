@@ -46,6 +46,9 @@ export class Search extends React.Component {
     componentDidMount(){
         const params = new URLSearchParams(this.props.location.search)
         let searchValue = params.get('search')
+        if (!searchValue) {
+            searchValue = this.props.query
+        }
         let index = CreateIndex()
         index.then((idx) => this.displayResults(idx, searchValue))
     }
@@ -54,6 +57,9 @@ export class Search extends React.Component {
         let prevSearchValue = prevState.searchValue
         const params = new URLSearchParams(this.props.location.search)
         let searchValue = params.get('search')
+        if (!searchValue) {
+            searchValue = this.props.query
+        }
         let index = this.state.index
 
         if(prevSearchValue !== searchValue){
