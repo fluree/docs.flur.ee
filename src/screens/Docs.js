@@ -225,6 +225,13 @@ class Docs extends React.Component {
     componentDidMount(){
         if(this.props.match.path === "/docs/search"){
             this.setState({displaySearch: true})
+            let query = this.props.location.search
+            let queryPattern = /\?search=/
+            if(queryPattern.test(query)) {
+                let searchValue = new URLSearchParams(query).get('search')
+                this.setState({searchValue: searchValue})
+                this.props.history.push(`/docs/search?search=${searchValue}`)
+            }
         } else {
             this.setState({displaySearch: false})
         }
@@ -339,9 +346,8 @@ class Docs extends React.Component {
         this.setState({language: language, markdown: html})
     }
 
-    pushSearch(){
-        let { searchValue } = this.state; 
-        this.props.history.push(`/docs/search?search=${searchValue}`)
+    pushSearch(e){
+        this.props.history.push(`/docs/search?search=${this.input.value}`)
     }
 
     render(){
@@ -370,8 +376,8 @@ class Docs extends React.Component {
                         <div className="col-xs-6">
                                 <div className="mt10 pull-right" style={{marginRight: "20px"}}>
                                     <form onSubmit= {(e) =>     {   e.preventDefault()
-                                                                    this.pushSearch()}}>
-                                        <input type="text" value={this.state.searchValue} onChange={(e) => this.setState({searchValue: e.target.value})} placeholder="Search Docs.." name="search"/>
+                                                                    this.pushSearch(e)}}>
+                                        <input type="text" ref={(searchTerm) => this.input = searchTerm} placeholder="Search Docs.." name="search"/>
                                         <button><i className="fa fa-search"></i></button>
                                     </form>
                                 </div>
@@ -379,7 +385,7 @@ class Docs extends React.Component {
                     </div>
                     {   displaySearch 
                         ?
-                        <Search {...this.props}/>
+                        <Search {...this.props} query={this.state.searchValue}/>
                         :
                         <div>
                             <article className="mb20 docs-section" style={{minHeight: "400px", width: "95%"}} dangerouslySetInnerHTML={{__html: markdown}}></article>
