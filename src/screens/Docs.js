@@ -219,10 +219,16 @@ class Docs extends React.Component {
         language: "flureeql",
         fixedSidebar: false,
         displaySearch: false,
-        searchValue: ""
+        searchValue: "",
+        hashAnchor: ""
     }
 
+    
+
     componentDidMount(){
+        if(this.props.location.hash) {
+            this.setState({hashAnchor: this.props.location.hash})
+        }
         if(this.props.match.path === "/docs/search"){
             this.setState({displaySearch: true})
             let query = this.props.location.search
@@ -240,6 +246,10 @@ class Docs extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState){
+        if(this.state.hashAnchor && document.querySelector(this.state.hashAnchor)) {
+            document.querySelector(this.state.hashAnchor).scrollIntoView()
+            this.setState({hashAnchor: ""})
+        }
         if(prevProps.match.path !== "/docs/search" & this.props.match.path === "/docs/search"){
             this.setState({displaySearch: true})
         }
@@ -313,7 +323,7 @@ class Docs extends React.Component {
     }
 
     scrollToTop = () => {
-        if (!this.props.location.hash) {
+        if (!this.state.hashAnchor) {
             window.scrollTo(0, 0)
         }
     }
