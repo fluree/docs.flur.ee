@@ -12,7 +12,7 @@ class SectionNav extends React.Component {
             <div className="third-level-nav">
                 {headers && headerLinks
                     ?
-                    headers.map((header, index) => <a key={header} href={`#${headerLinks[index]}`}><p>{header}</p></a>)
+                    headers.map((header, index) => <Link to={`#${headerLinks[index]}`} key={header} ><p>{header}</p></Link>)
                 :
                 null}
             </div>
@@ -148,23 +148,23 @@ export function PreviousSidebarNav(props) {
                 return( 
                     <div key={headers[idx]}>
                         <div className="top-level-nav">
-                            <a style={{fontWeight: 600, cursor: "pointer"}} href={`#${nav[key]["link"]}`}
+                            <Link style={{fontWeight: 600, cursor: "pointer"}} to={`#${nav[key]["link"]}`}
                                 className={`#${nav[key]["link"]}` === hash ? "chosen": null}
                             >
                             <div>
                                 {headers[idx]}
                             </div>
-                            </a>
+                            </Link>
                         </div>
                         { subTopics.map((subtopic, idx) => {
                             let subTopicName = subTopicObj[idx]["headerName"]
                                 return (<div className="second-level-nav chosen" key={subTopicName}>
-                                            <a href={`#${nav[key]["subTopics"][idx]["link"]}`}
+                                            <Link to={`#${nav[key]["subTopics"][idx]["link"]}`}
                                             className={`#${nav[key]["subTopics"][idx]["link"]}` === hash ? "chosen": null}>
                                             <div>
                                                 {get(subTopicObj, [idx, "headerName"])}
                                             </div>
-                                            </a>
+                                            </Link>
                                         </div>)})}
                     </div>
             )
