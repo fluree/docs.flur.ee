@@ -220,7 +220,8 @@ class Docs extends React.Component {
         fixedSidebar: false,
         displaySearch: false,
         searchValue: "",
-        hashAnchor: ""
+        hashAnchor: "",
+        scrollElementId: ""
     }
 
     
@@ -246,6 +247,11 @@ class Docs extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState){
+        if(this.state.scrollElementId){
+            let element = document.body.querySelector(this.state.scrollElementId)
+            window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top, behavior: "smooth" })
+            this.setState({scrollElementId: null})
+        }
         if(this.state.hashAnchor && document.querySelector(this.state.hashAnchor)) {
             document.querySelector(this.state.hashAnchor).scrollIntoView()
             this.setState({hashAnchor: ""})
@@ -322,6 +328,18 @@ class Docs extends React.Component {
     })
     }
 
+    setScrollElementId = () => {
+        let elementId
+        document.querySelectorAll('h3').forEach(el => {
+            // console.log(el.getBoundingClientRect())
+            if(el.getBoundingClientRect().x && el.getBoundingClientRect().bottom >= 0 && !elementId) {
+                // debugger;
+                elementId = `#${el.id}`
+            }
+        })
+        return elementId
+    }
+
     scrollToTop = () => {
         if (!this.state.hashAnchor) {
             window.scrollTo(0, 0)
@@ -353,7 +371,7 @@ class Docs extends React.Component {
 
     changeLanguage = (html, language) => {
         html = this.loadLanguage(html, language)
-        this.setState({language: language, markdown: html})
+        this.setState({language: language, markdown: html, scrollElementId: this.setScrollElementId()})
     }
 
     pushSearch(e){
@@ -380,7 +398,7 @@ class Docs extends React.Component {
                             <SidebarNav page="docs" nav={docNav} robust={false} chosenSubTopic={subtopic} chosenTopic={topic} headers={headers} headerLinks={headerLinks}/>
                     </div>
                 </div>
-                    <div className="col-md-8 mb20">
+                    <div className="col-md-8 mb20" id="body-container">
                     <div className="row">
                         <div className="col-xs-6"/>
                         <div className="col-xs-6">
