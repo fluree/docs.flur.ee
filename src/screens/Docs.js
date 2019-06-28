@@ -4,6 +4,7 @@ import get from 'lodash.get';
 import { SidebarNav, fixSidebar, getTopicAndSubTopic, getNextTopic, getPreviousTopic } from '../components/LoadTopics';
 import marked from 'marked';
 import { Search } from './DocIndex';
+import Notifications, { notify } from 'react-notify-toast'
 
 export const docNav = {
     "getting-started": {
@@ -369,6 +370,8 @@ class Docs extends React.Component {
 
     changeLanguage = (html, language) => {
         html = this.loadLanguage(html, language)
+        var languageText = { flureeql: "FlureeQL", graphql: "GraphQL", curl: "Curl", sparql: "SPARQL"}
+        notify.show(`Coding Examples Now In ${languageText[language]}`, "success", 1500)
         this.setState({language: language, markdown: html, scrollElementId: this.setScrollElementId()})
     }
 
@@ -380,7 +383,7 @@ class Docs extends React.Component {
         const { markdown, headers, headerLinks, topic, subtopic, language, previousTopic, nextTopic,  fixedSidebar, displaySearch } = this.state;
         return(
             <div className="row">
-
+                    <Notifications />
                     <div className="col-md-4 mt20 mb20">
                     <div className={fixedSidebar ? "fixedSidebar" : "sidebar" }>
                             <div>
