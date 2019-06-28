@@ -222,8 +222,7 @@ class Docs extends React.Component {
         displaySearch: false,
         searchValue: "",
         hashAnchor: "",
-        scrollElementId: "",
-        showLanguageToast: false
+        scrollElementId: ""
     }
 
     
