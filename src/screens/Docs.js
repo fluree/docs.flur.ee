@@ -331,9 +331,7 @@ class Docs extends React.Component {
     setScrollElementId = () => {
         let elementId
         document.querySelectorAll('h3').forEach(el => {
-            // console.log(el.getBoundingClientRect())
             if(el.getBoundingClientRect().x && el.getBoundingClientRect().bottom >= 0 && !elementId) {
-                // debugger;
                 elementId = `#${el.id}`
             }
         })
