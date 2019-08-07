@@ -1,11 +1,34 @@
 ## Downloaded Endpoint Examples
 
-In order to ensure speed of processing queries and transactions, different types of queries and transactions should be issued to different endpoints. All requests, except requests to `/storage`, should be POST requests. 
+In order to ensure speed of processing queries and transactions, different types of queries and transactions should be issued to different endpoints. All requests, unless otherwise specified, should be POST requests.
+
+### /dbs
+Returns a list of all ledgers in the transactor group. 
+
+An example of an unsigned request to `/dbs`.
+
+```
+Action: POST or GET
+Endpoint: http://localhost:8080/fdb/dbs
+Headers: None
+Body: Null
+```
+
+### /new-db
+Creates a new ledger given a "db/id". If the network specified does not exist, it creates a new network. This request returns a command id, the request does not wait to database to be fully initialized before returning.
+
+```
+Action: POST
+Endpoint: http://localhost:8080/fdb/new-db
+Headers: None
+Body: {"db/id": "NETWORK/DBID"}
+```
+
 
 ### /query
-All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-api-open` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
 
-An example of an unsigned request to `/query`:
+An example of an unsigned request to `/query` with the network, `dev` and the database `main`:
 ```
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/query
@@ -68,7 +91,7 @@ Body: {
 
 All unsigned transactions, except transaction issued through the GraphQL syntax, should be issued to the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact` endpoint. 
 
-If you do not have `fdb-api-open` set to true (it is true by default), then you cannot use the `/transact` endpoint. You'll need to use the [`/command` endpoint](#-command).
+If you do not have `fdb-open-api` set to true (it is true by default), then you cannot use the `/transact` endpoint. You'll need to use the [`/command` endpoint](#-command).
 
 An example of an unsigned request to `/transact`:
 
@@ -84,14 +107,14 @@ Body: [{
 
 ### /graphql Query
 
-All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-api-open` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/graphql`:
 ```
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/graphql
 Headers: None
-Body: "{ graph {
+Body: {"query": "{ graph {
   chat {
     _id
     comments
@@ -100,12 +123,12 @@ Body: "{ graph {
     person
   }
 }
-}"
+}"}
 ```
 
 ### /graphql Transaction
 
-All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-api-open` set to true (it is true by default), then you'll need to sign your GraphQL transaction like a query ([signing queries](/docs/identity/signatures#signed-)).
+All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your GraphQL transaction like a query ([signing queries](/docs/identity/signatures#signed-)).
 
 An example of an unsigned request to `/graphql`:
 ```
@@ -124,7 +147,7 @@ Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
 
 ### /sparql
 
-All queries in SPARQL syntax, regardless of type, should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` endpoint. If you do not have `fdb-api-open` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All queries in SPARQL syntax, regardless of type, should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/sparql`:
 ```
@@ -143,6 +166,66 @@ Body: "SELECT ?chat ?message ?person ?instant ?comments
 ### /command
 
 To see examples of sending a request to the `/command` endpoint, see [signed transactions](/docs/identity/signatures#signed-transactions).
+
+### /gen-flakes
+
+Returns the list of flakes that would be added to a ledger if a given transaction is issued. The body of this request is simply the transaction. Note that this is a test endpoint. This does *NOT* write the returned flakes to the ledger.
+
+```
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/gen-flakes
+Headers: None
+Body: [{
+    "_id":    "person",
+    "handle": "joanne",
+  }]
+```
+
+### /query-with
+
+Returns the results of a query using the existing database flakes, including flakes that are provided with the query. 
+
+The request expects a map with two key-value pairs:
+
+Key | Value
+-- | --
+`flakes` | An array of valid flakes
+`query` | A query to issue against the current database plus the flakes in the flakes value. 
+
+The `t` on the flakes provided has to be current with the latest database. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes. 
+
+```
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/query-with
+Headers: None
+Body: {
+  "query": {"select": ["*"], "from": "person"}, 
+  "flakes": [[351843720888321, 1002, "JoAnne", -5, true, nil]]}
+```
+
+### /test-transact-with
+
+Given a valid set of flakes that could be added to the database at a given point in time and a transaction, returns the flakes that would be added to a ledger if a given transaction is issued.
+
+The request expects a map with the following key-value pairs:
+
+Key | Value
+-- | --
+`flakes` | An array of valid flakes
+`txn` | A transaction to issue against the current database plus the flakes in the flakes value. This endpoint does *NOT* actually write the transaction to the ledger.
+`auth` | (Optional) The `_auth/id` with which to issue the transaction.
+
+The `t` on the flakes provided has to be current with the latest database. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes. 
+
+```
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/test-transact-with
+Headers: None
+Body: {
+  "tx": [{ "_id": "person", "handle": "kReeves" }], 
+  "flakes": [[351843720888321, 1002, "JoAnne", -5, true, nil]]}
+```
+
 
 ### /health
 

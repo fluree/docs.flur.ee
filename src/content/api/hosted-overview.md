@@ -27,8 +27,6 @@ The following endpoints do not require a token in the header:
 Action | Endpoint | Explanation 
 -- | -- | --
 Accounts | `/api/accounts` | Get all of the account associated with a particular account.
-Signin | `/api/signin` | Retrieve a token for your account for the master database. Syntax in [Getting Tokens](/api/hosted-endpoints/getting-tokens) and [Examples](/api/hosted-endpoints/hosted-examples)
-Reset Password | `/api/reset-pw` | Sends a reset-token to your email, so that you can reset your password.
-New Password | `/api/new-pw` | Given a reset token, allows you to reset your password. 
+Signin | `/api/signin` | Retrieve a token for your account. Syntax in [Getting Tokens](/api/hosted-endpoints/getting-tokens) and [Examples](/api/hosted-endpoints/hosted-examples)
 
 Each account in the hosted environment is its own network.

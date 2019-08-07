@@ -32,7 +32,7 @@ class Editor extends React.Component {
     // issueQuery = () => {
     //     const query = this.state.value
     //     const parsedQuery = JSON.parse(query)
-    //     const fullUri = `http://localhost:8080/fdb/dev/$network/query`
+    //     const fullUri = `http://localhost:8080/fdb/$network/query`
     //     signedFlureeFetch(fullUri, parsedQuery)
     //     .then(response => parseJSON(response))
     //     .then(response => {

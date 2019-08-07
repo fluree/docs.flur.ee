@@ -77,6 +77,7 @@ Function | Arguments | Example | Description | Cost (in fuel)
 `re-find` | `pattern` `string` | `(re-find "^[a-zA-Z0-9_][a-zA-Z0-9\.\-_]{0,254}" \"apples1\")` | Checks whether a string follows a given regex pattern. | 10 
 `db` | none | `(== (get db \"dbid\") 2)` | Returns a database object with the following keys: dbid, block, and permissions. | 10
 `query` | `query-string` |  `(query \"{\\\"select\\\":[\\\"*\\\"],\\\"from\\\":\\\"person\\\"}\")` | Allows you to query the current database. You need to doubly-escape the quotation marks in the query string `\"{\\\"select\\\":[\\\"*\\\"],\\\"from\\\":\\\"person\\\"}\"`. | Fuel required for the query.  
+`relationship?` | `startSubject path endSubject` |  `(relationship? [\"_user/username\" \"anna\"] [\"_user/auth\" \"_auth/department\" \"company/_department\"] [\"company/name\" \"Fluree\"])` | Returns a true or false, depending on if there is a relationship between two subjects. Start and end subjects should resolve to either subject _ids or unique two-tuples. For example,  `(?sid)` resolves to a subject _id, `87960930223080` and `["_user/username" "anna"]` are all valid for start or end subjects. The path should be a single predicate or a vector of predicates that potentially connect the two subjects. | 10, plus fuel of query
 
 Database function can also be combined, for instance `(inc (max 1.5 2 3))` will return 4. 
 

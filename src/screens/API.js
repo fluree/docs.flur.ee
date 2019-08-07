@@ -182,21 +182,26 @@ class APITest extends React.Component {
     state = {
         host: "downloaded",
         ip: "http://localhost:8080",
-        network: "dev",
-        dbid: "$network",
+        network: "test",
+        dbid: "one",
         endpoint: "query",
         results: "",
         account: "",
         token: ""
     }
 
+
     submitTransaction = () => {
         let header, url;
         let { host, token, account, endpoint, request, dbid, ip, network} = this.state
         if(host === "hosted"){
-            let prefix = endpoint === "signin" ? "" : "db/"
-            header= {Authorization: `Bearer ${token}`}
-            url = `https:${account}.beta.flur.ee/api/${prefix}${endpoint}`
+            let prefix = endpoint === "signin" ? "" : `db/${account}/${dbid}`
+            header= { "Content-Type": "application/json"}
+            if(token){
+                header["Authorization"] = `Bearer ${token}`
+            }
+
+            url = `https:db.flur.ee/api/${prefix}/${endpoint}`
         } else {
             url = `${ip}/fdb/${network}/${dbid}/${endpoint}`
             header= {}
@@ -236,6 +241,16 @@ class APITest extends React.Component {
                                     <ToggleButton key="downloaded" style={{fontVariant: "small-caps"}} value="downloaded">Downloaded</ToggleButton>
                             </ToggleButtonGroup>
                         </FormGroup>
+                        <FormGroup controlId="endpoint">
+                            <ControlLabel>Endpoint</ControlLabel>
+                            <FormControl
+                                componentClass="select"
+                                placeholder=""
+                                value={endpoint}
+                                onChange={(e) => this.setState({endpoint: e.target.value})}>
+                                {endpoints.map(ep => <option value={ep}>{ep}</option>)}
+                                </FormControl>
+                        </FormGroup>
                         {
                             host === "downloaded"
                             ?
@@ -259,7 +274,7 @@ class APITest extends React.Component {
                                     </FormControl>
                             </FormGroup>
                             <FormGroup controlId="dbid">
-                                <ControlLabel>DBID</ControlLabel>
+                                <ControlLabel>Database</ControlLabel>
                                 <FormControl
                                     type="text"
                                     placeholder="test"
@@ -270,6 +285,12 @@ class APITest extends React.Component {
                             </div>
                             :
                             <div>
+                                {
+                                    endpoint === "signin"
+                                    ?    
+                                    null
+                                    :      
+                                    <div>        
                                 <FormGroup controlId="Account">
                                     <ControlLabel>Account</ControlLabel>
                                     <FormControl
@@ -277,6 +298,15 @@ class APITest extends React.Component {
                                         placeholder="Account"
                                         value={account}
                                         onChange={(e) => this.setState({account: e.target.value})}>
+                                    </FormControl>
+                                </FormGroup>
+                                <FormGroup controlId="Database">
+                                    <ControlLabel>Database</ControlLabel>
+                                    <FormControl
+                                        type="text"
+                                        placeholder="Database"
+                                        value={dbid}
+                                        onChange={(e) => this.setState({dbid: e.target.value})}>
                                     </FormControl>
                                 </FormGroup>
                                 <FormGroup controlId="Token">
@@ -287,20 +317,11 @@ class APITest extends React.Component {
                                         value={token}
                                         onChange={(e) => this.setState({token: e.target.value})}>
                                     </FormControl>
-                                </FormGroup>
+                                </FormGroup> </div>
+                                }
                             </div>
                         }
                     
-                        <FormGroup controlId="endpoint">
-                            <ControlLabel>Endpoint</ControlLabel>
-                            <FormControl
-                                componentClass="select"
-                                placeholder=""
-                                value={endpoint}
-                                onChange={(e) => this.setState({endpoint: e.target.value})}>
-                                {endpoints.map(ep => <option value={ep}>{ep}</option>)}
-                                </FormControl>
-                        </FormGroup>
                         <FormGroup controlId="request">
                             <ControlLabel>Request</ControlLabel>
                             <AceEditor

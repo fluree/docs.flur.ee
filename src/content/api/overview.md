@@ -15,11 +15,7 @@ Make sure that you have a local version of Fluree running.
 
 Select "Downloaded" on the toolbar. 
 
-If you haven't changed your `fdb-api-port` or the IP address, your IP Address will be http://localhost:8080. 
-If you haven't changed your `fdb-network`, your network will be `dev`. 
-
-In downloaded versions, 0.9.1 and earlier, by default you will have the databases: "test.default" or "f.master". 
-In the version 0.9.5, by default, you will not have any databases by default.
+If you haven't changed your `fdb-api-port` or the IP address, your IP Address will be http://localhost:8080. Your network is the first part of your database name, before the `/`, i.e. `test/one` is in the `test` network with dbid `one`. 
 
 ### Toolbar - Hosted
 
@@ -32,29 +28,9 @@ Select "Hosted" on the top of the toolbar. In order to submit any queries or tra
 
 **1. Make sure your username and password are set up.**
 <br/>
-If you do not have a password, you can request to reset your password. 
+If you do not have a password, you can request to reset your password through the user interface. 
 
-```
-Account: f
-Endpoint: reset-pw
-Request: {
-            "email": "YOUR EMAIL ADDRESS HERE"
-        }
-```
-
-If the email supplied corresponds to a valid account, you will receive an email with a link to reset your password. You can either follow that link or send a request to `new-pw` to set or reset your password.
-
-```
-Account: f
-Endpoint: new-pw
-Request: {
-            "resetToken": "TOKEN FROM THE EMAIL YOU RECEIVED",
-            "password": "YOUR PASSWORD HERE"
-        }
-```
-
-<br/>
-
+If the email supplied corresponds to a valid account, you will receive an email with a link to reset your password. Follow that link to set or reset your password.
 
 
 **2. Signin to get a token for the relevant account.**
@@ -62,10 +38,10 @@ Request: {
 If you know the name of the account you want to use to sign in, you can issue the following request:
 
 ```
-Account: f
+Action: POST
 Endpoint: sign-in
 Request: {
-            "user":     ["_user/username" "YOUR EMAIL HERE"],
+            "user":     ["_user/username", "YOUR EMAIL HERE"],
             "password": "YOUR PASSWORD HERE",
             "account": "YOUR ACCOUNT NAME HERE"
         }
@@ -82,13 +58,12 @@ Copy the token (only the token). You'll have to paste it into the "Token" sectio
 If you don't know the names of the account(s) associated with your username and password, you can issue:
 
 ```
-Account: f
+Action: POST
 Endpoint: accounts
 Request: {
-            "user":     ["_user/username" "YOUR EMAIL HERE"],
+            "user":     ["_user/username", "YOUR EMAIL HERE"],
             "password": "YOUR PASSWORD HERE"
 }
-Action: POST
 ```
 
 If you don't know the names of the database(s) asssociated with an account, you can issue:

@@ -37,7 +37,7 @@ For Mac or Linux systems:
 
 Note that for Windows systems, you have to download a Bash emulator, like [Git For Windows](https://gitforwindows.org/) to properly run Fluree. In your Bash emulator, you can run `./fluree_start.sh` to start Fluree. Alternatively on Windows, you can [download Fluree with Chocolatey](#download-fluree-with-chocolatey).
 
-When you launch Fluree for the first time or if you choose `none` as your `fdb-storage-type` (see [config options](#config-options) for all options), Fluree will create a new network. When Fluree is done starting up, your terminal will log: 
+When Fluree is done starting up, your terminal will log: 
 
 ```all
 Starting web server on port:   [PORT NUMBER]
@@ -51,7 +51,7 @@ Creating a database and any other interaction with Fluree can happen either thro
 
 ### Exiting and Restarting Fluree
 
-To exit Fluree, simply click `ctrl + c` to quit the current process on your terminal. This will not delete any of the information that was successfully added to your databases (in other words, if you received a 200 response from your transactions, that means it was added to your database). 
+To exit Fluree, simply click `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory](#in-memory-fluree), this will not delete any of the information that was successfully added to your databases (in other words, if you received a 200 response from your transactions, that means it was added to your database). 
 
 To restart Fluree, navigate to the folder that contains your Fluree instance and run `./flureeDB_start.sh`.
 
@@ -91,6 +91,10 @@ If you have a valid private key, encoded with [Base58Check Encoding](/docs/ident
 
 You can also run `./fluree_start.sh :keygen` to generate a public key, private key, and account id. This will not start Fluree, it will just return those three pieces of information.
 
+### In-Memory Fluree
+
+You can run Fluree in memory for testing purposes. To do so, simply specify `fdb-consensus-type` as `in-memory` and `fdb-storage-type` as `memory`. At this time, you can only run a single, centralized ledger in memory. 
+
 ### Setting Up a Transactor Group
 Currently, transactor groups only support the Raft consensus algorithm to agree on a shared state for a network of databases. With Raft, a total of `n` servers can support `f` failures: n = 2f + 1. This means that anything less than 3 servers can sustain no failures, 5 servers can sustain two failures. 
 
@@ -112,7 +116,7 @@ See the full explanation for those settings in [config options](#config-options)
 
 ### Changing Transactor Group Config
 
-In order to add or remove transactor group servers, you need to bring down all of the servers, reset the the configuration options in `fluree_sample.properties`, and restart the servers. Note that, if you have 3 or fewer servers running Raft, none of them can fail. With Raft, a total of `n` servers can support `f` failures: n = 2f + 1.
+Currently, you cannot change the configuration on Fluree network after that network has started up.
 
 ### Config Options
 Note: not all of these configuration options are currently being used. Some options are ignored for the time being, because the related features aren't yet released. We are working on updating this section.
@@ -133,12 +137,30 @@ Property | Options | Description
 -- | -- | --
 `fdb-mode` | `dev` `query` `ledger` | Dev runs a standalone version of Fluree, with a query engine and ledger running together. Currently only `dev` is supported. `query` and `ledger` are for running Fluree as a query engine or ledger, respectively.
 `fdb-license-key` | `key` | (Optional) Required for enterprise version
+`logback.configurationFile` | `file path` | Path to a `logback.xml` file. If it is in the current file, you need to specify `./logback.xml`. A sample `logback.xml` file is below. You can set the level of logging that you want to see (`INFO`, `DEBUG`, `TRACE`), as well as how frequently you want the your logback file scanned for updates. For more information, you can visit [the logback manual](https://logback.qos.ch/manual/index.html).
+
+```all
+<configuration scan="true" scanPeriod="10 seconds">
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%highlight(%-5level) %white(%logger{24}) - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
+```
 
 
 Transactor Group Options
 
 Property | Options | Description   
 -- | -- | --
+`fdb-group-rejoin` | `boolean` | (Optional) Set to true if a server is rejoining a network or joining a network that has already been running. Setting this to true ensures that the transactor group files and FlureeDB files are fully synced before joining the network.
 `fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. Must be a [valid private key](/docs/identity/public-private-keys). This takes precedent over `fdb-group-private-key-file`.
 `fdb-group-private-key-file` | `file path` | If fdb-group-private-key is not provided, we'll look for it in this file. If not found in this file, we'll generate a default one and place it in this file.
 `fdb-group-servers` | `server-id@host:port, server-id@host:port` | List all servers participating in ledger-group with format of server-id@host:port. All tx-group servers should have this same config.
@@ -159,7 +181,7 @@ HTTP API Settings
 Property | Options | Description   
 -- | -- | --
 `fdb-api-port` | `int` | Port in which the query peers will respond to API calls from clients
-`fdb-api-open` | `boolean` | If fdb-open-api is true, will allow full access on above port for any request and will utilize default auth identity to regulate query/read permissions. If false, every request must be signed, and the auth id associated with the signature will determine query/read permissions.
+`fdb-open-api` | `boolean` | If fdb-open-api is true, will allow full access on above port for any request and will utilize default auth identity to regulate query/read permissions. If false, every request must be signed, and the auth id associated with the signature will determine query/read permissions.
 
 Decentralized Ledger Settings
 

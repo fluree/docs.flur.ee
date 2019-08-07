@@ -1,13 +1,13 @@
 ## Signatures
 
-For both queries and transactions, a signature is not required if the option `fdb-api-open` is set to true (default for the downloaded version of Fluree). 
+For both queries and transactions, a signature is not required if the option `fdb-open-api` is set to true (default for the downloaded version of Fluree). 
 
 If you do need to specify a signature, the signature may either be in the Authorization header (for all queries submitted) or in the signature map (for all transactions).
 
-Any requests sent to `/query`, `/multi-query`, `/block`, `/history`, `/sparql`, and any queries submitted through `/graphql` should have a signature in Authorization header (if `fdb-api-open` is set to false) [signed queries](#signed-queries). To submit a signed transaction, you need to use the `/command` endpoint.
+Any requests sent to `/query`, `/multi-query`, `/block`, `/history`, `/sparql`, and any queries submitted through `/graphql` should have a signature in Authorization header (if `fdb-open-api` is set to false) [signed queries](#signed-queries). To submit a signed transaction, you need to use the `/command` endpoint.
 
 ### Signed Queries
-If `fdb-api-open` is set to true, then you do not need to sign your queries. If you do need to sign your queries, you should have access to your private key. Your private key needs to be [connected to a valid auth record](/docs/identity/auth-records) in the database.
+If `fdb-open-api` is set to true, then you do not need to sign your queries. If you do need to sign your queries, you should have access to your private key. Your private key needs to be [connected to a valid auth record](/docs/identity/auth-records) in the database.
 
 You should include the following header in your request (using the API): 
 
@@ -18,9 +18,9 @@ You should include the following header in your request (using the API):
 The signature should be the SHA3-256 of the original query, signed with your private key, according to [RFC 6979](https://tools.ietf.org/html/rfc6979) standards.
 
 ### Signed Transactions
-If `fdb-api-open` is set to true, then you do not need to sign your transactions. You can issue transactions to the `/transact` endpoint, and they will be automatically signed.  
+If `fdb-open-api` is set to true, then you do not need to sign your transactions. You can issue transactions to the `/transact` endpoint, and they will be automatically signed.  
 
-Each database comes with a default auth record, which is either provided by you or automatically generated (see [config options](/docs/getting-started/installation#config-options)). If `fdb-api-open` is set to true, then all transactions will be signed with this default private key unless otherwise specified. 
+Each database comes with a default auth record, which is either provided by you or automatically generated (see [config options](/docs/getting-started/installation#config-options)). If `fdb-open-api` is set to true, then all transactions will be signed with this default private key unless otherwise specified. 
 
 All signed transactions need to be submitted to the [`/command` endpoint](/api/downloaded-endpoints/overview). The `/command` endpoint takes a map with two keys:
 

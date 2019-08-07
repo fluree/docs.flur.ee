@@ -1,8 +1,8 @@
 ## Rules
 
-When creating a rule, you specify a collection, predicate/s, and smart functions. That rule can then be connected to particular users and auth records. 
+When creating a rule, you specify a collection, predicate/s, and smart functions. That rule can then be connected to particular auth records. 
 
-For example, a user can be connected to a rule regarding the `person` collection and the `person/handle` predicate. If they issue a query or transaction that includues `person/handle`, then the smart functions attached to the rule are triggered. 
+For example, a auth can be connected to a role that references rules in the `person` collection and the `person/handle` predicate. If that auth record issues a query or transaction that includes `person/handle`, then the smart functions attached to the auth's roles are triggered. 
 
 - If all of the smart functions return true, then the transaction goes through or the query results get returned. 
 
@@ -12,7 +12,7 @@ This section goes into detail on the user-auth-role-rule structure. The [next se
 
 ### Rules Usage
 
-Predicate and collection specs apply exclusively to transactions, and are universal for everyone in the database. Rules, as explained above, can be used for queries as well as transactions. Rules can control what end users* in a database see and do. They cannot control what a node-operator or administrator of a hosted Fluree database can see, but they can control what those individual can do (transact). Anyone who is running their own node in Fluree, or who is the administrator of a hosted Fluree database, always has full access to **view** any item in any database in their network. 
+Predicate and collection specs apply exclusively to transactions, and are universal for everyone in the database. Rules, as explained above, can be used for queries as well as transactions. Rules can control what end users* in a database see and do. They cannot control what a node-operator or administrator of a hosted Fluree database can see, but they can control what those individual can do (transact). Anyone who is running their own node in Fluree, or who is the administrator of a hosted Fluree database, always has full access to **view** any item in any database in their network. Query peers, however, can be connected to a Fluree database or network as a permissioned user. 
 
 When an end user connects to a database, effectively their database is custom to them (and their requested point in time). Any data they do not have access to doesn't exist in their database. This means you can give direct access to the database to any user, and they can run ad-hoc queries without concern that data might be leaked. This is a very powerful concept that can drastically simplify end-user applications.
 
@@ -54,15 +54,8 @@ These roles are then assigned to different auth entities (via the `_auth/roles` 
 
 Auth entities govern access to a database. Auth entities are issued tokens (in the hosted version) or sign queries/transactions, and that auth subject's permissions are applied to every database action that they perform. 
 
-An auth subject does not need to be tied a user. All auth entities can be used independently. However, a common use case is to assign auth entities to database users (via the `_user/auth` predicate). Roles can also be assigned directly to users (via the `_user/roles` predicate), however if a user has an auth subject, permissions are determined according to the auth subject, *not* the roles. 
+An auth subject does not need to be tied a user. All auth entities can be used independently. However, a common use case is to assign auth entities to database users (via the `_user/auth` predicate). Users can have multiple auth records, but multiple users cannot share the same auth record.
 
-For instance, in the below example, the users, janeDoe and bobBoberson, both have roles assigned directly to their user entities. bobBoberson's permissions are limited to the rules assigned to the chatUser role - namely read access for all chats and people, as well as read and write access to one's own chats. 
-
-janeDoe has the dbAdmin role assigned to her user. However, she also has been assigned an auth subject, standardUser. Auth entities assigned to a user (via the `_user/auth` predicate) automatically override any roles that are directly assigned to a user (via the `_user/roles` predicate. In janeDoe's case, she has the permissions associated with a standardUser auth subject. 
-
-<p class="text-center">
-    <img src="https://s3.amazonaws.com/fluree-docs/userEntities.svg" alt="Diagram shows two user entities, janeDoe and bobBoberson. janeDoe is assigned one role, dbAdmin, and one auth subject, standardUser. bobBoberson is assigned one role, chatUser.">
-</p>
 
 ### User and Auth Entities
 
@@ -78,8 +71,7 @@ Predicate | Type | Description
 -- | -- | -- 
 `_user/username` | `string` |  (optional) A unique username for this user.
 `_user/auth` | `[ref]` | (optional) Reference to auth entities available for this user to authenticate. Note if no auth entities exist, the user will be unable to authenticate.
-`_user/roles` | `[ref]` | (optional) References to the default roles that apply to this user. If roles are specified via the `_auth` subject the user is authenticated as, those roles will always override (replace) any role specified here.
-
+`_user/roles` | `[ref]` | (deprecated) This predicate is no longer used.
 
 #### Auth Predicates
 

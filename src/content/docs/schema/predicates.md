@@ -17,7 +17,7 @@ Predicate | Type | Description
 `_predicate/multi` | `boolean` | (optional) If this is a multi-cardinality predicate (holds multiple values), set to `true`. (Default false.)
 `_predicate/index` | `boolean` | (optional) True if an index should be created on this predicate. An predicate marked as `unique` automatically will generate an index and will ignore the value specified here. (Default false.)
 `_predicate/upsert` | `boolean` | (optional) Only applicable to predicates marked as `unique`. If a new subject transaction using this predicate resolves to an existing subject, update that subject. By default the transaction will throw an exception if a conflict with a `unique` predicate exists.
-`_predicate/noHistory` | `boolean` | (optional) By default, all history is kept. If you wish to turn this off for a certain subject, set this flag to true. Queries, regardless of time travel, will always show the current value.
+`_predicate/noHistory` | `boolean` | (optional) By default, all history is kept. If you wish to turn this off for a certain subject, set this flag to true. Queries, regardless of time travel, will always show the current value. Currently not working.
 `_predicate/component` | `boolean` | (optional) For type 'ref' predicates only. Mark true if this predicate refers to an subject which only exists as part of the parent subject. If true, and the parent subject is deleted, the subject referenced by this predicate will also be deleted automatically. (Default false.)
 `_predicate/spec` | [`ref`] | (optional) A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. These specs restricts what is allowed in this _predicate. To learn more, visit the [Collection and Predicate Specs](#collection-and-predicate-specs) section. 
 `_predicate/specDoc` | `string` | (optional) Optional docstring to describe the specs. Is thrown when any spec fails. 
@@ -202,8 +202,9 @@ Add you can create new predicates with a `_predicate/longDescription`:
 ```flureeql
 [{
     "_id": "_predicate",
-    "name": "animal",
-    "longDescription": "I have a lot to say about this collection, so this is a longer description about the animal collection"
+    "name": "_user/age",
+    "type": "int",
+    "longDescription": "I have a lot to say about this predicate, so this is a longer description about the _user/age predicate"
 }]
 ```
 
@@ -213,8 +214,9 @@ Add you can create new predicates with a `_predicate/longDescription`:
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '[{
     "_id": "_predicate",
-    "name": "animal",
-    "longDescription": "I have a lot to say about this collection, so this is a longer description about the animal collection"
+    "name": "_user/age",
+    "type": "int",
+    "longDescription": "I have a lot to say about this predicate, so this is a longer description about the _user/age predicate"
 }]' \
    [HOST]/transact
 ```
@@ -225,7 +227,7 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 }
 
 {
-  "addLongDescTx": "[{\"_id\":\"_predicate\",\"name\":\"animal\",\"longDescription\":\"I have a lot to say about this collection, so this is a longer description about the animal collection\"}]"
+  "addLongDescTx": "[{\"_id\":\"_predicate\",\"name\":\"user/age\",\"longDescription\":\"I have a lot to say about this predicate, so this is a longer description about the _user/age predicate\"}]"
 }
 ```
 

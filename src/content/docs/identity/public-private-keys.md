@@ -43,4 +43,4 @@ Once you have a public-private key-pair, you can generate an auth id by hashing 
 
 Every node of Fluree can either specify a private key or private key file location (as [configured at start-up](/docs/getting-started/installation#config-option)). If neither is specified, a `default-private-key.txt` file will be created when an instance of Fluree starts up for the first time, and an assocatied auth record that corresponds to the private key will be added to the master database with root access. 
 
-If `fdb-api-open`, anyone can issue a query without signing it, and unsigned transactions will be signed with the default private key. 
+If `fdb-open-api`, anyone can issue a query without signing it, and unsigned transactions will be signed with the default private key. 

@@ -15,7 +15,7 @@ Adding a new auth to the database, with an id derived from the public key:
 
 Any roles that you add to this auth record set permissions for transactions that are signed with this auth record. 
 
-Note: This is not necessary if `fdb-api-open` is set to true (which is the default in the downloadable version). 
+Note: This is not necessary if `fdb-open-api` is set to true (which is the default in the downloadable version). 
 
 ### Authority
 

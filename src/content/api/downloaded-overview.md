@@ -4,10 +4,12 @@ Downloaded endpoints can only be used in the downloadable versions of Fluree. Al
 
 `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/[ACTION]`
 
-- For the downloadable version, unless you changed the default `fdb-api-port` or `fdb-network`, the full URL is `http://localhost:8080/fdb/dev/[DBNAME]/[ACTION]`
+- For the downloadable version, unless you changed the default `fdb-api-port`, the full URL is `http://localhost:8080/fdb/[DBNAME]/[ACTION]`
 
 Action | Endpoint | Explanation 
 -- | -- | --
+DBs | `/fdb/dbs` | Returns a list of all ledgers in the transactor group. 
+New DB | `/fdb/new-db` | Creates a new ledger
 Query | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` | Queries in FlureeQL syntax
 Multi-Query | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/multi-query` | Multi-Queries in FlureeQL syntax
 Block | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/block` | Block queries in FlureeQL syntax
@@ -16,6 +18,14 @@ Transact | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact` | Transactions in Flu
 GraphQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` | Queries or transactions in GraphQL syntax, as a string
 SPARQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` | Queries in SPARQL syntax, as a string
 Command | `/fdb/[NETWORK-NAME]/[DBID]/command` | Commands, such as transactions, with a signature in the body. See [signing transactions](/docs/identity/signatures#signed-transactions).
+
+Test endpoints:
+
+Action | Endpoint | Explanation 
+-- | -- | --
+Generate Flakes | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/gen-flakes` | Returns the list of flakes that would be added to a ledger if a given transaction is issued. 
+Query With | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query-with` | Returns the results of a query using the existing database flakes, including flakes that are provided with the query. 
+Test Transact With | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/test-transact-with` | Given a valid set of flakes that could be added to the database at a given point in time and a transaction, returns the flakes that would be added to a ledger if a given transaction is issued. 
 
 Other endpoints:
 
@@ -27,7 +37,7 @@ Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]` | Ge
 Sub | POST | `/fdb/sub` | Handles subscriptions
 
 
-For both queries and transactions, a signature is not required if the option `fdb-api-open` is set to true (default for the downloaded version of Fluree). 
+For both queries and transactions, a signature is not required if the option `fdb-open-api` is set to true (default for the downloaded version of Fluree). 
 
 More information on [signing queries](/docs/identity/signatures#signed-queries) and [signing transactions](/docs/identity/signatures#signed-transactions) can be found in the linked sections. 
 

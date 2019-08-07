@@ -190,20 +190,11 @@ Body: ["logs",{"db":"example.default","limit": 25}]
 
 ### `/api/accounts`
 
-To view all the accounts associated with a particular username and password, you can send a GET request with a token in the header, like below:
-
-```
-Action: GET
-Endpoint: https://db.flur.ee/api/accounts
-Headers: {"Authorization": "Bearer [TOKEN]"}
-```
-
-Alternatively, you can send a POST request with the username and password and NO token:
+To view all the accounts associated with a particular username and password,you can send a POST request with the username and password and NO token:
 
 ```
 Action: POST
 Endpoint: https://db.flur.ee/api/accounts
-Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: {
   "user": ["_user/username", "YOUR EMAIL"],
   "password": "YOUR PASSWORD"
@@ -232,29 +223,5 @@ Body: {
   "user": ["_user/username", "YOUR EMAIL"],
   "password": "YOUR PASSWORD",
   "expireSeconds": 300
-}
-```
-
-### `/api/reset-pw`
-
-Submit a request to `api/reset-pw` to get a reset token emailed to your email. The email must be a valid username for an account. 
-
-```
-Action: POST
-Endpoint: https://db.flur.ee/api/reset-pw
-Body: {
-  "username": "YOUR EMAIL"
-}
-```
-
-### `/api/new-pw`
-
-After you receive a reset token in your email, you can set a new password by specifying the reset token and new password. 
-```
-Action: POST
-Endpoint: https://db.flur.ee/api/new-pw
-Body: {
-  "password": "NEW PASSWORD",
-  "resetToken": "RESET TOKEN"
 }
 ```
