@@ -4,6 +4,7 @@ import get from 'lodash.get';
 import { SidebarNav, fixSidebar, getTopicAndSubTopic, getNextTopic, getPreviousTopic } from '../components/LoadTopics';
 import marked from 'marked';
 import { Search } from './DocIndex';
+import Notifications, { notify } from 'react-notify-toast'
 
 export const docNav = {
     "getting-started": {
@@ -219,12 +220,26 @@ class Docs extends React.Component {
         language: "flureeql",
         fixedSidebar: false,
         displaySearch: false,
-        searchValue: ""
+        searchValue: "",
+        hashAnchor: "",
+        scrollElementId: ""
     }
 
+    
+
     componentDidMount(){
+        if(this.props.location.hash) {
+            this.setState({hashAnchor: this.props.location.hash})
+        }
         if(this.props.match.path === "/docs/search"){
             this.setState({displaySearch: true})
+            let query = this.props.location.search
+            let queryPattern = /\?search=/
+            if(queryPattern.test(query)) {
+                let searchValue = new URLSearchParams(query).get('search')
+                this.setState({searchValue: searchValue})
+                this.props.history.push(`/docs/search?search=${searchValue}`)
+            }
         } else {
             this.setState({displaySearch: false})
         }
@@ -233,6 +248,15 @@ class Docs extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState){
+        if(this.state.scrollElementId){
+            let element = document.body.querySelector(this.state.scrollElementId)
+            window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top, behavior: "smooth" })
+            this.setState({scrollElementId: null})
+        }
+        if(this.state.hashAnchor && document.querySelector(this.state.hashAnchor)) {
+            document.querySelector(this.state.hashAnchor).scrollIntoView()
+            this.setState({hashAnchor: ""})
+        }
         if(prevProps.match.path !== "/docs/search" & this.props.match.path === "/docs/search"){
             this.setState({displaySearch: true})
         }
@@ -305,8 +329,18 @@ class Docs extends React.Component {
     })
     }
 
+    setScrollElementId = () => {
+        let elementId
+        document.querySelectorAll('h3').forEach(el => {
+            if(el.getBoundingClientRect().x && el.getBoundingClientRect().bottom >= 0 && !elementId) {
+                elementId = `#${el.id}`
+            }
+        })
+        return elementId
+    }
+
     scrollToTop = () => {
-        if (!this.props.location.hash) {
+        if (!this.state.hashAnchor) {
             window.scrollTo(0, 0)
         }
     }
@@ -336,19 +370,20 @@ class Docs extends React.Component {
 
     changeLanguage = (html, language) => {
         html = this.loadLanguage(html, language)
-        this.setState({language: language, markdown: html})
+        var languageText = { flureeql: "FlureeQL", graphql: "GraphQL", curl: "Curl", sparql: "SPARQL"}
+        notify.show(`Coding Examples Now In ${languageText[language]}`, "success", 1500)
+        this.setState({language: language, markdown: html, scrollElementId: this.setScrollElementId()})
     }
 
-    pushSearch(){
-        let { searchValue } = this.state; 
-        this.props.history.push(`/docs/search?search=${searchValue}`)
+    pushSearch(e){
+        this.props.history.push(`/docs/search?search=${this.input.value}`)
     }
 
     render(){
         const { markdown, headers, headerLinks, topic, subtopic, language, previousTopic, nextTopic,  fixedSidebar, displaySearch } = this.state;
         return(
             <div className="row">
-
+                    <Notifications />
                     <div className="col-md-4 mt20 mb20">
                     <div className={fixedSidebar ? "fixedSidebar" : "sidebar" }>
                             <div>
@@ -364,14 +399,14 @@ class Docs extends React.Component {
                             <SidebarNav page="docs" nav={docNav} robust={false} chosenSubTopic={subtopic} chosenTopic={topic} headers={headers} headerLinks={headerLinks}/>
                     </div>
                 </div>
-                    <div className="col-md-8 mb20">
+                    <div className="col-md-8 mb20" id="body-container">
                     <div className="row">
                         <div className="col-xs-6"/>
                         <div className="col-xs-6">
                                 <div className="mt10 pull-right" style={{marginRight: "20px"}}>
                                     <form onSubmit= {(e) =>     {   e.preventDefault()
-                                                                    this.pushSearch()}}>
-                                        <input type="text" value={this.state.searchValue} onChange={(e) => this.setState({searchValue: e.target.value})} placeholder="Search Docs.." name="search"/>
+                                                                    this.pushSearch(e)}}>
+                                        <input type="text" ref={(searchTerm) => this.input = searchTerm} placeholder="Search Docs.." name="search"/>
                                         <button><i className="fa fa-search"></i></button>
                                     </form>
                                 </div>
@@ -379,7 +414,7 @@ class Docs extends React.Component {
                     </div>
                     {   displaySearch 
                         ?
-                        <Search {...this.props}/>
+                        <Search {...this.props} query={this.state.searchValue}/>
                         :
                         <div>
                             <article className="mb20 docs-section" style={{minHeight: "400px", width: "95%"}} dangerouslySetInnerHTML={{__html: markdown}}></article>
