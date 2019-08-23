@@ -1,5 +1,6 @@
 import React from 'react';
-import { SidebarNav, fixSidebar, getTopicAndSubTopic, getNextTopic, getPreviousTopic } from '../components/LoadTopics';
+import { fixSidebar, getTopicAndSubTopic, getNextTopic, getPreviousTopic } from '../actions/LoadTopics';
+import { SidebarNav } from '../components/SidebarNav';
 import get from 'lodash.get';
 import marked from 'marked';
 import { Button, Form, FormGroup, ControlLabel, FormControl, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
@@ -97,7 +98,7 @@ class API extends React.Component {
         try {
             section = require(`../content/api/${fileName}.md`)
         } catch {
-            section = require(`../content/docs/404.md`)            
+            section = require(`../content/404.md`)            
         }
         
         fetch(section)

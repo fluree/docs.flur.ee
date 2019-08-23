@@ -1,215 +1,12 @@
 import React from 'react';
 import { ToggleButtonGroup, ToggleButton, Button } from 'react-bootstrap';
 import get from 'lodash.get';
-import { SidebarNav, fixSidebar, getTopicAndSubTopic, getNextTopic, getPreviousTopic } from '../components/LoadTopics';
+import { fixSidebar, getTopicAndSubTopic, getNextTopic, getPreviousTopic } from '../actions/LoadTopics';
+import { SidebarNav } from '../components/SidebarNav';
 import marked from 'marked';
-import { Search } from './DocIndex';
+// import { Search } from './DocIndex';
 import Notifications, { notify } from 'react-notify-toast'
-
-export const docNav = {
-    "getting-started": {
-        "subTopics": {
-            "intro": {
-                "headerName": "Intro",
-                "file": "start/intro"
-            },
-            "installation": {
-                "headerName": "Installation",
-                "file": "start/installation"
-            },
-            "user-interface": {
-                "headerName": "User Interface",
-                "file": "start/ui"
-            },
-            "basic-schema": {
-                "headerName": "Basic Schema",
-                "file": "start/basic-schema"
-            }
-        },
-        "pageName": "Getting Started"
-    },
-    "query": {
-        "pageName": "Query",
-        "subTopics": {
-            "overview": {
-                "headerName": "Basic Query",
-                "file": "query/basic-query"
-            },
-            "block-query": {
-                "headerName": "Block Query",
-                "file": "query/block-query"
-            },
-            "history-query": {
-                "headerName": "History Query",
-                "file": "query/history-query"
-            },
-            "advanced-query": {
-                "headerName": "Advanced Query",
-                "file": "query/advanced-query"
-            },
-            "analytical-query": {
-                "headerName": "Analytical Query",
-                "file": "query/analytical-query"
-            },
-            "sparql": {
-                "headerName": "SPARQL",
-                "file": "query/sparql"
-            },
-            "graphql": {
-                "headerName": "GraphQL",
-                "file": "query/graphql"
-            }
-        }
-
-    },
-    "transact": {
-        "pageName": "Transact",
-        "subTopics": {
-            "basics": {
-                "headerName": "Transaction Basics",
-                "file": "transact/basics"
-            },
-            "adding-data": {
-                "headerName": "Adding Data",
-                "file": "transact/adding-data"
-            },
-            "updating-data": {
-                "headerName": "Updating Data",
-                "file": "transact/updating-data"
-            },
-            "deleting-data": {
-                "headerName": "Deleting Data",
-                "file": "transact/deleting-data"
-            }
-        }
-    },
-    "smart-functions": {
-        "pageName": "Smart Functions",
-        "subTopics": {
-            "smart-functions": {
-                "headerName": "Intro",
-                "file": "smart-functions/intro"
-            },
-            "predicate-spec": {
-                "headerName": "Predicate Spec",
-                "file": "smart-functions/predicate-spec"
-            },
-            "collection-spec": {
-                "headerName": "Collection Spec",
-                "file": "smart-functions/collection-spec"
-            },
-            "predicate-tx-spec": {
-                "headerName": "Predicate Tx Spec",
-                "file": "smart-functions/predicate-tx-spec"
-            },
-            "rules": {
-                "headerName": "Rules and Rule Functions",
-                "file": "smart-functions/rules"
-            },
-            "rule-example": {
-                "headerName": "Rule Example",
-                "file": "smart-functions/rule-example"
-            },
-            "fns-in-txs": {
-                "headerName": "In Transactions",
-                "file": "smart-functions/fns-in-txs"
-            }
-        }
-    },
-    "identity": {
-        "pageName": "Identity",
-        "subTopics": {
-            "public-private-keys": {
-                "headerName": "Public and Private Keys",
-                "file": "identity/public-private-keys"
-            },
-            "auth-records": {
-                "headerName": "Auth Records",
-                "file": "identity/auth-records"
-            },
-            "signatures": {
-                "headerName": "Signatures",
-                "file": "identity/signatures"
-            }
-        }
-    },
-    "schema": {
-        "pageName": "Schema",
-        "subTopics": {
-            "overview": {
-                "headerName": "Overview",
-                "file": "schema/overview"
-            },
-            "collections": {
-                "headerName": "Collections",
-                "file": "schema/collections"
-            },
-            "predicates": {
-                "headerName": "Predicates",
-                "file": "schema/predicates"
-            }
-        }
-    },
-    "database-setup": {
-        "pageName": "Database Set-up",
-        "subTopics": {
-            "creating-a-db": {
-                "headerName": "Creating a DB",
-                "file": "db-setup/creating-a-database"
-            },
-            "database-settings": {
-                "headerName": "Database Settings",
-                "file": "db-setup/database-settings"
-            },
-            "forking-a-db": {
-                "headerName": "Forking a DB",
-                "file": "db-setup/forking-a-database"
-            },
-            "deleting-a-database": {
-                "headerName": "Deleting a DB",
-                "file": "db-setup/deleting-a-database"
-            }
-        }
-    },
-    "infrastructure": {
-        "pageName": "Infrastructure",
-        "subTopics": {
-            "db-infrastructure": {
-                "headerName": "Database Infrastructure",
-                "file": "infrastructure/db_infrastructure"
-            },
-            "network-infrastructure": {
-                "headerName": "Network Infrastructure",
-                "file": "infrastructure/network_infrastructure"
-            },
-            "system-collections": {
-                "headerName": "System Collections",
-                "file": "infrastructure/system_collections"
-            },
-            "application-best-practices": {
-                "headerName": "Best Practices",
-                "file": "infrastructure/app_best_practices"
-            }
-        }
-    },
-    "examples": {
-        "pageName": "Examples",
-        "subTopics": {
-            "cryptocurrency": {
-                "headerName": "Cryptocurrency",
-                "file": "examples/cryptocurrency"
-            },
-            "voting": {
-                "headerName": "Voting",
-                "file": "examples/voting"
-            },
-            "supply-chain": {
-                "headerName": "Supply Chain",
-                "file": "examples/supply-chain"
-            },
-        }
-    }
-}
+import { getDocNav, docNav091, docNav095} from '../navs/docNav';
 
 export const languages = ["flureeql", "graphql", "curl", "sparql"]
 
@@ -221,72 +18,71 @@ class Docs extends React.Component {
         fixedSidebar: false,
         displaySearch: false,
         searchValue: "",
-        hashAnchor: "",
+        hashAnchor: this.props.location.hash || "",
         scrollElementId: ""
     }
 
-    
-
     componentDidMount(){
-        if(this.props.location.hash) {
-            this.setState({hashAnchor: this.props.location.hash})
-        }
-        if(this.props.match.path === "/docs/search"){
-            this.setState({displaySearch: true})
-            let query = this.props.location.search
-            let queryPattern = /\?search=/
-            if(queryPattern.test(query)) {
-                let searchValue = new URLSearchParams(query).get('search')
-                this.setState({searchValue: searchValue})
-                this.props.history.push(`/docs/search?search=${searchValue}`)
-            }
-        } else {
-            this.setState({displaySearch: false})
-        }
-        window.addEventListener('scroll', fixSidebar.bind(this))
-        this.getTopicAndLoad(this.props)
+        // if(this.props.match.path === "/docs/search"){
+        //     this.setState({displaySearch: true})
+        //     let query = this.props.location.search
+        //     let queryPattern = /\?search=/
+        //     if(queryPattern.test(query)) {
+        //         let searchValue = new URLSearchParams(query).get('search')
+        //         this.setState({searchValue: searchValue})
+        //         this.props.history.push(`/docs/search?search=${searchValue}`)
+        //     }
+        // } else {
+        //     this.setState({displaySearch: false})
+        // }
+        // window.addEventListener('scroll', fixSidebar.bind(this))
+        let docNav = getDocNav(this.props.version, docNav091, docNav095)
+        this.setState({docNav: docNav}, () => this.getTopicAndLoad())
     }
 
-    componentDidUpdate(prevProps, prevState){
-        if(this.state.scrollElementId){
-            let element = document.body.querySelector(this.state.scrollElementId)
-            window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top, behavior: "smooth" })
-            this.setState({scrollElementId: null})
-        }
-        if(this.state.hashAnchor && document.querySelector(this.state.hashAnchor)) {
-            document.querySelector(this.state.hashAnchor).scrollIntoView()
-            this.setState({hashAnchor: ""})
-        }
-        if(prevProps.match.path !== "/docs/search" & this.props.match.path === "/docs/search"){
-            this.setState({displaySearch: true})
-        }
+    // componentDidUpdate(prevProps, prevState){
+    //     if(this.state.scrollElementId){
+    //         let element = document.body.querySelector(this.state.scrollElementId)
+    //         window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top, behavior: "smooth" })
+    //         this.setState({scrollElementId: null})
+    //     }
+    //     if(this.state.hashAnchor && document.querySelector(this.state.hashAnchor)) {
+    //         document.querySelector(this.state.hashAnchor).scrollIntoView()
+    //         this.setState({hashAnchor: ""})
+    //     }
+    //     if(prevProps.match.path !== "/docs/search" & this.props.match.path === "/docs/search"){
+    //         this.setState({displaySearch: true})
+    //     }
 
-        if(prevProps.match.params.topic !== this.props.match.params.topic || prevProps.match.params.subtopic !== this.props.match.params.subtopic){
-            this.setState({displaySearch: false})
-            this.getTopicAndLoad(this.props)
-        }
-    }
+    //     if(prevProps.match.params.topic !== this.props.match.params.topic || prevProps.match.params.subtopic !== this.props.match.params.subtopic){
+    //         this.setState({displaySearch: false})
+    //         this.getTopicAndLoad(this.props)
+    //     }
+    // }
 
     componentWillUnmount(){
         window.removeEventListener('scroll', this.fixSideBar);
    }
 
-    getTopicAndLoad = (props) => {
-        if(props.match.path === "/docs/search"){
-            this.setState({displaySearch: true})
-        } else {
+    getTopicAndLoad = () => {
+        const { docNav } = this.state
+        console.log("GET TOPIC AND LOAD, ", docNav)
+        // if(props.match.path === "/docs/search"){
+        //     this.setState({displaySearch: true})
+        // } else {
             let promise = new Promise((resolve, reject) => {
-                resolve(getTopicAndSubTopic(props, "docs", docNav))
+                resolve(getTopicAndSubTopic(this.props, docNav))
             })
 
             promise.then((resp) => {
                 let [topic, subtopic] = resp;
+                console.log("RESP", resp)
                 this.loadSection(topic, subtopic, docNav)
             }) 
             .catch(resp => {
                 this.loadSection("getting-started", "intro", docNav)
             })
-        }
+        // }
     }
 
     loadSection = (topic, subtopic, nav) => {
@@ -296,9 +92,9 @@ class Docs extends React.Component {
         let fileName = get(subTopics, [subtopic, "file"])
 
         try {
-            section = require(`../content/docs/${fileName}.md`)
+            section = require(`../content/${fileName}.md`)
         } catch {
-            section = require(`../content/docs/404.md`)            
+            section = require(`../content/404.md`)            
         }
         
         fetch(section)
@@ -315,8 +111,9 @@ class Docs extends React.Component {
 
             let language = this.state.language
             let html = this.loadLanguage(markedHTML, language)
-            let nextTopic = getNextTopic(topic, subtopic, docNav, "docs")
-            let previousTopic = getPreviousTopic(topic, subtopic, docNav, "docs")
+            console.log("TOPIC", topic, "SUBTOPIC", subtopic, "NAV", nav)
+            let nextTopic = getNextTopic(topic, subtopic, nav, "docs")
+            let previousTopic = getPreviousTopic(topic, subtopic, nav, "docs")
 
             const headers = []
             const headerLinks = []
@@ -375,12 +172,8 @@ class Docs extends React.Component {
         this.setState({language: language, markdown: html, scrollElementId: this.setScrollElementId()})
     }
 
-    pushSearch(e){
-        this.props.history.push(`/docs/search?search=${this.input.value}`)
-    }
-
     render(){
-        const { markdown, headers, headerLinks, topic, subtopic, language, previousTopic, nextTopic,  fixedSidebar, displaySearch } = this.state;
+        const { markdown, headers, headerLinks, topic, subtopic, language, previousTopic, nextTopic,  fixedSidebar, displaySearch, docNav } = this.state;
         return(
             <div className="row">
                     <Notifications />
@@ -396,7 +189,10 @@ class Docs extends React.Component {
                                     { languages.map(lang => <ToggleButton key={lang} style={{fontVariant: "small-caps"}} value={lang}>{lang}</ToggleButton>)}
                                 </ToggleButtonGroup>
                             </div>
-                            <SidebarNav page="docs" nav={docNav} robust={false} chosenSubTopic={subtopic} chosenTopic={topic} headers={headers} headerLinks={headerLinks}/>
+                            {
+                                this.state.docNav &&
+                                <SidebarNav page="docs" nav={docNav} robust={false} chosenSubTopic={subtopic} chosenTopic={topic} headers={headers} headerLinks={headerLinks}/>
+                            }
                     </div>
                 </div>
                     <div className="col-md-8 mb20" id="body-container">
@@ -405,7 +201,7 @@ class Docs extends React.Component {
                         <div className="col-xs-6">
                                 <div className="mt10 pull-right" style={{marginRight: "20px"}}>
                                     <form onSubmit= {(e) =>     {   e.preventDefault()
-                                                                    this.pushSearch(e)}}>
+                                                                    this.props.history.push(`/docs/search?search=${this.input.value}`)}}>
                                         <input type="text" ref={(searchTerm) => this.input = searchTerm} placeholder="Search Docs.." name="search"/>
                                         <button><i className="fa fa-search"></i></button>
                                     </form>
@@ -414,7 +210,8 @@ class Docs extends React.Component {
                     </div>
                     {   displaySearch 
                         ?
-                        <Search {...this.props} query={this.state.searchValue}/>
+                        <div>No serach</div>
+                        // <Search {...this.props} query={this.state.searchValue}/>
                         :
                         <div>
                             <article className="mb20 docs-section" style={{minHeight: "400px", width: "95%"}} dangerouslySetInnerHTML={{__html: markdown}}></article>

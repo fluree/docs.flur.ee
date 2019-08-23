@@ -2,8 +2,7 @@ import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button } from 'react-bootstrap';
 
-class Splash extends React.Component {
-    render() {
+const Splash = (props) => {
         return (
             <div className="row text-center" style={{backgroundColor: "#fff", padding: "80px 0px"}}>
                 <div className="col-md-4" style={{paddingBottom: "20px"}}>
@@ -15,16 +14,6 @@ class Splash extends React.Component {
                                Start Learning
                             </Button>
                         </LinkContainer>
-                        {/* <LinkContainer to="/docs" style={{margin:"2px 5px"}}>
-                            <Button  bsStyle="primary">
-                                Docs
-                            </Button>
-                        </LinkContainer>
-                        <LinkContainer to="/api" style={{margin:"2px 5px"}}>
-                            <Button  bsStyle="primary">
-                                API
-                            </Button>
-                        </LinkContainer> */}
                     </div>
                 </div>
                 <div className="col-md s-8">
@@ -32,8 +21,8 @@ class Splash extends React.Component {
                 </div>
             </div>
         )
-    }
 }
+
 
 const FPPanel = (props) => {
     return(
@@ -72,19 +61,14 @@ const FPPanel = (props) => {
     )
 }
 
-class Landing extends React.Component {
-    state = {
-
-    }
-
-    render() {
+const Landing = (props) =>  {
+    const { version } = props
         return (
             <div>
                 <Splash/>
-                <FPPanel />
+                { version !== "0.9.1" && <FPPanel /> }
             </div>
         )
-    }
 }
 
 export default Landing; 

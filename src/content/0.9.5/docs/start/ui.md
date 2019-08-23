@@ -33,9 +33,7 @@ In the hosted version and older downloadable versions, you will also be able to 
 When you create a new database or new user, you may have to refresh the UI in order to have those database or users appear in the sidebar. 
 
 ### Sidebar
-In the sidebar, you can select the database you want to use. Earlier downloadable versions of Fluree also allow you to select a particular user. 
-
-Use the sidebar to navigate to different pages in user interface. 
+In the sidebar, you can select the database you want to use. Use the sidebar to navigate to different pages in user interface. 
 
 <p class="text-center">
     <img style="height: 190px; width: 170px" src="https://s3.amazonaws.com/fluree-docs/sidebar2.png" alt="Sidebar with links to Account Info, default (a database name), root (a user name), FlureeQL, GraphQL, Schema, Stats, Permissions, and Docs.">

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Player } from 'video-react';
-import { SidebarNav, fixSidebar, getTopicAndSubTopic, getNextTopic, getPreviousTopic } from '../components/LoadTopics';
+import { fixSidebar, getTopicAndSubTopic, getNextTopic, getPreviousTopic } from '../actions/LoadTopics';
+import { SidebarNav } from '../components/SidebarNav';
 import get from 'lodash.get';
 import marked from 'marked';
 import { Button } from 'react-bootstrap';
 
-const videoNav = {
+const baseVideoNav = {
     "intro": {
         "pageName": "Introduction",
         "subTopics": {
@@ -165,7 +166,14 @@ const videoNav = {
                 }
             }
         }
-    }
+}
+
+const videoNav = {
+    "0.9.1": { "intro": baseVideoNav["intro"]},
+    "0.9.5": baseVideoNav,
+    "0.9.6": baseVideoNav
+}
+
 
 class Video extends React.Component {
     state = {
@@ -176,7 +184,8 @@ class Video extends React.Component {
         videoFile: "schema/2.0-schema",
         videoDesc: "",
         topic: "schema",
-        subtopic: "1"
+        subtopic: "1",
+        videoNavVersion: videoNav[this.props.version]
     }
 
     componentDidMount(){
@@ -185,9 +194,10 @@ class Video extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-        if(prevProps.match.params.topic !== this.props.match.params.topic || prevProps.match.params.subtopic !== this.props.match.params.subtopic){
-            this.getVideoAndLoad()
-        }
+        console.log("PREV PROPS!", prevProps)
+        // if(prevProps.match.params.topic !== this.props.match.params.topic || prevProps.match.params.subtopic !== this.props.match.params.subtopic){
+        //     this.getVideoAndLoad()
+        // }
     }
 
     componentWillUnmount(){
@@ -195,20 +205,22 @@ class Video extends React.Component {
    }
 
     getVideoAndLoad = () => {
+        let videoNavVersion = videoNav[this.props.version];
         let promise = new Promise((resolve, reject) => {
-            resolve(getTopicAndSubTopic(this.props, "video", videoNav))
+            resolve(getTopicAndSubTopic(this.props, "video", videoNavVersion))
         })
 
         promise.then(resp => {
             let [topic, subtopic] = resp;
-            this.loadVideo(topic, subtopic, videoNav)
+            this.loadVideo(topic, subtopic, videoNavVersion)
         })
         .catch(resp => {
-            this.loadVideo("intro", "intro", videoNav)
+            this.loadVideo("intro", "intro", videoNavVersion)
         })
     }
 
     loadVideo = (topic, subtopic, nav) => {
+        let videoNavVersion = this.state.videoNavVersion;
         let videoDesc;
         let subTopics = get(nav, [topic, "subTopics"]);
         subtopic = subtopic ? subtopic :  Object.keys(subTopics)[0]
@@ -223,8 +235,8 @@ class Video extends React.Component {
             })
             .then(text => {
                 let videoDesc = marked(text)
-                let nextTopic = getNextTopic(topic, subtopic, videoNav, "video")
-                let previousTopic = getPreviousTopic(topic, subtopic, videoNav, "video")
+                let nextTopic = getNextTopic(topic, subtopic, videoNavVersion, "video")
+                let previousTopic = getPreviousTopic(topic, subtopic, videoNavVersion, "video")
                 this.setState({topic: topic, subtopic: subtopic, vidName: vidName, videoFile: videoFile, videoDesc: videoDesc, nextTopic: nextTopic, previousTopic: previousTopic})
             })
         } catch {
@@ -234,12 +246,12 @@ class Video extends React.Component {
     }
 
     render() {
-        let { videoFile, videoDesc, vidName, topic, subtopic, fixedSidebar, nextTopic, previousTopic } = this.state
+        let { videoFile, videoDesc, vidName, topic, subtopic, fixedSidebar, nextTopic, previousTopic, videoNavVersion } = this.state
         return(
             <div>
                 <div className="col-md-3">  
                     <div className={fixedSidebar ? "fixedSidebar" : "sidebar" }>
-                        <SidebarNav robust={false} page="video" nav={videoNav} chosenSubTopic={subtopic} chosenTopic={topic}/>
+                        <SidebarNav robust={false} page="video" nav={videoNavVersion} chosenSubTopic={subtopic} chosenTopic={topic}/>
                     </div>
                 </div>
                 <div className="col-md-9">
