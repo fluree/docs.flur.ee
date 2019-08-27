@@ -1,12 +1,12 @@
 import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Col, DropdownButton, MenuItem, Button } from 'react-bootstrap';
-import { getDocNav, docNav091, docNav095 } from '../navs/docNav';
+import { getDocNav } from '../navs/docNav';
 
 const versions = ["0.9.6", "0.9.5", "0.9.1"]
 
 const NavItems = (props) => {
-    let docNav = getDocNav(props.version, docNav091, docNav095)
+    let docNav = getDocNav(props.version)
     let docKeys = Object.keys(docNav)
 
     return (<div>
@@ -30,12 +30,9 @@ const NavItems = (props) => {
                     )
                 }    
             </DropdownButton>
-        {  
-            props.version !== "0.9.1" &&
             <LinkContainer to="/api" className="text-center" style={props.btnStyles}>
                <Button bsStyle={props.btnStyle}>API</Button>
             </LinkContainer>
-        }
             <LinkContainer to="/help" className="text-center" style={props.btnStyles}>
                 <Button bsStyle={props.btnStyle}>Help</Button>            
             </LinkContainer>

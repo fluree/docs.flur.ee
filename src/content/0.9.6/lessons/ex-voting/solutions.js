@@ -175,17 +175,17 @@ export default {
     {
         "_id": "_fn$editOwnUser",
         "name": "editOwnUser",
-        "code": "(== (?sid) (?user_id))"
+        "code": "(contains? (get-all (query (str \"{\\\"select\\\": [{\\\"_user/_auth\\\": [\\\"_id\\\"]}], \\\"from\\\": \" (?auth_id) \"}\")) [\"_user/_auth\" \"_id\"]) (?sid))"
     }], "If users can create new auth records, then they can artificially inflate votes"],
     "6": ["We need to make sure that users can only add their own auth records to the vote. There are other smart functions you might want to add, but this one is the most critical."],
     "7": "(== (?o) (?auth_id))",
     "8": "There's nothing stopping Soft Cell from changing their username without a vote!",
-    "9": "(str \"change/subject = \\\"\" (?sid) \"\\\"\"  \" AND change/predicate = \" (?pid) \" AND change/object = \" (?o))",
-    "10": "(query \"[{change/vote [*]}]\" nil (voteWhere) nil nil)",
+    "9": "(str \"[[\\\"?change\\\", \\\"change/subject\\\", \" (?sid) \"],[\\\"?change\\\", \\\"change/predicate\\\", \" (?pid) \"],[\\\"?change\\\", \\\"change/object\\\", \\\"\" (?o) \"\\\"], [\\\"?change\\\", \\\"change/vote\\\", \\\"?vote\\\"]]\")",
+    "10": "(query (str \"{\\\"select\\\": {\\\"?vote\\\": [\\\"*\\\"] }, \\\"where\\\":\" (voteWhere) \"}\"))",
     "11": [{
         "_id": "_fn",
         "name": "yesVotes",
-        "code": "(get-all (vote) [\"change/vote\" \"vote/yesVotes\"] )"
+        "code": "(get-all (nth (vote) 0) [\"vote/yesVotes\" \"_id\"] )"
     }],
     "12": ["Some solutions", "(addAndDivide 100 20 4)", "(addAndDivide 28 2 1)"],
     "13": [{

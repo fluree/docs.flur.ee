@@ -111,26 +111,15 @@ We're going to place the following restrictions on the predicates in the `wallet
 - `wallet/balance` - anyone can edit
 - `wallet/user` - no one can edit. 
 
-First, we're going to create a function, which checks to see if the user attempting to make the update `(?user_id)` is the owner of the wallet. The full function is: `"(contains? (get-all (query (str \"{\\\"select\\\": [{\\\"wallet/user\\\": [{\\\"_user/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" }\")) [\"wallet/user\" \"_user/auth\" \"_id\"]) (?auth_id))"`, 
+First, we're going to create a function, which checks to see if the user attempting to make the update `(?user_id)` is the owner of the wallet. The full function is: `(contains? (get-all (?s \"[{wallet/user [{_user/auth [_id]}] }]\") [\"wallet/user\" \"_user/auth\" \"_id\"]) (?auth_id))`. This function starts with `(?s \"[{wallet/user [{_user/auth [_id]}] }]\")`, which is the subject being updated (a wallet), and following the subject to get the `wallet/user` and that `_user/auth`. 
 
-First, we use `str` to create a query-string, `(str \"{\\\"select\\\": [{\\\"wallet/user\\\": [{\\\"_user/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" }\")`. The resulting query will be:
+We `get-all` the `_id`s from the `_user/auth`s for that `wallet/user`. `get-all` returns a set. In this case, it is a set of one, single `_id`. Then we see if the set of `_id`s for the current `wallet/user`s contains the `_id` of the `_auth` currently making the update `(?auth_id)`. 
 
-```all
-{
-  "select": [{"wallet/user": [{"_user/auth": ["_id]}]}],
-  "from": SUBJECT-ID
-}
-```
-
-The subject-id will belong to the wallet in question, and we access that `_id` via the `(?sid)` function. We issue that query using the `query` function, and then use `get-all` to retrieve the `_id` of the `_user/auth`. 
-
-`get-all` returns a set. In this case, it is a set of one, single `_id`. Then we see if the set of `_id`s for the current `wallet/user`s contains the `_id` of the `_auth` currently making the update `(?auth_id)`. 
-
-```all
+```flureeql
 [{
     "_id": "_fn$ownWallet",
     "name": "ownWallet?",
-    "code": "(contains? (get-all (query (str \"{\\\"select\\\": [{\\\"wallet/user\\\": [{\\\"_user/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" }\")) [\"wallet/user\" \"_user/auth\" \"_id\"]) (?auth_id))"
+    "code": "(contains? (get-all (?s \"[{wallet/user [{_user/auth [_id]}] }]\") [\"wallet/user\" \"_user/auth\" \"_id\"]) (?auth_id))"
 },
    {
     "_id": "_rule$editOwnWalletName",
@@ -145,7 +134,7 @@ The subject-id will belong to the wallet in question, and we access that `_id` v
 
 Then, we'll use the built-in smart functions, `true` and `false` to make sure `wallet/balance` can be updated by anyone, and the `wallet/user` cannot be edited by anyone. 
 
-```all
+```flureeql
 [{
     "_id": "_rule$editAnyCryptoBalance",
     "id": "editAnyCryptoBalance",
@@ -322,12 +311,11 @@ We can also use a tool in the user interface to sign transactions as a particula
 
 The first item we will attempt is cryptoMan adding 5 to cryptoMan's own `wallet/balance`. If using the user interface, you need to include the private key in the form. If you're not using the user interface, you will need to sign the following transaction with the private key. You will also need to specify cryptoMan's auth in either the form or the [signed transaction](/docs/identity/signatures#signed-transactions).
 
+The private key for cryptoMan is `745f3040cbfba59ba158fc4ab295d95eb4596666c4c275380491ac658cf8b60c`. His `_auth/id` is `TfDao2xAPN1ewfoZY6BJS16NfwZ2QYJ2cF2`.
+
 A request to `/command` will return a `_tx/id`. In order to see if the transaction went through successfully, you will need to query: 
 
 ```all
-Private Key: 745f3040cbfba59ba158fc4ab295d95eb4596666c4c275380491ac658cf8b60c
-Auth id: TfDao2xAPN1ewfoZY6BJS16NfwZ2QYJ2cF2
-
 {
   "select": ["*"],
   "from": ["_tx/id", TRANSACTION ID HERE ]
@@ -338,10 +326,7 @@ If there is an error in the transaction, that will appear in `_tx/error`. If the
 
 If you are using the user interface, the "Results" editor will automatically show you the results of issuing the above query after submitting a command (unless the auth record you are using cannot view subjects in the `_tx` collection).
 
-```all
-Private Key: 745f3040cbfba59ba158fc4ab295d95eb4596666c4c275380491ac658cf8b60c
-Auth id: TfDao2xAPN1ewfoZY6BJS16NfwZ2QYJ2cF2
-
+```flureeql
 [{
     "_id": ["wallet/name", "cryptoWoman"],
     "balance": 205
@@ -378,10 +363,9 @@ In the following transaction, cryptoMan will attempt to add balance to his OWN w
 
 If you are using the user interface, the error message will appear in the "Results" editor. If you're not using the user interface, remember that a request to `/command` will only return `_tx/id`, and you need to query `{ "select": ["*"],"from": ["_tx/id", TRANSACTION ID HERE ] }` in order to see the error. 
 
-```all
-Private Key: 745f3040cbfba59ba158fc4ab295d95eb4596666c4c275380491ac658cf8b60c
-Auth id: TfDao2xAPN1ewfoZY6BJS16NfwZ2QYJ2cF2
+The private key for cryptoMan is `745f3040cbfba59ba158fc4ab295d95eb4596666c4c275380491ac658cf8b60c`. His `_auth/id` is `TfDao2xAPN1ewfoZY6BJS16NfwZ2QYJ2cF2`.
 
+```flureeql
 [{
     "_id": ["wallet/name", "cryptoMan"],
     "balance": 205
@@ -415,12 +399,11 @@ mutation addCryptoWoman ($addCryptoWomanTx: JSON) {
 Transactions not supported
 ``` -->
 
-We can try similar transactions for cryptoWoman. The following transaction should succeed. 
+We can try similar transactions for cryptoWoman. The private key for cryptoWoman is `65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19`. Her `_auth/id` is `Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP`.
 
-```all
-Private Key: 65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19
-Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
+The following transaction should succeed. 
 
+```flureeql
 [{
     "_id": ["wallet/name", "cryptoWoman"],
     "balance": 195
@@ -452,12 +435,11 @@ mutation addCryptoWoman ($addCryptoWomanTx: JSON) {
 Transactions not supported
 ``` -->
 
-Whereas adding to her own wallet will fail. Even if she doesn't know her current balance, she can use the database function, (`?pO`) to get the previous value of her `wallet/balance`.
+Whereas adding to her own wallet will fail (signed with the private key for cryptoWoman, which is `65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19`, and specifying her `_auth/id`, which is `Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP`.)
 
-```all
-Private Key: 65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19
-Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
+Even if she doesn't know her current balance, she can use the database function, (`?pO`) to get the previous value of her `wallet/balance`.
 
+```flureeql
 [{
     "_id": ["wallet/name", "cryptoWoman"],
     "balance": "#(+ (?pO) 5)"
@@ -489,13 +471,10 @@ mutation addCryptoMan ($addCryptoManTx: JSON) {
 Transactions not supported
 ``` -->
 
-Removing money from cryptoMan's wallet will also fail.
+Removing money from cryptoMan's wallet will also fail (signed with the private key for cryptoWoman, which is `65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19` and specifying her `_auth/id`, which is `Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP`.)
 
 
-```all
-Private Key: 65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19
-Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
-
+```flureeql
 [{
     "_id": ["wallet/name", "cryptoMan"],
     "balance": "#(- (?pO) 5)"
@@ -595,10 +574,9 @@ For example, with our final function in place, no user can perform the following
 
 We can try submitting the following transaction with cryptoWoman's private key. The following transaction adds to cryptoMan's wallet and subtracts from cryptoWoman's wallet. If we hadn't added the last function (crypto spent = crypto received), the following transaction would have been valid. Now, if signed as cryptoWoman, it will return the error, "The values of added and retracted wallet/balance flakes need to be equal".
 
-```all
-Private Key: 65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19
-Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
+CryptoWoman's private key is `65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19`, and her `_auth/id` is `Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP`.
 
+```flureeql
 [{
     "_id": ["wallet/name", "cryptoMan"],
     "balance": "#(+ (?pO) 10)"
@@ -608,7 +586,7 @@ Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
     "balance": "#(- (?pO) 5)"
 }]
 ```
-<!-- 
+
 ```curl
 curl \
    -H "Content-Type: application/json" \
@@ -636,16 +614,15 @@ mutation unevenSpend ($unevenSpendTx: JSON) {
 
 ```sparql
 Transactions not supported
-``` -->
+``` 
 
 The following transaction spends as much cryptocurrency as it receives. However, because it is withdrawing from cryptoMan and adding to cryptoWoman, only cryptoMan can initiate the transaction. We can sign it as cryptoMan, and it will go through.
+
+The private key for cryptoWoman is `65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19`. Her `_auth/id` is `Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP`.
 
 But if we sign it as cryptoWoman, it will return an error. 
 
 ```flureeql
-Private Key: 65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19
-Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
-
 [{
     "_id": ["wallet/name", "cryptoMan"],
     "balance": "#(- (?pO) 10)"
@@ -655,7 +632,7 @@ Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
     "balance": "#(+ (?pO) 10)"
 }]
 ```
-<!-- 
+
 ```curl
 curl \
    -H "Content-Type: application/json" \
@@ -683,4 +660,4 @@ mutation unevenSpend ($unevenSpendTx: JSON) {
 
 ```sparql
 Transactions not supported
-``` -->
+```

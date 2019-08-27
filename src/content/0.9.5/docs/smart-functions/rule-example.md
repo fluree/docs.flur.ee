@@ -60,22 +60,11 @@ The smart function attached to `viewAllChats` and `viewAllPeopleHandles` is just
 
 For `editOwnChats`, we needed to write a new function, which checks whether the subject being updated (a chat) belongs to the auth record doing the updating. 
 
-The full function is: `(contains? (get-all (query (str \"{\\\"select\\\": \\\"[{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")) [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))`. We break it down below:
+The full function is: `(contains? (get-all (?s \"[{chat/person [{person/auth [_id] }] }]\") [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))`. We break it down below:
 
-1. First, we use `str` to create a query string `(str \"{\\\"select\\\": \\\"[{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")`. The resulting string is:
-
-```all
-{
-  "select": [{"chat/person": [{"person/auth": ["_id"]}]}],
-  "from": SUBJECT-ID
-}
-```
-
-2. We then use `query` to issue that query. 
-
-3. Then, we retrieve all (just one in this case) of the `_id`s belonging to `person/auth` by crawling the results from step 2. `(get-all [\"chat/person\" \"person/auth\" \"_id\"]) `. `get-all` always returns a set. In this case, it is a set containing a single `_id`. 
-
-3. Finally, we ask does the set of `_id`s we got in step 3 contain the `(?auth_id)` who is currently making this update?
+1. First, we get the chat's, chat/person, and retrieve that person's person/auth, and finally get the _auth's _id: `(?s \"[{chat/person [{person/auth [_id] }] }]\")`.
+2. Then, we retrieve all (just one in this case) of the _auth _ids by again crawling the results from step 1. `(get-all [\"chat/person\" \"person/auth\" \"_id\"])`.
+3. Finally, we ask, does the set (of one) _id contain the (?auth_id) who is currently making this update. `(contains? (get-all (?s \"[{chat/person [{person/auth [_id] }] }]\") [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))`.
 
 ```flureeql
 [
@@ -115,8 +104,7 @@ The full function is: `(contains? (get-all (query (str \"{\\\"select\\\": \\\"[{
   {
     "_id": "_fn$ownChats",
     "name": "ownChats",
-    "code": "(contains? (get-all (query (str \"{\\\"select\\\": \\\"[{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")) [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))"
-
+    "code": "(contains? (get-all (?s \"[{chat/person  [{person/auth [_id] }] }]\") [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))"
   }
 ]
 ```
@@ -162,7 +150,7 @@ The full function is: `(contains? (get-all (query (str \"{\\\"select\\\": \\\"[{
   {
     "_id": "_fn$ownChats",
     "name": "ownChats",
-    "code": "(contains? (get-all (query (str \"{\\\"select\\\": \\\"[{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")) [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))"
+    "code": "(contains? (get-all (?s \"[{chat/person  [{person/auth [_id] }] }]\") [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))"
   }
 ]' \
    [HOST]/transact
@@ -176,8 +164,7 @@ mutation addRole ($level1RoleTx: JSON) {
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "level1RoleTx": "[{\"_id\":\"_role\",\"id\":\"level1User\",\"doc\":\"A level 1 user. Can view all chats, edit own chats, and view other people's handles.\",\"rules\":[\"_rule$viewAllChats\",\"_rule$viewAllPeopleHandles\",\"_rule$editOwnChats\"]},{\"_id\":\"_rule$viewAllChats\",\"id\":\"viewAllChats\",\"doc\":\"Can view all chats.\",\"collection\":\"chat\",\"collectionDefault\":true,\"fns\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$viewAllPeopleHandles\",\"id\":\"viewAllPeopleHandles\",\"doc\":\"Can view all people\",\"collection\":\"person\",\"predicates\":[\"person/handle\"],\"fns\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$editOwnChats\",\"id\":\"editOwnChats\",\"doc\":\"Only allow users to edit their own chats\",\"collection\":\"chat\",\"predicates\":[\"chat/message\", \"chat/message\"],\"fns\":[\"_fn$ownChats\"],\"ops\":[\"transact\"]},{\"_id\":\"_fn$ownChats\",\"name\":\"ownChats\",\"code\":\"(contains? (get-all (?s \\\"[{chat/person  [{person/auth [_id] }] }]\\\") [\\\"chat/person\\\" \\\"person/auth\\\" \\\"_id\\\"]) (?auth_id))\"}]"
-}
+  "level1RoleTx": "[{\"_id\":\"_role\",\"id\":\"level1User\",\"doc\":\"A level 1 user. Can view all chats, edit own chats, and view other people's handles.\",\"rules\":[\"_rule$viewAllChats\",\"_rule$viewAllPeopleHandles\",\"_rule$editOwnChats\"]},{\"_id\":\"_rule$viewAllChats\",\"id\":\"viewAllChats\",\"doc\":\"Can view all chats.\",\"collection\":\"chat\",\"collectionDefault\":true,\"fns\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$viewAllPeopleHandles\",\"id\":\"viewAllPeopleHandles\",\"doc\":\"Can view all people\",\"collection\":\"person\",\"predicates\":[\"person/handle\"],\"fns\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$editOwnChats\",\"id\":\"editOwnChats\",\"doc\":\"Only allow users to edit their own chats\",\"collection\":\"chat\",\"predicates\":[\"chat/message\",\"chat/person\"],\"fns\":[\"_fn$ownChats\"],\"ops\":[\"transact\"]},{\"_id\":\"_fn$ownChats\",\"name\":\"ownChats\",\"code\":\"(contains? (get-all (?s \\\"[{chat/person  [{person/auth [_id] }] }]\\\") [\\\"chat/person\\\" \\\"person/auth\\\" \\\"_id\\\"]) (?auth_id))\"}]"
 
 ```
 ```sparql
@@ -263,7 +250,6 @@ mutation addRole ($level2RoleTx: JSON) {
 {
   "level1RoleTx": "[{\"_id\":\"_role\",\"id\":\"level2User\",\"doc\":\"A level 2 user. Can view all chats, edit own chats, and view all people.\",\"rules\":[[\"_rule/id\",\"viewAllChats\"],[\"_rule/id\",\"editOwnChats\"],\"_rule$viewAllPeople\",\"_rule$viewAllComments\"]},{\"_id\":\"_rule$viewAllPeople\",\"id\":\"viewAllPeople\",\"doc\":\"Can view all people.\",\"collection\":\"person\",\"collectionDefault\":true,\"fns\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]},{\"_id\":\"_rule$viewAllComments\",\"id\":\"viewAllComments\",\"doc\":\"Can view all comments.\",\"collection\":\"comment\",\"collectionDefault\":true,\"fns\":[[\"_fn/name\",\"true\"]],\"ops\":[\"query\"]}]"
 }
-
 ```
 
 ```sparql

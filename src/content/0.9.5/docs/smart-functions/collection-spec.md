@@ -45,7 +45,7 @@ In the below transaction, we first attach the `_fn$fullNameReq` to the `person` 
 {
   "_id": "_fn$fullNameReq",
   "name": "fullNameReq",
-  "code": "(boolean (get (query (str \"{\\\"selectOne\\\": [\\\"*\\\"], \\\"from\\\": \" (?sid) \"}\")) \"person/fullName\"))"
+  "code": "(boolean (get (?s) \"person/fullName\"))"
 }]
 ```
 
@@ -61,7 +61,7 @@ curl \
 {
   "_id": "_fn$fullNameReq",
   "name": "fullNameReq",
-  "code": "(boolean (get (query (str \"{\\\"selectOne\\\": [\\\"*\\\"], \\\"from\\\": \" (?sid) \"}\")) \"person/fullName\"))"
+  "code": "(boolean (get (?s) \"person/fullName\"))"
 }]' \
    [HOST]/api/db/transact
 ```
@@ -71,7 +71,7 @@ mutation reqFullName ($reqFullNameTx: JSON) {
 }
 
 {
-  "reqFullNameTx": "[{\"_id\":[\"_collection/name\",\"person\"],\"spec\":[\"_fn$fullNameReq\"],\"specDoc\":\"A person is required to have a fullName.\"},{\"_id\":\"_fn$fullNameReq\",\"name\":\"fullNameReq\",\"code\":\"(boolean (get (query (str \\\"{\\\\\\\"selectOne\\\\\\\": [\\\\\\\"*\\\\\\\"], \\\\\\\"from\\\\\\\": \\\" (?sid) \\\"}\\\")) \\\"person/fullName\\\"))\"}]"
+  "reqFullNameTx": "[{\"_id\":[\"_collection/name\",\"person\"],\"spec\":[\"_fn$fullNameReq\"],\"specDoc\":\"A person is required to have a fullName.\"},{\"_id\":\"_fn$fullNameReq\",\"name\":\"fullNameReq\",\"code\":\"(boolean (get (?s) \\\"person/fullName\\\"))\"}]"
 }
 ```
 

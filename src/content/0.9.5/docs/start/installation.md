@@ -91,10 +91,6 @@ If you have a valid private key, encoded with [Base58Check Encoding](/docs/ident
 
 You can also run `./fluree_start.sh :keygen` to generate a public key, private key, and account id. This will not start Fluree, it will just return those three pieces of information.
 
-### In-Memory Fluree
-
-You can run Fluree in memory for testing purposes. To do so, simply specify `fdb-consensus-type` as `in-memory` and `fdb-storage-type` as `memory`. At this time, you can only run a single, centralized ledger in memory. 
-
 ### Setting Up a Transactor Group
 Currently, transactor groups only support the Raft consensus algorithm to agree on a shared state for a network of databases. With Raft, a total of `n` servers can support `f` failures: n = 2f + 1. This means that anything less than 3 servers can sustain no failures, 5 servers can sustain two failures. 
 
@@ -160,7 +156,6 @@ Transactor Group Options
 
 Property | Options | Description   
 -- | -- | --
-`fdb-group-rejoin` | `boolean` | (Optional) Set to true if a server is rejoining a network or joining a network that has already been running. Setting this to true ensures that the transactor group files and FlureeDB files are fully synced before joining the network.
 `fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. Must be a [valid private key](/docs/identity/public-private-keys). This takes precedent over `fdb-group-private-key-file`.
 `fdb-group-private-key-file` | `file path` | If fdb-group-private-key is not provided, we'll look for it in this file. If not found in this file, we'll generate a default one and place it in this file.
 `fdb-group-servers` | `server-id@host:port, server-id@host:port` | List all servers participating in ledger-group with format of server-id@host:port. All tx-group servers should have this same config.
@@ -170,7 +165,7 @@ Property | Options | Description
 `fdb-group-log-directory` | `file path` | Where to store tx-group raft log files and snapshots. These logs have fairly frequent disk access.
 `fdb-group-snapshot-threshold` | `int` | A snapshot of the current group state will be taken after this many new commits. Larger values mean larger log files, small values mean lots of snapshots which can be time consuming for large networks. Ideally somewhere in the range of 100 to 1000.
 `fdb-group-log-history` | `int` | Number of historic tx-group raft logs to keep around. Can be as low as 1. Historic logs take up disk space but can be useful for debugging if something goes wrong. High transactional volume servers may want to retain extra logs as there will be more frequent rotation.
-`fdb-storage-type` | `file`, `memory` |  This is where to store index/block segments. Can be replicated on every machine or in a common location all local/group ledgers and FlureeDB library/peers. Currently only `file` is supported. `file` storage is on-disk and replicated on every ledger, `memory` is not currently supported, but this is is replicated on every ledger, but only stored in memory (useful for testing; not currently implemented).
+`fdb-storage-type` | `file` |  This is where to store index/block segments. Storage is replicated on every machine. Currently only `file` is supported. `file` storage is on-disk and replicated on every ledger. (`memory` is useful for testing, and is not currently supported -  out in version `0.9.6`).
 `fdb-storage-file-directory` | `file path` | For file storage, specify directory to place ledger (blockchain) and db indexes
 `fdb-memory-cache` | `size` | Total memory cache of index segments across all databases. This setting can be changed per-ledger.
 `fdb-memory-reindex` and `fdb-memory-reindex-max` | `size` | These settings apply per-database, make sure all ledgers and query peers have at least this much memory * number of databases you expect to be active on those servers. This setting must be consistent across the entire ledger group.

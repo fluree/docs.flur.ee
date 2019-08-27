@@ -285,15 +285,109 @@ export const docNav095 = {
     }
 }
 
-export function getDocNav(version, docNav091, docNav095){
-    if(version === "0.9.1"){
+export const languageMap = {
+    "0.9.1": ["flureeql", "graphql", "curl"],
+    "0.9.5": ["flureeql", "graphql", "curl", "sparql"],
+    "0.9.6": ["flureeql", "graphql", "curl", "sparql"]
+}
+
+function transformations095(nav) {
+    nav["getting-started"] = {
+        "subTopics": {
+            "intro": {
+                "headerName": "Intro",
+                "file": "0.9.5/docs/start/intro"
+            },
+            "installation": {
+                "headerName": "Installation",
+                "file": "0.9.6/docs/start/installation"
+            },
+            "user-interface": {
+                "headerName": "User Interface",
+                "file": "0.9.5/docs/start/ui"
+            },
+            "basic-schema": {
+                "headerName": "Basic Schema",
+                "file": "0.9.5/docs/start/basic-schema"
+            }
+        },
+        "pageName": "Getting Started"
+    }
+
+
+    nav["smart-functions"] = {
+        "pageName": "Smart Functions",
+        "subTopics": {
+            "smart-functions": {
+                "headerName": "Intro",
+                "file": "0.9.6/docs/smart-functions/intro"
+            },
+            "predicate-spec": {
+                "headerName": "Predicate Spec",
+                "file": "0.9.5/docs/smart-functions/predicate-spec"
+            },
+            "collection-spec": {
+                "headerName": "Collection Spec",
+                "file": "0.9.6/docs/smart-functions/collection-spec"
+            },
+            "predicate-tx-spec": {
+                "headerName": "Predicate Tx Spec",
+                "file": "0.9.5/docs/smart-functions/predicate-tx-spec"
+            },
+            "rules": {
+                "headerName": "Rules and Rule Functions",
+                "file": "0.9.5/docs/smart-functions/rules"
+            },
+            "rule-example": {
+                "headerName": "Rule Example",
+                "file": "0.9.6/docs/smart-functions/rule-example"
+            },
+            "fns-in-txs": {
+                "headerName": "In Transactions",
+                "file": "0.9.5/docs/smart-functions/fns-in-txs"
+            }
+        }
+    }
+
+
+    nav["examples"] = {
+        "pageName": "Examples",
+        "subTopics": {
+            "cryptocurrency": {
+                "headerName": "Cryptocurrency",
+                "file": "0.9.6/docs/examples/cryptocurrency"
+            },
+            "voting": {
+                "headerName": "Voting",
+                "file": "0.9.6/docs/examples/voting"
+            },
+            "supply-chain": {
+                "headerName": "Supply Chain",
+                "file": "0.9.6/docs/examples/supply-chain"
+            },
+        }
+    }
+
+    return nav
+}
+
+function transformations096(nav) {
+    return nav
+}
+
+export function getDocNav(version) {
+    if (version === "0.9.1") {
         return docNav091
-    } else if (version === "0.9.5"){
+    } else if (version === "0.9.5") {
         return docNav095
-    } else if (version === "0.9.6"){
-        docNav095["getting-started"]["subTopics"]["installation"]["file"] = "0.9.6/docs/start/installation"
-        docNav095["smart-functions"]["subTopics"]["smart-functions"]["file"] = "0.9.6/docs/smart-functions/intro"
-        docNav095["smart-functions"]["subTopics"]["collection-spect"]["file"] = "0.9.6/docs/smart-functions/intro"
-        return docNav095;
+    } else if (version === "0.9.6") {
+        let copy095 = Object.assign({}, docNav095)
+        let docNav096 = transformations095(copy095);
+        return docNav096;
+    } else if (version === "0.9.7") {
+        let copy095 = Object.assign({}, docNav095)
+        let docNav096 = transformations095(copy095);
+        let docNav097 = transformations096(docNav096);
+        return docNav097;
     }
 }

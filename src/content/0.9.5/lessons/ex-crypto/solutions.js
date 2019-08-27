@@ -47,7 +47,7 @@ export default {
     "1. A. Only the user",
     "2. D. Anyone. You'll see why we make this choice",
     "3. C. No one."],
-    "5": "(contains? (get-all (?e) [\"wallet/user\" \"_id\"]) (?user_id))",
+    "5": "(contains? (get-all (?s \"[{wallet/user [{_user/auth [_id]}] }]\") [\"wallet/user\" \"_user/auth\" \"_id\"]) (?auth_id))",
     "6": [{
         "_id": "_rule$editAnyCryptoBalance",
         "id": "editAnyCryptoBalance",
@@ -98,11 +98,11 @@ export default {
         }],
     "8": ["There are several ways. Here are two", 
             "(>= (?o) 0)",
-            "(> (?o) -1"],
+            "(> (?o) -1)"],
     "9": [{
         "_id": "_fn$subtractOwnAddOthers?",
         "name": "subtractOwnAddOthers?",
-        "code": "(if-else (ownWallet?)  (> (?pV) (?v)) (< (?pV) (?v))))",
+        "code": "(if-else (ownWallet?)  (> (?pO) (?o)) (< (?pO) (?o))))",
         "doc": "You can only add to others balances, and only subtract from your own balance"
     },
     {

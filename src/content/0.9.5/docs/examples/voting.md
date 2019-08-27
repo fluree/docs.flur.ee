@@ -283,7 +283,7 @@ FlureeQL:
 {
     "_id": "_fn$editOwnUser",
     "name": "editOwnUser",
-    "code": "(contains? (get-all (query (str \"{\\\"select\\\": [{\\\"_user/_auth\\\": [\\\"_id\\\"]}], \\\"from\\\": \" (?auth_id) \"}\")) [\"_user/_auth\" \"_id\"]) (?sid))"
+    "code": "(contains? (get-all (query  \"[{_user/_auth [*]}]\" (?auth_id) nil nil nil) [\"_user/_auth\" \"_id\"]) (?sid))"
 }]
 ```
 
@@ -335,6 +335,9 @@ We can also use a tool in the user interface to sign transactions as a particula
 
 If using the user interface, you need to include the private key in the form. If you're not using the user interface, you will need to sign the following transaction with the private key. You will also need to specify softCell's auth in either the form or the [signed transaction](/docs/identity/signatures#signed-transactions).
 
+The private key for softCell is `4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4`
+and the `_auth/id` is `TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK`.
+
 A request to `/command` will return a `_tx/id`. The `_tx/id` is the unique SHA2-256 of the 'cmd' submitted to the `/command` endpoint. In order to see if the transaction went through successfully, you will need to query: 
 
 ```all
@@ -352,9 +355,6 @@ Soft Cell also adds their auth record to the `vote/yesVotes` predicate.
 
 FlureeQL:
 ```all
-Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
-Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
-
 [{
     "_id": "change",
     "name": "softCellNameChange",
@@ -380,7 +380,7 @@ We can see all the votes related to that subject with a single query.
 FlureeQL:
 ```all
 {
-    "select": {"?change": ["*", {"change/vote": ["*"]}]},
+    "select": [{"?change": ["*", {"change/vote": ["*"]}]}],
     "where": [["?change", "change/subject", "?subject"],
     ["?subject", "_user/username", "softCell"]]
 }
@@ -393,7 +393,7 @@ We want to make sure that we are only looking at votes for a given subject that 
 FlureeQL:
 ```all
 {
-    "select": {"?vote": ["*"]},
+    "select": [{"?vote": ["*"]}],
     "where": [["?change", "change/subject", "?subject"],
     ["?subject", "_user/username", "softCell"],
     ["?change", "change/predicate", "?predicate"],
@@ -405,7 +405,7 @@ FlureeQL:
 
 Sample result in FlureeQL:
 ```all
-[
+[[
   {
     "vote/name": "softCellNameVote",
     "vote/yesVotes": [
@@ -415,7 +415,7 @@ Sample result in FlureeQL:
     ],
     "_id": 351843720888321
   }
-]
+]]
 ```
 
 The first two functions we will create build and issue the above query. We will then use these functions to count votes, and eventually decide whether or not changes should be approved. 
@@ -446,26 +446,16 @@ FlureeQL:
 }]
 ```
 
-One of the most useful features of smart functions is that we can put them together. The second function we create issues a query using the `query` smart function. The `query` function takes a string of the query. 
+One of the most useful features of smart functions is that we can put them together. The second function we create issues a query using the `query` smart function. The arguments or parameters for the `query` function are: `select-string`, `from-string`, `where-string`, `block-string`, `limit-string`.
 
-The query in our smart function resolves to:
-
-```all
-{
-    "select": {"?vote": ["*"]},
-    "where": [["?change", "change/subject", (?sid)], 
-    ["?change", "change/predicate", (?pid)], 
-    ["?change", "change/object", (?o)], 
-    ["?change", "change/vote", "?vote"]]
-}
-```
+For `select-string`, we use `[{?vote [*]}]`. `from-string` is nil. For `where-string`, rather than composing the `where-string` from scratch, we can simply use `(voteWhere)`. `block-string` and `limit-string` are both set to nil.
 
 FlureeQL:
 ```all
 [{
         "_id": "_fn",
         "name": "vote",
-        "code": "(query (str \"{\\\"select\\\": {\\\"?vote\\\": [\\\"*\\\"] }, \\\"where\\\":\" (voteWhere) \"}\"))"
+        "code": "(query \"[{?vote [*]}]\" nil (voteWhere) nil nil)"
 }]
 ```
 
@@ -538,13 +528,10 @@ FlureeQL:
 
 ### Testing
 
-The only vote that we have so far is `softCell` voting for their own name change. That means that if we attempt to change Soft Cell's username, it should fail. We should sign this transaction as Soft Cell. 
+The only vote that we have so far is `softCell` voting for their own name change. That means that if we attempt to change Soft Cell's username, it should fail. We should sign this transaction as Soft Cell with the `_auth/id`, `TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK` and private key `4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4`. 
 
 FlureeQL:
 ```all
-Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
-Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
-
 [{
     "_id": ["_user/username", "softCell"],
     "username": "hardCell"
@@ -566,36 +553,29 @@ Response:
 
 We would need at least two more yes votes in order to successfully make this change. We can add two more votes for this name change.
 
+The first transaction should be issued with `_auth/id` `TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH` and private key, `46e37823bfe73ac2b5e440238cb2b65a1cb4115721f23202e543c454faab8449`.
+
 FlureeQL:
 ```all
-Private Key: 46e37823bfe73ac2b5e440238cb2b65a1cb4115721f23202e543c454faab8449
-Auth id: TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH
-
 [{
     "_id": ["vote/name", "softCellNameVote"],
     "yesVotes": [["_auth/id", "TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH"]]
 }]
 ```
 
-The second transaction should be signed as a different auth record.
+The second transaction should be issued with `_auth/id` `TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK` and private key, `afa6b042a342845c3bf4ea5fd2690d8548d5169fd18d18081ac8ac9093c2e43c`.
 
 FlureeQL:
 ```all
-Private Key: afa6b042a342845c3bf4ea5fd2690d8548d5169fd18d18081ac8ac9093c2e43c
-Auth id: TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK
-
 [{
     "_id": ["vote/name", "softCellNameVote"],
     "yesVotes": [["_auth/id", "TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK"]]
 }]
 ```
 
-After adding more votes, the following transaction will pass. We should sign this transaction as Soft Cell's auth record.
+After adding more votes, the following transaction will pass. We should sign this transaction as Soft Cell with the `_auth/id`, `TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK` and private key `4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4`. 
 
 ```all
-Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
-Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
-
 [{
     "_id": ["_user/username", "softCell"], 
     "username": "hardCell" 
