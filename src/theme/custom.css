@@ -29,6 +29,7 @@
 }
 
 .docs-section table {
+    width: 100%;
   margin: 30px;
   table-layout: fixed;
 }
