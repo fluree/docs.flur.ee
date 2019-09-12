@@ -9,7 +9,7 @@ Download and unzip: [latest version of Fluree](https://s3.amazonaws.com/fluree-r
 The contents of the folder are as follows:
 
 ```all
-flureeDB-0.9.5/
+flureeDB-0.10.0/
 ├── fluree_sample_.properties
 ├── VERSION
 ├── fluree_start.sh
@@ -58,7 +58,7 @@ To restart Fluree, navigate to the folder that contains your Fluree instance and
 After Fluree successfully starts for the first time, if you are using the default `fdb-storage-type` set to `file`, there will be additional items in your Fluree instance folder. Your folder will look something like the below: 
 
 ```all
-flureeDB-0.9.5/
+flureeDB-0.10.0/
 ├── data/
 │   ├── TRANSACTORNAME/
 │   │   ├── raft
@@ -195,7 +195,7 @@ There is a built-in user interface that can be accessed at `localhost:[port]/`. 
 
 For help using the user interface, read the [Navigating the User Interface](/docs/user-interface) section.
 
-Note that as of version 0.9.5, downloadable Fluree databases do not have a username and password. If you are using an older version of Fluree, you can log into the Master database with username, `master` and password, `fluree` or into the Test database with username, `test`, and password, `fluree`.
+Note that as of version 0.10.0 (formerly 0.9.5), downloadable Fluree databases do not have a username and password. If you are using an older version of Fluree, you can log into the Master database with username, `master` and password, `fluree` or into the Test database with username, `test`, and password, `fluree`.
 
 ### Fluree with Docker
 

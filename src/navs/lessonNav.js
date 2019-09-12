@@ -5,7 +5,7 @@ const staticLessonNav095 = {
         "class": "beginner",
         "title": "Basics: Querying #1",
         "description": "Learn the basics of querying in FlureeQL.",
-        "location": "0.9.5/lessons/bg-query"
+        "location": "0.10.0/lessons/bg-query"
     },
     "bg-query2": {
         "numLessons": 6,
@@ -13,7 +13,7 @@ const staticLessonNav095 = {
         "class": "beginner",
         "title": "Basics: Querying #2",
         "description": "Learn the basics of querying in FlureeQL.",
-        "location": "0.9.5/lessons/bg-query2"
+        "location": "0.10.0/lessons/bg-query2"
     },
     "bg-schema": {
         "numLessons": 7,
@@ -21,7 +21,7 @@ const staticLessonNav095 = {
         "class": "beginner",
         "title": "Basics: Schema",
         "description": "Create your own collections and predicates with FlureeQL.",
-        "location": "0.9.5/lessons/bg-schema"
+        "location": "0.10.0/lessons/bg-schema"
     },
     "bg-transact": {
         "numLessons": 9,
@@ -29,7 +29,7 @@ const staticLessonNav095 = {
         "class": "beginner",
         "title": "Basics: Transacting",
         "description": "Add, update, and delete data with FlureeQL.",
-        "location": "0.9.5/lessons/bg-transact"
+        "location": "0.10.0/lessons/bg-transact"
     },
     "bg-api": {
         "numLessons": 6,
@@ -37,7 +37,7 @@ const staticLessonNav095 = {
         "class": "beginner",
         "title": "Basics: API",
         "description": "Make requests to API endpoints in Fluree.",
-        "location": "0.9.5/lessons/bg-api"
+        "location": "0.10.0/lessons/bg-api"
     },
     "bg-infra": {
         "numLessons": 7,
@@ -45,7 +45,7 @@ const staticLessonNav095 = {
         "class": "beginner",
         "title": "Basics: Infrastructure",
         "description": "Understand flakes, triples, and general Fluree infrastructure.",
-        "location": "0.9.5/lessons/bg-infra"
+        "location": "0.10.0/lessons/bg-infra"
     },
     "im-query": {
         "numLessons": 10,
@@ -53,7 +53,7 @@ const staticLessonNav095 = {
         "class": "intermediate",
         "title": "Intermediate: Query",
         "description": "Block, history, and analytical queries using FlureeQL.",
-        "location": "0.9.5/lessons/im-query"
+        "location": "0.10.0/lessons/im-query"
     },
     "im-smart-functions": {
         "numLessons": 11,
@@ -61,7 +61,7 @@ const staticLessonNav095 = {
         "class": "intermediate",
         "title": "Intermediate: Smart Functions",
         "description": "Learn how smart functions work and create basic ones.",
-        "location": "0.9.5/lessons/im-smart-functions"
+        "location": "0.10.0/lessons/im-smart-functions"
     },
     "im-permissions": {
         "numLessons": 5,
@@ -69,7 +69,7 @@ const staticLessonNav095 = {
         "class": "intermediate",
         "title": "Intermediate: Permissions",
         "description": "Learn how rules and permissions work in Fluree.",
-        "location": "0.9.5/lessons/im-permissions"
+        "location": "0.10.0/lessons/im-permissions"
     },
     "im-cryptography": {
         "numLessons": 5,
@@ -77,7 +77,7 @@ const staticLessonNav095 = {
         "class": "intermediate",
         "title": "Intermediate: Cryptography",
         "description": "Learn about the cryptography behind Fluree.",
-        "location": "0.9.5/lessons/im-cryptography"
+        "location": "0.10.0/lessons/im-cryptography"
     },
     "supp-graphql": {
         "numLessons": 11,
@@ -85,7 +85,7 @@ const staticLessonNav095 = {
         "class": "example",
         "title": "Supplementary: GraphQL",
         "description": "Query and transact in GraphQL.",
-        "location": "0.9.5/lessons/supp-graphql"
+        "location": "0.10.0/lessons/supp-graphql"
     },
     "supp-sparql": {
         "numLessons": 10,
@@ -93,7 +93,7 @@ const staticLessonNav095 = {
         "class": "example",
         "title": "Supplementary: SPARQL",
         "description": "Query in SPARQL.",
-        "location": "0.9.5/lessons/supp-sparql"
+        "location": "0.10.0/lessons/supp-sparql"
     },
     "ex-crypto": {
         "numLessons": 11,
@@ -101,7 +101,7 @@ const staticLessonNav095 = {
         "class": "example",
         "title": "Example: Cryptocurrency",
         "description": "Build your own (simple) cryptocurrency.",
-        "location": "0.9.5/lessons/ex-crypto"
+        "location": "0.10.0/lessons/ex-crypto"
     },
     "ex-voting": {
         "numLessons": 15,
@@ -109,7 +109,7 @@ const staticLessonNav095 = {
         "class": "example",
         "title": "Example: Voting",
         "description": "Build your own voting mechanism.",
-        "location": "0.9.5/lessons/ex-voting"
+        "location": "0.10.0/lessons/ex-voting"
     }
 }
 
@@ -152,7 +152,7 @@ export function getLessonNav(version) {
 
     if (version === "0.9.1") {
         return null
-    } else if (version === "0.9.5") {
+    } else if (version === "0.10.0") {
         return staticLessonNav095
 
     } else if (version === "0.9.6") {

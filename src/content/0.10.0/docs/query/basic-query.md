@@ -15,7 +15,7 @@ Key | Required? | Description
 `block` | no | Optional time-travel query specified by block number, duration, or wall-clock time as an ISO-8601 formatted string.
 `component` | no | Optional boolean, which specifies whether or not to automatically crawl the graph and retrieve component entities. Default: true. 
 `offset`| no | Optional limit (integer) of results to exclude (i.e for pagination).
-
+`orderBy` | no | Optional variable (string) or two-tuple where the first element is "ASC" or "DESC" and the second element is the variable name. For example, `"name"` or `["ASC", "name"]`
 
 ### Select From Collection
 
