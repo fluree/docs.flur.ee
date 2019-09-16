@@ -13,6 +13,7 @@ import "./theme/bootstrap.css";
 import "./theme/custom.css";
 import "../node_modules/video-react/dist/video-react.css"; 
 
+import { versions} from './components/Header';
 export const currentVersion = "0.10.0"
 
 class Wrapper extends React.Component {
@@ -23,8 +24,11 @@ class Wrapper extends React.Component {
 
     componentDidMount(){
         let version = localStorage.getItem("fluree.doc.version");
-        version = version ? version : currentVersion;
-        this.setState({version: version})
+        let newVersion = ( version && versions.includes(version)) ? version : currentVersion;
+        if(version !== newVersion){
+            localStorage.setItem("fluree.doc.version", newVersion)
+        }
+        this.setState({version: newVersion})
     }
 
     changeVersion= (version) => {

@@ -178,11 +178,11 @@ export function getVideoNav(version) {
         return null
     } else if (version === "0.10.0") {
         return videoNav095
-    } else if (version === "0.9.6") {
+    } else if (version === "0.11.0") {
         let copy095 = Object.assign({}, videoNav095)
         let videoNav096 = transformations095(copy095);
         return videoNav096;
-    } else if (version === "0.9.7") {
+    } else if (version === "0.12.0") {
         let copy095 = Object.assign({}, videoNav095)
         let videoNav096 = transformations095(copy095);
         let videoNav097 = transformations096(videoNav096);

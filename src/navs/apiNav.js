@@ -58,18 +58,18 @@ export const endpointMap = {
     "0.9.6": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with"] 
 }
 
-function transformations095(nav){
+function transformations0100(nav){
 
     nav["downloaded-endpoints"] = {
         "pageName": "Downloaded Endpoints",
         "subTopics": {
             "overview": {
                 "headerName": "Overview",
-                "file": "0.9.6/api/downloaded-endpoints/downloaded-overview"
+                "file": "0.11.0/api/downloaded-endpoints/downloaded-overview"
             },
             "downloaded-examples": {
                 "headerName": "Examples",
-                "file": "0.9.6/api/downloaded-endpoints/downloaded-examples"
+                "file": "0.11.0/api/downloaded-endpoints/downloaded-examples"
             }
         }
     }
@@ -79,7 +79,7 @@ function transformations095(nav){
         "subTopics": {
             "overview": {
                 "headerName": "Overview",
-                "file": "0.9.6/api/hosted-endpoints/hosted-overview"
+                "file": "0.11.0/api/hosted-endpoints/hosted-overview"
             }
         }
     }
@@ -87,7 +87,7 @@ function transformations095(nav){
     return nav
 }
 
-function transformations096(nav){
+function transformations0110(nav){
     return nav
 }
 
@@ -96,14 +96,14 @@ export function getAPINav(version){
         return apiNav091
     } else if (version === "0.10.0"){
         return apiNav095
-    } else if (version === "0.9.6"){
+    } else if (version === "0.11.0"){
         let copy095 = Object.assign({}, apiNav095)
-        let apiNav096 = transformations095(copy095);
+        let apiNav096 = transformations0100(copy095);
         return apiNav096;
-    } else if (version === "0.9.7"){
+    } else if (version === "0.12.0"){
         let copy095 = Object.assign({}, apiNav095)
-        let apiNav096 = transformations095(copy095);
-        let apiNav097 = transformations096(apiNav096);
+        let apiNav096 = transformations0100(copy095);
+        let apiNav097 = transformations0110(apiNav096);
         return apiNav097;
     }
 }

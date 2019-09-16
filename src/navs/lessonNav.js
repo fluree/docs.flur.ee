@@ -121,7 +121,7 @@ function transformations095(nav) {
         "class": "intermediate",
         "title": "Intermediate: Smart Functions",
         "description": "Learn how smart functions work and create basic ones.",
-        "location": "0.9.6/lessons/im-smart-functions"
+        "location": "0.11.0/lessons/im-smart-functions"
     }
 
     nav["ex-crypto"] = {
@@ -130,7 +130,7 @@ function transformations095(nav) {
         "class": "example",
         "title": "Example: Cryptocurrency",
         "description": "Build your own (simple) cryptocurrency.",
-        "location": "0.9.6/lessons/ex-crypto"
+        "location": "0.11.0/lessons/ex-crypto"
     }
 
     nav["ex-voting"] = {
@@ -139,7 +139,7 @@ function transformations095(nav) {
         "class": "example",
         "title": "Example: Voting",
         "description": "Build your own voting mechanism.",
-        "location": "0.9.6/lessons/ex-voting"
+        "location": "0.11.0/lessons/ex-voting"
     }
     return nav
 }
@@ -155,13 +155,13 @@ export function getLessonNav(version) {
     } else if (version === "0.10.0") {
         return staticLessonNav095
 
-    } else if (version === "0.9.6") {
+    } else if (version === "0.11.0") {
 
         let lessonNav095 = Object.assign({}, staticLessonNav095)
         let lessonNav096 = transformations095(lessonNav095);
         return lessonNav096;
 
-    } else if (version === "0.9.7") {
+    } else if (version === "0.12.0") {
         let lessonNav095 = Object.assign({}, staticLessonNav095)
         let lessonNav096 = transformations095(lessonNav095);
         let lessonNav097 = transformations096(lessonNav096);

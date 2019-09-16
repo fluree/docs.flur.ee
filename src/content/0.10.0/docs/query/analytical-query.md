@@ -450,13 +450,13 @@ We can also use Wikidata to retrieve the narrative locations of users' favorite 
 
 ```flureeql
 {
-"select": ["?handle", "?title", "?narrative_location"],
-"where": [ ["?user", "user/favMovies", "?movie"],
+"select": ["?handle", "?title", "?narrative_locationLabel"],
+"where": [ ["?user", "person/favMovies", "?movie"],
 ["?movie", "movie/title", "?title"],
 ["$wd", "?wdMovie", "?label", "?title"],
 ["$wd", "?wdMovie", "wdt:P840", "?narrative_location"],
 ["$wd", "?wdMovie", "wdt:P31", "wd:Q11424"],
-["?user", "user/handle", "?handle"]]
+["?user", "person/handle", "?handle"]]
 }
 ```
 
@@ -465,13 +465,13 @@ We can also use Wikidata to retrieve the narrative locations of users' favorite 
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
-"select": ["?handle", "?title", "?narrative_location"],
-"where": [ ["?user", "user/favMovies", "?movie"],
+"select": ["?handle", "?title", "?narrative_locationLabel"],
+"where": [ ["?user", "person/favMovies", "?movie"],
 ["?movie", "movie/title", "?title"],
 ["$wd", "?wdMovie", "?label", "?title"],
 ["$wd", "?wdMovie", "wdt:P840", "?narrative_location"],
 ["$wd", "?wdMovie", "wdt:P31", "wd:Q11424"],
-["?user", "user/handle", "?handle"]]
+["?user", "person/handle", "?handle"]]
 }' \
    [HOST]/api/db/query
 ```
@@ -481,14 +481,14 @@ Not supported
 ```
 
 ```sparql
-SELECT ?handle ?title ?narrative_location
+SELECT ?handle ?title ?narrative_locationLabel
 WHERE {
-  ?user     fdb:user/favMovies    ?movie.
+  ?user     fdb:person/favMovies    ?movie.
   ?movie    fdb:movie/title       ?title.
   ?wdMovie  wd:?label             ?title;
             wd:P840               ?narrative_location;
             wdt:P31               wd:Q11424.
-  ?user     fdb:user/handle       ?handle.
+  ?user     fdb:person/handle       ?handle.
 }
 ```
 
