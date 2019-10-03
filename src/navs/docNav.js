@@ -288,7 +288,7 @@ export const docNav095 = {
 export const languageMap = {
     "0.9.1": ["flureeql", "graphql", "curl"],
     "0.10.0": ["flureeql", "graphql", "curl", "sparql"],
-    "0.9.6": ["flureeql", "graphql", "curl", "sparql"]
+    "0.11.0": ["flureeql", "graphql", "curl", "sparql"]
 }
 
 function transformations095(nav) {
@@ -300,7 +300,7 @@ function transformations095(nav) {
             },
             "installation": {
                 "headerName": "Installation",
-                "file": "0.9.6/docs/start/installation"
+                "file": "0.11.0/docs/start/installation"
             },
             "user-interface": {
                 "headerName": "User Interface",
@@ -314,13 +314,47 @@ function transformations095(nav) {
         "pageName": "Getting Started"
     }
 
+    nav["query"] = {
+        "pageName": "Query",
+        "subTopics": {
+            "overview": {
+                "headerName": "Basic Query",
+                "file": "0.11.0/docs/query/basic-query"
+            },
+            "block-query": {
+                "headerName": "Block Query",
+                "file": "0.10.0/docs/query/block-query"
+            },
+            "history-query": {
+                "headerName": "History Query",
+                "file": "0.10.0/docs/query/history-query"
+            },
+            "advanced-query": {
+                "headerName": "Advanced Query",
+                "file": "0.11.0/docs/query/advanced-query"
+            },
+            "analytical-query": {
+                "headerName": "Analytical Query",
+                "file": "0.10.0/docs/query/analytical-query"
+            },
+            "sparql": {
+                "headerName": "SPARQL",
+                "file": "0.10.0/docs/query/sparql"
+            },
+            "graphql": {
+                "headerName": "GraphQL",
+                "file": "0.11.0/docs/query/graphql"
+            }
+        }
+
+    }
 
     nav["smart-functions"] = {
         "pageName": "Smart Functions",
         "subTopics": {
             "smart-functions": {
                 "headerName": "Intro",
-                "file": "0.9.6/docs/smart-functions/intro"
+                "file": "0.11.0/docs/smart-functions/intro"
             },
             "predicate-spec": {
                 "headerName": "Predicate Spec",
@@ -328,7 +362,7 @@ function transformations095(nav) {
             },
             "collection-spec": {
                 "headerName": "Collection Spec",
-                "file": "0.9.6/docs/smart-functions/collection-spec"
+                "file": "0.11.0/docs/smart-functions/collection-spec"
             },
             "predicate-tx-spec": {
                 "headerName": "Predicate Tx Spec",
@@ -340,11 +374,29 @@ function transformations095(nav) {
             },
             "rule-example": {
                 "headerName": "Rule Example",
-                "file": "0.9.6/docs/smart-functions/rule-example"
+                "file": "0.11.0/docs/smart-functions/rule-example"
             },
             "fns-in-txs": {
                 "headerName": "In Transactions",
                 "file": "0.10.0/docs/smart-functions/fns-in-txs"
+            }
+        }
+    }
+
+    nav["identity"] = {
+        "pageName": "Identity",
+        "subTopics": {
+            "public-private-keys": {
+                "headerName": "Public and Private Keys",
+                "file": "0.10.0/docs/identity/public-private-keys"
+            },
+            "auth-records": {
+                "headerName": "Auth Records",
+                "file": "0.10.0/docs/identity/auth-records"
+            },
+            "signatures": {
+                "headerName": "Signatures",
+                "file": "0.11.0/docs/identity/signatures"
             }
         }
     }
@@ -355,15 +407,15 @@ function transformations095(nav) {
         "subTopics": {
             "cryptocurrency": {
                 "headerName": "Cryptocurrency",
-                "file": "0.9.6/docs/examples/cryptocurrency"
+                "file": "0.11.0/docs/examples/cryptocurrency"
             },
             "voting": {
                 "headerName": "Voting",
-                "file": "0.9.6/docs/examples/voting"
+                "file": "0.11.0/docs/examples/voting"
             },
             "supply-chain": {
                 "headerName": "Supply Chain",
-                "file": "0.9.6/docs/examples/supply-chain"
+                "file": "0.11.0/docs/examples/supply-chain"
             },
         }
     }
@@ -380,11 +432,11 @@ export function getDocNav(version) {
         return docNav091
     } else if (version === "0.10.0") {
         return docNav095
-    } else if (version === "0.9.6") {
+    } else if (version === "0.11.0") {
         let copy095 = Object.assign({}, docNav095)
         let docNav096 = transformations095(copy095);
         return docNav096;
-    } else if (version === "0.9.7") {
+    } else if (version === "0.12.0") {
         let copy095 = Object.assign({}, docNav095)
         let docNav096 = transformations095(copy095);
         let docNav097 = transformations096(docNav096);

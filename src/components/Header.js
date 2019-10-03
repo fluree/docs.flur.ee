@@ -3,7 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Col, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 import { getDocNav } from '../navs/docNav';
 
-const versions = ["0.10.0", "0.9.1"]
+export const versions = [ "0.10.0", "0.9.1"]
 
 const NavItems = (props) => {
     let docNav = getDocNav(props.version)

@@ -76,7 +76,7 @@ Function | Arguments | Example | Description | Cost (in fuel)
 `valid-email?` | `x` | `(valid-email? (?o))` | Checks whether a value is a valid email using the following pattern, `[a-z0-9!#$%&'*+/=?^_{\|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_{\|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`. | 10
 `re-find` | `pattern` `string` | `(re-find "^[a-zA-Z0-9_][a-zA-Z0-9\.\-_]{0,254}" \"apples1\")` | Checks whether a string follows a given regex pattern. | 10 
 `db` | none | `(== (get db \"dbid\") 2)` | Returns a database object with the following keys: dbid, block, and permissions. | 10
-`query` | `select-string`, `from-string`, `where-string`, `block-string` `limit-string` |  `(get (query \"[*]\" [\"book/editor\" \"Penguin\"] nil nil nil) \"book/year\")` | Allows you to query the current database. The select-string should be inputted without any commas. The select-string and can be inputted without any quotation marks, for example, `"[* {person/user [*]}]"`, or you can optionally doubly-escape those strings `"[\\\"*\\\" {\\\"person/user\\\" [\\\"*\\\"]}]"`. (This format is deprecated as of `0.9.6`.)| Fuel required for the query.  
+`query` | `select-string`, `from-string`, `where-string`, `block-string` `limit-string` |  `(get (query \"[*]\" [\"book/editor\" \"Penguin\"] nil nil nil) \"book/year\")` | Allows you to query the current database. The select-string should be inputted without any commas. The select-string and can be inputted without any quotation marks, for example, `"[* {person/user [*]}]"`, or you can optionally doubly-escape those strings `"[\\\"*\\\" {\\\"person/user\\\" [\\\"*\\\"]}]"`. | Fuel required for the query.  
 
 Database function can also be combined, for instance `(inc (max 1.5 2 3))` will return 4. 
 
@@ -161,9 +161,9 @@ Some available functions are only available in certain contexts. For example, `?
 
 Fn | Args | Example | Available In | Usage | Fuel
 -- | -- | ------- | -- | -- | --  
-`?s` | `string`* | `(== (get (?s) \"person/handle\") \"jdoe\")` | `_predicate/spec`, `_collection/spec`, `_rule/fns` | Allows you to access all the predicates of the subject that the spec is being applied to.  (This smart function is no longer in use as of `0.9.6`.) | 10 plus cost of lookup
+`?s` | `string`* | `(== (get (?s) \"person/handle\") \"jdoe\")` | `_predicate/spec`, `_collection/spec`, `_rule/fns` | Allows you to access all the predicates of the subject that the spec is being applied to.  | 10 plus cost of lookup
 `?sid` | None | `(== (?auth_id) (?sid))` | `_predicate/spec`, `_collection/spec`, `_rule/fns` | The `_id` of the subject that the spec is being applied to | 10
-`?p` | `string`** | `(== (get (?p) \"_predicate/name") \"person/fullName\")` | `_predicate/spec`, `_predicate/txSpec`, `transaction` | Allows you to access all the predicates of the predicate that the spec is being applied to. (This smart function is no longer in use as of `0.9.6`.) | 10 plus cost of fuel
+`?p` | `string`** | `(== (get (?p) \"_predicate/name") \"person/fullName\")` | `_predicate/spec`, `_predicate/txSpec`, `transaction` | Allows you to access all the predicates of the predicate that the spec is being applied to. | 10 plus cost of fuel
 `?pid` | None | `(?pid)` | `_predicate/spec`, `_predicate/txSpec`, transaction | `_id` of the predicate that the spec is being applied to | 10
 `?o` <img width=40/>| None | `(< 1000 (?o))` <img width=150/> | `_predicate/spec` | The proposed object of the predicate that the user is attempting to add or update. | 10
 `?pO` |  None | `(< (?pO) (?o))` | `_predicate/spec` | The object of the predicate that the user is attempting to add or update, as of the block before the proposed transaction | 10 plus cost of object-lookup 
