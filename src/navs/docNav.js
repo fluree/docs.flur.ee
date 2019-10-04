@@ -335,7 +335,7 @@ function transformations095(nav) {
             },
             "analytical-query": {
                 "headerName": "Analytical Query",
-                "file": "0.10.0/docs/query/analytical-query"
+                "file": "0.11.0/docs/query/analytical-query"
             },
             "sparql": {
                 "headerName": "SPARQL",

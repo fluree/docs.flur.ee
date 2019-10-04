@@ -13,8 +13,8 @@ import "./theme/bootstrap.css";
 import "./theme/custom.css";
 import "../node_modules/video-react/dist/video-react.css"; 
 
-import { versions} from './components/Header';
-export const currentVersion = "0.10.0"
+export const versions = ["0.11.0", "0.10.0", "0.9.5"]
+export const currentVersion = "0.11.0"
 
 class Wrapper extends React.Component {
 
