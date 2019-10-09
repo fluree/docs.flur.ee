@@ -26,7 +26,7 @@ Collection | Description
 
 Predicate | Type | Description
 ---|---|---
-`_collection/name` | `string` | (required) The name of the collection. Collection names are aliases to an underlying collection integer identifier, and therefore it is possible to change collection alias to a different collection ID.
+`_collection/name` | `string` | (required) The name of the collection. Collection names are aliases to an underlying collection integer identifier, and therefore it is possible to change collection alias to a different collection ID. Note that if you intend to use GraphQL tools, predicate names must conform to `/[_A-Za-z][_0-9A-Za-z]*/`. If you do not conform to this standard, queries issued to the `/graphql` endpoint will still work, but many GraphQL tools will not.
 `_collection/doc` | `string` | (optional) Optional docstring describing this collection.
 `_collection/spec` | [`ref`] | (optional) A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. These specs restricts what is allowed in this collection. To learn more, visit the [Collection and Predicate Specs](#collection-and-predicate-specs) section. 
 `_collection/specDoc` | `string` | (optional) Optional docstring to describe the specs. Is thrown when any spec fails. 
@@ -36,7 +36,7 @@ Predicate | Type | Description
 
 Predicate | Type | Description
 ---|---|---
-`_predicate/name` | `string` | (required) Actual predicate name. Must be namespaced, and convention is to namespace it using the collection name you intend it to be used within. Technically any predicate can be placed on any subject, but using a `spec` can restrict this behavior.
+`_predicate/name` | `string` | (required) Actual predicate name. Must be namespaced, and convention is to namespace it using the collection name you intend it to be used within. Technically any predicate can be placed on any subject, but using a `spec` can restrict this behavior. Note that if you intend to use GraphQL tools, predicate names must conform to `/[_A-Za-z][_0-9A-Za-z]*/`. If you do not conform to this standard, queries issued to the `/graphql` endpoint will still work, but many GraphQL tools will not.
 `_predicate/doc` | `string` | (optional) Doc string for this predicate describing its intention. This description is also used for GraphQL automated schema generation.
 `_predicate/type` | `tag` | (required) Data type of this predicate such as `string`, `integer`, or a reference (join) to another subject - `ref`. See table below for valid data types.
 `_predicate/unique` | `boolean` | (optional) True if this predicate acts as a primary key.  Unique predicates can be used for idsubject (as the `_id` value in a transaction or query).  (Default false.)
