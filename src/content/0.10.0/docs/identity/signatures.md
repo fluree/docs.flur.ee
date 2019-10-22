@@ -11,13 +11,15 @@ In the case of transactions, if you send a transaction to `/transact` or to `/gr
 
 If you do need to specify a signature, such as in the case of testing out user permissions, you can submit a [signed transaction](#signed-transactions) to the `/command` endpoint.  
 
-### NPM Package
+### Packages
 
-Fluree has published a Javascript library that contains helper functions to help users sign queries and transactions. This can be downloaded via npm, `npm install fluree-cryptography`. 
+Fluree has several published NPM and Clojars packages that provide helper functions for Fluree cryptography. 
 
-The documentation (available on <a href="https://github.com/fluree/cryptography" target="_blank">GitHub</a>), guides you through how to generate keys, sign queries, and sign transactions. 
+1. The <a href="https://github.com/fluree/fluree-cryptography" target="_blank">`fluree-cryptography`</a> library has a several wrapper functions that generate keys, sign transactions, and sign queries. This library is built on top of the fluree cryptography base library. This is available on NPM as `fluree-cryptography`.
 
-We recommend using the Javascript library or the [user interface](#user-interface) for ease of use, but you can read more about how to sign queries and transactions manually below. 
+2. The <a href="https://github.com/fluree/fluree-cryptography-base" target="_blank">`fluree-cryptography-base`</a> library has a collection of cryptographic hash, encryption, and other functions. This library was written in Clojurescript and compiled to Javascript. This is available on NPM as `fluree-cryptography-base`.
+
+3. The Clojurescript library, <a href="https://github.com/fluree/fluree.crypto" target="_blank">`fluree.crypto`</a> has all of our base cryptographic functions. You can download it on Clojars, or you can visit the library to see human-readable versions of our cryptographic functions. It is available on Clojars as `fluree.crypto`.
 
 ### User Interface
 
@@ -36,12 +38,18 @@ You should submit a POST request should have the following headers: `content-typ
 
 - `content-type`: `application/json`
 - `mydate`: An RFC 1123 formatted date, i.e. Mon, 11 Mar 2019 12:23:01 GMT
-- `digest`: The SHA256 hash of the stringified query body, formatted as follows: `SHA256={hashHere}`
+- `digest`: The SHA2-256 hash of the stringified query body in `base64` encoding, formatted as follows: `SHA-256={hashHere}`
 - `signature`: A string containing the algorithm and signature, including other information, formatted as follows: `keyId="na",headers="(request-target) host mydate digest",algorithm="ecdsa-sha256",signature="{sigHere}"`. 
 
 In order to get the actual signature (labelled `sig` above) that goes into the larger signature value, you need to first create a signing string. Formatted as follows: `(request-target): post {uri}\nhost: {host}\nmydate: {formattedDate}\ndigest: SHA-256={digest}`. 
 
-Then, you should get the SHA3-256 hash of that signing string, and sign it using Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the `secp256k1 curve`. The resulting signature is DER encoded and returned as a hex-string. In addition, after adding 27 to the recoveryByte, that number is converted into a hex string, and prepended to the rest of the signature. 
+The steps are as follows:
+
+1. Convert the signing string to a byte-array.
+2. Convert the private key to a big integer.
+3. Hash the result of step 1 with SHA2-256.
+4. Sign the hash using the private key using the `SECP256K1` curve (<a href="https://github.com/fluree/fluree.crypto/blob/master/src/fluree/crypto/secp256k1.cljc#L202" target="_blank">example code available on Github</a>).
+5. DER encode the results and return the signature using hex-encoding.
 
 #### Body
 
@@ -71,8 +79,8 @@ The `/command` endpoint takes a map with two keys:
 
 Key | Description
 --- | ---
-cmd | SHA3-256 hash of the stringified command map
-sig | ECDSA signature of the value of the cmd key. 
+cmd | Stringified command map
+sig | ECDSA signature of the cmd key. 
 
 When submitting a transaction, the command map of type `tx` (transaction) needs to have the following keys in the following order. Documentation on command of type `new-db` and `default-key` is forthcoming. 
 
@@ -90,11 +98,19 @@ expire | Epoch milliseconds after which point this transaction can no longer be 
 
 #### Sig
 
-In order to get the `sig`, you need to get the SHA3-256 hash of the stringified command. That hash is then signed using Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the `secp256k1 curve`. The resulting signature is DER encoded and returned as a hex-string. In addition, after adding 27 to the recoveryByte, that number is converted into a hex string, and prepended to the rest of the signature. 
+The steps to get a signature are as follows:
+
+1. Convert the stringified command to a byte-array.
+2. Convert the private key to a big integer.
+3. Hash the result of step 1 with SHA2-256.
+4. Sign the hash using the private key using the `SECP256K1` curve (<a href="https://github.com/fluree/fluree.crypto/blob/master/src/fluree/crypto/secp256k1.cljc#L202" target="_blank">example code available on Github</a>).
+5. DER encode the results and return the signature using hex-encoding.
 
 ### Verifying Signatures
 
-ECDSA allows for recovery of the public key from a signature, so the original transaction and signature are the only two things required in order to verify that a signature is valid. There are online tools that allow you to independently verify a signature based on the signature + original transaction. <a href="https://github.com/fluree/cryptography" target="_blank">Our cryptography GitHub repo</a> also has functions that allow you to verify any signatures.
+ECDSA allows for recovery of the public key from a signature, so the original transaction and signature are the only two things required in order to verify that a signature is valid. There are online tools that allow you to independently verify a signature based on the signature + original transaction. 
+
+Our `fluree-cryptography-base` and `fluree.crypto` libraries allow for you to check the signature.
 
 ### Examples
 

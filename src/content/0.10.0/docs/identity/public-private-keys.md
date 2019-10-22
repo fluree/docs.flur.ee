@@ -12,7 +12,9 @@ There are many ways to generate a public-private key/auth id triple:
 
 1. In the downloadable version of Fluree, you can run the following command to generate a public key, private key, and auth id. `./fluree_start.sh :keygen`
 2. In the user interface, in either the hosted or the downloadable version, you can go to Permissions and View Permissions by Auth. From there, you can click, "Generate Keys" to generate valid keys. You can also do so from FlureeQL -> Transact. 
-3. We provide Javascript functions to generate these triples in the <a href="https://github.com/fluree/cryptography" target="_blank">cryptography repo</a>.
+3. The <a href="https://github.com/fluree/fluree-cryptography" target="_blank">`fluree-cryptography`</a> library has a `generateKeyPair` function that will generate a `public` and `private` key pair. `getSinFromPublicKey` will return an account id given a public key. This library is available on <a href="https://www.npmjs.com/package/fluree-cryptography" target="_blank">npm</a>.
+4. The <a href="https://github.com/fluree/fluree-cryptography-base" target="_blank">`fluree-cryptography-base`</a> library has a `generate_key_pair` function that will generate a `public` and `private` key pair. `account_id_from_private` or `account_id_from_public` will return an account id given a private or public key, respectively. This library is available on <a href="https://www.npmjs.com/package/fluree-cryptography-base" target="_blank">npm</a>.
+5. The Clojurescript library, `fluree.crypto` has a function `generate-key-pair`, `account-id-from-private`, and `account-id-from-public` that return a public and private key, as well as an account id. This library is available on <a href="https://clojars.org/fluree.crypto" target="_blank">clojars</a>, and the code is on <a href="https://github.com/fluree/fluree.crypto" target="_blank">GitHub</a>.
 
 ### Intro to Public-Private Keys
 
@@ -37,7 +39,24 @@ Base58Check encoding is the same encoding used in Bitcoin, and was developed by 
 
 ### Auth Id
 
-Once you have a public-private key-pair, you can generate an auth id by hashing the public key with SHA3-256 and then RIPEMD-160. An auth record with this id needs to be in the database in order for a transaction signed with the corresponding private key to be valid.
+Once you have a public-private key-pair, you can generate an auth id using the following steps:
+
+You need to create two items, a `pub-prefixed` and a `checksum`.
+
+For the `pub-prefixed`:
+1. Convert the public key to bytes.
+2. Hash the result with SHA2-256.
+3. Hash the result with RIPEMD-160.
+4. Prefix the result with `[0x0F 0x02]`.
+
+For the `checksum`:
+1. Hash with `pub-prefixed` with SHA2-256.
+2. Hash the result with SHA2-256.
+3. Take the first 4 bytes of the result.
+
+To get the account id, concatenate the `pub-prefixed` with the `checksum`, and encode with `Base58Check` encoding. 
+
+An auth record with this id needs to be in the database in order for a transaction signed with the corresponding private key to be valid.
 
 ### Default Private Key
 
