@@ -5,7 +5,7 @@ All requests should be POST requests, and all requests, with the exception of re
 ### `/api/db/NETWORK/DB/query`
 All single queries in FlureeQL syntax that include a `select` key should be issued through the `/query` endpoint. 
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/db/NETWORK/DB/query
 Headers: {"Authorization": "Bearer [TOKEN]"}
@@ -16,7 +16,7 @@ Body: { "select": ["*"], "from": "_collection"}
 
 If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/docs/query/advanced-query#multiple-queries)), that should be done through the `/multi-query` endpoint. 
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/db/NETWORK/DB/multi-query
 Headers: {"Authorization": "Bearer [TOKEN]"}
@@ -28,7 +28,7 @@ Body: { "query1": { "select": ["*"], "from": "_collection"},
 
 FlureeQL [block queries](/docs/query/block-query) should be submitted to the `/block` endpoint. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries like those in the linked section - queries that are returning flakes from a block or set of blocks. 
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/db/NETWORK/DB/block
 Headers: {"Authorization": "Bearer [TOKEN]"}
@@ -39,7 +39,7 @@ Body: { "block": 5 }
 
 FlureeQL [history queries](/docs/query/history-query) should be submitted to the `/history` endpoint. This only includes queries like those in the linked section.
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/db/NETWORK/DB/history
 Headers: {"Authorization": "Bearer [TOKEN]"}
@@ -53,7 +53,7 @@ Body: {
 
 All transactions, except transaction issued through the GraphQL syntax, should be issued to the `/api/db/transact` endpoint.
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/db/NETWORK/DB/history
 Headers: {"Authorization": "Bearer [TOKEN]"}
@@ -69,7 +69,7 @@ All queries and transactions in GraphQL syntax should be issued through the `/ap
 
 An example of a GraphQL query:
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/db/NETWORK/DB/graphql
 Headers: {"Authorization": "Bearer [TOKEN]"}
@@ -87,7 +87,7 @@ Body: {"query": "{ graph {
 
 An example of a GraphQL transaction:
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/db/NETWORK/DB/graphql
 Headers: {"Authorization": "Bearer [TOKEN]"}
@@ -105,7 +105,7 @@ Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
 
 All queries in SPARQL syntax, regardless of type, should be issued through the `/api/db/sparql` endpoint. 
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/db/NETWORK/DB/sparql
 Headers: {"Authorization": "Bearer [TOKEN]"}
@@ -126,7 +126,7 @@ To see examples of sending a request to the `/command` endpoint, see [signed tra
 
 To view all the databases attached to a particular account, you can either send the following as a GET request or a POST request with an empty body. 
 
-```
+```all
 Action: POST or GET
 Endpoint: https://db.flur.ee/api/dbs
 Headers: {"Authorization": "Bearer [TOKEN]"}
@@ -137,7 +137,7 @@ Body: { }
 
 To create a new database, send the following request to `api/action`. Your `db/id` should begin with your account name and a forward slash, followed by a database name (any combination of letters and numbers).
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/action
 Headers: {"Authorization": "Bearer [TOKEN]"}
@@ -151,7 +151,7 @@ Body: ["new-db", {
 
 To create a new user, send the following request to `api/action`. 
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/action
 Headers: {"Authorization": "Bearer [TOKEN]"}
@@ -181,7 +181,7 @@ Key | Type | Description
 
 For example, to get the 25 most recent logs from `example.default`:
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/fdb/logs/example
 Headers: {"Authorization": "Bearer [MASTER TOKEN]"}
@@ -192,7 +192,7 @@ Body: ["logs",{"db":"example.default","limit": 25}]
 
 To view all the accounts associated with a particular username and password,you can send a POST request with the username and password and NO token:
 
-```
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/accounts
 Body: {
@@ -215,7 +215,8 @@ Key | Type | Description
 `user` | idsubject | The user idsubject you are logging in with. This can be the `_id` integer of the user record, or any idsubject value, such as `["_user/username", "my_username"]`.
 `password` | string | Your password
 `expireSeconds` | integer | How many seconds token is valid for. Must be between 1 and 2592000 (30 days).
-```
+
+```all
 Action: POST
 Endpoint: https://db.flur.ee/api/signin
 Body: {

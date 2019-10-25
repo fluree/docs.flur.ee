@@ -7,7 +7,7 @@ Returns a list of all ledgers in the transactor group.
 
 An example of an unsigned request to `/dbs`.
 
-```
+```all
 Action: POST or GET
 Endpoint: http://localhost:8080/fdb/dbs
 Headers: None
@@ -17,7 +17,7 @@ Body: Null
 ### /new-db
 Creates a new ledger given a "db/id". If the network specified does not exist, it creates a new network. This request returns a command id, the request does not wait to database to be fully initialized before returning.
 
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/new-db
 Headers: None
@@ -29,7 +29,7 @@ Body: {"db/id": "NETWORK/DBID"}
 All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/query` with the network, `dev` and the database `main`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/query
 Headers: None
@@ -37,7 +37,7 @@ Body: { "select": ["*"], "from": "_collection"}
 ```
 
 An example of a signed request to `/query`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/query
 Headers: {
@@ -53,7 +53,7 @@ Body: { "select": ["*"], "from": "_collection"}
 If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/docs/query/advanced-query#multiple-queries)), that should be done through the `/multi-query` endpoint. 
 
 An example of an unsigned request to `/multi-query`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/multi-query
 Headers: None
@@ -65,7 +65,7 @@ Body: { "query1": { "select": ["*"], "from": "_collection"},
 FlureeQL [block queries](/docs/query/block-query) should be submitted to the `/block` endpoint. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries like those in the linked section - queries that are returning flakes from a block or set of blocks. 
 
 An example of an unsigned request to `/block`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/block
 Headers: None
@@ -77,7 +77,7 @@ Body: { "block": 5 }
 FlureeQL [history queries](/docs/query/history-query) should be submitted to the `/history` endpoint. This only includes queries like those in the linked section.
 
 An example of an unsigned request to `/history`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/history
 Headers: None
@@ -95,7 +95,7 @@ If you do not have `fdb-open-api` set to true (it is true by default), then you 
 
 An example of an unsigned request to `/transact`:
 
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/transact
 Headers: None
@@ -110,7 +110,7 @@ Body: [{
 All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/graphql`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/graphql
 Headers: None
@@ -131,7 +131,7 @@ Body: {"query": "{ graph {
 All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your GraphQL transaction like a query ([signing queries](/docs/identity/signatures#signed-)).
 
 An example of an unsigned request to `/graphql`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/graphql
 Headers: None
@@ -150,7 +150,7 @@ Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
 All queries in SPARQL syntax, regardless of type, should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/sparql`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/sparql
 Headers: None
@@ -172,7 +172,7 @@ To see examples of sending a request to the `/command` endpoint, see [signed tra
 
 A GET request to `/fdb/health` returns whether the server is ready or not. You are not able to test this endpoint in the sidebar. These requests do not need to be signed. 
 
-```
+```all
 Action: GET
 Endpoint: http://localhost:8080/fdb/health
 ```
@@ -181,14 +181,14 @@ Endpoint: http://localhost:8080/fdb/health
 
 A GET request to `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]` returns all key-value pairs of a certain type. You are not able to test this endpoint in the sidebar. These requests do not need to be signed. 
 
-```
+```all
 Action: GET
 Endpoint: http://localhost:8080/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]
 ```
 
 A GET request to `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]` returns the value for the provided key.
 
-```
+```all
 Action: GET
 Endpoint: http://localhost:8080/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]
 ```
@@ -214,7 +214,7 @@ For example, `test/one` is the `one` database in the `one` network. If you speci
 These requests do not need to be signed. 
 
 An example of a request to `/new-db`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/new-db
 Body: {

@@ -12,6 +12,10 @@ If you are using the API, you can issue all these transactions to endpoints endi
 
 Make sure that you have a new database. You can either create a new database through the [user interface](/docs/getting-started/user-interface#account-page), through the API for the [downloadable version](/api/downlaoded-endpoints/downloaded-examples#-new-db), or through the API for the [hosted version](/api/hosted-endpoints/hosted-examples#-api-action-new-database). 
 
+A database name is comprised of a network name followed by the database name `network/db`. Both the network name and the database name must begin with a lowercase letter, and then can include as many `[a-z0-9-]` characters as needed. 
+
+The full regex for a network or database name is: `^[a-z][a-z0-9-]*$`. This ensures cross-platform file and URL-compatibility.
+
 ### Overview
 
 In Fluree, schema are comprised of collections and predicates. A [collection](/docs/schema/overview#collections) is analogous to a relational database table. Every time you want a new type of item in your database, you would create a new collection. For example, collections in your database might be person, company, and city. 

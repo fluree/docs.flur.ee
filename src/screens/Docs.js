@@ -120,6 +120,7 @@ class Docs extends React.Component {
             return response.text()
         })
         .then(text => {
+            const { type } = this.props;
             let markdown = marked(text)
             let markedHTML = document.createElement('div')
             markedHTML.innerHTML= markdown
@@ -130,8 +131,8 @@ class Docs extends React.Component {
             let language = this.state.language
             let html = this.loadLanguage(markedHTML, language)
             if(found){
-                nextTopic = getNextTopic(topic, subtopic, nav, "docs")
-                previousTopic = getPreviousTopic(topic, subtopic, nav, "docs")
+                nextTopic = getNextTopic(topic, subtopic, nav, type)
+                previousTopic = getPreviousTopic(topic, subtopic, nav, type)
             }
 
             const headers = []
