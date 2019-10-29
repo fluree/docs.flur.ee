@@ -35,8 +35,8 @@ Where clauses are a collection of five-tuples. Each tuple is comprised of a sour
 Value | Description
 -- | -- 
 `source` | Optional source. If no source included, assume current version database. See [Queries Across Sources](#queries-across-sources).
-`subject` | Reference to an subject. Can be an subject id, unique two-tuple, a variable (a string that begins with `?`), or null.
-`predicate` | Reference to an predicate. Can be either subject id, predicate name, or a variable (a string that begins with `?`).
+`subject` | Reference to a subject. Can be an subject id, unique two-tuple, a variable (a string that begins with `?`), or null.
+`predicate` | Reference to a predicate. Can be either subject id, predicate name, or a variable (a string that begins with `?`).
 `object` | Reference to an object. Can be a value, subject id, unique two-tuple, a variable (a string that begins with `?`), or null.
 `options` | Optional map with clause options, including filter. See [Supported Options](#supported-options).
 
