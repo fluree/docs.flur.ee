@@ -8,6 +8,8 @@ import { Search } from '../actions/Search';
 import Notifications, { notify } from 'react-notify-toast'
 import { getDocNav, languageMap } from '../navs/docNav';
 import { getAPINav, endpointMap } from '../navs/apiNav';
+import { getLibNav } from '../navs/libNav';
+
 import { parseJSON } from '../flureeFetch';
 import AceEditor from 'react-ace';
 import 'brace/mode/json';
@@ -48,7 +50,10 @@ class Docs extends React.Component {
             nav = getDocNav(this.props.version )
         } else if (this.props.type === "api"){
             nav = getAPINav(this.props.version )
+        } else if (this.props.type === "library") {
+            nav = getLibNav(this.props.version )
         }
+
         this.setState({languages: languages, nav: nav}, () => this.getTopicAndLoad())
     }
 
@@ -93,6 +98,8 @@ class Docs extends React.Component {
                 if(this.props.type === "docs") {
                     this.loadSection("getting-started", "intro", nav)
                 } else if (this.props.type === "api"){
+                    this.loadSection("intro", "intro", nav)
+                } else if (this.props.type === "library") {
                     this.loadSection("intro", "intro", nav)
                 }
             })
@@ -220,7 +227,7 @@ class Docs extends React.Component {
                             }
                     </div>
                 </div>
-                    <div className={ this.props.type === "docs" ?  "col-md-8 mb20" : "col-sm-6"} id="body-container">
+                <div className={ this.props.type === "docs" ?  "col-md-8 mb20" : "col-sm-6"} id="body-container">
                     { this.props.type === "docs" &&
                         <div className="row">
                             <div className="col-xs-6"/>
@@ -256,7 +263,7 @@ class Docs extends React.Component {
                                 }       
                             </div>
                         </div>
-                }
+                    }
                 </div>
                 { this.props.type === "api" &&
                       <div className="col-sm-3">
@@ -270,7 +277,7 @@ class Docs extends React.Component {
                         </div>
                     </div>
                 }
-                </div>
+            </div>
         )
     }
 }

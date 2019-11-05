@@ -13,8 +13,8 @@ import "./theme/bootstrap.css";
 import "./theme/custom.css";
 import "../node_modules/video-react/dist/video-react.css"; 
 
-export const versions = ["0.10.0", "0.9.1"]
-export const currentVersion = "0.10.0"
+export const versions = ["0.11.0", "0.10.0", "0.9.1"]
+export const currentVersion = "0.11.0"
 
 class Wrapper extends React.Component {
 
@@ -62,6 +62,9 @@ class Wrapper extends React.Component {
                             <Route path="/api/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
                             <Route path="/api/:topic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
                             <Route path="/api" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
+                            <Route path="/library/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="library"/>} />
+                            <Route path="/library/:topic" component={(props) => <Docs {...props} version={this.state.version} type="library"/>} />
+                            <Route path="/library" component={(props) => <Docs {...props} version={this.state.version} type="library"/>} />
                             <Route path="/help" component={Help} />
                             <Route path="/" component={(props) => <Landing {...props} version={this.state.version}/>}  />
                         </Switch>

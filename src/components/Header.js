@@ -32,6 +32,9 @@ const NavItems = (props) => {
             <LinkContainer to="/api" className="text-center" style={props.btnStyles}>
                <Button bsStyle={props.btnStyle}>API</Button>
             </LinkContainer>
+            <LinkContainer to="/library" className="text-center" style={props.btnStyles}>
+               <Button bsStyle={props.btnStyle}>Library</Button>
+            </LinkContainer>
             <LinkContainer to="/help" className="text-center" style={props.btnStyles}>
                 <Button bsStyle={props.btnStyle}>Help</Button>            
             </LinkContainer>
