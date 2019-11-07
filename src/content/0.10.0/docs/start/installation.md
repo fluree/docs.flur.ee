@@ -53,11 +53,7 @@ Creating a database and any other interaction with Fluree can happen either thro
 
 To exit Fluree, simply click `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory](#in-memory-fluree), this will not delete any of the information that was successfully added to your databases (in other words, if you received a 200 response from your transactions, that means it was added to your database). 
 
-<<<<<<< HEAD:src/content/docs/start/installation.md
 To restart Fluree, navigate to the folder that contains your Fluree instance and run `./fluree_start.sh`.
-=======
-To restart Fluree, navigate to the folder that contains your Fluree instance and run `./flureeDB_start.sh`.
->>>>>>> cljs:src/content/0.10.0/docs/start/installation.md
 
 After Fluree successfully starts for the first time, if you are using the default `fdb-storage-type` set to `file`, there will be additional items in your Fluree instance folder. Your folder will look something like the below: 
 
