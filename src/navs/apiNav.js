@@ -55,7 +55,7 @@ const apiNav095 = {
 export const endpointMap = {
     "0.9.1": [ "graphql", "query", "token", "transact"],
     "0.10.0": [ "block", "graphql", "history", "multi-query", "query", "signin", "sparql", "transact"],
-    "0.9.6": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with"] 
+    "0.11.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with"] 
 }
 
 function transformations0100(nav){

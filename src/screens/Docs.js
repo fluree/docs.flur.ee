@@ -297,7 +297,7 @@ class APITest extends React.Component {
     }
 
     componentDidMount(){
-        let endpoints = endpointMap[this.props.version];
+        let endpoints = endpointMap[this.props.version] || [];
         this.setState({ endpoints: endpoints })
     }
 
