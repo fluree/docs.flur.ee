@@ -155,7 +155,7 @@ Alternatively, if we want to specify every flake that contains favorite numbers,
 ```flureeql
 {
     "select": "?nums",
-    "where": [ ["$fdb", "?person, "person/favNums", "?nums"] ]
+    "where": [ ["$fdb", "?person", "person/favNums", "?nums"] ]
 }
 ```
 
@@ -317,7 +317,7 @@ If we want to see a sample of size, 10, from all the favorite numbers in the dat
 
 ```flureeql
 {
-  "selectOne": "(sample 10 ?nums)",
+  "select": "(sample 10 ?nums)",
   "where": [ [null, "person/favNums", "?nums"]] 
 }
 ```
@@ -326,7 +326,7 @@ If we want to see a sample of size, 10, from all the favorite numbers in the dat
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
-  "selectOne": "(sample 10 ?nums)",
+  "select": "(sample 10 ?nums)",
   "where": [ [null, "person/favNums", "?nums"]] 
 }' \
    [HOST]/api/db/query

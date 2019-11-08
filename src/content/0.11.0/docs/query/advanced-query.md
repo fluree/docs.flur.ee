@@ -227,7 +227,7 @@ You can also sort each comment by `comment/message`.
 
 ```all
 {
-    "select": ["handle", {"comment/_person": ["*", {"_as": "comment", "orderBy": "comment/message", "_limit": 1}]}], 
+    "select": ["handle", {"comment/_person": ["*", {"_as": "comment", "_orderBy": "comment/message", "_limit": 1}]}], 
     "from": "person"
 }
 ```
