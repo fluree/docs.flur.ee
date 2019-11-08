@@ -3,11 +3,12 @@
 In order to ensure speed of processing queries and transactions, different types of queries and transactions should be issued to different endpoints. All requests, unless otherwise specified, should be POST requests.
 
 ### /dbs
-Returns a list of all ledgers in the transactor group. 
+
+A POST request with an empty object or a GET request to `/fdb/dbs` returns all the dbs in the transactor group. These requests do not need to be signed.  
 
 An example of an unsigned request to `/dbs`.
 
-```
+```all
 Action: POST or GET
 Endpoint: http://localhost:8080/fdb/dbs
 Headers: None
@@ -15,11 +16,51 @@ Body: Null
 ```
 
 ### /new-db
-Creates a new ledger given a "db/id". If the network specified does not exist, it creates a new network. This request returns a command id, the request does not wait to database to be fully initialized before returning.
 
-```
+A database id must begin with a network name followed by a `/` and a dbid. Network names and dbids may only contain lowercase letters and numbers. In your request, you must specify `db/id`. 
+
+If the network specified does not exist, it creates a new network. This request returns a command id, the request does not wait to database to be fully initialized before returning.
+
+These requests do not need to be signed. 
+
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/new-db
+Headers: None
+Body: {"db/id": "test/one"}
+```
+
+You can also use the `/new-db` endpoint to create a database from an archive. See [archiving a database](/docs/database-setup/archiving-a-database) for more information.
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/new-db
+Body: {
+  "db/id": "test/one",
+  "archive": "fluree/demo/archive/1573233945064.avro"
+}
+```
+
+### /archive
+
+This creates a LOCAL archive of a particular ledger - it does not create archives on every transactor in the network. An archive file can be used to create a database from an archive (see [archiving](/docs/database-setup/archiving-a-database) and [new-db](#-new-db)).
+
+To create an archive, simply send an empty POST request to the `/archive` endpoint. The below example creates an archive of a database with network `dev` and ledger-id `main`.
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/archive
+Headers: None
+Body: Null
+```
+
+
+### /delete-db
+This deletes a ledger. Deleting a ledger means that a user will no longer be able to query or transact against that ledger, but currently the actual ledger files will not be deleted on disk. You can choose to delete those files yourself - or keep them. You will not be able to create a new ledger with the same name as the deleted ledger.
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/delete-db
 Headers: None
 Body: {"db/id": "NETWORK/DBID"}
 ```
@@ -29,7 +70,7 @@ Body: {"db/id": "NETWORK/DBID"}
 All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/query` with the network, `dev` and the database `main`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/query
 Headers: None
@@ -37,7 +78,7 @@ Body: { "select": ["*"], "from": "_collection"}
 ```
 
 An example of a signed request to `/query`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/query
 Headers: {
@@ -53,7 +94,7 @@ Body: { "select": ["*"], "from": "_collection"}
 If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/docs/query/advanced-query#multiple-queries)), that should be done through the `/multi-query` endpoint. 
 
 An example of an unsigned request to `/multi-query`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/multi-query
 Headers: None
@@ -65,7 +106,7 @@ Body: { "query1": { "select": ["*"], "from": "_collection"},
 FlureeQL [block queries](/docs/query/block-query) should be submitted to the `/block` endpoint. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries like those in the linked section - queries that are returning flakes from a block or set of blocks. 
 
 An example of an unsigned request to `/block`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/block
 Headers: None
@@ -77,7 +118,7 @@ Body: { "block": 5 }
 FlureeQL [history queries](/docs/query/history-query) should be submitted to the `/history` endpoint. This only includes queries like those in the linked section.
 
 An example of an unsigned request to `/history`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/history
 Headers: None
@@ -95,7 +136,7 @@ If you do not have `fdb-open-api` set to true (it is true by default), then you 
 
 An example of an unsigned request to `/transact`:
 
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/transact
 Headers: None
@@ -110,7 +151,7 @@ Body: [{
 All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/graphql`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/graphql
 Headers: None
@@ -131,7 +172,7 @@ Body: {"query": "{ graph {
 All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your GraphQL transaction like a query ([signing queries](/docs/identity/signatures#signed-)).
 
 An example of an unsigned request to `/graphql`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/graphql
 Headers: None
@@ -150,7 +191,7 @@ Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
 All queries in SPARQL syntax, regardless of type, should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/sparql`:
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/sparql
 Headers: None
@@ -171,7 +212,7 @@ To see examples of sending a request to the `/command` endpoint, see [signed tra
 
 Returns the list of flakes that would be added to a ledger if a given transaction is issued. The body of this request is simply the transaction. Note that this is a test endpoint. This does *NOT* write the returned flakes to the ledger.
 
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/gen-flakes
 Headers: None
@@ -194,7 +235,7 @@ Key | Value
 
 The `t` on the flakes provided has to be current with the latest database. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes. 
 
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/query-with
 Headers: None
@@ -217,7 +258,7 @@ Key | Value
 
 The `t` on the flakes provided has to be current with the latest database. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes. 
 
-```
+```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/test-transact-with
 Headers: None
@@ -231,7 +272,7 @@ Body: {
 
 A GET request to `/fdb/health` returns whether the server is ready or not. You are not able to test this endpoint in the sidebar. These requests do not need to be signed. 
 
-```
+```all
 Action: GET
 Endpoint: http://localhost:8080/fdb/health
 ```
@@ -240,14 +281,14 @@ Endpoint: http://localhost:8080/fdb/health
 
 A GET request to `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]` returns all key-value pairs of a certain type. You are not able to test this endpoint in the sidebar. These requests do not need to be signed. 
 
-```
+```all
 Action: GET
 Endpoint: http://localhost:8080/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]
 ```
 
 A GET request to `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]` returns the value for the provided key.
 
-```
+```all
 Action: GET
 Endpoint: http://localhost:8080/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]
 ```
@@ -259,24 +300,3 @@ A POST request to `/fdb/sub` handles subscriptions. More documentation on this f
 ### /new-keys
 
 A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/docs/identity/public-private-keys). These requests do not need to be signed. 
-
-### /dbs
-
-A POST request with an empty object or a GET request to `/fdb/dbs` returns all the dbs in the transactor group. These requests do not need to be signed. 
-
-### /new-db
-
-A database id must begin with a network name followed by a `/` and a dbid. Network names and dbids may only contain letters and numbers. In your request, you must specify `db/id`. No other options are currently supported. 
-
-For example, `test/one` is the `one` database in the `one` network. If you specify a network that doesn't exist, then Fluree will create a new network for you, as well as the new database.
-
-These requests do not need to be signed. 
-
-An example of a request to `/new-db`:
-```
-Action: POST
-Endpoint: http://localhost:8080/fdb/new-db
-Body: {
-  "db/id": "test.one"
-}
-```

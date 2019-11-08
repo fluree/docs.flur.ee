@@ -25,8 +25,9 @@ FlureeQL Analytical Queries are also structured as a JSON object/map and may con
 
 Key | Required? | Description
 -- | -- | -- 
-[select](#select-or-select-one-clauses) | yes (or selectOne) | Analytical select statement, which can include aggregate functions, bound variables, and query graphs including bound variables. If more than one item is specified, the clause should be inside of square brackets `[ ]`. A `select` statement inside square brackets will return results inside of square brackets. 
-[selectOne](#select-or-select-one-clauses) | yes (or select) | Same as `select` statement, but returns only a single result. Result may be inside of square brackets if the select statement is inside square brackets.
+[select](#select-or-select-one-clauses) | yes (or selectOne or selectDistinct) | Analytical select statement, which can include aggregate functions, bound variables, and query graphs including bound variables. If more than one item is specified, the clause should be inside of square brackets `[ ]`. A `select` statement inside square brackets will return results inside of square brackets. 
+[selectOne](#select-or-select-one-clauses) | yes (or select or selectDistinct) | Same as `select` statement, but returns only a single result. Result may be inside of square brackets if the select statement is inside square brackets.
+[selectDistinct](#select-or-select-one-clauses) | yes (or select or selectOne) 
 [where](#where-clause) | yes | A collection of tuples which contain matching logic and variable binding.
 [optional](#optional-clauses) | no | A set of tuples, which are optional. In other words, if there is no match, `null` will be added to the matching pattern, rather than removing that pattern.
 [filter](#filter) | no | A set of filters and optional filters.
@@ -221,6 +222,8 @@ WHERE {
 When submitting an analytical query, you need to specify either a `select` or a `selectOne` clause. A select clause can include aggregate functions, bound variables, and query graphs including bound variables. If more than one item is specified, the clause should be inside of square brackets `[ ]`.  
 
 A select statement inside square brackets will return results inside of square brackets. One without square brackets (only valid when there is a single item in the select clause) will return the result outside of square brackets.
+
+A selectDistinct clause is the same as a select clause, except that it only returns distinct results. It is important to note that all analytical queries are issued against the FULL result set. So for example, if your select statement is `(count ?favNums)`, it will count all `?favNums`, even repeats. If you issue a query like `(sample 5 ?favNums)`, if you use `selectDistinct`, the results may return less than 5 values.
 
 A selectOne clause is the same as a select clause, except only one result is returned. 
 

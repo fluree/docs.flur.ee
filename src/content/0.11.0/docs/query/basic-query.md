@@ -9,7 +9,7 @@ Below are all the possible keys that you can include in a basic select query. Us
 
 Key | Required? | Description
 -- | -- | -- 
-`select`, `selectOne` | yes |  An array of predicates or a `*`. (`selectOne` is the same as `select`, except it just returns a single value).
+`select`, `selectOne`, `selectDistinct` | yes |  An array of predicates or a `*`. (`selectOne` is the same as `select`, except it just returns a single value). `select` results are distinct by default, so `select` and `selectDistint` are equivalent.
 `from` | yes | A collection, predicate name, subject id, unique two-tuple, or array of subject ids and two-tuples
 `limit` | no | Optional limit (integer) of results to include.
 `block` | no | Optional time-travel query specified by block number, duration, or wall-clock time as an ISO-8601 formatted string.

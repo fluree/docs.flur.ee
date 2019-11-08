@@ -420,6 +420,32 @@ function transformations095(nav) {
         }
     }
 
+    nav["database-setup"] =   {
+        "pageName": "Database Set-up",
+        "subTopics": {
+            "creating-a-db": {
+                "headerName": "Creating a DB",
+                "file": "0.11.0/docs/db-setup/creating-a-database"
+            },
+            "database-settings": {
+                "headerName": "Database Settings",
+                "file": "0.10.0/docs/db-setup/database-settings"
+            },
+            "forking-a-db": {
+                "headerName": "Forking a DB",
+                "file": "0.10.0/docs/db-setup/forking-a-database"
+            },
+            "archiving-a-database": {
+                "headerName": "Archiving a DB",
+                "file": "0.11.0/docs/db-setup/archiving-a-database"
+            },
+            "deleting-a-database": {
+                "headerName": "Deleting a DB",
+                "file": "0.11.0/docs/db-setup/deleting-a-database"
+            }
+        }
+    }
+
     return nav
 }
 
