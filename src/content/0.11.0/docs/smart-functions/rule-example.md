@@ -60,9 +60,9 @@ The smart function attached to `viewAllChats` and `viewAllPeopleHandles` is just
 
 For `editOwnChats`, we needed to write a new function, which checks whether the subject being updated (a chat) belongs to the auth record doing the updating. 
 
-The full function is: `(contains? (get-all (query (str \"{\\\"select\\\": \\\"[{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")) [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))`. We break it down below:
+The full function is: `(contains? (get-all (query (str \"{\\\"select\\\": [{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")) [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))`. We break it down below:
 
-1. First, we use `str` to create a query string `(str \"{\\\"select\\\": \\\"[{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")`. The resulting string is:
+1. First, we use `str` to create a query string `(str \"{\\\"select\\\": [{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")`. The resulting string is:
 
 ```all
 {
@@ -115,7 +115,7 @@ The full function is: `(contains? (get-all (query (str \"{\\\"select\\\": \\\"[{
   {
     "_id": "_fn$ownChats",
     "name": "ownChats",
-    "code": "(contains? (get-all (query (str \"{\\\"select\\\": \\\"[{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")) [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))"
+    "code": "(contains? (get-all (query (str \"{\\\"select\\\": [{\\\"chat/person\\\":  [{\\\"person/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \" (?sid) \" } \")) [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))"
 
   }
 ]

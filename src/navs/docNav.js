@@ -420,6 +420,24 @@ function transformations095(nav) {
         }
     }
 
+    nav["schema"] = {
+        "pageName": "Schema",
+        "subTopics": {
+            "overview": {
+                "headerName": "Overview",
+                "file": "0.10.0/docs/schema/overview"
+            },
+            "collections": {
+                "headerName": "Collections",
+                "file": "0.10.0/docs/schema/collections"
+            },
+            "predicates": {
+                "headerName": "Predicates",
+                "file": "0.11.0/docs/schema/predicates"
+            }
+        }
+    }
+ 
     nav["database-setup"] =   {
         "pageName": "Database Set-up",
         "subTopics": {

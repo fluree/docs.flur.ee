@@ -36,7 +36,7 @@ Key | Required? | Description
 `orderBy` | no | Optional variable (string) or two-tuple where the first element is "ASC" or "DESC" and the second element is the variable name. For example, `"?favNums"` or `["ASC", "?favNums"]`
 [groupBy](#group-by) | no | Optional variable or array of variables by  Note that depending on the query, group by can significantly slow down results. 
 `prettyPrint` | no | Default false. Optional boolean. Whether to "pretty print" the results (as a map with keys) or as a vector without labels. This is only available when select is an array of values. Note that depending on the query, pretty print can significantly slow down results. 
-`wikidataOpts` | no | Optional map of configurations for Wikidata queries, including specifying whether to return `distinct` results or whether to limit results.
+[wikidataOpts](#wikidata-options) | no | Optional map of configurations for Wikidata queries, including specifying whether to return `distinct` results or whether to limit results.
 
 ### Where Clause
 We suggest reading the [Where Clause](#where-clause) section before reading the [Select or Select One Clauses](#select-or-select-one-clauses) section. The where clause is the first part of the query that is resolved. 
@@ -453,8 +453,8 @@ Filters can be optional by specifying a two-tuple where the first item is "optio
 ```all
 {
     "select": ["?handle", "?num"],
-    "where": [  ["?person", "person/handle", "?handle"], 
-                ["?person", "person/favNums", "?num"] ],
+    "where": [  ["?person", "person/handle", "?handle"] ],
+    "optional": [  ["?person", "person/favNums", "?num"]],
     "filter": [ ["optional", "(> 10 ?num)"] ]
 }
 ```
@@ -604,7 +604,7 @@ Not supported
 ```
 
 ```sparql
-SELECT ?name ?artist ?artwok ?artworkLabel
+SELECT ?name ?artist ?artwork ?artworkLabel
 WHERE {
     ?person     fd:person/handle        "jdoe";
                 fd:person/favArtists    ?artist.
@@ -663,7 +663,7 @@ WHERE {
   ?user     fdb:person/favMovies    ?movie.
   ?movie    fdb:movie/title       ?title.
   ?wdMovie  wd:?label             ?title;
-            wd:P840               ?narrative_location;
+            wdt:P840               ?narrative_location;
             wdt:P31               wd:Q11424.
   ?user     fdb:person/handle       ?handle.
 }
@@ -675,17 +675,18 @@ Note that cross-database queries can take some time.
 
 ### Wikidata Options
 
-All Wikidata tuples can optionally include a map with the following keys:
+By default, any Wikidata queries are run with a limit of 100, an offset of 0, English as the label language, and returning only distinct values. Any of these options can be overwritten by specifying Wikidata options in the `wikidataOpts` key-value pair in an analytical query. 
+
+`wikidataOpts` can be a map with any of the following keys:
 
 Key | Description
 -- | --
 distinct | Default is true. Boolean, which specifies whether to include only distinct Wikidata results.
 limit | Default is 100. Number of results (integer) to return for each query.
 offset | Default is 0. Number of results to skip before returning the results.  
+language | Default is "en". See [Wikidata language codes](https://www.wikidata.org/wiki/Help:Wikimedia_language_codes/lists/all) for other options.
 
-Each consecutive group of Wikidata queries is run together. You only need to include these options in one clause per clause group. If you list multiple different limits in a clause group, the max value is used. If you list distinct as both true and false in a clause group, we default to true. 
-
-For example, if we want to run the same query as the [Wikidata Example](#wikidata-example), but include non-distinct results and limit the result quantity to 5, our resulting query would be: 
+Below is an example of using `wikidataOpts` in a query. In SPARQL, you cannot currently specify Wikidata options other than `language` (see [language labels](/docs/query/sparql#language-labels))
 
 ```flureeql
 {
@@ -693,9 +694,10 @@ For example, if we want to run the same query as the [Wikidata Example](#wikidat
     "where": [
         [["person/handle", "jdoe"], "person/favArtists", "?artist"],
         ["?artist", "artist/name", "?name"],
-        ["$wd", "?artwork", "wdt:P170", "?creator", {"limit": 5, "distinct": false}],
+        ["$wd", "?artwork", "wdt:P170", "?creator"],
         ["$wd", "?creator", "?label", "?name"]
-        ]
+        ],
+    "wikidataOpts": {"limit": 5, "distinct": false}
 }
 ```
 
@@ -708,9 +710,10 @@ For example, if we want to run the same query as the [Wikidata Example](#wikidat
     "where": [
         [["person/handle", "jdoe"], "person/favArtists", "?artist"],
         ["?artist", "artist/name", "?name"],
-        ["$wd", "?artwork", "wdt:P170", "?creator", {"limit": 5, "distinct": false}],
+        ["$wd", "?artwork", "wdt:P170", "?creator"],
         ["$wd", "?creator", "?label", "?name"]
-        ]
+        ],
+    "wikidataOpts": {"limit": 5, "distinct": false}
 }' \
    [HOST]/api/db/query
 ```
@@ -720,7 +723,7 @@ Not supported
 ```
 
 ```sparql
-SELECT DISTINCT ?name ?artist ?artwok ?artworkLabel
+SELECT DISTINCT ?name ?artist ?artwork ?artworkLabel
 WHERE {
     ?person     fd:person/handle        "jdoe";
                 fd:person/favArtists    ?artist.

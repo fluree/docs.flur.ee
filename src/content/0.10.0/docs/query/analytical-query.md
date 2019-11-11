@@ -427,7 +427,7 @@ Not supported
 ```
 
 ```sparql
-SELECT ?name ?artist ?artwok ?artworkLabel
+SELECT ?name ?artist ?artwork ?artworkLabel
 WHERE {
     ?person     fd:person/handle        "jdoe";
                 fd:person/favArtists    ?artist.
@@ -543,7 +543,7 @@ Not supported
 ```
 
 ```sparql
-SELECT DISTINCT ?name ?artist ?artwok ?artworkLabel
+SELECT DISTINCT ?name ?artist ?artwork ?artworkLabel
 WHERE {
     ?person     fd:person/handle        "jdoe";
                 fd:person/favArtists    ?artist.
