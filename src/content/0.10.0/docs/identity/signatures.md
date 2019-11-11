@@ -32,6 +32,8 @@ If `fdb-open-api` is set to true, then you do not need to sign your queries. Wit
 
 If you do need to sign your queries, you should have access to your private key. Your private key needs to be [connected to a valid auth record](/docs/identity/auth-records) in the database.
 
+If you are having an issue signing queries, you can use the [troubleshooting guide](https://docs.google.com/document/d/1uS3on1-xAtl86hcdya9fN5gPyp8qikVIsPH2nnJ-0bo/edit?usp=sharing).
+
 #### Headers
 
 You should submit a POST request should have the following headers: `content-type`, `mydate`, `digest`, `signature`.
@@ -83,6 +85,9 @@ cmd | Stringified command map
 sig | ECDSA signature of the cmd key. 
 
 When submitting a transaction, the command map of type `tx` (transaction) needs to have the following keys in the following order. Documentation on command of type `new-db` and `default-key` is forthcoming. 
+
+If you are having an issue signing queries, you can use the [troubleshooting guide](https://docs.google.com/document/d/10DvYqlBZs2I_qPjKEsl53mMWxabh8aObjeSdeFjWwN0/edit?usp=sharing).
+
 
 #### Command Map
 
