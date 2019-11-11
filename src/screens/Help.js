@@ -23,7 +23,7 @@ class Help extends React.Component {
                         </div>
                 </div>
                 <div className="col-sm-6 text-center">
-                    <a className="no-underline" href="https://join.slack.com/t/flureedb/shared_invite/enQtNTM1NzI4MTEzODA4LWEzNTMzN2VmYjBiODQ5MDUzODg1M2E3OTBjNGVmM2EwNmZhMGMwNTg2ZmJiZjk2MjA5NDkwYTk0OTVhODQ1Y2U" 
+                    <a className="no-underline" href="https://launchpass.com/flureedb" 
                     rel="noopener noreferrer" target="_blank">
                         <div className="lesson-square beginner">
                             <div className="lesson-square-icon">

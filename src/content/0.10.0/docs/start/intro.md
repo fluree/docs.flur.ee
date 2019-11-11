@@ -45,4 +45,4 @@ The videos are not comprehensive, but are a good reference for particular topics
 ### Where Can I Get Help?
 If you can't find the answers you are looking for in our documentation, please let us know! We are always looking to improve the quality of support we provide.
 
-You can send an email to <support@flur.ee> or you can <a href="https://join.slack.com/t/flureedb/shared_invite/enQtNTM1NzI4MTEzODA4LWEzNTMzN2VmYjBiODQ5MDUzODg1M2E3OTBjNGVmM2EwNmZhMGMwNTg2ZmJiZjk2MjA5NDkwYTk0OTVhODQ1Y2U" target="_blank" rel="noopener noreferrer">join our Slack</a> for support and community.
+You can send an email to <support@flur.ee> or you can <a href="https://launchpass.com/flureedb" target="_blank" rel="noopener noreferrer">join our Slack</a> for support and community.
