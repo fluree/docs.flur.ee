@@ -15,7 +15,7 @@ You should include the following header in your request (using the API):
 "Authorization": "Bearer [RFC 6979 SIGNATURE]"
 ```
 
-The signature should be the SHA3-256 of the original query, signed with your private key, according to [RFC 6979](https://tools.ietf.org/html/rfc6979) standards.
+The signature should be the SHA2-256 of the original query, signed with your private key, according to [RFC 6979](https://tools.ietf.org/html/rfc6979) standards.
 
 ### Signed Transactions
 If `fdb-open-api` is set to true, then you do not need to sign your transactions. You can issue transactions to the `/transact` endpoint, and they will be automatically signed.  
@@ -26,7 +26,7 @@ All signed transactions need to be submitted to the [`/command` endpoint](/api/d
 
 Key | Description
 --- | ---
-cmd | SHA3-256 hash of the stringified command map
+cmd | SHA2-256 hash of the stringified command map
 sig | ECDSA signature of the value of the cmd key. 
 
 When submitting a transaction, the command map of type `tx` (transaction) needs to have the following keys in the following order. Documentation on command of type `new-db` and `default-key` is forthcoming. 

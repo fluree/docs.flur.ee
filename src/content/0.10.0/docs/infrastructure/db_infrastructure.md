@@ -116,7 +116,7 @@ Metadata for each transaction is stored in the `_block` and `_tx` collections. B
 Key | Description
 ---|---
 `number` | Block number for this block.
-`hash` | SHA3-256 Hash for current block. Not included in block hash (can't include itself!).
+`hash` | SHA2-256 Hash for current block. Not included in block hash (can't include itself!).
 `prevHash` | Previous block's hash
 `transactions` | Reference to transactions included in this block (`_tx`).
 `transactors` | Reference to transactor auth identities that signed this block. Not included in block hash. 

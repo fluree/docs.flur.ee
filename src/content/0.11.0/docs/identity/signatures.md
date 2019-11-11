@@ -43,7 +43,7 @@ If an authority is signing on behalf of an auth record, then the `_auth/id` of t
 
 In order to get the actual signature (labelled `sig` above) that goes into the larger signature value, you need to first create a signing string. Formatted as follows: `(request-target): post {uri}\nhost: {host}\nmydate: {formattedDate}\ndigest: SHA-256={digest}`. 
 
-Then, you should get the SHA3-256 hash of that signing string, and sign it using Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the `secp256k1 curve`. The resulting signature is DER encoded and returned as a hex-string. In addition, after adding 27 to the recoveryByte, that number is converted into a hex string, and prepended to the rest of the signature. 
+Then, you should get the SHA2-256 hash of that signing string, and sign it using Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the `secp256k1 curve`. The resulting signature is DER encoded and returned as a hex-string. In addition, after adding 27 to the recoveryByte, that number is converted into a hex string, and prepended to the rest of the signature. 
 
 #### Body
 
@@ -73,7 +73,7 @@ The `/command` endpoint takes a map with two keys:
 
 Key | Description
 --- | ---
-cmd | SHA3-256 hash of the stringified command map
+cmd | SHA2-256 hash of the stringified command map
 sig | ECDSA signature of the value of the cmd key. 
 
 When submitting a transaction, the command map of type `tx` (transaction) needs to have the following keys in the following order. Documentation on command of type `new-db` and `default-key` is forthcoming. 
@@ -92,7 +92,7 @@ expire | Epoch milliseconds after which point this transaction can no longer be 
 
 #### Sig
 
-In order to get the `sig`, you need to get the SHA3-256 hash of the stringified command. That hash is then signed using Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the `secp256k1 curve`. The resulting signature is DER encoded and returned as a hex-string. In addition, after adding 27 to the recoveryByte, that number is converted into a hex string, and prepended to the rest of the signature. 
+In order to get the `sig`, you need to get the SHA2-256 hash of the stringified command. That hash is then signed using Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the `secp256k1 curve`. The resulting signature is DER encoded and returned as a hex-string. In addition, after adding 27 to the recoveryByte, that number is converted into a hex string, and prepended to the rest of the signature. 
 
 ### Verifying Signatures
 
