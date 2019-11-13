@@ -22,8 +22,6 @@ Block Range | `block_range` | Block range queries in FlureeQL syntax
 History |  `history_query`| History queries in FlureeQL syntax
 Transact | `transact` | Submits a transaction for a ledger and a transaction.
 Monitor Transaction | `monitor_tx` | Returns the results of the monitor transaction request or a timeout
-GraphQL | `graphql` | Queries or transactions in GraphQL syntax, as a string
-SPARQL | `sparql` | Queries in SPARQL syntax, as a string
 Listen | `listen` | Listens to all events of a given ledger
 Close Listener | `close_listener` | Closes a listener
 Listeners | `listeners` | Returns a list of listeners currently registered for each ledger
