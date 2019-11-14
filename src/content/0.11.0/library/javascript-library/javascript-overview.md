@@ -27,8 +27,8 @@ Close Listener | `close_listener` | Closes a listener
 Listeners | `listeners` | Returns a list of listeners currently registered for each ledger
 
 
-For both queries and transactions, a signature is not required if the option `fdb-open-api` is set to true (default for the downloaded version of Fluree). 
+For transactions, a signature is not required if the option `fdb-open-api` is set to true (default for the downloaded version of Fluree). 
 
-More information on [signing queries](/docs/identity/signatures#signed-queries) and [signing transactions](/docs/identity/signatures#signed-transactions) can be found in the linked sections. 
+More information on [signing transactions](/docs/identity/signatures#signed-transactions) can be found in the linked sections. 
 
-See [JavaScript Library Examples](/api/javascript-library/javascript-examples) for examples of how to use each of the commands.
+See [JavaScript Library Examples](/library/javascript-library/javascript-examples) for examples of how to use each of the commands.

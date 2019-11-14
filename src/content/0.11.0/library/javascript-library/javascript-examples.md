@@ -256,7 +256,7 @@ The id of a subject or nil when the subject identity does not exist.
 ```
   
 ### **q**
-All single queries in FlureeQL syntax that include a `select` key should be issued through the `q` command. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All single queries in FlureeQL syntax that include a `select` key should be issued through the `q` command. 
 
 #### Parameter(s)
 Name | Value
@@ -293,43 +293,6 @@ An example of an unsigned request to `q` with the network, `test` and the databa
 ```
   
 &nbsp;&nbsp;
-
-An example of a signed request to `q`:
-     
-```all
-    import { getSinFromPublicKey, signTransaction } from 'fluree-cryptography';
-    :
-    :
-    const publicKey = '023fa3aad728bcb4b571ee4b4aba77853e6e943307be842f46429bfbac74fc7cb0';
-    const privateKey = '2debec18af7f95e099f44007d68603d9b5a17906ebdb77b214dc1a5df89291c9';
-    const auth = 'Tf9oNJ2RRFkx8jSUXoyXvhRFDq1S5CW9c1g';
-    :
-    const flureeServerUrl = "http://localhost:8090";
-    const myLedgerName = "test/chat";
-    var myConn = flureedb.connect(flureeServerUrl);
-    var myDb = flureedb.db(myConn, myLedgerName);
-    :
-    :
-    var myQuery  = {
-      select: ['*'],
-      from:   '_collection'
-    };
-    var myOpts = {
-        "private-key": privateKey,
-        auth: auth,
-        expire: Date.now() + 30000,
-        nonce: 1,
-        timeout: 600000,
-        fuel: 100000  
-    };
-    flureedb.q (myDb, JSON.stringify(myQuery), JSON.stringify(myOpts))
-      .then( resp => {console.log('Success ', resp);})
-      .catch( error => {console.log('Error ', error);});    
-    :
-    :
-    flureedb.close(myConn);
-```
-  
   
 ### **multi_query**
 If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/docs/query/advanced-query#multiple-queries)), that should be done through the `multi_query` command. 
