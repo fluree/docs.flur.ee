@@ -424,18 +424,30 @@ You could have as many optional clauses as you like, but note that ORDER matters
 Currently, all filter functions should be written using Clojure. The following are all of the accepted filter functions:
 
 Name | Example | Explanation
--- | -- | -- 
-> | `(> 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3E" target="_blank">Greater than</a>
->= | `(>= 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3E=" target="_blank">Less than</a>
-< | `(< 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3C" target="_blank">Less than</a>
-<= | `(<= 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3C=" target="_blank">Less than or equal to</a>
-= | `(= 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/=" target="_blank">Equal to</a>
-+ | `(> 11 (+ 10 ?nums))` | <a href="https://clojuredocs.org/clojure.core/+" target="_blank">Add</a>
-- | `(- 11 (+ 10 ?nums))` | <a href="https://clojuredocs.org/clojure.core/-" target="_blank">Subtract</a>
-* | `(> 11 (* 10 ?nums))` | <a href="https://clojuredocs.org/clojure.core/*" target="_blank">Multiply</a>
-/ | `(> 11 (/ 10 ?nums))` | <a href="https://clojuredocs.org/clojure.core/_fs" target="_blank">Divide</a>
-and | `(and (> 10 ?nums1) (< 100 ?nums2))` | <a href="https://clojuredocs.org/clojure.core/and" target="_blank">And</a>
-or | `(or (> 10 ?nums1) (< 100 ?nums2))` | <a href="https://clojuredocs.org/clojure.core/or" target="_blank">Or</a>
+-- | -- | --
+> | `(> 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3E" target="_blank">greater than</a>
+>= | `(>= 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3E=" target="_blank">less than</a>
+< | `(< 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3C" target="_blank">less than</a>
+<= | `(<= 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3C=" target="_blank">less than or equal to</a>
+= | `(= 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/=" target="_blank">equal to</a>
+not= | `(not= 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/not=" target="_blank">not equal to</a>
++ | `(> 11 (+ 10 ?nums))` | <a href="https://clojuredocs.org/clojure.core/+" target="_blank">add</a>
+- | `(- 11 (+ 10 ?nums))` | <a href="https://clojuredocs.org/clojure.core/-" target="_blank">subtract</a>
+* | `(> 11 (* 10 ?nums))` | <a href="https://clojuredocs.org/clojure.core/*" target="_blank">multiply</a>
+/ | `(> 11 (/ 10 ?nums))` | <a href="https://clojuredocs.org/clojure.core/_fs" target="_blank">divide</a>
+and | `(and (> 10 ?nums1) (< 100 ?nums2))` | <a href="https://clojuredocs.org/clojure.core/and" target="_blank">and</a>
+&& | `(&& (> 10 ?nums1) (< 100 ?nums2))` | Same as and.
+or | `(or (> 10 ?nums1) (< 100 ?nums2))` | <a href="https://clojuredocs.org/clojure.core/or" target="_blank">or</a>
+\|\| | `(\|\| (> 10 ?nums1) (< 100 ?nums2))` | Same as or.
+nil? | `(nil? ?nums)` | <a href="https://clojuredocs.org/clojure.core/nil_q" target="_blank">nil?</a>
+bound | `(bound ?nums)` | True if non-nil
+coalesce | `(> ?nums (coalesce ?age 30))` | Coalesce takes the first non-nil argument, example below. 
+if | `(if (> ?nums 30) (> ?age 100) true)` |  <a href="https://clojuredocs.org/clojure.core/if" target="_blank">if</a>
+not | `(not (> ?nums 30))` |  <a href="https://clojuredocs.org/clojure.core/not" target="_blank">not</a>
+! | `(! (> ?nums 30))` |  Same as not
+now | `(> ?nums (now))` | Returns the current time in epoch milliseconds.
+re-pattern | `(re-pattern "\\d+")` | Returns a regex pattern, for use in re-find. <a href="https://clojuredocs.org/clojure.core/re-pattern" target="_blank">re-pattern</a>
+re-find | `(re-find (re-pattern \"^_collection\") ?name)` | Returns the first regex match. <a href="https://clojuredocs.org/clojure.core/re-find" target="_blank">re-find</a>
 
 Specify all filters in the `filter` key on the top-level of the query.
 
@@ -456,6 +468,17 @@ Filters can be optional by specifying a two-tuple where the first item is "optio
     "where": [  ["?person", "person/handle", "?handle"] ],
     "optional": [  ["?person", "person/favNums", "?num"]],
     "filter": [ ["optional", "(> 10 ?num)"] ]
+}
+```
+
+Filters can include multiple variables, for example gets all the favorite numbers for every person, and if a person has an age, it also gets their age. Then, it filters by returning only the favorite numbers that are greater than a given person's age or. 
+
+```all
+{
+  "select": ["?favNums", "?age" ],
+  "where": [["?person", "person/favNums", "?favNums"]],
+  "optional": [["?person", "person/age", "?age"]],
+  "filter": ["(> ?favNums (coalesce ?age 3))"]
 }
 ```
 
