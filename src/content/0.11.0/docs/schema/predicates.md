@@ -53,7 +53,7 @@ Notice there is no `array` type. If you want a predicate to have multiple object
 
 ### Creating Predicates
 
-In order to create a predicate, you only need to specify what type of subject you are creating (`_predicate`), a name, and a type. The name for a predicate should be name-spaced with the relevant collection (as in all predicates in the `person` collection should begin with `person/`). There are also a host of other [predicate predicates](#_predicate-predicates), which are listed in the linked section, but they are not required. 
+In order to create a predicate, you only need to specify what type of subject you are creating (`_predicate`), a name, and a type. The name for a predicate should be namespaced with the relevant collection (as in all predicates in the `person` collection should begin with `person/`). There are also a host of other [predicate predicates](#_predicate-predicates), which are listed in the linked section, but they are not required. 
 
 If you would like a `_predicate/spec`, you should follow [Fluree Best Practices](/docs/infrastructure/application-best-practices) and read the [Smart Functions](/docs/smart-functions/smart-functions) section in full to understand how to incorporate smart functions into your schema. 
 

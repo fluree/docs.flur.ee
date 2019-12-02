@@ -96,7 +96,7 @@ Transactions not support in SPARQL
 
 Schema predicates are similar to relational database columns, however there are fewer restrictions (any predicate can be attached to any subject, unless a restriction is put in place using a `spec`). 
 
-In order to create a predicate, you only need to specify what type of subject you are creating (`_predicate`), a name, and a type. The name for a predicate should be name-spaced with the relevant collection (as in all predicates in the `person` collection should begin with `person/`).
+In order to create a predicate, you only need to specify what type of subject you are creating (`_predicate`), a name, and a type. The name for a predicate should be namespaced with the relevant collection (as in all predicates in the `person` collection should begin with `person/`).
 
 In the below transaction, we also specify some other information for predicates. You can find all of the [predicate predicates](/docs/infrastructure/system-collections#_predicate) that can be specified in the `System Collections` section. 
 

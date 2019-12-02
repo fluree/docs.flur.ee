@@ -125,7 +125,7 @@ For example, if you want to set `fdb-api-port` and `fdb-mode` when starting up F
 
 You can set various configuration options as either environment variables, Java property flags, or in the `fluree_sample.properties` file. `fluree_sample.properties` has all of the default configuration settings. 
 
-Environment variables take precedent over both configuration options listed as Java property flags and those in the `fluree_sample.properties` file. Java property flags, in turn, take precedent over config options listed in the `fluree_sample.properties` file. 
+Environment variables take precedence over both configuration options listed as Java property flags and those in the `fluree_sample.properties` file. Java property flags, in turn, take precedence over config options listed in the `fluree_sample.properties` file. 
 
 Base Settings
 

@@ -98,7 +98,7 @@ To launch the standalone version of Fluree, download and unzip the [version 0.9.
 
 #### Setting the DB Configuration Options
 
-The following are the properties that you can set in the flureeDB.properties file. Java property flages (i.e. -Dfdb-mode=dev) take precedent over properties in the flureeDB.properties file. Additionally. environment variables take precedent over both Java property flags and properties specified in flureeDB.properties.
+The following are the properties that you can set in the flureeDB.properties file. Java property flages (i.e. -Dfdb-mode=dev) take precedence over properties in the flureeDB.properties file. Additionally. environment variables take precedence over both Java property flags and properties specified in flureeDB.properties.
 
 
 Property | Options | Description   
