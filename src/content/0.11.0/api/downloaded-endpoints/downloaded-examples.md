@@ -146,6 +146,20 @@ Body: [{
   }]
 ```
 
+By specifying a `Request-Timeout` header, you can set a transaction timeout. The maximum transaction size that is currently permitted by Fluree is 2MB. A sufficiently large transaction can take 50 seconds or longer to be resolved. By default, your request will timeout after 60 seconds. 
+
+An example of setting your own custom timeout is below. The value provided to `Request-Timeout` is in milliseconds.
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/transact
+Headers: {"Request-Timeout": 10000 }
+Body: [{
+    "_id":    "_user",
+    "username": "jdoe",
+  }]
+```
+
 ### /graphql Query
 
 All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
