@@ -8,6 +8,6 @@ If a network already exists with that name, and you have permissions to add to t
 
 You can either create a new database through the [user interface](/docs/getting-started/user-interface#account-page), through the API for the [downloadable version](/api/downloaded-endpoints/downloaded-examples#-new-db), or through the API for the [hosted version](/api/hosted-endpoints/hosted-examples#-api-action-new-database). 
 
-You can also create a new database from an archive file (see [archiving](/docs/database-setup/archiving-a-database)).
+You can also create a new database from a snapshot file (see [snapshotting](/docs/database-setup/snapshotting-a-database)).
 
 When a database is created, it automatically has all of the system collections, as well as an `auth/id` which is tied to a private key. In the hosted version, this key is kept by Fluree (user-controlled private keys to be added shortly). In the downloadable version, this private key is held in `default-private-key.txt` (unless specified otherwise in your properties file).

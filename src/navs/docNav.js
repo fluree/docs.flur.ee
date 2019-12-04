@@ -453,9 +453,9 @@ function transformations095(nav) {
                 "headerName": "Forking a DB",
                 "file": "0.10.0/docs/db-setup/forking-a-database"
             },
-            "archiving-a-database": {
-                "headerName": "Archiving a DB",
-                "file": "0.11.0/docs/db-setup/archiving-a-database"
+            "snapshotting-a-database": {
+                "headerName": "Snapshotting a DB",
+                "file": "0.11.0/docs/db-setup/snapshotting-a-database"
             },
             "deleting-a-database": {
                 "headerName": "Deleting a DB",

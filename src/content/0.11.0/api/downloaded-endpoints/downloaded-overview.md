@@ -10,7 +10,7 @@ Action | Endpoint | Explanation
 -- | -- | --
 DBs | `/fdb/dbs` | Returns a list of all ledgers in the transactor group. 
 New DB | `/fdb/new-db` | Creates a new ledger
-Archive | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/archive` | Creates a (local) archive file from an existing ledger
+Snapshot | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/snapshot` | Creates a (local) snapshot file from an existing ledger
 Delete DB | `/fdb/delete-db` | Deletes ledger (does not currently delete ledger files)
 Query | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` | Queries in FlureeQL syntax
 Multi-Query | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/multi-query` | Multi-Queries in FlureeQL syntax

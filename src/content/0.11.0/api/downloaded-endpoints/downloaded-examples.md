@@ -30,26 +30,26 @@ Headers: None
 Body: {"db/id": "test/one"}
 ```
 
-You can also use the `/new-db` endpoint to create a database from an archive. See [archiving a database](/docs/database-setup/archiving-a-database) for more information.
+You can also use the `/new-db` endpoint to create a database from a snapshot. See [snapshotting a database](/docs/database-setup/snapshotting-a-database) for more information.
 
 ```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/new-db
 Body: {
   "db/id": "test/one",
-  "archive": "fluree/demo/archive/1573233945064.avro"
+  "snapshot": "fluree/demo/snapshot/1573233945064.avro"
 }
 ```
 
-### /archive
+### /snapshot
 
-This creates a LOCAL archive of a particular ledger - it does not create archives on every transactor in the network. An archive file can be used to create a database from an archive (see [archiving](/docs/database-setup/archiving-a-database) and [new-db](#-new-db)).
+This creates a LOCAL snapshot of a particular ledger - it does not create snapshots on every transactor in the network. A snapshot file can be used to create a database from a snapshot (see [snapshotting](/docs/database-setup/snapshotting-a-database) and [new-db](#-new-db)).
 
-To create an archive, simply send an empty POST request to the `/archive` endpoint. The below example creates an archive of a database with network `dev` and ledger-id `main`.
+To create a snapshot, simply send an empty POST request to the `/snapshot` endpoint. The below example creates a snapshot of a database with network `dev` and ledger-id `main`.
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/archive
+Endpoint: http://localhost:8080/fdb/dev/main/snapshot
 Headers: None
 Body: Null
 ```
@@ -98,6 +98,21 @@ An example of an unsigned request to `/multi-query`:
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/multi-query
 Headers: None
+Body: { "query1": { "select": ["*"], "from": "_collection"}, 
+        "query2": { "select": ["*"], "from": "_predicate"}}
+```
+
+An example of a signed request to `/multi-query`:
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/multi-query
+Headers: {
+                content-type:       application/json,
+                mydate:             Thu, 13 Mar 2019 19:24:22 GMT,
+                digest:             SHA-256=6bc8bd9e8cf3079f2fe7c66b4151745ca80168c89835d9aaef6a79404fcb3018,
+                signature:          keyId="na",headers="(request-target) host mydate digest",algorithm="ecdsa-sha256",signature="1c3046022100da65438f46df2950b3c6cb931a73031a9dee9faaf1ea8d8dd1d83d5ac026635f022100aabe5483c7bd10c3a468fe720d0fbec256fa3e904e16ff9f330ef13f7921700b"
+            }
 Body: { "query1": { "select": ["*"], "from": "_collection"}, 
         "query2": { "select": ["*"], "from": "_predicate"}}
 ```
