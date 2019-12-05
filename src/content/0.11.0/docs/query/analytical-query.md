@@ -34,6 +34,7 @@ Key | Required? | Description
 `block` | no | Optional time-travel query specified by block number, duration, or wall-clock time as a ISO-8601 formatted string.
 `limit` | no | Optional limit (integer) of results to include. Default is 100.
 `orderBy` | no | Optional variable (string) or two-tuple where the first element is "ASC" or "DESC" and the second element is the variable name. For example, `"?favNums"` or `["ASC", "?favNums"]`
+`vars` | no | Provide a map of variables that will be substituted into a given query. 
 [groupBy](#group-by) | no | Optional variable or array of variables by  Note that depending on the query, group by can significantly slow down results. 
 `prettyPrint` | no | Default false. Optional boolean. Whether to "pretty print" the results (as a map with keys) or as a vector without labels. This is only available when select is an array of values. Note that depending on the query, pretty print can significantly slow down results. 
 [wikidataOpts](#wikidata-options) | no | Optional map of configurations for Wikidata queries, including specifying whether to return `distinct` results or whether to limit results.
@@ -479,6 +480,23 @@ Filters can include multiple variables, for example gets all the favorite number
   "where": [["?person", "person/favNums", "?favNums"]],
   "optional": [["?person", "person/age", "?age"]],
   "filter": ["(> ?favNums (coalesce ?age 3))"]
+}
+```
+
+### Variables
+
+You can provide a map of variables which will get substituted into a given query. 
+
+For example, in the below query `?handle` will be replaced with `dsanchez` anywhere it appears in the query.
+
+```all
+{
+    "select": "?handle",
+    "where": [  
+        ["?person", "person/handle", "?handle"] ],
+    "vars": {
+        "?handle": "dsanchez"
+    }
 }
 ```
 
