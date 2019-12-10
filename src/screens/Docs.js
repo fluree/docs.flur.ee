@@ -6,9 +6,7 @@ import { SidebarNav } from '../components/SidebarNav';
 import marked from 'marked';
 import { Search } from '../actions/Search';
 import Notifications, { notify } from 'react-notify-toast'
-import { getDocNav, languageMap } from '../navs/docNav';
-import { getAPINav, endpointMap } from '../navs/apiNav';
-import { getLibNav } from '../navs/libNav';
+import { getAPINav, getDocNav, getLibNav, endpointMap, languageMap } from '../navs/nav';
 
 import { parseJSON } from '../flureeFetch';
 import AceEditor from 'react-ace';

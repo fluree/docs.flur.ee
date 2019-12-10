@@ -1,4 +1,4 @@
-const staticLessonNav095 = {
+{
     "bg-query": {
         "numLessons": 10,
         "icon": "fas fa-question-circle",
@@ -110,61 +110,5 @@ const staticLessonNav095 = {
         "title": "Example: Voting",
         "description": "Build your own voting mechanism.",
         "location": "0.10.0/lessons/ex-voting"
-    }
-}
-
-function transformations095(nav) {
-    // Need to set entire value, otherwise it changes to original. Damn JS mutable objects.
-    nav["im-smart-functions"] = {
-        "numLessons": 11,
-        "icon": "far fa-file-code",
-        "class": "intermediate",
-        "title": "Intermediate: Smart Functions",
-        "description": "Learn how smart functions work and create basic ones.",
-        "location": "0.11.0/lessons/im-smart-functions"
-    }
-
-    nav["ex-crypto"] = {
-        "numLessons": 11,
-        "icon": "fas fa-coins",
-        "class": "example",
-        "title": "Example: Cryptocurrency",
-        "description": "Build your own (simple) cryptocurrency.",
-        "location": "0.11.0/lessons/ex-crypto"
-    }
-
-    nav["ex-voting"] = {
-        "numLessons": 15,
-        "icon": "fas fa-person-booth",
-        "class": "example",
-        "title": "Example: Voting",
-        "description": "Build your own voting mechanism.",
-        "location": "0.11.0/lessons/ex-voting"
-    }
-    return nav
-}
-
-function transformations096(nav) {
-    return nav
-}
-
-export function getLessonNav(version) {
-
-    if (version === "0.9.1") {
-        return null
-    } else if (version === "0.10.0") {
-        return staticLessonNav095
-
-    } else if (version === "0.11.0") {
-
-        let lessonNav095 = Object.assign({}, staticLessonNav095)
-        let lessonNav096 = transformations095(lessonNav095);
-        return lessonNav096;
-
-    } else if (version === "0.12.0") {
-        let lessonNav095 = Object.assign({}, staticLessonNav095)
-        let lessonNav096 = transformations095(lessonNav095);
-        let lessonNav097 = transformations096(lessonNav096);
-        return lessonNav097;
     }
 }

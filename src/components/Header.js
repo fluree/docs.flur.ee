@@ -1,7 +1,7 @@
 import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Col, DropdownButton, MenuItem, Button } from 'react-bootstrap';
-import { getDocNav } from '../navs/docNav';
+import { getDocNav } from '../navs/nav';
 import { versions } from '../index';
 
 const NavItems = (props) => {

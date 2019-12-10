@@ -5,7 +5,7 @@ import { SidebarNav } from '../components/SidebarNav';
 import get from 'lodash.get';
 import marked from 'marked';
 import { Button } from 'react-bootstrap';
-import { getVideoNav } from '../navs/videoNav';
+import { getVideoNav } from '../navs/nav';
 
 class Video extends React.Component {
     state = {
