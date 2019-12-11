@@ -329,3 +329,46 @@ A POST request to `/fdb/sub` handles subscriptions. More documentation on this f
 ### /new-keys
 
 A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/docs/identity/public-private-keys). These requests do not need to be signed. 
+
+### /generate
+Returns a valid token for a given user or role. Sets a valid password for that user or role. 
+
+Keys | Required | Explanations 
+-- | -- | --
+password | true | A password string
+user | false | You can pass in either a `_user/username` or a `subject _id`. An auth record with type `password-secp256k1` with the relevant salt will be created and attached to this `_user`. Either a user or roles must be provided.
+roles | false | You can pass in an array of role subjects or two-tuples. An auth record with type `password-secp256k1` with the relevant salt will be created and all the specified roles will be attached to it.  Either a user or roles must be provided. 
+expire | false |  Expiration time in epoch ms.
+
+If using a closed API, this request needs to contain a valid token in the header. 
+
+### /renew
+
+This endpoint returns a valid JWT token. You need to pass a NON-expired JWT token in the header, and an expiration time (in epoch milliseconds from now), to the body of the request. 
+
+Keys | Required | Explanations 
+-- | -- | --
+expire | false |  Expiration time in epoch ms from now. i.e. `1000`.
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/pw/renew
+Headers: { Authorization: "Bearer TOKEN-HERE" }
+Body: { "expire": "TIME IN EPOCH MS" }
+```
+
+### /login
+
+Keys | Required | Explanations 
+-- | -- | --
+password | true | A password string
+user | false | You must pass in your `_user/username`. Either a user or auth must be provided. 
+auth | false | You must pass in your `_auth_id` . Either a user or auth must be provided. 
+expire | false |  Requested time to expire in epoch milliseconds, i.e. `1000`.
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/pw/login
+Headers: { Authorization: "Bearer TOKEN-HERE" }
+Body: { "expire": "TIME IN EPOCH MS" }
+```
