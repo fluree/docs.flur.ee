@@ -41,7 +41,7 @@
             },
             "analytical-query": {
                 "headerName": "Analytical Query",
-                "file": "0.11.0/docs/query/analytical-query"
+                "file": "0.13.0/docs/query/analytical-query"
             },
             "sparql": {
                 "headerName": "SPARQL",
