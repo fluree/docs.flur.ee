@@ -342,6 +342,19 @@ expire | false |  Expiration time in epoch ms.
 
 If using a closed API, this request needs to contain a valid token in the header. 
 
+The below request will return a valid token for the user, which has permissions that correspond to the listed user's roles. 
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/pw/generate
+Headers: 
+Body: {
+	"password": "appleSaucePanFried",
+	"user": "myUser",
+  "expire": "TIME IN EPOCH MS" 
+  }
+```
+
 ### /renew
 
 This endpoint returns a valid JWT token. You need to pass a NON-expired JWT token in the header, and an expiration time (in epoch milliseconds from now), to the body of the request. 
@@ -370,5 +383,9 @@ expire | false |  Requested time to expire in epoch milliseconds, i.e. `1000`.
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/pw/login
 Headers: { Authorization: "Bearer TOKEN-HERE" }
-Body: { "expire": "TIME IN EPOCH MS" }
+Body: { 
+  "user": "myUsername",
+  "password": "myPassword",
+  "expire": "TIME IN EPOCH MS" 
+  }
 ```

@@ -33,7 +33,7 @@ Test Transact With | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/test-transact-with` |
 
 ### Password Authentication Endpoints
 
-You need password authentication enabled to use these endpoints. See [config options](/docs/getting-started/installation#config-options) for all password authentication options. 
+You need password authentication enabled to use these endpoints. See [config options](/docs/getting-started/installation#password-and-jwt-token-settings) for all password authentication options. 
 
 Action | Endpoint | Explanation
 -- | -- | --

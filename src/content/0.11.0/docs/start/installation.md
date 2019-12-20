@@ -131,7 +131,7 @@ You can set various configuration options as either environment variables, Java 
 
 Environment variables take precedence over both configuration options listed as Java property flags and those in the `fluree_sample.properties` file. Java property flags, in turn, take precedence over config options listed in the `fluree_sample.properties` file. 
 
-Base Settings
+#### Base Settings
 
 Property | Options | Description   
 -- | -- | --
@@ -156,7 +156,7 @@ Property | Options | Description
 ```
 
 
-Transactor Group Options
+#### Transactor Group Options
 
 Property | Options | Description   
 -- | -- | --
@@ -176,15 +176,14 @@ Property | Options | Description
 `fdb-memory-reindex` and `fdb-memory-reindex-max` | `size` | These settings apply per-database, make sure all ledgers and query peers have at least this much memory * number of databases you expect to be active on those servers. This setting must be consistent across the entire ledger group.
 `fdb-stats-report-frequency` | `time` | How frequently to report out stats as a log entry in milliseconds, or can use shorthand like 2m for two minutes, 45s for 45 seconds.
 
-HTTP API Settings
+#### HTTP API Settings
 
 Property | Options | Description   
 -- | -- | --
 `fdb-api-port` | `int` | Port in which the query peers will respond to API calls from clients
 `fdb-open-api` | `boolean` | If fdb-open-api is true, will allow full access on above port for any request and will utilize default auth identity to regulate query/read permissions. If false, every request must be signed, and the auth id associated with the signature will determine query/read permissions.
 
-Decentralized Ledger Settings
-
+#### Decentralized Ledger Settings
 
 Property | Options | Description   
 -- | -- | --
@@ -192,9 +191,10 @@ Property | Options | Description
 `fdb-ledger-private-keys` | `key@network/dbname,` `key@network/dbname` | List each auth identity private key at each network and/or database you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be  used as a default for all databases on that network and it is assumed this server is participating with every database, i.e. `fdb-ledger-private-keys=5...3@networka/dbname`
 `fdb-ledger-servers` | `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,` `networkb/dbname@external.dot.com:9795` | List of seed servers to contact for each network/db. Like fdb-ledger-identities, the db is optional. Every network/db + server address combination should be separated by a comma, i.e. `fdb-ledger-servers=` `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,networkb/` `dbname@external.dot.com:9795`
 
-Password and JWT Token Settings
+#### Password and JWT Token Settings
 
 Property | Options | Description
+-- | -- | --
 `fdb-pw-auth-enable` | `boolean` |This defaults to true, but will only work if there is a signing key for transactions. 
 `fdb-pw-auth-secret` | `string` | This secret is used to generate a HMAC signature that is used by scrypt to generate a valid private key from a password. Every auth record uses a unique salt ensuring different private keys for identical passwords. A server must have permission to access to the salt (stored in the _auth record) to successfully regenerate a private key - along with the normalized password and the following secret. Without all 3 elements, the private key cannot be regenerated.
 `fdb-pw-auth-jwt-secret` | `string` | JWT tokens issued are secured with this secret. If empty, will default to use fdb-pw-auth-secret
