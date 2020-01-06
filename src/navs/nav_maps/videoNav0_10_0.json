@@ -1,5 +1,4 @@
-
-const videoNav095 = {
+{
     "intro": {
         "pageName": "Introduction",
         "subTopics": {
@@ -14,7 +13,7 @@ const videoNav095 = {
             "install-homebrew": {
                 "headerName": "Install With Homebrew",
                 "file": "0.10.0/videos/intro/1.2-install-homebrew"
-            },
+            }
         }
     },
     "schema": {
@@ -125,7 +124,7 @@ const videoNav095 = {
                 "headerName": "GraphQL",
                 "file": "0.10.0/videos/query/3.20-GraphQL"
             }
-        },
+        }
     },
     "transact": {
         "pageName": "Transact",
@@ -159,33 +158,5 @@ const videoNav095 = {
                 "file": "0.10.0/videos/transact/4.7-deleting-data"
             }
         }
-    }
-}
-
-function transformations095(nav) {
-    // See lessonNav or apiNav for an example, 
-    // you need to set entire value, otherwise it changes to original.
-    // Is there a better way in JS?
-    return nav
-}
-
-function transformations096(nav) {
-    return nav
-}
-
-export function getVideoNav(version) {
-    if (version === "0.9.1") {
-        return null
-    } else if (version === "0.10.0") {
-        return videoNav095
-    } else if (version === "0.11.0") {
-        let copy095 = Object.assign({}, videoNav095)
-        let videoNav096 = transformations095(copy095);
-        return videoNav096;
-    } else if (version === "0.12.0") {
-        let copy095 = Object.assign({}, videoNav095)
-        let videoNav096 = transformations095(copy095);
-        let videoNav097 = transformations096(videoNav096);
-        return videoNav097;
     }
 }

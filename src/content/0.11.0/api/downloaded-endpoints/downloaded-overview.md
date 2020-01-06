@@ -6,6 +6,8 @@ Downloaded endpoints can only be used in the downloadable versions of Fluree. Al
 
 - For the downloadable version, unless you changed the default `fdb-api-port`, the full URL is `http://localhost:8080/fdb/[DBNAME]/[ACTION]`
 
+### Main Endpoints
+
 Action | Endpoint | Explanation 
 -- | -- | --
 DBs | `/fdb/dbs` | Returns a list of all ledgers in the transactor group. 
@@ -21,7 +23,7 @@ GraphQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` | Queries or transactio
 SPARQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` | Queries in SPARQL syntax, as a string
 Command | `/fdb/[NETWORK-NAME]/[DBID]/command` | Commands, such as transactions, with a signature in the body. See [signing transactions](/docs/identity/signatures#signed-transactions).
 
-Test endpoints:
+### Test endpoints
 
 Action | Endpoint | Explanation 
 -- | -- | --
@@ -29,7 +31,18 @@ Generate Flakes | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/gen-flakes` | Returns th
 Query With | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query-with` | Returns the results of a query using the existing database flakes, including flakes that are provided with the query. 
 Test Transact With | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/test-transact-with` | Given a valid set of flakes that could be added to the database at a given point in time and a transaction, returns the flakes that would be added to a ledger if a given transaction is issued. 
 
-Other endpoints:
+### Password Authentication Endpoints
+
+You need password authentication enabled to use these endpoints. See [config options](/docs/getting-started/installation#password-and-jwt-token-settings) for all password authentication options. 
+
+Action | Endpoint | Explanation
+-- | -- | --
+[Generate](/api/downloaded-endpoints/downloaded-examples#-generate) | `/fdb/[NETWORK-NAME]/[DBID]/pw/generate` | Returns a valid token for a given user or role. Sets a valid password for that user or role. 
+[Renew](/api/downloaded-endpoints/downloaded-examples#-renew) | `/fdb/[NETWORK-NAME]/[DBID]/pw/renew` | Given a token in the header and a new expiration time, returns a new token for a given user or role. 
+[Login](/api/downloaded-endpoints/downloaded-examples#-login) | `/fdb/[NETWORK-NAME]/[DBID]/pw/login` | Given a password and user or auth id, returns a valid token. 
+
+
+### Other endpoints
 
 Action | Verb | Endpoint | Description
 -- | -- | -- | --

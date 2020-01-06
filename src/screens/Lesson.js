@@ -2,7 +2,7 @@ import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import LessonContent from '../components/LessonContent';
 import marked from 'marked';
-import { getLessonNav } from '../navs/lessonNav'
+import { getLessonNav } from '../navs/nav'
 
 const LearnHomePage = (props) => {
     let { nav } = props;

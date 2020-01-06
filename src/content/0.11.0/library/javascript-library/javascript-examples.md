@@ -28,7 +28,7 @@ var myConn = flureedb.connect(flureeServerUrl);
 An example of the `connect_p` command:
 ```all
 const flureeServerUrl = "http://localhost:8090";
-flureedb.connect_p(this.state.dbserverUrl)
+flureedb.connect_p(flureeServerUrl)
 .then(conn => { 
   // execute a query or transaction
 })
@@ -522,7 +522,7 @@ const publicKey = '...';
 const privateKey = '...';
 const auth = getSinFromPublicKey(publicKey);
 :
-flureedb.connect_p(this.state.dbserverUrl)
+flureedb.connect_p(tflureeServerUrl)
 .then(conn => 
   {
     var query = { block: 1};
@@ -562,7 +562,7 @@ const publicKey = '...';
 const privateKey = '...';
 const auth = getSinFromPublicKey(publicKey);
 :
-flureedb.connect_p(this.state.dbserverUrl)
+flureedb.connect_p(flureeServerUrl
   .then(conn => 
     {
       var query = { collections: { select: ["*"], from: "_collection"},
@@ -605,7 +605,7 @@ const publicKey = '...';
 const privateKey = '...';
 const auth = getSinFromPublicKey(publicKey);
 :
-flureedb.connect_p(this.state.dbserverUrl)
+flureedb.connect_p(flureeServerUrl)
   .then(conn => 
   {
     var query = { history: ["person/handle", "zsmith"]};
