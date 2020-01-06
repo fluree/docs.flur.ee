@@ -11,7 +11,7 @@ Analytical Queries can:
 - Group results by a single or multiple variables
 - Use aggregate values calculated mid-query to filter results
 
-We utilized concepts of logic programming and variable binding to give an immense amount of query potential that can largely be designed by you. Note that users 
+We utilized concepts of logic programming and variable binding to give an immense amount of query potential that can largely be designed by you.
 
 
 This section covers analytical queries using the FlureeQL syntax. All FlureeQL queries in this section can be issued to an API endpoint ending in `/query`.
