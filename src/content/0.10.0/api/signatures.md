@@ -26,7 +26,7 @@ All signed transactions need to be submitted to the [`/command` endpoint](/api/d
 
 Key | Description
 --- | ---
-cmd | SHA2-256 hash of the stringified command map
+cmd | Stringified command map
 sig | ECDSA signature of the value of the cmd key. 
 
 When submitting a transaction, the command map of type `tx` (transaction) needs to have the following keys in the following order. Documentation on command of type `new-db` and `default-key` is forthcoming. 

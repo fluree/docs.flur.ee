@@ -121,7 +121,7 @@
             },
             "signatures": {
                 "headerName": "Signatures",
-                "file": "0.11.0/docs/identity/signatures"
+                "file": "0.13.0/docs/identity/signatures"
             }
         }
     },

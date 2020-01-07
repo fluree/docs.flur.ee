@@ -9,7 +9,7 @@ For both queries and transactions, a signature is not required if the option `fd
 
 In the case of transactions, if you send a transaction to `/transact` or to `/graphql`, the transaction will be signed with a default private key. 
 
-If you do need to specify a signature, such as in the case of testing out user permissions, you can submit a [signed transaction](#signed-transactions) to the `/command` endpoint.  
+If you do need to specify a signature, such as in the case of testing out user permissions, you can submit a [signed transaction](#signed-transactions) to the `/command` endpoint. As of `v0.13.0`, you can also submitted an unsigned command to the `/command` endpoint, but only `fdb-open-api` is true.
 
 ### NPM Package
 
@@ -74,7 +74,7 @@ The `/command` endpoint takes a map with two keys:
 Key | Description
 --- | ---
 cmd | Stringified command map
-sig | ECDSA signature of the value of the cmd key. 
+sig | (optional if `fdb-open-api` is true). ECDSA signature of the value of the cmd key. 
 
 When submitting a transaction, the command map of type `tx` (transaction) needs to have the following keys in the following order. Documentation on command of type `new-db` and `default-key` is forthcoming. 
 
@@ -89,6 +89,7 @@ auth | `_auth/id` of the auth
 fuel | Max integer for the amount of fuel to use for this transaction
 nonce | Integer nonce, to ensure that the command map is unique.
 expire | Epoch milliseconds after which point this transaction can no longer be submitted. 
+deps | (optional, if no deps, simply exclude the key). An array of the `_tx/id`s of any transactions this `tx` depends on. If any of the `_tx/id`s either do not exist in the ledger or resulted in failed transactions, then the command will not succeed.
 
 #### Sig
 
