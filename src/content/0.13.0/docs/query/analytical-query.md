@@ -49,9 +49,9 @@ Value | Description
 `source` | Optional source. If no source included, assume current version database. See [Queries Across Sources](#queries-across-sources).
 `subject` | Reference to a subject. Can be an subject id, unique two-tuple, a variable (a string that begins with `?`), or null.
 `predicate` | Reference to a predicate. Can be either subject id, predicate name, or a variable (a string that begins with `?`).  Reverse references are *NOT* supported.
-`object` | Reference to an object. Can be a value, subject id, unique two-tuple, a variable (a string that begins with `?`), or null.
+`object` | Reference to an object. Can be a value, subject id, unique two-tuple, a variable (a string that begins with `?`), or null. <br/> <br/> If your object begins with a `?`, and it is NOT a variable, for example someone's name is `?Fred`, then you can use escape strings in the object, for example: `"\"?Fred\""`.
 
-The subject, predicate, and object can all be variables, and a variable needs to be a string that begins with `?`. 
+The subject, predicate, and object can all be variables, and a variable needs to be a string that begins with `?`.
 
 The result of a tuple are the values that match that tuples pattern. For example, with the tuple: `["?person", "person/handle", "?handle"]`, the results would be a table.
 
