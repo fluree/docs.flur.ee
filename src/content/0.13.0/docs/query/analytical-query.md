@@ -449,6 +449,8 @@ not | `(not (> ?nums 30))` |  <a href="https://clojuredocs.org/clojure.core/not"
 now | `(> ?nums (now))` | Returns the current time in epoch milliseconds.
 re-pattern | `(re-pattern "\\d+")` | Returns a regex pattern, for use in re-find. <a href="https://clojuredocs.org/clojure.core/re-pattern" target="_blank">re-pattern</a>
 re-find | `(re-find (re-pattern \"^_collection\") ?name)` | Returns the first regex match. <a href="https://clojuredocs.org/clojure.core/re-find" target="_blank">re-find</a>
+strStarts | `(strStarts ?message \"Hi\")` | Returns true if the string starts with the given substring, case sensitive. 
+strEnds | `(strEnds ?message \"Amy.\")` | Returns true if the string ends with the given substring, case sensitive. 
 
 Specify all filters in the `filter` key on the top-level of the query.
 
