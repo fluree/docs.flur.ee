@@ -11,13 +11,15 @@ Analytical Queries can:
 - Group results by a single or multiple variables
 - Use aggregate values calculated mid-query to filter results
 
-We utilized concepts of logic programming and variable binding to give an immense amount of query potential that can largely be designed by you. Note that users 
+We utilized concepts of logic programming and variable binding to give an immense amount of query potential that can largely be designed by you. 
 
 
 This section covers analytical queries using the FlureeQL syntax. All FlureeQL queries in this section can be issued to an API endpoint ending in `/query`.
 
 ### Note: Breaking Changes
-Note that to enhance performance and add new features, optional and filter clauses are now part of their own, respective, top-level key value pairs. A full explanation for how to write `optional` and `filter` clauses is below.
+Note that to enhance performance and add new features, optional and filter clauses are now part of their own, respective, top-level key value pairs. You are still able to use `optional` and `filter` clauses within `where` clauses as well, however the syntax for this has changed. 
+
+A full explanation for how to write `optional` and `filter` clauses is below.
 
 ### Query Keys
 
@@ -27,10 +29,11 @@ Key | Required? | Description
 -- | -- | -- 
 [select](#select-or-select-one-clauses) | yes (or selectOne or selectDistinct) | Analytical select statement, which can include aggregate functions, bound variables, and query graphs including bound variables. If more than one item is specified, the clause should be inside of square brackets `[ ]`. A `select` statement inside square brackets will return results inside of square brackets. 
 [selectOne](#select-or-select-one-clauses) | yes (or select or selectDistinct) | Same as `select` statement, but returns only a single result. Result may be inside of square brackets if the select statement is inside square brackets.
-[selectDistinct](#select-or-select-one-clauses) | yes (or select or selectOne) 
-[where](#where-clause) | yes | A collection of tuples which contain matching logic and variable binding.
+[selectDistinct](#select-or-select-one-clauses) | yes (or select or selectOne) | `selectDistinct` returns the same results as `select`, skipping over duplicate values. 
+[where](#where-clause) | yes | A collection of tuples which contain matching logic and variable binding. The where clause can also contain [unions](#unions), [intermediate aggregate](#intermediate-aggregate-values) values, [binds](#bind), [optional](#optional) clauses, [filter](#filter) clauses.
 [optional](#optional-clauses) | no | A set of tuples, which are optional. In other words, if there is no match, `null` will be added to the matching pattern, rather than removing that pattern.
 [filter](#filter) | no | A set of filters and optional filters.
+[prefixes](#prefixes-and-querying-across-sources) | no | A map of sources, this is usually used for specifying external databases. 
 `block` | no | Optional time-travel query specified by block number, duration, or wall-clock time as a ISO-8601 formatted string.
 `limit` | no | Optional limit (integer) of results to include. Default is 100.
 `orderBy` | no | Optional variable (string) or two-tuple where the first element is "ASC" or "DESC" and the second element is the variable name. For example, `"?favNums"` or `["ASC", "?favNums"]`
@@ -42,7 +45,7 @@ Key | Required? | Description
 ### Where Clause
 We suggest reading the [Where Clause](#where-clause) section before reading the [Select or Select One Clauses](#select-or-select-one-clauses) section. The where clause is the first part of the query that is resolved. 
 
-Where clauses are a collection of four-tuples. Each tuple is comprised of a source, subject, predicate, and object. Multiple four-tuples strung together allow us to finely filter data, and connect our Fluree to outside triple-store databases. 
+Where clauses are a collection of four-tuples. Each tuple is comprised of a source, subject, predicate, and object. Multiple four-tuples strung together allow us to finely filter data, and connect our Fluree to outside triple-store databases. The where clause can also contain [unions](#unions), [intermediate aggregate](#intermediate-aggregate-values) values, [binds](#bind), [optional](#optional) clauses, [filter](#filter) clauses.
 
 Value | Description
 -- | -- 
@@ -104,7 +107,152 @@ In the middle of a where clause, you can bind a variable to an aggregate value. 
 ]}
 ```
 
+```sparql
+SELECT ?hash
+WHERE {
+  ?s fdb:_block/number ?bNum.
+  BIND (MAX(?bNum) AS ?maxBlock)
+  ?s fdb:_block/number ?maxBlock.
+  ?s fdb:_block/hash ?hash.
+}
+```
+
 See [Select or selectOne Clauses](#select-or-select-one-clauses) for a list of valid aggregate variables. 
+
+#### Bind
+
+Binding works the same as intermediate aggregate values, except the syntax is different. 
+
+A `bind` map (or multiple maps), can be declared anywhere in the where clause. The `bind` map must precede any clauses, which use the variables declared in the map. 
+
+The map is comprised of keys that correspond to variables, and values. For example, `{"bind": {"?handle": "dsanchez"}}`. You can bind multiple variables in the same map, as well, for example `{"bind": {"?handle": "dsanchez", "?person": 351843720888324}}`.
+
+```all
+{
+  "select": [ "?person", "?handle"],
+  "where": [
+      {"bind": {"?handle": "dsanchez"}},
+    [
+      "?person",
+      "person/handle",
+      "?handle"
+    ]
+  ]
+}
+```
+
+Like intermediate aggregate clauses, binds can use aggregate functions. See [Select or selectOne Clauses](#select-or-select-one-clauses) for a list of valid aggregate variables. 
+
+```all
+{"select": "?hash", 
+ "where": [
+    ["?s", "_block/number", "?bNum"],
+    {"bind": {"?maxBlock":  "#(max ?bNum)"}},
+    ["?s", "_block/number", "?maxBlock"],
+    ["?s", "_block/hash", "?hash"]
+]}
+```
+
+#### Unions
+
+A `union` map in a where clause allow variables to match multiple graph patterns. 
+
+For example, the clause `[ "?person", "person/handle", "dsanchez" ]` will only match Diana Sanchez. The clause `[ "?person", "person/handle", "jdoe" ]` will only match Jane Doe. If we want to bind BOTH Diana and Jane's subject ids to `?person`, we can use a `union` map. The `union` map has `left` and `right` keywords, which correspond to two different arrays of clauses. For example, the following `union` map allows `?person` to match either the left-hand side or the right-hand side. Both `left` and `right` can contain multiples clauses. In the example, they each only contain one.
+
+```all
+{
+      "union": {
+        "left": [
+          [ "?person", "person/handle", "dsanchez" ]
+        ],
+        "right": [
+          [ "?person", "person/handle", "anguyen"]
+        ]
+      }
+    }
+```
+
+Below is an example of a `union` map with multiple clauses. In this case, `?person` can EITHER have an age of 70 and a handle, dsanzhez, OR it can have a handle of anguyen.
+
+```all
+{
+      "union": {
+        "left": [
+          ["?person","person/age", 70],
+          ["?person", "person/handle", "dsanchez]
+        ],
+        "right": [
+          ["?person", "person/handle", "anguyen" ]
+        ]
+      }
+}
+```
+
+A `union` map can be placed anywhere inside of a `where` clause. For example:
+
+```all
+{
+  "select": [ "?person", "?age" ],
+  "where": [
+    {
+      "union": {
+        "left": [
+            ["?person", "person/age", 70],
+          [
+            "?person",
+            "person/handle",
+            "dsanchez"
+          ]
+        ],
+        "right": [
+          [
+            "?person",
+            "person/handle",
+            "anguyen"
+          ]
+        ]
+      }
+    },
+    [
+      "?person",
+      "person/age",
+      "?age"
+    ]
+  ]
+}
+```
+
+#### Optional
+
+An optional map can be placed anywhere in a `where` clause. Note that the order of an `optional` clause matters. `Optional` clauses are evaluated according to their order in a where clause. 
+
+Optional clauses are structured the same as where clauses. The difference is that rather than performing an inner-join to determine the results, we perform a left outer join. In other words, any rows from the initial table that don't match in the optional clauses's table are joined with nulls. For more information, see [optional clauses](#optional-clauses).
+
+Currently, we do not support starting your where clause with an `optional` map. This will always return an empty result, as of 0.13.0. 
+
+```all
+{
+  "select": [ "?person", "?name", "?age" ],
+  "where": [ [ "?person", "person/age", "?age"],
+    { "optional": [ [ "?person", "person/fullName", "?name"],
+        [ "?person", "person/favNums", "?favNums"]]
+    }
+  ]
+}
+```
+
+#### Filter
+
+To see all supported filters, see the [Filters](#filters) section. Filters can be placed anywhere in a where clause. 
+
+```all
+{
+    "select": ["?handle", "?num"],
+    "where": [  ["?person", "person/handle", "?handle"], 
+                ["?person", "person/favNums", "?num"],
+                { "filter": [ "(> 10 ?num)"] }]
+}
+```
 
 #### Query examples:
 
@@ -113,7 +261,7 @@ In the [Basic Schema](/docs/getting-started/basic-schema), we gave each person a
 ```flureeql
 {
     "select": "?nums",
-    "where": [ ["$fdb", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
+    "where": [["$fdb", ["person/handle", "zsmith"], "person/favNums", "?nums"]]
 }
 ```
 
@@ -624,9 +772,11 @@ A few things to note with full text searching:
 1. The full-text search index is not guaranteed to be fully up-to-date. It may take some time for index to become synchronized.
 2. Full-text search is only available for the current Fluree database. 
 
-### Queries Across Sources
+### Prefixes and Querying Across Sources
 
-Each tuple in a where clause is essentially a triple with an added piece of information at the beginning (source) and at the end (options). This tuple structure allows users to query across multiple points in time and across data sources. Currently, we support querying across Fluree and Wikidata. In the future, we will support additional data sources, as well as the ability to query across multiple Fluree databases. 
+Each tuple in a where clause is a triple with an optional added piece of information at the beginning (source). This tuple structure allows users to query across multiple points in time and across data sources. Currently, we support querying across multiple Fluree databases and across Wikidata.
+
+There are several built-in sources that you can simply specify at the beginning of a clause, for example `["$fdb6", "?person", "person/handle", "jdoe"]`. These built in source all begin with a `$`, and they are listed below. Later in this section, we will demonstrate how to use database across different Fluree databases. 
 
 Source | Description 
 -- | --
@@ -636,9 +786,7 @@ Source | Description
 `$fdbPT5M` | Fluree as of a specified ISO-8601 formatted duration ago. For example, `$fdbPT5M` is as of 5 minutes ago.  
 `$wd` | Wikidata 
 
-For example, if we wanted to see whether "zsmith" as of block 5 shared a favorite number with "zsmith" as of block 4.
-
-We are currently at block 4, so we would first need to issue a transaction. We can give `zsmith` an additional favorite number. 
+For example, if we wanted to see whether "zsmith" as of block 5 shared a favorite number with "zsmith" as of block 4. We are currently at block 4, so we would first need to issue a transaction. We can give `zsmith` an additional favorite number. 
 
 ```all
 [{
@@ -652,7 +800,8 @@ Now, we can issue a query showing which numbers were his favorites in BOTH block
 ```flureeql
 {
     "select": "?nums",
-    "where": [ ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], ["$fdb5", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
+    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
+                ["$fdb5", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
 }
 ```
 ```curl
@@ -661,7 +810,8 @@ Now, we can issue a query showing which numbers were his favorites in BOTH block
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
     "select": "?nums",
-    "where": [ ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], ["$fdb5", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
+    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
+                ["$fdb5", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
 }' \
    [HOST]/api/db/query
 ```
@@ -678,6 +828,60 @@ WHERE {
                 fd5:person/favNums  ?nums.
 }
 ```
+
+#### Prefixes 
+If we want to query across multiple Fluree databases we can do so by specifying the database in the `prefixes` map. 
+
+```all
+{
+    "prefixes": {
+      "ftest": "fluree/test"
+    },
+    "select": "?nums",
+    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
+                ["ftest", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
+}
+```
+
+In the prefix map, we can specify what ledger we want to query across, in this case `fluree/test`, and we give that source a name, `ftest`. The name given to a source must be only lowercase letters and no numbers. 
+
+Now we can use `ftest` as a source in any clause. 
+
+After declaring the source in the prefix, we can access that ledger at any block by specifying the time in the clause. You can specify a time using a block integer (`ftest3`), a duration (`ftestPT5M`), or an ISO-8601 formatted time-string (`ftest2019-03-14T20:59:36.097Z`). The time SHOULD NOT be declared in the prefix map - only in a particular clause. 
+
+For example, the below is incorrect. 
+
+```all
+<<< ----- THIS IS A AN INCORRECT EXAMPLE ----- >>>
+{
+    "prefixes": {
+      "ftest5": "fluree/test" <<< ----- WRONG ----- >>>
+    },
+    "select": "?nums",
+    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
+                ["ftest", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
+}
+```
+
+The below is correct, where the time is specified in the actual clause itself. 
+
+```all
+{
+    "prefixes": {
+      "ftest": "fluree/test" 
+    },
+    "select": "?nums",
+    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
+                ["ftest5", ["person/handle", "zsmith"], "person/favNums", "?nums"],
+                ["ftestPT5M", ["person/handle", "jdoe"], "person/favNums", "?nums"] ]
+}
+```
+
+#### Permissions
+If you want to access information in different databases, you need to have permissions to access those databases, and those databases need to be running on the same transactor. 
+
+1. If you are accessing outside databases in the **same network** as your current database (i.e. `fluree/one` and `fluree/test`) and **fdb-open-api** is `true`, then you can freely query across databases. 
+2. In any other situation, `fdb-open-api` must be `false`, and your query must be signed. The `_auth` record with which you signed your query will be the one that determines your permissions for each given database. 
 
 ### WikiData Examples
 
@@ -845,3 +1049,31 @@ WHERE {
 }
 LIMIT 5
 ```
+
+### Recursion
+
+To recur across a relationship, simply add a `+` after a predicate. This will match flakes any path length from the original. By default the recur depth is 100. You can also specify a certain path length by adding an integer after the `+`. 
+
+```all
+{
+    "select": ["?followHandle"],
+    "where": [
+        ["?person", "person/handle", "anguyen"],
+        ["?person", "person/follows+", "?follows"],
+        ["?follows", "person/handle", "?followHandle"]
+        ]
+    
+}
+```
+
+{
+    "select": ["?followHandle"],
+    "where": [
+        ["?person", "person/handle", "anguyen"],
+        ["?person", "person/follows+3", "?follows"],
+        ["?follows", "person/handle", "?followHandle"]
+        ]
+    
+}
+```
+
