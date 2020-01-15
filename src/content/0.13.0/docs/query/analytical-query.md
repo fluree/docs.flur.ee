@@ -97,7 +97,7 @@ To speed up your queries, you want to order your clauses so that there are match
 
 In the middle of a where clause, you can bind a variable to an aggregate value. The aggregate is calculated as of that clause - it does NOT take into account the clauses after it. To bind an intermediate aggregate value, just specify a two-tuple with the first item as a variable and the second item as the aggregate function. For example:
 
-```all
+```flureeql
 {"select": "?hash", 
  "where": [
     ["?s", "_block/number", "?bNum"],
@@ -105,6 +105,24 @@ In the middle of a where clause, you can bind a variable to an aggregate value. 
     ["?s", "_block/number", "?maxBlock"],
     ["?s", "_block/hash", "?hash"]
 ]}
+```
+
+```curl
+  curl \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer $FLUREE_TOKEN" \
+   -d '{"select": "?hash", 
+        "where": [
+    ["?s", "_block/number", "?bNum"],
+    ["?maxBlock",  "#(max ?bNum)"],
+    ["?s", "_block/number", "?maxBlock"],
+    ["?s", "_block/hash", "?hash"]
+]}' \
+   [HOST]/api/db/query
+```
+
+```graphql
+Not supported
 ```
 
 ```sparql
@@ -157,34 +175,29 @@ Like intermediate aggregate clauses, binds can use aggregate functions. See [Sel
 
 A `union` map in a where clause allow variables to match multiple graph patterns. 
 
-For example, the clause `[ "?person", "person/handle", "dsanchez" ]` will only match Diana Sanchez. The clause `[ "?person", "person/handle", "jdoe" ]` will only match Jane Doe. If we want to bind BOTH Diana and Jane's subject ids to `?person`, we can use a `union` map. The `union` map has `left` and `right` keywords, which correspond to two different arrays of clauses. For example, the following `union` map allows `?person` to match either the left-hand side or the right-hand side. Both `left` and `right` can contain multiples clauses. In the example, they each only contain one.
+For example, the clause `[ "?person", "person/handle", "dsanchez" ]` will only match Diana Sanchez. The clause `[ "?person", "person/handle", "jdoe" ]` will only match Jane Doe. If we want to bind BOTH Diana and Jane's subject ids to `?person`, we can use a `union` map. The `union` map has an array of clause array. Note that even if each clause array only has a single clause, it still must be enclosed in `[`.
 
 ```all
 {
-      "union": {
-        "left": [
-          [ "?person", "person/handle", "dsanchez" ]
-        ],
-        "right": [
-          [ "?person", "person/handle", "anguyen"]
-        ]
-      }
+      "union": [
+        [[ "?person", "person/handle", "dsanchez" ]],
+        [[ "?person", "person/handle", "anguyen"]]
+      ]
     }
 ```
 
-Below is an example of a `union` map with multiple clauses. In this case, `?person` can EITHER have an age of 70 and a handle, dsanzhez, OR it can have a handle of anguyen.
+Below is an example of a `union` with multiple clauses. In this case, `?person` can EITHER have an age of 70 and a handle, dsanzhez, OR it can have a handle of anguyen.
 
 ```all
 {
-      "union": {
-        "left": [
-          ["?person","person/age", 70],
-          ["?person", "person/handle", "dsanchez]
-        ],
-        "right": [
-          ["?person", "person/handle", "anguyen" ]
-        ]
-      }
+      "union": [
+        // First clause group
+        [["?person","person/age", 70],
+        ["?person", "person/handle", "dsanchez]],
+        
+        // Second clause
+        [["?person", "person/handle", "anguyen"]]
+      ]
 }
 ```
 
@@ -194,25 +207,16 @@ A `union` map can be placed anywhere inside of a `where` clause. For example:
 {
   "select": [ "?person", "?age" ],
   "where": [
-    {
-      "union": {
-        "left": [
-            ["?person", "person/age", 70],
-          [
-            "?person",
-            "person/handle",
-            "dsanchez"
-          ]
-        ],
-        "right": [
-          [
-            "?person",
-            "person/handle",
-            "anguyen"
-          ]
-        ]
-      }
-    },
+   {
+      "union": [
+        // First clause group
+        [["?person","person/age", 70],
+        ["?person", "person/handle", "dsanchez"]],
+        
+        // Second clause
+        [["?person", "person/handle", "anguyen"]]
+      ]
+  }
     [
       "?person",
       "person/age",
