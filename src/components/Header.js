@@ -45,7 +45,7 @@ class Header extends React.Component {
     render() {
       return (
         <div>
-            <div className="row" style={{backgroundColor: "#00aeef", height: "115px"}}>
+            <div className="row" style={{backgroundColor: "#00aeef", height: "115px", color: "#13C6FF"}}>
                 <div className="col-md-4 col-sm-12">
                     <div className="row">
                         <LinkContainer to="/" style={{display: 'inline-block', height: "80px", margin: "12.5px 25px"}}>
