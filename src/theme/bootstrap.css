@@ -7,12 +7,16 @@
 @import "../../node_modules/react-bootstrap-toggle/dist/bootstrap2-toggle.css";
 
 html {
-  font-family: sans-serif;
+  font-family:sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
 body {
   margin: 0;
+  font-family: "open-sans";
+  font-weight: 400;
+  font-size: 1em;
+  color: #091133;
 }
 article,
 aside,
