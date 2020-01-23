@@ -7,10 +7,10 @@ const LessonContent = (props) => {
         const { solution, markdown, prevPage, nextPage, progress, version } = props;
         return (
             <>
-                <div className="col-sm-10">
+                {/* <div className="col-sm-10">
                     <div className="text-center mb20" style={{ width: "100%", backgroundColor: "lightgrey" }}><ProgressBar now={progress} /></div>
-                </div>
-                <div className="col-sm-2 text-center">
+                </div> */}
+                <div className="col-sm-12 mb20 mt20 text-center" style={{ width: "100%" }}>
                     <LinkContainer to={"/lesson/"}>
                         <span className="lessons-home"><i className="fas fa-home" />&nbsp;<span className="hidden-xs hidden-sm">Lessons</span></span>
                     </LinkContainer>
@@ -25,6 +25,9 @@ const LessonContent = (props) => {
                                         <Button>Previous</Button>
                                     </LinkContainer>
                             }
+                        </div>
+                        <div>
+
                         </div>
                         <div className="col-sm-6 text-right">
                             {
