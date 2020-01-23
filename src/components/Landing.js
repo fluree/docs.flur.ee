@@ -32,16 +32,16 @@ const FPPanel = (props) => {
             </div>
             <div className="col-sm-4">
                 <div style={{backgroundColor: "white", width: "200px", height: "160px", paddingTop: "5px", margin: "20px 30px", border: "1px solid #0089bc"}}>
-                    <i className="fas fa-video mb10" style={{color: "#0089bc", fontSize: "50px"}}/>
+                    <i className="fas fa-video mb10" style={{color: "#13C6FF", fontSize: "50px"}}/>
                     <p>Through Videos... </p>
                     <LinkContainer to="/video">
-                        <Button bsStyle="success"><i className="fas fa-video"/>&nbsp;&nbsp;Videos</Button>
+                        <Button bsStyle="success"><i className="fas fa-video"m />&nbsp;&nbsp;Videos</Button>
                     </LinkContainer>
                 </div>
             </div>
             <div className="col-sm-4">
                 <div style={{backgroundColor: "white", width: "200px", height: "160px", paddingTop: "5px",  margin: "20px 30px", border: "1px solid #0089bc"}}>
-                    <i className="fas fa-chalkboard-teacher mb10" style={{color: "#0089bc", fontSize: "50px"}}/>
+                    <i className="fas fa-chalkboard-teacher mb10" style={{color: "#13C6FF", fontSize: "50px"}}/>
                     <p>Step-By-Step Guided Lessons</p>
                     <LinkContainer to="/lesson">
                         <Button bsStyle="success"><i className="fas fa-chalkboard-teacher"/>&nbsp;&nbsp;Lessons</Button>
@@ -50,9 +50,9 @@ const FPPanel = (props) => {
             </div>
             <div className="col-sm-4">
                 <div style={{backgroundColor: "white", width: "200px", height: "160px", paddingTop: "5px",  margin: "20px 30px", border: "1px solid #0089bc"}}>
-                    <i className="fas fa-book mb10" style={{color: "#0089bc", fontSize: "50px"}}/>
+                    <i className="fas fa-book mb10" style={{color: "#13C6FF", fontSize: "50px"}}/>
                     <p>Or Read the Docs</p>
-                    <LinkContainer to="/docs">
+                    <LinkContainer to="/docs/getting-started">
                         <Button bsStyle="success"><i className="fas fa-book"/>&nbsp;&nbsp;Documentation</Button>
                     </LinkContainer>
                 </div>
