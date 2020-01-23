@@ -49,10 +49,10 @@ class Header extends React.Component {
                 <div className="col-md-4 col-sm-12">
                     <div className="row">
                         <LinkContainer to="/" style={{display: 'inline-block', height: "80px", margin: "12.5px 25px"}}>
-                            <img style={{height: "50px"}} alt="Fluree" src={require('../theme/assets/logo_horizontal_white.png')} />
-                        </LinkContainer>
-                        <div className="version-toggle" 
-                        style={{display: 'inline-block', margin: "37.5px 0px"}}>
+                            <div style={{margin: "0"}}>
+                            <img style={{height: "50px", margin: "0px 20px"}} alt="Fluree" src={require('../theme/assets/latestflureelogo.png')} />
+                                <span className="version-toggle" 
+                                style={{display: 'inline-block', margin: "30px 0px 36px 20px"}}>
                             <DropdownButton
                                 style={{background: 'transparent', color: "white", fontWeight: 800}}
                                 title={this.props.version}
@@ -62,7 +62,10 @@ class Header extends React.Component {
                                     <MenuItem key={version} eventKey={idx} onClick={() => this.props.changeVersion(version)}>{version}</MenuItem>
                                 )}
                             </DropdownButton>  
+                        </span>
                         </div>
+                        </LinkContainer>
+                         
                     </div>
                 </div>
                     <Col md={8} smHidden xsHidden>
