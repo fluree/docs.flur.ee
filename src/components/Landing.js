@@ -10,7 +10,16 @@ const Splash = (props) => {
                     <h2 className="color-success" style={{fontVariant: "small-caps"}}>Blockchain, Meet Database</h2>
                     <div className="mt10">
                         <LinkContainer to="/lesson" style={{margin:"2px 5px"}}>
-                            <Button bsStyle="primary">
+                            <Button id="landingpage-button" style={{
+                                backgroundColor: "#4B56A5",
+                                borderRadius: "2px",
+                                fontFamily: "CooperHewitt",
+                                fontStyle: "normal",
+                                fontWeight: "bold",
+                                fontSize: "16px",
+                                textAlign: "center",
+                                color: "#fff"
+                            }}>
                                Start Learning
                             </Button>
                         </LinkContainer>

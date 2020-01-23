@@ -2750,7 +2750,7 @@ tbody.collapse.in {
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
   color: #fff;
-  text-decoration: none;
+  text-decoration: none;              
   outline: 0;
   background-color: #4B56A5;
 }
