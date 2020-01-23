@@ -6,8 +6,14 @@ import { getLessonNav } from '../navs/nav'
 
 const LearnHomePage = (props) => {
     let { nav } = props;
+    console.log(nav)
     let headers = Object.keys(nav)
+    //console.log(headers)
 
+    let basics = headers.filter(header => nav[header]["class"] === "beginner");
+     let intermediate = headers.filter(header => nav[header]["class"] === "intermediate")
+      let examples = headers.filter(header => nav[header]["class"] === "example")
+    console.log(basics, intermediate)
     return (
         <div className="text-center">
             <div className="row">
@@ -17,7 +23,7 @@ const LearnHomePage = (props) => {
             </div>
             <div className="row text-center">
                 {
-                    headers.map(header => <div className="col-md-3 col-sm-4 col-xs-6" key={header}>
+                    basics.map(header => <div className="col-md-3 col-sm-4 col-xs-6" key={header}>
                         <LinkContainer to={`/lesson/${header}/1`}>
                             <div className={`lesson-square ${nav[header]["class"]}`}>
                                 <div className="lesson-square-icon">
@@ -32,6 +38,41 @@ const LearnHomePage = (props) => {
                     </div>)
                 }
             </div>
+            <div className="row text-center">
+                {
+                    intermediate.map(header => <div className="col-md-3 col-sm-4 col-xs-6" key={header}>
+                        <LinkContainer to={`/lesson/${header}/1`}>
+                            <div className={`lesson-square ${nav[header]["class"]}`}>
+                                <div className="lesson-square-icon">
+                                    <i className={nav[header]["icon"]} />
+                                </div>
+                                <div className="lesson-square-header">
+                                    {nav[header]["title"]}</div>
+                                <div className="lesson-square-description">
+                                    {nav[header]["description"]}</div>
+                            </div>
+                        </LinkContainer>
+                    </div>)
+                }
+            </div>
+            <div className="row text-center">
+                {
+                    examples.map(header => <div className="col-md-3 col-sm-4 col-xs-6" key={header}>
+                        <LinkContainer to={`/lesson/${header}/1`}>
+                            <div className={`lesson-square ${nav[header]["class"]}`}>
+                                <div className="lesson-square-icon">
+                                    <i className={nav[header]["icon"]} />
+                                </div>
+                                <div className="lesson-square-header">
+                                    {nav[header]["title"]}</div>
+                                <div className="lesson-square-description">
+                                    {nav[header]["description"]}</div>
+                            </div>
+                        </LinkContainer>
+                    </div>)
+                }
+            </div>
+
         </div>
     )
 }

@@ -114,37 +114,37 @@
 }
 
 .beginner {
-    background-color: #C1DD8E;
-    box-shadow: 2px 5px #7d8e5d;
-    color: #505b3c;
+    background-color:  #4B56A5;
+    box-shadow: 2px 5px #ccc;
+    color: #fff;
 }
 
 .beginner:hover{
-    background-color: #7d8e5d;
+    background-color: #B775D6;
     cursor: pointer;
-    box-shadow: 2px 5px #505b3c;
-    color: #cad8af;
+    box-shadow: 2px 5px #ccc;
+    color: #fff;
     text-decoration: none;
 }
 
 .intermediate {
-    background-color: #8dd1ed;
-    box-shadow: 2px 5px #509fb7;
-    color: #1c353d;
+    background-color: #C6D4FF;
+    box-shadow: 2px 5px #ccc;
+    color: #091133;
 }
 
 .intermediate:hover{
     background-color: #509fb7;
     cursor: pointer;
-    box-shadow: 2px 5px #1c353d;
-    color: #c1e2ef;
+    box-shadow: 2px 5px #ccc;
+    color: #091133;
     text-decoration: none;
 }
 
 .example {
     background-color: #e6a9c7;
     box-shadow: 2px 5px #a85981;
-    color:#792b52;
+    color:#091133;
 }
 
 .example:hover{
