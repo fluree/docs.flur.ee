@@ -43,7 +43,7 @@ class Wrapper extends React.Component {
 
         return (
             <>
-            <div className="container-fluid" style={{ height: "100%" }}>
+            <div className="container-fluid" style={{ height: "100%"}}>
                 <div className="row">
                     <div className="col-xs-12" style={{ padding: "0px"}}>
                         <Header {...this.props} version={this.state.version} changeVersion={this.changeVersion}/>

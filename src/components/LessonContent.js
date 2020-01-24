@@ -12,7 +12,7 @@ const LessonContent = (props) => {
                 </div> */}
                 <div className="col-sm-12 mb20 mt20 text-center" style={{ width: "100%" }}>
                     <LinkContainer to={"/lesson/"}>
-                        <span className="lessons-home"><i className="fas fa-home" />&nbsp;<span className="hidden-xs hidden-sm">Lessons</span></span>
+                        <button className="lessons-home buttonPurple"><i className="fas fa-home" />&nbsp;<span className="hidden-xs hidden-sm">Lessons</span></button>
                     </LinkContainer>
                 </div>
                 <div className="col-sm-5 mb20">
@@ -22,7 +22,7 @@ const LessonContent = (props) => {
                             {
                                 prevPage && 
                                     <LinkContainer to={prevPage}>
-                                        <Button>Previous</Button>
+                                        <Button id="buttonPurplePrevious">Previous</Button>
                                     </LinkContainer>
                             }
                         </div>
@@ -33,7 +33,7 @@ const LessonContent = (props) => {
                             {
                                 nextPage &&
                                 <LinkContainer to={nextPage}>
-                                    <Button>Next</Button>
+                                    <Button className="buttonPurple">Next</Button>
                                 </LinkContainer>
                             }
                         </div>

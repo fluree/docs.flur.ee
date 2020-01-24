@@ -6,7 +6,7 @@ import { getLessonNav } from '../navs/nav'
 
 const LearnHomePage = (props) => {
     let { nav } = props;
-    console.log(nav)
+    //console.log(nav)
     let headers = Object.keys(nav)
     //console.log(headers)
 

@@ -32,7 +32,7 @@ class Editor extends React.Component {
         return (
             <div style={{margin: "5px 40px 0px 20px"}}>
                 <div className="text-right" style={{width: "90%"}}>
-                      <Button onClick={this.getSolution}>Get Solution</Button>
+                      <Button className="buttonPurple" onClick={this.getSolution}>Get Solution</Button>
                 </div>
                 <h2 className="text-center" style={{padding: "2px", color: "#8e8989", fontFamily: 'Open Sans'}}>Test Here</h2>
                 <AceEditor
