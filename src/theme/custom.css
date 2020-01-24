@@ -1,3 +1,17 @@
+/*********  mainHeader  *************/
+#mainHeader {
+    background-color:#00aeef;
+    display: flex;
+    width: 100%;
+    flex-flow: wrap;
+    padding: 12px;
+    padding-left: 40px;
+}
+/* * {
+    border: 1px solid red;
+} */
+
+
 .docs-section tr:nth-child(even), article tr:nth-child(even) {background-color: #f2f2f2;}
 .docs-section tr:nth-child(odd), article tr:nth-child(odd) {background-color: #FFF}
 
@@ -48,6 +62,8 @@
     color: #4d4c4c;
     background-color: rgba(245, 245, 245);
 }
+
+/****** Landing Page  *************/
 
 #landingpage-button {
     background-color: #4B56A5;

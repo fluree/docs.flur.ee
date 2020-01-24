@@ -7,8 +7,15 @@ import { versions } from '../index';
 const NavItems = (props) => {
     let docNav = getDocNav(props.version)
     let docKeys = Object.keys(docNav)
+   
 
-    return (<div>
+    return (
+    <div style={{
+        marginTop: "auto",
+        marginBottom: "auto",
+        marginLeft: "auto"
+
+    }}>
         {
             props.version !== "0.9.1" &&
             <DropdownButton id="Learn" title="Learn" bsStyle={props.btnStyle} style={props.btnStyles}>
@@ -44,44 +51,38 @@ class Header extends React.Component {
 
     render() {
       return (
-        <div>
-            <div className="row" style={{backgroundColor: "#00aeef", height: "115px", color: "#13C6FF"}}>
-                <div className="col-md-4 col-sm-12">
-                    <div className="row">
-                        <LinkContainer to="/" style={{display: 'inline-block', height: "80px", margin: "12.5px 25px"}}>
-                            <div style={{margin: "0"}}>
-                            <img style={{height: "50px", margin: "0px 20px"}} alt="Fluree" src={require('../theme/assets/latestflureelogo.png')} />
-                                <span className="version-toggle" 
-                                style={{display: 'inline-block', margin: "30px 0px 36px 20px"}}>
-                            <DropdownButton
-                                style={{background: 'transparent', color: "white", fontWeight: 800}}
-                                title={this.props.version}
-                                id="version-dropdown"
-                            >
-                                {versions.map((version, idx) => 
-                                    <MenuItem key={version} eventKey={idx} onClick={() => this.props.changeVersion(version)}>{version}</MenuItem>
-                                )}
-                            </DropdownButton>  
-                        </span>
-                        </div>
-                        </LinkContainer>
-                         
+            <div id="mainHeader">
+                <LinkContainer to="/" style={{height: "42px"}}>
+                        <img style={{height: "100%"}} alt="Fluree" src={require('../theme/assets/latestflureelogo.png')} />
+                </LinkContainer>
+                <div className="version-toggle" 
+                    style={{display: 'inline-block', margin: "auto 0 auto 1.8em"}}>
+                    <DropdownButton
+                        style={{background: 'transparent', color: "white", fontWeight: 800}}
+                        title={this.props.version}
+                        id="version-dropdown"
+                    >
+                        {versions.map((version, idx) => 
+                            <MenuItem key={version} eventKey={idx} onClick={() => this.props.changeVersion(version)}>{version}</MenuItem>
+                        )}
+                    </DropdownButton>  
+                </div> 
+
+                {/* <Col md={8} smHidden xsHidden> */}
+                <NavItems version={this.props.version} btnStyle="success" btnStyles={{padding: "10px", display:"inline-block", backgroundColor: "rgba(255, 255, 255, 0.1)", width: "100px", textAlign: "center", fontWeight: "900", fontSize: "16px"}}/>
+              
+                {/* </Col> */}
+                {/* <Col xs={12} mdHidden lgHidden style={{backgroundColor: "#84CEC5", height: "55px"}}>
+                    <div className="text-center">
+                        <NavItems version={this.props.version} btnStyle="info" btnStyles={{margin:"5px", fontSize: "16px", fontWeight: "900", width: "80px", backgroundColor: "rgba(0, 0, 0, 0.15)"}}/>
                     </div>
-                </div>
-                    <Col md={8} smHidden xsHidden>
-                        <div className="pull-right" style={{marginRight: "10px"}}>
-                            <NavItems version={this.props.version} btnStyle="success" btnStyles={{padding: "10px", backgroundColor: "rgba(255, 255, 255, 0.1)", marginTop: "30px", width: "100px", textAlign: "center", fontWeight: "900", fontSize: "16px"}}/>
-                        </div>
-                    </Col>
-                    <Col xs={12} mdHidden lgHidden style={{backgroundColor: "#84CEC5", height: "55px"}}>
-                        <div className="text-center">
-                            <NavItems version={this.props.version} btnStyle="info" btnStyles={{margin:"5px", fontSize: "16px", fontWeight: "900", width: "80px", backgroundColor: "rgba(0, 0, 0, 0.15)"}}/>
-                        </div>
-                    </Col>
+                </Col> */}
             </div>
-        </div>
       );
     }
   }
   
   export default Header;
+
+
+//header color :  #13C6FF
