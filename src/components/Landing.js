@@ -6,8 +6,8 @@ const Splash = (props) => {
         return (
             <div className="row text-center" style={{backgroundColor: "#fff", padding: "80px 0px"}}>
                 <div className="col-md-4" style={{paddingBottom: "20px"}}>
-                    <h1 className="color-success" style={{fontSize: "56px"}}>Fluree Docs</h1>
-                    <h2 className="color-success" style={{fontVariant: "small-caps"}}>Welcome to better data management.</h2>
+                    <h1 className="color-success" style={{fontSize: "56px", color: "#13C6FF"}}>Fluree Docs</h1>
+                    <h2 className="color-success" style={{fontVariant: "small-caps", color: "#13C6FF"}}>Welcome to better data management.</h2>
                     <div className="mt10">
                         <LinkContainer to="/lesson" style={{margin:"2px 5px"}}>
                             <Button id="landingpage-button" style={{
@@ -37,7 +37,12 @@ const FPPanel = (props) => {
     return(
         <div className="row mt20 mb20 text-center hidden-xs" style={{height: "250px"}}>
             <div className="col-sm-12">
-                <h2 className="color-success">Learn Fluree How You Learn Best</h2>
+                <h2 
+                    className="color-success"
+                    style={{
+                        color: "#13C6FF"
+                    }}
+                >Learn Fluree How You Learn Best</h2>
             </div>
             <div className="col-sm-4">
                 <div style={{
@@ -52,7 +57,12 @@ const FPPanel = (props) => {
                     //backgroundColor: "white", width: "200px", height: "160px", paddingTop: "5px", margin: "20px 30px"
                     }}>
                     <i className="fas fa-video mb10" style={{color: "#13C6FF", fontSize: "50px"}}/>
-                    <p>Through Videos... </p>
+                    <p
+                        style={{
+                        color: "#13C6FF"
+                        }}
+                    >Through Videos... 
+                    </p>
                     <LinkContainer to="/video"
                         style={{
                             marginTop: "auto"
@@ -74,7 +84,11 @@ const FPPanel = (props) => {
                     //backgroundColor: "white", width: "200px", height: "160px", paddingTop: "5px",  margin: "20px 30px"
                     }}>
                     <i className="fas fa-chalkboard-teacher mb10" style={{color: "#13C6FF", fontSize: "50px"}}/>
-                    <p>Step-By-Step Guided Lessons</p>
+                    <p 
+                        style={{
+                        color: "#13C6FF"
+                        }}
+                    >Step-By-Step Guided Lessons</p>
                     <LinkContainer to="/lesson"
                         style={{
                             marginTop: "auto"
@@ -96,7 +110,9 @@ const FPPanel = (props) => {
                     flexDirection: "column" 
                 }}>
                     <i className="fas fa-book mb10" style={{color: "#13C6FF", fontSize: "50px"}}/>
-                    <p>Or Read the Docs</p>
+                    <p
+                        style={{color: "#13C6FF"}}
+                    >Or Read the Docs</p>
                     <LinkContainer to="/docs/getting-started"
                         style={{
                             marginTop: "auto"
