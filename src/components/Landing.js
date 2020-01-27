@@ -6,8 +6,8 @@ const Splash = (props) => {
         return (
             <div className="row text-center" style={{ backgroundColor: "#fff", padding: "50px 0 50px 0", display: "flex", justifyContent: "center"}}>
                 <div style={{paddingBottom: "20px", marginRight:"40px"}}>
-                    <h1 className="color-success" style={{fontSize: "36px", weight:"700", textAlign: "left", color: "#091133", marginBottom:"10px"}}>Fluree Docs</h1>
-                    <p style={{ color: "#091133", maxWidth:"350px", weight: "400", textAlign: "left", fontSize: "16px", marginTop:"15px"}}>
+                    <h1 className="color-success font-header" style={{fontSize: "36px", weight:"700", textAlign: "left", color: "#091133", marginBottom:"10px"}}>Fluree Docs</h1>
+                    <p className="font-paragraph" style={{ color: "#091133", maxWidth:"350px", weight: "400", textAlign: "left", fontSize: "16px", marginTop:"15px"}}>
                         Ready to dive deeper into Fluree? Here you'll find videos, docs, examples, and 
                         more to help you learn how to use Fluree for your business or project.
                     </p>

@@ -9,6 +9,8 @@ import Help from './screens/Help';
 import Landing from './components/Landing';
 import Video from './screens/Video';
 
+
+import "typeface-cooper-hewitt";
 import "./theme/bootstrap.css";
 import "./theme/custom.css";
 import "../node_modules/video-react/dist/video-react.css"; 

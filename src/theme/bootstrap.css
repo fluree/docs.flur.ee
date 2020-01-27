@@ -5991,6 +5991,7 @@ a.badge-rnd:focus {
   src: url('open-sans/bold-italic.eot');
   src: url('open-sans/bold-italic.eot#iefix') format('embedded-opentype'), url('open-sans/bold-italic.ttf') format('truetype'), url('open-sans/bold-italic.woff') format('woff');
 }
+
 h1,
 h2,
 h3,
@@ -6001,6 +6002,26 @@ h6 {
   font-weight: normal;
   margin: 0;
 }
+h1 {
+  font-family: "typeface-cooper-hewitt";
+  font-weight: 700;
+  color: #091133;
+}
+h2 {
+  font-family: "typeface-cooper-hewitt";
+  font-weight: 600;
+  color: #091133;
+  font-size: 36px;
+}
+
+h3 {
+  font-family: "typeface-cooper-hewitt";
+  font-weight: 700;
+  color: #091133;
+  font-size: 22px;
+}
+
+
 h1.light,
 h2.light,
 h3.light,
@@ -7137,6 +7158,9 @@ html {
 }
 body {
   -webkit-font-smoothing: antialiased;
+  font-family: "open-sans";
+  color: #091133;
+  font-weight: 16px;
 }
 .background-gradient {
   color: #fff !important;
