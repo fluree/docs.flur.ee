@@ -12,7 +12,7 @@
     border: 1px solid red;
 } */
 
-
+.buttonPurple a,
 .buttonPurple {
     background-color: #4B56A5;
     border-radius: 2px;
@@ -24,7 +24,7 @@
     color: #ffffff;
     padding: 10px;
 }
-
+.buttonPurple a:hover,
 .buttonPurple:hover {
     border: 2px solid #4B56A5;
     border-radius: 2px;
