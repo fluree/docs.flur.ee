@@ -12,6 +12,15 @@
     border: 1px solid red;
 } */
 
+
+/**** Help Page ******/
+
+@media only screen and (max-width: 768px) {
+    .help-media-wrapper {
+        flex-direction: column;
+}
+}
+
 .buttonPurple a,
 .buttonPurple {
     background-color: #4B56A5;

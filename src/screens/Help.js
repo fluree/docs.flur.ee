@@ -11,10 +11,11 @@ class Help extends React.Component {
                     textAlign: "center",
                     marginBottom: "20px"
                 }}>Need Help?</h2>
-                <div
+                <div className="help-media-wrapper"
                     style={{
                             display: "flex",
-                            justifyContent: "space-around"
+                            justifyContent: "space-around",
+                            alignItems: "center"
                         }}>
                     <div 
                         style={{
@@ -24,17 +25,18 @@ class Help extends React.Component {
                             border: "solid 1px #ccc",
                             boxShadow: "2px 2px  3px  #ccc",
                             borderRadius: "4px",
-                            padding: "0 15px 0 15px",
+                            padding: "20px 15px 30px 15px",
                             width: "35%"
                         }}>
                         <div className="image-haeder"
                             style={{
-                                textAlign: "center"
+                                textAlign: "center",
+                                width: "100%"
                             }}>
                             <img
                              style={{
                                 width: "200px",
-                                height: "150px"
+                                height: "175px"
                             }}
                              alt="Contact Image" src={require('../theme/assets/contactImage.png')}/>
                         </div>
@@ -70,7 +72,7 @@ class Help extends React.Component {
                             border: "solid 1px #ccc",
                             boxShadow: "2px 2px  3px  #ccc",
                             borderRadius: "4px",
-                            padding: "0 15px 30px 15px",
+                            padding: "20px 15px 30px 15px"
                         }}>
                           <div
                           className="image-header"
