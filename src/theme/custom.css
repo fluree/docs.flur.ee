@@ -40,11 +40,22 @@ h3 {
   font-size: 22px;
 }
 
+/**** Add Cooper Hewitt Fonts *****/
+p,
+div,
+body p {
+    font-family: "Cooper Hewitt";
+}
+
+body div a {
+    font-family: "Cooper Hewitt";
+}
+
 .buttonPurple a,
 .buttonPurple {
     background-color: #4B56A5;
     border-radius: 2px;
-    /* font-family: "typeface-cooper-hewitt"; */
+    font-family: "Cooper Hewitt"; 
     font-style: normal;
     font-weight: bold;
     font-size: 16px;

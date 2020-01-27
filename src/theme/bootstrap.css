@@ -8,16 +8,17 @@
 
 html {
   font-family:sans-serif;
+  
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-body {
+/* body {
   margin: 0;
   font-family: "Open Sans";
   font-weight: 400;
   font-size: 1em;
   color: #091133;
-}
+} */
 article,
 aside,
 details,
@@ -274,10 +275,11 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Open Sans", sans-serif;
-  font-size: 15px;
+  margin: 0;
+  font-family:"Cooper Hewitt", "Open Sans", sans-serif;
+  font-size: 16px;
   line-height: 1.33333333;
-  color: #253044;
+  color: #091133;
   background-color: #fff;
 }
 input,
