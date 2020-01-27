@@ -13,7 +13,7 @@ html {
 }
 body {
   margin: 0;
-  font-family: "open-sans";
+  font-family: "Open Sans";
   font-weight: 400;
   font-size: 1em;
   color: #091133;
@@ -6002,24 +6002,7 @@ h6 {
   font-weight: normal;
   margin: 0;
 }
-h1 {
-  font-family: "typeface-cooper-hewitt";
-  font-weight: 700;
-  color: #091133;
-}
-h2 {
-  font-family: "typeface-cooper-hewitt";
-  font-weight: 600;
-  color: #091133;
-  font-size: 36px;
-}
 
-h3 {
-  font-family: "typeface-cooper-hewitt";
-  font-weight: 700;
-  color: #091133;
-  font-size: 22px;
-}
 
 
 h1.light,

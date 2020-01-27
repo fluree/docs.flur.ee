@@ -21,6 +21,25 @@
 }
 }
 
+h1 {
+  font-family: "Cooper Hewitt";
+  font-weight: 700;
+  color: #091133;
+}
+h2 {
+  font-family: "Cooper Hewitt";
+  font-weight: 600;
+  color: #091133;
+  font-size: 36px;
+}
+
+h3 {
+  font-family: "Cooper Hewitt";
+  font-weight: 700;
+  color: #091133;
+  font-size: 22px;
+}
+
 .buttonPurple a,
 .buttonPurple {
     background-color: #4B56A5;
