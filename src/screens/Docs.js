@@ -27,6 +27,8 @@ class Docs extends React.Component {
         scrollElementId: ""
     }
 
+    
+
     componentDidMount(){
         if(this.props.match.path === "/docs/search" ){
             this.setState({displaySearch: true})
@@ -51,25 +53,33 @@ class Docs extends React.Component {
         } else if (this.props.type === "library") {
             nav = getLibNav(this.props.version )
         }
-
-        this.setState({languages: languages, nav: nav}, () => this.getTopicAndLoad())
+        let currentLanguage = localStorage.getItem("currentLanguage") ? localStorage.getItem("currentLanguage") : "flureeql"
+        
+        this.setState({languages: languages, nav: nav, language: currentLanguage}, () => this.getTopicAndLoad())
     }
 
     componentDidUpdate(prevProps, prevState){
         if(this.state.scrollElementId){
             let element = document.body.querySelector(this.state.scrollElementId)
             window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top, behavior: "smooth" })
+           
+       
             this.setState({scrollElementId: null})
         }
         if(this.state.hashAnchor && document.querySelector(this.state.hashAnchor)) {
-            document.querySelector(this.state.hashAnchor).scrollIntoView()
+            document.querySelector(this.state.hashAnchor).scrollIntoView();
+             let currentLanguage = localStorage.getItem("currentLanguage")
             this.setState({hashAnchor: ""})
+         
+                
         }
         if(prevProps.match.path !== "/docs/search" & this.props.match.path === "/docs/search"){
+          
             this.setState({displaySearch: true})
         }
 
         if(prevProps.match.params.topic !== this.props.match.params.topic || prevProps.match.params.subtopic !== this.props.match.params.subtopic){
+            
             this.setState({displaySearch: false})
             this.getTopicAndLoad(this.props)
         }
@@ -133,7 +143,7 @@ class Docs extends React.Component {
             let h3s = markedHTML.getElementsByTagName("h3")
             let keys = Object.keys(h3s)
 
-            let language = this.state.language
+            let language = this.state.language;
             let html = this.loadLanguage(markedHTML, language)
             if(found){
                 nextTopic = getNextTopic(topic, subtopic, nav, type)
@@ -191,6 +201,7 @@ class Docs extends React.Component {
     }
 
     changeLanguage = (html, language) => {
+        localStorage.setItem("currentLanguage", language)
         html = this.loadLanguage(html, language)
         var languageText = { flureeql: "FlureeQL", graphql: "GraphQL", curl: "Curl", sparql: "SPARQL"}
         notify.show(`Coding Examples Now In ${languageText[language]}`, "success", 1500)
@@ -198,7 +209,7 @@ class Docs extends React.Component {
     }
 
     render(){
-        const { markdown, headers, headerLinks, topic, subtopic, language, 
+        const { markdown, headers, headerLinks, topic, subtopic, language,
             languages, previousTopic, nextTopic,  fixedSidebar, displaySearch, 
             nav } = this.state;
         return(
