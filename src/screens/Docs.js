@@ -213,7 +213,10 @@ class Docs extends React.Component {
             languages, previousTopic, nextTopic,  fixedSidebar, displaySearch, 
             nav } = this.state;
         return(
-            <div className="row">
+            <div className="row"
+                style={{
+                    marginBottom: "40px"
+                }}>
                     { this.props.type === "docs" && <Notifications /> }
                     <div className={ this.props.type === "docs" ? "col-md-4 mt20 mb20" : "col-sm-3"}>
                     <div className={fixedSidebar ? "fixedSidebar" : "sidebar" }>
@@ -261,13 +264,13 @@ class Docs extends React.Component {
                                 { 
                                     previousTopic 
                                     ?
-                                    <Button onClick={() => this.props.history.push(previousTopic)} className="pull-left">Previous</Button>
+                                    <Button onClick={() => this.props.history.push(previousTopic)} className="pull-left fluree-button">Previous</Button>
                                     : null
                                 }
                                 {
                                     nextTopic 
                                     ?
-                                    <Button onClick={() => this.props.history.push(nextTopic)} className="pull-right">Next</Button>
+                                    <Button onClick={() => this.props.history.push(nextTopic)} className="pull-right fluree-button">Next</Button>
                                     : null
                                 }       
                             </div>
@@ -347,7 +350,10 @@ class APITest extends React.Component {
     render(){
         const { host, ip, network, dbid, account, token, request, results, endpoint, endpoints } = this.state
         return(
-            <div className="mt20">
+            <div className="mt20" 
+                style={{
+                    marginRight: "40px"
+                }}>
                 <div className="mb20">
                     <h2>Test the Endpoints</h2>
                     <Form onSubmit={(e) => e.preventDefault()}>
@@ -360,7 +366,7 @@ class APITest extends React.Component {
                                     { this.props.version === currentVersion &&
                                     <ToggleButton key="hosted" style={{fontVariant: "small-caps"}} value="hosted">Hosted</ToggleButton>
                                     }
-                                    <ToggleButton key="downloaded" style={{fontVariant: "small-caps"}} value="downloaded">Downloaded</ToggleButton>
+                                    <ToggleButton key="downloaded" style={{fontVariant: "small-caps"}}  value="downloaded" className="fluree-button" >Downloaded</ToggleButton>
                             </ToggleButtonGroup>
                         </FormGroup>
                         <FormGroup controlId="endpoint">
@@ -465,7 +471,7 @@ class APITest extends React.Component {
                         </FormGroup>
                     </Form>
                     <div className="text-right">
-                        <Button bsStyle="success" onClick={this.submitTransaction}>Submit</Button>
+                        <Button bsStyle="success" onClick={this.submitTransaction} className="fluree-button">Submit</Button>
                     </div>
                 </div>
                 <div className="mt20">

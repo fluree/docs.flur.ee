@@ -144,7 +144,7 @@ body div a {
 }
 
 /****** Landing Page  *************/
-
+.fluree-button,
 #landingpage-button {
     background-color: #4B56A5;
     border-radius: 2px;
@@ -156,11 +156,26 @@ body div a {
     color: #ffffff;
 }
 
+.fluree-button:hover,
 #landingpage-button:hover {
     border: 2px solid #4B56A5;
     border-radius: 2px;
     background-color: #ffffff;
     color: #4B56A5;
+}
+
+
+.learn-button {
+    border-radius: 2px;
+    background-color: #13C6FF;
+    color: #fff;
+}
+
+.learn-button:hover {
+    border: 2px solid #13C6FF;
+    border-radius: 2px;
+    background-color: #fff;
+    color: #13C6FF;
 }
 .top-level-nav > a {
     font-weight: 800;

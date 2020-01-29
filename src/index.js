@@ -66,7 +66,7 @@ class Wrapper extends React.Component {
                             <Route path="/docs"  component={(props) => <Docs {...props} version={this.state.version} type="docs"/>} />
                             <Route path="/api/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
                             <Route path="/api/:topic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
-                            <Route path="/api" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
+                            <Route path="/api" component={(props) => <Docs  {...props} version={this.state.version} type="api"/>} />
                             <Route path="/library/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="library"/>} />
                             <Route path="/library/:topic" component={(props) => <Docs {...props} version={this.state.version} type="library"/>} />
                             <Route path="/library" component={(props) => <Docs {...props} version={this.state.version} type="library"/>} />

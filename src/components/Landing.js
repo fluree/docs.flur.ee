@@ -89,7 +89,7 @@ const FPPanel = (props) => {
                                 marginTop: "auto",
                                 padding: "3px"
                             }}>
-                            <Button bsStyle="success" 
+                            <Button bsStyle="success" className="learn-button"
                             style={{
                                 backgroundColor: "#13C6FF"
                                
@@ -119,7 +119,7 @@ const FPPanel = (props) => {
                                 marginTop: "auto",
                                 padding: "3px"
                             }}>
-                            <Button bsStyle="success"><i className="fas fa-chalkboard-teacher" style={{fontSize: "0.9em"}}/>&nbsp;&nbsp;Lessons</Button>
+                            <Button bsStyle="success" className="learn-button"><i className="fas fa-chalkboard-teacher" style={{fontSize: "0.9em"}}/>&nbsp;&nbsp;Lessons</Button>
                         </LinkContainer>
                     </div>
               
@@ -143,7 +143,7 @@ const FPPanel = (props) => {
                                 marginTop: "auto",
                                 padding: "3px"
                             }}>
-                            <Button bsStyle="success"><i className="fas fa-book" style={{fontSize: "0.9em"}}/>&nbsp;&nbsp;Documentation</Button>
+                            <Button bsStyle="success" className="learn-button"><i className="fas fa-book" style={{fontSize: "0.9em"}}/>&nbsp;&nbsp;Documentation</Button>
                         </LinkContainer>
                 </div>
             </div>
