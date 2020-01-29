@@ -58,7 +58,7 @@ class Header extends React.Component {
                 <div className="version-toggle" 
                     style={{display: 'inline-block', margin: "auto 0 auto 1.8em"}}>
                     <DropdownButton
-                        style={{background: 'transparent', color: "white", fontWeight: 800}}
+                        style={{background: 'transparent', color: "white", padding:"5px", fontSize: "1em"}}
                         title={this.props.version}
                         id="version-dropdown"
                     >
@@ -69,7 +69,7 @@ class Header extends React.Component {
                 </div> 
 
                 {/* <Col md={8} smHidden xsHidden> */}
-                <NavItems version={this.props.version} btnStyle="success" btnStyles={{padding: "10px", display:"inline-block", backgroundColor: "rgba(255, 255, 255, 0.1)", width: "100px", textAlign: "center", fontWeight: "900", fontSize: "16px"}}/>
+                <NavItems version={this.props.version} btnStyle="success" btnStyles={{padding: "5px", display:"inline-block", backgroundColor: "rgba(255, 255, 255, 0.1)", width: "100px", textAlign: "center", fontSize: "1em"}}/>
               
                 {/* </Col> */}
                 {/* <Col xs={12} mdHidden lgHidden style={{backgroundColor: "#84CEC5", height: "55px"}}>
