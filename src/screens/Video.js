@@ -109,14 +109,14 @@ class Video extends React.Component {
                             { 
                                 previousTopic 
                                 ?
-                                <Button onClick={() => this.props.history.push(previousTopic)} className="pull-left">Previous</Button>
+                                <Button onClick={() => this.props.history.push(previousTopic)} className="pull-left fluree-button">Previous</Button>
                                 : null
                             }
                             {vidName}
                             {
                                 nextTopic 
                                 ?
-                                <Button onClick={() => this.props.history.push(nextTopic)} className="pull-right">Next</Button>
+                                <Button onClick={() => this.props.history.push(nextTopic)} className="pull-right fluree-button">Next</Button>
                                 : null
                             }     
                         </h2>
