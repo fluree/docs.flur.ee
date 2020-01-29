@@ -13,7 +13,7 @@ const LearnHomePage = (props) => {
     let basics = headers.filter(header => nav[header]["class"] === "beginner");
      let intermediate = headers.filter(header => nav[header]["class"] === "intermediate")
       let examples = headers.filter(header => nav[header]["class"] === "example")
-    console.log(basics, intermediate)
+    
     return (
         <div className="text-center">
             <div className="row">
@@ -55,7 +55,10 @@ const LearnHomePage = (props) => {
                     </div>)
                 }
             </div>
-            <div className="row text-center">
+            <div className="row text-center examples-supplementary"
+                style={{
+                    paddingBottom: "150px"
+                }}>
                 {
                     examples.map(header => <div className="col-md-3 col-sm-4 col-xs-6" key={header}>
                         <LinkContainer to={`/lesson/${header}/1`}>

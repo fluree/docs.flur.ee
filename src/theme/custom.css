@@ -205,7 +205,6 @@ body div a {
     width: 200px;
     height: 200px;
     background-color: lightblue;
-    box-shadow: 2px 5px #6d8b94;
     display: "block";
     margin: 20px auto;
 }
@@ -228,7 +227,7 @@ body div a {
 
 .beginner {
     background-color:  #4B56A5;
-    box-shadow: 2px 5px #ccc;
+    border-radius: 2px;
     color: #fff;
 }
 
@@ -241,8 +240,8 @@ body div a {
 }
 
 .intermediate {
-    background-color: #C6D4FF;
-    box-shadow: 2px 5px #ccc;
+    background-color:  #C6D4FF;
+    border-radius: 2px;
     color: #091133;
 }
 
@@ -255,8 +254,8 @@ body div a {
 }
 
 .example {
-    background-color: #e6a9c7;
-    box-shadow: 2px 5px #a85981;
+    background-color: #B775D6;
+    border-radius: 2px;
     color:#091133;
 }
 
@@ -266,7 +265,9 @@ body div a {
     box-shadow: 2px 5px #a85981;
     color: #e8c8d8;
 }
-
+.examples-supplementary {
+    padding-bottom: 100px;
+}
 
 
 .no-underline{
