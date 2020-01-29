@@ -21,7 +21,10 @@ const LearnHomePage = (props) => {
                     <h2>Lessons</h2>
                 </div>
             </div>
-            <div className="row text-center">
+            <div className="row text-center"
+                 style={{
+                    paddingBottom: "60px"
+                }}>
                 {
                     basics.map(header => <div className="col-md-3 col-sm-4 col-xs-6" key={header}>
                         <LinkContainer to={`/lesson/${header}/1`}>
@@ -38,7 +41,10 @@ const LearnHomePage = (props) => {
                     </div>)
                 }
             </div>
-            <div className="row text-center">
+            <div className="row text-center"
+             style={{
+                    paddingBottom: "60px"
+                }}>
                 {
                     intermediate.map(header => <div className="col-md-3 col-sm-4 col-xs-6" key={header}>
                         <LinkContainer to={`/lesson/${header}/1`}>

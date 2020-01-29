@@ -232,7 +232,8 @@ body div a {
 }
 
 .beginner:hover{
-    background-color: #B775D6;
+    /* background-color: #B775D6; */
+    opacity: 0.5;
     cursor: pointer;
     box-shadow: 2px 5px #ccc;
     color: #fff;
@@ -246,7 +247,8 @@ body div a {
 }
 
 .intermediate:hover{
-    background-color: #509fb7;
+    /* background-color: #509fb7; */
+    opacity: 0.5;
     cursor: pointer;
     box-shadow: 2px 5px #ccc;
     color: #091133;
@@ -260,8 +262,9 @@ body div a {
 }
 
 .example:hover{
-    background-color: #792b52;
+    /* background-color: #792b52; */
     cursor: pointer;
+    opacity: 0.5;
     box-shadow: 2px 5px #a85981;
     color: #e8c8d8;
 }
