@@ -98,7 +98,7 @@ In the middle of a where clause, you can bind a variable to an aggregate value. 
 {"select": "?hash", 
  "where": [
     ["?s", "_block/number", "?bNum"],
-    ["?maxBlock",  "#(max ?bNum)"],
+    ["?maxBlock",  "(max ?bNum)"],
     ["?s", "_block/number", "?maxBlock"],
     ["?s", "_block/hash", "?hash"]
 ]}
