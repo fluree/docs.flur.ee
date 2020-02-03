@@ -237,6 +237,32 @@ Body: "SELECT ?chat ?message ?person ?instant ?comments
 
 To see examples of sending a request to the `/command` endpoint, see [signed transactions](/docs/identity/signatures#signed-transactions).
 
+
+### /reindex 
+
+Available in `0.11.7` or higher. Reindexes the specified ledger. 
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/reindex
+Headers: None
+Body: None
+```
+
+This request may take some time to return. It will return a map, such as the following:
+
+```all
+{
+    "block": 13,
+    "t": -27,
+    "stats": {
+        "flakes": 899990,
+        "size": 41435614,
+        "indexed": 13
+    }
+}
+```
+
 ### /gen-flakes
 
 Returns the list of flakes that would be added to a ledger if a given transaction is issued. The body of this request is simply the transaction. Note that this is a test endpoint. This does *NOT* write the returned flakes to the ledger.
