@@ -40,6 +40,9 @@ h3 {
   font-size: 22px;
 }
 
+div.help-box-shadow:hover {
+    box-shadow: 2px 2px  3px  #ccc;
+}
 /**** Add Cooper Hewitt Fonts *****/
 p,
 div,

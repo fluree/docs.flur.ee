@@ -18,12 +18,13 @@ class Help extends React.Component {
                             alignItems: "center"
                         }}>
                     <div 
+                        className="help-box-shadow"
                         style={{
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "center",
                             border: "solid 1px #ccc",
-                            boxShadow: "2px 2px  3px  #ccc",
+                            
                             borderRadius: "4px",
                             padding: "20px 15px 30px 15px",
                             width: "35%"
@@ -64,13 +65,14 @@ class Help extends React.Component {
                           
                     </div>
                     <div
+                        className="help-box-shadow"
                          style={{
                             display: "flex",
                             flexDirection: "column",
                             width: "35%",
                             justifyContent: "center",
                             border: "solid 1px #ccc",
-                            boxShadow: "2px 2px  3px  #ccc",
+                            
                             borderRadius: "4px",
                             padding: "20px 15px 30px 15px"
                         }}>
