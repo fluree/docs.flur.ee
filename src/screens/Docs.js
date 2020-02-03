@@ -352,7 +352,7 @@ class APITest extends React.Component {
         return(
             <div className="mt20" 
                 style={{
-                    // marginRight: "40px"
+                    marginRight: "30px"
                 }}>
                 <div className="mb20">
                     <h2>Test the Endpoints</h2>
