@@ -83,8 +83,8 @@ class Help extends React.Component {
                             }}>
                             <img
                              style={{
-                                width: "200px",
-                                height: "125px"
+                                width: "250px",
+                                height: "150px"
                             }}
                              alt="Contact Image" src={require('../theme/assets/slackimage.png')}/>
                         </div>
