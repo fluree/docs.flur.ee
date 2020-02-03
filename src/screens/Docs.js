@@ -352,7 +352,7 @@ class APITest extends React.Component {
         return(
             <div className="mt20" 
                 style={{
-                    marginRight: "40px"
+                    // marginRight: "40px"
                 }}>
                 <div className="mb20">
                     <h2>Test the Endpoints</h2>
@@ -459,14 +459,14 @@ class APITest extends React.Component {
                             showPrintMargin={true}
                             showGutter={true}
                             onChange={(e) => this.setState({request: e})}
-                            width= {"90%"}
+                            width= {"100%"}
                             height= {"300px"}
                             highlightActiveLine={true}
                             value={request}
                             editorProps={{ $blockScrolling: true }}
                             setOptions={{
                             showLineNumbers: true,
-                            tabSize: 2 
+                            tabSize: 2
                             }}/>
                         </FormGroup>
                     </Form>
@@ -484,7 +484,7 @@ class APITest extends React.Component {
                             fontSize={14}
                             showPrintMargin={true}
                             showGutter={true}
-                            width= {"90%"}
+                            width= {"100%"}
                             height= {"300px"}
                             highlightActiveLine={true}
                             value={results}

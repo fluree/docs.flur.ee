@@ -11,7 +11,10 @@
 /* * {
     border: 1px solid red;
 } */
-
+/*** API Editor ***/
+.ace_content * {
+    font-family: monospace;
+}
 
 /**** Help Page ******/
 
