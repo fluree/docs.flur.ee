@@ -36,7 +36,7 @@ If you are having an issue signing queries, you can use the [troubleshooting gui
 
 #### Headers
 
-You should submit a POST request should have the following headers: `content-type`, `mydate`, `digest`, `signature`.
+You should submit a POST request that should have the following headers: `content-type`, `mydate`, `digest`, `signature`.
 
 - `content-type`: `application/json`
 - `mydate`: An RFC 1123 formatted date, i.e. Mon, 11 Mar 2019 12:23:01 GMT

@@ -14,8 +14,8 @@ Location | When Trigged?
 -- | --
 [_rule/fns](/docs/smart-functions/rules) | When an `_auth` record containing a given `_rule` issues a query or transaction containing the `_collection` or `_predicates` specified in the rule. 
 [_collection/spec](/docs/smart-functions/collection-spec) | When transaction containing the specified `_collection` is issued, regardless of the issuer.
-[_predicate/spec](/docs/smart-functions/predicate-spec) | When transaction containing the specified `_predicate` is issued, regardless of issuer (once per specified predicate).
-[_predicate/txSpec](/docs/smart-functions/predicate-tx-spec) | When transaction containing the specified `_predicate` is issued, regardless of who issuer (once per transaction).
+[_predicate/spec](/docs/smart-functions/predicate-spec) | When transaction containing the specified `_predicate` is issued, regardless of the issuer (once per specified predicate).
+[_predicate/txSpec](/docs/smart-functions/predicate-tx-spec) | When transaction containing the specified `_predicate` is issued, regardless of who the issuer is (once per transaction).
 [In transactions](/docs/smart-functions/fns-in-txs) | You can use smart functions directly in transactions, but their role and behavior is slightly different. 
 
 ### Function Predicates

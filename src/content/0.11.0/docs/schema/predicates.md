@@ -197,7 +197,7 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 Transactions not support in SPARQL
 ```
 
-Add you can create new predicates with a `_predicate/longDescription`:
+And you can create new predicates with a `_predicate/longDescription`:
 
 
 ```flureeql

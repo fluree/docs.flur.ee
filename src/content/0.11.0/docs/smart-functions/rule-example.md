@@ -274,7 +274,7 @@ Transactions not supported in SPARQL.
 
 In order for the people to sign their own transactions and queries, we need to create auth records. Unless we are using [authorities](/docs/identity/auth-records#authority), the `_auth/id` for each auth record needs to be connected to a [public-private key pair](/docs/identity/public-private-keys#auth-id).
 
-There are several different ways to [generate public-private key/auth id triples](/docs/identity/public-private-keys#generating-a-public-private-key-auth-id-triple), and you can either choose to use your own or follow along with the ones provided in our example. Note that if you are using this is a real application, you should create your own. 
+There are several different ways to [generate public-private key/auth id triples](/docs/identity/public-private-keys#generating-a-public-private-key-auth-id-triple), and you can either choose to use your own or follow along with the ones provided in our example. Note that if you are using this in a real application, you should create your own. 
 
 Public/Private Key and Account Id (`_auth/id`) for `_auth$jdoe`.
 

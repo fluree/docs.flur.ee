@@ -165,7 +165,7 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 Transactions not support in SPARQL
 ```
 
-Add you can create new collections with a `_collection/longDescription`:
+And you can create new collections with a `_collection/longDescription`:
 
 
 ```flureeql

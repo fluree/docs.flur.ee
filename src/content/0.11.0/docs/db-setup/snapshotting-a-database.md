@@ -6,7 +6,7 @@ Currently, you can only delete a database if you are using Fluree version 0.11.0
 
 ### Creating a Database from an Snapshot
 
-Currently, you can only create a database from a snapshot if you are using Fluree version 0.11.0 or higher and you are using the downloaded version of Fluree. In addition, there is currently no way to create a snapshot via the UI. You must use the [new-db](/api/downloaded-endpoints/downloaded-examples#-new-db) endpoint to create a database from a snapshot a database.
+Currently, you can only create a database from a snapshot if you are using Fluree version 0.11.0 or higher and you are using the downloaded version of Fluree. In addition, there is currently no way to create a snapshot via the UI. You must use the [new-db](/api/downloaded-endpoints/downloaded-examples#-new-db) endpoint to create a database from a snapshot.
 
 The snapshot file that you are using to create your new database does not have to be from the same network. It can be from any Fluree instance. In addition, in the future we anticipate supporting the ability to create database from snapshots that are hosted remotely (i.e. in an S3 bucket).
 
