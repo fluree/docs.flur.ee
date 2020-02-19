@@ -2,7 +2,7 @@
 
 When creating a new database, you must specify a `db/id`. This id must be unique in your network and cannot be changed. A `db/id` begins with your network name followed by `/`. 
 
-A database name is comprised of a network name followed by the database name `network/db`. Both the network name and the database name can only included lowercase characters, numbers, and dashes - `[a-z0-9-]`. This ensures cross-platform file and URL-compatibility. Database created with previous versions where uppercase letters were allowed will be automatically lowercased, as of version 0.11.0 and up.
+A database name is comprised of a network name followed by the database name `network/db`. Both the network name and the database name can only include lowercase characters, numbers, and dashes - `[a-z0-9-]`. This ensures cross-platform file and URL-compatibility. Database created with previous versions where uppercase letters were allowed will be automatically lowercased, as of version 0.11.0 and up.
 
 If a network already exists with that name, and you have permissions to add to that network, a new database will be created. If a network does not already exist with that name, a new network and new database will be created. 
 

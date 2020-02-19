@@ -26,16 +26,15 @@ Key Files:
 
 ### Dependencies
 
-Fluree requires Java 8 (Java 1.8) or above. To verify that your version of Java, you can type `java -version` in the terminal.
+Fluree requires Java Server 8 (Java 1.8) or above. To verify that your version of Java, you can type `java -version` in the terminal.
 
 ### Launching Fluree
 
 To run Fluree with all the default options, navigate to the directory where you downloaded Fluree in the terminal then launch Fluree with the following command:
 
-For Mac or Linux systems:
-`./fluree_start.sh` 
+> For Mac or Linux systems: `./fluree_start.sh` 
 
-Note that for Windows systems, you have to download a Bash emulator, like [Git For Windows](https://gitforwindows.org/) to properly run Fluree. In your Bash emulator, you can run `./fluree_start.sh` to start Fluree. Alternatively on Windows, you can [download Fluree with Chocolatey](#download-fluree-with-chocolatey).
+> For Windows systems, you have to download a Bash emulator, like [Git For Windows](https://gitforwindows.org/) to properly run Fluree. In your Bash emulator, you can run `./fluree_start.sh` to start Fluree. Alternatively on Windows, you will be able to [download Fluree with Chocolatey](#download-fluree-with-chocolatey).
 
 When Fluree is done starting up, your terminal will log: 
 
@@ -44,6 +43,8 @@ Starting web server on port:   [PORT NUMBER]
 ```
 
 If the above message is not displaying in your terminal, the terminal should print out a relevant error message. Common errors include your chosen port already being in use and not having Java 8 or above installed. 
+
+> If you see an error "missing 'server' JVM", you need to install Java Server JRE. See [Oracle documentation](https://docs.oracle.com/en/java/) to select the appropriate platform, version (e.g., 8) and operating system.
 
 After you launch Fluree for the first time, you will not have any databases. You will need to create a database to begin. 
 
@@ -215,7 +216,7 @@ Note that as of version 0.10.0, downloadable Fluree databases do not have a user
 
 ### Fluree with Docker
 
-Instructions and materials for using Fluree with Docker are [available on Gitlab](https://gitlab.com/zer0active/fluree/flureedb-docker). This is contributed by supporter, Allan Tomkinson. 
+Instructions and materials for using Fluree with Docker are [available on Gitlab](https://github.com/fluree/fluree-docker-example). 
 
 ### Download Fluree with Homebrew
 
