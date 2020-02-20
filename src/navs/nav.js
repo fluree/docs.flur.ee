@@ -33,7 +33,8 @@ export const endpointMap = {
     "0.10.0": [ "block", "graphql", "history", "multi-query", "query", "signin", "sparql", "transact"],
     "0.11.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with"],
     "0.12.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with"] ,
-    "0.13.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with"] 
+    "0.13.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
+                "ledger-stats", "block-range-with-txn"] 
 }
 
 export const languageMap = {

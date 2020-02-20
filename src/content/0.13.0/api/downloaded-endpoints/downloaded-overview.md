@@ -48,11 +48,12 @@ Action | Endpoint | Explanation
 
 Action | Verb | Endpoint | Description
 -- | -- | -- | --
+Block Stats | POST | `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn-async` | Block data, including signatures, instant, hash, flakes and transactions
 Health | ANY | `/fdb/health` | Returns whether or not the server is ready. 
+Ledger Stats | POST | `/fdb/[NETWORK-NAME]/[DBID]/ledger-stats` | General ledger stats, including status, # flakes, current block, and size (kb).
 Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]` | Get all key-value pairs of a certain type
 Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]` | Gets the value for the provided key
 Sub | POST | `/fdb/sub` | Handles subscriptions
-
 
 For both queries and transactions, a signature is not required if the option `fdb-open-api` is set to true (default for the downloaded version of Fluree). 
 

@@ -32,7 +32,7 @@ The keys can contain the full predicate name including the namespace, i.e. `chat
   "handle":   "cStuart",
   "fullName": "Chana Stuart"
 }]' \
-   [HOST]/api/db/transact  
+   [HOST]/fdb/[NETWORK]/[LEDGER]/transact  
 ```
 
 ```graphql

@@ -343,6 +343,18 @@ Body: {
   "flakes": [[351843720888321, 1002, "JoAnne", -5, true, nil]]}
 ```
 
+### /block-range-with-txn-async
+
+A POST request to `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn-async` returns block stats, as well as flakes and transactions for the specified block(s).
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/block-range-with-txn-async
+Headers: None
+Body: {
+  "start": 1, 
+  "end": 2}
+```
 
 ### /health
 
@@ -351,6 +363,17 @@ A GET request to `/fdb/health` returns whether the server is ready or not. You a
 ```all
 Action: GET
 Endpoint: http://localhost:8080/fdb/health
+```
+
+### /ledger-stats
+
+A POST request to `/fdb/[NETWORK-NAME]/[DBID]/ledger-stats` provides stats about the requested ledger.  
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/ledger-stats
+Headers: None
+Body: None
 ```
 
 ### /storage
@@ -372,6 +395,7 @@ Endpoint: http://localhost:8080/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYP
 ### /sub
 
 A POST request to `/fdb/sub` handles subscriptions. More documentation on this feature coming soon. You are not able to test this endpoint in the sidebar. These requests do not need to be signed. 
+
 
 ### /new-keys
 
