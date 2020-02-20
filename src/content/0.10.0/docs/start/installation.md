@@ -237,4 +237,4 @@ brew untap fluree/flureedb
 
 ### Download Fluree with Chocolatey
 
-This features is coming soon. 
+This feature is coming soon. 

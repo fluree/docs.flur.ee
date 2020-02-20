@@ -2,11 +2,11 @@
 
 If you already have a hosted version of Fluree, you can jump to [User Interface](#user-interface). To request a hosted version of Fluree, you can sign up on [our site](https://www.flur.ee/), but note that free hosted versions may be limited. 
 
-### Installing Fluree
+### Installing Fluree Locally
 
-Download and unzip: [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip).
+Download and unzip: [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip). On Mac or Linux, you can issue `wget https://fluree-releases-public.s3.amazonaws.com/fluree-latest.zip` to download the latest zip file into your current directory.
 
-The contents of the folder are as follows:
+The contents of the folder are as follows (might be slightly different based on your version):
 
 ```all
 flureeDB-0.11.0/
@@ -48,7 +48,7 @@ If the above message is not displaying in your terminal, the terminal should pri
 
 After you launch Fluree for the first time, you will not have any databases. You will need to create a database to begin. 
 
-Creating a database and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the [user interface](#user-interface).
+Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the [user interface](#user-interface).
 
 ### Exiting and Restarting Fluree
 
@@ -252,4 +252,8 @@ brew untap fluree/flureedb
 
 ### Download Fluree with Chocolatey
 
-This features is coming soon. 
+This feature is coming soon. 
+
+### Fluree Command Line Tool
+
+We have a command line tool that you can [download](https://fluree-cli-releases-public.s3.amazonaws.com/fluree_cli-latest.zip) to explore your ledger even without Fluree running. To see all the tool's capabilities, visit the [documentation](https://github.com/fluree/fluree.cli).
