@@ -26,6 +26,7 @@ const libNav0_11_0 = require('./nav_maps/libNav0_11_0.json');
 
 // Video Navs
 const videoNav0_10_0 = require('./nav_maps/videoNav0_10_0.json');
+const videoNav0_13_0 = require('./nav_maps/videoNav0_13_0.json');
 
 
 export const endpointMap = {
@@ -110,7 +111,9 @@ export function getVideoNav(version) {
         return videoNav0_10_0;
     } else if (version === "0.12.0") {
         return videoNav0_10_0;
-    } else {
-        return videoNav0_10_0;
+    }  else if (version === "0.13.0") {
+        return videoNav0_13_0;
+    }  else {
+        return videoNav0_13_0;
     }
 }

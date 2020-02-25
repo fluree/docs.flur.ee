@@ -86,6 +86,45 @@ Headers: None
 Body: {"db/id": "NETWORK/DBID"}
 ```
 
+### /add-server
+
+This endpoint attempts to dynamically add server to the network. Please note, this is a beta feature in 0.13.0
+
+Let's say you have two servers running, `ABC` and `DEF`, in order to get a third server, `GHI` to join the network, you need to start up server `GHI` with the following properties. Note the properties can be set in a property file or environment variables as well:
+
+```all
+./fluree_start.sh -Dfdb-join?=true -Dfdb-group-servers=ABC@localhost:9790,DEF@localhost:9791,GHI@localhost:9792 -Dfdb-group-this-server=GHI -Dfdb-group-log-directory=data/GHI/raft/ -Dfdb-storage-file-directory=data/GHI/fdb/ -Dfdb-api-port=8092
+```
+
+Then, once `GHI` is running a request needs to be sent to either of the two servers already in the network, `ABC` or `DEF`:
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/add-server
+Headers: None
+Body: {"server": "GHI"}
+```
+
+If a majority of the network agrees to the configuration change, `GHI` will then have a preset amount of rounds to sync up it's network state - for example, it's RAFT state. By default, the new server has 10 rounds, but if you changed `fdb-group-catch-up-rounds` in your properties, it could be more or less. Once its RAFT state is synced, the server will attempt to copy all block and index files from the other servers in the network. This should all happen in one try, however, if you have a large number of blocks or ledgers, you may need to shut down and restart `GHI` (please do let us know if you encounter issues. This is a beta feature, and any feedback on your experiences is helpful. You can reach us on Slack or at `support@flur.ee`). 
+
+Only one configuration change can be in process at once. Attempts to issues simultaneous additions or removals will be rejected. 
+
+### /remove-server
+
+This endpoint attempts to dynamically remove a server from the network. Please note, this is a beta feature in 0.13.0
+
+Let's say you have three servers running, `ABC`, `DEF`, and `GHI`. If you want to shut down any of the servers, you can issue a request to any of the servers to shut down a given server. 
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/remove-server
+Headers: None
+Body: {"server": "GHI"}
+```
+
+If a majority of the network agrees to the configuration change, then `GHI` will be removed from the network. If `GHI` was the leader, then a new leader will be elected. Note, the running server will still have query access to the blocks it has received, but it will not be able to issue transaction and it will not receive updates. 
+
+Only one configuration change can be in process at once. Attempts to issues simultaneous additions or removals will be rejected. 
 
 ### /query
 All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).

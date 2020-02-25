@@ -15,6 +15,8 @@ New DB | `/fdb/new-db` | Creates a new ledger
 Snapshot | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/snapshot` | Creates a (local) snapshot file from an existing ledger
 Export | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/export` | Locally exports an existing ledger into either `.xml` or `.ttl`
 Delete DB | `/fdb/delete-db` | Deletes ledger (does not currently delete ledger files)
+Add Server | `/fdb/add-server` | (Beta feature) Dynamically adds a server to the network.
+Remove Server | `/fdb/remove-server`| (Beta feature) Dynamically removes a server from the network.
 Query | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` | Queries in FlureeQL syntax
 Multi-Query | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/multi-query` | Multi-Queries in FlureeQL syntax
 Block | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/block` | Block queries in FlureeQL syntax
