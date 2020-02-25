@@ -33,7 +33,7 @@
             },
             "history-query": {
                 "headerName": "History Query",
-                "file": "0.10.0/docs/query/history-query"
+                "file": "0.13.0/docs/query/history-query"
             },
             "advanced-query": {
                 "headerName": "Advanced Query",

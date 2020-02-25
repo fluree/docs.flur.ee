@@ -189,7 +189,8 @@ There are several sub-select options you specify. Certain options, such as `_rec
 
 Key | Description 
 -- | -- 
-`_limit` | Limit (integer) of results to include. For `multi` predicates. 
+`_limit` | Limit (integer) of results to include. For `multi` predicates. By default, returns 100.  
+`_offset` | Offset (integer) number results to include. For `multi` predicates. By default, offset is 0.
 `_recur` | Number of times (integer) to follow a relationship. See [Recursion](#recursion). For `ref` predicates.
 `_component` | Whether to automatically crawl the graph for component entities. Overrides the top-level option. For `ref` predicates.
 `_as` | An alternate name for the predicate that is being referenced.
