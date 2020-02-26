@@ -1,8 +1,10 @@
 ## Overview
 
-The javascript library, as an extension of our linear-scaling query peer service, makes data readily accessible. We get trusted data to the access point quickly, It runs in the browser, using a web socket to connect to a ledger server/group.  The main commands are below.
+Using the NodeJS library, a NodeJS service can be configured as a fully-functioning query peer.  After establishing an initial connection, a web socket is used to communicate to a ledger server/group.  
 
-For the downloadable version, unless you changed the default `fdb-api-port`, the full URL is `http://localhost:8080/`
+The main commands are below.
+
+> For the downloadable version, unless you changed the default `fdb-api-port`, the full URL is `http://localhost:8080/`
 
 Action | Command | Explanation 
 -- | -- | --
@@ -24,6 +26,8 @@ History |  `history_query`| History queries in FlureeQL syntax
 Signed Query | `signed_query` | Signed query in FlureeQL syntax
 Transact | `transact` | Submits a transaction for a ledger.
 Monitor Transaction | `monitor_tx` | Returns the results of the monitor transaction request or a timeout
+GraphQL | `graphql` | Queries or transactions in GraphQL syntax, as a string
+SPARQL | `sparql` | Queries in SPARQL syntax, as a string
 Listen | `listen` | Listens to all events of a given ledger
 Close Listener | `close_listener` | Closes a listener
 Listeners | `listeners` | Returns a list of listeners currently registered for each ledger
@@ -33,4 +37,4 @@ For queries and transactions, a signature is not required if the option `fdb-ope
 
 More information on [signing queries](/docs/identity/signatures#signed-queries) and [signing transactions](/docs/identity/signatures#signed-transactions) can be found in the linked sections. 
 
-See [JavaScript Library Examples](/library/javascript-library/javascript-examples) for examples of how to use each of the commands.
+See [NodeJS Library Examples](/library/nodejs/nodejs-examples) for examples of how to use each of the commands.

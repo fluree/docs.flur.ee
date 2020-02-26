@@ -239,7 +239,7 @@ class Docs extends React.Component {
                             }
                     </div>
                 </div>
-                <div className={ this.props.type === "docs" ?  "col-md-8 mb20" : "col-sm-6"} id="body-container">
+                <div className={ this.props.type === "docs" || this.props.type === "library" ?  "col-md-8 mb20" : "col-sm-6"} id="body-container">
                     { this.props.type === "docs" &&
                         <div className="row">
                             <div className="col-xs-6"/>
