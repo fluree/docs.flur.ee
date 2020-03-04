@@ -15,7 +15,7 @@
             },
             "basic-schema": {
                 "headerName": "Basic Schema",
-                "file": "0.10.0/docs/start/basic-schema"
+                "file": "0.13.0/docs/start/basic-schema"
             }
         },
         "pageName": "Getting Started"
@@ -151,7 +151,7 @@
             },
             "database-settings": {
                 "headerName": "Database Settings",
-                "file": "0.10.0/docs/db-setup/database-settings"
+                "file": "0.13.0/docs/db-setup/database-settings"
             },
             "forking-a-db": {
                 "headerName": "Forking a DB",
@@ -180,7 +180,7 @@
             },
             "system-collections": {
                 "headerName": "System Collections",
-                "file": "0.10.0/docs/infrastructure/system_collections"
+                "file": "0.13.0/docs/infrastructure/system_collections"
             },
             "application-best-practices": {
                 "headerName": "Best Practices",
@@ -188,9 +188,13 @@
             }
         }
     },
-    "examples": {
-        "pageName": "Examples",
+    "developer-hub": {
+        "pageName": "Developer Hub",
         "subTopics": {
+            "hub": {
+                "headerName": "Developer Hub",
+                "file": "0.13.0/docs/developer-hub/developer-hub"
+            },
             "cryptocurrency": {
                 "headerName": "Cryptocurrency",
                 "file": "0.11.0/docs/examples/cryptocurrency"
@@ -198,10 +202,6 @@
             "voting": {
                 "headerName": "Voting",
                 "file": "0.11.0/docs/examples/voting"
-            },
-            "supply-chain": {
-                "headerName": "Supply Chain",
-                "file": "0.11.0/docs/examples/supply-chain"
             }
         }
     }

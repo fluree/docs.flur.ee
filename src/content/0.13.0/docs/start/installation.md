@@ -4,12 +4,16 @@ If you already have a hosted version of Fluree, you can jump to [User Interface]
 
 ### Installing Fluree Locally
 
-Download and unzip: [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip). On Mac or Linux, you can issue `wget https://fluree-releases-public.s3.amazonaws.com/fluree-latest.zip` to download the latest zip file into your current directory.
+Download and unzip: [latest stable version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-stable.zip).
+
+Or, you can get the [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip). 
+
+On Mac or Linux, you can issue `wget https://fluree-releases-public.s3.amazonaws.com/fluree-latest.zip` to download the latest zip file into your current directory.
 
 The contents of the folder are as follows (might be slightly different based on your version):
 
 ```all
-flureeDB-0.11.0/
+fluree-0.13.0/
 ├── fluree_sample_.properties
 ├── VERSION
 ├── fluree_start.sh
@@ -54,12 +58,12 @@ Creating a ledger and any other interaction with Fluree can happen either throug
 
 To exit Fluree, simply click `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory](#in-memory-fluree), this will not delete any of the information that was successfully added to your databases (in other words, if you received a 200 response from your transactions, that means it was added to your database). 
 
-To restart Fluree, navigate to the folder that contains your Fluree instance and run `./flureeDB_start.sh`.
+To restart Fluree, navigate to the folder that contains your Fluree instance and run `./fluree_start.sh`.
 
 After Fluree successfully starts for the first time, if you are using the default `fdb-storage-type` set to `file`, there will be additional items in your Fluree instance folder. Your folder will look something like the below: 
 
 ```all
-flureeDB-0.11.0/
+fluree-0.13.0/
 ├── data/
 │   ├── TRANSACTORNAME/
 │   │   ├── raft
