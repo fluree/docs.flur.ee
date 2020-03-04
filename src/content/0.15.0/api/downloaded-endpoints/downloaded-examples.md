@@ -54,7 +54,7 @@ Headers: None
 Body: Null
 ```
 
-You can also create a snapshot with no history by specifying `no-history` true in the in the body, as seen below. 
+You can also create a snapshot with no history by specifying `no-history` true in the in the body, as seen below. See how to do this in the section on [mutability and snapshotting with no history](/docs/database-setup/mutability#snapshot-no-history).
 
 
 ```all
@@ -332,6 +332,20 @@ This request may take some time to return. It will return a map, such as the fol
         "size": 41435614,
         "indexed": 13
     }
+}
+```
+
+### /hide
+
+This is a beta feature. To read about how it works, visit [hiding flakes](/docs/database-setup/mutability#hiding-flakes).
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/hide
+Headers: None
+Body: {
+  "hide": [387028092977154, "comment/message", "bad comment"],
+	"local": true
 }
 ```
 

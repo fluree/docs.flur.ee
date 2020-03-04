@@ -7,15 +7,7 @@ Currently, you can only delete a database if you are using Fluree version 0.11.0
 
 See [/snapshot](/api/downloaded-endpoints/downloaded-examples#-snapshot) to see how to do this. 
 
-### Snapshot, no History
-
-A snapshot with no history is one way we allow flexibility in immutability in Fluree. You can create a snapshot for a ledger. This snapshot will have three blocks (or more):
-
-- `Genesis Block` with any system collections and predicates, as well as auths, roles, rules, functions, tags, and settings.
-- `Schema Block` with any user-created collections and predicates, excluding any `_collection/spec`, `_predicate/spec`, and `_predicate/txSpec`.
-- `Data Block` with any active flakes (i.e. flakes that have not been retracted). Depending on the size of your active flakes, this may be 1 or more blocks. After all other flakes are added to the ledger, we will then apply any smart functions to collection or predicate specs.
-
-See [/snapshot](/api/downloaded-endpoints/downloaded-examples#-snapshot) to see how to do this. 
+You can also create a snapshot with no history. Look at the section on [mutability](/docs/database-setup/mutability#snapshot-no-history) for more information.
 
 ### Creating a Database from an Snapshot
 
