@@ -98,7 +98,3 @@ In order to get the `sig`, you need to get the SHA2-256 hash of the stringified 
 ### Verifying Signatures
 
 ECDSA allows for recovery of the public key from a signature, so the original transaction and signature are the only two things required in order to verify that a signature is valid. There are online tools that allow you to independently verify a signature based on the signature + original transaction. <a href="https://github.com/fluree/cryptography" target="_blank">Our cryptography GitHub repo</a> also has functions that allow you to verify any signatures.
-
-### Examples
-
-You can see examples of how to use signed transaction in the [Cryptocurrency](/docs/examples/cryptocurrency), [Voting](/docs/examples/voting), and [Supply Chain](/docs/examples/supply-chain) sample apps. 
