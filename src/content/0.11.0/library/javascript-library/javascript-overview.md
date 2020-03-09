@@ -1,8 +1,7 @@
 ## Overview
 
-The javascript library, as an extension of our linear-scaling query peer service, makes data readily accessible. We get trusted data to the access point quickly.  It runs in the browser, using a web socket to connect to a ledger server/group.  The main commands are below.
+The javascript library, as an extension of our linear-scaling query peer service, makes data readily accessible. We get trusted data to the access point quickly.  It runs in the browser, using a web socket to connect to a ledger server/group. The main commands are below.
 
-For the downloadable version, unless you changed the default `fdb-api-port`, the full URL is `http://localhost:8080/`
 
 Action | Command | Explanation 
 -- | -- | --

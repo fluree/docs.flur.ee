@@ -8,4 +8,7 @@ The following libraries are available as of v0.13.0.
 * Node.js Library (beta)
 > Using the Node.js library, a node service can be configured as a fully-functioning query peer. 
 
+* FlureeWorker Library (beta)
+> The FlureeWorker library, based on the Web Worker APIs, provides trusted data locally to your browser application.    
+
 

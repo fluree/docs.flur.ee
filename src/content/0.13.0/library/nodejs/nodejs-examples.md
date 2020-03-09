@@ -1,13 +1,13 @@
-## NodeJS Library Examples
+## Node.js Library Examples
 
-The following commands are available in the NodeJS api library. JavaScript promises are used to return results from long-running processes.   
-
-For the examples, we are assuming that the Fluree NodeJS Library is is imported or required.  For example:
-
+You can dowbload the latest version of the Fluree Node.js library from npm:
 ```all
-require('./flureenjs.js');
+npm install @fluree/flureenjs
 ```
-&nbsp;
+
+
+The following commands are available in the Node.js api library. JavaScript promises are used to return results from long-running processes.   
+
 
 ### **connect**
 Connect to a ledger server using an URL address. If using a ledger group, multiple addresses can be supplied, separated by a comma.  
@@ -44,7 +44,7 @@ flureenjs.connect_p(flureeUrl)
     })
     .catch(error => {
         console.error("Error connecting to Fluree DB", error);
-        // send alerts, gracefully shutdown NodeJS server
+        // send alerts, gracefully shutdown Node.js server
     })
 ```  
 

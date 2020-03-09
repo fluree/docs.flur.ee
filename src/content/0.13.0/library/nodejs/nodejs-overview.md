@@ -1,10 +1,8 @@
 ## Overview
 
-Using the NodeJS library, a NodeJS service can be configured as a fully-functioning query peer.  After establishing an initial connection, a web socket is used to communicate to a ledger server/group.  
+Using the Node.js library, a Node.js service can be configured as a fully-functioning query peer.  After establishing an initial connection, a web socket is used to communicate to a ledger server/group.  
 
 The main commands are below.
-
-> For the downloadable version, unless you changed the default `fdb-api-port`, the full URL is `http://localhost:8080/`
 
 Action | Command | Explanation 
 -- | -- | --
@@ -37,4 +35,4 @@ For queries and transactions, a signature is not required if the option `fdb-ope
 
 More information on [signing queries](/docs/identity/signatures#signed-queries) and [signing transactions](/docs/identity/signatures#signed-transactions) can be found in the linked sections. 
 
-See [NodeJS Library Examples](/library/nodejs/nodejs-examples) for examples of how to use each of the commands.
+See [Node.js Library Examples](/library/Node.js/Node.js-examples) for examples of how to use each of the commands.

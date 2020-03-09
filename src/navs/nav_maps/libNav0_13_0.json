@@ -22,7 +22,7 @@
         }
     },
     "nodejs": {
-        "pageName": "NodeJS Library",
+        "pageName": "Node.js Library",
         "subTopics": {
             "overview": {
                 "headerName": "Overview",
@@ -31,6 +31,19 @@
             "nodejs-examples": {
                 "headerName": "Examples",
                 "file": "0.13.0/library/nodejs/nodejs-examples"
+            }
+        }
+    },
+    "serviceworker": {
+        "pageName": "FlureeWorker Library",
+        "subTopics": {
+            "overview": {
+                "headerName": "Overview",
+                "file": "0.13.0/library/serviceworker/flureeworker-overview"
+            },
+            "flureeworker-examples": {
+                "headerName": "Examples",
+                "file": "0.13.0/library/serviceworker/flureeworker-examples"
             }
         }
     }

@@ -1,6 +1,13 @@
 ## JavaScript Library Examples
 
+You can dowbload the latest version of the Fluree JavaScript library from npm:
+```all
+npm install @fluree/flureedb
+```
+
 The following commands are available in the JavaScript api library. JavaScript promises are used to return results from long-running processes.   
+
+>*For the following examples, it is assumed that you are using the downloaded Fluree Community Edition.  Unless you changed the default* `fdb-api-port`*, the full URL is* `http://localhost:8080/`
 
 ### **connect**
 Connect to a ledger server using an URL address. If using a ledger group, multiple addresses can be supplied, separated by a comma.  
