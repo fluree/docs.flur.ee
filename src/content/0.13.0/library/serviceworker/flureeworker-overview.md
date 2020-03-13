@@ -2,7 +2,7 @@
 
 Using the FlureeWorker library, a browser [service worker](https://developers.google.com/web/fundamentals/primers/service-workers) can create a local query peer within the browser, making trusted data readily available.  
 
-[Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Worker) messages are used communicate between the FlureeWorker and the originating application. Message *data* to/from the FlureeWorker are expected in the following format:
+Messages are used communicate between the FlureeWorker and the originating application. Message *data* to/from the FlureeWorker are expected in the following format:
 
 Name | Description
 -- | --

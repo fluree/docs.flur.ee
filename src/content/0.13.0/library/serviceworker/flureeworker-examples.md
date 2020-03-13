@@ -34,6 +34,7 @@ Name | Value
 `workerUrl` | path to FlureeWorker (e.g. /flureeworker.js looks for FlureeWorker in public directory)
 `compact` | true (default) or false; Option to remove namespaces from predicates when the namespace is the same as the collection
 `log` | true or false (default); Set to true to see logging. Debug logging must be enabled with 'Verbose' in DevTools.
+`keepAlive` | true or false (default); Option to attempt re-connection to the Fluree instance when web socket is no longer ping-able. 
 
 
 ### **close**
