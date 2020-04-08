@@ -13,9 +13,9 @@ If you do need to specify a signature, such as in the case of testing out user p
 
 ### NPM Package
 
-Fluree has published a Javascript library that contains helper functions to help users sign queries and transactions. This can be downloaded via npm, `npm install fluree-cryptography`. 
+Fluree has published a Javascript library that contains helper functions to help users sign queries and transactions. This can be downloaded via npm, `npm install @fluree/crypto-utils`. 
 
-The documentation (available on <a href="https://github.com/fluree/cryptography" target="_blank">GitHub</a>), guides you through how to generate keys, sign queries, and sign transactions. 
+The documentation (available on <a href="https://github.com/fluree/crypto-utils" target="_blank">GitHub</a>), guides you through how to generate keys, sign queries, and sign transactions. 
 
 We recommend using the Javascript library or the [user interface](#user-interface) for ease of use, but you can read more about how to sign queries and transactions manually below. 
 
@@ -97,4 +97,4 @@ In order to get the `sig`, you need to get the SHA2-256 hash of the stringified 
 
 ### Verifying Signatures
 
-ECDSA allows for recovery of the public key from a signature, so the original transaction and signature are the only two things required in order to verify that a signature is valid. There are online tools that allow you to independently verify a signature based on the signature + original transaction. <a href="https://github.com/fluree/cryptography" target="_blank">Our cryptography GitHub repo</a> also has functions that allow you to verify any signatures.
+ECDSA allows for recovery of the public key from a signature, so the original transaction and signature are the only two things required in order to verify that a signature is valid. There are online tools that allow you to independently verify a signature based on the signature + original transaction. <a href="https://github.com/fluree/crypto-utils" target="_blank">Our cryptography GitHub repo</a> also has functions that allow you to verify any signatures.

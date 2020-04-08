@@ -549,7 +549,7 @@ A JavaScript promise that eventually contains the results or an error.
 An example of a signed `query` request to `signed_query`:
   
 ```all
-import { getSinFromPublicKey } from 'fluree-cryptography';
+import { getSinFromPublicKey } from '@fluree/crypto-utils';
 :
 :
 const publicKey = '...';
@@ -586,7 +586,7 @@ flureenjs.close(flureeDbConn);
 An example of signed `block` request to `signed_query`:
 
 ```all
-import { getSinFromPublicKey } from 'fluree-cryptography';
+import { getSinFromPublicKey } from '@fluree/crypto-utils';
 :
 :
 const publicKey = '...';
@@ -626,7 +626,7 @@ flureenjs.connect_p(flureeServerUrl)
 An example of signed `multi-query` request to `signed_query`:
 
 ```all
-import { getSinFromPublicKey } from 'fluree-cryptography';
+import { getSinFromPublicKey } from '@fluree/crypto-utils';
 :
 :
 const publicKey = '...';
@@ -670,7 +670,7 @@ flureenjs.connect_p(flureeServerUrl)
 An example of signed `history` request to `signed_query`:
 
 ```all
-import { getSinFromPublicKey } from 'fluree-cryptography';
+import { getSinFromPublicKey } from '@fluree/crypto-utils';
 :
 :
 const publicKey = '...';
@@ -765,7 +765,7 @@ flureenjs.close(flureeDbConn);
 An example of a signed request to `transact`:
   
 ```all
-import { getSinFromPublicKey } from 'fluree-cryptography';
+import { getSinFromPublicKey } from '@fluree/crypto-utils';
 :
 :
 const publicKey = '...';
