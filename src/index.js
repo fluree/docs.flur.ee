@@ -22,6 +22,7 @@ export const versions = [
 export const currentVersion = "0.11.0"
 
 class Wrapper extends React.Component {
+    //let query = (boolean (get (query (str {"select": ["*"], "from":" (?sid) "}")) "person/fullName"))
 
     state = {
         version: currentVersion

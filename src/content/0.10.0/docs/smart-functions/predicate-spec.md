@@ -1,26 +1,27 @@
 ## Predicate Spec
 
-A `_predicate/spec` is set of smart functions that are attached to a particular predicate. Any time that predicate appears in a transaction, regardless of who issues the transaction, the smart functions attached to the `_predicate/spec` will execute. 
+A `_predicate/spec` is a set of smart functions that are attached to a particular predicate. Any time that predicate appears in a transaction, regardless of who issues the transaction, the smart functions attached to the `_predicate/spec` will execute.
 
-If all of the smart functions return true, the transaction will succeed. If any of the smart functions return false, it will fail. 
+If all of the smart functions return true, the transaction will succeed. If any of the smart functions return false, it will fail.
 
 The examples in this section use the [Basic Schema](/docs/getting-started/basic-schema).
 
 ### Example Uses
 
 1. Ensure an object is non-negative.
-2. Ensure a string is less than 20 characters long. 
+2. Ensure a string is less than 20 characters long.
 3. Ensure an integer only increases, or only decreases.
 
-Predicate specs may also be more complicated and may involve information about the person issuing the transaction. For example, a person can only edit their own chats or delete their own comments. These sorts of restrictions could alternatively be added to `_rule/fns`. 
+Predicate specs may also be more complicated and may involve information about the person issuing the transaction. For example, a person can only edit their own chats or delete their own comments. These sorts of restrictions could alternatively be added to `_rule/fns`.
 
 The decision of whether to add a restriction like this to `_rule/fns` or to `_predicate/spec` is based on whether that rule is universal or not. For example, you might want to have most people only able delete their own chats, but some people, i.e. moderators, who can delete any chat. If the rule is not universal, you want to add it to `_rule/fns`. If the rule is universal, you want to add it to `_predicate/spec`.
 
 ### Example: favNums non-negative
 
-If we want to make sure that `person/favNums` is always non-negative, we need to first create a smart function and then reference that function in the `person/favNums` predicate spec. Note, we can perform these transactions at the same time, but we separate them here for clarity. 
+If we want to make sure that `person/favNums` is always non-negative, we need to first create a smart function and then reference that function in the `person/favNums` predicate spec. Note, we can perform these transactions at the same time, but we separate them here for clarity.
 
 Create a Non-Negative Function:
+
 ```flureeql
 [{
     "_id": "_fn",
@@ -42,6 +43,7 @@ curl \
 }]' \
    [HOST]/api/db/transact
 ```
+
 ```graphql
 mutation nonNeg ($nonNegTx: JSON) {
   transact(tx: $nonNegTx)
@@ -75,6 +77,7 @@ curl \
 }]' \
    [HOST]/api/db/transact
 ```
+
 ```graphql
 mutation addFn ($addFnTx: JSON) {
   transact(tx: $addFnTx)
