@@ -1,15 +1,19 @@
 ## Installing Fluree
 
-If you already have a hosted version of Fluree, you can jump to [User Interface](/docs/getting-started/user-interface). To request a hosted version of Fluree, you can sign up on [our site](https://www.flur.ee/), but note that free hosted versions may be limited. 
+If you already have a hosted version of Fluree, you can jump to [User Interface](#user-interface). To request a hosted version of Fluree, you can sign up on [our site](https://www.flur.ee/), but note that free hosted versions may be limited. 
 
-### Installing Fluree
+### Installing Fluree Locally
 
-Download and unzip: [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip).
+Download and unzip: [latest stable version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-stable.zip).
 
-The contents of the folder are as follows:
+Or, you can get the [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip). 
+
+On Mac or Linux, you can issue `wget https://fluree-releases-public.s3.amazonaws.com/fluree-latest.zip` to download the latest zip file into your current directory.
+
+The contents of the folder are as follows (might be slightly different based on your version):
 
 ```all
-flureeDB-0.10.0/
+fluree-0.13.0/
 ├── fluree_sample_.properties
 ├── VERSION
 ├── fluree_start.sh
@@ -27,7 +31,6 @@ Key Files:
 ### Dependencies
 
 Fluree requires Java Server 8 (Java 1.8) or above. To verify that your version of Java, you can type `java -version` in the terminal.
-
 
 ### Launching Fluree
 
@@ -49,7 +52,7 @@ If the above message is not displaying in your terminal, the terminal should pri
 
 After you launch Fluree for the first time, you will not have any databases. You will need to create a database to begin. 
 
-Creating a database and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the [user interface](#user-interface).
+Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the [user interface](#user-interface).
 
 ### Exiting and Restarting Fluree
 
@@ -60,7 +63,7 @@ To restart Fluree, navigate to the folder that contains your Fluree instance and
 After Fluree successfully starts for the first time, if you are using the default `fdb-storage-type` set to `file`, there will be additional items in your Fluree instance folder. Your folder will look something like the below: 
 
 ```all
-flureeDB-0.10.0/
+fluree-0.13.0/
 ├── data/
 │   ├── TRANSACTORNAME/
 │   │   ├── raft
@@ -92,6 +95,10 @@ To use your own private key, first please see the section on [public and private
 If you have a valid private key, encoded with [Base58Check Encoding](/docs/identity/public-private-keys#base58check-encoding), then you can add your private key to a `default_private_key.txt`. You can also change the name of the file that holds the private key by changing the `fdb-group-private-key-file` config option (see below).
 
 You can also run `./fluree_start.sh :keygen` to generate a public key, private key, and account id. This will not start Fluree, it will just return those three pieces of information.
+
+### In-Memory Fluree
+
+You can run Fluree in memory for testing purposes. To do so, simply specify `fdb-consensus-type` as `in-memory` and `fdb-storage-type` as `memory`. At this time, you can only run a single, centralized ledger in memory. 
 
 ### Setting Up a Transactor Group
 Currently, transactor groups only support the Raft consensus algorithm to agree on a shared state for a network of databases. With Raft, a total of `n` servers can support `f` failures: n = 2f + 1. This means that anything less than 3 servers can sustain no failures, 5 servers can sustain two failures. 
@@ -129,7 +136,7 @@ You can set various configuration options as either environment variables, Java 
 
 Environment variables take precedence over both configuration options listed as Java property flags and those in the `fluree_sample.properties` file. Java property flags, in turn, take precedence over config options listed in the `fluree_sample.properties` file. 
 
-Base Settings
+#### Base Settings
 
 Property | Options | Description   
 -- | -- | --
@@ -154,10 +161,12 @@ Property | Options | Description
 ```
 
 
-Transactor Group Options
+#### Transactor Group Options
 
 Property | Options | Description   
 -- | -- | --
+`fdb-join?` | `boolean` | (Optional) Set this to true if a server is attempting to dynamically join a network. By default, false. 
+`fdb-group-catch-up-rounds` | `int` | By default, set to 10. The number of rounds the tx group leader will wait for a new server that is 
 `fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. Must be a [valid private key](/docs/identity/public-private-keys). This takes precedent over `fdb-group-private-key-file`.
 `fdb-group-private-key-file` | `file path` | If fdb-group-private-key is not provided, we'll look for it in this file. If not found in this file, we'll generate a default one and place it in this file.
 `fdb-group-servers` | `server-id@host:port, server-id@host:port` | List all servers participating in ledger-group with format of server-id@host:port. All tx-group servers should have this same config.
@@ -167,27 +176,38 @@ Property | Options | Description
 `fdb-group-log-directory` | `file path` | Where to store tx-group raft log files and snapshots. These logs have fairly frequent disk access.
 `fdb-group-snapshot-threshold` | `int` | A snapshot of the current group state will be taken after this many new commits. Larger values mean larger log files, small values mean lots of snapshots which can be time consuming for large networks. Ideally somewhere in the range of 100 to 1000.
 `fdb-group-log-history` | `int` | Number of historic tx-group raft logs to keep around. Can be as low as 1. Historic logs take up disk space but can be useful for debugging if something goes wrong. High transactional volume servers may want to retain extra logs as there will be more frequent rotation.
-`fdb-storage-type` | `file` |  This is where to store index/block segments. Storage is replicated on every machine. Currently only `file` is supported. `file` storage is on-disk and replicated on every ledger. (`memory` is useful for testing, and is not currently supported -  out in version `0.9.6`).
+`fdb-storage-type` | `file`, `memory` |  This is where to store index/block segments. Can be replicated on every machine or in a common location all local/group ledgers and FlureeDB library/peers. Currently only `file` is supported. `file` storage is on-disk and replicated on every ledger, `memory` is not currently supported, but this is is replicated on every ledger, but only stored in memory (useful for testing; not currently implemented).
 `fdb-storage-file-directory` | `file path` | For file storage, specify directory to place ledger (blockchain) and db indexes
 `fdb-memory-cache` | `size` | Total memory cache of index segments across all databases. This setting can be changed per-ledger.
 `fdb-memory-reindex` and `fdb-memory-reindex-max` | `size` | These settings apply per-database, make sure all ledgers and query peers have at least this much memory * number of databases you expect to be active on those servers. This setting must be consistent across the entire ledger group.
 `fdb-stats-report-frequency` | `time` | How frequently to report out stats as a log entry in milliseconds, or can use shorthand like 2m for two minutes, 45s for 45 seconds.
 
-HTTP API Settings
+#### HTTP API Settings
 
 Property | Options | Description   
 -- | -- | --
 `fdb-api-port` | `int` | Port in which the query peers will respond to API calls from clients
 `fdb-open-api` | `boolean` | If fdb-open-api is true, will allow full access on above port for any request and will utilize default auth identity to regulate query/read permissions. If false, every request must be signed, and the auth id associated with the signature will determine query/read permissions.
 
-Decentralized Ledger Settings
-
+#### Decentralized Ledger Settings
 
 Property | Options | Description   
 -- | -- | --
 `fdb-ledger-port`| `int` | External port to expose for external ledger communication. If using a ledger group behind a load balancer then this should be consistent across the ledger group, i.e. fdb-ledger-port=9795
 `fdb-ledger-private-keys` | `key@network/dbname,` `key@network/dbname` | List each auth identity private key at each network and/or database you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be  used as a default for all databases on that network and it is assumed this server is participating with every database, i.e. `fdb-ledger-private-keys=5...3@networka/dbname`
 `fdb-ledger-servers` | `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,` `networkb/dbname@external.dot.com:9795` | List of seed servers to contact for each network/db. Like fdb-ledger-identities, the db is optional. Every network/db + server address combination should be separated by a comma, i.e. `fdb-ledger-servers=` `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,networkb/` `dbname@external.dot.com:9795`
+
+#### Password and JWT Token Settings
+
+Property | Options | Description
+-- | -- | --
+`fdb-pw-auth-enable` | `boolean` |This defaults to true, but will only work if there is a signing key for transactions. 
+`fdb-pw-auth-secret` | `string` | This secret is used to generate a HMAC signature that is used by scrypt to generate a valid private key from a password. Every auth record uses a unique salt ensuring different private keys for identical passwords. A server must have permission to access to the salt (stored in the _auth record) to successfully regenerate a private key - along with the normalized password and the following secret. Without all 3 elements, the private key cannot be regenerated.
+`fdb-pw-auth-jwt-secret` | `string` | JWT tokens issued are secured with this secret. If empty, will default to use fdb-pw-auth-secret
+`fdb-pw-auth-signing-key` | `string` | A valid Fluree private key with proper permissions must be used to sign any new transaction where new password auth records are created. If a default root key still exists and has proper permission, that will be used by default.
+`fdb-pw-auth-jwt-max-exp` | `time in milliseconds, i.e. 86400000` |  Maximum allowed expiration time per JWT token in milliseconds. Blank means any amount of time is valid. (86400000 ms in 24 hours, 31536000000 in 1 year)
+`fdb-pw-auth-jwt-max-renewal` | `time, i.e. 1y or 2d` | If renewal JWT tokens are allowed (blank if not allowed), maximum time from initial issuance a token can be renewed for in ms. To make this 'forever', use the maximum long value (9223372036854775807). For example, if you had a JWT token that expires after 120 seconds, but want to allow an active user to not be challenged for a password for up to 1 day, enter "1d" here and an unexpired token can be renewed as many times as desired (swapped for an 'fresh' token) so long as the original token issued from the password was less then this time period ago.
+
 
 </div>
 
@@ -197,7 +217,7 @@ There is a built-in user interface that can be accessed at `localhost:[port]/`. 
 
 For help using the user interface, read the [Navigating the User Interface](/docs/user-interface) section.
 
-Note that as of version 0.10.0 (formerly 0.9.5), downloadable Fluree databases do not have a username and password. If you are using an older version of Fluree, you can log into the Master database with username, `master` and password, `fluree` or into the Test database with username, `test`, and password, `fluree`.
+Note that as of version 0.10.0, downloadable Fluree databases do not have a username and password. If you are using an older version of Fluree, you can log into the Master database with username, `master` and password, `fluree` or into the Test database with username, `test`, and password, `fluree`.
 
 ### Fluree with Docker
 
@@ -238,3 +258,7 @@ brew untap fluree/flureedb
 ### Download Fluree with Chocolatey
 
 This feature is coming soon. 
+
+### Fluree Command Line Tool
+
+We have a command line tool that you can [download](https://fluree-cli-releases-public.s3.amazonaws.com/fluree_cli-latest.zip) to explore your ledger even without Fluree running. To see all the tool's capabilities, visit the [documentation](https://github.com/fluree/fluree.cli).

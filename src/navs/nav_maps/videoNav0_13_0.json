@@ -1,0 +1,166 @@
+{
+    "intro": {
+        "pageName": "Introduction",
+        "subTopics": {
+            "intro": {
+                "headerName": "Intro",
+                "file": "0.10.0/videos/intro/1.0-intro"
+            },
+            "install-mac": {
+                "headerName": "Install on Mac",
+                "file": "0.10.0/videos/intro/1.1-install-file"
+            },
+            "install-homebrew": {
+                "headerName": "Install With Homebrew",
+                "file": "0.10.0/videos/intro/1.2-install-homebrew"
+            },
+            "multiple-nodes": {
+                "headerName": "Starting Multiple Nodes",
+                "file": "0.13.0/videos/intro/1.3-multiple-nodes"
+            }
+        }
+    },
+    "schema": {
+        "pageName": "Schema",
+        "subTopics": {
+            "create-1": {
+                "headerName": "Creating a Schema: Part 1",
+                "file": "0.10.0/videos/schema/2.0-schema"
+            },
+            "create-2": {
+                "headerName": "Creating a Schema: Part 2",
+                "file": "0.10.0/videos/schema/2.1-schema"
+            },
+            "docs": {
+                "headerName": "Using the Docs",
+                "file": "0.10.0/videos/schema/2.2-schema-docs"
+            },
+            "schema-challenge": {
+                "headerName": "Schema Challenge",
+                "file": "0.10.0/videos/schema/2.3-schema-challenge"
+            },
+            "schema-challenge-solution": {
+                "headerName": "Schema Challenge: Solution",
+                "file": "0.10.0/videos/schema/2.4-schema-challenge-solution"
+            }
+        }
+    },
+    "query": {
+        "pageName": "Query",
+        "subTopics": {
+            "add-schema": {
+                "headerName": "Add Basic Schema",
+                "file": "0.10.0/videos/query/3.1-query-add-basic"
+            },
+            "query-basic": {
+                "headerName": "Basic Queries",
+                "file": "0.10.0/videos/query/3.2-query-basic"
+            },
+            "query-basic-select": {
+                "headerName": "Basic Query: Select Key",
+                "file": "0.10.0/videos/query/3.3-query-basic-select"
+            },
+            "query-basic-challenge": {
+                "headerName": "Basic Query: Challenge",
+                "file": "0.10.0/videos/query/3.4-query-basic-challenge"
+            },
+            "query-basic-challenge-solution": {
+                "headerName": "Basic Query: Challenge Solution",
+                "file": "0.10.0/videos/query/3.5-query-basic-challenge-solution"
+            },
+            "query-basic-limit-block": {
+                "headerName": "Basic Query: Limit and Block",
+                "file": "0.10.0/videos/query/3.6-query-basic-limit-block"
+            },
+            "query-block": {
+                "headerName": "Block Queries",
+                "file": "0.10.0/videos/query/3.7-block-queries"
+            },
+            "query-history": {
+                "headerName": "History Queries",
+                "file": "0.10.0/videos/query/3.8-history-queries"
+            },
+            "query-crawl": {
+                "headerName": "Crawling Relationships",
+                "file": "0.10.0/videos/query/3.9-query-crawl"
+            },
+            "query-crawl-reverse": {
+                "headerName": "Crawling Relationships in Reverse",
+                "file": "0.10.0/videos/query/3.10-query-crawl-reverse"
+            },
+            "query-sub-select": {
+                "headerName": "Sub-Select Options in Queries",
+                "file": "0.10.0/videos/query/3.11-query-sub-select"
+            },
+            "query-recursion": {
+                "headerName": "Recursion in Queries",
+                "file": "0.10.0/videos/query/3.12-query-recursion"
+            },
+            "query-multi": {
+                "headerName": "Multi Queries",
+                "file": "0.10.0/videos/query/3.13-query-multi"
+            },
+            "query-analytical": {
+                "headerName": "Analytical Queries",
+                "file": "0.10.0/videos/query/3.14-analytical-queries"
+            },
+            "query-analytical-agg": {
+                "headerName": "Analytical Queries: Aggregate Functions",
+                "file": "0.10.0/videos/query/3.15-analytical-queries-agg"
+            },
+            "query-analytical-block": {
+                "headerName": "Analytical Queries: Across Blocks",
+                "file": "0.10.0/videos/query/3.16-analytical-queries-block"
+            },
+            "query-analytical-triple-options": {
+                "headerName": "Analytical Queries: Triple Options",
+                "file": "0.10.0/videos/query/3.17-analytical-queries-triple-options"
+            },
+            "query-analytical-wikidata": {
+                "headerName": "Analytical Queries: Wikidata",
+                "file": "0.10.0/videos/query/3.18-analytical-queries-wikidata"
+            },
+            "query-sparql": {
+                "headerName": "SPARQL",
+                "file": "0.10.0/videos/query/3.19-SPARQL"
+            },
+            "query-graphql": {
+                "headerName": "GraphQL",
+                "file": "0.10.0/videos/query/3.20-GraphQL"
+            }
+        }
+    },
+    "transact": {
+        "pageName": "Transact",
+        "subTopics": {
+            "transact-keys": {
+                "headerName": "Transact Keys",
+                "file": "0.10.0/videos/transact/4.1-transact-keys"
+            },
+            "temp-ids": {
+                "headerName": "Temporary Ids",
+                "file": "0.10.0/videos/transact/4.2-temp-ids"
+            },
+            "adding-data": {
+                "headerName": "Adding Data",
+                "file": "0.10.0/videos/transact/4.3-adding-data"
+            },
+            "nested-txns": {
+                "headerName": "Nested Transactions",
+                "file": "0.10.0/videos/transact/4.4-nested-txns"
+            },
+            "updating-data": {
+                "headerName": "Updating Data",
+                "file": "0.10.0/videos/transact/4.5-updating-data"
+            },
+            "upserting-data": {
+                "headerName": "Upserting Data",
+                "file": "0.10.0/videos/transact/4.6-upserting-data"
+            },
+            "deleting-data": {
+                "headerName": "Deleting Data",
+                "file": "0.10.0/videos/transact/4.7-deleting-data"
+            }
+        }
+    }
+}

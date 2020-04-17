@@ -5,6 +5,7 @@ const apiNav0_10_0 = require('./nav_maps/apiNav0_10_0.json');
 const apiNav0_11_0 = require('./nav_maps/apiNav0_11_0.json');
 const apiNav0_12_0 = require('./nav_maps/apiNav0_12_0.json');
 const apiNav0_13_0 = require('./nav_maps/apiNav0_13_0.json');
+const apiNav0_15_0 = require('./nav_maps/apiNav0_15_0.json');
 
 // Docs Navs
 
@@ -13,6 +14,7 @@ const docNav0_10_0 = require('./nav_maps/docNav0_10_0.json');
 const docNav0_11_0 = require('./nav_maps/docNav0_11_0.json');
 const docNav0_12_0 = require('./nav_maps/docNav0_12_0.json');
 const docNav0_13_0 = require('./nav_maps/docNav0_13_0.json');
+const docNav0_15_0 = require('./nav_maps/docNav0_15_0.json');
 
 // Lesson Navs
 
@@ -23,9 +25,11 @@ const lessonNav0_11_0 = require('./nav_maps/lessonNav0_11_0');
 
 const libNav0_10_0 = require('./nav_maps/libNav0_10_0.json');
 const libNav0_11_0 = require('./nav_maps/libNav0_11_0.json');
+const libNav0_13_0 = require('./nav_maps/libNav0_13_0.json');
 
 // Video Navs
 const videoNav0_10_0 = require('./nav_maps/videoNav0_10_0.json');
+const videoNav0_13_0 = require('./nav_maps/videoNav0_13_0.json');
 
 
 export const endpointMap = {
@@ -33,7 +37,12 @@ export const endpointMap = {
     "0.10.0": [ "block", "graphql", "history", "multi-query", "query", "signin", "sparql", "transact"],
     "0.11.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with"],
     "0.12.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with"] ,
-    "0.13.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with"] 
+    "0.13.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
+                "ledger-stats", "block-range-with-txn"],
+    "0.14.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
+                "ledger-stats", "block-range-with-txn"],
+    "0.15.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
+                "ledger-stats", "block-range-with-txn"]
 }
 
 export const languageMap = {
@@ -41,7 +50,9 @@ export const languageMap = {
     "0.10.0": ["flureeql", "graphql", "curl", "sparql"],
     "0.11.0": ["flureeql", "graphql", "curl", "sparql"],
     "0.12.0": ["flureeql", "graphql", "curl", "sparql"],
-    "0.13.0": ["flureeql", "graphql", "curl", "sparql"]
+    "0.13.0": ["flureeql", "graphql", "curl", "sparql"],
+    "0.14.0": ["flureeql", "graphql", "curl", "sparql"],
+    "0.15.0": ["flureeql", "graphql", "curl", "sparql"]
 }
 
 export function getAPINav(version){
@@ -55,6 +66,10 @@ export function getAPINav(version){
         return apiNav0_12_0;
     } else if (version === "0.13.0"){
         return apiNav0_13_0;
+    } else if (version === "0.14.0"){
+        return apiNav0_13_0;
+    } else if (version === "0.15.0"){
+        return apiNav0_15_0;
     }
 }
 
@@ -69,6 +84,10 @@ export function getDocNav(version){
         return docNav0_12_0;
     } else if (version === "0.13.0"){
         return docNav0_13_0;
+    } else if (version === "0.14.0"){
+        return docNav0_13_0;
+    } else if (version === "0.15.0"){
+        return docNav0_15_0;
     }
 }
 
@@ -83,6 +102,10 @@ export function getLessonNav(version) {
         return lessonNav0_11_0;
     } else if (version === "0.13.0") {
         return lessonNav0_11_0;
+    } else if (version === "0.14.0") {
+        return lessonNav0_11_0;
+    } else if (version === "0.15.0") {
+        return lessonNav0_11_0;
     }
 }
 
@@ -96,7 +119,11 @@ export function getLibNav(version){
     } else if (version === "0.12.0"){
         return libNav0_11_0;
     } else if (version === "0.13.0"){
-        return libNav0_11_0;
+        return libNav0_13_0;
+    } else if (version === "0.14.0"){
+        return libNav0_13_0;
+    } else if (version === "0.15.0"){
+        return libNav0_13_0;
     }
 }
 
@@ -109,7 +136,11 @@ export function getVideoNav(version) {
         return videoNav0_10_0;
     } else if (version === "0.12.0") {
         return videoNav0_10_0;
-    } else {
-        return videoNav0_10_0;
+    }  else if (version === "0.13.0") {
+        return videoNav0_13_0;
+    }  else if (version === "0.14.0"){
+        return videoNav0_13_0;
+    } else if (version === "0.15.0"){
+        return videoNav0_13_0;
     }
 }

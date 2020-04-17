@@ -54,6 +54,41 @@ Headers: None
 Body: Null
 ```
 
+You can also create a snapshot with no history by specifying `no-history` true in the in the body, as seen below. See how to do this in the section on [mutability and snapshotting with no history](/docs/database-setup/mutability#snapshot-no-history).
+
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/snapshot
+Headers: None
+Body: {
+    "no-history": true 
+}
+```
+
+### /list-snapshots
+
+This lists all LOCAL snapshot for a particular ledger - it does not list snapshots on every transactor in the network. A snapshot file can be used to create a database from a snapshot (see [snapshotting](/docs/database-setup/snapshotting-a-database) and [new-db](#-new-db)).
+
+To list snapshots, simply send an empty POST request to the `/list-snapshots` endpoint. The below example checks for local snapshots of a database with network `dev` and ledger-id `main`.
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/list-snapshots
+Headers: None
+Body: Null
+```
+
+The result is an array listing all the snapshots, for example:
+
+```
+[
+    "dev/main/snapshot/1587143181823.avro",
+    "dev/main/snapshot/1587140544208.avro",
+    "dev/main/snapshot/1587140743815.avro"
+]
+```
+
 ### /export 
 
 This endpoint exports an existing ledger into either `xml` or `ttl`. 
@@ -320,6 +355,20 @@ This request may take some time to return. It will return a map, such as the fol
         "size": 41435614,
         "indexed": 13
     }
+}
+```
+
+### /hide
+
+This is a beta feature. To read about how it works, visit [hiding flakes](/docs/database-setup/mutability#hiding-flakes).
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/hide
+Headers: None
+Body: {
+  "hide": [387028092977154, "comment/message", "bad comment"],
+	"local": true
 }
 ```
 

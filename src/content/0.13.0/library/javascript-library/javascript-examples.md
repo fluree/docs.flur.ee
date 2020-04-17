@@ -20,6 +20,8 @@ There are 2 versions of the connect command:
 Name | Value
 -- | --
 `server-string` | a string identifying one or more ledger servers
+`options` | <ul style="list-style-type:none; padding-left: 0;"><li>a JSON object containing configuration options.  The following option is currently supported:</li><li>-  `keep-alive-fn`: a JavaScript function that is executed when a connection is abruptly dropped.</li></ul>
+
 
 #### Returns
 Returns a connection object.
@@ -45,7 +47,40 @@ flureedb.connect_p(flureeServerUrl)
 .finally( () => {
   // close connection
 });
-```  
+```
+&nbsp;&nbsp;
+
+An example of using `connect_p` with `keep-alive-fn` option:
+```all
+function flureeConnect(url, options){
+    if (!url) {
+        throw "Unable to connect to Fluree: Missing url. "
+    }
+
+    var cOpts = {};
+    if (options && options.keepAlive && options.keepAlive === true) {
+        cOpts = {"keep-alive-fn": function(){ flureeConnect(url,options); }}
+    }
+
+    flureedb.connect_p(url, cOpts)
+    .then(conn => {
+        reConnection = conn;
+    })
+    .catch(error => {
+        console.error("Error connecting to Fluree DB", error);
+        //  [  1.771s] [server] "Server contact error: " 
+        //  "xhttp error - http://localhost:8080/fdb/health" 
+        //  {:url "http://localhost:8080/fdb/health", :error :xhttp/http-error}
+        // -> gracefully shutdown
+        // -> or add re-try logic
+    }) 
+
+    :
+    :
+    const downloadedInstance = "http://localhost:8080"
+    const options = {keepAlive: true};
+    flureeConnect(downloadedInstance, options);
+```
 
 ### **close**
 Close a connection to a ledger server/group.

@@ -2,11 +2,11 @@
 
 If you already have a hosted version of Fluree, you can jump to [User Interface](#user-interface). To request a hosted version of Fluree, you can sign up on [our site](https://www.flur.ee/), but note that free hosted versions may be limited. 
 
-### Installing Fluree
+### Installing Fluree Locally
 
-Download and unzip: [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip).
+Download and unzip: [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip). On Mac or Linux, you can issue `wget https://fluree-releases-public.s3.amazonaws.com/fluree-latest.zip` to download the latest zip file into your current directory.
 
-The contents of the folder are as follows:
+The contents of the folder are as follows (might be slightly different based on your version):
 
 ```all
 flureeDB-0.11.0/
@@ -26,16 +26,15 @@ Key Files:
 
 ### Dependencies
 
-Fluree requires Java 8 (Java 1.8) or above. To verify that your version of Java, you can type `java -version` in the terminal.
+Fluree requires Java Server 8 (Java 1.8) or above. To verify that your version of Java, you can type `java -version` in the terminal.
 
 ### Launching Fluree
 
 To run Fluree with all the default options, navigate to the directory where you downloaded Fluree in the terminal then launch Fluree with the following command:
 
-For Mac or Linux systems:
-`./fluree_start.sh` 
+> For Mac or Linux systems: `./fluree_start.sh` 
 
-Note that for Windows systems, you have to download a Bash emulator, like [Git For Windows](https://gitforwindows.org/) to properly run Fluree. In your Bash emulator, you can run `./fluree_start.sh` to start Fluree. Alternatively on Windows, you can [download Fluree with Chocolatey](#download-fluree-with-chocolatey).
+> For Windows systems, you have to download a Bash emulator, like [Git For Windows](https://gitforwindows.org/) to properly run Fluree. In your Bash emulator, you can run `./fluree_start.sh` to start Fluree. Alternatively on Windows, you will be able to [download Fluree with Chocolatey](#download-fluree-with-chocolatey).
 
 When Fluree is done starting up, your terminal will log: 
 
@@ -45,9 +44,11 @@ Starting web server on port:   [PORT NUMBER]
 
 If the above message is not displaying in your terminal, the terminal should print out a relevant error message. Common errors include your chosen port already being in use and not having Java 8 or above installed. 
 
+> If you see an error "missing 'server' JVM", you need to install Java Server JRE. See [Oracle documentation](https://docs.oracle.com/en/java/) to select the appropriate platform, version (e.g., 8) and operating system.
+
 After you launch Fluree for the first time, you will not have any databases. You will need to create a database to begin. 
 
-Creating a database and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the [user interface](#user-interface).
+Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the [user interface](#user-interface).
 
 ### Exiting and Restarting Fluree
 
@@ -215,7 +216,7 @@ Note that as of version 0.10.0, downloadable Fluree databases do not have a user
 
 ### Fluree with Docker
 
-Instructions and materials for using Fluree with Docker are [available on Gitlab](https://gitlab.com/zer0active/fluree/flureedb-docker). This is contributed by supporter, Allan Tomkinson. 
+Instructions and materials for using Fluree with Docker are [available on Gitlab](https://github.com/fluree/fluree-docker-example). 
 
 ### Download Fluree with Homebrew
 
@@ -251,4 +252,8 @@ brew untap fluree/flureedb
 
 ### Download Fluree with Chocolatey
 
-This features is coming soon. 
+This feature is coming soon. 
+
+### Fluree Command Line Tool
+
+We have a command line tool that you can [download](https://fluree-cli-releases-public.s3.amazonaws.com/fluree_cli-latest.zip) to explore your ledger even without Fluree running. To see all the tool's capabilities, visit the [documentation](https://github.com/fluree/fluree.cli).

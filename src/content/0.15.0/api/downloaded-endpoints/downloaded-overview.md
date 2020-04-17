@@ -13,6 +13,7 @@ Action | Endpoint | Explanation
 DBs | `/fdb/dbs` | Returns a list of all ledgers in the transactor group. 
 New DB | `/fdb/new-db` | Creates a new ledger
 Snapshot | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/snapshot` | Creates a (local) snapshot file from an existing ledger
+List Snapshots | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/list-snapshots` | Lists all (local) snapshot files for a given ledger
 Export | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/export` | Locally exports an existing ledger into either `.xml` or `.ttl`
 Delete DB | `/fdb/delete-db` | Deletes ledger (does not currently delete ledger files)
 Add Server | `/fdb/add-server` | (Beta feature) Dynamically adds a server to the network.
@@ -26,6 +27,7 @@ GraphQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` | Queries or transactio
 SPARQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` | Queries in SPARQL syntax, as a string
 Command | `/fdb/[NETWORK-NAME]/[DBID]/command` | Commands, such as transactions, with a signature in the body. See [signing transactions](/docs/identity/signatures#signed-transactions).
 Reindex | `/fdb/[NETWORK-NAME]/[DBID]/reindex` | Reindexes the specified ledger.
+Hide | `/fdb/[NETWORK-NAME]/[DBID]/hide` | Hides flakes that match the given pattern. 
 
 ### Test endpoints
 

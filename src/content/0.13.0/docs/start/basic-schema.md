@@ -182,7 +182,8 @@ The below transaction creates the following predicates:
   "_id":  "_predicate",
   "name": "chat/message",
   "doc":  "A chat message",
-  "type": "string"
+  "type": "string",
+  "fullText": true
 },
 {
   "_id":  "_predicate",
@@ -211,7 +212,8 @@ The below transaction creates the following predicates:
   "_id":  "_predicate",
   "name": "comment/message",
   "doc":  "A comment message.",
-  "type": "string"
+  "type": "string",
+  "fullText": true
 },
 {
   "_id":  "_predicate",
@@ -230,6 +232,7 @@ The below transaction creates the following predicates:
   "_id": "_predicate",
   "name": "movie/title",
   "type": "string",
+  "fullText": true,
   "unique": true
 }]
 </code></pre>

@@ -43,7 +43,7 @@ expire | Epoch milliseconds after which point this transaction can no longer be 
 
 For help with submitting a transaction to the `/cmd` endpoint, you can use the user interface found in `/flureeql`. Select `transact` in the top right, and then select `Own Private Key` in the middle of the top row. 
 
-We also have a <a href="https://github.com/fluree/cryptography" target="_blank">cryptography GitHub repo</a>.
+We also have a <a href="https://github.com/fluree/crypto-utils" target="_blank">cryptography GitHub repo</a>.
 
 You can see examples of how to use signed transaction in the [Cryptocurrency](/docs/examples/cryptocurrency), [Voting](/docs/examples/voting), and [Supply Chain](/docs/examples/supply-chain) sample apps. 
 
