@@ -66,6 +66,29 @@ Body: {
 }
 ```
 
+### /list-snapshots
+
+This lists all LOCAL snapshot for a particular ledger - it does not list snapshots on every transactor in the network. A snapshot file can be used to create a database from a snapshot (see [snapshotting](/docs/database-setup/snapshotting-a-database) and [new-db](#-new-db)).
+
+To list snapshots, simply send an empty POST request to the `/list-snapshots` endpoint. The below example checks for local snapshots of a database with network `dev` and ledger-id `main`.
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/dev/main/list-snapshots
+Headers: None
+Body: Null
+```
+
+The result is an array listing all the snapshots, for example:
+
+```
+[
+    "dev/main/snapshot/1587143181823.avro",
+    "dev/main/snapshot/1587140544208.avro",
+    "dev/main/snapshot/1587140743815.avro"
+]
+```
+
 ### /export 
 
 This endpoint exports an existing ledger into either `xml` or `ttl`. 
