@@ -25,7 +25,7 @@
         "subTopics": {
             "overview": {
                 "headerName": "Basic Query",
-                "file": "0.13.0/docs/query/basic-query"
+                "file": "0.15.0/docs/query/basic-query"
             },
             "block-query": {
                 "headerName": "Block Query",
