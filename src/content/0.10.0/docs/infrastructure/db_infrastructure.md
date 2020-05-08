@@ -136,22 +136,32 @@ Key | Description
 `authority` | If this transaction utilized an authority, reference to it.
 `auth` | Reference to the auth id for this transaction.
 
-<!-- #### Specifying Metadata
+### Custom Metadata
 
-When issuing a transaction, you can specify the following pieces of metadata: `nonce`, `auth`, `authority`, `altId`, and `doc`. This is done by including a map in your transaction with a key-value pair of {`_id`: `_tx`}, and adding any metadata predicates you want to specify in that map. For example,
+When issuing a transaction, you can include your own metadata. For example, 
 
-FlureeQL example:
+specify the following pieces of metadata: `nonce`, `auth`, `authority`, `altId`, and `doc`. This is done by including a map in your transaction with a key-value pair of {`_id`: `_tx`}, and adding any metadata predicates you want to specify in that map. For example, if you create a predicate called, `_tx/note`:
+
 ```all
 [{
-  "_id": "person",
-  "handle": "jdoe"
+    "_id": "_predicate",
+    "name": "_tx/note",
+    "type": "string"
+}]
+```
+
+Then, when you issue a transaction, you can include a `_tx/note`.
+
+```all
+[{
+    "_id": "_user",
+    "username": "abc"
 },
 {
-  "_id": "_tx",
-  "auth": "root",
-  "nonce": 100
+    "_id": "_tx",
+    "note": "hey there"
 }]
-``` -->
+```
 
 ### Block Files
 
