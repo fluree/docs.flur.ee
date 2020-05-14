@@ -31,6 +31,10 @@ const libNav0_13_0 = require('./nav_maps/libNav0_13_0.json');
 const videoNav0_10_0 = require('./nav_maps/videoNav0_10_0.json');
 const videoNav0_13_0 = require('./nav_maps/videoNav0_13_0.json');
 
+// Guide Nac
+const guideNav0_10_0 = require('./nav_maps/guideNav0_10_0.json')
+const guideNav0_15_0 = require('./nav_maps/guideNav0_15_0.json')
+
 
 export const endpointMap = {
     "0.9.1": [ "graphql", "query", "token", "transact"],
@@ -124,6 +128,14 @@ export function getLibNav(version){
         return libNav0_13_0;
     } else if (version === "0.15.0"){
         return libNav0_13_0;
+    }
+}
+
+export function getGuideNav(version){
+    if(version === "0.9.1" || version === "0.10.0" || version === "0.11.0" || version === "0.12.0" || version === "0.13.0" || version === "0.14.0"){
+        return guideNav0_10_0;
+    } else if (version === "0.15.0"){
+        return guideNav0_15_0;
     }
 }
 

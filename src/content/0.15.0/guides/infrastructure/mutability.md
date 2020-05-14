@@ -1,3 +1,4 @@
+## Mutable Fluree 
 
 While Fluree is an immutable database, there are several features that provide some flexibility around hiding and removing data. 
 

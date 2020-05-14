@@ -46,5 +46,14 @@
                 "file": "0.13.0/library/serviceworker/flureeworker-examples"
             }
         }
+    },
+    "other": {
+        "pageName": "Other Tools",
+        "subTopics": {
+            "tools": {
+                "headerName": "Other Tools",
+                "file": "0.13.0/library/other/other"
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ import "./theme/custom.css";
 import "../node_modules/video-react/dist/video-react.css"; 
 
 export const versions = [ 
-    // "0.15.0",
+    "0.15.0",  "0.14.0",
     "0.13.0", 
     "0.12.0",
     "0.11.0", "0.10.0", "0.9.1"]
@@ -69,9 +69,12 @@ class Wrapper extends React.Component {
                             <Route path="/api/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
                             <Route path="/api/:topic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
                             <Route path="/api" component={(props) => <Docs  {...props} version={this.state.version} type="api"/>} />
-                            <Route path="/library/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="library"/>} />
-                            <Route path="/library/:topic" component={(props) => <Docs {...props} version={this.state.version} type="library"/>} />
-                            <Route path="/library" component={(props) => <Docs {...props} version={this.state.version} type="library"/>} />
+                            <Route path="/tools/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="tools"/>} />
+                            <Route path="/tools/:topic" component={(props) => <Docs {...props} version={this.state.version} type="tools"/>} />
+                            <Route path="/tools" component={(props) => <Docs {...props} version={this.state.version} type="tools"/>} />
+                            <Route path="/guides/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="guides"/>} />
+                            <Route path="/guides/:topic" component={(props) => <Docs {...props} version={this.state.version} type="guides"/>} />
+                            <Route path="/guides" component={(props) => <Docs {...props} version={this.state.version} type="guides"/>} />
                             <Route path="/help" component={Help} />
                             <Route path="/" component={(props) => <Landing {...props} version={this.state.version}/>}  />
                         </Switch>

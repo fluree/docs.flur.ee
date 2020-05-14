@@ -1,0 +1,116 @@
+{
+    "intro": {
+        "pageName": "Intro",
+        "subTopics": {
+            "intro": {
+                "headerName": "Intro",
+                "file": "0.15.0/guides/intro/intro"
+            },
+            "what-is-fluree": {
+                "headerName": "What is Fluree?",
+                "file": "0.15.0/guides/intro/fluree"
+            }
+        } 
+    },
+
+    "infrastructure": {
+        "pageName": "Infrastucture",
+        "subTopics": {
+            "file-system": {
+                "headerName": "File System",
+                "file": "0.15.0/guides/infrastructure/file_system"
+            },
+            "transactor-group": {
+                "headerName": "Transactor Group",
+                "file": "0.15.0/guides/infrastructure/transactor_group"
+            },
+            "network-infrastructure": {
+                "headerName": "Network Infrastructure",
+                "file": "0.15.0/guides/infrastructure/network_infrastructure"
+            },
+            "in-memory": {
+                "headerName": "In Memory",
+                "file": "0.15.0/guides/infrastructure/in_memory"
+            },
+            "consensus-algorithms": {
+                "headerName": "Consensus Algorithms",
+                "file": "0.15.0/guides/infrastructure/consensus_algorithms"
+            },
+            "mutability": {
+                "headerName": "Mutable Fluree",
+                "file": "0.15.0/guides/infrastructure/mutability"
+            }
+        } 
+    },
+    "smart-functions": {
+        "pageName": "Smart Functions",
+        "subTopics": {
+            "smart-functions": {
+                "headerName": "Intro",
+                "file": "0.15.0/guides/smart-functions/intro"
+            },
+            "predicate-spec": {
+                "headerName": "Predicate Spec",
+                "file": "0.10.0/docs/smart-functions/predicate-spec"
+            },
+            "collection-spec": {
+                "headerName": "Collection Spec",
+                "file": "0.11.0/docs/smart-functions/collection-spec"
+            },
+            "predicate-tx-spec": {
+                "headerName": "Predicate Tx Spec",
+                "file": "0.10.0/docs/smart-functions/predicate-tx-spec"
+            },
+            "rules": {
+                "headerName": "Rules and Rule Functions",
+                "file": "0.10.0/docs/smart-functions/rules"
+            },
+            "rule-example": {
+                "headerName": "Rule Example",
+                "file": "0.11.0/docs/smart-functions/rule-example"
+            },
+            "fns-in-txs": {
+                "headerName": "In Transactions",
+                "file": "0.10.0/docs/smart-functions/fns-in-txs"
+            },
+            "best-practices": {
+                "headerName": "Best Practices",
+                "file": "0.15.0/guides/guides/smart_function_best_practices"
+            }
+        }
+    },
+    "identity": {
+        "pageName": "Identity",
+        "subTopics": {
+            "public-private-keys": {
+                "headerName": "Public and Private Keys",
+                "file": "0.10.0/docs/identity/public-private-keys"
+            },
+            "auth-records": {
+                "headerName": "Auth Records",
+                "file": "0.10.0/docs/identity/auth-records"
+            },
+            "signatures": {
+                "headerName": "Signatures",
+                "file": "0.13.0/docs/identity/signatures"
+            }
+        }
+    },
+    "examples": {
+        "pageName": "Examples",
+        "subTopics": {
+            "hub": {
+                "headerName": "Developer Hub",
+                "file": "0.13.0/docs/developer-hub/developer-hub"
+            },
+            "cryptocurrency": {
+                "headerName": "Cryptocurrency",
+                "file": "0.11.0/docs/examples/cryptocurrency"
+            },
+            "voting": {
+                "headerName": "Voting",
+                "file": "0.11.0/docs/examples/voting"
+            }
+        }
+    }
+}

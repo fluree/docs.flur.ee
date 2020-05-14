@@ -6,7 +6,7 @@ import { SidebarNav } from '../components/SidebarNav';
 import marked from 'marked';
 import { Search } from '../actions/Search';
 import Notifications, { notify } from 'react-notify-toast'
-import { getAPINav, getDocNav, getLibNav, endpointMap, languageMap } from '../navs/nav';
+import { getAPINav, getDocNav, getLibNav, getGuideNav, endpointMap, languageMap } from '../navs/nav';
 
 import { parseJSON } from '../flureeFetch';
 import AceEditor from 'react-ace';
@@ -50,8 +50,10 @@ class Docs extends React.Component {
             nav = getDocNav(this.props.version )
         } else if (this.props.type === "api"){
             nav = getAPINav(this.props.version )
-        } else if (this.props.type === "library") {
+        } else if (this.props.type === "tools") {
             nav = getLibNav(this.props.version )
+        } else if (this.props.type === "guides") {
+            nav = getGuideNav(this.props.version )
         }
         let currentLanguage = localStorage.getItem("currentLanguage") ? localStorage.getItem("currentLanguage") : "flureeql"
         

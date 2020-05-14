@@ -57,7 +57,7 @@ const FPPanel = (props) => {
                         fontSize: "36px" ,
                         marginBottom: "20px"
                     }}
-                >Learn Fluree How You Learn Best</h3>
+                >Explore Fluree</h3>
           
             <div 
                 style={{
@@ -67,6 +67,29 @@ const FPPanel = (props) => {
                     paddingBottom: "5em",
                     width: "55%"
                 }}>
+                                        <div 
+                    style={{
+                        backgroundColor: "white", 
+                 
+                        padding: "8px",
+                        width: "150px", 
+                        height: "140px",  
+                        display: "flex", 
+                        justifyContent: "center",
+                        flexDirection: "column"
+                    }}>
+                        <i className="fas fa-book mb10" style={{color: "#13C6FF", fontSize: "30px", textAlign:"center"}}/>
+                        <p
+                            style={{color: "#091133", textAlign: "center"}}
+                        >Read the Docs</p>
+                        <LinkContainer to="/docs/getting-started"
+                            style={{
+                                marginTop: "auto",
+                                padding: "3px"
+                            }}>
+                            <Button bsStyle="success" className="learn-button"><i className="fas fa-book" style={{fontSize: "0.9em"}}/>&nbsp;&nbsp;Documentation</Button>
+                        </LinkContainer>
+                </div>
                     <div style={{
                         backgroundColor: "white", 
                         padding: "7px",
@@ -83,7 +106,7 @@ const FPPanel = (props) => {
                             textAlign: "center",
                 
                             }}
-                        >Through Videos... 
+                        >View Videos... 
                         </p>
                         <LinkContainer to="/video"
                             style={{
@@ -114,7 +137,7 @@ const FPPanel = (props) => {
                             color: "#091133",
                             textAlign: "center"
                             }}
-                        >Step-By-Step Guided Lessons</p>
+                        >And Guided Lessons</p>
                         <LinkContainer to="/lesson"
                             style={{
                                 marginTop: "auto",
@@ -123,30 +146,6 @@ const FPPanel = (props) => {
                             <Button bsStyle="success" className="learn-button"><i className="fas fa-chalkboard-teacher" style={{fontSize: "0.9em"}}/>&nbsp;&nbsp;Lessons</Button>
                         </LinkContainer>
                     </div>
-              
-                    <div 
-                    style={{
-                        backgroundColor: "white", 
-                 
-                        padding: "8px",
-                        width: "150px", 
-                        height: "140px",  
-                        display: "flex", 
-                        justifyContent: "center",
-                        flexDirection: "column"
-                    }}>
-                        <i className="fas fa-book mb10" style={{color: "#13C6FF", fontSize: "30px", textAlign:"center"}}/>
-                        <p
-                            style={{color: "#091133", textAlign: "center"}}
-                        >Or Read the Docs</p>
-                        <LinkContainer to="/docs/getting-started"
-                            style={{
-                                marginTop: "auto",
-                                padding: "3px"
-                            }}>
-                            <Button bsStyle="success" className="learn-button"><i className="fas fa-book" style={{fontSize: "0.9em"}}/>&nbsp;&nbsp;Documentation</Button>
-                        </LinkContainer>
-                </div>
             </div>
             
         </div>
