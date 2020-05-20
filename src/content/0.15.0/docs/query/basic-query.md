@@ -94,7 +94,16 @@ curl\
    [HOST]/api/db/query
 ```
 ```graphql
-Not supported
+{ graph {
+  chat(_id: 369435906932737) {
+    _id
+    comments
+    instant
+    message
+    person
+  }
+}
+}
 ```
 
 ```sparql 
@@ -131,7 +140,7 @@ curl \
 
 ```graphql
 { graph {
-  person (where: "person/handle = \"jdoe\""){
+  person (ident: ["person/handle", "jdoe"]){
     _id
     handle
     fullName
@@ -177,12 +186,12 @@ curl \
 # Note this may show an error in your GraphQL tool, but it will return the expected result. 
 
 { graph {
-  person1(where: "person/handle = \"jdoe\""){
+  person1(ident: ["person/handle, "jdoe"]){
     _id
     handle
     fullName
   }
-    person2(where: "person/handle = \"zsmith\""){
+    person2(ident: ["person/handle", "zsmith"]){
     _id
     handle
     fullName
