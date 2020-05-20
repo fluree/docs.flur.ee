@@ -1,366 +1,250 @@
 ## Basic Query
 
-In this section, we show you how to perform basic queries. All of these queries can be issued to an API endpoint ending in `/query`. 
+In this section, we show you how to perform basic queries using FlureeQL. All code examples are shown in FlureeQL. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the sidebar, then make sure `Query` is selected in the top-right, as well as in the dropdown). 
 
+To issue these queries using the API, see `/query` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-query) or [Fluree On-Demand](/api/hosted-endpoints/hosted-examples#-api-db-network-db-query) (you may have to change versions). You can also issue multiple queries at once using the `/multi-query` endpoints in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-multi-query) or [Fluree On-Demand](/api/hosted-endpoints/hosted-examples#-api-db-network-db-multi-query) (you may have to change versions)
 
 ### Query Keys
 
 Below are all the possible keys that you can include in a basic select query. Usage examples are in subsequent sections on this page.
 
-Key | Required? | Description
--- | -- | -- 
-`select`, `selectOne`, `selectDistinct` | yes |  An array of predicates or a `*`. (`selectOne` is the same as `select`, except it just returns a single value). `select` results are distinct by default, so `select` and `selectDistint` are equivalent.
-`from` | yes | A collection, predicate name, subject id, unique two-tuple, or array of subject ids and two-tuples
-`limit` | no | Optional limit (integer) of results to include.
-`block` | no | Optional time-travel query specified by block number, duration, or wall-clock time as an ISO-8601 formatted string.
-`component` | no | Optional boolean, which specifies whether or not to automatically crawl the graph and retrieve component entities. Default: true. 
-`offset`| no | Optional limit (integer) of results to exclude (i.e for pagination).
-`orderBy` | no | Optional variable (string) or two-tuple where the first element is "ASC" or "DESC" and the second element is the variable name. For example, `"person/chat"` or `["ASC", "person/handle"]`. Predicate name should match the name in the select clause. Ordering is done before taking the number of results specified in `limit`.
-`opts` | no | Optional map of options. Currently only `compact`, `sync-to`, and `sync-timeout` are supported. See below.
+Key | Required? | Value | Notes
+-- | -- | -- | -- 
+`select`, `selectOne`, `selectDistinct` | yes |  An array of predicates or a `*`. | `selectOne` is the same as `select`, except it just returns a single value. `select` results are distinct by default, so `select` and `selectDistinct` are equivalent. See [select key](#select-key).
+`from` | no | A collection, predicate name, subject id, unique two-tuple, or array of subject ids and two-tuples. | `from` or `where` are required.  See [from key](#from-key)
+`where` | no | A series of where expressions connected by AND or OR | Where allows for simple result filters. `from` or `where` must be required.  Can be used with our without `from`. See [where key](#where-key).
+`block` | no | Optional time-travel query specified by block number, duration, or wall-clock time as an ISO-8601 formatted string. | See [block key](#block-key)
+`opts` | no | Optional map of options. | See [opts key](#opts-key)
+
+### Select Key
+
+A basic query must include one of the following select keys: `select`, `selectOne`, or `selectDistinct`. 
+
+`select` returns all query results. `select` results are distinct by default, so `select` and `selectDistinct` are equivalent.
+
+`selectOne` is the same as `select`, except it just returns a single value. 
+
+The value of the select key is always an array. For the purposes of this section, we will call it a `select-array`. The select-array can include any combination of the following items in any order:
+
+- An `*`:
+- Predicate Names: Namespaced or Not
+- A map, crawling the graph. 
+- Reversely-referenced Predicates
+- A map with sub-select options
 
 
-In the `opts` map, you can have the following keys:
+1. An `*`:
 
-Key | Value | Description
--- | -- | ---
-`compact` | `boolean` |  For example, if issuing the following query, `{ "select": ["*"], "from": "person", "opts": {"compact": true} }`, all predicates returned are in their compact form (`handle`, rather than `person/handle`).
-`sync-to` | `integer` | Waits to return the results of the query until 
-`sync-timeout` | `integer` | Number of milliseconds to wait for the ledger to reach `sync-to` block. Default is `60000`, and max allowed is `120000`.
+An `*` indicates "select all predicates" using the default options. An `*` may be used in conjunction with other select-array items, especially when the user wants to specify particular options. There are examples of this latter in the list.  
 
-
-### Select From Collection
-
-To select all subjects from a collection, you can use the glob character, `*`, and specify a collection in the "from" clause. 
-
-```flureeql
+```all
 {
   "select": ["*"],
   "from": "chat"
 }
 ```
-```curl
-curl\
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": ["*"],
+
+2. Predicate Names: Namespaced or Not
+
+If a predicate is name-spaced, that means that the collection name is included in the predicate name, like `chat/message`. The way that the predicate is specified in the select-array is how it will be returned in the results. 
+
+Predicates do not have to be namespaced. The collection can often (but not always be inferred). For example, if selecting from the `chat` collection or a specific chat subject, `instant` is inferred to be `chat/instant`. However, with Fluree's flexible schema a predicate in any collection can be attached to any subject. 
+
+```all
+{
+    "select": ["chat/message", "instant", "*", ],
+    "from": "chat"
+}
+```
+
+3. A map, crawling the graph. 
+
+If selecting predicates that are references, then you can crawl the graph. For example in our basic schema, the `chat/person` predicate is a reference to a person for a particular chat. 
+
+You'll notice that when you just include `chat/person` in the select-array, your results will only show you the subject id (unique identifer) for the person.
+
+```all
+{
+    "_id": 369435906932739,
+    "chat/message": "Hi! I'm a chat from Zach.",
+    "person": {
+      "_id": 351843720888322      // subject id only is returned
+    },
+    "chat/instant": 1589570211400
+  },
+```
+
+However, you may want to see the details for that person. To do so, you can include a map in your select array where the key is the predicate you want to crawl and the value is a select array itself. The syntax for this select-array is identical to the syntax for a top-level select-array. 
+
+In addition, it does not matter whether the predicate you are crawling references one or many subjects - the syntax is identical (i.e. per our schema, a chat can only have one person `chat/person`, but a person can have multiple favorite movies `person/favMovies`. ).
+
+```all
+{
+    "select": [    {"person": [ "*", "favMovies", "favNums"] }   ],
+    "from": "chat"
+}
+```
+
+There is no limit to how many times we crawl the graph. For example, below we are crawling the graph to get the person associated with all the chats, as well as each person's favorite movies and favorite artists. We are also crawling the graph to get all the information about those favorite artists and favorite movies. This may look confusing at first, but a select-array is simply made up of any combination of the listed items with an unlimited amount of nesting. 
+
+```all
+{
+    "select": ["*", {"person": ["*", {"favMovies": ["*"] } , {"favArtists": ["*"] } ]}],
+    "from": "chat"
+}
+```
+
+You can crawl the graph with reversely-referenced predicates as well (see below).
+
+4. Reversely-referenced Predicates
+
+In our basic schema, we know that a chat can reference a person. A person can be referenced in multiple chats. By default, when we return a given subject, we don't return all the subjects that reference it- this could potentially pull the entire ledger! In order to pull reverse references, we have to explicitly list those references. 
+
+In the basic schema, a chat references a person via the `chat/person` predicate. We know that the following query works to select all `chat/person`s from the chat collection:
+
+```all
+{
+  "select": ["chat/person"],
   "from": "chat"
-}'\
-   [HOST]/api/db/query
-```
-```graphql
-{ graph {
-  chat {
-    _id
-    comments
-    instant
-    message
-    person
-  }
-}
 }
 ```
 
-```sparql 
- SELECT ?chat ?message ?person ?instant ?comments
- WHERE {
-    ?chat   fd:chat/message  ?message;
-            fd:chat/person   ?person;
-            fd:chat/comments ?comments;
-            fd:chat/instant  ?instant.
- }
-```
+In order to get all chats that reference `person`s, we simply add an `_` after the `/`. So `chat/person` becomes `chat/_person`. 
 
-### Select From a Subject
-
-To select all predicates from a subject, you can use the glob character, `*`, in the select clause, and use either a subject id or unique two-tuple in the from clause.
-
-Using a Subject Id: 
-
-```flureeql
+```all
 {
-  "select": ["*"],
-  "from": 369435906932737
-}
-```
-```curl
-curl\
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": ["*"],
-  "from": 369435906932737
-}'\
-   [HOST]/api/db/query
-```
-```graphql
-{ graph {
-  chat(_id: 369435906932737) {
-    _id
-    comments
-    instant
-    message
-    person
-  }
-}
+  "select": ["chat/_person"],
+  "from": "person"
 }
 ```
 
-```sparql 
- SELECT ?message ?person ?instant ?comments
- WHERE {
-    369435906932737   fd:chat/message  ?message;
-                    fd:chat/person   ?person;
-                    fd:chat/comments ?comments;
-                    fd:chat/instant  ?instant.
- }
-```
+Any predicate that is a reference (it is of type `ref`) can be reversely referenced. For example:
+-  `person/favMovies` -> `person/_favMovies`
+- `_user/auth` -> `_user/_auth`
+- `chat/comments` -> `chat/_comments`
 
-If a predicate is listed as `unique` (such as `person/handle` in our sample data), then you can use the name of the predicate and the object of the predicate to select a subject.
 
-Using a unique two-tuple:
+Reverse references can simply return the subject id (as in the query above) or you can crawl the graph with those preferences. Crawling the graph with a reverse reference has the same syntax and behaves the same way as crawling the graph with a regular reference. 
 
-```flureeql
+```all
 {
-  "select": ["*"],
-  "from":  ["person/handle", "jdoe"]
+  "select": [{"chat/_person": ["*"]}],
+  "from": "person"
 }
 ```
 
-```curl
-curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": ["*"],
-  "from":  ["person/handle", "jdoe"]
-}' \
-   [HOST]/api/db/query
-```
+5. A map with sub-select options
 
-```graphql
-{ graph {
-  person (ident: ["person/handle", "jdoe"]){
-    _id
-    handle
-    fullName
-  }
-}
-}
-```
+You can specify granular options that only apply to certain predicates. To do so, you need to create a map where the key is the predicate name and the value is an array with the sub-select option map inside. For example: `{"fullName": [{"_as": "name"}]}`. The sub-select option `as` renames `fullName` to `name` in the results. The full list of sub-select options is in the table below. 
 
-```sparql
- SELECT ?person ?fullName 
- WHERE {
-    ?person fd:person/fullName  ?fullName;
-            fd:person/handle    "jdoe".
- }
-```
-
-### Select From A Group of Subjects
-
-In your "from" clause, list subject ids and unique-two tuples. Query results will be returned in the same order as we specify them. 
-
-
-```flureeql
+```all
 {
-  "select": ["*"],
-  "from":  [369435906932737, ["person/handle", "jdoe"], 387028092977153,  ["person/handle", "zsmith"] ]
+    "select": ["handle", {"fullName": [{"_as": "name"}]}], 
+    "from": "person"
 }
 ```
 
-```
+A map can BOTH crawl the graph and have sub-select options. For example, `{"comment/_person": ["*", {"_as": "comment", "_limit": 1}]}`
 
-```curl
-curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": ["*"],
-  "from":  [369435906932737, ["person/handle", "jdoe"], 387028092977153,  ["person/handle", "zsmith"] ]
-}' \
-   [HOST]/api/db/query
-```
 
-```graphql
-# Note this may show an error in your GraphQL tool, but it will return the expected result. 
-
-{ graph {
-  person1(ident: ["person/handle, "jdoe"]){
-    _id
-    handle
-    fullName
-  }
-    person2(ident: ["person/handle", "zsmith"]){
-    _id
-    handle
-    fullName
-  }
-}
-}
-```
-
-```sparql
-Not supported
-```
-
-### Select Subjects With Certain Predicate
-
-By specifying a predicate name in the "from" clause, you can select all subjects that contain that predicate.
-
-```flureeql
+```all
 {
-    "select": ["*"],
-    "from": "person/handle"
+    "select": ["handle", {"comment/_person": ["*", {"_as": "comment", "_limit": 1}]}], 
+    "from": "person"
 }
 ```
 
-```curl
-curl\
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": ["*"],
-    "from": "person/handle"
-}'\
-   [HOST]/api/db/query
-```
+Below is another example using `_recur`. 
 
-```graphql
-{ graph {
-  person {
-    handle
-}
-}
-```
-
-```sparql
- SELECT ?person ?handle
- WHERE {
-    ?person   fd:person/handle ?handle.
- }
-```
-
-### Select Certain Predicates
-
-To select one or more specific predicates from a collection, we can specify them in the "select" array. 
-
-
-```flureeql
+```all
 {
-  "select": ["chat/message", "chat/person"],
-  "from": "chat",
-  "limit": 100
-}
-```
-```curl
-curl\
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": ["chat/message", "chat/person"],
-  "from": "chat",
-  "limit": 100
-}'\
-   [HOST]/api/db/query
-```
-```graphql
-{ graph {
-  chat(limit:100) {
-    message
-    person
-  }
-}
+    "select":["handle", {"person/follows": ["handle", {"_recur": 10}]}],
+    "from":"person"
 }
 ```
 
-```sparql 
- SELECT ?chat ?message ?person
- WHERE {
-    ?chat   fd:chat/message  ?message;
-            fd:chat/person   ?person;
- }
- LIMIT 100
+Certain sub-select options, such as `_recur` are only relevant for refs. While other options, such as `_limit` are only relevant for `multi` predicates.
+
+Key | Description 
+-- | -- 
+`_limit` | Limit (integer) of results to include. For `multi` predicates. By default, returns 100.  
+`_offset` | Offset (integer) number results to include. For `multi` predicates. By default, offset is 0.
+`_recur` | Number of times (integer) to follow a relationship. This only works for predicates where the subject referenced is in the same collection as the original subject (i.e. for `person/follows` in our basic schema, this predicate is attached to the `person` collection and must reference another `person`).
+`_component` | Whether to automatically crawl the graph for component entities. Overrides the top-level option. For `ref` predicates.
+`_as` | An alternate name for the predicate that is being referenced.
+`_orderBy` | Specify either a predicate (make sure to use the same name as returned in the results), or a two-tuple, where the first item is either `ASC` or `DESC` and the second item is the predicate name, i.e. `["ASC", "person/handle"]`.  Ordering is done before taking the number of results specified in limit. 
+`_compact` | Returns all predicate names in their compact (non-namespaced format). For example, rather than return `person/handle`, would just return `handle`. 
+
+### From Key
+
+Either a `from` key or a `where` key are required in a basic query. Your select options are applied to the field of subjects described by the `from`. A `from` key can be any of the following:
+
+Value Type | Example | Explanation 
+-- | -- | --
+collection name | `"person"` | Select options will be applied to any subject of the type listed. 
+a predicate name | `"person/chat"` | Predicate must be name-spaced. Select options will be applied to any subject, which has the given predicate specified. 
+a subject id | `87960930223082` | Applies select options to the given subject
+a unique two-tuple | `["person/handle", "jdoe"]` | Applies select options to the given subject, which is identified by a two-tuple where the first item is any predicate marked as `unique` and the second item is the value. 
+an array of subject ids and unique two-tuples | `[87960930223082, ["person/handle", "jdoe"]]` | Applies select options to the given subjects. Returns the results as an array
+
+Any select-array can be combined with any type of `from` key. 
+
+```all
+{
+  "select": ["*", {"chat/_person": ["*", {"_as": "chperson"}]}],
+  "from": [87960930223082, ["person/handle", "jdoe"]]
+}
 ```
 
-### Select with Where
+### Where Key
 
-To limit the subjects returned, we can specify a where clause. 
+A where clause filters a given database so that select-options are only applied to the field of subjects that meet the filter criteria. Where clauses are a simple way to apply very basic filters to a query. For more complex queries and filters, we recommend using [Analytical Queries](/docs/query/analytical-query).
 
-Where clauses can filter predicates using the following operations:
-`>`, `>=`, `<`, `<=`, and `=`.
+Where clause statements are simple expressions like `chat/instant > 1517437000000` where the first item is a predicate (not surrounded by quotation marks). This predicate must be indexed (it is either a `ref`, `tag`, or labelled as `unique` or `index`), and it cannot be a reversely-referenced predicate. 
+
+The second item in the expression is any of the following operations `>`, `>=`, `<`, `<=`, `!=`, and `=`. 
+
+The and the third item is a value. String values must be surrounded by escaped quotation marks, i.e. `person/handle != \"jdoe\"`. 
+
+Note: You are able to filter string values with `>`, `>=`, `<`, `<=`, although we do not recommend it. The results may not be sorted in an expected way, and we do not support any type of customizeable alphabetization. 
 
 You can link multiple specifications with `AND`s or `OR`s, for example `chat/instant > 1517437000000 AND chat/instant < 1517438000000`. You cannot submit a where clause with both an `AND` and an `OR`.
 
-```flureeql
+```all
 {
   "select": ["chat/message", "chat/instant"],
   "where": "chat/instant > 1517437000000"
 }
 ```
-```curl
-curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": ["chat/message", "chat/instant"],
-  "where": "chat/instant > 1517437000000"
-}'\
-   [HOST]/api/db/query
-```
-```graphql
-{ graph {
-  chat(where: "chat/instant >= 1516051090000"){
-    _id
-    instant 
-    message
-  }
-}
-}
-```
-```sparql
-Not supported
-```
 
-You can specify a collection as a `from` clause. This collection will be used as the default collection for any non-namespaced predicates in your where clause. For example, we can rewrite the above query using both a `where` and a `from` clause.
-
-```flureeql
+```all
 {
   "select": ["chat/message", "chat/instant"],
-  "where": "instant > 1517437000000",
-  "from": "chat"
+  "where": "chat/person = 351843720888322 OR chat/instant > 1517437000000"
 }
 ```
-```curl
-curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": ["chat/message", "chat/instant"],
-  "where": "instant > 1517437000000",
-  "from": "chat"
-}'\
-   [HOST]/api/db/query
-```
-```graphql
-<!-- Not applicable in GraphQL -->
 
-{ graph {
-  chat(where: "chat/instant >= 1516051090000"){
-    _id
-    instant 
-    message
-  }
-}
+
+```all
+{
+  "select": ["handle"],
+  "where": "person/handle != \"jdoe\" AND person/_chat"
 }
 ```
-```sparql
-Not supported
+
+You can optionally apply the where filter to a specific collection by including a `from` key in your query map with a collection as the value. 
+
+```all
+{
+  "select": ["handle"],
+  "where": "person/handle != \"jdoe\" AND person/_chat",
+  "from": "person"
+}
 ```
 
-### Select, As Of Block
+### Block Key
 
-We can issue any query as of any point in time by specifying a block number or a ISO-8601 formatted wall-clock time or duration. 
+A basic query can optionall have a block key, which issues that query as of a given point in time. The value of the block key can be a block number or a ISO-8601 formatted wall-clock time or duration. 
 
 Using a block number: 
 
@@ -371,6 +255,7 @@ Using a block number:
   "block": 2
 }
 ```
+
 ```curl
  curl \
    -H "Content-Type: application/json" \
@@ -378,6 +263,7 @@ Using a block number:
    -d '{"select": ["*"], "from": "chat", "block": 2}' \
    [HOST]/api/db/query
 ```
+
 ```graphql
 { graph (block: 2) {
   chat {
@@ -388,6 +274,7 @@ Using a block number:
 }
 }
 ```
+
 ```sparql
  SELECT ?chat ?message ?person ?instant
  WHERE {
@@ -397,7 +284,7 @@ Using a block number:
  }
  ```
 
- Using an ISO-8601 formatted wall clock time: 
+Using an ISO-8601 formatted wall clock time: 
 
  ```flureeql
 {
@@ -467,140 +354,35 @@ Using an ISO-8601 formatted duration (as of 5 minutes ago):
 Not supported
 ```
 
-### Select With Limit and Offset
 
-To limit the number of responses, add a limit clause with a positive integer. 
+### Opts Key
 
-```flureeql
-{
-  "select": ["*"],
-  "from": "chat",
-  "limit": 100
+<div class=" alert alert-danger show" style="background-color: #c57886">
+Deprecation note: As of version 0.15.0, we are discouraging the use of the following keys in the top-level of the query:
+
+- limit, component, offset, orderBy
+
+If using these in your query, they should instead by included in the opts map. See below. 
+</div>
+
+In the `opts` map, you can have the following optional keys:
+
+Key | Value | Description
+-- | -- | ---
+`limit` | `int` | Limit of results to include.
+`offset`| `int` | Number of results to exclude (i.e for pagination).
+`orderBy` | `predicate` or `[ORDER, predicate]` | Predicate name or two-tuple specifying how to order results. If using a two-tuple, the first element must be "ASC" or "DESC" and the second element is the predicate name. For example, `"person/chat"` or `["ASC", "person/handle"]`. Predicate name should match the name in the select clause. Ordering is done before taking the number of results specified in `limit`.
+`component` | `boolean` | Whether or not to automatically crawl the graph and retrieve component entities. Default: true. 
+`compact` | `boolean` |  All predicates returned are in their compact form (`handle`, rather than `person/handle`).
+`sync-to` | `integer` | Waits to return the results of the query until the ledger has reached a given block number. By default, waits for up to 1 minute, but `sync-timeout` (see below) can be changed.  
+`sync-timeout` | `integer` | Number of milliseconds to wait for the ledger to reach `sync-to` block. Default is `60000`, and max allowed is `120000`.
+
+For example:
+
+```all
+{ 
+  "select": ["*"], 
+  "from": "person", 
+  "opts": { "compact": true, "limit": 10, "offset": 5, "sync-to": 5, "orderBy": "handle" }
 }
-```
-```curl
-curl\
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": ["*"],
-  "from": "chat",
-   "limit": 100
-}'\
-   [HOST]/api/db/query
-```
-```graphql
-{ graph {
-  chat(limit:100) {
-    _id
-    comments
-    instant
-    message
-    person
-  }
-}
-}
-```
-
-```sparql 
- SELECT ?chat ?message ?person ?instant ?comments
- WHERE {
-    ?chat   fd:chat/message  ?message;
-            fd:chat/person   ?person;
-            fd:chat/comments ?comments;
-            fd:chat/instant  ?instant.
- }
- LIMIT 100
-```
-
-To skip a number of results at the beginning of a resultset, add an offset clause with a positive integer. 
-
-```flureeql
-{
-  "select": ["*"],
-  "from": "chat",
-  "offset": 100
-}
-```
-```curl
-curl\
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": ["*"],
-  "from": "chat",
-   "offset": 100
-}'\
-   [HOST]/api/db/query
-```
-```graphql
-{ graph {
-  chat(offset:100) {
-    _id
-    comments
-    instant
-    message
-    person
-  }
-}
-}
-```
-
-```sparql 
- SELECT ?chat ?message ?person ?instant ?comments
- WHERE {
-    ?chat   fd:chat/message  ?message;
-            fd:chat/person   ?person;
-            fd:chat/comments ?comments;
-            fd:chat/instant  ?instant.
- }
- OFFSET 100
-```
-
-Offset can be used in conjunction with limit. 
-
-
-```flureeql
-{
-  "select": ["*"],
-  "from": "chat",
-  "limit": 10,
-  "offset": 100
-}
-```
-```curl
-curl\
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": ["*"],
-  "from": "chat",
-   "offset": 100,
-   "limit": 10
-}'\
-   [HOST]/api/db/query
-```
-```graphql
-{ graph {
-  chat(offset:100, limit: 10) {
-    _id
-    comments
-    instant
-    message
-    person
-  }
-}
-}
-```
-
-```sparql 
- SELECT ?chat ?message ?person ?instant ?comments
- WHERE {
-    ?chat   fd:chat/message  ?message;
-            fd:chat/person   ?person;
-            fd:chat/comments ?comments;
-            fd:chat/instant  ?instant.
- }
- LIMIT 10
- OFFSET 100
 ```

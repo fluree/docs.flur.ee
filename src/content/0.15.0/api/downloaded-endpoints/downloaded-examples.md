@@ -212,6 +212,54 @@ Body: { "query1": { "select": ["*"], "from": "_collection"},
         "query2": { "select": ["*"], "from": "_predicate"}}
 ```
 
+To build the body of this query, create unique names for your queries, and set those as the keys of the your JSON query. The values of the keys should be the queries themselves. 
+
+For example, this query selects all chats and people at once. 
+
+```all
+{
+    "chatQuery": {
+        "select": ["*"],
+        "from": "chat"
+    },
+    "personQuery": {
+         "select": ["*"],
+        "from": "person"
+    }
+}
+```
+
+Any errors will be returned in a header, called `X-Fdb-Errors`. For example, incorrectCollection is attempting to query a collection that does not exist. 
+
+```all
+{
+    "incorrectCollection": {
+        "select": ["*"],
+        "from": "apples"
+    },
+    "personQuery": {
+         "select": ["*"],
+        "from": "person"
+    }
+}
+```
+
+The response will have a status of 207, and it will only return the response for `personQuery`.
+
+```all
+{
+    "personQuery": [
+      {
+        "_id": 4303557230594,
+        "person/handle": "zsmith",
+        "person/fullName": "Zach Smith",
+        "person/karma": 5
+      },
+      ...
+    ]
+}
+```
+
 ### /block
 FlureeQL [block queries](/docs/query/block-query) should be submitted to the `/block` endpoint. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries like those in the linked section - queries that are returning flakes from a block or set of blocks. 
 

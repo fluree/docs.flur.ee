@@ -12,7 +12,6 @@
             }
         } 
     },
-
     "infrastructure": {
         "pageName": "Infrastucture",
         "subTopics": {
@@ -93,6 +92,10 @@
             "signatures": {
                 "headerName": "Signatures",
                 "file": "0.13.0/docs/identity/signatures"
+            },
+            "password-management": {
+                "headerName": "Password Management",
+                "file": "0.15.0/guides/identity/password_management"
             }
         }
     },

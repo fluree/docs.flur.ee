@@ -10,6 +10,9 @@ Predicate | Type | Description
 `_user/auth` | `[ref]` | (optional) Reference to auth entities available for this user to authenticate. Note if no auth entities exist, the user will be unable to authenticate.
 `_user/roles` | `[ref]` | (optional) References to the default roles that apply to this user. If roles are specified via the `_auth` subject the user is authenticated as, those roles will always override (replace) any role specified here.
 
+
+Note: You can also run `./fluree_start.sh :keygen` to generate a valid public key, private key, and account id. This will not start Fluree or change your ledgers in any way- it will just return those three pieces of information.
+
 ### _auth
 
 More information about the [`_auth` collection](/docs/infrastructure/permissions#user-and-auth-entities)

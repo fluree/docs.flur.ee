@@ -19,7 +19,7 @@
             },
             "start-here": {
                 "headerName": "Start Here",
-                "file": "0.13.0/docs/start/basic-schema"
+                "file": "0.15.0/docs/start/basic_schema"
             }
         },
         "pageName": "Getting Started"
@@ -31,21 +31,17 @@
                 "headerName": "Basic Query",
                 "file": "0.15.0/docs/query/basic-query"
             },
+            "analytical-query": {
+                "headerName": "Analytical Query",
+                "file": "0.15.0/docs/query/analytical-query"
+            },
             "block-query": {
                 "headerName": "Block Query",
-                "file": "0.10.0/docs/query/block-query"
+                "file": "0.15.0/docs/query/block-query"
             },
             "history-query": {
                 "headerName": "History Query",
                 "file": "0.13.0/docs/query/history-query"
-            },
-            "advanced-query": {
-                "headerName": "Advanced Query",
-                "file": "0.13.0/docs/query/advanced-query"
-            },
-            "analytical-query": {
-                "headerName": "Analytical Query",
-                "file": "0.13.0/docs/query/analytical-query"
             },
             "sparql": {
                 "headerName": "SPARQL",
@@ -53,7 +49,7 @@
             },
             "graphql": {
                 "headerName": "GraphQL",
-                "file": "0.11.0/docs/query/graphql"
+                "file": "0.15.0/docs/query/graphql"
             }
         }
 

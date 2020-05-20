@@ -26,7 +26,7 @@ Download and unzip: [latest stable version of Fluree](https://s3.amazonaws.com/f
 
 Or, you can get the [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip). 
 
-You can also download the latest Fluree with Homebrew (see [Github repo](https://github.com/fluree/homebrew-flureedb)) and through Docker (see [Github repo](https://github.com/fluree/fluree-docker-example)). Downloading Fluree with Chocolatey is coming soon. 
+You can also download the latest Fluree with [Homebrew](/tools/other/tools#fluree-through-homebrew), [Docker](/tools/other/tools#fluree-on-docker), and [Chocolatey](/tools/other/tools#fluree-with-chocolatey) (coming soon).
 
 ### Launching and Exiting Fluree
 
@@ -34,7 +34,7 @@ To run Fluree with all the default options, navigate to the directory where you 
 
 - For Mac or Linux systems: `./fluree_start.sh` 
 
-- For Windows systems, you have to download a Bash emulator, like [Git For Windows](https://gitforwindows.org/) to properly run Fluree. In your Bash emulator, you can run `./fluree_start.sh` to start Fluree. 
+- For Windows systems, you have to download a Bash emulator, like <a href="https://gitforwindows.org/" target="_blank">Git for Windows</a> to properly run Fluree. In your Bash emulator, you can run `./fluree_start.sh` to start Fluree. 
 
 When Fluree is done starting up, your terminal will log (exact log message may be different based on version): 
 
@@ -45,37 +45,36 @@ When Fluree is done starting up, your terminal will log (exact log message may b
 -
 ```
 
-To change the location of the webserver, or any other settings, see [Config Options](#config-options).
+To change the location of the webserver (setting name `fdb-api-port`), or any other settings, see [Config Options](#config-options).
+
+#### Troubleshooting
 
 If the above message is not displaying in your terminal, the terminal should print out a relevant error message. Common errors include your chosen port already being in use and not having Java 8 or above installed. 
 
-- If you see an error "missing 'server' JVM", you need to install Java Server JRE. See [Oracle documentation](https://docs.oracle.com/en/java/) to select the appropriate platform, version (e.g., 8) and operating system.
+- If you see an error "missing 'server' JVM", you need to install Java Server JRE. See <a href="https://docs.oracle.com/en/java/" target="_blank">Oracle documentation</a> to select the appropriate platform, version (e.g., 8) and operating system.
 
-After you launch Fluree for the first time, you will not have any databases. You will need to create a database to begin.  Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the [user interface](#user-interface).
+After you launch Fluree for the first time, you will not have any databases. You will need to create a database to begin.  Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the user interface.
 
-To learn about the Fluree file system, see the [File System](/guides/guides/file-system) guide.
-
-#### Note 
-
-Note: You can also run `./fluree_start.sh :keygen` to generate a valid public key, private key, and account id. This will not start Fluree or change your ledgers in any way- it will just return those three pieces of information.
+To learn about the Fluree file system, see the [File System](/guides/infrastructure/file-system) guide.
 
 #### Exiting and Restarting Fluree
 
-To exit Fluree, simply click `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory](#in-memory-fluree), this will not delete any ledgers or invalidate any successful transactions. 
+To exit Fluree, simply click `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory]((/guides/infrastructure/file-system), this will not delete any ledgers or invalidate any successful transactions. 
 
 To restart Fluree, navigate to the folder that contains your Fluree instance and run `./fluree_start.sh`. This will restart your Fluree instance with all your previous networks and ledgers. 
 
-To completely reset your Fluree instance (erasing ALL ledger and transactor group data), you can shut down your instance and delete `data/` and `default_private_key.txt`. Don't do this unless you are sure you want to completely delete everything! See more about the Fluree [File System](/guides/guides/file-system) in the guides. 
+To completely reset your Fluree instance (erasing ALL ledger and transactor group data), you can shut down your instance and delete `data/` and `default_private_key.txt` (or wherever your private key is stored if you changed the ). Don't do this unless you are sure you want to completely delete everything! See more about the Fluree [File System](/guides/infrastructure/file-system) in the guides. 
 
 ### Config Options
 
-The `fluree_sample.properties` contains all configurable properties. To change properties, you can change the properties file or you can supply environment variables or Java property flags (for example, `./fluree_start.sh -Dfdb-api-port=8081`). Environment variables take precedence over both configuration options listed as Java property flags and those in the `fluree_sample.properties` file. Java property flags, in turn, take precedence over config options listed in the `fluree_sample.properties` file. 
+The `fluree_sample.properties` contains all configurable properties, as well as short descriptions of the properties themselves. To change properties, you can change the properties file or you can supply environment variables or Java property flags (for example, `./fluree_start.sh -Dfdb-api-port=8081`). Environment variables take precedence over both configuration options listed as Java property flags and those in the `fluree_sample.properties` file. Java property flags, in turn, take precedence over config options listed in the `fluree_sample.properties` file. 
 
 To learn about different configurations in-depth, see the following guides:
 
-- Running Fluree [In-Memory](/guides/guides/in-memory)
-- Running a [Transactor Group](/guides/guides/transactor-group)
-- [Consensus Algorithms](/guides/guides/consensus-algorithms)
+- Running Fluree [In-Memory](/guides/infrastructure/in-memory)
+- Running a [Transactor Group](/guides/infrastructure/transactor-group)
+- [Consensus Algorithms](/guides/infrastructure/consensus-algorithms)
+- [Password Management](/guides/identity/password-management)
 
 #### Base Settings
 
@@ -89,10 +88,10 @@ Property | Options | Description
 
 Property | Options | Description   
 -- | -- | -- 
-`fdb-consensus-type` | `raft` or `in-memory` | Currently `raft` is the only option consensus type supported for transactor groups. See the [in-memory](/guides/guides/in-memory) guide on how to run Fluree in memory. 
-`fdb-join?` | `boolean` | (Optional) Set this to true if a server is attempting to dynamically join a network. See the [transactor-group](/guides/guides/transactor-group) guide on how to run Fluree as a transactor group. 
-`fdb-group-catch-up-rounds` | `int` | By default, set to 10. The number of rounds the tx group leader will wait for a new server that is 
-`fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. Must be a [valid private key](/docs/identity/public-private-keys). This takes precedent over `fdb-group-private-key-file`.
+`fdb-consensus-type` | `raft` or `in-memory` | Currently `raft` is the only option consensus type supported for transactor groups. See the [in-memory](/guides/infrastructure/in-memory) guide on how to run Fluree in memory. 
+`fdb-join?` | `boolean` | (Optional) Set this to true if a server is attempting to dynamically join a network. See the [transactor-group](/guides/infrastructure/transactor-group) guide on how to run Fluree as a transactor group and dynamically change the network configuration. 
+`fdb-group-catch-up-rounds` | `int` | By default, set to 10. The number of rounds the tx group leader will wait for a new server to catch up get caught up to the network, when dynamically joining a network. See the [transactor-group](/guides/infrastructure/transactor-group) guide on how to run Fluree as a transactor group and dynamically change the network configuration. 
+`fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. Must be a [valid private key](/guides/identity/public-private-keys). This takes precedent over `fdb-group-private-key-file`.
 `fdb-group-private-key-file` | `file path` | If fdb-group-private-key is not provided, we'll look for it in this file. If not found in this file, we'll generate a default one and place it in this file.
 `fdb-group-servers` | `server-id@host:port, server-id@host:port` | List all servers participating in ledger-group with format of server-id@host:port. All tx-group servers should have this same config.
 `fdb-group-this-server` | `server-id` | Specify which of the above listed server-ids is this server. Note this must be unique for every server in the tx-group, and is likely easiest to supply this setting via environment variable.
@@ -132,35 +131,3 @@ Property | Options | Description
 `fdb-pw-auth-signing-key` | `string` | A valid Fluree private key with proper permissions must be used to sign any new transaction where new password auth records are created. If a default root key still exists and has proper permission, that will be used by default.
 `fdb-pw-auth-jwt-max-exp` | `time in milliseconds, i.e. 86400000` |  Maximum allowed expiration time per JWT token in milliseconds. Blank means any amount of time is valid. (86400000 ms in 24 hours, 31536000000 in 1 year)
 `fdb-pw-auth-jwt-max-renewal` | `time, i.e. 1y or 2d` | If renewal JWT tokens are allowed (blank if not allowed), maximum time from initial issuance a token can be renewed for in ms. To make this 'forever', use the maximum long value (9223372036854775807). For example, if you had a JWT token that expires after 120 seconds, but want to allow an active user to not be challenged for a password for up to 1 day, enter "1d" here and an unexpired token can be renewed as many times as desired (swapped for an 'fresh' token) so long as the original token issued from the password was less then this time period ago.
-
-
-</div>
-
-<!-- ### Setting Your Own Private Key
-To use your own private key, first please see the section on [public and private keys](/docs/identity/public-private-keys) to see what is and isn't valid as a private key. 
-
-If you have a valid private key, encoded with [Base58Check Encoding](/docs/identity/public-private-keys#base58check-encoding), then you can add your private key to a `default_private_key.txt`. You can also change the name of the file that holds the private key by changing the `fdb-group-private-key-file` config option (see below).
-
-
-
-### 
-
-### Setting Up a Transactor Group
-Currently, transactor groups only support the Raft consensus algorithm to agree on a shared state for a network of databases. With Raft, a total of `n` servers can support `f` failures: n = 2f + 1. This means that anything less than 3 servers can sustain no failures, 5 servers can sustain two failures. 
-
-You can test a decentralized Fluree on a single computer (different ports) or on multiple computers. Each member of Fluree needs to have its own folder containing `fluree_server.jar`, `fluree_sample.properties`, and `fluree_start.sh`. 
-
-Before starting any of the servers, make sure to set `fdb-group-servers` and `fdb-group-this-server`.
-
-All the members of the transactor group need to have the same `fdb-group-servers`. All of the servers participating in ledger-group should be listed in the format of server-id@host:port, for example to run them all on one machine, you would list:
-
-`fdb-group-servers=myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792`
-
-Each server should have a different `fdb-group-this-server`, which should be the server-id (from `fdb-group-servers`). 
-
-Other configuration options that are relevant to setting up a transactor group are:
-
-`fdb-group-timeout`, `fdb-group-heartbeat`, `fdb-group-log-directory`, `fdb-group-snapshot-threshhold`, `fdb-group-log-history`.
-
-See the full explanation for those settings in [config options](#config-options).  -->
-
