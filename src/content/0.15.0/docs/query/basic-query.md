@@ -362,7 +362,7 @@ Deprecation note: As of version 0.15.0, we are discouraging the use of the follo
 
 - limit, component, offset, orderBy
 
-If using these in your query, they should instead by included in the opts map. See below. 
+If using these in your query, they should instead be included in the opts map. See below. 
 </div>
 
 In the `opts` map, you can have the following optional keys:

@@ -26,9 +26,21 @@ Key | Required? | Description
 [select, selectOne, or selectDistinct](#select-key) | yes | `select` returns all relevant results, `selectOne` returns one result, and `selectDistinct` only returns unique results. [See select key](#select-key)
 [where](#where-key) | yes | A collection of tuples which allow for complex filtering of data. 
 `block` | no | Optional block specified by block number, duration, or wall-clock time as a ISO-8601 formatted string. This applies a block to every part of the query that does not have a block specified. It follows the same syntax as the [block key in basic queries](/docs/query/overview#block-key). 
-`prefixes` | no | Optional map of outside sources. See [prefixes](#prefixes-key).
-`vars` | no | Optional map of variable bindings. See [vars](#vars-key).
-`opts` | no | Optional map where options like `limit`, `orderBy`, `pretty-print`, and `wikipediaOpts` can be specified. See [opts](#opts-key).
+[prefixes](#prefixes-key) | no | Optional map of outside sources.
+[vars](#vars-key) | no | Optional map of variable bindings.
+[opts](#opts-key) | no | Optional map where options like `limit`, `orderBy`, `pretty-print`, and `wikipediaOpts` can be specified.
+
+This page covers every available option for analytical queries, to see [examples](/guides/analytical-queries/analytical-query-examples), visit the relevant guide.
+
+<div class=" alert alert-danger show" style="background-color: #c57886">
+Deprecation note: As of version 0.15.0, we are discouraging the use of the following keys in the top-level of the query:
+
+- union, filter, optional, limit, offset, orderBy, groupBy, prettyPrint
+
+If using union, filter, optional in your query, they should instead be included in the where key.
+If using limit, offset, orderBy, groupBy, prettyPrint in your query, they should instead be included in the opts map.  
+</div>
+
 
 ### Select Key
 
@@ -87,14 +99,15 @@ A where-array can be comprised of any of the following items in any order:
 
 Item | Function 
 -- | --
-three-tuple | Looks for flakes (pieces of data) in the database that match a provided pattern, and bind variables to the results. See [three tuple](#three-tuple)
-four-tuple | Same as a simple three-tuple, except the first item in the tuple specifies a particular data source, such as Wikidata, another ledger, or the current ledger at a specific in time.  See [four tuple](#four-tuple)
-Intermediate Aggregate clause | TO DO
-Binding map | Serves the same function as an intermediate aggregate clause, except the syntax is different. 
-Optional map | TO DO
-Union map | TO DO
-Filter map | TO DO
+[three-tuple](#three-tuple) | Looks for flakes (pieces of data) in the database that match a provided pattern, and bind variables to the results.
+[four-tuple](#four-tuple) | Same as a simple three-tuple, except the first item in the tuple specifies a particular data source, such as Wikidata, another ledger, or the current ledger at a specific in time.
+[two-tuple variable binding](#two-tuple-variable-binding)| Bind a variable to a value, including to a calculated aggregate values. These variables can be used subsequent where-array items.
+[binding map](#binding-map)| Serves the same function as a two-tuple variable binding, except the syntax is different. 
+[optional map](#optional-map) | Like, three-tuples, looks for flakes (pieces of data) that match a provided pattern. However, when joining the results of this map with the queries existing resultset, will simply bind `null` if there is no match (a left outer join).
+[union map](#union-map) | The two parts of a union map are outer joined. 
+[filter map](#filter-map) | Filters the results up that point in the query. 
 
+Each where-array item is resolved and then inner joined with the resultset up until that point. See the [Analytical Query](/guides/analytical-queries/inner-joins-in-fluree) guide for more information. 
 
 #### Three Tuple
 
@@ -105,55 +118,16 @@ When you include a three-tuple in your where-array, you specify the values for o
 Part | Value
 -- | -- 
 `subject` | Can be an subject id, unique two-tuple, a variable (a string that begins with `?`), or null.
-`predicate` | Can be either subject id, predicate name, or a variable (a string that begins with `?`).  Reverse references are *NOT* supported.
-`object` | Can be a value, subject id, unique two-tuple, a variable (a string that begins with `?`), or null. <br/> <br/> If your object begins with a `?`, and it is NOT a variable, for example someone's name is `?Fred`, then you can use escape strings in the object, for example: `"\"?Fred\""`.
+`predicate`, `predicate+[RECUR-DEPTH]`, or `service call` | Can be either subject id, predicate name, or a variable (a string that begins with `?`).  Reverse references are *NOT* supported. <br/> <br/> If using a predicate name, can add `+` after the predicate name to signify recur. Can also specify how many times to recur, i.e. `person/follows+3`. <br/> <br/> The second item in the clause can also be a service call. All supported service calls are in the subsequent table. 
+`object` or `object-function` | Can be a value, subject id, unique two-tuple, a variable (a string that begins with `?`), or null. <br/> <br/> The object can also be a filter function, which contains an existing or a newly declared variable, for example, `(= 20 ?nums)`. The filters follow the same syntax as [filter maps](#filter-maps), and you can read more in that section.  <br/> <br/> If your object begins with a `?`, and it is NOT a variable, for example someone's name is `?Fred`, then you can use escape strings in the object, for example: `"\"?Fred\""`.
 
-A three tuple acts as a pattern in a where-array. First it pulls all the data that matches that given pattern, and then it binds the appropriate variables. For example, we can issue the following query:
+A three tuple acts as a pattern in a where-array. First it pulls all the data that matches that given pattern, and then it binds the appropriate variables. Subsequent three tuples are inner-joined. For more information and examples, see [inner joins in Fluree](/guides/analytical-queries/inner-joins-in-fluree).
 
-```all
-{
-    "select": ["?person", "?handle"],
-    "where": [["?person", "person/handle", "?handle"]]
-}
-```
-
-The result (in table form) could be (subject ids may be different for you):
-
-?person | ?handle
--- | --
-351843720888324 | dsanchez
-351843720888323 | anguyen
-351843720888322 | zsmith
-351843720888321 | jdoe
-
-Subsequent three-tuples are inner-joined with the previous results. For example, let's say that that next clause is `["?person", "person/favArtists", "?artist"]`. The results of that clause (in table form) could be:
-
-?person | ?artist 
--- | -- 
-351843720888324 | 404620279021570
-351843720888321 | 404620279021571
-351843720888322 | 404620279021569
-351843720888323 | 404620279021570
-351843720888321 | 404620279021570
-351843720888323 | 404620279021571
-351843720888321 | 404620279021569
-
-If we were to resolve these two sequential three tuples `["?person", "person/handle", "?handle"]` `["?person", "person/favArtists", "?artist"]`, the above tables need to be inner-joined. The `?person` variable is the only variable that matches across both sets of tuples, so that is the one that we look to for matches. The resulting inner join:
-
-
-?person | ?handle | ?artist
+Supported Service Call | Example Three-tuple | Description
 -- | -- | --
-351843720888324 | dsanchez | 404620279021570
-351843720888323 | anguyen | 404620279021570
-351843720888323 | anguyen | 404620279021571
-351843720888322 | zsmith | 404620279021569
-351843720888321 | jdoe | 404620279021571
-351843720888321 | jdoe | 404620279021570
-351843720888321 | jdoe | 404620279021569
-
-Note that if the previous result table and the subsequent clause have no matching variables, this is the same as if every row in the previous results (table A) matched every row in the new results (table B). This would result in a table of `count of table A rows` * `count of table B rows`. 
-
-To speed up your queries, you want to order your clauses so that there are matching variables in as many subsequent clauses as possible.
+Full Text Search a Collection | `["?movie", "fullText:movie", "redemption"]` | This service call searches for the word `redemption` in any predicates in the movie collection that are enabled for full text search. See the [Full Text Search](/guides/additional-features/full-text-search) guide for more examples and details. 
+Full Text Search a Predicate | `["?movie", "fullText:movie/title", "redemption"]` | This service call searches for the word `redemption` in `movie/title`s. This only works if the `movie/title` predicate is enabled for full text search. See the [Full Text Search](/guides/additional-features/full-text-search) guide for more examples and details. 
+Collection Select | `["?movie", "rdf:type", "movie"]` | This service call binds all subject ids where the subject belongs to the `movie`. collection to the provided variable, `?movie`.
 
 #### Four Tuple
 
@@ -163,15 +137,26 @@ Source | Example | Description
 -- | -- | --
 This Database | `$fdb` | Default source. The current version of a given Fluree. Can be omitted. 
 This Database at a Previous Point in Time | `$fdb3`, `$fdb2019-03-14T20:59:36.097Z`, `$fdbPT5M`| This database at a specified block. The block is specified either by providing the block integer, ISO-8601 formatted wall clock time, or ISO-8601 formatted duration ago
-Other Fluree Database | `$ftest` | Other Fluree database must be specifed in the [prefixes key](#prefixes-key). 
-Other Fluree Database | `$ftestPT5M` | Other database at a specified block. The block is specified either by providing the block integer, ISO-8601 formatted wall clock time, or ISO-8601 formatted duration ago
+Other Fluree Database | `ftest` | Other Fluree database must be specifed in the [prefixes key](#prefixes-key). 
+Other Fluree Database | `ftestPT5M` | Other database at a specified block. The block is specified either by providing the block integer, ISO-8601 formatted wall clock time, or ISO-8601 formatted duration ago
 Wikidata | `$wd` | Wikidata 
 
 For example, the three tuple `["?person", "person/handle", "?handle"]` is equivalent to `["$fdb", "?person", "person/handle", "?handle"]`, because the specified source is the current database. The four tuple, `["$fdbPT2H", "?person", "person/handle", "?handle"]` is matching the given tuple pattern to the subject-predicate-object triples active in the database as of two hours ago. 
 
-#### Intermediate Aggregate Values
+```all
+{
+  "select": "?nums",
+  "where": [["?person", "rdf:type", "person"],
+            ["?person", "person/handle", "?handle"],
+            ["?person", "person/favNums", "#(> 80 ?nums)"]]
+}
+```
 
-You can bind a variable to an aggregate value. As mentioned above, where-array items are resolved in the order in which they appear. This means that aggregates do NOT take into account the where-array item that come later in the array. To bind an intermediate aggregate value, just specify a two-tuple with the first item as a variable and the second item as the aggregate function. For example:
+#### Two Tuple Variable Binding
+
+You can bind a variable to an aggregate value. As mentioned above, where-array items are resolved in the order in which they appear. This means that aggregates do NOT take into account the where-array item that come later in the array. To bind an intermediate aggregate value, just specify a two-tuple with the first item as a variable and the second item as the aggregate function. For example `["?maxBlock",  "#(max ?bNum)"]`. 
+
+Valid functions are the same as the ones listed in [Valid Aggregate Functions](#valid-aggregate-functions). You can also use the aggregate modifier (`distinct`) explained in the valid aggregate section (you can use the `as` modifier, but this will simply by ignored). A function must be preceded with a `#`. 
 
 ```flureeql
 {"select": "?hash", 
@@ -211,24 +196,21 @@ WHERE {
 }
 ```
 
-<!-- 
-### Where Key
-We suggest reading the [Where Clause](#where-clause) section before reading the [Select or Select One Clauses](#select-or-select-one-clauses) section. The where clause is the first part of the query that is resolved. 
+You can also simply specify values as the second item in the tuple. This binds the given variable to the value provided. 
 
-Where clauses are a collection of four-tuples. Each tuple is comprised of a source, subject, predicate, and object. Multiple four-tuples strung together allow us to finely filter data, and connect our Fluree to outside triple-store databases. The where clause can also contain [unions](#unions), [intermediate aggregate](#intermediate-aggregate-values) values, [binds](#bind), [optional](#optional) clauses, [filter](#filter) clauses.
+```all
+{"select": "?person", 
+ "where": [
+    ["?handle",  "jdoe"],
+     ["?person", "person/handle", "?handle"]
+]}
+```
 
-
-
-
-
-
-
-
-#### Bind
+#### Binding Map
 
 Binding works the same as intermediate aggregate values, except the syntax is different. 
 
-A `bind` map (or multiple maps), can be declared anywhere in the where clause. The `bind` map must precede any clauses, which use the variables declared in the map. 
+A `bind` map (or multiple maps), can be declared anywhere in the where clause. The `bind` map must precede any clauses that use the variables declared in the map. 
 
 The map is comprised of keys that correspond to variables, and values. For example, `{"bind": {"?handle": "dsanchez"}}`. You can bind multiple variables in the same map, as well, for example `{"bind": {"?handle": "dsanchez", "?person": 351843720888324}}`.
 
@@ -276,7 +258,7 @@ WHERE {
 }
 ```
 
-Like intermediate aggregate clauses, binds can use aggregate functions. See [Select or selectOne Clauses](#select-or-select-one-clauses) for a list of valid aggregate variables. 
+Like intermediate aggregate clauses, binds can use aggregate functions. See the [Valid Aggregate Functions](#valid-aggregate-functions) list above. 
 
 ```flureeql
 {"select": "?hash", 
@@ -316,442 +298,49 @@ WHERE {
 }
 ```
 
-#### Unions
+#### Optional Map
 
-A `union` map in a where clause allow variables to match multiple graph patterns. 
+An optional map is map where the key is `optional`, and the value is an array of where-items (you can include any where-items within an optional map, such as three-tuples, four-tuples, two-tuple variable bindings, other optional maps, etc). 
 
-For example, the clause `[ "?person", "person/handle", "dsanchez" ]` will only match Diana Sanchez. The clause `[ "?person", "person/handle", "jdoe" ]` will only match Jane Doe. If we want to bind BOTH Diana and Jane's subject ids to `?person`, we can use a `union` map. The `union` map has an array of clause array. Note that even if each clause array only has a single clause, it still must be enclosed in `[`.
+For example:
 
-```flureeql
-{
-      "union": [
-        [[ "?person", "person/handle", "dsanchez" ]],
-        [[ "?person", "person/handle", "anguyen"]]
-      ]
-    }
-```
-
-```curl
-// Below is just the FlureeQL code
-{
-      "union": [
-        [[ "?person", "person/handle", "dsanchez" ]],
-        [[ "?person", "person/handle", "anguyen"]]
-      ]
+```all
+{ "optional": [ 
+    [ "?person", "person/fullName", "?name"], 
+    ["?favNums", 1223],
+    [ "?person", "person/favNums", "?favNums"]
+  ]
 }
 ```
 
-```graphql 
-Not supported
-```
+Anything within an optional map is resolved and then left outer joined with previous results. In other words, optional maps do not remove any entries from the existing resultset - any rows from the original resultset that do not have a match are bound with `null`. For a more in-depth explanation of optional clauses, see the [optional clauses](/guides/analytical-queries/optional-clauses) guide. 
 
-```sparql 
-{ ?person fdb:person/handle "dsanchez" } UNION { ?person fdb:person/handle "anguyen" } 
-```
 
-Below is an example of a `union` with multiple clauses. In this case, `?person` can EITHER have an age of 70 and a handle, dsanzhez, OR it can have a handle of anguyen.
+#### Union Map
 
-```flureeql
+A union map take an two-item array as a value. The two items in this array is itself an array comprised of any number of where-items (for example, three-tuples, two-tuples, optional maps, and filter maps). The results of each array of where-items is then outer joined. 
+
+```all
 {
-      "union": [
-        // First clause group
-        [["?person","person/age", 70],
-        ["?person", "person/handle", "dsanchez]],
-        
-        // Second clause
-        [["?person", "person/handle", "anguyen"]]
-      ]
-}
-```
-
-```curl
-// Below is just the FlureeQL code
-{
-      "union": [
-        // First clause group
-        [["?person","person/age", 70],
-        ["?person", "person/handle", "dsanchez]],
-        
-        // Second clause
-        [["?person", "person/handle", "anguyen"]]
-      ]
-}
-```
-
-```graphql
-Not supported
-```
-
-```sparql 
-{   ?person fdb:person/age 70.
-    ?person fdb:person/handle "dsanchez". } 
-  UNION 
-{   ?person fdb:person/handle "anguyen" } 
-```
-
-A `union` map can be placed anywhere inside of a `where` clause. For example:
-
-```flureeql
-{
-  "select": [ "?person", "?age" ],
+  "select": [ "?x", "?y", "?b", "?c"],
   "where": [
-   {
-      "union": [
-        // First clause group
-        [["?person","person/age", 70],
-        ["?person", "person/handle", "dsanchez"]],
+    { "union": [ 
         
-        // Second clause
-        [["?person", "person/handle", "anguyen"]]
-      ]
-  }
-    [
-      "?person",
-      "person/age",
-      "?age"
-    ]
-  ]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": [ "?person", "?age" ],
-  "where": [
-   {
-      "union": [
-        // First clause group
-        [["?person","person/age", 70],
-        ["?person", "person/handle", "dsanchez"]],
+        [["?x", "_collection/name", "?na"],
+        ["?b", 2]],
         
-        // Second clause
-        [["?person", "person/handle", "anguyen"]]
-      ]
-  }
-    [
-      "?person",
-      "person/age",
-      "?age"
-    ]
-  ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?person ?age
-WHERE {
-  {   ?person fdb:person/age 70.
-    ?person fdb:person/handle "dsanchez". } 
-  UNION 
-  {   ?person fdb:person/handle "anguyen". } 
-  ?person fdb:person/age ?age.
-}
-```
-
-#### Optional
-
-An optional map can be placed anywhere in a `where` clause. Note that the order of an `optional` clause matters. `Optional` clauses are evaluated according to their order in a where clause. 
-
-Optional clauses are structured the same as where clauses. The difference is that rather than performing an inner-join to determine the results, we perform a left outer join. In other words, any rows from the initial table that don't match in the optional clauses's table are joined with nulls. For more information, see [optional clauses](#optional-clauses).
-
-Currently, we do not support starting your where clause with an `optional` map. This will always return an empty result, as of 0.13.0. 
-
-```flureeql
-{
-  "select": [ "?person", "?name", "?age" ],
-  "where": [ [ "?person", "person/age", "?age"],
-    { "optional": [ [ "?person", "person/fullName", "?name"],
-        [ "?person", "person/favNums", "?favNums"]]
+        [["?y", "_predicate/name", "?na"],
+        ["?c", 8]]
+        
+        ]
     }
   ]
 }
 ```
 
-```curl 
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": [ "?person", "?name", "?age" ],
-  "where": [ [ "?person", "person/age", "?age"],
-    { "optional": [ [ "?person", "person/fullName", "?name"],
-        [ "?person", "person/favNums", "?favNums"]]
-    }
-  ]
-}' \
-   [HOST]/api/db/query
-```
+#### Filter Map
 
-```graphql 
-Not supported
-```
-
-```sparql
-SELECT ?person ?name ?age
-WHERE {
-  ?person fdb:person/fullName ?name. 
-  OPTIONAL {  ?person fdb:person/fullName ?name. 
-              ?person fdb:person/favNums ?favNums. }
-}
-```
-
-#### Filter
-
-To see all supported filters, see the [Filters](#filters) section. Filters can be placed anywhere in a where clause. 
-
-```flureeql
-{
-    "select": ["?handle", "?num"],
-    "where": [  ["?person", "person/handle", "?handle"], 
-                ["?person", "person/favNums", "?num"],
-                { "filter": [ "(> 10 ?num)"] }]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": ["?handle", "?num"],
-    "where": [  ["?person", "person/handle", "?handle"], 
-                ["?person", "person/favNums", "?num"],
-                { "filter": [ "(> 10 ?num)"] }]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql 
-Not supported
-```
-
-```sparql
-SELECT ?handle ?num
-WHERE {
-  ?person fdb:person/handle ?handle.
-  ?person fdb:person/favNums ?num.
-  FILTER ( ?num > 10 ).
-}
-```
-
-#### Query examples:
-
-In the [Basic Schema](/docs/getting-started/basic-schema), we gave each person a set of favorite numbers. If we want to view all of `zsmith`'s flakes, which contain the values of his favorite numbers, our query could be:
-
-```flureeql
-{
-    "select": "?nums",
-    "where": [["$fdb", ["person/handle", "zsmith"], "person/favNums", "?nums"]]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": "?nums",
-    "where": [ ["$fdb", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?nums
-WHERE {
-    ?person fd:person/handle    "jdoe";
-            fd:person/favNums   ?nums.
-}
-```
-
-Our where clause only contains one tuple, `["$fdb", ["person/handle", "zsmith"], "person/favNums", "?nums"]` within the main tuple (we'll see examples of multiple tuples later). There are four elements in this tuple: 
-
-Tuple-Part | Example | Explanation
--- | -- | --
-source | `$fdb` | This specifies the source from which we will retrieve the subsequent tuple.*
-subject | `["person/handle", "zsmith"]` | The second element in a where-clause tuple represents the subject. Our subject is a two-tuple, `["person/handle", "zsmith"]`, but we can alternatively use a Zach Smith's `_id` or any two-tuple, which specifies a unique predicate and that predicate value. 
-predicate | `"person/favNums"`| The third element (or second, if we omit a source) in a where-clause tuple is the predicate. In this case, the specified predicate is a `multi` predicate of type `int`. We can specify any type and cardinality of predicate.
-object| `"?nums"`| The fourth element is for an object. Rather than specify an object, we bind any of the flake objects specified by subject, `["person/handle", "zsmith"]` and predicate `person/favNums` to the variable `"?nums"`. Variables have to begin with a `?`. These variables can be used in the `select` or `selectOne` statements. 
-
-\* In the above example, because our source is our current database, we can optionally omit the source element (leaving us with the tuple: `[["person/handle", "zsmith"], "person/favNums", "?nums"]`]).
-
-Alternatively, if we want to specify every flake that contains favorite numbers, we set the subject as a variable. 
-
-```flureeql
-{
-    "select": "?nums",
-    "where": [ ["$fdb", "?person", "person/favNums", "?nums"] ]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": "?nums",
-    "where": [ ["$fdb", null, "person/favNums", "?nums"] ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?nums
-WHERE {
-    ?person fd:person/favNums ?nums.
-}
-```
-
-If the same variable is used in multiple tuples, it acts as a filter. For example, if we want to select any favorite numbers shared by both "jdoe" and "zsmith", we could bind the value of their favNums to the same variable. 
-
-```flureeql
-{
-    "select": "?nums",
-    "where": [  ["$fdb", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
-                ["$fdb", ["person/handle", "jdoe"], "person/favNums", "?nums"] ]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": "?nums",
-    "where": [  ["$fdb", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
-                ["$fdb", ["person/handle", "jdoe"], "person/favNums", "?nums"] ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?nums
-WHERE {
-    ?person     fd:person/handle    "jdoe";
-                fd:person/favNums    ?nums.
-    ?person2    fd:person/handle    "zsmith";
-                fd:person/favNums   ?nums.
-}
-```
-
-### Optional Clauses
-
-Optional clauses are structured the same as where clauses. The difference is that rather than performing an inner-join to determine the results, we perform a left outer join. In other words, any rows from the initial table that don't match in the optional clauses's table are joined with `null`s.
-
-Here is a query that does not have any optional clauses:
-
-```flureeql
-{
-    "select": ["?handle", "?num"],
-    "where": [  ["?person", "person/handle", "?handle"], 
-                ["?person", "person/favNums", "?num"] ]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": ["?handle", "?num"],
-    "where": [  ["?person", "person/handle", "?handle"], 
-                ["?person", "person/favNums", "?num"] ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?handle ?num
-WHERE {
-  ?person fdb:person/handle ?handle.
-  ?person fdb:person/favNums ?num.
-}
-```
-
-Let's say the results of the where clause are as follows:
-
-?handle | ?num
--- | --
-Alice | 7
-Alice | 42 
-Bob | 2
-Bob | 9
-Bob | 42
-
-If there were any people in our database *without* favorite numbers, they would not appear in this query. However, if we want to preserve all `handle`s, even ones belonging to people without favorite numbers, we could issue this query:
-
-```flureeql
-{
-    "select": ["?handle", "?num"],
-    "where": [  ["?person", "person/handle", "?handle"] ],
-    "optional": [["?person", "person/favNums", "?num"]]
-}
-```
-
-```curl 
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": ["?handle", "?num"],
-    "where": [  ["?person", "person/handle", "?handle"] ],
-    "optional": [["?person", "person/favNums", "?num"]]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?handle ?num
-WHERE {
-  ?person fdb:person/handle ?handle.
-  OPTIONAL { ?person fdb:person/favNums ?num. }
-}
-```
-
-The results of the above query might look below. Where Jack and Jill are still in our result set, even though they don't have favorite numbers.
-
-?handle | ?num
--- | --
-Alice | 7
-Alice | 42 
-Bob | 2
-Bob | 9
-Bob | 42
-Jack | null
-Jill | null
-
-You could have as many optional clauses as you like, but note that ORDER matters! So think through those joins before writing out your query.
-
-### Filters
-Currently, all filter functions should be written using Clojure. The following are all of the accepted filter functions:
+A filter map has the key `filter`, and the value is an number of filter functions. Currently, all filter functions should be written using Clojure. The following are all of the accepted filter functions:
 
 Name | Example | Explanation
 -- | -- | --
@@ -781,26 +370,26 @@ re-find | `(re-find (re-pattern \"^_collection\") ?name)` | Returns the first re
 strStarts | `(strStarts ?message \"Hi\")` | Returns true if the string starts with the given substring, case sensitive. 
 strEnds | `(strEnds ?message \"Amy.\")` | Returns true if the string ends with the given substring, case sensitive. 
 
-Specify all filters in the `filter` key on the top-level of the query.
+An example query:
 
 ```flureeql
 {
     "select": ["?handle", "?num"],
     "where": [  ["?person", "person/handle", "?handle"], 
-                ["?person", "person/favNums", "?num"] ],
-    "filter": [ "(> 10 ?num)"]
+                ["?person", "person/favNums", "?num"],
+                { "filter": [ "(> 10 ?num)", "(= \"jdoe\" ?handle)"] }]
 }
 ```
 
-```curl 
+```curl
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
     "select": ["?handle", "?num"],
     "where": [  ["?person", "person/handle", "?handle"], 
-                ["?person", "person/favNums", "?num"] ],
-    "filter": [ "(> 10 ?num)"]
+                ["?person", "person/favNums", "?num"],
+                { "filter": [ "(> 10 ?num)", "(= \"jdoe\" ?handle)"] }]
 }' \
    [HOST]/api/db/query
 ```
@@ -809,7 +398,7 @@ Specify all filters in the `filter` key on the top-level of the query.
 Not supported
 ```
 
-```sparql 
+```sparql
 SELECT ?handle ?num
 WHERE {
   ?person fdb:person/handle ?handle.
@@ -818,14 +407,22 @@ WHERE {
 }
 ```
 
-Filters can be optional by specifying a two-tuple where the first item is "optional", and the second item is the filter function. If a filter is optional, like `(> 10 ?num)`, then any row where `?num` is `null` will be ignored and will not be filtered out. On the other hand, any row where `?num` is greater or equal to 10 will be removed.
+### Prefixes Key
+
+If we want to query across multiple Fluree databases we can do so by specifying the database in the `prefixes` map. 
+
+In the prefix map, we can specify what ledger we want to query across, in this case `fluree/test`, and we give that source a name, `ftest`. The name given to a source must be only lowercase letters and no numbers. 
+
+Now we can use `ftest` as a source in any clause. 
 
 ```flureeql
 {
-    "select": ["?handle", "?num"],
-    "where": [  ["?person", "person/handle", "?handle"] ],
-    "optional": [  ["?person", "person/favNums", "?num"]],
-    "filter": [ ["optional", "(> 10 ?num)"] ]
+    "prefixes": {
+      "ftest": "fluree/test"
+    },
+    "select": "?nums",
+    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
+                ["ftest", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
 }
 ```
 
@@ -834,70 +431,46 @@ Filters can be optional by specifying a two-tuple where the first item is "optio
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
    -d '{
-    "select": ["?handle", "?num"],
-    "where": [  ["?person", "person/handle", "?handle"] ],
-    "optional": [  ["?person", "person/favNums", "?num"]],
-    "filter": [ ["optional", "(> 10 ?num)"] ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql 
-Not supported.
-```
-
-```sparql
-SELECT ?handle ?num
-WHERE {
-  ?person fdb:person/handle ?handle.
-  OPTIONAL { ?person fdb:person/favNums ?num. 
-            FILTER( ?num > 10 )
-    }
-}
-```
-
-Filters can include multiple variables, for example gets all the favorite numbers for every person, and if a person has an age, it also gets their age. Then, it filters by returning only the favorite numbers that are greater than a given person's age or greater than 3 if no age is provided. 
-
-```flureeql
-{
-  "select": ["?favNums", "?age" ],
-  "where": [["?person", "person/favNums", "?favNums"]],
-  "optional": [["?person", "person/age", "?age"]],
-  "filter": ["(> ?favNums (coalesce ?age 3))"]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-  "select": ["?favNums", "?age" ],
-  "where": [["?person", "person/favNums", "?favNums"]],
-  "optional": [["?person", "person/age", "?age"]],
-  "filter": ["(> ?favNums (coalesce ?age 3))"]
+    "prefixes": {
+      "ftest": "fluree/test"
+    },
+    "select": "?nums",
+    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
+                ["ftest", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
 }' \
    [HOST]/api/db/query
 ```
 
 ```graphql
-Not supported
+Not supported.
 ```
 
 ```sparql
-SELECT ?favNums ?age
+// SPARQL Note: When using SPARQL, omit the `$` in front-of built-in sources. In addition, if you want to specify an `ISO-8601` formatted wall clock time, replace all the `:` with `;`. For example, `"SELECT ?s ?o WHERE {  ?s   fdb2019-03-14T20;59;36;097Z:person/handle  ?o.}`. 
+
+
+PREFIX ftest: <fluree/test>
+SELECT ?nums
 WHERE {
-  ?person fdb:person/favNums ?favNums.
-  OPTIONAL {
-    ?person fdb:person/age ?age.
-  }
-  FILTER( ?favNums > (coalesce ?age 3))
+   ?person     fd4:person/handle   "zsmith";
+                fd4:person/favNums  ?nums.
+    ?personTest ftest:person/handle "zsmith".
+                ftest:person/favNums  ?nums.
 }
 ```
 
-### Variables
+After declaring the source in the prefix, we can access that ledger at any block by specifying the time in the clause. You can specify a time using a block integer (`ftest3`), a duration (`ftestPT5M`), or an ISO-8601 formatted time-string (`ftest2019-03-14T20:59:36.097Z`). The time SHOULD NOT be declared in the prefix map - only in a particular clause. 
 
-You can provide a map of variables which will get substituted into a given query. 
+*Permissions*
+If you want to access information in different databases, you need to have permissions to access those databases, and those databases need to be running on the same transactor. 
+
+1. If you are accessing outside databases in the **same network** as your current database (i.e. `fluree/one` and `fluree/test`) and **fdb-open-api** is `true`, then you can freely query across databases. 
+2. In any other situation, `fdb-open-api` must be `false`, and your query must be signed. The `_auth` record with which you signed your query will be the one that determines your permissions for each given database. 
+
+### Vars Key
+
+The `vars` key takes a map where the keys are variable names and the values are the variable values. These variables will be substituted into the given query. 
+
 
 For example, in the below query `?handle` will be replaced with `dsanchez` anywhere it appears in the query.
 
@@ -942,671 +515,19 @@ WHERE {
 }
 ```
 
-### Group By
-You can group by any variable or variables that appears in your where clause. Grouping is specified in the top-level `groupBy` key. This can either be a single variable, i.e. `?person` or a vector of variables, i.e. `["?person", "?handle"]`.
 
-```flureeql
-{
-    "select":  "?handle",
-    "where": [  ["?person", "person/handle", "?handle"] ],
-    "groupBy": "?person"
-}
-```
+### Opts Key
 
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select":  "?handle",
-    "where": [["?person", "person/handle", "?handle"]],
-    "groupBy": "?person"
-}' \
-   [HOST]/api/db/query
-```
 
-```graphql
-Not supported.
-```
+Key | Value | Description 
+-- | -- | --
+limit | `integer` | Limit (integer) of results to include. Default is 100.
+offset | `integer` | Number of results to exclude (i.e for pagination).
+orderBy | `predicate` or `[ORDER, predicate]` | Predicate name or two-tuple specifying how to order results. If using a two-tuple, the first element must be "ASC" or "DESC" and the second element is the predicate name. For example, `"person/chat"` or `["ASC", "person/handle"]`. Predicate name should match the name in the select clause. Ordering is done before taking the number of results specified in limit. `ASC` is the used if not specified. 
+groupBy | `?var1` or `["?var1", "?var2", ... ]` | You can group by any variable or variables that appears in your where clause. Grouping is specified in the top-level `groupBy` key. This can either be a single variable, i.e. `?person` or a vector of variables, i.e. `["?person", "?handle"]`.
+prettyPrint | `boolean`| Default false. Optional boolean. Whether to "pretty print" the results (as a map with keys) or as a vector without labels. This is only available when select is an array of values. Note that depending on the query, pretty print can significantly slow down results. 
+[wikidataOpts](#wikidata-options) | `{ Wikidata Options Map }` | Optional map of configurations for Wikidata queries. See all options below. 
 
-```sparql
-SELECT ?handle
-WHERE {
-  ?person fdb:person/handle ?handle.
-}
-GROUP BY ?person
-```
-
-Below, we group by two different variables. 
-
-```flureeql
-{
-    "select":  "?handle",
-    "where": [  ["?person", "person/handle", "?handle"] ],
-    "groupBy": ["?handle", "?person"]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select":  "?handle",
-    "where": [  ["?person", "person/handle", "?handle"] ],
-    "groupBy": ["?handle", "?person"]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported.
-```
-
-```sparql
-SELECT ?handle
-WHERE {
-  ?person fdb:person/handle ?handle.
-}
-GROUP BY ?person ?handle
-```
-
-You can use `groupBy` in conjunction with `orderBy`. For example, the below query will order the results by the second variable in the grouping. 
-
-```flureeql
-{
-    "select":  "?handle",
-    "where": [  ["?person", "person/handle", "?handle"] ],
-    "groupBy": ["?handle", "?person"],
-    "orderBy": "?person"
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select":  "?handle",
-    "where": [  ["?person", "person/handle", "?handle"] ],
-    "groupBy": ["?handle", "?person"],
-    "orderBy": "?person"
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?handle
-WHERE {
-  ?person fdb:person/handle ?handle.
-}
-GROUP BY ?handle ?person
-ORDER BY ?person
-```
-
-Example results for the above query in FlureeQL.
-
-```all
-{
-  "[\"jdoe\" 351843720888321]": [
-    "jdoe"
-  ],
-  "[\"zsmith\" 351843720888322]": [
-    "zsmith"
-  ],
-  "[\"anguyen\" 351843720888323]": [
-    "anguyen"
-  ],
-  "[\"dsanchez\" 351843720888324]": [
-    "dsanchez"
-  ],
-  "[\"jdoe2\" 351843720888325]": [
-    "jdoe2"
-  ]
-}
-```
-
-### Full Text Search
-
-You can use analytical queries to search objects of a given predicate or within a given collection. In order to do this, you first need to enable full text search on any predicates you want to be able to search. For example, we're going to enable full text search on `person/fullName`, `person/handle`, and `chat/message`. 
-
-```flureeql
-[{
-    "_id": ["_predicate/name", "person/fullName"],
-    "fullText": true
-},
-{
-    "_id": ["_predicate/name", "person/handle"],
-    "fullText": true
-},
-{
-    "_id": ["_predicate/name", "chat/message"],
-    "fullText": true
-}]
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '[{
-    "_id": ["_predicate/name", "person/fullName"],
-    "fullText": true
-},
-{
-    "_id": ["_predicate/name", "person/handle"],
-    "fullText": true
-},
-{
-    "_id": ["_predicate/name", "chat/message"],
-    "fullText": true
-}]' \
-   [HOST]/api/db/transact
-```
-
-```graphql
-mutation makeFullText ($myFullTextTx: JSON) {
-  transact(tx: $myFullTextTx)
-}
-
-{
-  "myFullTextTx": "[{\"_id\":[\"_predicate/name\",\"person/fullName\"],\"fullText\":true},{\"_id\":[\"_predicate/name\",\"person/handle\"],\"fullText\":true},{\"_id\":[\"_predicate/name\",\"chat/message\"],\"fullText\":true}]"
-}
-```
-
-```sparql
-Transactions not supported in SPARQL.
-```
-
-Now, we can issue a full text query against any predicate or collection by using a special predicate, `fullText:PREDICATE` or `fullText:COLLECTION`, which acts as a service call. For example:
-
-```flureeql
-{
-    "select": "?person",
-    "where": [
-        ["?person", "fullText:person/handle", "jdoe"]
-    ]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": "?person",
-    "where": [
-        ["?person", "fullText:person/handle", "jdoe"]
-    ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?person
-WHERE {
-  ?person fullText:person/handle "jdoe".
-}
-```
-
-The above query binds the subject _ids for any person whose full names includes `doe` (not case-sensitive). We can also issue the same query searching any full-text-searchable predicates in the `person` collection. In this case, we would be searching the predicates: `person/fullName` and `person/handle`.
-
-```flureeql
-{
-    "select": "?person",
-    "where": [
-        ["?person", "fullText:person", "doe"]
-    ]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": "?person",
-    "where": [
-        ["?person", "fullText:person", "doe"]
-    ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?person
-WHERE {
-  ?person fullText:person "doe".
-}
-```
-
-We can combine a full-text search service call clause with any other clause, for example:
-
-```flureeql
-{
-    "select": ["?person", "?nums", "?age"
-    "where": [
-        ["?person", "fullText:person/handle", "jdoe"],
-        ["?person", "person/favNums", "?nums"],
-        ["?person", "person/age", "?age"]
-    ]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": ["?person", "?nums", "?age"
-    "where": [
-        ["?person", "fullText:person/handle", "jdoe"],
-        ["?person", "person/favNums", "?nums"],
-        ["?person", "person/age", "?age"]
-    ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?person ?nums ?age
-WHERE {
-  ?person fullText:person/handle "jdoe".
-  ?person fdb:person/favNums ?nums.
-  ?person fdb:person/age ?age.
-}
-```
-
-A predicate can be removed from the full-text search index (and thus from full-text search capability) at any time by simply setting `fullText` to false:
-
-```flureeql
-[{
-    "_id": ["_predicate/name", "person/fullName"],
-    "fullText": false
-}]
-```
-
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '[{
-    "_id": ["_predicate/name", "person/fullName"],
-    "fullText": false
-}]' \
-   [HOST]/api/db/transact
-```
-
-```graphql
-mutation unmakeFullText ($myFullTextRemoveTx: JSON) {
-  transact(tx: $myFullTextRemoveTx)
-}
-
-{
-  "myFullTextRemoveTx": "[{\"_id\":[\"_predicate/name\",\"person/fullName\"],\"fullText\":false}]"
-}
-```
-
-```sparql
-Transactions not supported in SPARQL.
-```
-
-#### Note
-A few things to note with full text searching:
-
-1. The full-text search index is not guaranteed to be fully up-to-date. It may take some time for index to become synchronized.
-2. Full-text search is only available for the current Fluree database. 
-
-### Prefixes and Querying Across Sources
-
-
-
-For example, if we wanted to see whether "zsmith" as of block 5 shared a favorite number with "zsmith" as of block 4. We are currently at block 4, so we would first need to issue a transaction. We can give `zsmith` an additional favorite number. 
-
-```flureeql
-[{
-  "_id": ["person/handle", "zsmith"],
-  "favNums": [100]
-}]
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '[{
-  "_id": ["person/handle", "zsmith"],
-  "favNums": [100]
-}]' \
-   [HOST]/api/db/transact
-```
-
-```graphql
-mutation addFavNum ($addFavNumTx: JSON) {
-  transact(tx: $addFavNumTx)
-}
-
-{
-  "addFavNumTx": "[{\"_id\":[\"person/handle\",\"zsmith\"],\"favNums\":[100]}]"
-}
-```
-
-```sparql
-Transactions not supported in SPARQL.
-```
-
-Now, we can issue a query showing which numbers were his favorites in BOTH block 4 and block 5. This means the results should exclude the number 100. 
-
-```flureeql
-{
-    "select": "?nums",
-    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
-                ["$fdb5", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": "?nums",
-    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
-                ["$fdb5", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?nums
-WHERE {
-    ?person     fd4:person/handle   "zsmith";
-                fd4:person/favNums  ?nums;
-                fd5:person/favNums  ?nums.
-}
-```
-
-#### Prefixes 
-If we want to query across multiple Fluree databases we can do so by specifying the database in the `prefixes` map. 
-
-```flureeql
-{
-    "prefixes": {
-      "ftest": "fluree/test"
-    },
-    "select": "?nums",
-    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
-                ["ftest", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "prefixes": {
-      "ftest": "fluree/test"
-    },
-    "select": "?nums",
-    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
-                ["ftest", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported.
-```
-
-```sparql
-PREFIX ftest: <fluree/test>
-SELECT ?nums
-WHERE {
-   ?person     fd4:person/handle   "zsmith";
-                fd4:person/favNums  ?nums.
-    ?personTest ftest:person/handle "zsmith".
-                ftest:person/favNums  ?nums.
-}
-```
-
-SPARQL Note: When using SPARQL, omit the `$` in front-of built-in sources. In addition, if you want to specify an `ISO-8601` formatted wall clock time, replace all the `:` with `;`. For example, `"SELECT ?s ?o WHERE {  ?s   fdb2019-03-14T20;59;36;097Z:person/handle  ?o.}`. 
-
-In the prefix map, we can specify what ledger we want to query across, in this case `fluree/test`, and we give that source a name, `ftest`. The name given to a source must be only lowercase letters and no numbers. 
-
-Now we can use `ftest` as a source in any clause. 
-
-After declaring the source in the prefix, we can access that ledger at any block by specifying the time in the clause. You can specify a time using a block integer (`ftest3`), a duration (`ftestPT5M`), or an ISO-8601 formatted time-string (`ftest2019-03-14T20:59:36.097Z`). The time SHOULD NOT be declared in the prefix map - only in a particular clause. 
-
-For example, the below is incorrect. 
-
-```flureeql
-<<< ----- THIS IS A AN INCORRECT EXAMPLE ----- >>>
-{
-    "prefixes": {
-      "ftest5": "fluree/test" <<< ----- WRONG ----- >>>
-    },
-    "select": "?nums",
-    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
-                ["ftest5", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
-}
-```
-
-```curl
-<<< ----- THIS IS A AN INCORRECT EXAMPLE ----- >>>
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "prefixes": {
-      "ftest5": "fluree/test" <<< ----- WRONG ----- >>>
-    },
-    "select": "?nums",
-    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
-                ["ftest5", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-<<< ----- THIS IS A AN INCORRECT EXAMPLE ----- >>>
-PREFIX ftest5: <fluree/test> <<< ----- WRONG ----- >>>
-SELECT ?nums
-WHERE {
-   ?person     fd4:person/handle   "zsmith";
-                fd4:person/favNums  ?nums.
-    ?personTest ftest5:person/handle "zsmith".
-                ftest5:person/favNums  ?nums.
-}
-```
-
-The below is correct, where the time is specified in the actual clause itself. 
-
-```flureeql
-{
-    "prefixes": {
-      "ftest": "fluree/test" 
-    },
-    "select": "?nums",
-    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
-                ["ftest5", ["person/handle", "zsmith"], "person/favNums", "?nums"],
-                ["ftestPT5M", ["person/handle", "jdoe"], "person/favNums", "?nums"] ]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "prefixes": {
-      "ftest": "fluree/test" 
-    },
-    "select": "?nums",
-    "where": [  ["$fdb4", ["person/handle", "zsmith"], "person/favNums", "?nums"], 
-                ["ftest5", ["person/handle", "zsmith"], "person/favNums", "?nums"],
-                ["ftestPT5M", ["person/handle", "jdoe"], "person/favNums", "?nums"] ]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-PREFIX ftest: <fluree/test> 
-SELECT ?nums
-WHERE {
-   ?person     fd4:person/handle   "zsmith";
-                fd4:person/favNums  ?nums.
-    ?personTest ftest5:person/handle "zsmith".
-                ftest5:person/favNums  ?nums.
-}
-```
-
-#### Permissions
-If you want to access information in different databases, you need to have permissions to access those databases, and those databases need to be running on the same transactor. 
-
-1. If you are accessing outside databases in the **same network** as your current database (i.e. `fluree/one` and `fluree/test`) and **fdb-open-api** is `true`, then you can freely query across databases. 
-2. In any other situation, `fdb-open-api` must be `false`, and your query must be signed. The `_auth` record with which you signed your query will be the one that determines your permissions for each given database. 
-
-### WikiData Examples
-
-#### Artist Example 
-
-Using the [Basic Schema](/docs/getting-started/basic-schema), we will be able to use analytical queries to connect up a `person/favArtists` (stored in Fluree) to their artworks (stored in Wikidata).
-
-We can retrieve the names of artworks created by jdoe's favorite artists. Our full query is below. We will discuss each of the where clause tuples individually. 
-
-```flureeql
-{
-    "select": ["?name", "?artist", "?artwork", "?artworkLabel"],
-    "where": [[["person/handle", "jdoe"], "person/favArtists", "?artist"],
-              ["?artist", "artist/name", "?name"],
-              ["$wd", "?artwork", "wdt:P170", "?creator"],
-              ["$wd", "?creator", "?label", "?name"]]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": ["?name", "?artist", "?artwork", "?artworkLabel"],
-    "where": [[["person/handle", "jdoe"], "person/favArtists", "?artist"],
-              ["?artist", "artist/name", "?name"],
-              ["$wd", "?artwork", "wdt:P170", "?creator"],
-              ["$wd", "?creator", "?label", "?name"]]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?name ?artist ?artwork ?artworkLabel
-WHERE {
-    ?person     fd:person/handle        "jdoe";
-                fd:person/favArtists    ?artist.
-    ?artist     fd:artist/name          ?name.
-    ?artwork    wdt:P170                ?creator.
-    ?creator    wd:?label                ?name.
-}
-```
-
-Tuple | Explanation
--- | --
-`[["person/handle", "jdoe"], "person/favArtists", "?artist"]` | Retrieves all of the subject, `["person/handle", "jdoe"]`'s favorite artists (`"person/favArtists"`) and it binds them to the variable `?artist`.
-`["?artist", "artist/name", "?name"]` | Looks up `artist/name` and binds to the variable `?name`.
-`["$wd", "?artwork", "wdt:P170", "?creator"]` | Use the [Wikidata property, creator](#https://www.wikidata.org/wiki/Property:P170) to bind `?artwork` and `?creator`
-`["$wd", "?creator", "?label", "?name"]` | Limits the scope of our `?creator`s (and thus `?artworks`) based on `?creator`s whose `?label` matches `?name`
-
-#### Movie Example
-
-We can also use Wikidata to retrieve the narrative locations of users' favorite movies with the following query:
-
-```flureeql
-{
-"select": ["?handle", "?title", "?narrative_locationLabel"],
-"where": [ ["?user", "person/favMovies", "?movie"],
-["?movie", "movie/title", "?title"],
-["$wd", "?wdMovie", "?label", "?title"],
-["$wd", "?wdMovie", "wdt:P840", "?narrative_location"],
-["$wd", "?wdMovie", "wdt:P31", "wd:Q11424"],
-["?user", "person/handle", "?handle"]]
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-"select": ["?handle", "?title", "?narrative_locationLabel"],
-"where": [ ["?user", "person/favMovies", "?movie"],
-["?movie", "movie/title", "?title"],
-["$wd", "?wdMovie", "?label", "?title"],
-["$wd", "?wdMovie", "wdt:P840", "?narrative_location"],
-["$wd", "?wdMovie", "wdt:P31", "wd:Q11424"],
-["?user", "person/handle", "?handle"]]
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT ?handle ?title ?narrative_locationLabel
-WHERE {
-  ?user     fdb:person/favMovies    ?movie.
-  ?movie    fdb:movie/title       ?title.
-     ?wdMovie  wd:?label             ?title;
-            wdt:P840               ?narrative_location;
-            wdt:P31               wd:Q11424.
-  ?user     fdb:person/handle       ?handle.
-}
-```
-
-To learn more about querying Wikidata, visit their [documentation](#https://www.wikidata.org/wiki/Wikidata:Introduction). Also, stay tuned for our [analytical query lessons](/lessons) coming soon!
-
-Note that cross-database queries can take some time. 
-
-### Wikidata Options
-
-By default, any Wikidata queries are run with a limit of 100, an offset of 0, English as the label language, and returning only distinct values. Any of these options can be overwritten by specifying Wikidata options in the `wikidataOpts` key-value pair in an analytical query. 
-
-`wikidataOpts` can be a map with any of the following keys:
 
 Key | Description
 -- | --
@@ -1615,143 +536,3 @@ limit | Default is 100. Number of results (integer) to return for each query.
 offset | Default is 0. Number of results to skip before returning the results.  
 language | Default is "en". See [Wikidata language codes](https://www.wikidata.org/wiki/Help:Wikimedia_language_codes/lists/all) for other options.
 
-Below is an example of using `wikidataOpts` in a query. In SPARQL, you cannot currently specify Wikidata options other than `language` (see [language labels](/docs/query/sparql#language-labels))
-
-```flureeql
-{
-    "select": ["?name", "?artist", "?artwork"],
-    "where": [
-        [["person/handle", "jdoe"], "person/favArtists", "?artist"],
-        ["?artist", "artist/name", "?name"],
-        ["$wd", "?artwork", "wdt:P170", "?creator"],
-        ["$wd", "?creator", "?label", "?name"]
-        ],
-    "wikidataOpts": {"limit": 5, "distinct": false}
-}
-```
-
-```curl
-  curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": ["?name", "?artist", "?artwork"],
-    "where": [
-        [["person/handle", "jdoe"], "person/favArtists", "?artist"],
-        ["?artist", "artist/name", "?name"],
-        ["$wd", "?artwork", "wdt:P170", "?creator"],
-        ["$wd", "?creator", "?label", "?name"]
-        ],
-    "wikidataOpts": {"limit": 5, "distinct": false}
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported
-```
-
-```sparql
-SELECT DISTINCT ?name ?artist ?artwork ?artworkLabel
-WHERE {
-    ?person     fd:person/handle        "jdoe";
-                fd:person/favArtists    ?artist.
-    ?artist     fd:artist/name          ?name.
-    ?artwork    wdt:P170                ?creator.
-    ?creator    wd:?label                ?name.
-}
-LIMIT 5
-```
-
-### Recursion
-
-To recur across a relationship, simply add a `+` after a predicate. This will match flakes any path length from the original. By default the recur depth is 100. You can also specify a certain path length by adding an integer after the `+`. 
-
-```flureeql
-{
-    "select": ["?followHandle"],
-    "where": [
-        ["?person", "person/handle", "anguyen"],
-        ["?person", "person/follows+", "?follows"],
-        ["?follows", "person/handle", "?followHandle"]
-        ]  
-}
-```
-
-```curl
- curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": ["?followHandle"],
-    "where": [
-        ["?person", "person/handle", "anguyen"],
-        ["?person", "person/follows+", "?follows"],
-        ["?follows", "person/handle", "?followHandle"]
-        ]  
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not supported.
-```
-
-```sparql
-SELECT ?followHandle
-WHERE {
-  ?person fdb:person/handle "anguyen".
-  ?person fdb:person/follows+ ?follows.
-  ?person fdb:person/handle ?followHandle.
-}
-```
-
-Below is an example specifying a maximum recursion depth. 
-
-```flureeql
-{
-    "select": ["?followHandle"],
-    "where": [
-        ["?person", "person/handle", "anguyen"],
-        ["?person", "person/follows+3", "?follows"],
-        ["?follows", "person/handle", "?followHandle"]
-        ]
-    
-}
-```
-
-```curl
- curl \
-   -H "Content-Type: application/json" \
-   -H "Authorization: Bearer $FLUREE_TOKEN" \
-   -d '{
-    "select": ["?followHandle"],
-    "where": [
-        ["?person", "person/handle", "anguyen"],
-        ["?person", "person/follows+3", "?follows"],
-        ["?follows", "person/handle", "?followHandle"]
-        ]
-    
-}' \
-   [HOST]/api/db/query
-```
-
-```graphql
-Not sypported.
-```
-
-```sparql
-SELECT ?followHandle
-WHERE {
-  ?person fdb:person/handle "anguyen".
-  ?person fdb:person/follows+3 ?follows.
-  ?follows fdb:person/handle ?followHandle.
-}
-```
-
-<!-- `limit` | no | Optional limit (integer) of results to include. Default is 100.
-`orderBy` | no | Optional variable (string) or two-tuple where the first element is "ASC" or "DESC" and the second element is the variable name. For example, `"?favNums"` or `["ASC", "?favNums"]`
-`vars` | no | Provide a map of variables that will be substituted into a given query. 
-[groupBy](#group-by) | no | Optional variable or array of variables by  Note that depending on the query, group by can significantly slow down results. 
-`prettyPrint` | no | Default false. Optional boolean. Whether to "pretty print" the results (as a map with keys) or as a vector without labels. This is only available when select is an array of values. Note that depending on the query, pretty print can significantly slow down results. 
-[wikidataOpts](#wikidata-options) | no | Optional map of configurations for Wikidata queries, including specifying whether to return `distinct` results or whether to limit results. -->

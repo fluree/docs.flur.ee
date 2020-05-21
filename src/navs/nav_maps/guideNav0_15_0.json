@@ -99,6 +99,27 @@
             }
         }
     },
+    "analytical-queries": {
+        "pageName": "Analytical Queries",
+        "subTopics": {
+            "inner-joins-in-fluree": {
+                "headerName": "Inner Joins in Fluree",
+                "file": "0.15.0/guides/analytical_queries/inner-joins-in-fluree"
+            },
+            "full-text-search": {
+                "headerName": "Full Text Search",
+                "file": "0.15.0/guides/analytical_queries/full-text-search"
+            },
+            "optional-clauses": {
+                "headerName": "Optional Clauses",
+                "file": "0.15.0/guides/analytical_queries/optional-clauses"
+            },
+            "analytical-query-examples": {
+                "headerName": "Analytical Query Examples",
+                "file": "0.15.0/guides/analytical_queries/examples"
+            }
+        }
+    },
     "examples": {
         "pageName": "Examples",
         "subTopics": {
