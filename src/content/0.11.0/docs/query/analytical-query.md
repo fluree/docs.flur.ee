@@ -659,7 +659,7 @@ Tuple | Explanation
 -- | --
 `[["person/handle", "jdoe"], "person/favArtists", "?artist"]` | Retrieves all of the subject, `["person/handle", "jdoe"]`'s favorite artists (`"person/favArtists"`) and it binds them to the variable `?artist`.
 `["?artist", "artist/name", "?name"]` | Looks up `artist/name` and binds to the variable `?name`.
-`["$wd", "?artwork", "wdt:P170", "?creator"]` | Use the [Wikidata property, creator](#https://www.wikidata.org/wiki/Property:P170) to bind `?artwork` and `?creator`
+`["$wd", "?artwork", "wdt:P170", "?creator"]` | Use the [Wikidata property, creator](https://www.wikidata.org/wiki/Property:P170) to bind `?artwork` and `?creator`
 `["$wd", "?creator", "?label", "?name"]` | Limits the scope of our `?creator`s (and thus `?artworks`) based on `?creator`s whose `?label` matches `?name`
 
 #### Movie Example
@@ -710,7 +710,7 @@ WHERE {
 }
 ```
 
-To learn more about querying Wikidata, visit their [documentation](#https://www.wikidata.org/wiki/Wikidata:Introduction). Also, stay tuned for our [analytical query lessons](/lessons) coming soon!
+To learn more about querying Wikidata, visit their [documentation](https://www.wikidata.org/wiki/Wikidata:Introduction). Also, stay tuned for our [analytical query lessons](/lessons) coming soon!
 
 Note that cross-database queries can take some time. 
 
