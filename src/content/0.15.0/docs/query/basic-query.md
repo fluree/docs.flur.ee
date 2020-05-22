@@ -374,8 +374,8 @@ Key | Value | Description
 `orderBy` | `predicate` or `[ORDER, predicate]` | Predicate name or two-tuple specifying how to order results. If using a two-tuple, the first element must be "ASC" or "DESC" and the second element is the predicate name. For example, `"person/chat"` or `["ASC", "person/handle"]`. Predicate name should match the name in the select clause. Ordering is done before taking the number of results specified in `limit`.
 `component` | `boolean` | Whether or not to automatically crawl the graph and retrieve component entities. Default: true. 
 `compact` | `boolean` |  All predicates returned are in their compact form (`handle`, rather than `person/handle`).
-`sync-to` | `integer` | Waits to return the results of the query until the ledger has reached a given block number. By default, waits for up to 1 minute, but `sync-timeout` (see below) can be changed.  
-`sync-timeout` | `integer` | Number of milliseconds to wait for the ledger to reach `sync-to` block. Default is `60000`, and max allowed is `120000`.
+`syncTo` | `integer` | Waits to return the results of the query until the ledger has reached a given block number. By default, waits for up to 1 minute, but `syncTimeout` (see below) can be changed.  
+`syncTimeout` | `integer` | Number of milliseconds to wait for the ledger to reach `syncTo` block. Default is `60000`, and max allowed is `120000`.
 
 For example:
 
@@ -383,6 +383,6 @@ For example:
 { 
   "select": ["*"], 
   "from": "person", 
-  "opts": { "compact": true, "limit": 10, "offset": 5, "sync-to": 5, "orderBy": "handle" }
+  "opts": { "compact": true, "limit": 10, "offset": 5, "syncTo": 5, "orderBy": "handle" }
 }
 ```

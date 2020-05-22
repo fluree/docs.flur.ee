@@ -28,7 +28,7 @@ Key | Required? | Description
 `block` | no | Optional block specified by block number, duration, or wall-clock time as a ISO-8601 formatted string. This applies a block to every part of the query that does not have a block specified. It follows the same syntax as the [block key in basic queries](/docs/query/overview#block-key). 
 [prefixes](#prefixes-key) | no | Optional map of outside sources.
 [vars](#vars-key) | no | Optional map of variable bindings.
-[opts](#opts-key) | no | Optional map where options like `limit`, `orderBy`, `pretty-print`, and `wikipediaOpts` can be specified.
+[opts](#opts-key) | no | Optional map where options like `limit`, `orderBy`, `prettyPrint`, and `wikipediaOpts` can be specified.
 
 This page covers every available option for analytical queries, to see [examples](/guides/analytical-queries/analytical-query-examples), visit the relevant guide.
 
@@ -76,7 +76,7 @@ Function | Arguments | Description
 
 Additional Modifiers
 
-1. `as`: `as` can be wrapped around the ENTIRE aggregate function to rename the result for this aggregate. This renaming only applies to how the results are displayed if pretty-printed. For example, `(as (sum ?nums) ?sum)`.
+1. `as`: `as` can be wrapped around the ENTIRE aggregate function to rename the result for this aggregate. This renaming only applies to how the results are displayed if pretty printed. For example, `(as (sum ?nums) ?sum)`.
 
 2. `distinct`: If you want an aggregate function to only apply to the set of distinct values, you can wrap `distinct` around the variable. For example, `(variance (distinct ?nums))` or  `(as (sum (distinct ?nums)) ?sum)`.
 

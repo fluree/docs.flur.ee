@@ -41,7 +41,7 @@
             },
             "history-query": {
                 "headerName": "History Query",
-                "file": "0.13.0/docs/query/history-query"
+                "file": "0.15.0/docs/query/history-query"
             },
             "sparql": {
                 "headerName": "SPARQL",

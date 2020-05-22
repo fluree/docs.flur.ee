@@ -2,18 +2,22 @@
 
 In this section, we show you how to select all flakes from a block or a selection of blocks. Fluree allows you to select data from an entire block or block range. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the sidebar, then make sure `Query` is selected in the top-right, and `Block` is selected in the dropdown). 
 
-To issue these queries using the API, see `/block` in [Fluree Anywhere]/api/downloaded-endpoints/downloaded-examples#-block) or [Fluree On-Demand](/api/downloaded-endpoints/downloaded-examples#-block) (you may have to change versions).
+To issue these queries using the API, see `/block` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-block) or [Fluree On-Demand](/api/downloaded-endpoints/downloaded-examples#-block) (you may have to change versions).
 
 ### Block Clauses
 
 A block query requires a `block` key, which specifies a block or range of blocks to return. There are a variety of options for how to format this value. They are listed below. 
 
-A block query can also optionally include a `pretty-print` key, which pretty prints the results if `true`.
+A block query can also optionally include a `prettyPrint` key, which pretty prints the results if `true`.
 
 Key | Required? | Description
 -- | -- | -- 
 `block` | yes | A block or range of blocks to return, options for the format of this value are listed below.
-`pretty-print` | no | Optional, `true` or `false`, whether to pretty-print results. Default `false`
+`prettyPrint` | no | Optional, `true` or `false`, whether to pretty print results. Default `false`
+
+<div class=" alert alert-danger show" style="background-color: #c57886">
+Deprecation note: As of version 0.15.0, we are discouraging the use of pretty-print in favor of prettyPrint.
+</div>
 
 #### Query Single block
 
@@ -125,14 +129,14 @@ query  {
 Not supported
 ```
 
-### Pretty-Print Block Query
+### Pretty Print Block Query
 
-In FlureeQL, you can pretty print the results of a block query by adding `"pretty-print": true` to your query map. Any format of block query can be pretty-printed. 
+In FlureeQL, you can pretty print the results of a block query by adding `"prettyPrint": true` to your query map. Any format of block query can be pretty printed. 
 
 ```flureeql
 {
   "block": [3],
-  "pretty-print": true
+  "prettyPrint": true
 }
 ```
 
@@ -141,7 +145,7 @@ curl \
    -H "Content-Type: application/json" \
    -d '{
   "block": [3],
-  "pretty-print": true
+  "prettyPrint": true
 }' \
  [HOST]/api/db/block
 ```
