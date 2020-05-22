@@ -10,23 +10,19 @@ If you are using the API, you can issue all these transactions to endpoints endi
 
 ### New Database
 
-Make sure that you have a new database. You can either create a new database through the [user interface](/docs/getting-started/user-interface#account-page), through the API for the [downloadable version](/api/downlaoded-endpoints/downloaded-examples#-new-db), or through the API for the [hosted version](/api/hosted-endpoints/hosted-examples#-api-action-new-database). 
-
-A database name is comprised of a network name followed by the database name `network/db`. Both the network name and the database name can only include lowercase characters, numbers, and dashes - `[a-z0-9-]`. This ensures cross-platform file and URL-compatibility.
+Make sure that you have a new database. You can either create a new database through the user interface, through the API for the [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the API for the [Fluree On-Demand](/api/hosted-endpoints/hosted-examples#-api-action-new-database) (you may have to change the version).
 
 ### Overview
 
-In Fluree, schema are comprised of collections and predicates. A [collection](/docs/schema/overview#collections) is analogous to a relational database table. Every time you want a new type of item in your database, you would create a new collection. For example, collections in your database might be person, company, and city. 
+In Fluree, schema are comprised of collections and predicates. A [collection](/docs/schema/collections) is analogous to a relational database table. Every time you want a new type of item in your database, you would create a new collection. For example, collections in your database might be person, company, and city. 
 
-Every collection has [predicates](/docs/schema/overview#predicates). Predicates are analogous to relational database columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. The value of those predicates are called, objects (read more about the [subject-predicate-object model](/docs/infrastructure/db-infrastructure#subject-predicate-object-model)).
+Every collection has [predicates](/docs/schema/predicates). Predicates are analogous to relational database columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. The value of those predicates are called, objects (read more about the [subject-predicate-object model](/guides/intro/what-is-fluree#subject-predicate-object-model)).
 
 Note that many of the transactions in this section can be combined, but are separated for clarity. 
 
 ### Adding Collections
 
-In order to add a collection, you need to specify what type of subject you are creating (a `_collection`) and a collection name (there are also additional [collection predicates](/docs/infrastructure/system-collections#_collection) that can be specified). 
-
-The below transaction adds five new collections: `person`, `chat`, `comment`, `artist`, and `movie`. You can issue this transaction in your user interface. 
+The below transaction adds five new collections: `person`, `chat`, `comment`, `artist`, and `movie`. You can issue this transaction in your user interface. The syntax is explained in the [Transact](/docs/transact/basics) section. For now, we recommend you adding this basic schema and walking through the documentation section-by-section. 
 
 ```flureeql
 [{
@@ -94,11 +90,7 @@ Transactions not support in SPARQL
 
 ### Adding Predicates
 
-Schema predicates are similar to relational database columns, however there are fewer restrictions (any predicate can be attached to any subject, unless a restriction is put in place using a `spec`). 
-
-In order to create a predicate, you only need to specify what type of subject you are creating (`_predicate`), a name, and a type. The name for a predicate should be namespaced with the relevant collection (as in all predicates in the `person` collection should begin with `person/`).
-
-In the below transaction, we also specify some other information for predicates. You can find all of the [predicate predicates](/docs/infrastructure/system-collections#_predicate) that can be specified in the `System Collections` section. 
+Schema predicates are similar to relational database columns. More information about predicates can be found in the [Predicates](/docs/schema/predicates) section. For now, we recommend you adding this basic schema and walking through the documentation section-by-section without concerning yourself too much with the syntax. 
 
 The below transaction creates the following predicates: 
 
@@ -386,7 +378,7 @@ Transactions not supported in SPARQL.
 
 ### Adding Sample Data
 
-You can issue the below transaction to add some sample data into your database. The below transaction adds four users, three chats, four comments, and three artists. 
+You can issue the below transaction to add some sample data into your database. The below transaction adds four users, three chats, four comments, three artists, and three movies. 
 
 <pre style="height: 200px;overflow-y: scroll"><code class="language-flureeql">
 [{

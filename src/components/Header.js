@@ -16,17 +16,6 @@ const NavItems = (props) => {
         marginLeft: "auto"
 
     }}>
-        {
-            props.version !== "0.9.1" &&
-            <DropdownButton id="Learn" title="Learn" bsStyle={props.btnStyle} style={props.btnStyles}>
-                <LinkContainer to="/lesson" className="text-center">
-                    <MenuItem>Lessons</MenuItem>
-                </LinkContainer>
-                <LinkContainer to="/video" className="text-center">
-                    <MenuItem>Video</MenuItem>
-                </LinkContainer>  
-            </DropdownButton>
-        }
             <DropdownButton id="Docs" title="Docs" bsStyle={props.btnStyle} style={props.btnStyles}>
                 {
                     docKeys.map(docItem => 
@@ -39,8 +28,11 @@ const NavItems = (props) => {
             <LinkContainer to="/api" className="text-center" style={props.btnStyles}>
                <Button bsStyle={props.btnStyle}>API</Button>
             </LinkContainer>
-            <LinkContainer to="/library" className="text-center" style={props.btnStyles}>
-               <Button bsStyle={props.btnStyle}>Library</Button>
+            <LinkContainer to="/guides" className="text-center" style={props.btnStyles}>
+               <Button bsStyle={props.btnStyle}>Guides</Button>
+            </LinkContainer>
+            <LinkContainer to="/tools" className="text-center" style={props.btnStyles}>
+               <Button bsStyle={props.btnStyle}>Tools</Button>
             </LinkContainer>
             <LinkContainer to="/help" className="text-center" style={props.btnStyles}>
                 <Button bsStyle={props.btnStyle}>Help</Button>            

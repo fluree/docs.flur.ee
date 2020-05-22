@@ -1,3 +1,20 @@
+## What is Fluree?
+
+Fluree is an immutable, time-ordered blockchain database. 
+
+Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
+
+<img class="medium-img float-left" src="https://s3.amazonaws.com/fluree-docs/blockContents.png" alt="A series of 5 blocks stacked on top of each other vertically. The middle block is deconstructed to show: the previous block's hash, the current block's hash, data, a timestamp, and the block index">
+
+
+You can run Fluree privately or as part of a federated network.  
+
+A private Fluree is a database run on a single server, either by you or hosted for you by Fluree. A private Fluree gives you access to features such as time-travel queries and rich permission logic.
+
+A federated Fluree is a group of databases shared by network. In addition to all the features of a private instance of Fluree, having a federated group of databases provides additional data integrity. With a federated blockchain, the network uses an agreed-upon consensus algorithm to reach a shared state.  
+
+You can find more in-depth information about both invididual [datasebase infrastructure](/docs/infrastructure/db-infrastructure) and [network infrastructure](/docs/infrastructure/network-infrastructure) in later sections. 
+
 ## Database Infrastructure
 
 This section is background on the infrastructure of a single database in Fluree. This includes flakes, blocks, and the subject-predicate-object model. 
@@ -108,63 +125,3 @@ After the user issues a transaction, a Fluree transactor creates new [flakes](#f
 This metadata is also in the form of flakes, and it is recorded in the database in the same way as any other information. The difference is that metadata flakes are automatically generated and cannot be edited. Some metadata can be [included in your transaction](#specifying-metadata). 
 
 Metadata for each transaction is stored in the `_block` and `_tx` collections. Both `_block` and `_tx` are search-able in the same way as any other information in the database. 
-
-`_block` is a built-in database collection with the following predicates:
-
-#### Block Predicates
-
-Key | Description
----|---
-`number` | Block number for this block.
-`hash` | SHA2-256 Hash for current block. Not included in block hash (can't include itself!).
-`prevHash` | Previous block's hash
-`transactions` | Reference to transactions included in this block (`_tx`).
-`transactors` | Reference to transactor auth identities that signed this block. Not included in block hash. 
-`instant` | Instant this block was created, per the transactor.
-`sigs` | List of transactor signatures that signed this block (signature of _block/hash). Not included in block hash.
-
-`_tx` is a built-in database collection with the following predicates. `_tx` flakes, like `_block` flakes are automatically generated after a transaction is issued. While automatically generated, users can specify certain predicates when using the `/cmd` endpoint if they choose. 
-
-Key | Description
----|---
-`tempids` | Tempid JSON map for this transaction.
-`sig` | Signature of original JSON transaction command.
-`tx` | Original JSON transaction command.
-`doc` | Optional docstring for the transaction.
-`altId` | Alternative Unique ID for the transaction that the user can supply. Transaction will throw if not unique.
-`nonce` | A nonce that helps ensure identical transactions have unique txids, and also can be used for logic within smart functions (not yet implemented). Note this nonce does not enforce uniqueness, use _tx/altId if uniqueness must be enforced.
-`authority` | If this transaction utilized an authority, reference to it.
-`auth` | Reference to the auth id for this transaction.
-
-### Custom Metadata
-
-When issuing a transaction, you can include your own metadata. For example, 
-
-specify the following pieces of metadata: `nonce`, `auth`, `authority`, `altId`, and `doc`. This is done by including a map in your transaction with a key-value pair of {`_id`: `_tx`}, and adding any metadata predicates you want to specify in that map. For example, if you create a predicate called, `_tx/note`:
-
-```all
-[{
-    "_id": "_predicate",
-    "name": "_tx/note",
-    "type": "string"
-}]
-```
-
-Then, when you issue a transaction, you can include a `_tx/note`.
-
-```all
-[{
-    "_id": "_user",
-    "username": "abc"
-},
-{
-    "_id": "_tx",
-    "note": "hey there"
-}]
-```
-
-### Fuel
-
-In the hosted version of Fluree, fuel is used to meter usage. Every query and transaction accumulates a certain amount of "fuel." The amount of fuel used is returned in the query or transaction results. 
-
-In the downloadable version of Fluree, fuel is returned as supplemental information.
