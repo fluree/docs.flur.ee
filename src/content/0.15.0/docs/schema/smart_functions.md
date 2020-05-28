@@ -1,27 +1,27 @@
 ## Functions
 
-Smart functions are the engine for setting permissions in Fluree. This section lists all of the accepted smart functions in Fluree. To learn more about how to use smart functions, see the [Smart Functions](/guides/smart-functions/smart-functions) guide.
+Smart functions are the engine for setting permissions in Fluree. This section lists all built-in predicates that can be added to a function, as well as information on how to write the actual function code. 
+
+To learn more about how to use smart functions, see the [Smart Functions](/guides/smart-functions/smart-functions) guide.
 
 ### _fn
-
-More information about the [`_fn` collection](/docs/infrastructure/permissions#smart-functions)
 
 Predicate | Type | Description
 -- | -- | -- 
 `name` | `string` | Function name
 `params` | `(multi) string` | List of parameters this function supports.
-`code` | `string` | Actual database code
+`code` | `string` | Actual database code. Can just be `true` or `false`. 
 `doc` | `string` | A docstring for this function.
 `language` | `string` |  Programming language used (not yet implemented, currently only Clojure supported)
 `spec` | `JSON` | (not yet implemented) Optional spec for parameters. Spec should be structured as a map, parameter names are keys and the respective spec is the value.
 
-## Universal Functions
+### Universal Functions For `_fn/code`
 
 Clojure is the only language that is currently supported for writing smart functions. Only a subset of Clojure functions, as well as several custom functions, are allowed to be used in smart functions. 
 
-The below functions are available for any smart functions, regardless of where those smart functions are deployed (i.e. `_predicate/spec` versus `_rule/fns`). In addition, `true` and `false` are valid keywords in your function code.
+The below functions are available for any smart functions, regardless of where those smart functions are referenced. (i.e. `_predicate/spec` versus `_rule/fns`). In addition, `true` and `false` are valid keywords in your function code.
 
-Note: Each function accrues a certain amount of [fuel](/docs/infrastructure/db-infrastructure#fuel). Fuel is used to limit usage in the hosted version of Fluree.
+Note: Each function accrues a certain amount of fuel. Fuel is used to limit usage in the hosted version of Fluree.
 
 Function | Arguments | Example | Description | Cost (in fuel)
 -- | -- | -- | -- | -- 

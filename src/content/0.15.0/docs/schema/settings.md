@@ -1,13 +1,15 @@
 
-### _setting
+## _setting
 
 Every database contains a built-in `_setting` collection that defines several database configurations, including the consensus algorithm. You can change these accordingly.
 
+Currently the only setting id that is activated is the `_setting` entry with id `root`. 
+
 Key | Description
 ---|---
-`id` | The setting id. Currently the only setting id that is activated is the `_setting` entry with id `root`. 
+`id` | The setting id. 
 `doc` | Optional docstring for the db.
-`language` | By default, this is set to English. This is used for full-text search only. To see all available langauges and how to change languages, look [below](#languages). To see how to use full-text search, see the [analytical query section for full-text search](/docs/query/analytical-query#full-text-search).
+`language` | By default, this is set to English. This is used for full-text search only. To see all available langauges and how to change languages, look [below](#languages). To see how to use full-text search, see the [guide on full-text search](/guides/analytical-queries/full-text-search).
 `consensus` | Consensus type for this db. Currently only 'Raft' supported.
 `txMax` | Maximum transaction size in bytes. Will default to the network db's value if not present.
 `anonymous` | Reference to auth identity to use for anonymous requests to this db.
@@ -58,6 +60,6 @@ To change your language, simply set your language setting to the two-letter code
 
 Note that when you change a language, your full-text search may not immediately reflect this change. Your ledger will have to completely reindex any full-text enabled predicates, which may take a while with a larger dataset. When full-text re-indexing is complete, you will see a log `Add full text flakes to store complete for: X subjects.`. 
 
-To see how to use full-text search, see the [analytical query section for full-text search](/docs/query/analytical-query#full-text-search).
+To see how to use full-text search, see the [guide on full-text search](/guides/analytical-queries/full-text-search).
 
 \* Fluree Full-text search uses [Apache Lucene Smart Chinese Analyzer](https://lucene.apache.org/core/4_0_0/analyzers-smartcn/org/apache/lucene/analysis/cn/smart/SmartChineseAnalyzer.html) for Chinese and mixed Chinese-English text.

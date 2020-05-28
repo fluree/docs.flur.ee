@@ -21,7 +21,7 @@ There are other resources in this documentation website, such as:
 
 - [API](/api): API endpoints for both download Fluree, as well as Fluree-On-Demand. 
 - [Tools](/tools): documentation for our Javascript, NodeJS, FlureeWorker, and other libraries.
-- [Guides](/guides): in-depth articles on important themes, such as [What is Fluree?](/guides/intro/intro) and identity management.
+- [Guides](/guides): in-depth articles on important themes, such as [What is Fluree?](/guides/intro/what-is-fluree) and identity management.
 - [Lessons](/lesson): lessons that guide you through key concepts in Fluree and let you try queries and transaction directly from this site. While the lessons are a good introduction, they are not comprehensive.
 - [Videos](/video): screen captures of how-to-use Fluree combined with relevant narration (some video transcripts are available, and others can be provided by request). The videos are not comprehensive, but are a good reference for particular topics. 
 

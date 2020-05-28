@@ -39,14 +39,13 @@ Test Transact With | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/test-transact-with` |
 
 ### Password Authentication Endpoints
 
-You need password authentication enabled to use these endpoints. See [config options](/docs/getting-started/installation#password-and-jwt-token-settings) for all password authentication options. 
+You need password authentication enabled to use these endpoints. See [config options](/docs/getting-started/installation#password-and-jwt-token-settings) for all password authentication options. See the [Password Management Guide](/guides/identity/password-management) for more information. 
 
 Action | Endpoint | Explanation
 -- | -- | --
 [Generate](/api/downloaded-endpoints/downloaded-examples#-generate) | `/fdb/[NETWORK-NAME]/[DBID]/pw/generate` | Returns a valid token for a given user or role. Sets a valid password for that user or role. 
 [Renew](/api/downloaded-endpoints/downloaded-examples#-renew) | `/fdb/[NETWORK-NAME]/[DBID]/pw/renew` | Given a token in the header and a new expiration time, returns a new token for a given user or role. 
 [Login](/api/downloaded-endpoints/downloaded-examples#-login) | `/fdb/[NETWORK-NAME]/[DBID]/pw/login` | Given a password and user or auth id, returns a valid token. 
-
 
 ### Other endpoints
 

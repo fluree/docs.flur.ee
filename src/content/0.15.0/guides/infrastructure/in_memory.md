@@ -8,3 +8,17 @@ To do so, you will need to specify the following config options:
 2. `fdb-storage-type` as `memory`. 
 
 Full-text indexing and full-text search are not available when running Fluree in-memory. 
+
+To try this out, we can clone down the tx-group-ex-dirs repo. 
+
+```all
+git clone https://github.com/fluree/tx-group-ex-dirs.git
+```
+
+Then you can navigate to the `in-memory/` directory. You'll need to download any version of Fluree (0.13 and higher) and copy `fluree_server.jar` into `in-memory/` folder: `in-memory/fluree_server.jar`.
+
+Then, you can open a terminal window and navigate to `in-memory/`. Issue `./fluree_start.sh` to start running Fluree in-memory. 
+
+When running Fluree in-memory, nothing is written to disk, and all data is lost when the instance is shut down. 
+
+Note: prior to version 0.15, there was a bug where full-text search was not disabled in `in-memory`, so full-text indexes were being written to disk. This has since been fixed. 

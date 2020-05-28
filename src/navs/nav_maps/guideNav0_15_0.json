@@ -41,6 +41,23 @@
             }
         } 
     },
+    "identity": {
+        "pageName": "Identity",
+        "subTopics": {
+            "auth-records": {
+                "headerName": "Auth Records",
+                "file": "0.15.0/guides/identity/auth_records"
+            },
+            "signatures": {
+                "headerName": "Signatures",
+                "file": "0.15.0/docs/identity/signatures"
+            },
+            "password-management": {
+                "headerName": "Password Management",
+                "file": "0.15.0/guides/identity/password_management"
+            }
+        }
+    },
     "smart-functions": {
         "pageName": "Smart Functions",
         "subTopics": {
@@ -50,52 +67,27 @@
             },
             "predicate-spec": {
                 "headerName": "Predicate Spec",
-                "file": "0.10.0/docs/smart-functions/predicate-spec"
+                "file": "0.15.0/guides/smart-functions/predicate-spec"
             },
             "collection-spec": {
                 "headerName": "Collection Spec",
-                "file": "0.11.0/docs/smart-functions/collection-spec"
+                "file": "0.15.0/guides/smart-functions/collection-spec"
             },
             "predicate-tx-spec": {
                 "headerName": "Predicate Tx Spec",
-                "file": "0.10.0/docs/smart-functions/predicate-tx-spec"
+                "file": "0.15.0/guides/smart-functions/predicate-tx-spec"
             },
             "rules": {
                 "headerName": "Rules and Rule Functions",
-                "file": "0.10.0/docs/smart-functions/rules"
+                "file": "0.15.0/guides/smart-functions/rules"
             },
             "rule-example": {
                 "headerName": "Rule Example",
-                "file": "0.11.0/docs/smart-functions/rule-example"
+                "file": "0.15.0/guides/smart-functions/rule-example"
             },
             "fns-in-txs": {
                 "headerName": "In Transactions",
-                "file": "0.10.0/docs/smart-functions/fns-in-txs"
-            },
-            "best-practices": {
-                "headerName": "Best Practices",
-                "file": "0.15.0/guides/guides/smart_function_best_practices"
-            }
-        }
-    },
-    "identity": {
-        "pageName": "Identity",
-        "subTopics": {
-            "public-private-keys": {
-                "headerName": "Public and Private Keys",
-                "file": "0.10.0/docs/identity/public-private-keys"
-            },
-            "auth-records": {
-                "headerName": "Auth Records",
-                "file": "0.10.0/docs/identity/auth-records"
-            },
-            "signatures": {
-                "headerName": "Signatures",
-                "file": "0.13.0/docs/identity/signatures"
-            },
-            "password-management": {
-                "headerName": "Password Management",
-                "file": "0.15.0/guides/identity/password_management"
+                "file": "0.15.0/guides/smart-functions/fns-in-txs"
             }
         }
     },

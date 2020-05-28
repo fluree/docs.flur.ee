@@ -1,11 +1,9 @@
 ## Signatures
 
-In Fluree, you can sign both queries and transactions. The signature proves that the issuer of a given query or transaction has access to the private key associated with the signature. See [Public and Private Keys](/docs/identity/public-private-keys) for a primer on public-private key cryptography.  
-
-Fluree signatures comply to [RFC 6979](https://tools.ietf.org/html/rfc6979) standards.
+In Fluree, you can sign both queries and transactions. The signature proves that the issuer of a given query or transaction has access to the private key associated with the signature.
 
 ### `fdb-open-api`
-For both queries and transactions, a signature is not required if the option `fdb-open-api` is set to true (default [config option](/docs/getting-started/installation#config-options) for the downloaded version of Fluree). In fact, the signature in signed query will be ignored if `fdb-open-api` is set to true. 
+For both queries and transactions, a signature is not required if the option `fdb-open-api` is set to true (default [config option](/docs/getting-started/fluree-anywhere#config-options) for the downloaded version of Fluree). In fact, the signature in signed query will be ignored if `fdb-open-api` is set to true. 
 
 In the case of transactions, if you send a transaction to `/transact` or to `/graphql`, the transaction will be signed with a default private key. 
 
@@ -17,7 +15,7 @@ Fluree has published a Javascript library that contains helper functions to help
 
 The documentation (available on <a href="https://github.com/fluree/crypto-utils" target="_blank">GitHub</a>), guides you through how to generate keys, sign queries, and sign transactions. 
 
-We recommend using the Javascript library or the [user interface](#user-interface) for ease of use, but you can read more about how to sign queries and transactions manually below. 
+We recommend using the Javascript library or the user interface for ease of use, but you can read more about how to sign queries and transactions manually below. 
 
 ### User Interface
 
@@ -28,7 +26,7 @@ This can be found in the user interface by navigating to `/flureeql`. By clickin
 ### Signed Queries
 If `fdb-open-api` is set to true, then you do not need to sign your queries. In fact, the signature in a signed query will be ignored if `fdb-open-api` is set to true. 
 
-If you do need to sign your queries, you should have access to your private key. Your private key needs to be [connected to a valid auth record](/docs/identity/auth-records) in the database.
+If you do need to sign your queries, you should have access to your private key. Your private key needs to be [connected to a valid auth record](/guides/identity/auth-records) in the database.
 
 #### Headers
 
@@ -65,9 +63,9 @@ The body of a signed query is same query as would be submitted in an unsigned qu
 ```
 
 ### Signed Transactions
-If `fdb-open-api` is set to true, then you do not need to sign your transactions. Each database comes with a default auth record, which is either provided by you or automatically generated (see [config options](/docs/getting-started/installation#config-options)). If `fdb-open-api` is set to true, then all transactions submitted to `/transact` will be signed with this default private key unless otherwise specified. 
+If `fdb-open-api` is set to true, then you do not need to sign your transactions. Each database comes with a default auth record, which is either provided by you or automatically generated (see [config options](/docs/getting-started/fluree-anywhere#config-options)). If `fdb-open-api` is set to true, then all transactions submitted to `/transact` will be signed with this default private key unless otherwise specified. 
 
-All signed transactions need to be submitted to the [`/command` endpoint](/api/downloaded-endpoints/overview). Transactions can be sent to the `/command` endpoint, regardless of whether `fdb-open-api` is true or not. All transactions submitted will be attributed to the auth record that signs the transactions, not the default auth record (if there is one).
+All signed transactions need to be submitted to the [`/command` endpoint](/api/downloaded-endpoints/downloaded-examples#-command). Transactions can be sent to the `/command` endpoint, regardless of whether `fdb-open-api` is true or not. All transactions submitted will be attributed to the auth record that signs the transactions, not the default auth record (if there is one).
 
 The `/command` endpoint takes a map with two keys:
 
@@ -98,8 +96,8 @@ In order to get the `sig`, you need to get the SHA2-256 hash of the stringified 
 
 ### Verifying Signatures
 
-ECDSA allows for recovery of the public key from a signature, so the original transaction and signature are the only two things required in order to verify that a signature is valid. There are online tools that allow you to independently verify a signature based on the signature + original transaction. <a href="https://github.com/fluree/crypto-utils" target="_blank">Our cryptography GitHub repo</a> also has functions that allow you to verify any signatures.
+ECDSA allows for recovery of the public key from a signature, so the original transaction and signature are the only two things required in order to verify that a signature is valid. There are online tools that allow you to independently verify a signature based on the signature + original transaction. [Our cryptography GitHub repos](/tools/other/tools#js-cryptography) also have functions that allow you to verify any signatures.
 
 ### Examples
 
-You can see examples of how to use signed transaction in the [Cryptocurrency](/docs/examples/cryptocurrency), [Voting](/docs/examples/voting), and [Supply Chain](/docs/examples/supply-chain) sample apps. 
+You can see examples of how to use signed transaction in the [example apps](/guides/examples/hub).

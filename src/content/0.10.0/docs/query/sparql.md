@@ -22,9 +22,8 @@ In additional, SPARQL is strictly a query-language. You cannot use SPARQL to tra
 SPARQL queries, as supported in FlureeQL are comprised of a:
 
 * [SELECT clause](#select-clause)
-* [WHERE clause](#where-clause-1)
-* [PREFIXes](#prefixes)
-* [Additional Options](#additional-options)
+* [WHERE clause](#where-clause)
+* [Sources](#sources)
 
 ### SELECT Clause
 In the SELECT clause, list all the variables that you want returned in your results. Variables must begin with a `?`. It does not matter what you call each variable, as long as you list those variables in your WHERE clause. 

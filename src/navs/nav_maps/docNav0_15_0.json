@@ -43,13 +43,13 @@
                 "headerName": "History Query",
                 "file": "0.15.0/docs/query/history-query"
             },
-            "sparql": {
-                "headerName": "SPARQL",
-                "file": "0.10.0/docs/query/sparql"
-            },
             "graphql": {
                 "headerName": "GraphQL",
                 "file": "0.15.0/docs/query/graphql"
+            },
+            "sparql": {
+                "headerName": "SPARQL",
+                "file": "0.10.0/docs/query/sparql"
             }
         }
 
@@ -84,7 +84,7 @@
             },
             "collections": {
                 "headerName": "Collections",
-                "file": "0.10.0/docs/schema/collections"
+                "file": "0.15.0/docs/schema/collections"
             },
             "predicates": {
                 "headerName": "Predicates",
@@ -98,9 +98,9 @@
                 "headerName": "Functions",
                 "file": "0.15.0/docs/schema/smart_functions"
             },
-            "meta-data": {
-                "headerName": "Meta-Data",
-                "file": "0.15.0/docs/schema/meta_data"
+            "metadata": {
+                "headerName": "Metadata",
+                "file": "0.15.0/docs/schema/metadata"
             },
             "tags": {
                 "headerName": "Tags",
