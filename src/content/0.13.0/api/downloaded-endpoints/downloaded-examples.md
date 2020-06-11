@@ -382,13 +382,13 @@ Body: {
   "flakes": [[351843720888321, 1002, "JoAnne", -5, true, nil]]}
 ```
 
-### /block-range-with-txn-async
+### /block-range-with-txn
 
-A POST request to `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn-async` returns block stats, as well as flakes and transactions for the specified block(s).
+A POST request to `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn` returns block stats, as well as flakes and transactions for the specified block(s).
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/block-range-with-txn-async
+Endpoint: http://localhost:8080/fdb/dev/main/block-range-with-txn
 Headers: None
 Body: {
   "start": 1, 
