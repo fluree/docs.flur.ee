@@ -38,6 +38,10 @@
             "mutability": {
                 "headerName": "Mutable Fluree",
                 "file": "0.15.0/guides/infrastructure/mutability"
+            },
+            "decentralization": {
+                "headerName": "Decentralization",
+                "file": "0.15.0/guides/infrastructure/decentralization"
             }
         } 
     },
