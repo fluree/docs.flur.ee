@@ -797,17 +797,33 @@ Returns true if the listener is successfully added.  Otherwise, an exception is 
 ```all
 const flureeServerUrl = "http://localhost:8080";
 const myLedgerName = "test/chat";
-var flureeDbConn = flureenjs.connect(flureeServerUrl);
-:
-:
+var myConn;
+
+// connect to fluree using a promise.
+// the promise resolves when connection is 
+// ready or errors
+flureedb.connect_p(flureeServerUrl)
+  .then(conn => {
+      myConn = conn;
+  })
+  .catch(error => {
+      console.error("Error connecting to Fluree DB", error);
+  });
+
 var myListenerKey = "supercalifragilisticexpialidocious";
-var someFunction = function() {
-    ; // do something
+var someFunction = function(eventType, eventData) {
+    // do something
+    console.info("eventType: ", eventType);
+    console.info("eventData: ", eventData);
   };
-var listenerAdded? = flureenjs.listen(flureeDbConn, myDbName, myKey, someFunction);
-console.log("Added listener?", listenerAdded?);
-:
-:
+
+// non-blocking wait for connection
+(async() => {
+        while (!myConn) {
+            await new Promise(resolve => setTimeout(resolve,1000));
+        }
+        addListener(myConn, myLedgerName, myListenerKey, someFunction);
+    })().catch(e => console.log(e));
 ```
   
 ### close_listener
@@ -832,7 +848,7 @@ var flureeDbConn = flureenjs.connect(flureeServerUrl);
 :
 :
 var myListenerKey = "supercalifragilisticexpialidocious";
-var listenerClosed? = flureenjs.close_listener(flureeDbConn, myDbName, myKey);
+var listenerClosed? = flureenjs.close_listener(flureeDbConn, myLedgerName, myKey);
 console.log("Closed listener?", listenerClosed?);
 :
 :
