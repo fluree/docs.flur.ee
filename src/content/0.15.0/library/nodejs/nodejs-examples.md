@@ -20,7 +20,7 @@ There are 2 versions of the connect command:
 Name | Value
 -- | --
 `server-string` | a string identifying one or more ledger servers
-`options` | <ul style="list-style-type:none; padding-left: 0;"><li>a JavaScript object containing configuration options.  The following option is currently supported:</li><li>-  `keep-alive-fn`: a JavaScript function that is executed when a connection is abruptly dropped.</li></ul>
+`options` | <ul style="list-style-type:none; padding-left: 0;"><li>a JavaScript object containing configuration options.  The following options are currently supported:</li><li>-  `keep-alive-fn`: a JavaScript function that is executed when a connection is abruptly dropped.</li><li>-  `private`: The private-key identifying the Auth to be used for operations associated with the connection. This is required for accessing Fluree instances with a closed api (i.e., fdb-open-api=false) unless you are using password authentication.</li></ul>
 
 #### Returns
 Returns a connection object.
@@ -160,7 +160,7 @@ flureenjs.close(flureeDbConn);
   
 
 ### **new_ledger**
-Creates a new ledger given a "network/id". If the network specified does not exist, it creates a new network. This request returns a transaction id; the process does not wait for the ledger to be fully initialized before returning.
+Creates a new ledger given a "network/id". If the network specified does not exist, it creates a new network. This call returns a transaction id; the process does not wait for the ledger to be fully initialized before returning.
 
 #### Parameter(s)
 Name | Value
@@ -235,7 +235,7 @@ Name | Value
 A JavaScript promise that eventually contains the results of the query or an error.
 
 #### Code Example   
-An example of an unsigned request to `q` with the network, `test` and the ledger `chat`:
+An example of a query referencing the network, `test` and the ledger `chat`:
      
 ```all
 const flureeServerUrl = "http://localhost:8080";
@@ -274,7 +274,7 @@ Name | Value
 A JavaScript promise that eventually contains the results of the query or an error.
 
 #### Code Example  
-An example of an unsigned request to `multi_query`:
+An example of a `multi_query` call:
   
 ```all
 const flureeServerUrl = "http://localhost:8080";
@@ -312,7 +312,7 @@ Name | Value
 A JavaScript promise that eventually contains the results of the query or an error.
 
 #### Code Example  
-An example of an unsigned request to `block_query`:
+An example of a `block_query` call:
   
 ```all
 const flureeServerUrl = "http://localhost:8080";
@@ -344,7 +344,7 @@ Name | Value
 A JavaScript promise that eventually contains the results of the query or an error.
 
 #### Code Example  
-An example of an unsigned request to `block_range`:
+An example of a `block_range` call:
   
 ```all
 const flureeServerUrl = "http://localhost:8080";
@@ -373,7 +373,7 @@ Name | Value
 A JavaScript promise that eventually contains the results of the query or an error.
 
 #### Code Example   
-An example of an unsigned request to `history_query`:
+An example of a `history_query`:
   
 ```all
 const flureeServerUrl = "http://localhost:8080";
@@ -395,192 +395,6 @@ flureenjs.history_query(myDb, myQuery)
 flureenjs.close(flureeDbConn);
 ```
 
-### signed_query
-Submits a signed query for a ledger to the query peer or transaction server. Returns a promise that will eventually contain the result of the query, or an exception either due to an invalid query request or when a timeout occurs prior to a response.
-
-Options is a map with the following possible keys:
-   - private-key - The private key to use for signing. 
-   - auth        - The auth id for the auth record being used.
-   - expire      - When this request should expire if not yet attempted.
-                   Defaults to 5 minutes.
-   - nonce       - Any long/64-bit integer value that will make this request unique.
-                   By default epoch milliseconds is used.
-   - timeout     - will respond with an exception if timeout reached before response available.
-
-#### Parameter(s)
-Name | Value
--- | --
-`connection` | a connection object created using the `connect` or `connect_p` command
-`ledger` | a string identifying both the network and ledger-id 
-`query-map` | a map of key/value pairs defining the query
-`options` | an optional map of key/value pairs 
-`action` | identifies the type of query to process. Valid actions are `query` (default), `block`, `multi-query`, and `history`. 
-
-#### Returns
-A JavaScript promise that eventually contains the results or an error.
-
-#### Code Example  
-An example of a signed `query` request to `signed_query`:
-  
-```all
-import { getSinFromPublicKey } from '@fluree/crypto-utils';
-:
-:
-const publicKey = '...';
-const privateKey = '...';
-const auth = getSinFromPublicKey(publicKey);
-:
-const flureeServerUrl = "http://localhost:8080";
-var flureeDbConn = flureenjs.connect(flureeServerUrl);
-const myLedgerName = "test/chat";
-:
-:
-var myQuery  = {
-    select: ['*'],
-    from:   '_collection'
-  };
-var myOpts = {
-    "private-key": privateKey,
-    auth: auth,
-    expire: Date.now() + 30000,
-    nonce: 1,
-    timeout: 600000,
-    fuel: 100000  
-};
-flureenjs.signed_query(flureeDbConn, myLedgerName, myQuery, myOpts)
-  .then( resp => {console.log('results:', resp);})
-  .catch( error => {console.log('Error ', error);});    
-:
-:
-flureenjs.close(flureeDbConn);
-```
-&nbsp;&nbsp;
-&nbsp;&nbsp;
-
-An example of signed `block` request to `signed_query`:
-
-```all
-import { getSinFromPublicKey } from '@fluree/crypto-utils';
-:
-:
-const publicKey = '...';
-const privateKey = '...';
-const auth = getSinFromPublicKey(publicKey);
-:
-flureenjs.connect_p(flureeServerUrl)
-.then(conn => 
-  {
-    var query = { block: 1};
-    var opts = {
-      "private-key": privateKey,
-      auth: auth,
-      expire: Date.now() + 60000,
-      nonce: nonce,
-      timeout: 600000,
-      fuel: maxFuel,
-      action: "block"
-    };
-    flureenjs.signed_query(conn, ledger, query, opts)
-    .then(results => 
-      {
-        console.log("block results", results);
-        // do something with results
-      })
-    .catch(error => 
-      {
-        console.log("block error: ", error );
-        // error handling
-      })
-    .finally( () => {flureenjs.close(conn);} )})
-.catch(error => {console.log("connection error: ", error)});
-```
-&nbsp;&nbsp;
-&nbsp;&nbsp;
-
-An example of signed `multi-query` request to `signed_query`:
-
-```all
-import { getSinFromPublicKey } from '@fluree/crypto-utils';
-:
-:
-const publicKey = '...';
-const privateKey = '...';
-const auth = getSinFromPublicKey(publicKey);
-const flureeServerUrl = "http://localhost:8080";
-:
-flureenjs.connect_p(flureeServerUrl)
-  .then(conn => 
-    {
-      var query = { collections: { select: ["*"], from: "_collection"},
-                persons: { select: ["*"], from: "person"}};
-      var opts = {
-        "private-key": privateKey,
-        auth: auth,
-        expire: Date.now() + 60000,
-        nonce: nonce,
-        timeout: 600000,
-        fuel: maxFuel,
-        action: "multi-query"
-      }
-      flureenjs.signed_query(conn, ledger, query, opts)
-      .then(results => 
-        {
-          console.log("multi-query results", results);
-          // check status returned for 200
-          // do something with results
-        })
-      .catch(error => 
-        {
-          console.log("multi-query error: ", error );
-          // error handling
-        })
-      .finally( () => {flureenjs.close(conn);} )
-    })
-  .catch(error => {console.log("connection error: ", error)});
-```
-&nbsp;&nbsp;
-&nbsp;&nbsp;
-
-An example of signed `history` request to `signed_query`:
-
-```all
-import { getSinFromPublicKey } from '@fluree/crypto-utils';
-:
-:
-const publicKey = '...';
-const privateKey = '...';
-const auth = getSinFromPublicKey(publicKey);
-const flureeServerUrl = "http://localhost:8080";
-:
-flureenjs.connect_p(flureeServerUrl)
-  .then(conn => 
-  {
-    var query = { history: ["person/handle", "zsmith"]};
-    var opts = {
-      "private-key": "...",
-      auth: "...",
-      expire: Date.now() + 60000,
-      nonce: nonce,
-      timeout: 600000,
-      fuel: maxFuel,
-      action: "history"
-    }
-    flureenjs.signed_query(conn, ledger, query, opts)
-    .then(results => 
-      {
-        console.log("history results", results);
-        // check status returned for 200
-        // do something with results
-      })
-    .catch(error => 
-      {
-        console.log("history error: ", error );
-        // error handling
-      })
-    .finally( () => {flureenjs.close(conn);} )
-    })
-  .catch(error => {console.log("connection error: ", error)});      
-```
 
 ### transact
 Submits a transaction for a ledger. Returns a promise that will eventually have the result of the tx, the txid (if :txid-only option used), or an exception either due to an invalid transaction or if the timeout occurs prior to a response.
@@ -614,7 +428,7 @@ Name | Value
 A JavaScript promise that eventually contains the transaction id or an error.
 
 #### Code Example  
-An example of an unsigned request to `transact`:
+An example of a `transact` call using the default private key to sign the transaction:
   
 ```all
 const flureeServerUrl = "http://localhost:8080";
@@ -636,7 +450,7 @@ flureenjs.close(flureeDbConn);
 &nbsp;&nbsp;
 &nbsp;&nbsp;
 
-An example of a signed request to `transact`:
+An example of a call to `transact` specifying the auth and private key for signing:
   
 ```all
 import { getSinFromPublicKey } from '@fluree/crypto-utils';
@@ -686,7 +500,7 @@ Name | Value
 A JavaScript promise that eventually returns the results from the monitor_tx command.
 
 #### Code Example  
-An example of an unsigned request to `monitor_tx`:
+An example of a `monitor_tx` call:
   
 ```all
 const flureeServerUrl = "http://localhost:8080";
@@ -705,7 +519,7 @@ flureenjs.close(flureeDbConn);
 
 
 ### **graphQL**
-All queries and transactions in GraphQL syntax should be issued through the `graphql` command. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All queries and transactions in GraphQL syntax should be issued through the `graphql` command. 
 
 #### Parameter(s)
 Name | Value
@@ -719,7 +533,7 @@ Name | Value
 A JavaScript promise that eventually contains the results of the query.
 
 #### Code Example  
-An example of an unsigned query to `graphql`:
+An example of a `graphql` call:
   
 ```all
     const flureeServerUrl = "http://localhost:8080";
@@ -740,7 +554,7 @@ An example of an unsigned query to `graphql`:
 ```
   
 ### **sparql**
-All queries in SPARQL syntax, regardless of type, should be issued through the `sparql` command. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All queries in SPARQL syntax, regardless of type, should be issued through the `sparql` command. 
 
 #### Parameter(s)
 Name | Value
@@ -753,7 +567,7 @@ Name | Value
 A JavaScript promise that eventually contains the results of the query or an error.
 
 #### Code Example   
-An example of an unsigned request to `sparql` with the network, `test` and the database `chat`:
+An example of a `sparql` call referencing the network, `test` and the database `chat`:
   
 ```all
     const flureeServerUrl = "http://localhost:8080";
