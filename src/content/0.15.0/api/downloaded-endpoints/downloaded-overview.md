@@ -60,6 +60,6 @@ Sub | POST | `/fdb/sub` | Handles subscriptions
 
 For both queries and transactions, a signature is not required if the option `fdb-open-api` is set to true (default for the downloaded version of Fluree). 
 
-More information on [signing queries](/docs/identity/signatures#signed-queries) and [signing transactions](/docs/identity/signatures#signed-transactions) can be found in the linked sections. 
+More information on [signing queries](/guides/identity/signatures#signed-queries) and [signing transactions](/guides/identity/signatures#signed-transactions) can be found in the linked sections. 
 
 See [Downloaded Endpoint Examples](/api/downloaded-endpoints/downloaded-examples) for examples of how to use each of the endpoints.
