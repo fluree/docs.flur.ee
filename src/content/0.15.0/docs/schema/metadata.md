@@ -10,7 +10,7 @@ Key | Description
 `hash` | Hash for current block. Not included in block hash (can't include itself!).
 `prevHash` | Previous block's hash
 `transactions` | Reference to transactions included in this block (`_tx`).
-`transactors` | Reference to transactor auth identities that signed this block. Not included in block hash. 
+`ledgers` | Reference to transactor auth identities that signed this block. Not included in block hash. 
 `instant` | Instant this block was created, per the transactor.
 `sigs` | List of transactor signatures that signed this block (signature of _block/hash). Not included in block hash.
 
