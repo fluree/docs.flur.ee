@@ -52,14 +52,11 @@ To completely reset your Fluree instance (erasing ALL ledger and transactor grou
 
 ### Block Files and Index Files
 
-Block files and indexes are stored in the `data` folder inside the folder that contains your Fluree instance. 
+Block files and indexes are stored in the folder listed in your settings as `fdb-storage-file-directory`.
 
 This folder can be moved or copied to a different Fluree instance folder and run from the folder if you choose. This is a good option if you want to use a newer Fluree version, but to keep all of your previous databases. 
 
-Block files are never overwritten. Once the file for block 1 is written, it is never overwritten. When the transactions for block 2 are issued, they will be written to a file for block 2. If using versioned blocks (see Mutable Fluree)
-
-### Index Files
-Block files and indexes are stored in the `fdbdata` folder inside the folder that contains your Fluree instance. 
+Block files are never overwritten. For example, when the transactions for block 2 are issued, they will be written to a file for block 2 and never modified. If using versioned blocks (see [Mutable Fluree](/guides/infrastructure/mutability)), block files may be renamed. 
 
 There are four different types of indexes that are written to file. These indexes sort flakes by:
 
@@ -68,4 +65,4 @@ There are four different types of indexes that are written to file. These indexe
 - object-predicate-subject-time : only references and tags are written to this index
 - predicate-object-subject-time : indexed predicates are written to this index
 
-The frequency at which new index files are written depends on your [database configuration](/docs/getting-started/installation#config-options), specifically, the `fdb-memory-reindex` option.
+The frequency at which new index files are written depends on your [database configuration](/docs/getting-started/fluree-anywhere#config-options), specifically, the `fdb-memory-reindex` option.

@@ -1,12 +1,13 @@
 ## GraphQL
 
-Fluree supports queries and transactions using both the FlureeQL JSON format as well as GraphQL. All GraphQL queries and transactions should be run through the [hosted endpoints](/api/hosted-endpoints/endpoints#-api-db-graphql) or [downloaded endpoints](/api/downloaded-endpoints/downloaded-examples#-graphql-query) ending in `/graphql`.
-
-GraphQL supports a more limited set of query capability, but is robust enough for many applications. Fluree's version of GraphQL supports a wide-range of GraphQL features, but not all of them. 
+Fluree supports queries and transactions using GraphQL. GraphQL supports a more limited set of query capability than FlureeQL. Fluree's version of GraphQL supports a wide-range of GraphQL features, but not all of them. 
 
 If you don't already know and want to use GraphQL, we definitely recommend using FlureeQL. This section is an overview of GraphQL, and highlights key differences between FlureeQL and GraphQL. Throughout the rest of the documentation, you can toggle the left sidebar to see all applicable examples in GraphQL.
 
 Because FlureeQL is a JSON format, this allows queries to be more easily composed within your programming code and is built to support Fluree's advanced capabilities like graph recursion. 
+
+
+All GraphQL queries and transactions can issued should be run through the [hosted endpoints](/api/hosted-endpoints/hosted-examples#-api-db-network-db-graphql) (you may need to change versions) or [downloaded endpoints](/api/downloaded-endpoints/downloaded-examples#-graphql-query) ending in `/graphql`.
 
 ### Queries 
 
@@ -46,6 +47,8 @@ However, in order to retrieve references using GraphQL, the `restrictCollection`
 GraphQL does not usually support the use of wildcards ( `*`), so most GraphQL interfaces will show an error when you attempt to use a wildcard. However, if you submit, the following query, the expected results will be returned.
 
 ```all
+# Note this may show an error in your GraphQL tool, but it will return the expected result. 
+
 { graph {
   person {
     *
@@ -114,6 +117,43 @@ query  {
 }
 ```
 
+### Search by Id or Ident
+
+To query a specific subject id, you can use the `_id` option, as seen below.
+
+```all
+{ graph {
+  chat(_id: 369435906932737) {
+    _id
+    comments
+    instant
+    message
+    person
+  }
+}
+}
+```
+
+To query a unique two-tuple, you can use the `ident` option, as seen below.
+
+```all
+# Note this may show an error in your GraphQL tool, but it will return the expected result. 
+
+{ graph {
+  person1(ident: ["person/handle", "jdoe"]){
+    _id
+    handle
+    fullName
+  }
+    person2(ident: ["person/handle", "zsmith"]){
+    _id
+    handle
+    fullName
+  }
+}
+}
+```
+
 ### Sort By
 GraphQL queries allow you to sort any field at any level in the graph. In order to perform a sort, you need to specify both the attribute name and whether you would like to sort the values by ascending or descending values.
 
@@ -130,13 +170,13 @@ In the below example, we are sorting chat messages in alphabetical order.
 }
 ```
 
-The below query sorts every person alphabetically by their full name, and then sorts all of their comments from oldest to newest.
+The below query sorts every person alphabetically by their full name, and then sorts all of their comments by message.
 
 ```all
 { graph {
    person (sort: {attribute: "fullName", order: ASC}) {
     fullName
-    comment_Via_person (sort:{attribute: "instant", order: ASC}) {
+    comment_Via_person (sort:{attribute: "message", order: DESC}) {
       message
       instant
     }

@@ -50,7 +50,7 @@ Action | Endpoint | Explanation
 
 Action | Verb | Endpoint | Description
 -- | -- | -- | --
-Block Stats | POST | `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn-async` | Block data, including signatures, instant, hash, flakes and transactions
+Block Stats | POST | `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn` | Block data, including signatures, instant, hash, flakes and transactions
 Health | ANY | `/fdb/health` | Returns whether or not the server is ready. 
 Ledger Stats | POST | `/fdb/[NETWORK-NAME]/[DBID]/ledger-stats` | General ledger stats, including status, # flakes, current block, and size (kb).
 Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]` | Get all key-value pairs of a certain type

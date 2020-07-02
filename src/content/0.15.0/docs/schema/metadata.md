@@ -1,7 +1,8 @@
+## Metadata 
+
+When a new block is added, that block may have many transactions. Each block has automatically generated metadata, as does each transaction. You can also add [custom metadata](/docs/transact/basics#adding-custom-metadata).
 
 ### _block
-
-More information about the [`_block` collection](/docs/infrastructure/db-infrastructure#block-metadata).
 
 Key | Description
 ---|---
@@ -14,8 +15,6 @@ Key | Description
 `sigs` | List of transactor signatures that signed this block (signature of _block/hash). Not included in block hash.
 
 ### _tx
-
-More information about the [`_tx` collection](/docs/infrastructure/db-infrastructure#block-metadata).
 
 Key | Description
 ---|---

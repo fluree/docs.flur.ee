@@ -125,8 +125,8 @@ A three tuple acts as a pattern in a where-array. First it pulls all the data th
 
 Supported Service Call | Example Three-tuple | Description
 -- | -- | --
-Full Text Search a Collection | `["?movie", "fullText:movie", "redemption"]` | This service call searches for the word `redemption` in any predicates in the movie collection that are enabled for full text search. See the [Full Text Search](/guides/additional-features/full-text-search) guide for more examples and details. 
-Full Text Search a Predicate | `["?movie", "fullText:movie/title", "redemption"]` | This service call searches for the word `redemption` in `movie/title`s. This only works if the `movie/title` predicate is enabled for full text search. See the [Full Text Search](/guides/additional-features/full-text-search) guide for more examples and details. 
+Full Text Search a Collection | `["?movie", "fullText:movie", "redemption"]` | This service call searches for the word `redemption` in any predicates in the movie collection that are enabled for full text search. See the [Full Text Search](/guides/analytical-queries/full-text-search) guide for more examples and details. 
+Full Text Search a Predicate | `["?movie", "fullText:movie/title", "redemption"]` | This service call searches for the word `redemption` in `movie/title`s. This only works if the `movie/title` predicate is enabled for full text search. See the [Full Text Search](/guides/analytical-queries/full-text-search) guide for more examples and details. 
 Collection Select | `["?movie", "rdf:type", "movie"]` | This service call binds all subject ids where the subject belongs to the `movie`. collection to the provided variable, `?movie`.
 
 #### Four Tuple
@@ -526,7 +526,7 @@ offset | `integer` | Number of results to exclude (i.e for pagination).
 orderBy | `predicate` or `[ORDER, predicate]` | Predicate name or two-tuple specifying how to order results. If using a two-tuple, the first element must be "ASC" or "DESC" and the second element is the predicate name. For example, `"person/chat"` or `["ASC", "person/handle"]`. Predicate name should match the name in the select clause. Ordering is done before taking the number of results specified in limit. `ASC` is the used if not specified. 
 groupBy | `?var1` or `["?var1", "?var2", ... ]` | You can group by any variable or variables that appears in your where clause. Grouping is specified in the top-level `groupBy` key. This can either be a single variable, i.e. `?person` or a vector of variables, i.e. `["?person", "?handle"]`.
 prettyPrint | `boolean`| Default false. Optional boolean. Whether to "pretty print" the results (as a map with keys) or as a vector without labels. This is only available when select is an array of values. Note that depending on the query, pretty print can significantly slow down results. 
-[wikidataOpts](#wikidata-options) | `{ Wikidata Options Map }` | Optional map of configurations for Wikidata queries. See all options below. 
+wikidataOpts | `{ Wikidata Options Map }` | Optional map of configurations for Wikidata queries. See all options below. 
 
 
 Key | Description

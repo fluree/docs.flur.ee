@@ -1,31 +1,30 @@
 ## What is Fluree?
 
-Fluree is an immutable, time-ordered blockchain database. 
+Fluree is an immutable, time-ordered ledger. 
 
 Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
 
 <img class="medium-img float-left" src="https://s3.amazonaws.com/fluree-docs/blockContents.png" alt="A series of 5 blocks stacked on top of each other vertically. The middle block is deconstructed to show: the previous block's hash, the current block's hash, data, a timestamp, and the block index">
 
+You can run Fluree privately or as part of a federated network.
 
-You can run Fluree privately or as part of a federated network.  
+A private Fluree is a group of ledgers run on a single server, hosted either by you or by Fluree for you. 
 
-A private Fluree is a database run on a single server, either by you or hosted for you by Fluree. A private Fluree gives you access to features such as time-travel queries and rich permission logic.
+A federated Fluree is a group of ledgers shared by a network. In addition to all the features of a private instance of Fluree, running Fluree federated provides additional data integrity. With a federated Fluree, the network uses an agreed-upon consensus algorithm to reach a shared state.  
 
-A federated Fluree is a group of databases shared by network. In addition to all the features of a private instance of Fluree, having a federated group of databases provides additional data integrity. With a federated blockchain, the network uses an agreed-upon consensus algorithm to reach a shared state.  
+You can find more in-depth information about both individual ledger [infrastructure](/guides/infrastructure/file-system) and [network infrastructure](/guides/infrastructure/network-infrastructure) in later sections. 
 
-You can find more in-depth information about both invididual [datasebase infrastructure](/docs/infrastructure/db-infrastructure) and [network infrastructure](/docs/infrastructure/network-infrastructure) in later sections. 
+## Data Model
 
-## Database Infrastructure
-
-This section is background on the infrastructure of a single database in Fluree. This includes flakes, blocks, and the subject-predicate-object model. 
+This section is background on the way data is conceptualized in any given ledger in Fluree. This sections covers topics like flakes, blocks, and the subject-predicate-object model. 
 
 ### Overview 
 
-Fluree is an immutable, time-ordered blockchain database.
+When a Fluree ledger is initialized, a block 1 is created. This block contains certain important metadata, including all the [System Collections](/docs/schema#all-system-collections) needed to make ledger features work.
 
-Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
+A ledger at a given block is a database. Every block corresponds to a moment in time, and the data in ablock consists of a group of atomic updates made to that ledger at a given point in time. 
 
-At its core, every block contains a group of specially formatted log files of database updates, as well as block metadata. We call these log files [flakes](#flakes). Each flake is a specific fact at a specific point in time about a specific subject. No two flakes are the same.
+These atomic updates are very specially formatted logs. Each updates is a called a [flakes](#flakes). Flakes are a specific fact at a specific point in time about a specific subject. No two flakes are the same.
 
 Below is an example of database block. We will go into detail about the contents of the transaction response in the [Block Metadata](#block-metadata) section. However, below you can see that, among other things, every block contains a hash, a timestamp, and the size of the block data (block-bytes). This block also contains an array of nine flakes. These flakes contain all the data that is added, updated, or deleted in block 5, as compared to block 4. 
 
@@ -72,17 +71,17 @@ The below image shows you a simplified representation of five blocks worth of fl
 Rather than storing a copy of the entire database in each block, every block contains only flakes, or facts about entities, that are different as of that block.
 
 ### Collections and Predicates
-A [collection](/docs/schema/overview#collections) is analogous to a relational database table. Every time you want a new type of item in your database, you would create a new collection. For example, collections in your database might be person, company, and city. 
+A [collection](/docs/schema/collections) is analogous to a relational database table. Every time you want a new type of item in your database, you would create a new collection. For example, collections in your database might be person, company, and city. 
 
-Every collection has [predicates](/docs/schema/overview#predicates). Predicates are analogous to relational database columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. 
+Every collection has [predicates](/docs/schema/predicates). Predicates are analogous to relational database columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. 
 
 Together, collections, and predicates make up a Fluree schema. 
 
 ### Subject-Predicate-Object Model
 
-In a Fluree, every item in the database is called a `subject`. When you create a new subject, you need to specify what collection it belongs to (for example, a person). When you create that subject, we automatically generate an `_id` for it. This `_id` is a long integer, which uniquely references that subject in the database. 
+Every item in the database is called a `subject`. When you create a new subject, you need to specify what collection it belongs to (for example, a person). When you create that subject, we automatically generate an `_id` for it. This `_id` is a long integer, which uniquely references that subject in the database. 
 
-In addition to an `_id`, subject can have an unlimited number of `predicate`s. For example, when you create your person, you might give them a person/firstName, person/lastName, and person/age - those are the predicates. 
+In addition to an `_id`, subjects can have an unlimited number of `predicate`s. For example, when you create your person, you might give them a person/firstName, person/lastName, and person/age - those are the predicates. 
 
 In addition to subjects and predicates, we have something called objects in Fluree. The object is the value of the subject-predicate combination. So, a subject could be `17592186044440` (a subject `_id`), a corresponding predicate could be `person/firstName`, and a corresponding object could be `Mike`. 
 
@@ -110,7 +109,7 @@ The second flake would assert the new fact:
 Part | Value 
 -- | ---
 Subject | Relevant subject id
-Predicate | person/firstName
+Predicate | person/firstName*
 Object | Michael
 Time | - 15
 Boolean | True
@@ -118,10 +117,12 @@ Metadata | {}
 
 If you issue a [block query](/docs/query/block-query), you can see all the flakes issued at a given block.  
 
+\* Really, when looking at a flake, the predicate name would not be displayed. Rather the predicate, like every other item in a Fluree ledger is a subject, and it has a subject id. So that predicate's subject id appears in the flake, not the name. 
+
 ### Block Metadata
 
 After the user issues a transaction, a Fluree transactor creates new [flakes](#flakes), which represent the changes made to the database at that given point in time. In addition to those flakes, there are also new flakes, which represent the metadata for that block (this is distinct from the sixth element of a flake, where metadata for an individual flake will be stored - not currently implemented). 
 
-This metadata is also in the form of flakes, and it is recorded in the database in the same way as any other information. The difference is that metadata flakes are automatically generated and cannot be edited. Some metadata can be [included in your transaction](#specifying-metadata). 
+This metadata is also in the form of flakes, and it is recorded in the database in the same way as any other information. The difference is that metadata flakes are automatically generated and cannot be edited. Some custom metadata can be [included in your transaction](/docs/transact/basics#adding-custom-metadata). 
 
 Metadata for each transaction is stored in the `_block` and `_tx` collections. Both `_block` and `_tx` are search-able in the same way as any other information in the database. 

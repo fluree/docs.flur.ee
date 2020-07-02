@@ -49,22 +49,6 @@ Note that if the previous result table and the subsequent clause have no matchin
 
 To speed up your queries, you want to order your clauses so that there are matching variables in as many subsequent clauses as possible.
 
-
-
-Recursion
-
-
-```
-{ "select": "?sname",
- "where":  [
- ["?ss", "_class/subclassOf+", "?s"],
- ["?s", "_class/name", "Person"],
-          ["?ss", "_class/name", "?sname"]]
-          }
-```
-
-
-
 ### Recursion
 
 To recur across a relationship, simply add a `+` after a predicate. This will match flakes any path length from the original. By default the recur depth is 100. You can also specify a certain path length by adding an integer after the `+`. 

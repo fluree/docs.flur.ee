@@ -2,7 +2,7 @@
 
 When creating a rule, you specify a collection, predicate/s, and smart functions. That rule can then be connected to particular auth records. 
 
-For example, a auth can be connected to a role that references rules in the `person` collection and the `person/handle` predicate. If that auth record issues a query or transaction that includes `person/handle`, then the smart functions attached to the auth's roles are triggered. 
+For example, an auth can be connected to a role that references rules in the `person` collection and the `person/handle` predicate. If that auth record issues a query or transaction that includes `person/handle`, then the smart functions attached to the auth's roles are triggered. 
 
 - If all of the smart functions return true, then the transaction goes through or the query results get returned. 
 

@@ -479,13 +479,13 @@ Body: {
   "flakes": [[351843720888321, 1002, "JoAnne", -5, true, nil]]}
 ```
 
-### /block-range-with-txn-async
+### /block-range-with-txn
 
-A POST request to `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn-async` returns block stats, as well as flakes and transactions for the specified block(s).
+A POST request to `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn` returns block stats, as well as flakes and transactions for the specified block(s).
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/block-range-with-txn-async
+Endpoint: http://localhost:8080/fdb/dev/main/block-range-with-txn
 Headers: None
 Body: {
   "start": 1, 
@@ -538,6 +538,9 @@ A POST request to `/fdb/sub` handles subscriptions. More documentation on this f
 A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/docs/identity/public-private-keys). These requests do not need to be signed. 
 
 ### /generate
+
+See the [Password Management Guide](/guides/identity/password-management) for more information. 
+
 Returns a valid token for a given user or role. Sets a valid password for that user or role. 
 
 Keys | Required | Explanations 
@@ -564,6 +567,8 @@ Body: {
 
 ### /renew
 
+See the [Password Management Guide](/guides/identity/password-management) for more information. 
+
 This endpoint returns a valid JWT token. You need to pass a NON-expired JWT token in the header, and an expiration time (in epoch milliseconds from now), to the body of the request. 
 
 Keys | Required | Explanations 
@@ -578,6 +583,9 @@ Body: { "expire": "TIME IN EPOCH MS" }
 ```
 
 ### /login
+
+See the [Password Management Guide](/guides/identity/password-management) for more information. 
+
 
 Keys | Required | Explanations 
 -- | -- | --

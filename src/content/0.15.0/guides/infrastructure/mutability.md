@@ -66,7 +66,7 @@ See [/snapshot](/api/downloaded-endpoints/downloaded-examples#-snapshot) to see 
 
 ### Querying Across Ledgers
 
-One common reason for wanting mutable data is to store personally identifiable information (PII). One common way for dealing with PII is by storing the PII in one ledger and non-sensitive data in a separate ledger. A single query can join data across multiple ledgers (see the [query syntax](/docs/query/analytical-query#prefixes-and-querying-across-sources) here). 
+One common reason for wanting mutable data is to store personally identifiable information (PII). One common way for dealing with PII is by storing the PII in one ledger and non-sensitive data in a separate ledger. A single query can join data across multiple ledgers (see the [query syntax](/docs/query/analytical-query#prefixes-key) here). 
 
 In this situation, the ledger with PII can be shared only with select users, and information that should be deleted can be handled in any of the ways listed above:
 - hiding data

@@ -39,7 +39,7 @@ Test Transact With | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/test-transact-with` |
 
 ### Password Authentication Endpoints
 
-You need password authentication enabled to use these endpoints. See [config options](/docs/getting-started/installation#password-and-jwt-token-settings) for all password authentication options. 
+You need password authentication enabled to use these endpoints. See [config options](/docs/getting-started/installation#password-and-jwt-token-settings) for all password authentication options. See the [Password Management Guide](/guides/identity/password-management) for more information. 
 
 Action | Endpoint | Explanation
 -- | -- | --
@@ -47,12 +47,11 @@ Action | Endpoint | Explanation
 [Renew](/api/downloaded-endpoints/downloaded-examples#-renew) | `/fdb/[NETWORK-NAME]/[DBID]/pw/renew` | Given a token in the header and a new expiration time, returns a new token for a given user or role. 
 [Login](/api/downloaded-endpoints/downloaded-examples#-login) | `/fdb/[NETWORK-NAME]/[DBID]/pw/login` | Given a password and user or auth id, returns a valid token. 
 
-
 ### Other endpoints
 
 Action | Verb | Endpoint | Description
 -- | -- | -- | --
-Block Stats | POST | `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn-async` | Block data, including signatures, instant, hash, flakes and transactions
+Block Stats | POST | `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn` | Block data, including signatures, instant, hash, flakes and transactions
 Health | ANY | `/fdb/health` | Returns whether or not the server is ready. 
 Ledger Stats | POST | `/fdb/[NETWORK-NAME]/[DBID]/ledger-stats` | General ledger stats, including status, # flakes, current block, and size (kb).
 Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]` | Get all key-value pairs of a certain type
@@ -61,6 +60,6 @@ Sub | POST | `/fdb/sub` | Handles subscriptions
 
 For both queries and transactions, a signature is not required if the option `fdb-open-api` is set to true (default for the downloaded version of Fluree). 
 
-More information on [signing queries](/docs/identity/signatures#signed-queries) and [signing transactions](/docs/identity/signatures#signed-transactions) can be found in the linked sections. 
+More information on [signing queries](/guides/identity/signatures#signed-queries) and [signing transactions](/guides/identity/signatures#signed-transactions) can be found in the linked sections. 
 
 See [Downloaded Endpoint Examples](/api/downloaded-endpoints/downloaded-examples) for examples of how to use each of the endpoints.

@@ -2,14 +2,14 @@
 
 Much like a relational database, before storing your records in a Fluree database, you must first register a schema which consists of collections (similar to tables) and predicates (similar to columns).
 
-Defining and updating schemas is done through regular database transactions (in JSON) by writing to the special pre-defined system collections. This also means that all information regarding the schema is stored in the database as [flakes](/docs/infrastructure/db-infrastructure#flakes), in the same way as any other type of information. 
+Defining and updating schemas is done through regular database transactions (in JSON) by writing to the special pre-defined system collections. This also means that all information regarding the schema is stored in the database as [flakes](/guides/intro/what-is-fluree#flakes), in the same way as any other type of information. 
 
-Most examples in the documentation use the [Basic Schema](/docs/getting-started/basic-schema). The Basic Schema section provides an introduction to schema, but this section goes into more detail. 
+Most examples in the documentation use the [Basic Schema](/docs/getting-started/start-here#overview). The Basic Schema section provides an introduction to schema, but this section goes into more detail. 
 
 ### Validation
 Fluree validates all updates written against the database's schema, ensuring each change meets all of the defined restrictions (i.e. data type, multi-cardinality, uniqueness).
 
-Beyond validating types, Fluree allows custom validation that can further restrict predicate values. This level of validation is done by specifying an optional [spec for a collection](/docs/smart-functions/collection-spec) or [predicate](/docs/smart-functions/predicate-spec).
+Beyond validating types, Fluree allows custom validation that can further restrict predicate values. This level of validation is done by specifying an optional [spec for a collection](/guides/smart-functions/collection-spec) or [predicate](/guides/smart-functions/predicate-spec).
 
 ### References 
 Being a graph database, the special type of ref (reference) is core to traversing through data. Any predicate of type ref refers (links/joins) to another entity. These relationships can be navigated in both directions. For example, listing all invoices from a customer record is trivial if the invoice is of type ref, and once established an invoice automatically links back to the customer.
@@ -28,12 +28,12 @@ Collection | Description
 --- | ---
 [_collection](/docs/schema/collections) | Schema collections list
 [_predicate](/docs/schema/predicates) | Schema predicate definition
-[_tag](#_tag) | Tags
-[_fn](#_fn) | Database functions
-[_user](#_user) | Database users
-[_auth](#_auth) | Auth records. Every db interaction is performed by an auth record which governs permissions.
-[_role](#_role) | Roles group multiple permission rules to an assignable category, like 'employee', 'customer'.
-[_rule](#_rule) | Permission rules
-[_block](#_block) | Block metadata
-[_tx](#_block) | Database transactions
-[_setting](#setting) | Database settings
+[_tag](/docs/schema/tags) | Tags
+[_fn](/docs/schema/functions) | Database functions
+[_user](/docs/schema/identity#_user) | Database users
+[_auth](/docs/schema/identity#_auth) | Auth records. Every db interaction is performed by an auth record which governs permissions.
+[_role](/docs/schema/identity#_role) | Roles group multiple permission rules to an assignable category, like 'employee', 'customer'.
+[_rule](/docs/schema/identity#_rule) | Permission rules
+[_block](/docs/schema/meta-data#_block) | Block metadata
+[_tx](/docs/schema/meta-data#_tx) | Database transactions
+[_setting](/docs/schema/settings) | Database settings
