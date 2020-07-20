@@ -357,13 +357,13 @@ Not supported
 
 ### Opts Key
 
-<div class=" alert alert-danger show" style="background-color: #c57886">
+<!-- <div class=" alert alert-danger show" style="background-color: #c57886">
 Deprecation note: As of version 0.15.0, we are discouraging the use of the following keys in the top-level of the query:
 
 - limit, component, offset, orderBy
 
 If using these in your query, they should instead be included in the opts map. See below. 
-</div>
+</div> -->
 
 In the `opts` map, you can have the following optional keys:
 
