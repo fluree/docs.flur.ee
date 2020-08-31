@@ -173,12 +173,34 @@ Now that we have querying permissions set for our user roles, let's talk transac
 In the admin dashboard, transact the following block to allow "magician" users the ability to update and add to the `illusion` collection.
 
 ```flureeql
+[
   {
     "_id": ["_rule/id", "magicianPermission"],
     "ops": ["transact"]
   }
+]
 ```
 
 Alternatively, to get the same effect from the outset, you could apply the `all` tag to the `_rule/ops` prediate to allow query & transaction operations.
+
+Now, try transacting the following block as an "initiate", and then attempt the same transaction as a "magician" user.
+
+```flureeql
+[
+  {
+    "_id": "illusion#new",
+    "name": "Sawed in Half",
+    "description": "Using a magic box, you can saw a person in half",
+    "equipment": [
+      "dramatic looking saw",
+      "2-piece magic box w/ wheels",
+      "2 flexible assistants"],
+    "difficulty": 8,
+    "instructions": "Be sure to have the assistant representing the lower half preloaded in their box compartment. Onstage, have the 'top-half' assistant get into the box, with the 'lower-half' sticking their legs out at the properly coordinated time, close the box, and do the dramatic sawing performance. Wheel the box halves around to sell the trick."
+  }
+]
+```
+
+Unlike an unauthorized query attempt, an unauthorized transaction attempt will return an error from Fluree.
 
 So now, we have a collection of magical illusions, accessible both by inititiates and magicians, but with the magicians' secrets guarded from untrusted eyes. Our magicians also have the ability to update and add new illusions to the collection.
