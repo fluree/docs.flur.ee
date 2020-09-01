@@ -8,6 +8,10 @@ Identity and access managment is a system that uses authentication, authorizatio
 
 For this example, we'll create a basic illusion database for a magicians' guild. Magicians like to keep their illusions secret, so we'll implement roles for our users which will only allow trusted magicians to see sensitive information, such as how exactly an illusion is performed. We'll leave less sensitive information, like names and basic descriptions open to querying by users who have not gained the trust of the guild.
 
+### Open / Closed API
+
+For the purposes of this example, we'd recommend setting the API to open, especially when adding or editing the ledger schema. With the API set to open, any queries or transactions that aren't properly authenticated will be considered considered the actions of the default `root` user. This will bypass any data security roles set in the schema. If the API is set to closed, any improperly authenticated queries or transactions will be rejected outright. If you are receiving unexpected results for your queries / transactions, be sure you're not adding any unneeded quotes to your header settings (i.e. Postman and Insomnia do not require quotations for setting strings in header value fields).
+
 ### Initial Schema
 
 You can copy/paste the following schema transaction into the Fluree Admin dashboard, to create the `illusion` collection and user roles in the ledger.
@@ -132,7 +136,7 @@ Let's try to query some illusions. With a valid JWT set in the Authorization hea
 }
 ```
 
-Oh no! All that was returned were some empty brackets. This is because we forgot to make rules for our user roles. A role must be given permissions before it can access any data, and we'll use the `rules` predicate to aggregate those permissions. Using the built-in `true` smart-function, we will now transact some rules to apply to our roles, so that our users can access the appropriate data for their trust level. Transact the following array in the admin dashboard to give our each role appropriate query permissions for the `illusion` collection:
+Oh no! All that was returned were some empty brackets (if your API is set to closed, or you properly formatted your `Authorization` header). This is because we forgot to make rules for our user roles. A role must be given permissions before it can access any data, and we'll use the `rules` predicate to aggregate those permissions. Using the built-in `true` smart-function, we will now transact some rules to apply to our roles, so that our users can access the appropriate data for their trust level. Transact the following array in the admin dashboard to give our each role appropriate query permissions for the `illusion` collection:
 
 ```flureeql
 [
