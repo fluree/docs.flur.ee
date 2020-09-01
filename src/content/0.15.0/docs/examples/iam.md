@@ -10,7 +10,7 @@ For this example, we'll create a basic illusion database for a magicians' guild.
 
 ### Open / Closed API
 
-For the purposes of this example, we'd recommend setting the API to open, especially when adding or editing the ledger schema. With the API set to open, any queries or transactions that aren't properly authenticated will be considered considered the actions of the default `root` user. This will bypass any data security roles set in the schema. If the API is set to closed, any improperly authenticated queries or transactions will be rejected outright. If you are receiving unexpected results for your queries / transactions, be sure you're not adding any unneeded quotes to your header settings (i.e. Postman and Insomnia do not require quotations for setting strings in header value fields).
+For the purposes of this example, we'd recommend setting the API to open, especially when adding or editing the ledger schema. With the API set to open, any queries or transactions that aren't properly authenticated will be considered the actions of the default `root` user. This will bypass any data security roles set in the schema. If the API is set to closed, any improperly authenticated queries or transactions will be rejected outright. If you are receiving unexpected results for your queries / transactions, be sure you're not adding any unneeded quotes to your header settings (i.e. Postman and Insomnia do not require quotations for setting strings in header value fields).
 
 ### Initial Schema
 
