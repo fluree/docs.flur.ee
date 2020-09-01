@@ -2,8 +2,6 @@
 
 This example will give you an idea of how you can implement a basic Identity & Access Management system with Fluree's password authentication API and built-in data permissioning features. To follow along, you will need to have some API testing software handy (like [Postman](https://postman.com) or [Insomnia](https://insomnia.rest)) in order to use password authentication.
 
-### What is IAM?
-
 Identity and access managment is a system that uses authentication, authorizations, and user roles to provide the appropriate level of access to a data source for a user. In this example, we'll be using Fluree's Password API to handle authentication; smart functions and the `_rule` collection to handle authorization, and the `_role` and `_auth` collections to set up our user roles.
 
 ### Setting Up
@@ -106,7 +104,9 @@ We'll be using the [Password Authentication API](/guides/identity/password-manag
 }
 ```
 
-You should recieve a long string full or random numbers and letters. This is the [JSON Web Token](https://jwt.io) (JWT) that will be passed in each HTTP request to authenticate the user. This string must be sent with each request in the `Authorization` header, formatted as such: `Authorization: "`. Make sure _not_ to include the quotes on either end of the token string.
+To create a user with the role of "magician", change the replace `initiate` with `magician`.
+
+You should recieve a long string full or random numbers and letters. This is the [JSON Web Token](https://jwt.io) (JWT) that will be passed in each HTTP request to authenticate the user. This string must be sent with each request in the `Authorization` header, formatted as such: `Authorization: "Bearer [JWT]"`. Make sure _not_ to include any quotes if you're setting the header in Postman or Insomnia. When Fluree is set to open API mode, an improperly formatted Authorization header will not be read by Fluree, and the request will be consider unsigned. With the open API, any unsigned requests will be considered sent by the `root` user.
 
 Sending an object containing the `user` and `password` key/value pairs of an existing user to the `pw/login` endpoint will return a JWT to use for authentication as well.
 
