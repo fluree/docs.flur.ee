@@ -1,8 +1,8 @@
 ## Identity & Access Managment (IAM)
 
-This example will give you an idea of how you can implement a basic Identity & Access Management system with Fluree's password authentication API and built-in data permissioning features. To follow along, you will need to have some API testing software handy (like [Postman](https://postman.com) or [Insomnia](https://insomnia.rest)) in order to use password authentication.
+This example will give you an idea of how you can implement a basic Identity & Access Management system with Fluree's password authentication API and built-in data permission features. To follow along, you will need to have some API testing software handy (like [Postman](https://postman.com) or [Insomnia](https://insomnia.rest)) in order to use password authentication.
 
-Identity and access managment is a system that uses authentication, authorizations, and user roles to provide the appropriate level of access to a data source for a user. In this example, we'll be using Fluree's Password API to handle authentication; smart functions and the `_rule` collection to handle authorization, and the `_role` and `_auth` collections to set up our user roles.
+Identity and access management is a system that uses authentication, authorizations, and user roles to provide the appropriate level of access to a data source for a user. In this example, we'll be using Fluree's Password API to handle authentication; smart functions and the `_rule` collection to handle authorization, and the `_role` and `_auth` collections to set up our user roles.
 
 ### Setting Up
 
@@ -113,7 +113,7 @@ To create a user with the role of "magician", change the replace `initiate` with
 
 Under the hood, Fluree is creating new `_user` and `_auth` records, associating them together, and associating the specified role with the `_auth` record.
 
-You should recieve a long string that looks something like this. (Shortened for readability)
+You should receive a long string that looks something like this. (Shortened for readability)
 
 `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....Vvon__pAMa6BRQoAaT_zG_qt0pSI`
 
@@ -202,7 +202,7 @@ In the admin dashboard, transact the following block to allow "magician" users t
 ]
 ```
 
-Alternatively, to get the same effect from the outset, you could apply the `all` tag to the `_rule/ops` prediate to allow query & transaction operations.
+Alternatively, to get the same effect from the outset, you could apply the `all` tag to the `_rule/ops` predicate to allow query & transaction operations.
 
 Now, try transacting the following block as an "initiate", and then attempt the same transaction as a "magician" user.
 
@@ -224,4 +224,4 @@ Now, try transacting the following block as an "initiate", and then attempt the 
 
 Unlike an unauthorized query attempt, an unauthorized transaction attempt will return an error from Fluree.
 
-So now, we have a collection of magical illusions, accessible both by inititiates and magicians, but with the magicians' secrets guarded from untrusted eyes. Our magicians also have the ability to update and add new illusions to the collection.
+So now, we have a collection of magical illusions, accessible both by initiates and magicians, but with the magicians' secrets guarded from untrusted eyes. Our magicians also have the ability to update and add new illusions to the collection.
