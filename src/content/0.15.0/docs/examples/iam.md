@@ -113,7 +113,13 @@ To create a user with the role of "magician", change the replace `initiate` with
 
 Under the hood, Fluree is creating new `_user` and `_auth` records, associating them together, and associating the specified role with the `_auth` record.
 
-You should recieve a long string full or random numbers and letters. This is the [JSON Web Token](https://jwt.io) (JWT) that will be passed in each HTTP request to authenticate the user. This string must be sent with each request in the `Authorization` header, formatted as such: `Authorization: "Bearer [JWT]"`. Make sure _not_ to include any quotes if you're setting the header in Postman or Insomnia. When Fluree is set to open API mode, an improperly formatted Authorization header will not be read by Fluree, and the request will be considered unsigned. With the open API, any unsigned requests will be considered sent by the `root` user.
+You should recieve a long string that looks something like this. (Shortened for readability)
+
+`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....Vvon__pAMa6BRQoAaT_zG_qt0pSI`
+
+This is the [JSON Web Token](https://jwt.io) (JWT) that will be passed in each HTTP request to authenticate the user. This string must be sent with each request in the `Authorization` header, formatted as such:
+
+`Authorization: "Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....Vvon__pAMa6BRQoAaT_zG_qt0pSI"`
 
 Sending an object containing the `user` and `password` key/value pairs of an existing user to the `pw/login` endpoint will return a JWT to use for authentication as well. The following object would be included in the POST request body to login the created user.
 
