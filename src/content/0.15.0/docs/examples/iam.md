@@ -95,7 +95,7 @@ You can copy/paste the following schema transaction into the Fluree Admin dashbo
 ]
 ```
 
-### Registering Users
+### Registering & Logging In Users
 
 We'll be using the [Password Authentication API](/guides/identity/password-management) to create our users. Using your API testing software, send a POST request with the following body to `http://localhost:8080/fdb/[NETWORK-NAME]/[DBID]/pw/generate`.
 
