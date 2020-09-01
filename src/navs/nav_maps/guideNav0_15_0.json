@@ -130,6 +130,10 @@
             "voting": {
                 "headerName": "Voting",
                 "file": "0.11.0/docs/examples/voting"
+            },
+            "iam": {
+                "headerName": "IAM",
+                "file": "0.15.0/docs/examples/iam"
             }
         }
     }
