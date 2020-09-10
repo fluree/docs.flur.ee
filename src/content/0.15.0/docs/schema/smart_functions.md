@@ -47,6 +47,7 @@ Function | Arguments | Example | Description | Cost (in fuel)
 `if-else` | `test` `true` `false` | `(if-else (== 1 1) \"John\" \"Jane\")` | Takes a test as a first argument. If the test succeeds, return the second argument, else return the third argument. | 10
 `and` | `arg1 arg2 ...` | `(and (== 1 1) (== 2 2) )` | Returns true if all objects within the vector are non-nil and non-false, else returns false. | 9 + count of objects in and
 `or` | `arg1 arg2 ...` | `(or (== 1 1) (== 2 3))` | Returns true if any of the objects within the vector are non-nil and non-false, else returns false. | 9 + count of objects in or
+`not` | `arg1 arg2 ...`  | `(not (== 3 3))` | Returns true if value is falsey, returns false if value is truthy. `(not (== 3 3))` would return false. | 10
 `boolean` | `x` | `(boolean 1)` | Coerces any non-nil and non-false value to true, else returns false. | 10
 `nil?` | `x` | `(nil? 2)` | If nil, returns true, else returns false. | 10
 `count` | `[s]` or `string` | `(count  \"Appleseed\")`, `#(count  [1 2 3])` | Returns the count of letters in a string or the number of items in a vector. | 9 + count of objects in count
