@@ -114,11 +114,24 @@ Body: { "format": "xml" , "block": 10 }
 ### /delete-db
 This deletes a ledger. Deleting a ledger means that a user will no longer be able to query or transact against that ledger, but currently the actual ledger files will not be deleted on disk. You can choose to delete those files yourself - or keep them. You will not be able to create a new ledger with the same name as the deleted ledger.
 
+Use the following request when Fluree server is running in open-api mode (i.e., fdb-open-api=true)
 ```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/delete-db
 Headers: None
 Body: {"db/id": "NETWORK/DBID"}
+```
+
+When the Fluree server is running in closed-api mode (i.e., fdb-open-api=false), the request must be signed.  The process to sign the delete-db request is the similar to signing queries and transactions; only the end-point is different.  .
+
+```all
+Action: POST
+Endpoint: http://localhost:8080/fdb/delete-db
+Headers {:content-type :application/json,
+           "Digest" "SHA-256=WRw/lfS4v6C7whgUKhbfJPxPQ3wNnRx99NPqDcBCe9M=",
+           "X-Fluree-Date" "Wed, 1 Jul 2020 17:38:13 GMT",
+           "Signature" "keyId=\"na\",headers=\"(request-target) x-fluree-date digest\",algorithm=\"ecdsa-sha256\",signature=\"1b3044022072efe51f308084a691310824d6065d1b413fcd5d6d7ca310b78e99013db6a08102201485659f379abf8fdf2421e73cb60de2f86394ad22039ec5c8cb475e69b7fc6b\",date=\"Wed, 1 Jul 2020 17:38:13 GMT\""},
+ Body: {"db/id": "NETWORK/DBID", "auth": "AUTH-ID"}
 ```
 
 ### /add-server
