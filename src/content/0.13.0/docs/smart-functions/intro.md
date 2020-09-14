@@ -168,7 +168,6 @@ Fn | Args | Example | Available In | Usage | Fuel
 `?sid` | None | `(== (?auth_id) (?sid))` | `_predicate/spec`, `_collection/spec`, `_rule/fns` | The `_id` of the subject that the spec is being applied to | 10
 `?pid` | None | `(?pid)` | `_predicate/spec`, `_predicate/txSpec`, transaction | `_id` of the predicate that the spec is being applied to | 10
 `?s` | `string`* | `(== (get (?s) \"person/handle\") \"jdoe\")` | `_predicate/spec`, `_collection/spec`, `_rule/fns` | Allows you to access all the predicates of the subject that the spec is being applied to. | 10 plus cost of lookup 
-`?sid` | None | `(== (?user_id) (?sid))` | `_predicate/spec`, `_collection/spec`, `_rule/fns` | The `_id` of the subject that the spec is being applied to | 10
 `?p` | `string`** | `(== (get (?p) \"_predicate/name") \"person/fullName\")` | `_predicate/spec`, `_predicate/txSpec`, transaction | Allows you to access all the predicates of the predicate that the spec is being applied to. | 10 plus cost of fuel
 `?o` <img width=40/>| None | `(< 1000 (?o))` <img width=150/> | `_predicate/spec` | The proposed object of the predicate that the user is attempting to add or update. | 10
 `?pO` |  None | `(< (?pO) (?o))` | `_predicate/spec` | The object of the predicate that the user is attempting to add or update, as of the block before the proposed transaction | 10 plus cost of object-lookup 
