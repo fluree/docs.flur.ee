@@ -11,6 +11,7 @@ export function fixSidebar(){
 export function getTopicAndSubTopic(props, nav){
         let topic = props.match.params.topic; 
         let subtopic = props.match.params.subtopic;
+       
 
         if(!topic){
             topic = Object.keys(nav)[0]
@@ -25,7 +26,8 @@ export function getTopicAndSubTopic(props, nav){
         return [topic, subtopic]
     }
 
-export function getNextTopic(topic, subtopic, nav, page){
+export function getNextTopic(topic, subtopic, nav, page, version){
+    
         let subTopicObj = get(nav, [topic, "subTopics"])
         let subTopics = Object.keys(subTopicObj)
         let idx = subTopics.indexOf(subtopic)
@@ -39,16 +41,17 @@ export function getNextTopic(topic, subtopic, nav, page){
                 let nextTopic = topics[nextTopicIdx]
                 let subTopicObj = get(nav, [nextTopic, "subTopics"])
                 let subTopics = Object.keys(subTopicObj)
-                return `/${page}/${nextTopic}/${subTopics[0]}`
+                return `/${page}/${version}/${nextTopic}/${subTopics[0]}`
             }
         } else {
             let nextSubTopic = subTopics[nextIdx]
             // Get next subtopic
-            return `/${page}/${topic}/${nextSubTopic}`
+            return `/${page}/${version}/${topic}/${nextSubTopic}`
         }
 }
 
-export function getPreviousTopic(topic, subtopic, nav, page){
+export function getPreviousTopic(topic, subtopic, nav, page, version){
+    
         let subTopicObj = get(nav, [topic, "subTopics"])
         let subTopics = Object.keys(subTopicObj)
         let idx = subTopics.indexOf(subtopic)
@@ -62,12 +65,12 @@ export function getPreviousTopic(topic, subtopic, nav, page){
                 let subTopicObj = get(nav, [prevTopic, "subTopics"])
                 let subTopics = Object.keys(subTopicObj)
                 let prevSubTopicIdx = subTopics.length - 1
-                return `/${page}/${prevTopic}/${subTopics[prevSubTopicIdx]}`
+                return `/${page}/${version}/${prevTopic}/${subTopics[prevSubTopicIdx]}`
             }
         } else {
             let prevIdx = idx - 1
             let prevSubTopic = subTopics[prevIdx]
             // Get previous subtopic
-            return `/${page}/${topic}/${prevSubTopic}`
+            return `/${page}/${version}/${topic}/${prevSubTopic}`
         }
     }

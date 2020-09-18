@@ -42,10 +42,12 @@ class Wrapper extends React.Component {
     changeVersion= (version) => {
         localStorage.setItem("fluree.doc.version", version)
         this.setState({version: version})
+        this.props.history.push(`/docs/${version}/getting-started`)
+       
     }
 
     render() {
-
+       
         return (
             <>
             <div className="container-fluid" style={{ height: "100%"}}>
@@ -64,8 +66,8 @@ class Wrapper extends React.Component {
                             <Route path="/lesson/:topic" component={(props) => <Lesson {...props} version={this.state.version} />} />
                             <Route path="/lesson" component={(props) => <Lesson {...props} version={this.state.version} />} />
                             <Route path="/docs/search" component={(props) => <Docs {...props} version={this.state.version} type="docs"/>}  />
-                            <Route path="/docs/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="docs"/>} />
-                            <Route path="/docs/:topic"  component={(props) => <Docs {...props} version={this.state.version} type="docs"/>} />
+                            <Route path="/docs/:version/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="docs"/>} />
+                            <Route path="/docs/:version/:topic" component={(props) => <Docs {...props} version={this.state.version} type="docs"/>} />
                             <Route path="/docs"  component={(props) => <Docs {...props} version={this.state.version} type="docs"/>} />
                             <Route path="/api/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
                             <Route path="/api/:topic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />

@@ -17,8 +17,9 @@ const SectionNav = (props) => {
 }
 
 export function SidebarNav(props){
-    let { nav, robust, page, chosenTopic, chosenSubTopic } = props
+    let { nav, robust, page, chosenTopic, chosenSubTopic, version } = props
     let keys = Object.keys(nav)
+  
     let headers = keys.map(key => get(nav[key], "pageName"))
     return (<div className="mt20">
         { keys.map((item, idx) => {
@@ -27,7 +28,7 @@ export function SidebarNav(props){
             return( 
                 <div key={item}>
                     <div className="top-level-nav">
-                        <LinkContainer style={{fontWeight: 600, cursor: "pointer"}} to={`/${page}/${item}/${subTopics[0]}`}>
+                        <LinkContainer style={{fontWeight: 600, cursor: "pointer"}} to={`/${page}/${version}/${item}/${subTopics[0]}`}>
                         <div>
                             {headers[idx]}
                         </div>
@@ -36,7 +37,7 @@ export function SidebarNav(props){
                     { subTopics.map(subtopic => {
                          if(chosenTopic === item && chosenSubTopic === subtopic){
                             return (<div className="second-level-nav chosen" key={subtopic}>
-                                        <LinkContainer to={`/${page}/${item}/${subtopic}`}>
+                                        <LinkContainer to={`/${page}/${version}/${item}/${subtopic}`}>
                                         <div>
                                             {get(subTopicObj, [subtopic, "headerName"])}
                                         </div>
@@ -45,7 +46,7 @@ export function SidebarNav(props){
                                     </div>)
                         } else if (chosenTopic === item || robust === true) {
                             return(<div className="second-level-nav" key={subtopic}>
-                                        <LinkContainer to={`/${page}/${item}/${subtopic}`}>
+                                        <LinkContainer to={`/${page}/${version}/${item}/${subtopic}`}>
                                         <div>
                                             {get(subTopicObj, [subtopic, "headerName"])}
                                         </div>
