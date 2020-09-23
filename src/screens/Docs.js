@@ -60,7 +60,7 @@ class Docs extends React.Component {
 			this.setState({ displaySearch: false });
 		}
 
-		console.log(this.props);
+		
 		const languages = languageMap[this.props.version];
 		let nav;
 

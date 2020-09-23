@@ -7,7 +7,7 @@ import { versions } from '../index';
 const NavItems = (props) => {
     let docNav = getDocNav(props.version)
     let docKeys = Object.keys(docNav)
-   
+  
 
     return (
     <div style={{
@@ -16,15 +16,15 @@ const NavItems = (props) => {
         marginLeft: "auto"
 
     }}>
-            {/* <DropdownButton id="Docs" title="Docs" bsStyle={props.btnStyle} style={props.btnStyles}>
+            <DropdownButton id="Docs" title="Docs" bsStyle={props.btnStyle} style={props.btnStyles}>
                 {
                     docKeys.map(docItem => 
-                        <LinkContainer to={`/docs/${docItem}`}  className="text-center" key={docItem}>
+                        <LinkContainer to={`/docs/${props.version}/${docItem}`}  className="text-center" key={docItem}>
                             <MenuItem key={docItem}>{docNav[docItem].pageName}</MenuItem>
                         </LinkContainer>
                     )
                 }    
-            </DropdownButton> */}
+            </DropdownButton>
             <LinkContainer to="/api" className="text-center" style={props.btnStyles}>
                <Button bsStyle={props.btnStyle}>API</Button>
             </LinkContainer>
