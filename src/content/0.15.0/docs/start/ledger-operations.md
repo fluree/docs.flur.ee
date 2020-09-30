@@ -5,7 +5,7 @@ This section discusses the ledger operations that are possible with Fluree.
 ### Creating a New Ledger
 You can create a new ledger through the user interface, or through the APIs. You have the option between creating a blank ledger or a ledger from a snapshot. 
 
-See the section for [creating a new ledger in Fluree Anywere](/api/downloaded-endpoints/downloaded-examples#-new-db) or in [Fluree On-Demand](/api/hosted-endpoints/hosted-examples#-api-action-new-database) (for Fluree On-Demand, you may have to change your version number).
+See the section for [creating a new ledger in Fluree Anywere](/api/downloaded-endpoints/downloaded-examples#-new-db).  You will need to change your version number to test the feature in [Fluree On-Demand](/api/hosted-endpoints/).
 
 ### Snapshotting a Ledger
 

@@ -10,7 +10,7 @@ If you are using the API, you can issue all these transactions to endpoints endi
 
 ### New Database
 
-Make sure that you have a new database. You can either create a new database through the user interface, through the API for the [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the API for the [Fluree On-Demand](/api/hosted-endpoints/hosted-examples#-api-action-new-database) (you may have to change the version).
+Make sure that you have a new database. You can either create a new database through the user interface, through the API for the [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the API for the [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version).
 
 ### Overview
 

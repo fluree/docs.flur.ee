@@ -16,9 +16,6 @@ Key | Required? | Description
 `auth` | no | Optional, an array of `_auth/id`s or `_auth` subject ids. If included, only returns results that were submitted by the included auth records.
 `prettyPrint` | no | Optional, `true` or `false`, whether to pretty print results. Default `false`
 
-<div class=" alert alert-danger show" style="background-color: #c57886">
-Deprecation note: As of version 0.15.0, we are discouraging the use of pretty-print and show-auth in favor of prettyPrint and showAuth.
-</div>
 
 ### History of Subject at a Single Block
 

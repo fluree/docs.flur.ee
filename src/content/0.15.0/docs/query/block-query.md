@@ -2,7 +2,7 @@
 
 In this section, we show you how to select all flakes from a block or a selection of blocks. Fluree allows you to select data from an entire block or block range. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the sidebar, then make sure `Query` is selected in the top-right, and `Block` is selected in the dropdown). 
 
-To issue these queries using the API, see `/block` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-block) or [Fluree On-Demand](/api/downloaded-endpoints/downloaded-examples#-block) (you may have to change versions).
+To issue these queries using the API, see `/block` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-block) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version).
 
 ### Block Clauses
 
@@ -15,9 +15,6 @@ Key | Required? | Description
 `block` | yes | A block or range of blocks to return, options for the format of this value are listed below.
 `prettyPrint` | no | Optional, `true` or `false`, whether to pretty print results. Default `false`
 
-<div class=" alert alert-danger show" style="background-color: #c57886">
-Deprecation note: As of version 0.15.0, we are discouraging the use of pretty-print in favor of prettyPrint.
-</div>
 
 #### Query Single block
 

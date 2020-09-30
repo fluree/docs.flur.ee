@@ -116,7 +116,7 @@
         "subTopics": {
             "creating-a-db": {
                 "headerName": "Creating a DB",
-                "file": "0.11.0/docs/db-setup/creating-a-database"
+                "file": "0.15.0/docs/db-setup/creating-a-database"
             },
             "database-settings": {
                 "headerName": "Database Settings",
@@ -149,11 +149,11 @@
             },
             "system-collections": {
                 "headerName": "System Collections",
-                "file": "0.13.0/docs/infrastructure/system_collections"
+                "file": "0.15.0/docs/infrastructure/system_collections"
             },
             "application-best-practices": {
                 "headerName": "Best Practices",
-                "file": "0.10.0/docs/infrastructure/app_best_practices"
+                "file": "0.15.0/docs/infrastructure/app_best_practices"
             }
         }
     }
