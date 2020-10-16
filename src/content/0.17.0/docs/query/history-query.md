@@ -223,7 +223,10 @@ curl \
 ```
 
 ```graphql
-Not supported
+{
+  history(subject: "[\"person/handle\", \"jdoe\"]",
+          prettyPrint: true)
+}
 ```
 
 ```sparql

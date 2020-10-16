@@ -2,7 +2,7 @@
 
 In this section, we show you how to perform basic queries using FlureeQL. All code examples are shown in FlureeQL. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the sidebar, then make sure `Query` is selected in the top-right, as well as in the dropdown). 
 
-To issue these queries using the API, see `/query` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-query) or [Fluree On-Demand](/api/hosted-endpoints/hosted-examples#-api-db-network-db-query) (you may have to change versions). You can also issue multiple queries at once using the `/multi-query` endpoints in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-multi-query) or [Fluree On-Demand](/api/hosted-endpoints/hosted-examples#-api-db-network-db-multi-query) (you may have to change versions)
+To issue these queries using the API, see `/query` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-query) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version). You can also issue multiple queries at once using the `/multi-query` endpoints in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-multi-query) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version).
 
 ### Query Keys
 
@@ -356,14 +356,6 @@ Not supported
 
 
 ### Opts Key
-
-<!-- <div class=" alert alert-danger show" style="background-color: #c57886">
-Deprecation note: As of version 0.15.0, we are discouraging the use of the following keys in the top-level of the query:
-
-- limit, component, offset, orderBy
-
-If using these in your query, they should instead be included in the opts map. See below. 
-</div> -->
 
 In the `opts` map, you can have the following optional keys:
 

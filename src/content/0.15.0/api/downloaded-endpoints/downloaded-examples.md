@@ -548,7 +548,7 @@ A POST request to `/fdb/sub` handles subscriptions. More documentation on this f
 
 ### /new-keys
 
-A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/docs/identity/public-private-keys). These requests do not need to be signed. 
+A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/docs/identity/auth-records#generating-a-public-private-key-auth-id-triple). These requests do not need to be signed. 
 
 ### /generate
 

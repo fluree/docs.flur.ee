@@ -34,6 +34,6 @@ Collection | Description
 [_auth](/docs/schema/identity#_auth) | Auth records. Every db interaction is performed by an auth record which governs permissions.
 [_role](/docs/schema/identity#_role) | Roles group multiple permission rules to an assignable category, like 'employee', 'customer'.
 [_rule](/docs/schema/identity#_rule) | Permission rules
-[_block](/docs/schema/meta-data#_block) | Block metadata
-[_tx](/docs/schema/meta-data#_tx) | Database transactions
+[_block](/docs/schema/metadata#_block) | Block metadata
+[_tx](/docs/schema/metadata#_tx) | Database transactions
 [_setting](/docs/schema/settings) | Database settings

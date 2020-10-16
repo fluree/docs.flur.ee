@@ -15,7 +15,7 @@ We utilized concepts of logic programming and variable binding to give an immens
 
 This section covers analytical queries using the FlureeQL syntax. All code examples are shown in FlureeQL. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the sidebar, then make sure `Query` is selected in the top-right, as well as in the dropdown). 
 
-To issue these queries using the API, see `/query` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-query) or [Fluree On-Demand](/api/hosted-endpoints/hosted-examples#-api-db-network-db-query) (you may have to change versions). You can also issue multiple queries at once using the `/multi-query` endpoints in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-multi-query) or [Fluree On-Demand](/api/hosted-endpoints/hosted-examples#-api-db-network-db-multi-query) (you may have to change versions)
+To issue these queries using the API, see `/query` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-query) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version). You can also issue multiple queries at once using the `/multi-query` endpoints in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-multi-query) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version).
 
 ### Query Keys
 
@@ -31,15 +31,6 @@ Key | Required? | Description
 [opts](#opts-key) | no | Optional map where options like `limit`, `orderBy`, `prettyPrint`, and `wikipediaOpts` can be specified.
 
 This page covers every available option for analytical queries, to see [examples](/guides/analytical-queries/analytical-query-examples), visit the relevant guide.
-
-<div class=" alert alert-danger show" style="background-color: #c57886">
-Deprecation note: As of version 0.15.0, we are discouraging the use of the following keys in the top-level of the query:
-
-- union, filter, optional, limit, offset, orderBy, groupBy, prettyPrint
-
-If using union, filter, optional in your query, they should instead be included in the where key.
-If using limit, offset, orderBy, groupBy, prettyPrint in your query, they should instead be included in the opts map.  
-</div>
 
 
 ### Select Key
@@ -345,7 +336,7 @@ A filter map has the key `filter`, and the value is an number of filter function
 Name | Example | Explanation
 -- | -- | --
 > | `(> 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3E" target="_blank">greater than</a>
->= | `(>= 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3E=" target="_blank">less than</a>
+>= | `(>= 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3E=" target="_blank">greater than or equal to</a>
 < | `(< 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3C" target="_blank">less than</a>
 <= | `(<= 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/%3C=" target="_blank">less than or equal to</a>
 = | `(= 10 ?nums)` | <a href="https://clojuredocs.org/clojure.core/=" target="_blank">equal to</a>

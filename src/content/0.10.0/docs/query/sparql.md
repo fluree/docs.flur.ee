@@ -30,7 +30,7 @@ In the SELECT clause, list all the variables that you want returned in your resu
 
 An example SELECT clause `SELECT ?chat ?message ?instant ?person ?handle ?fullName`
 
-If you are submitting a query that uses any of the prefixes supported by Wikidata, you can optionally add the labels for the variables you are returning by just adding an addition variable with the name + `Label`. More on this in [SPARQL with Outside Sources](#sparql-with-outside-sources).
+If you are submitting a query that uses any of the prefixes supported by Wikidata, you can optionally add the labels for the variables you are returning by just adding an addition variable with the name + `Label`. More on this in [SPARQL with Outside Sources](#sources).
 
 For example, with the select clause `SELECT ?horse ?horseLabel`, the variable `?horse` must be included in your WHERE clause, but `?horseLabel` does not. 
 
@@ -56,7 +56,7 @@ Function | Example | Description
 
 WHERE clauses are comprised of a series of triples, which correspond to subject-predicate-object. By stringing multiple triples together, we can create fairly complex queries and easily follow relationships across entities. 
 
-Note: If you have already looked at [FlureeQL Analytical Queries](/docs/query/analytical-queries), then this section will look very familiar. FlureeQL Analytical Queries use the same concept of binding variables across triples, although the syntax is slightly different. In addition, the source of the data in a given triple is specified as a prefix, rather than as the first item in a five-tuple. We'll explain this fully later. 
+Note: If you have already looked at [FlureeQL Analytical Queries](/docs/query/analytical-query), then this section will look very familiar. FlureeQL Analytical Queries use the same concept of binding variables across triples, although the syntax is slightly different. In addition, the source of the data in a given triple is specified as a prefix, rather than as the first item in a five-tuple. We'll explain this fully later. 
 
 The basic building block of WHERE clause is the triple. To start, let's take a look at a WHERE clause with a single triple `WHERE { ?person fd:person/handle "jdoe".}`.
 
@@ -169,7 +169,7 @@ OFFSET | `SELECT ... WHERE {...} LIMIT 10` | Amount of results you would like to
 DISTINCT | `SELECT DISTINCT ... WHERE {...}` | Return only distinct results
 ORDER BY | `SELECT ... WHERE {...} ORDER BY ?nums` | To sort the results, specify `ORDER BY` followed either a variable name, `ASC(variableName)`, or `DESC(variableName)`
 PRETTY-PRINT | `SELECT ... WHERE {...} PRETTY-PRINT`| By default, SPARQL queries are returned as a vector without any result labels. If you would like labels with your results, you can specify `PRETTY-PRINT` at the end of your query. 
-Language Labels | See [language labels](#language-labels) | See [language labels](#language-labels) 
+Language Labels | See [language labels](#language-labels)  | For more information, see the [Wikidata documentation on Service labels](https://en.wikibooks.org/wiki/SPARQL/SERVICE_-_Label) 
 
 ### Language Labels
 
