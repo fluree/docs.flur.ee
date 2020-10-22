@@ -60,6 +60,7 @@ class Video extends React.Component {
         subtopic = subtopic ? subtopic :  Object.keys(subTopics)[0]
         let videoFile = get(subTopics, [subtopic, "file"])
         let vidName = get(subTopics, [subtopic, "headerName"])
+        let version = this.props.version
 
         try {
             videoDesc = require(`../content/${videoFile}.md`)
@@ -69,8 +70,9 @@ class Video extends React.Component {
             })
             .then(text => {
                 let videoDesc = marked(text)
-                let nextTopic = getNextTopic(topic, subtopic, nav, "video")
-                let previousTopic = getPreviousTopic(topic, subtopic, nav, "video")
+                let nextTopic = getNextTopic(topic, subtopic, nav, "video", version)
+                console.log(nextTopic)
+                let previousTopic = getPreviousTopic(topic, subtopic, nav, "video", version)
                 this.setState({topic: topic, subtopic: subtopic, vidName: vidName, 
                     videoFile: videoFile, videoDesc: videoDesc, nextTopic: nextTopic, 
                     previousTopic: previousTopic})
@@ -100,7 +102,7 @@ class Video extends React.Component {
                 <>
                 <div className="col-md-3">  
                     <div className={fixedSidebar ? "fixedSidebar" : "sidebar" }>
-                        <SidebarNav robust={false} page="video" nav={nav} chosenSubTopic={subtopic} chosenTopic={topic}/>
+                        <SidebarNav robust={false} page="video" nav={nav} chosenSubTopic={subtopic} chosenTopic={topic} version={this.props.version}/>
                     </div>
                 </div>
                 <div className="col-md-9">
