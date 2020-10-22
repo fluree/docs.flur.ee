@@ -70,14 +70,14 @@ class Wrapper extends React.Component {
                             <Route path="/docs/:version/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="docs"/>} />
                             <Route path="/docs/:version/:topic" component={(props) => <Docs {...props} version={this.state.version} type="docs"/>} />
                             <Route path="/docs"  component={(props) => <Docs {...props} version={this.state.version} type="docs"/>} />
-                            <Route path="/api/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
-                            <Route path="/api/:topic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
+                            <Route path="/api/:version/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
+                            <Route path="/api/:version/:topic" component={(props) => <Docs {...props} version={this.state.version} type="api"/>} />
                             <Route path="/api" component={(props) => <Docs  {...props} version={this.state.version} type="api"/>} />
-                            <Route path="/tools/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="tools"/>} />
-                            <Route path="/tools/:topic" component={(props) => <Docs {...props} version={this.state.version} type="tools"/>} />
+                            <Route path="/tools/:version/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="tools"/>} />
+                            <Route path="/tools/:version/:topic" component={(props) => <Docs {...props} version={this.state.version} type="tools"/>} />
                             <Route path="/tools" component={(props) => <Docs {...props} version={this.state.version} type="tools"/>} />
-                            <Route path="/guides/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="guides"/>} />
-                            <Route path="/guides/:topic" component={(props) => <Docs {...props} version={this.state.version} type="guides"/>} />
+                            <Route path="/guides/:version/:topic/:subtopic" component={(props) => <Docs {...props} version={this.state.version} type="guides"/>} />
+                            <Route path="/guides/:version/:topic" component={(props) => <Docs {...props} version={this.state.version} type="guides"/>} />
                             <Route path="/guides" component={(props) => <Docs {...props} version={this.state.version} type="guides"/>} />
                             <Route path="/help" component={Help} />
                             <Route path="/" component={(props) => <Landing {...props} version={this.state.version}/>}  />

@@ -144,6 +144,8 @@ class Docs extends React.Component {
 						this.loadSection("intro", "intro", nav);
 					} else if (this.props.type === "library") {
 						this.loadSection("intro", "intro", nav);
+					} else if (this.props.type === "guides") {
+					this.loadSection("intro", "intro", nav);
 					}
 				});
 		}
