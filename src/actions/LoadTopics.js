@@ -1,4 +1,5 @@
 import get from 'lodash.get';
+import { versions } from "../index";
 
 export function fixSidebar(){
         if(window.scrollY >= 105) {
@@ -9,9 +10,16 @@ export function fixSidebar(){
     }
 
 export function getTopicAndSubTopic(props, nav){
+        let version = props.match.params.version;
         let topic = props.match.params.topic; 
         let subtopic = props.match.params.subtopic;
-       
+
+        if(version && !versions.includes(version)) {
+            // embedded link from markdown does not include version
+            // so, map topic to subtopic & version to topic
+            subtopic = topic;
+            topic = version;
+        }
 
         if(!topic){
             topic = Object.keys(nav)[0]
