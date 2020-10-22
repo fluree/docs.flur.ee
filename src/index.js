@@ -60,8 +60,8 @@ class Wrapper extends React.Component {
                 <div className="row">
                     <div className="col-xs-12" style={{ padding: "0px"}}>
                         <Switch>
-                            <Route path="/video/:topic/:subtopic" component={(props) => <Video {...props} version={this.state.version} />}  />
-                            <Route path="/video/:topic" component={(props) => <Video {...props} version={this.state.version} />}  />
+                            <Route path="/video/:version/:topic/:subtopic" component={(props) => <Video {...props} version={this.state.version} />}  />
+                            <Route path="/video/:version/:topic" component={(props) => <Video {...props} version={this.state.version} />}  />
                             <Route path="/video" component={(props) => <Video {...props} version={this.state.version} />} />
                             <Route path="/lesson/:topic/:subtopic" component={(props) => <Lesson {...props} version={this.state.version} />} />
                             <Route path="/lesson/:topic" component={(props) => <Lesson {...props} version={this.state.version} />} />
