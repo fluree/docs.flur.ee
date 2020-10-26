@@ -5,6 +5,10 @@
 				"headerName": "Intro",
 				"file": "0.15.0/docs/start/intro"
 			},
+			"installation": {
+				"headerName": "Installation",
+				"file": "0.13.0/docs/start/installation"
+			},
 			"fluree-on-demand": {
 				"headerName": "Fluree On-Demand",
 				"file": "0.15.0/docs/start/on-demand"
@@ -110,51 +114,51 @@
 				"file": "0.15.0/docs/schema/settings"
 			}
 		}
-    },
-    "database-setup": {
-        "pageName": "Database Set-up",
-        "subTopics": {
-            "creating-a-db": {
-                "headerName": "Creating a DB",
-                "file": "0.15.0/docs/db-setup/creating-a-database"
-            },
-            "database-settings": {
-                "headerName": "Database Settings",
-                "file": "0.13.0/docs/db-setup/database-settings"
-            },
-            "forking-a-db": {
-                "headerName": "Forking a DB",
-                "file": "0.10.0/docs/db-setup/forking-a-database"
-            },
-            "snapshotting-a-database": {
-                "headerName": "Snapshotting a DB",
-                "file": "0.11.0/docs/db-setup/snapshotting-a-database"
-            },
-            "deleting-a-database": {
-                "headerName": "Deleting a DB",
-                "file": "0.11.0/docs/db-setup/deleting-a-database"
-            }
-        }
-    },
-    "infrastructure": {
-        "pageName": "Infrastructure",
-        "subTopics": {
-            "db-infrastructure": {
-                "headerName": "Database Infrastructure",
-                "file": "0.10.0/docs/infrastructure/db_infrastructure"
-            },
-            "network-infrastructure": {
-                "headerName": "Network Infrastructure",
-                "file": "0.10.0/docs/infrastructure/network_infrastructure"
-            },
-            "system-collections": {
-                "headerName": "System Collections",
-                "file": "0.15.0/docs/infrastructure/system_collections"
-            },
-            "application-best-practices": {
-                "headerName": "Best Practices",
-                "file": "0.15.0/docs/infrastructure/app_best_practices"
-            }
-        }
-    }
+	},
+	"database-setup": {
+		"pageName": "Database Set-up",
+		"subTopics": {
+			"creating-a-db": {
+				"headerName": "Creating a DB",
+				"file": "0.15.0/docs/db-setup/creating-a-database"
+			},
+			"database-settings": {
+				"headerName": "Database Settings",
+				"file": "0.13.0/docs/db-setup/database-settings"
+			},
+			"forking-a-db": {
+				"headerName": "Forking a DB",
+				"file": "0.10.0/docs/db-setup/forking-a-database"
+			},
+			"snapshotting-a-database": {
+				"headerName": "Snapshotting a DB",
+				"file": "0.11.0/docs/db-setup/snapshotting-a-database"
+			},
+			"deleting-a-database": {
+				"headerName": "Deleting a DB",
+				"file": "0.11.0/docs/db-setup/deleting-a-database"
+			}
+		}
+	},
+	"infrastructure": {
+		"pageName": "Infrastructure",
+		"subTopics": {
+			"db-infrastructure": {
+				"headerName": "Database Infrastructure",
+				"file": "0.10.0/docs/infrastructure/db_infrastructure"
+			},
+			"network-infrastructure": {
+				"headerName": "Network Infrastructure",
+				"file": "0.10.0/docs/infrastructure/network_infrastructure"
+			},
+			"system-collections": {
+				"headerName": "System Collections",
+				"file": "0.15.0/docs/infrastructure/system_collections"
+			},
+			"application-best-practices": {
+				"headerName": "Best Practices",
+				"file": "0.15.0/docs/infrastructure/app_best_practices"
+			}
+		}
+	}
 }
