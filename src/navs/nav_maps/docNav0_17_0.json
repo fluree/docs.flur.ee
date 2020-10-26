@@ -5,6 +5,10 @@
                 "headerName": "Intro",
                 "file": "0.15.0/docs/start/intro"
             },
+                "installation": {
+                    "headerName": "Installation",
+                    "file": "0.13.0/docs/start/installation"
+                },
             "fluree-on-demand": {
                 "headerName": "Fluree On-Demand",
                 "file": "0.15.0/docs/start/on-demand"
