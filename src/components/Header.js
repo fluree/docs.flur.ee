@@ -25,13 +25,13 @@ const NavItems = (props) => {
                     )
                 }    
             </DropdownButton>
-            <LinkContainer to="/api" className="text-center" style={props.btnStyles}>
+            <LinkContainer to={`/api/${props.version}`} className="text-center" style={props.btnStyles}>
                <Button bsStyle={props.btnStyle}>API</Button>
             </LinkContainer>
-            <LinkContainer to="/guides" className="text-center" style={props.btnStyles}>
+            <LinkContainer to={`/guides/${props.version}`} className="text-center" style={props.btnStyles}>
                <Button bsStyle={props.btnStyle}>Guides</Button>
             </LinkContainer>
-            <LinkContainer to="/tools" className="text-center" style={props.btnStyles}>
+            <LinkContainer to={`/tools/${props.version}`} className="text-center" style={props.btnStyles}>
                <Button bsStyle={props.btnStyle}>Tools</Button>
             </LinkContainer>
             <LinkContainer to="/help" className="text-center" style={props.btnStyles}>
