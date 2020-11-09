@@ -121,19 +121,19 @@
         "subTopics": {
             "hub": {
                 "headerName": "Developer Hub",
-                "file": "0.13.0/docs/developer-hub/developer-hub"
+                "file": "0.15.0/guides/developer-hub/developer-hub"
             },
             "cryptocurrency": {
                 "headerName": "Cryptocurrency",
-                "file": "0.11.0/docs/examples/cryptocurrency"
+                "file": "0.15.0/guides/examples/cryptocurrency"
             },
             "voting": {
                 "headerName": "Voting",
-                "file": "0.11.0/docs/examples/voting"
+                "file": "0.15.0/guides/examples/voting"
             },
             "iam": {
                 "headerName": "IAM",
-                "file": "0.15.0/docs/examples/iam"
+                "file": "0.15.0/guides/examples/iam"
             }
         }
     }
