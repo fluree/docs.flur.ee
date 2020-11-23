@@ -6,8 +6,8 @@ A ledger name is comprised of a network name followed by the ledger name `networ
 
 If a network already exists with that name, and you have permissions to add to that network, a new ledger will be created. If a network does not already exist with that name, a new network and new ledger will be created. 
 
-You can either create a new ledger through the [user interface](/docs/getting-started/user-interface#account-page), through the API for the [downloadable version](/api/downloaded-endpoints/downloaded-examples#-new-db), or through the API for the [hosted version](/api/hosted-endpoints/hosted-examples#-api-action-new-database). 
+You can either create a new ledger through the user interface, through the API for the [downloadable version](/api/downloaded-endpoints/downloaded-examples#-new-db), or through the API for the [hosted version](/api/hosted-endpoints). 
 
-You can also create a new ledger from a snapshot file (see [snapshotting](/docs/ledger-setup/snapshotting-a-database)).
+You can also create a new ledger from a snapshot file (see [snapshotting](/docs/ledger-setup/snapshotting-a-ledger)).
 
 When a ledger is created, it automatically has all of the system collections, as well as an `auth/id` which is tied to a private key. In the hosted version, this key is kept by Fluree (user-controlled private keys to be added shortly). In the downloadable version, this private key is held in `default-private-key.txt` (unless specified otherwise in your properties file).

@@ -142,36 +142,36 @@
             }
         }
     },
-    "database-setup": {
-        "pageName": "Database Set-up",
+    "ledger-setup": {
+        "pageName": "Ledger Set-up",
         "subTopics": {
             "creating-a-db": {
-                "headerName": "Creating a DB",
-                "file": "0.11.0/docs/db-setup/creating-a-database"
+                "headerName": "Creating a Ledger",
+                "file": "0.11.0/docs/db-setup/creating-a-ledger"
             },
-            "database-settings": {
-                "headerName": "Database Settings",
-                "file": "0.13.0/docs/db-setup/database-settings"
+            "ledger-settings": {
+                "headerName": "Ledger Settings",
+                "file": "0.13.0/docs/db-setup/ledger-settings"
             },
             "forking-a-db": {
-                "headerName": "Forking a DB",
-                "file": "0.10.0/docs/db-setup/forking-a-database"
+                "headerName": "Forking a Ledger",
+                "file": "0.10.0/docs/db-setup/forking-a-ledger"
             },
-            "snapshotting-a-database": {
-                "headerName": "Snapshotting a DB",
-                "file": "0.11.0/docs/db-setup/snapshotting-a-database"
+            "snapshotting-a-ledger": {
+                "headerName": "Snapshotting a Ledger",
+                "file": "0.11.0/docs/db-setup/snapshotting-a-ledger"
             },
-            "deleting-a-database": {
-                "headerName": "Deleting a DB",
-                "file": "0.11.0/docs/db-setup/deleting-a-database"
+            "deleting-a-ledger": {
+                "headerName": "Deleting a Ledger",
+                "file": "0.11.0/docs/db-setup/deleting-a-ledger"
             }
         }
     },
     "infrastructure": {
         "pageName": "Infrastructure",
         "subTopics": {
-            "db-infrastructure": {
-                "headerName": "Database Infrastructure",
+            "ledger-infrastructure": {
+                "headerName": "Ledger Infrastructure",
                 "file": "0.10.0/docs/infrastructure/db_infrastructure"
             },
             "network-infrastructure": {

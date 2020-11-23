@@ -1,4 +1,4 @@
-## ledger Infrastructure
+## Ledger Infrastructure
 
 This section is background on the infrastructure of a single ledger in Fluree. This includes flakes, blocks, and the subject-predicate-object model. 
 
