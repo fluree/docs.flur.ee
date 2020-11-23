@@ -9,7 +9,7 @@ Key | Type | Description
 `select` | select-spec |  Selection specification in the form of an array/vector. To select all attributes use `[ "*" ]`. If you were storing customers and wanted to select just the customer name and products they own, the select statement might look like: `[ "customer/name", "customer/products"]`.
 `from` | from-spec | Optional. Can be an entity (represented as an identity or integer), or an entire collection of entities utilizing the collection name. If selecting from customers as per the prior example, it would simply be `"from": "customer"`. If selecting a specific customer, it would for example be `"from": 4299262263299` or `"from": "[\"customer/name\", \"Newco Inc.\"]"`. 
 `where` | where-spec | Optional. Can be in the simple SQL-like string format or more sophisticated queries can be specified in the datalog format. For the simple format, might include something like: `"where": "customer/name = 'ABC Corp'"` or `"where": "person/age >= 22 AND person/age <= 50"`.
-`block` | integer or ISO-8601 date string | Optional time-travel query, specified either by the block the query results should be of, or a wall-clock time in ISO-8601 fromat. When no block is specified, the most current database is always queried.
+`block` | integer or ISO-8601 date string | Optional time-travel query, specified either by the block the query results should be of, or a wall-clock time in ISO-8601 fromat. When no block is specified, the most current ledger is always queried.
 `limit` | integer | Optional limit for result quantity. Fluree uses a default of 1000.
 
 
@@ -343,7 +343,7 @@ Key | Type | Description
 -- | -- | -- 
 `auth` | identity |  Required auth identity you wish this token to be tied to. Can be the `_id` integer of the auth record,  or any identity value such as `["_auth/id", "my_admin_auth_id"]`.
 `expireSeconds` | integer | Optional number of seconds until this token should expire. If not provided, token will never expire.
-`db` | string | Only required if using your master authorization token from Fluree (from your username/password to flureedb.flur.ee). So long as you are using a token from your own database, it will automatically use the database the token is coming from.
+`db` | string | Only required if using your master authorization token from Fluree (from your username/password to flureedb.flur.ee). So long as you are using a token from your own ledger, it will automatically use the ledger the token is coming from.
 
 
 If you are handling authentication for your application but still want users to connect directly to Fluree, your authentication code can utilize this endpoint to retrieve tokens on behalf of the user. The user can subsequently use this token to interact directly with Fluree from the respective application.
@@ -353,7 +353,7 @@ In order to create a token, you must use a token that has the following permissi
 1. A role with a rule that grants `token` within the `_rule/ops` attribute.
 2. The permission to query the `_auth` record required to generate the token.
 
-For item #2, this allows a permission where someone can generate tokens only for certain user or auth records. Generally you'll use an admin-type rights that have visibility to the entire database in which case you simply need to make sure the `_rule/ops` contains the rights for `token`.
+For item #2, this allows a permission where someone can generate tokens only for certain user or auth records. Generally you'll use an admin-type rights that have visibility to the entire ledger in which case you simply need to make sure the `_rule/ops` contains the rights for `token`.
 
 Here is an example request using curl. Be sure to replace your auth token, account name and auth-id in the request:
 
@@ -430,6 +430,6 @@ GraphQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql`
 New DB | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/new-db`
 Delete DB | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/delete-db`
 
-For example, if you are in the `test` network using the `test.one` database, you could post a query to the `/fdb/test/test.one/query` endpoint. For queries, the signature needs to be included in the Authorization header. For transactions, the signature can be included in the signature map. See [Signing Transactions](#signing-transactions).
+For example, if you are in the `test` network using the `test.one` ledger, you could post a query to the `/fdb/test/test.one/query` endpoint. For queries, the signature needs to be included in the Authorization header. For transactions, the signature can be included in the signature map. See [Signing Transactions](#signing-transactions).
 
-A signature is not required is the option `fdb-group-open-api` is set to true (default for the downloaded version of Fluree). Deleting and adding a database only works if `fdb-group-open-api` is set to true. 
+A signature is not required is the option `fdb-group-open-api` is set to true (default for the downloaded version of Fluree). Deleting and adding a ledger only works if `fdb-group-open-api` is set to true. 

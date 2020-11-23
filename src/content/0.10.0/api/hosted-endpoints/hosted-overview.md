@@ -18,9 +18,9 @@ Transact | `/api/db/NETWORK/DB/transact` | Transactions in FlureeQL syntax
 GraphQL | `/api/db/NETWORK/DB/graphql` | Queries or transactions in GraphQL syntax, as a string
 SPARQL | `/api/db/NETWORK/DB/sparql` | Queries in SPARQL syntax, as a string
 Command | `/api/db/NETWORK/DB/command` | Commands, such as transactions, with a signature in the body. See [signing transactions](/docs/identity/signatures#signed-transactions).
-Dbs | `/api/dbs` | Get all of the databases for an account.
-Actions | `/api/action` | Actions, such as a a new database, a new user, or snapshotting a database (not yet supported).
-Logs | `/api/fdb/logs/[account]` | Retrieve the logs for a given database. Syntax in [Examples](/api/hosted-endpoints/hosted-examples)
+Dbs | `/api/dbs` | Get all of the ledgers for an account.
+Actions | `/api/action` | Actions, such as a a new ledger, a new user, or snapshotting a ledger (not yet supported).
+Logs | `/api/fdb/logs/[account]` | Retrieve the logs for a given ledger. Syntax in [Examples](/api/hosted-endpoints/hosted-examples)
 
 The following endpoints do not require a token in the header:
 

@@ -1,6 +1,6 @@
 export default { 
     "1": ["=^_^=", "Relax! No challenge here"],
-    "2": ["a", "False. Each database user should have their own auth/s",
+    "2": ["a", "False. Each ledger user should have their own auth/s",
         "True or false"],
     "3": "b",
     "4": ["Yes, they would be!",

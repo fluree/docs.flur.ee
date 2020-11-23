@@ -124,7 +124,7 @@ To see examples of sending a request to the `/command` endpoint, see [signed tra
 
 ### `/api/dbs`
 
-To view all the databases attached to a particular account, you can either send the following as a GET request or a POST request with an empty body. 
+To view all the ledger attached to a particular account, you can either send the following as a GET request or a POST request with an empty body. 
 
 ```all
 Action: POST or GET
@@ -133,16 +133,16 @@ Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: { }
 ```
 
-### `/api/action` - New Database
+### `/api/action` - New Ledger
 
-To create a new database, send the following request to `api/action`. Your `db/id` should begin with your account name and a forward slash, followed by a database name (any combination of letters and numbers).
+To create a new ledger, send the following request to `api/action`. Your `db/id` should begin with your account name and a forward slash, followed by a ledger name (any combination of letters and numbers).
 
 ```all
 Action: POST
 Endpoint: https://db.flur.ee/api/action
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: ["new-db", {
-  "db/id": [NETWORK NAME]/[DATABASE NAME]
+  "db/id": [NETWORK NAME]/[LEDGER NAME]
  }]
 ```
 
@@ -156,21 +156,21 @@ Action: POST
 Endpoint: https://db.flur.ee/api/action
 Headers: {"Authorization": "Bearer [TOKEN]"}
 Body: ["new-user", {
-  "db/id": [NETWORK NAME]/[DATABASE NAME]
+  "db/id": [NETWORK NAME]/[LEDGER NAME]
  }]
 ```
 
-### `/api/action` - Archive Database
+### `/api/action` - Archive Ledger
 
 Not yet supported.
 
 ### `/api/fdb/logs/[account]`
 
-To retrieve the logs for a given database, you would post an array where the first item is "logs", and the second item is a JSON map/object containing the following keys:
+To retrieve the logs for a given ledger, you would post an array where the first item is "logs", and the second item is a JSON map/object containing the following keys:
 
 Key | Type | Description
 -- | -- | --
-`db` | Database name | Required. Should be `[ACCOUNT NAME]/[DBNAME]`
+`db` | Ledger name | Required. Should be `[ACCOUNT NAME]/[DBNAME]`
 `limit` | `int` | (optional) Number of logs to retrieve
 `status` | `ok` or `error` | To view just successful requests or just errors, specify `status`. 
 
@@ -205,7 +205,7 @@ Body: {
 
 This is a POST request issued to `https://db.flur.ee/api/signin`, and it does not require a token. 
 
-This endpoint will return a token for your account. You will be able to issue queries or transactions to all of the databases in your account using this token. 
+This endpoint will return a token for your account. You will be able to issue queries or transactions to all of the ledger in your account using this token. 
 
 Post a JSON map/object containing the following keys:
 

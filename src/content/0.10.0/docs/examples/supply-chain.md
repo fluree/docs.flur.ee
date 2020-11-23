@@ -545,7 +545,7 @@ curl \
 Transactions are not supported in SPARQL
 ```
 
-The `purchaseOrder` will become the central collection in our database. Coffee on the Block will create a purchaseOrder, and every other participant in the blockchain will update that purchaseOrder as the product moves through the supply chain. Participants will add shipping information and information about any other events that happen. Before each participant in the supply chain ships the product to the next participant, they will sign off on the purchaseOrder, as a way of approving their portion of the supply chain was successfully completed. 
+The `purchaseOrder` will become the central collection in our ledger. Coffee on the Block will create a purchaseOrder, and every other participant in the blockchain will update that purchaseOrder as the product moves through the supply chain. Participants will add shipping information and information about any other events that happen. Before each participant in the supply chain ships the product to the next participant, they will sign off on the purchaseOrder, as a way of approving their portion of the supply chain was successfully completed. 
 
 ### Add Sample Data
 
@@ -746,7 +746,7 @@ Below is an overview of all the smart functions that we will be adding.
 
 These rules are vital in a decentralized application where there isn’t necessarily full trust between the actors. A mentioned earlier, setting up and testing these smart functions is part of the initial configuration before a decentralized network goes live. Most applications will not require any changes to the smart functions after initial set up. 
 
-The custom blockchain should live at the bottom of a software stack, where the top-level, the user interface, allows for easy and seamless interaction with the database. A good user interface should only allow valid transaction, however the role of the smart functions is to prevent bad actors from circumventing the allowed actions in a database. Even if bad actors were to start issuing transactions directly to a database, they would be unable to issue any transactions that are not allowed by smart functions. 
+The custom blockchain should live at the bottom of a software stack, where the top-level, the user interface, allows for easy and seamless interaction with the ledger. A good user interface should only allow valid transaction, however the role of the smart functions is to prevent bad actors from circumventing the allowed actions in a ledger. Even if bad actors were to start issuing transactions directly to a ledger, they would be unable to issue any transactions that are not allowed by smart functions. 
 
 We'll be walking through them more slowly for clarity's sake. Currently, these are only available to be viewed in FlureeQL in our documentation.
 
@@ -2325,7 +2325,7 @@ Transaction Set 5:
 
 ### Example Queries
 
-Now that our database is populated with several purchase orders, we can issue a host of queries. We will only show a few example queries in this walk-through, but you can see that the queries can get quite complex, and can instantaneously query data from previous blocks.
+Now that our ledger is populated with several purchase orders, we can issue a host of queries. We will only show a few example queries in this walk-through, but you can see that the queries can get quite complex, and can instantaneously query data from previous blocks.
 
 <pre style="height: 200px;overflow-y: scroll"><code class="language-all">
 // Selecting all purchase orders

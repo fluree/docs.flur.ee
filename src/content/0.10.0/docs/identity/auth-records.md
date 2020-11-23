@@ -1,9 +1,9 @@
 ## Auth Records
 
 Auth records control identity in Fluree and can be tied to specific public-private key pairs. 
-As mentioned in the previous section, once you have a public-private key-pair, you can generate an auth id by hashing the public key with SHA3-256 and then RIPEMD-160. You then need to add this auth id to the database. If it is not added to the database, any transactions signed with the relevant private key are invalid.
+As mentioned in the previous section, once you have a public-private key-pair, you can generate an auth id by hashing the public key with SHA3-256 and then RIPEMD-160. You then need to add this auth id to the ledger. If it is not added to the ledger, any transactions signed with the relevant private key are invalid.
 
-Adding a new auth to the database, with an id derived from the public key:
+Adding a new auth to the ledger, with an id derived from the public key:
 
 ```all
 [{

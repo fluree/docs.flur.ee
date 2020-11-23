@@ -8,7 +8,7 @@ Key | Type | Description
 `select` | select-spec |  Selection specification in the form of an array/vector. To select all predicates use `[ "*" ]`. If you were storing customers and wanted to select just the customer name and products they own, the select statement might look like: `[ "customer/name", "customer/products"]`.
 `from` | from-spec | Optional. Can be an subject (represented as an idsubject or integer), or an entire collection of entities utilizing the collection name. If selecting from customers as per the prior example, it would simply be `"from": "customer"`. If selecting a specific customer, it would for example be `"from": 4299262263299` or `"from": "[\"customer/name\", \"Newco Inc.\"]"`. 
 `where` | where-spec | Optional. Can be in the simple SQL-like string format or more sophisticated queries can be specified in the datalog format. For the simple format, might include something like: `"where": "customer/name = 'ABC Corp'"` or `"where": "person/age >= 22 AND person/age <= 50"`.
-`block` | integer or ISO-8601 date string | Optional time-travel query specified by block number, duration, or wall-clock time as a ISO-8601 formatted string. When no block is specified, the most current database is always queried.
+`block` | integer or ISO-8601 date string | Optional time-travel query specified by block number, duration, or wall-clock time as a ISO-8601 formatted string. When no block is specified, the most current ledger is always queried.
 `limit` | integer | Optional limit for result quantity. Fluree uses a default of 100.
 
 
@@ -414,7 +414,7 @@ All SPARQL queries can be sent to this endpoint. Simply send a string of the SPA
 
 ### `/api/signin`
 
-The signin endpoint is only available in the hosted version of Fluree. This endpoint will return a token for the master database. Using this token, you will be able to see information about your account, your databases, and you will be able to issue tokens for any databases within your account. 
+The signin endpoint is only available in the hosted version of Fluree. This endpoint will return a token for the master ledger. Using this token, you will be able to see information about your account, your ledgers, and you will be able to issue tokens for any ledgers within your account. 
 
 Post a JSON map/object containing the following keys:
 

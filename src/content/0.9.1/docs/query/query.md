@@ -2,9 +2,9 @@
 
 Fluree allows you to specify queries using the FlureeQL JSON syntax or with GraphQL. The FlureeQL format, being a JSON data structure, allows for queries to be easily composed within your programming code and is built to support Fluree's advanced capabilities like graph recursion. GraphQL supports a more limited set of query capability, but is robust enough for many applications. If you don't already know and want to use GraphQL, we definitely recommend using FlureeQL.
 
-Fluree has permissions embedded within the database itself, which has the effect that every database for every user is potentially customized and contains only data they can view. This capability allows more direct access to the database for front-end UIs or other applications, and means less time spent creating custom API endpoints that simply modify select statements based on who the user is. In addition, multiple apps can share the same database with security consistency.
+Fluree has permissions embedded within the ledger itself, which has the effect that every ledger for every user is potentially customized and contains only data they can view. This capability allows more direct access to the ledger for front-end UIs or other applications, and means less time spent creating custom API endpoints that simply modify select statements based on who the user is. In addition, multiple apps can share the same ledger with security consistency.
 
-The graph selection capability of Fluree allows query results to be returned as a nested graph instead of 'flat' result sets. This aligns with how data is actually used in applications and makes it simpler to pass data around to various UI components, etc. This also means the role of a client database library is substantially reduced, and for many applications may be unnecessary.
+The graph selection capability of Fluree allows query results to be returned as a nested graph instead of 'flat' result sets. This aligns with how data is actually used in applications and makes it simpler to pass data around to various UI components, etc. This also means the role of a client ledger library is substantially reduced, and for many applications may be unnecessary.
 
 Both FlureeQL and GraphQL give the ability to issue multiple queries in the same request which reduces round-trips for end-user applications. Both also support *time travel* queries, allowing you to issue any query at any point in history. Any place you might have written code or created extra tables to store a historical log of changes becomes unnecessary when using Fluree. It also gives your apps the ability to 'rewind' to any point in time.
 
@@ -234,7 +234,7 @@ The graph selection syntax is a vector / array of selection attributes. They can
 
 Additional options can also allow recursion to specified depths (or infinite recursion).
 
-The syntax isn't just a way to specify the data you'd like returned, but inherently represents **how** the data looks as it is returned. This can often remove complicated data transformation steps needed to deal with returned database data, and even negates the need for a fairly substantial role of client-side database drivers.
+The syntax isn't just a way to specify the data you'd like returned, but inherently represents **how** the data looks as it is returned. This can often remove complicated data transformation steps needed to deal with returned ledger data, and even negates the need for a fairly substantial role of client-side ledger drivers.
 
 
 #### FlureeQL Graph Query with specific attribute selection
@@ -630,7 +630,7 @@ The below transaction creates a multi, integer attribute to hold a person's favo
 }]
 ```
 
-We can then add favorite numbers to some of the people in our database. 
+We can then add favorite numbers to some of the people in our ledger. 
 
 ```all
 [{
@@ -702,7 +702,7 @@ For example, in order to see the average of all of Zach Smith's favorite numbers
 }
 ```
 
-If we want to see a sample of size, 10, from all the favorite numbers in the database, we could issue the query: 
+If we want to see a sample of size, 10, from all the favorite numbers in the ledger, we could issue the query: 
 ```all
 {
   "selectOne": "(sample 10 ?nums)",

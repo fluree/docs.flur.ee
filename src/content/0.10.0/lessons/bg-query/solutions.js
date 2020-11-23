@@ -10,7 +10,7 @@ export default {
     "5": {"select": ["movie/credits", "movie/title"], "from": ["movie/title", "Titanic"]},
     "6": {
             "queryAnswer": {"select": ["*"], "from": "_predicate/unique"},
-            "quizAnswer": ["B is correct! There may be predicates in our databases where",
+            "quizAnswer": ["B is correct! There may be predicates in our ledgers where",
              "we've set _predicate/unique to false. This query returns any",
              "predicates that have the _predicate/unique predicate",
              "- whether true or false"]},

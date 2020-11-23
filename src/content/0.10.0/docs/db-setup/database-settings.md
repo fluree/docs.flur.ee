@@ -1,20 +1,20 @@
-## Database Settings
+## Ledger Settings
 
-Every database contains a built-in `_setting` collection that defines several database configurations, including the consensus algorithm. You can change these accordingly.
+Every ledger contains a built-in `_setting` collection that defines several ledger configurations, including the consensus algorithm. You can change these accordingly.
 
 Key | Description
 ---|---
 `txMax` | Maximum transaction size in bytes. Will default to the network db's value if not present.
 `anonymous` | Reference to auth identity to use for anonymous requests to this db.
 `consensus` | Consensus type for this db. Currently only 'Raft' supported.
-`ledgers` | Reference to auth identities that are allowed to act as ledgers for this database.
+`ledgers` | Reference to auth identities that are allowed to act as ledgers for this ledger.
 `doc` | Optional docstring for the db.
 
 ### Consensus Algorithms
 
 Consensus algorithms decide how new blocks are committed to a chain, as well as who can commit those blocks. Consensus algorithms have to balance the need for speed with the need for security. The choice of consensus algorithm depends on your use case, and whether your network is more or less trusted. 
 
-Currently, Fluree supports the Raft consensus algorithm. The next algorithm we will release is the PBFT (Practical Byzantine Fault Tolerance) algorithm. The consensus algorithm you use is specified in the `_setting/consensus` predicate in each database (look at [database settings](/docs/database-setup/database-settings) for more information).
+Currently, Fluree supports the Raft consensus algorithm. The next algorithm we will release is the PBFT (Practical Byzantine Fault Tolerance) algorithm. The consensus algorithm you use is specified in the `_setting/consensus` predicate in each ledger (look at [ledger settings](/docs/database-setup/database-settings) for more information).
 
 ### Raft
 

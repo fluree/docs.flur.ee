@@ -6,16 +6,16 @@ All of the examples below display SPARQL syntax, regardless of the language sele
 
 ### What is SPARQL?
 
-SPARQL (pronounced "sparkle") is a query-langauge for RDF databases. RDF databases are also known as triple-store databases, and every fact in a triple-store database is stored a triple composed of a subject-predicate-object (SPO). The first three elements of a flake (subject, predicate, object) align exactly to triple-store databases' SPO triples. This lends itself to connection across Fluree and RDF databases. 
+SPARQL (pronounced "sparkle") is a query-langauge for RDF ledgers. RDF ledgers are also known as triple-store ledgers, and every fact in a triple-store ledger is stored a triple composed of a subject-predicate-object (SPO). The first three elements of a flake (subject, predicate, object) align exactly to triple-store ledgers' SPO triples. This lends itself to connection across Fluree and RDF ledgers. 
 
 You can use SPARQL to:
 
-- Query FlureeQL databases across time 
-- Query across Fluree and non-Fluree databases, such as Wikidata and BigData.
+- Query FlureeQL ledgers across time 
+- Query across Fluree and non-Fluree ledgers, such as Wikidata and BigData.
 - Calculate aggregates
 - Create complicated joins
 
-The ability to query across multiple FlureeQL databases is not currently supported, although will be supported in future releases.
+The ability to query across multiple FlureeQL ledgers is not currently supported, although will be supported in future releases.
 
 In additional, SPARQL is strictly a query-language. You cannot use SPARQL to transact data. 
 
@@ -117,7 +117,7 @@ WHERE {
 }
 ```
 
-All the queries with the `?person fd:person/handle "jdoe", "zsmith"` triple will return null results, because the comma `,` is not an `or` statement. Our triple, `?person fd:person/handle "jdoe", "zsmith".` is looking for an subject with a `person/handle` that matches both `jdoe` and `zsmith`. This cannot exist in our current database, because `person/handle` is not a multi-type of predicate. 
+All the queries with the `?person fd:person/handle "jdoe", "zsmith"` triple will return null results, because the comma `,` is not an `or` statement. Our triple, `?person fd:person/handle "jdoe", "zsmith".` is looking for an subject with a `person/handle` that matches both `jdoe` and `zsmith`. This cannot exist in our current ledger, because `person/handle` is not a multi-type of predicate. 
 
 ### OPTIONAL Clauses
 

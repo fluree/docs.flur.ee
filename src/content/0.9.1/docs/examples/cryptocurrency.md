@@ -5,7 +5,7 @@ This example outlines how a user can create a simple cryptocurrency using Fluree
 
 ### Schema
 
-The first step is to create a `crypto` collection with the attributes `crypto/balance`, which tracks the amount of currency each user has, `crypto/user`, which references a database `_user`, and `crypto/walletName`, which is a unique name for the entity. 
+The first step is to create a `crypto` collection with the attributes `crypto/balance`, which tracks the amount of currency each user has, `crypto/user`, which references a ledger `_user`, and `crypto/walletName`, which is a unique name for the entity. 
 
 ```all
 [{
@@ -101,7 +101,7 @@ mutation cryptoSchema ($mycryptoSchemaTx: JSON) {
 
 ### Ensure Balance Non-Negative
 
-Next, we add an `_attribute/spec` that makes sure our `crypto/balance` is never negative. The code for this is `(< [-1 (?v)])`. To see how to properly format database functions, you can visit [Function Syntax](#function-syntax).
+Next, we add an `_attribute/spec` that makes sure our `crypto/balance` is never negative. The code for this is `(< [-1 (?v)])`. To see how to properly format ledger functions, you can visit [Function Syntax](#function-syntax).
 
 Note, this transaction, and many of the subsequent transactions can be combined. We separate out these transactions here for demonstration purposes. 
 
@@ -234,7 +234,7 @@ Next, we create two users with `_user/username` cryptoMan and cryptoWoman, as we
   }]
 ```
 
-#### Creating Database Functions
+#### Creating Ledger Functions
 
 ```flureeql
 [{
@@ -402,7 +402,7 @@ mutation addUsersPerm ($userPermTx: JSON) {
 
 ### Adding Crypto/Balance
 
-Once we create these two users, we can give each user a crypto/balance. Note, if you will want more than 400 `crypto/balance` in your database, you will need to add additional users and additional `crypto/balance` at this point in the example. Once we put additional rules in place, no user will be able create `crypto/balance` from nothing without changing the rules that govern the database. 
+Once we create these two users, we can give each user a crypto/balance. Note, if you will want more than 400 `crypto/balance` in your ledger, you will need to add additional users and additional `crypto/balance` at this point in the example. Once we put additional rules in place, no user will be able create `crypto/balance` from nothing without changing the rules that govern the ledger. 
 
 ```all
 [{
@@ -536,7 +536,7 @@ The `_fn/code` we use for this is fairly long, so we will break it down together
 )
 ```
 
-The database function checks whether you are the root user (`(== [0 (?auth_id)])`). If so, you have no restrictions on which crypto you can add or remove. In your own cryptocurrency, you can choose whether or not to include a "backdoor" for a root user. 
+The ledger function checks whether you are the root user (`(== [0 (?auth_id)])`). If so, you have no restrictions on which crypto you can add or remove. In your own cryptocurrency, you can choose whether or not to include a "backdoor" for a root user. 
 
 If you are not the root user, the function checks whether you are transacting your own crypto or not (`(contains? (get-all (?e) [\"crypto/user\" \"_id\"]) (?user_id))`). 
 
@@ -631,7 +631,7 @@ When she attempts to subtract from her own account, she can do so successfully.
 }]
 ```
 
-Even if she doesn't know her current balance, she can use the database function, `(?pV)` to get the previous value of her `crypto/balance`.
+Even if she doesn't know her current balance, she can use the ledger function, `(?pV)` to get the previous value of her `crypto/balance`.
 
 ```all
 [{
@@ -718,7 +718,7 @@ mutation addCryptoWoman ($addCryptoWomanTx: JSON) {
 }
 ```
 
-#### CryptoWoman Can Withdraw From Her Own Account Using a Database Function
+#### CryptoWoman Can Withdraw From Her Own Account Using a Ledger Function
 
 ```flureeql
 [{

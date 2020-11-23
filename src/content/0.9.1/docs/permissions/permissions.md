@@ -11,7 +11,7 @@ Attribute | Type | Description
 `_tx/altId` | `string` | (optional) Alternative Unique ID for the transaction that the user can supply.
 
 
-For example, I could specify a  `_tx/id` and `_tx/nonce` in my transaction as follows. If your database specifies a defaultAuth (see the section [Authority](#authority)), this additional map is completely optional.
+For example, I could specify a  `_tx/id` and `_tx/nonce` in my transaction as follows. If your ledger specifies a defaultAuth (see the section [Authority](#authority)), this additional map is completely optional.
 
 ```all
 [{
@@ -60,7 +60,7 @@ As you can see in the flakes section of the response below, the `_tx/nonce` that
 
 ### Authority
 
-Every transaction is signed by an `_auth` record. By default, every database includes a default auth record, which is specified with the following entity:
+Every transaction is signed by an `_auth` record. By default, every ledger includes a default auth record, which is specified with the following entity:
 
 ```all
 {
@@ -99,11 +99,11 @@ Additionally, every transaction can specify a `_tx/authority` as part of the `_t
 
 ```
 
-Remember, if your database specifies a defaultAuth, this `_tx` map is optional. 
+Remember, if your ledger specifies a defaultAuth, this `_tx` map is optional. 
 
 ### Fluree Permissions
 
-Fluree allows very granular permissions to control exactly what data users can write and read, down to an entity + attribute level. When a user connects to a database, effectively their database is custom to them (and their requested point in time). Any data they do not have access to doesn't exist in their database. This means you can give direct access to the database to any user, and they can run ad-hoc queries without ever a concern that data might be leaked. This is a very powerful concept that can drastically simplify end-user applications.
+Fluree allows very granular permissions to control exactly what data users can write and read, down to an entity + attribute level. When a user connects to a ledger, effectively their ledger is custom to them (and their requested point in time). Any data they do not have access to doesn't exist in their ledger. This means you can give direct access to the ledger to any user, and they can run ad-hoc queries without ever a concern that data might be leaked. This is a very powerful concept that can drastically simplify end-user applications.
 
 Permissions are controlled by restricting (or allowing) access to either collections or attributes, and both of these dimensions of access must be true to allow access.
 
@@ -131,9 +131,9 @@ These roles are then assigned to different auth entities (via the `_auth/roles` 
     <img style="height: 140px; width: 520px; margin-bottom: 10px;" src="https://s3.amazonaws.com/fluree-docs/091/authEntities.svg" alt="Diagram shows two auth entities, adminstrator and standardUser. administrator is assigned two roles: dbAdmin and chatUser. standardUser is only assigned one role - chatUser.">
 </p>
 
-Auth entities govern access to a database. Auth entities are issued tokens, and that auth entity's permissions are applied to every database action that they perform. 
+Auth entities govern access to a ledger. Auth entities are issued tokens, and that auth entity's permissions are applied to every ledger action that they perform. 
 
-An auth entity does not need to be tied a user. All auth entities can be used independently. However, a common use case is to assign auth entities to database users (via the `_user/auth` attribute). Roles can also be assigned directly to users (via the `_user/roles` attribute), however if a user has an auth entity, permissions are determined according to the auth entity, *not* the roles. 
+An auth entity does not need to be tied a user. All auth entities can be used independently. However, a common use case is to assign auth entities to ledger users (via the `_user/auth` attribute). Roles can also be assigned directly to users (via the `_user/roles` attribute), however if a user has an auth entity, permissions are determined according to the auth entity, *not* the roles. 
 
 For instance, in the below example, the users, janeDoe and bobBoberson, both have roles assigned directly to their user entities. bobBoberson's permissions are limited to the rules assigned to the chatUser role - namely read access for all chats and peopls, as well as read and write access to one's own chats. 
 
@@ -145,7 +145,7 @@ janeDoe has the dbAdmin role assigned to her user. However, she also has been as
 
 #### Query / Read Permissions
 
-Every database that a query is executed against in Fluree can be thought of as a unique, custom database. This concept applies not only for historical (time travel) queries, but also for permissions. Effectively, every piece of data the user does not have access to does not exist in their database. This allows you to query at will.
+Every ledger that a query is executed against in Fluree can be thought of as a unique, custom ledger. This concept applies not only for historical (time travel) queries, but also for permissions. Effectively, every piece of data the user does not have access to does not exist in their ledger. This allows you to query at will.
 
 When a query asks for attributes or entities that don't exist for them, the results are simply empty. An exception is not thrown in this case.
 
@@ -188,7 +188,7 @@ Attribute | Type | Description
 `_auth/secret` | `string` | (optional) The hashed secret. When using this as a `password` `_auth/type`, it is the one-way encrypted password.
 `_auth/hashType` | `tag` | (optional) The type of hashing algorithm used on the `_auth/secret`. Fluree's API supports `scrypt`, `bcrypt` and `pbkdf2-sha256`.
 `_auth/resetToken` | `string` | (optional) If the user is currently trying to reset a password/secret, an indexed reset token can be stored here allowing quick access to the specific auth record that is being reset. Once used, it is recommended to delete this value so it cannot be used again.
-`_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to use if authenticated via this auth record. If not provided, this `_auth` record will not be able to view or change anything in the database. 
+`_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to use if authenticated via this auth record. If not provided, this `_auth` record will not be able to view or change anything in the ledger. 
 `_auth/authority` | `[ref]` | (optional) Authorities for this auth record. References another _auth record. Any auth records referenced in `_auth/authority` can sign a transaction in place of this auth record. To use and authority, you must include it in your transaction. See more in the [Authority](#authority) section. 
 
 ### Defining Rules
@@ -204,9 +204,9 @@ Attribute | Type | Description
 `_rule/collection` | `string` | (required) The collection name this rule applies to. In addition to a collection name, the special glob character `*` can be used to indicate all collections (wildcard).
 `_rule/collectionDefault` | `boolean` | Indicates if this rule is a default rule for the specified collection. Use either this or `_rule/attributes` on a rule, but not both. Default rules are only executed if a more specific rule does not apply, and can be thought of as a catch-all.
 `_rule/attributes` | `[string]`| (optional) A multi-cardinality list of attributes this rule applies to. The special glob character `*` can be used to indicate all attributes (wildcard).
-`_rule/predicate` | `[ref]` | (required) Multi-cardinality reference to `_fn` entity. The actual predicate is stored in the `_fn/code` attribute. The predicate function to be applied. Can be `true`, `false`, or a predicate database function expression. Available predicate functions and variables are listed in [Database Functions](#database-functions). `true` indicates the user always has access to this collection + attribute combination. `false` indicates the user is always denied access. Predicate functions will return a truthy or false value that has the same meanings.
-`_rule/ops` | `[tag]` | (required) Multi-cardinality tag of action(s) this rule applies to. Current tags supported are `query` for query/read access, `transact` for transact/write access, `token` to generate tokens, `logs` to access all database logs (users always have access to their own logs), and `all` for all operations.
-`_rule/errorMessage` | `string` | (optional) If this rule prevents a transaction from executing, this optional error message can be returned to the client instead of the default error message (which is intentionally generic to limit insights into the database configuration).
+`_rule/predicate` | `[ref]` | (required) Multi-cardinality reference to `_fn` entity. The actual predicate is stored in the `_fn/code` attribute. The predicate function to be applied. Can be `true`, `false`, or a predicate ledger function expression. Available predicate functions and variables are listed in [ledger Functions](#ledger-functions). `true` indicates the user always has access to this collection + attribute combination. `false` indicates the user is always denied access. Predicate functions will return a truthy or false value that has the same meanings.
+`_rule/ops` | `[tag]` | (required) Multi-cardinality tag of action(s) this rule applies to. Current tags supported are `query` for query/read access, `transact` for transact/write access, `token` to generate tokens, `logs` to access all ledger logs (users always have access to their own logs), and `all` for all operations.
+`_rule/errorMessage` | `string` | (optional) If this rule prevents a transaction from executing, this optional error message can be returned to the client instead of the default error message (which is intentionally generic to limit insights into the ledger configuration).
 
 
 ### Defining Roles
@@ -219,7 +219,7 @@ Having roles be assigned to an `_auth` record, rather than to a `_user` allows a
 
 The ability to override roles at the auth entity allows a more limited (or possibly expanded) set of roles to the same user depending on how they authenticate. If, for example, a social media website authenticated as a user, it might only have access to read a limited set of data whereas if the user logged in, they may have their full set of access rights.
 
- Note that, by default, all databases have a built-in `["_role/id", "root"]` role with access to everything inside a database.
+ Note that, by default, all ledgers have a built-in `["_role/id", "root"]` role with access to everything inside a ledger.
 
 #### Role attributes
 

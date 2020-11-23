@@ -3,7 +3,7 @@ TOKEN
 
 ## Getting Tokens
 
-Tokens are tied to a specific authorization record stored in the database and govern the permission of the requests. There are several ways to get a token which are subsequently explained.
+Tokens are tied to a specific authorization record stored in the ledger and govern the permission of the requests. There are several ways to get a token which are subsequently explained.
 
 It is worth noting that transactions are signed using public/private key cryptography. The hosted Fluree abstracts this from your application so that a more common username/password authentication scheme can be utilized.
 
@@ -12,16 +12,16 @@ Interacting with the hosted Fluree is done using secure tokens that have the aut
 
 **Interacting with Fluree only from your app server**
 
-Fluree can be run in a manner similar to a traditional database server, 'behind' your application server. If you choose to utilize it in this way, you simply need to generate a token with the permissions you desire (likely full access) and pass it to your application. You provide the token to your application like you would any secret, typically via an environment variable.
+Fluree can be run in a manner similar to a traditional ledger server, 'behind' your application server. If you choose to utilize it in this way, you simply need to generate a token with the permissions you desire (likely full access) and pass it to your application. You provide the token to your application like you would any secret, typically via an environment variable.
 
 To get a permanent admin token, follow these steps:
 
-1. Identify the authorization record (or create one) that you wish the token to utilize. A sample transaction is provided here if you need to create a new one. Note that, by default, all databases have a built-in `["_role/id", "root"]` role with access to everything inside a database.
+1. Identify the authorization record (or create one) that you wish the token to utilize. A sample transaction is provided here if you need to create a new one. Note that, by default, all ledgers have a built-in `["_role/id", "root"]` role with access to everything inside a ledger.
 2. Generate a token tied to that authorization record either via the Fluree admin dashboard or via an API call
 
 If you need to create an authorization record, see the example provided.
 
-Remember, authorization is governed by rules (stored in the `_rule` collection). Rule functions (either true/false or more complicated [database functions](#database-functions)) are stored in the `_fn` collection, and listed in the multi-cardinality predicate, `_rule/fns` as a `ref`. Rules are grouped into roles (stored in the `_role` collection), and roles are assigned to auth entities (`_auth` collection).
+Remember, authorization is governed by rules (stored in the `_rule` collection). Rule functions (either true/false or more complicated [ledger functions](#ledger-functions)) are stored in the `_fn` collection, and listed in the multi-cardinality predicate, `_rule/fns` as a `ref`. Rules are grouped into roles (stored in the `_role` collection), and roles are assigned to auth entities (`_auth` collection).
 
 ## Revoking Tokens
 

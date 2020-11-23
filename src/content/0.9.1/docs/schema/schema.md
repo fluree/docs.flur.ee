@@ -1,18 +1,18 @@
 ### Fluree Schemas
 
-Much like a relational database, before storing your records in a Fluree database, you must first register a schema which consists of collections (similar to tables) and permissible attributes (similar to columns).
+Much like a relational ledger, before storing your records in a Fluree ledger, you must first register a schema which consists of collections (similar to tables) and permissible attributes (similar to columns).
 
-Fluree validates all Flakes being written against the database's schema, ensuring each Flake event type and attribute are registered and meet all of the defined restrictions (i.e. data type, multi-cardinality, uniqueness, required).
+Fluree validates all Flakes being written against the ledger's schema, ensuring each Flake event type and attribute are registered and meet all of the defined restrictions (i.e. data type, multi-cardinality, uniqueness, required).
 
-Defining and updating schemas is done through regular database transactions (in JSON) by writing to the special pre-defined system collections.
+Defining and updating schemas is done through regular ledger transactions (in JSON) by writing to the special pre-defined system collections.
 
-Fluree attributes can be of many different types documented in the types table (i.e. string, boolean). Being a graph database, the special type of `ref` (reference) is core to traversing through data. Any attribute of type `ref` refers (links/joins) to another entity. These relationships can be navigated in both directions. For example, listing all invoices from a customer record is trivial if the invoice is of type `ref`, and once established an invoice automatically links back to the customer.
+Fluree attributes can be of many different types documented in the types table (i.e. string, boolean). Being a graph ledger, the special type of `ref` (reference) is core to traversing through data. Any attribute of type `ref` refers (links/joins) to another entity. These relationships can be navigated in both directions. For example, listing all invoices from a customer record is trivial if the invoice is of type `ref`, and once established an invoice automatically links back to the customer.
 
 Beyond validating types, Fluree allows custom validation that can further restrict attribute values. This level of validation is done by specifying an optional [`spec` for a collection or attribute](#collection-and-attribute-specs).
 
 ### Collections
 
-Collections are like relational database tables. We call them collections because they hold an event-collection of changes pertaining to a specific type of entity. For each type of entity/object you have, there should be a collection defined to hold it (i.e. customers, chat messages, addresses).
+Collections are like relational ledger tables. We call them collections because they hold an event-collection of changes pertaining to a specific type of entity. For each type of entity/object you have, there should be a collection defined to hold it (i.e. customers, chat messages, addresses).
 
 To create a new collection, submit a transaction against the system collection named `_collection`. A sample collection transaction is provided here to create a new collection.
 
@@ -125,7 +125,7 @@ Attribute | Type | Description
 `_attribute/txSpec` | [`ref`] | (optional)  A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. This attribute allows you to set specifications for all of the flakes pertaining to a certain attribute. To learn more, visit the [Attribute Tx Specs](#attribute-tx-specs) section. 
 `_attribute/txSpecDoc` | `string` | (optional) Optional docstring to describe the txSpecs. Is thrown when any txSpec fails. 
 `_attribute/restrictCollection` | `string` | (optional) Only applicable to attributes of `ref` (reference) types. It will restrict references to only be allowed from the specified collection.
-`_attribute/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and database functions won't be permitted on this value.
+`_attribute/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and ledger functions won't be permitted on this value.
 
 
 ### Attribute Types
@@ -161,7 +161,7 @@ GraphQL requires additional information to auto-generate a schema that shows rel
 
 Both _attribute and _collection specs allow you to specify the contents of an attribute or a collection with a high level of control. Both attribute and collection specs are multi-cardinality references to `_fn`, and the `_fn/code` attribute may simply be true or false, or it can be statements, which resolves to true or false. Specs are evaluated for every entity that is updated within a collection or attribute. 
 
-Attribute and collection specs are built using [database functions](#database-functions). 
+Attribute and collection specs are built using [ledger functions](#ledger-functions). 
 
 Spec | Description
 ---|---
@@ -170,9 +170,9 @@ Spec | Description
 true | You will be able to add any values to this collection or attribute. Given you have access to that attribute or collection.
 false | You will *not* be able to add any values to this collection or attribute.
 
-Specs using just true/false or basic arithmetical database functions, will determine whether users have access to that attribute or collection may edit or add values for any given attribute or collection. While this is possible, Fluree allows very [granular permissions](#fluree-permissions) through a system of auth records, roles, and rules. 
+Specs using just true/false or basic arithmetical ledger functions, will determine whether users have access to that attribute or collection may edit or add values for any given attribute or collection. While this is possible, Fluree allows very [granular permissions](#fluree-permissions) through a system of auth records, roles, and rules. 
 
-Specs are best suited for controlling the actual values of attributes through either specs that govern a specific attribute, or through specs that govern an entire collection. In order to make this possible, `_attribute/spec` and `_collection/spec` both have access to special functions which can give you certain information about the entity you are editing or the database in general. The functions below, as well as all general purpose database functions, are also listed in [Database Functions](#database-functions). 
+Specs are best suited for controlling the actual values of attributes through either specs that govern a specific attribute, or through specs that govern an entire collection. In order to make this possible, `_attribute/spec` and `_collection/spec` both have access to special functions which can give you certain information about the entity you are editing or the ledger in general. The functions below, as well as all general purpose ledger functions, are also listed in [ledger Functions](#ledger-functions). 
 
 Function| Description | Access
 ---|---|---
@@ -182,13 +182,13 @@ Function| Description | Access
 (`?e`) | All of the attributes of the entity you are currently transacting. | Both
 (`?auth_id`) | The `_id` of the current _auth, if any. | Both
 (`?user_id`) | The `_id` of the current user, if any. | Both
-(`db`) | Returns a database object with the following keys: dbid, block, and permissions. | Both
+(`db`) | Returns a ledger object with the following keys: dbid, block, and permissions. | Both
 
-There are many ways to use database functions to control the value of an attribute or attributes in a collection. Below is a small series of examples:
+There are many ways to use ledger functions to control the value of an attribute or attributes in a collection. Below is a small series of examples:
 
 ### Ex: Check If an Email Is Valid
 
-Fluree has a built-in database function, `valid-email?` that checks whether an email is valid (using the following pattern, "`[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`". You can also create your own email pattern using the function, `re-find`). 
+Fluree has a built-in ledger function, `valid-email?` that checks whether an email is valid (using the following pattern, "`[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`". You can also create your own email pattern using the function, `re-find`). 
 
 Suppose we want to add a spec to `person/email`, which checks whether the syntax of an email is valid. The `specDoc` attribute is the error message that is thrown when a value does not pass the spec, so we want to make sure that it is descriptive. 
 
@@ -474,7 +474,7 @@ For example, the below `_attribute/txSpec` ensures that the `crypto/balance` bei
 }]
 ```
 
-The following special database functions are available in `txSpec`, and give the user information about the group of flakes being edits. The functions below, as well as all general purpose database functions, are also listed in [Database Functions](#database-functions). 
+The following special ledger functions are available in `txSpec`, and give the user information about the group of flakes being edits. The functions below, as well as all general purpose ledger functions, are also listed in [Ledger Functions](#ledger-functions). 
 
 Function| Description 
 ---|---
@@ -482,4 +482,4 @@ Function| Description
 (`?auth_id`) | The `_id` of the current _auth, if any. 
 (`flakes`) | The transaction flakes that edit the specified attribute.  
 (`?user_id`) | The `_id` of the current user, if any. 
-(`db`) | Returns a database object with the following keys: dbid, block, and permissions. 
+(`db`) | Returns a ledger object with the following keys: dbid, block, and permissions. 

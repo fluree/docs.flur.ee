@@ -1,26 +1,26 @@
 ## System Collections
 
-When a new database is created, the first transaction, issued automatically by Fluree, initializes system collections and predicates. 
+When a new ledger is created, the first transaction, issued automatically by Fluree, initializes system collections and predicates. 
 
-These system collections govern various database behaviors, such as schema, user rules, smart functions. Each of these system collections and their predicates is discussed in its respective section. The below list compiles all of the built-in collections in one place, and you can follow the link to any particular section for more information.
+These system collections govern various ledger behaviors, such as schema, user rules, smart functions. Each of these system collections and their predicates is discussed in its respective section. The below list compiles all of the built-in collections in one place, and you can follow the link to any particular section for more information.
 
 ### All System Collections
 
-All databases are created with the following collections. 
+All ledgers are created with the following collections. 
 
 Collection | Description
 --- | ---
 [_collection](#_collection) | Schema collections list
 [_predicate](#_predicate) | Schema predicate definition
 [_tag](#_tag) | Tags
-[_fn](#_fn) | Database functions
-[_user](#_user) | Database users
+[_fn](#_fn) | ledger functions
+[_user](#_user) | ledger users
 [_auth](#_auth) | Auth records. Every db interaction is performed by an auth record which governs permissions.
 [_role](#_role) | Roles group multiple permission rules to an assignable category, like 'employee', 'customer'.
 [_rule](#_rule) | Permission rules
 [_block](#_block) | Block metadata
-[_tx](#_block) | Database transactions
-[_setting](#setting) | Database settings
+[_tx](#_block) | ledger transactions
+[_setting](#setting) | ledger settings
 
 ### _collection
 
@@ -52,7 +52,7 @@ Predicate | Type | Description
 `_predicate/txSpecDoc` | `string` | (optional) Optional docstring to describe the txSpecs. Is thrown when any txSpec fails. 
 `_predicate/restrictCollection` | `string` | (optional) Only applicable to predicates of `ref` (reference) types. It will restrict references to only be allowed from the specified collection.
 `_predicate/restrictTag` | `boolean` | (optional) Only applicable to predicates of type `tag`. If true, a tag, which corresponds to this predicate object must exist before adding predicate-object pair.
-`_predicate/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and database functions won't be permitted on this value.
+`_predicate/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and ledger functions won't be permitted on this value.
 
 ### _predicate Types
 
@@ -91,7 +91,7 @@ Predicate | Type | Description
 -- | -- | -- 
 `name` | `string` | Function name
 `params` | `(multi) string` | List of parameters this function supports.
-`code` | `string` | Actual database code
+`code` | `string` | Actual ledger code
 `doc` | `string` | A docstring for this function.
 `language` | `string` |  Programming language used (not yet implemented, currently only Clojure supported)
 `spec` | `JSON` | (not yet implemented) Optional spec for parameters. Spec should be structured as a map, parameter names are keys and the respective spec is the value.
@@ -117,10 +117,10 @@ Predicate | Type | Description
 `_auth/doc` | `string` | (optional) A docstring for this auth record.
 `_auth/key` | `string` |  (optional) A unique lookup key for this auth record.
 `_auth/type` | `tag` | (optional) The type of authorization this is. Current type tags supported are: `password`. 
-`_auth/secret` | `string` | (optional) The hashed secret. When using this as a `password` `_auth/type`, it is the one-way encrypted password. This predicate is not used anywhere in the database, but you can create an application using logins and passwords with the help of this predicate. 
+`_auth/secret` | `string` | (optional) The hashed secret. When using this as a `password` `_auth/type`, it is the one-way encrypted password. This predicate is not used anywhere in the ledger, but you can create an application using logins and passwords with the help of this predicate. 
 `_auth/hashType` | `tag` | (optional) The type of hashing algorithm used on the `_auth/secret`. 
-`_auth/resetToken` | `string` | (optional) If the user is currently trying to reset a password/secret, an indexed reset token can be stored here allowing quick access to the specific auth record that is being reset. This predicate is not used anywhere in the database, but you can create an application using logins and passwords with the help of this predicate. 
-`_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to use if authenticated via this auth record. If not provided, this `_auth` record will not be able to view or change anything in the database. 
+`_auth/resetToken` | `string` | (optional) If the user is currently trying to reset a password/secret, an indexed reset token can be stored here allowing quick access to the specific auth record that is being reset. This predicate is not used anywhere in the ledger, but you can create an application using logins and passwords with the help of this predicate. 
+`_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to use if authenticated via this auth record. If not provided, this `_auth` record will not be able to view or change anything in the ledger. 
 `_auth/authority` | `[ref]` | (optional) Authorities for this auth record. References another _auth record. Any auth records referenced in `_auth/authority` can sign a transaction in place of this auth record. To use an authority, you must sign your transaction using the authority's auth record. See more about signing transactions and authorities in the [Signed Transactions](/docs/identity/signatures#signed-transactions) section. 
 `_auth/fuel` | `long` | Fuel this auth record has. [Fuel](/docs/infrastructure/db-infrastructure#fuel) is used to meter usage in the hosted version of Fluree, but an application can use this predicate to meter fuel usage in the downloadable version as well. 
 
@@ -145,9 +145,9 @@ Predicate | Type | Description
 `_rule/collection` | `string` | (required) The collection name this rule applies to. In addition to a collection name, the special glob character `*` can be used to indicate all collections (wildcard).
 `_rule/collectionDefault` | `boolean` | Indicates if this rule is a default rule for the specified collection. Use either this or `_rule/predicates` on a rule, but not both. Default rules are only executed if a more specific rule does not apply, and can be thought of as a catch-all.
 `_rule/predicates` | `[string]`| (optional) A multi-cardinality list of predicates this rule applies to. The special glob character `*` can be used to indicate all predicates (wildcard).
-`_rule/fns` | `[ref]` | (required) Multi-cardinality reference to `_fn` subject. The actual function is stored in the `_fn/code` predicate. `_fn/code` can be `true`, `false`, or a database function expression. Built-in functions and variables are listed in [Database Functions](#database-functions). `true` indicates the user always has access to this collection + predicate combination. `false` indicates the user is always denied access. Functions will return a truthy or false value that has the same meanings.
+`_rule/fns` | `[ref]` | (required) Multi-cardinality reference to `_fn` subject. The actual function is stored in the `_fn/code` predicate. `_fn/code` can be `true`, `false`, or a ledger function expression. Built-in functions and variables are listed in [ledger Functions](#ledger-functions). `true` indicates the user always has access to this collection + predicate combination. `false` indicates the user is always denied access. Functions will return a truthy or false value that has the same meanings.
 `_rule/ops` | `[tag]` | (required) Multi-cardinality tag of action(s) this rule applies to. Current tags supported are `query` for query/read access, `transact` for transact/write access, and `all` for all operations.
-`_rule/errorMessage` | `string` | (optional) If this rule prevents a transaction from executing, this optional error message can be returned to the client instead of the default error message (which is intentionally generic to limit insights into the database configuration).
+`_rule/errorMessage` | `string` | (optional) If this rule prevents a transaction from executing, this optional error message can be returned to the client instead of the default error message (which is intentionally generic to limit insights into the ledger configuration).
 
 ### _block
 
@@ -185,5 +185,5 @@ Key | Description
 `txMax` | Maximum transaction size in bytes. Will default to the network db's value if not present.
 `anonymous` | Reference to auth identity to use for anonymous requests to this db.
 `consensus` | Consensus type for this db. Currently only 'Raft' supported.
-`ledgers` | Reference to auth identities that are allowed to act as ledgers for this database.
+`ledgers` | Reference to auth identities that are allowed to act as ledgers for this ledger.
 `doc` | Optional docstring for the db.

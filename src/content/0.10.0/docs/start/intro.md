@@ -1,7 +1,7 @@
 ## Intro to Fluree Docs
 
 ### What is Fluree?
-Fluree is an immutable, time-ordered blockchain database. 
+Fluree is an immutable, time-ordered blockchain ledger. 
 
 Each block is an atomic update that is cryptographically signed to prevent tampering and linked to the previous block in the chain.
 
@@ -10,9 +10,9 @@ Each block is an atomic update that is cryptographically signed to prevent tampe
 
 You can run Fluree privately or as part of a federated network.  
 
-A private Fluree is a database run on a single server, either by you or hosted for you by Fluree. A private Fluree gives you access to features such as time-travel queries and rich permission logic.
+A private Fluree is a ledger run on a single server, either by you or hosted for you by Fluree. A private Fluree gives you access to features such as time-travel queries and rich permission logic.
 
-A federated Fluree is a group of databases shared by network. In addition to all the features of a private instance of Fluree, having a federated group of databases provides additional data integrity. With a federated blockchain, the network uses an agreed-upon consensus algorithm to reach a shared state.  
+A federated Fluree is a group of ledgers shared by network. In addition to all the features of a private instance of Fluree, having a federated group of ledgers provides additional data integrity. With a federated blockchain, the network uses an agreed-upon consensus algorithm to reach a shared state.  
 
 You can find more in-depth information about both invididual [datasebase infrastructure](/docs/infrastructure/db-infrastructure) and [network infrastructure](/docs/infrastructure/network-infrastructure) in later sections. 
 

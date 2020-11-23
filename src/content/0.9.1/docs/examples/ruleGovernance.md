@@ -1,7 +1,7 @@
 
 ### Rule Governance
 
-This example outlines how users can vote on proposed changes to the database. At the end of the example, user will be able to propose changes, vote on those changes, and create various voting threshholds (minimum votes and minimum win percentage) for different attributes. There are various ways to enable a rule governance scheme, but this is one simple way.
+This example outlines how users can vote on proposed changes to the ledger. At the end of the example, user will be able to propose changes, vote on those changes, and create various voting threshholds (minimum votes and minimum win percentage) for different attributes. There are various ways to enable a rule governance scheme, but this is one simple way.
 
 In our hypothetical example, let's say we've had a network that has been humming along quite smoothly, except that a few rogue users have adopted offensive usernames. Rather than relying on central authority to interpret and enforce community standards, we can create a voting mechanism for whenever a user wants to change their username. In practice, you might want to add rules that prevent users from using certain words in their usernames in the first-place, or initiate a voting process only after a complaint. As previously stated, this is a example is a backbone that can be built upon for real-life applications.
 
@@ -276,7 +276,7 @@ Now that we've done our part to prevent voter fraud, we can propose a change. `[
 
 ### Building Our Smart Functions
 
-Currently, there is nothing stopping A-Ha from issuing a transaction to change their `_user/username` from `a-ha` to `Eureka!`. In order to prevent users from editing their usernames without a vote, we need to create a set of smart functions ([database functions](#database-functions-1)) that we can add to the `_user/username` attribute specification. 
+Currently, there is nothing stopping A-Ha from issuing a transaction to change their `_user/username` from `a-ha` to `Eureka!`. In order to prevent users from editing their usernames without a vote, we need to create a set of smart functions ([ledger functions](#ledger-functions-1)) that we can add to the `_user/username` attribute specification. 
 
 Given an entity id, we can see all the votes related to that entity with a single query. 
 
@@ -288,12 +288,12 @@ Given an entity id, we can see all the votes related to that entity with a singl
 
 ```
 
-Note: Currently, two-tuple references to entities, i.e. `["_user/username", "a-ha"]`, are not supported in where clauses. In the case of our database, `["_user/username", "a-ha"]` resolves to the id `21474837487`. You can find out this information for your own database by querying, `{"select": ["_id"],"from": ["_user/username", "a-ha"]}`.
+Note: Currently, two-tuple references to entities, i.e. `["_user/username", "a-ha"]`, are not supported in where clauses. In the case of our ledger, `["_user/username", "a-ha"]` resolves to the id `21474837487`. You can find out this information for your own ledger by querying, `{"select": ["_id"],"from": ["_user/username", "a-ha"]}`.
 
 The above query returns *every* change that might have been proposed for `21474837487`, including changes to other attributes, such as A-Ha's `_user/auth` or their `_user/roles`. It also might return other changes proposed for their `_user/username` other than `Eureka!`.
 
 
-We want to make sure that we are only looking at votes for a given entity that also pertain to the proper attribute and the relevant value. In order to do this, we need to query the following, where `50` is the entity id for the `_user/username` attribute (you can see this in your database with the query: `{"select": ["_id"],"from": ["_attribute/name", "_user/username"]})`.
+We want to make sure that we are only looking at votes for a given entity that also pertain to the proper attribute and the relevant value. In order to do this, we need to query the following, where `50` is the entity id for the `_user/username` attribute (you can see this in your ledger with the query: `{"select": ["_id"],"from": ["_attribute/name", "_user/username"]})`.
 
 ```all
 {
@@ -330,7 +330,7 @@ Sample result:
 
 The first two functions we create build and issue the above query. We will then use these functions to count votes, and eventually decide whether or not changes should be approved. If, at this point, you cannot understand how these functions fit into the larger applications, do not worry, we will see the entire voting mechanism working in short order. At this point, the most important part is to try and understand the syntax of the individual smart functions.
 
-The function, `?voteWhere` constructs the where clause using the `str` function, which concatenates all strings in a given array (all available database or smart functions are detailed in [database functions](#database-functions-1)). 
+The function, `?voteWhere` constructs the where clause using the `str` function, which concatenates all strings in a given array (all available ledger or smart functions are detailed in [ledger functions](#ledger-functions-1)). 
 
 When we are editing a given entity's attribute in a transaction, we have access to the value we are attempting to input `(?v)`, the id of the entity we are editing `(?eid)`, and the id of the attribute we are editing `(?aid)`, which is all of the information we need in order to compose our where clause. 
 

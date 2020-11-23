@@ -1,12 +1,12 @@
 ## Collections
 
-A collection is analogous to a relational database table. Every time you want a **new type of item** in your database, you would create a new collection. For example, collections in your database might be person, company, and city.
+A collection is analogous to a relational ledger table. Every time you want a **new type of item** in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city.
 
-Collections are recorded in the database in the same way as any other type of data. The syntax for updating the `_collection` collection or `_collection` predicates is the same as updating any other type of information. Furthermore, if you wanted to add additional predicates to the `_collection` collection, you can. 
+Collections are recorded in the ledger in the same way as any other type of data. The syntax for updating the `_collection` collection or `_collection` predicates is the same as updating any other type of information. Furthermore, if you wanted to add additional predicates to the `_collection` collection, you can. 
 
 ### _collection Predicates
 
-Below are the built-in predicates for the `_collection` collection. As mentioned above, you can add additional predicates if you wish. You are also able to delete predicates, although this is strongly discouraged and may break parts of your database.  
+Below are the built-in predicates for the `_collection` collection. As mentioned above, you can add additional predicates if you wish. You are also able to delete predicates, although this is strongly discouraged and may break parts of your ledger.  
 
 Predicate | Type | Description
 ---|---|---
@@ -18,31 +18,31 @@ Predicate | Type | Description
 
 ### Creating Collections
 
-Creating collections is done in the same way as creating any other type of subject in the database. In the below example, we create four new collections: person, chat, comment, and artist. We strongly discourage adding smart functions to your `_collection/spec` when you initially create a collection. If you would like a `_collection/spec`, you should follow [Fluree Best Practices](/docs/infrastructure/application-best-practices) and read the [Smart Functions](/docs/smart-functions/smart-functions) section in full to understand how to incorporate smart functions into your schema. 
+Creating collections is done in the same way as creating any other type of subject in the ledger. In the below example, we create four new collections: person, chat, comment, and artist. We strongly discourage adding smart functions to your `_collection/spec` when you initially create a collection. If you would like a `_collection/spec`, you should follow [Fluree Best Practices](/docs/infrastructure/application-best-practices) and read the [Smart Functions](/docs/smart-functions/smart-functions) section in full to understand how to incorporate smart functions into your schema. 
 
 ```flureeql
 [{
  "_id": "_collection",
  "name": "person",
- "doc": "A collection to hold all the people in our database",
+ "doc": "A collection to hold all the people in our ledger",
  "version": 1 
 },
 {
  "_id": "_collection",
  "name": "chat",
-  "doc": "A collection to hold all the chats in our database",
+  "doc": "A collection to hold all the chats in our ledger",
  "version": 1 
 },
 {
  "_id": "_collection",
  "name": "comment",
- "doc": "A collection to hold all the comments in our database",
+ "doc": "A collection to hold all the comments in our ledger",
  "version": 1 
 },
 {
  "_id": "_collection",
  "name": "artist",
-  "doc": "A collection to hold all the artists in our database",
+  "doc": "A collection to hold all the artists in our ledger",
   "version": 1 
 }]
 ```
@@ -54,25 +54,25 @@ Creating collections is done in the same way as creating any other type of subje
    -d '[{
  "_id": "_collection",
  "name": "person",
- "doc": "A collection to hold all the people in our database",
+ "doc": "A collection to hold all the people in our ledger",
  "version": 1 
 },
 {
  "_id": "_collection",
  "name": "chat",
-  "doc": "A collection to hold all the chats in our database",
+  "doc": "A collection to hold all the chats in our ledger",
  "version": 1 
 },
 {
  "_id": "_collection",
  "name": "comment",
- "doc": "A collection to hold all the comments in our database",
+ "doc": "A collection to hold all the comments in our ledger",
  "version": 1 
 },
 {
  "_id": "_collection",
  "name": "artist",
-  "doc": "A collection to hold all the artists in our database",
+  "doc": "A collection to hold all the artists in our ledger",
   "version": 1 
 }]' \
    [HOST]/api/db/transact
@@ -84,7 +84,7 @@ mutation addCollections ($myCollectionTx: JSON) {
 }
 
 {
-  "myCollectionTx": "[{\"_id\":\"_collection\",\"name\":\"person\",\"doc\":\"A collection to hold all the people in our database\",\"version\":1},{\"_id\":\"_collection\",\"name\":\"chat\",\"doc\":\"A collection to hold all the chats in our database\",\"version\":1},{\"_id\":\"_collection\",\"name\":\"comment\",\"doc\":\"A collection to hold all the comments in our database\",\"version\":1},{\"_id\":\"_collection\",\"name\":\"artist\",\"doc\":\"A collection to hold all the artists in our database\",\"version\":1}]"
+  "myCollectionTx": "[{\"_id\":\"_collection\",\"name\":\"person\",\"doc\":\"A collection to hold all the people in our ledger\",\"version\":1},{\"_id\":\"_collection\",\"name\":\"chat\",\"doc\":\"A collection to hold all the chats in our ledger\",\"version\":1},{\"_id\":\"_collection\",\"name\":\"comment\",\"doc\":\"A collection to hold all the comments in our ledger\",\"version\":1},{\"_id\":\"_collection\",\"name\":\"artist\",\"doc\":\"A collection to hold all the artists in our ledger\",\"version\":1}]"
 }
 ```
 
@@ -93,7 +93,7 @@ Transactions not support in SPARQL
 ```
 
 ### Adding a Predicate to `_collection`
-`_collection` is a built-in database collection with built-in predicates. This does not mean, for instance, that you cannot add predicates. For example, you may want to add a `_collection/longDescription` predicate, where you store a longer version of `_collection/doc`. 
+`_collection` is a built-in ledger collection with built-in predicates. This does not mean, for instance, that you cannot add predicates. For example, you may want to add a `_collection/longDescription` predicate, where you store a longer version of `_collection/doc`. 
 
 You can do this by adding a new predicate:
 

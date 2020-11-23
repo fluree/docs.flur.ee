@@ -28,17 +28,17 @@ You can also select whether there is an open API or not (if not, you'll be asked
 
 
 ### Account Page
-The account page lists all the databases in your account. You have the option to add and delete databases from this page. 
+The account page lists all the ledgers in your account. You have the option to add and delete ledgers from this page. 
 
 In the hosted version and older downloadable versions, you will also be able to see all the users in your account, as well as to add, and remove users. 
 
-When you create a new database or new user, you may have to refresh the UI in order to have those database or users appear in the sidebar. 
+When you create a new ledger or new user, you may have to refresh the UI in order to have those ledger or users appear in the sidebar. 
 
 ### Sidebar
-In the sidebar, you can select the database you want to use. Use the sidebar to navigate to different pages in user interface. 
+In the sidebar, you can select the ledger you want to use. Use the sidebar to navigate to different pages in user interface. 
 
 <p class="text-center">
-    <img style="height: 190px; width: 170px" src="https://s3.amazonaws.com/fluree-docs/sidebar2.png" alt="Sidebar with links to Account Info, default (a database name), root (a user name), FlureeQL, GraphQL, Schema, Stats, Permissions, and Docs.">
+    <img style="height: 190px; width: 170px" src="https://s3.amazonaws.com/fluree-docs/sidebar2.png" alt="Sidebar with links to Account Info, default (a ledger name), root (a user name), FlureeQL, GraphQL, Schema, Stats, Permissions, and Docs.">
 </p>
 
 ### FlureeQL
@@ -76,7 +76,7 @@ SPARQL is strictly a query language, so you can only issue queries. On the SPARQ
 ### Schema
 In earlier versions, the Schema page is broken into two parts: 'Explore' and 'Export'. In later versions, these two pages are combined. 
 
-The Schema page shows you all the non-system collections and predicates in your database. There is also a section called, "Export Transaction." If you want to export your schema from one database to another, you can issue the transaction in "Export Schema." This transaction includes all collections, predicates, and functions. 
+The Schema page shows you all the non-system collections and predicates in your ledger. There is also a section called, "Export Transaction." If you want to export your schema from one ledger to another, you can issue the transaction in "Export Schema." This transaction includes all collections, predicates, and functions. 
 
 The Schema Explorer (accessible by either the 'Explore Schema' page or the 'Launch Schema Explorer' button), shows you the GraphQL Voyager tool. This tool displays all the collections and predicates in your schema. Note that if you do not have a valid schema, this will not display. In addition, this outside GraphQL Explorer tool requires all predicates of type, 'ref' to be restricted to a specific collection. This is not required for Fluree in general, but it is required if you want to use the Voyager tool. 
 
@@ -86,10 +86,10 @@ The Schema Explorer (accessible by either the 'Explore Schema' page or the 'Laun
 
 ### Permissions
 
-The Permissions page allows you to view, add, edit, and delete all the users, auth records, roles, and rules in a given database. After you make changes to a given form, the changes will appear in the transaction section below. You can also edit the transaction directly. 
+The Permissions page allows you to view, add, edit, and delete all the users, auth records, roles, and rules in a given ledger. After you make changes to a given form, the changes will appear in the transaction section below. You can also edit the transaction directly. 
 
 <p class="text-center">
-    <img style="height: 300px; width: 850px" src="https://s3.amazonaws.com/fluree-docs/permissions.png" alt="Top of the permission page, which shows you the number of users, auth records, roles, and rules in your database.">
+    <img style="height: 300px; width: 850px" src="https://s3.amazonaws.com/fluree-docs/permissions.png" alt="Top of the permission page, which shows you the number of users, auth records, roles, and rules in your ledger.">
 </p>
 
 ### Docs

@@ -1,6 +1,6 @@
 ## Public and Private Keys
 
-In Fluree, identity is established through 256 bit public and private key pairs. Auth ids can be derived from those public keys. When a transaction is issued and signed, it is not acceptable unless the transaction is signed by a private key that corresponds to an auth id already in the database.
+In Fluree, identity is established through 256 bit public and private key pairs. Auth ids can be derived from those public keys. When a transaction is issued and signed, it is not acceptable unless the transaction is signed by a private key that corresponds to an auth id already in the ledger.
 
 Fluree uses the Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the [`secp256k1` curve](http://www.secg.org/sec2-v2.pdf), with [Base58Check encoding](https://en.bitcoin.it/wiki/Base58Check_encoding#Background).
 
@@ -58,10 +58,10 @@ For the `checksum`:
 
 To get the account id, concatenate the `pub-prefixed` with the `checksum`, and encode with `Base58Check` encoding.
 
-An auth record with this id needs to be in the database in order for a transaction signed with the corresponding private key to be valid.
+An auth record with this id needs to be in the ledger in order for a transaction signed with the corresponding private key to be valid.
 
 ### Default Private Key
 
-Every node of Fluree can either specify a private key or private key file location (as [configured at start-up](/docs/getting-started/installation#config-option)). If neither is specified, a `default-private-key.txt` file will be created when an instance of Fluree starts up for the first time, and an assocatied auth record that corresponds to the private key will be added to the master database with root access.
+Every node of Fluree can either specify a private key or private key file location (as [configured at start-up](/docs/getting-started/installation#config-option)). If neither is specified, a `default-private-key.txt` file will be created when an instance of Fluree starts up for the first time, and an assocatied auth record that corresponds to the private key will be added to the master ledger with root access.
 
 If `fdb-open-api`, anyone can issue a query without signing it, and unsigned transactions will be signed with the default private key.

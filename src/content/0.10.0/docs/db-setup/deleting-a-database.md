@@ -1,3 +1,3 @@
-## Deleting a Database
+## Deleting a Ledger
 
-As of version 0.10.0 (formerly 0.9.5), we no longer support deleting databases. We will begin supporting archiving databases, which sets the database to `inactive`. In the downloadable version, you may delete database by manually deleting them from the file systems where they are stored. 
+As of version 0.10.0 (formerly 0.9.5), we no longer support deleting ledgers. We will begin supporting archiving ledgers, which sets the ledger to `inactive`. In the downloadable version, you may delete ledger by manually deleting them from the file systems where they are stored. 

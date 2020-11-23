@@ -1,4 +1,4 @@
-### Database Functions
+### Ledger Functions
 
 The `_fn` collection is where the code that governs `_rule/predicate`, `_attribute/spec`, `_attribute/txSpec`, and `_collection/spec` is used. In addition, any [custom functions](#custom-functions) created can be used in transactions.
 
@@ -13,15 +13,15 @@ Attribute | Type | Description
 `_fn/spec` | `json` | (optional, not yet implemented) An optional spec for parameters. Spec should be structured as a map, parameter names are keys and the respective spec is the value.
 `_fn/language` | `tag` | (optional, not yet implemented) Programming language used.
 
-Note, that every database has two built-in functions, `["_fn$name", "true"]` and `["_fn$name", "false"]`, which either allow or block access, respectively, to a given collection or attribute.
+Note, that every ledger has two built-in functions, `["_fn$name", "true"]` and `["_fn$name", "false"]`, which either allow or block access, respectively, to a given collection or attribute.
 
 ### Function Syntax
 
-Database functions allow you to update an attribute's value based on the existing value. This allows features such as an atomic counter and timestamps. Database functions are stored in `_fn/code` and referenced by `_rule/predicate`, `_attribute/spec`, `_attribute/txSpec`, or `_collection/spec`. Database functions can also be used directly in transactions by prefacing the transaction with a `#`.
+Ledger functions allow you to update an attribute's value based on the existing value. This allows features such as an atomic counter and timestamps. Ledger functions are stored in `_fn/code` and referenced by `_rule/predicate`, `_attribute/spec`, `_attribute/txSpec`, or `_collection/spec`. Ledger functions can also be used directly in transactions by prefacing the transaction with a `#`.
 
-Using database functions in:
+Using ledger functions in:
 
-* Transactions - Pass database functions into transactions with a #, for example, `	#(inc)`. Resolves to any type of value. 
+* Transactions - Pass ledger functions into transactions with a #, for example, `	#(inc)`. Resolves to any type of value. 
 * `_attribute/spec` - A multi-cardinality ref attribute. Control the values that can be held in an attribute. Resolves to true or false. 
 * `_attribute/txSpec` - A multi-cardinality ref attribute. Controls all the flakes for a given attribute in a single transaction. Resolves to true or false. 
 * `_collection/spec` - A multi-cardinality ref attribute. Control the values of the attributes in a specific collection. Resolves to true or false. 
@@ -56,11 +56,11 @@ Function | Arguments | Example | Description | Cost (in fuel)
 `get-all` | `entity` `[path]` | `(contains? (get-all ?e [\"chat/person\" \"person/user\"]) ?user)` | Gets all of a certain attribute (or attribute-path from an entity. | 9 + length of path
 `valid-email?` | `x` | `(valid-email? ?v)` | Checks whether a value is a valid email using the following pattern, "`[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`\``{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`. | 10
 `re-find` | `pattern` `string` | `#(re-find "^[a-zA-Z0-9_][a-zA-Z0-9\.\-_]{0,254}" \"apples1\")` | Checks whether a string follows a given regex pattern. | 10 
-`db` | none | `#(== [(get db \"dbid\") 2])` | Returns a database object with the following keys: dbid, block, and permissions. | 10
-`query` | `select-string` `from-string` `where-string` `block-string` `limit-string` |  `#(get (query \"[*]\" [\"book/editor\" \"Penguin\"] nil nil nil) \"book/year\")` | Allows you to query the current database. The select-string should be inputted without any commas. The select-string and can be inputted without any quotation marks, for example, `"[* {person/user [*]}]"`, or you can optionally doubly-escape those strings `"[\\\"*\\\" {\\\"person/user\\\" [\\\"*\\\"]}]"`. | Fuel required for the query.  
+`db` | none | `#(== [(get db \"dbid\") 2])` | Returns a ledger object with the following keys: dbid, block, and permissions. | 10
+`query` | `select-string` `from-string` `where-string` `block-string` `limit-string` |  `#(get (query \"[*]\" [\"book/editor\" \"Penguin\"] nil nil nil) \"book/year\")` | Allows you to query the current ledger. The select-string should be inputted without any commas. The select-string and can be inputted without any quotation marks, for example, `"[* {person/user [*]}]"`, or you can optionally doubly-escape those strings `"[\\\"*\\\" {\\\"person/user\\\" [\\\"*\\\"]}]"`. | Fuel required for the query.  
 
 
-Database function can also be combined, for instance `#(inc (max [1.5 2 3]))` will return 4. 
+Ledger function can also be combined, for instance `#(inc (max [1.5 2 3]))` will return 4. 
 
 The below functions are available through some function interfaces, but not others. For instance, an `_attribute/spec` can access the value `(?v)` of that given attribute, but this function does not make sense in a transaction. The functions are listed below, along with a list of places where those functions are valid. 
 
@@ -160,7 +160,7 @@ When you add a function to the `_fn` stream, you can optionally reference it usi
 }] 
 ```
 
-Now, we will be able to use it anywhere we use database functions. For example:
+Now, we will be able to use it anywhere we use ledger functions. For example:
 
 1. Using it in a transaction
 

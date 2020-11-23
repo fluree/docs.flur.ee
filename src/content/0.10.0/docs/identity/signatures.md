@@ -30,7 +30,7 @@ This can be found in the user interface by navigating to `/flureeql`. By clickin
 ### Signed Queries
 If `fdb-open-api` is set to true, then you do not need to sign your queries. With an open api, you can still sign your queries to see what the results would have been with a closed API.
 
-If you do need to sign your queries, you should have access to your private key. Your private key needs to be [connected to a valid auth record](/docs/identity/auth-records) in the database.
+If you do need to sign your queries, you should have access to your private key. Your private key needs to be [connected to a valid auth record](/docs/identity/auth-records) in the ledger.
 
 If you are having an issue signing queries, you can use the [troubleshooting guide](https://docs.google.com/document/d/1uS3on1-xAtl86hcdya9fN5gPyp8qikVIsPH2nnJ-0bo/edit?usp=sharing).
 
@@ -73,7 +73,7 @@ The body of a signed query is same query as would be submitted in an unsigned qu
 ```
 
 ### Signed Transactions
-If `fdb-open-api` is set to true, then you do not need to sign your transactions. Each database comes with a default auth record, which is either provided by you or automatically generated (see [config options](/docs/getting-started/installation#config-options)). If `fdb-open-api` is set to true, then all transactions submitted to `/transact` will be signed with this default private key unless otherwise specified. 
+If `fdb-open-api` is set to true, then you do not need to sign your transactions. Each ledger comes with a default auth record, which is either provided by you or automatically generated (see [config options](/docs/getting-started/installation#config-options)). If `fdb-open-api` is set to true, then all transactions submitted to `/transact` will be signed with this default private key unless otherwise specified. 
 
 All signed transactions need to be submitted to the [`/command` endpoint](/api/downloaded-endpoints/overview). Transactions can be sent to the `/command` endpoint, regardless of whether `fdb-open-api` is true or not. All transactions submitted will be attributed to the auth record that signs the transactions, not the default auth record (if there is one).
 

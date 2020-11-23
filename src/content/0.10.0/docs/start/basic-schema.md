@@ -2,23 +2,23 @@
 
 We recommend that you read this section using the 'FlureeQL' code examples (select in top left) unless you have specific reason to use a different language. 
 
-This section shows you how to create a simple schema and populate your database with sample data. All of the examples in the Query and Transact sections of the Documentation use the schema located here, so we recommend that you populate a database with this sample data.
+This section shows you how to create a simple schema and populate your ledger with sample data. All of the examples in the Query and Transact sections of the Documentation use the schema located here, so we recommend that you populate a ledger with this sample data.
 
 If you are using the user interface, you can issue all of the code on this page directly on the 'FlureeQL' page of your user interface. Make sure that you select 'Transact'.
 
 If you are using the API, you can issue all these transactions to endpoints ending with `/transact`. 
 
-### New Database
+### New ledger
 
-Make sure that you have a new database. You can either create a new database through the [user interface](/docs/getting-started/user-interface#account-page), through the API for the [downloadable version](/api/downlaoded-endpoints/downloaded-examples#-new-db), or through the API for the [hosted version](/api/hosted-endpoints/hosted-examples#-api-action-new-database). 
+Make sure that you have a new ledger. You can either create a new ledger through the [user interface](/docs/getting-started/user-interface#account-page), through the API for the [downloadable version](/api/downlaoded-endpoints/downloaded-examples#-new-db), or through the API for the [hosted version](/api/hosted-endpoints/hosted-examples#-api-action-new-database). 
 
-A database name is comprised of a network name followed by the database name `network/db`. Both the network name and the database name can only include lowercase characters, numbers, and dashes - `[a-z0-9-]`. This ensures cross-platform file and URL-compatibility.
+A ledger name is comprised of a network name followed by the ledger name `network/db`. Both the network name and the ledger name can only include lowercase characters, numbers, and dashes - `[a-z0-9-]`. This ensures cross-platform file and URL-compatibility.
 
 ### Overview
 
-In Fluree, schema are comprised of collections and predicates. A [collection](/docs/schema/overview#collections) is analogous to a relational database table. Every time you want a new type of item in your database, you would create a new collection. For example, collections in your database might be person, company, and city. 
+In Fluree, schema are comprised of collections and predicates. A [collection](/docs/schema/overview#collections) is analogous to a relational ledger table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city. 
 
-Every collection has [predicates](/docs/schema/overview#predicates). Predicates are analogous to relational database columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. The value of those predicates are called, objects (read more about the [subject-predicate-object model](/docs/infrastructure/db-infrastructure#subject-predicate-object-model)).
+Every collection has [predicates](/docs/schema/overview#predicates). Predicates are analogous to relational ledger columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. The value of those predicates are called, objects (read more about the [subject-predicate-object model](/docs/infrastructure/db-infrastructure#subject-predicate-object-model)).
 
 Note that many of the transactions in this section can be combined, but are separated for clarity. 
 
@@ -94,7 +94,7 @@ Transactions not support in SPARQL
 
 ### Adding Predicates
 
-Schema predicates are similar to relational database columns, however there are fewer restrictions (any predicate can be attached to any subject, unless a restriction is put in place using a `spec`). 
+Schema predicates are similar to relational ledger columns, however there are fewer restrictions (any predicate can be attached to any subject, unless a restriction is put in place using a `spec`). 
 
 In order to create a predicate, you only need to specify what type of subject you are creating (`_predicate`), a name, and a type. The name for a predicate should be namespaced with the relevant collection (as in all predicates in the `person` collection should begin with `person/`).
 
@@ -383,7 +383,7 @@ Transactions not supported in SPARQL.
 
 ### Adding Sample Data
 
-You can issue the below transaction to add some sample data into your database. The below transaction adds four users, three chats, four comments, and three artists. 
+You can issue the below transaction to add some sample data into your ledger. The below transaction adds four users, three chats, four comments, and three artists. 
 
 <pre style="height: 200px;overflow-y: scroll"><code class="language-flureeql">
 [{
