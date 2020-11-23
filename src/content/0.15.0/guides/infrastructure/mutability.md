@@ -1,10 +1,10 @@
 ## Mutable Fluree 
 
-While Fluree is an immutable database, there are several features that provide some flexibility around hiding and removing data. 
+While Fluree is an immutable ledger, there are several features that provide some flexibility around hiding and removing data. 
 
 ### Deleting Data
 
-There is the standard way of [deleting data](/docs/transact/deleting-data). Using this method, the data will not appear in a query against the current database, however the record of that data being added and deleted from the ledger are still present. 
+There is the standard way of [deleting data](/docs/transact/deleting-data). Using this method, the data will not appear in a query against the current ledger, however the record of that data being added and deleted from the ledger are still present. 
 
 Let's say, for example, you delete or overwrite a person's phone number. When you query for that person, their phone number (the one you deleted) will not appear. However, if you search for the history of all the updates made to that person, the phone number will still appear. If you search for that person's data as of a previous block, that phone number will still appear. 
 
@@ -16,8 +16,8 @@ If you do not need to remove the traces of a certain piece of deleted data, then
 
 Another option is hiding flakes:
 
-- Hidden data does not appear in queries of the current database.
-- Hidden data does not appear in queries of past databases.
+- Hidden data does not appear in queries of the current ledger.
+- Hidden data does not appear in queries of past ledgers.
 - The integrity of the blockchain is maintained. 
 
 A `hide` request can have the following keys:

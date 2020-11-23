@@ -187,7 +187,7 @@ mutation updateById ($myUpdateByIdTx: JSON) {
 
 When a transaction with a tempid resolves to an existing entity, `"_action": "upsert"` is inferred. This is only applicable to attributes marked as unique. By default the transaction will throw an exception if a conflict with a unique attribute exists.
 
-If "person/handle" is marked as unique and `["person/handle", "jdoe"]` is already in our database, this transaction will simply update `["person/handle", "jdoe"]`. If `["person/handle", "jdoe"]` is not yet in the database, it will add the new entity.  
+If "person/handle" is marked as unique and `["person/handle", "jdoe"]` is already in our ledger, this transaction will simply update `["person/handle", "jdoe"]`. If `["person/handle", "jdoe"]` is not yet in the ledger, it will add the new entity.  
 
 Curl example:
 
@@ -331,5 +331,5 @@ Key | Description
 `status` | The status of the transactions. These map to HTML status codes, i.e. 200 is OK. 
 `block-bytes` | The size of the block, in bytes.
 `timestamp` | A timestamp for the transaction. 
-`flakes` | Flakes are the state change of the database, and is the block data itself. Each is a six-tuple of information including the entity-id, attribute-id, value, block-id, true/false for add/delete, and expiration of this piece of data in epoch-milliseconds (0 indicates it never expires).
+`flakes` | Flakes are the state change of the ledger, and is the block data itself. Each is a six-tuple of information including the entity-id, attribute-id, value, block-id, true/false for add/delete, and expiration of this piece of data in epoch-milliseconds (0 indicates it never expires).
 

@@ -30,7 +30,7 @@ Headers: None
 Body: {"db/id": "test/one"}
 ```
 
-You can also use the `/new-db` endpoint to create a ledger from a snapshot. See [snapshotting a ledger](/docs/database-setup/snapshotting-a-database) for more information.
+You can also use the `/new-db` endpoint to create a ledger from a snapshot. See [snapshotting a ledger](/docs/ledger-setup/snapshotting-a-ledger) for more information.
 
 ```all
 Action: POST
@@ -43,7 +43,7 @@ Body: {
 
 ### /snapshot
 
-This creates a LOCAL snapshot of a particular ledger - it does not create snapshots on every transactor in the network. A snapshot file can be used to create a ledger from a snapshot (see [snapshotting](/docs/database-setup/snapshotting-a-database) and [new-db](#-new-db)).
+This creates a LOCAL snapshot of a particular ledger - it does not create snapshots on every transactor in the network. A snapshot file can be used to create a ledger from a snapshot (see [snapshotting](/docs/ledger-setup/snapshotting-a-ledger) and [new-db](#-new-db)).
 
 To create a snapshot, simply send an empty POST request to the `/snapshot` endpoint. The below example creates a snapshot of a ledger with network `dev` and ledger-id `main`.
 
@@ -54,7 +54,7 @@ Headers: None
 Body: Null
 ```
 
-You can also create a snapshot with no history by specifying `no-history` true in the in the body, as seen below. See how to do this in the section on [mutability and snapshotting with no history](/docs/database-setup/mutability#snapshot-no-history).
+You can also create a snapshot with no history by specifying `no-history` true in the in the body, as seen below. See how to do this in the section on [mutability and snapshotting with no history](/docs/ledger-setup/mutability#snapshot-no-history).
 
 ```all
 Action: POST
@@ -67,7 +67,7 @@ Body: {
 
 ### /list-snapshots
 
-This lists all LOCAL snapshot for a particular ledger - it does not list snapshots on every transactor in the network. A snapshot file can be used to create a ledger from a snapshot (see [snapshotting](/docs/database-setup/snapshotting-a-database) and [new-db](#-new-db)).
+This lists all LOCAL snapshot for a particular ledger - it does not list snapshots on every transactor in the network. A snapshot file can be used to create a ledger from a snapshot (see [snapshotting](/docs/ledger-setup/snapshotting-a-ledger) and [new-db](#-new-db)).
 
 To list snapshots, simply send an empty POST request to the `/list-snapshots` endpoint. The below example checks for local snapshots of a ledger with network `dev` and ledger-id `main`.
 
@@ -431,7 +431,7 @@ This request may take some time to return. It will return a map, such as the fol
 
 ### /hide
 
-This is a beta feature. To read about how it works, visit [hiding flakes](/docs/database-setup/mutability#hiding-flakes).
+This is a beta feature. To read about how it works, visit [hiding flakes](/docs/ledger-setup/mutability#hiding-flakes).
 
 ```all
 Action: POST

@@ -48,9 +48,9 @@ These roles are then assigned to different auth entities (via the `_auth/roles` 
     <img src="https://s3.amazonaws.com/fluree-docs/authEntities.svg" alt="Diagram shows two auth entities, adminstrator and standardUser. administrator is assigned two roles: dbAdmin and chatUser. standardUser is only assigned one role - chatUser.">
 </p>
 
-Auth entities govern access to a database. Auth entities are issued tokens (in the hosted version) or sign queries/transactions, and that auth subject's permissions are applied to every database action that they perform. 
+Auth entities govern access to a ledger. Auth entities are issued tokens (in the hosted version) or sign queries/transactions, and that auth subject's permissions are applied to every ledger action that they perform. 
 
-An auth subject does not need to be tied a user. All auth entities can be used independently. However, a common use case is to assign auth entities to database users (via the `_user/auth` predicate). Users can have multiple auth records, but multiple users cannot share the same auth record.
+An auth subject does not need to be tied a user. All auth entities can be used independently. However, a common use case is to assign auth entities to ledger users (via the `_user/auth` predicate). Users can have multiple auth records, but multiple users cannot share the same auth record.
 
 
 ### User and Auth Entities
@@ -69,7 +69,7 @@ Having roles be assigned to an `_auth` record, rather than to a `_user` allows a
 
 The ability to override roles at the auth subject allows a more limited (or possibly expanded) set of roles to the same user depending on how they authenticate. If, for example, a social media website authenticated as a user, it might only have access to read a limited set of data whereas if the user logged in, they may have their full set of access rights.
 
- Note that, by default, all databases have a built-in `["_role/id", "root"]` role with access to everything inside a database.
+ Note that, by default, all ledgers have a built-in `["_role/id", "root"]` role with access to everything inside a ledger.
 
 ### Rules
 

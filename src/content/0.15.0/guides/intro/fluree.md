@@ -22,11 +22,11 @@ This section is background on the way data is conceptualized in any given ledger
 
 When a Fluree ledger is initialized, a block 1 is created. This block contains certain important metadata, including all the [System Collections](/docs/schema#all-system-collections) needed to make ledger features work.
 
-A ledger at a given block is a database. Every block corresponds to a moment in time, and the data in ablock consists of a group of atomic updates made to that ledger at a given point in time. 
+A ledger at a given block is a ledger. Every block corresponds to a moment in time, and the data in ablock consists of a group of atomic updates made to that ledger at a given point in time. 
 
 These atomic updates are very specially formatted logs. Each updates is a called a [flakes](#flakes). Flakes are a specific fact at a specific point in time about a specific subject. No two flakes are the same.
 
-Below is an example of database block. We will go into detail about the contents of the transaction response in the [Block Metadata](#block-metadata) section. However, below you can see that, among other things, every block contains a hash, a timestamp, and the size of the block data (block-bytes). This block also contains an array of nine flakes. These flakes contain all the data that is added, updated, or deleted in block 5, as compared to block 4. 
+Below is an example of ledger block. We will go into detail about the contents of the transaction response in the [Block Metadata](#block-metadata) section. However, below you can see that, among other things, every block contains a hash, a timestamp, and the size of the block data (block-bytes). This block also contains an array of nine flakes. These flakes contain all the data that is added, updated, or deleted in block 5, as compared to block 4. 
 
 ```all
 {
@@ -60,7 +60,7 @@ Below is an example of database block. We will go into detail about the contents
   ]
 }
 ```
-We can think of the database at any given point in time as the combination of all the flakes up until that point. For example, the database at block 5 is the result of "playing all of the flakes forward" from blocks 1 through 5. 
+We can think of the ledger at any given point in time as the combination of all the flakes up until that point. For example, the ledger at block 5 is the result of "playing all of the flakes forward" from blocks 1 through 5. 
 
 The below image shows you a simplified representation of five blocks worth of flakes. In the first two blocks, we create our simple schema (a user with a user/handle and a user/chat). In block 3, we add a new user named 'bob' and a chat message for Bob. In block 4, we create a new user with the handle 'jane', and finally in block 5, we attribute a chat to 'jane'.
 
@@ -68,28 +68,28 @@ The below image shows you a simplified representation of five blocks worth of fl
     <img style="width: 600px; height: 220px" src="https://s3.amazonaws.com/fluree-docs/flakeLogBlocks1-5.png" alt="A table with the columns: 'subject', 'predicate', 'object', 'block', and 'add.' There are seven rows in this table, and each contains sample data, which is explained in the accompanying paragraph">
 </p>
 
-Rather than storing a copy of the entire database in each block, every block contains only flakes, or facts about entities, that are different as of that block.
+Rather than storing a copy of the entire ledger in each block, every block contains only flakes, or facts about entities, that are different as of that block.
 
 ### Collections and Predicates
-A [collection](/docs/schema/collections) is analogous to a relational database table. Every time you want a new type of item in your database, you would create a new collection. For example, collections in your database might be person, company, and city. 
+A [collection](/docs/schema/collections) is analogous to a relational ledger table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city. 
 
-Every collection has [predicates](/docs/schema/predicates). Predicates are analogous to relational database columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. 
+Every collection has [predicates](/docs/schema/predicates). Predicates are analogous to relational ledger columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. 
 
 Together, collections, and predicates make up a Fluree schema. 
 
 ### Subject-Predicate-Object Model
 
-Every item in the database is called a `subject`. When you create a new subject, you need to specify what collection it belongs to (for example, a person). When you create that subject, we automatically generate an `_id` for it. This `_id` is a long integer, which uniquely references that subject in the database. 
+Every item in the ledger is called a `subject`. When you create a new subject, you need to specify what collection it belongs to (for example, a person). When you create that subject, we automatically generate an `_id` for it. This `_id` is a long integer, which uniquely references that subject in the ledger. 
 
 In addition to an `_id`, subjects can have an unlimited number of `predicate`s. For example, when you create your person, you might give them a person/firstName, person/lastName, and person/age - those are the predicates. 
 
 In addition to subjects and predicates, we have something called objects in Fluree. The object is the value of the subject-predicate combination. So, a subject could be `17592186044440` (a subject `_id`), a corresponding predicate could be `person/firstName`, and a corresponding object could be `Mike`. 
 
-All together, a subject, predicate, and object together is called a triple. These triples, or [RDF triples](https://www.w3.org/TR/rdf-concepts/), are a standard structure for data, which allows Fluree to be compatible with other triple-store databases. You can also take the triples created by the Fluree transactor and ingest them into a query engine that can interpret triples. 
+All together, a subject, predicate, and object together is called a triple. These triples, or [RDF triples](https://www.w3.org/TR/rdf-concepts/), are a standard structure for data, which allows Fluree to be compatible with other triple-store ledgers. You can also take the triples created by the Fluree transactor and ingest them into a query engine that can interpret triples. 
 
 ### Flakes
 
-Flakes are modified RDF triples. Because each block in a Fluree represents the database at a different point in time, flakes not only contain a subject-object-predicate, but also  a time `t`, and a boolean (true/false). The sixth element of a flake is a JSON-object for metadata. It is not fully implemented. 
+Flakes are modified RDF triples. Because each block in a Fluree represents the ledger at a different point in time, flakes not only contain a subject-object-predicate, but also  a time `t`, and a boolean (true/false). The sixth element of a flake is a JSON-object for metadata. It is not fully implemented. 
 
 The `t` is a negative integer. `t` is a more granular notion of time than a block. A block with multiple transactions will have multiple `t`s. Each block has a [metadata flake](#block-metadata) with the predicate `_block/number` that links a `t` with a positive block integer. 
 
@@ -121,8 +121,8 @@ If you issue a [block query](/docs/query/block-query), you can see all the flake
 
 ### Block Metadata
 
-After the user issues a transaction, a Fluree transactor creates new [flakes](#flakes), which represent the changes made to the database at that given point in time. In addition to those flakes, there are also new flakes, which represent the metadata for that block (this is distinct from the sixth element of a flake, where metadata for an individual flake will be stored - not currently implemented). 
+After the user issues a transaction, a Fluree transactor creates new [flakes](#flakes), which represent the changes made to the ledger at that given point in time. In addition to those flakes, there are also new flakes, which represent the metadata for that block (this is distinct from the sixth element of a flake, where metadata for an individual flake will be stored - not currently implemented). 
 
-This metadata is also in the form of flakes, and it is recorded in the database in the same way as any other information. The difference is that metadata flakes are automatically generated and cannot be edited. Some custom metadata can be [included in your transaction](/docs/transact/basics#adding-custom-metadata). 
+This metadata is also in the form of flakes, and it is recorded in the ledger in the same way as any other information. The difference is that metadata flakes are automatically generated and cannot be edited. Some custom metadata can be [included in your transaction](/docs/transact/basics#adding-custom-metadata). 
 
-Metadata for each transaction is stored in the `_block` and `_tx` collections. Both `_block` and `_tx` are search-able in the same way as any other information in the database. 
+Metadata for each transaction is stored in the `_block` and `_tx` collections. Both `_block` and `_tx` are search-able in the same way as any other information in the ledger. 

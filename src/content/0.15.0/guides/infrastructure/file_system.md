@@ -41,10 +41,10 @@ fluree-0.15.0/
 - `default_private_key.txt`
 
 #### data/
-The new `data` folder will contain all of your block data, consensus logs, as well as database indexes. This folder can be moved or copied to a different Fluree instance folder and run from the folder if you choose. This is a good option if you want to use a newer Fluree version, but to keep all of your previous databases. 
+The new `data` folder will contain all of your block data, consensus logs, as well as ledger indexes. This folder can be moved or copied to a different Fluree instance folder and run from the folder if you choose. This is a good option if you want to use a newer Fluree version, but to keep all of your previous ledgers. 
 
 #### default_private_key.txt
-This file contains the default private key for your databases. A new (and unique) private key is generated every time you start up a new network, unless you already have a valid private key in `default_private_key.txt`. 
+This file contains the default private key for your ledgers. A new (and unique) private key is generated every time you start up a new network, unless you already have a valid private key in `default_private_key.txt`. 
 
 ### Reset Fluree
 
@@ -54,7 +54,7 @@ To completely reset your Fluree instance (erasing ALL ledger and transactor grou
 
 Block files and indexes are stored in the folder listed in your settings as `fdb-storage-file-directory`.
 
-This folder can be moved or copied to a different Fluree instance folder and run from the folder if you choose. This is a good option if you want to use a newer Fluree version, but to keep all of your previous databases. 
+This folder can be moved or copied to a different Fluree instance folder and run from the folder if you choose. This is a good option if you want to use a newer Fluree version, but to keep all of your previous ledgers. 
 
 Block files are never overwritten. For example, when the transactions for block 2 are issued, they will be written to a file for block 2 and never modified. If using versioned blocks (see [Mutable Fluree](/guides/infrastructure/mutability)), block files may be renamed. 
 
@@ -65,4 +65,4 @@ There are four different types of indexes that are written to file. These indexe
 - object-predicate-subject-time : only references and tags are written to this index
 - predicate-object-subject-time : indexed predicates are written to this index
 
-The frequency at which new index files are written depends on your [database configuration](/docs/getting-started/fluree-anywhere#config-options), specifically, the `fdb-memory-reindex` option.
+The frequency at which new index files are written depends on your [ledger configuration](/docs/getting-started/fluree-anywhere#config-options), specifically, the `fdb-memory-reindex` option.

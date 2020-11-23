@@ -1,6 +1,6 @@
 ## Voting
 
-This example outlines how users can vote on proposed changes to the database. At the end of the example, user will be able to propose changes, vote on those changes, and create various voting threshholds (minimum votes and minimum win percentage) for different predicates. There are various ways to enable a rule governance scheme, but this is one simple way.
+This example outlines how users can vote on proposed changes to the ledger. At the end of the example, user will be able to propose changes, vote on those changes, and create various voting threshholds (minimum votes and minimum win percentage) for different predicates. There are various ways to enable a rule governance scheme, but this is one simple way.
 
 In our hypothetical example, let's say we've had a network that has been humming along quite smoothly, except that a few rogue users have adopted offensive usernames. Rather than relying on central authority to interpret and enforce community standards, we can create a voting mechanism for whenever a user wants to change their username. In practice, you might want to add rules that prevent users from using certain words in their usernames in the first-place, or initiate a voting process only after a complaint. As previously stated, this is a example is a backbone that can be built upon for real-life applications.
 
@@ -373,7 +373,7 @@ Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
 
 ### Building Our Smart Functions
 
-Currently, there is nothing stopping Soft Cell from issuing a transaction to change their `_user/username` from `softCell` to `hardCell`. In order to prevent users from editing their usernames without a vote, we need to create a set of smart functions ([database functions](#database-functions-1)) that we can add to the `_user/username` predicate specification. 
+Currently, there is nothing stopping Soft Cell from issuing a transaction to change their `_user/username` from `softCell` to `hardCell`. In order to prevent users from editing their usernames without a vote, we need to create a set of smart functions ([ledger functions](#ledger-functions-1)) that we can add to the `_user/username` predicate specification. 
 
 We can see all the votes related to that subject with a single query. 
 
@@ -422,7 +422,7 @@ The first two functions we will create build and issue the above query. We will 
 
 If, at this point, you cannot understand how these functions fit into the larger applications, do not worry, we will see the entire voting mechanism working in short order. At this point, the most important part is to try and understand the syntax of the individual smart functions.
 
-The function, `voteWhere` constructs the where clause using the `str` function, which concatenates all strings in a given array (all available database or smart functions are detailed in [database functions](#database-functions-1)). 
+The function, `voteWhere` constructs the where clause using the `str` function, which concatenates all strings in a given array (all available ledger or smart functions are detailed in [ledger functions](#ledger-functions-1)). 
 
 When we are editing a given subject's predicate in a transaction, we have access to the value we are attempting to input `(?o)`, the id of the subject we are editing `(?sid)`, and the id of the predicate we are editing `(?pid)`, which is all of the information we need in order to compose our where clause. 
 

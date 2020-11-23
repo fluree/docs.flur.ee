@@ -53,7 +53,7 @@ Predicate | Type | Description
 `_predicate/restrictCollection` | `string` | (optional) Only applicable to predicates of `ref` (reference) types. It will restrict references to only be allowed from the specified collection.
 `_predicate/restrictTag` | `boolean` | (optional) Only applicable to predicates of type `tag`. If true, a tag, which corresponds to this predicate object must exist before adding predicate-object pair.
 `_predicate/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and ledger functions won't be permitted on this value.
-`_predicate/fullText` | `boolean` | (optional) If true, full text search enabled on this ledger. By default, the language for a Fluree ledger is set to English. You can change the default language in [ledger settings](/docs/database-setup/database-settings).
+`_predicate/fullText` | `boolean` | (optional) If true, full text search enabled on this ledger. By default, the language for a Fluree ledger is set to English. You can change the default language in [ledger settings](/docs/ledger-setup/ledger-settings).
 
 ### _predicate Types
 

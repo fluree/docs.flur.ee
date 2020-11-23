@@ -15,7 +15,7 @@ Body: Null
 ```
 
 ### /new-db
-Creates a new ledger given a "db/id". If the network specified does not exist, it creates a new network. This request returns a command id, the request does not wait to database to be fully initialized before returning.
+Creates a new ledger given a "db/id". If the network specified does not exist, it creates a new network. This request returns a command id, the request does not wait to ledger to be fully initialized before returning.
 
 ```all
 Action: POST
@@ -28,7 +28,7 @@ Body: {"db/id": "NETWORK/DBID"}
 ### /query
 All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
 
-An example of an unsigned request to `/query` with the network, `dev` and the database `main`:
+An example of an unsigned request to `/query` with the network, `dev` and the ledger `main`:
 ```all
 Action: POST
 Endpoint: http://localhost:8080/fdb/dev/main/query
@@ -207,9 +207,9 @@ A POST request with an empty object or a GET request to `/fdb/dbs` returns all t
 
 ### /new-db
 
-A database id must begin with a network name followed by a `/` and a dbid. Network names and dbids may only contain letters and numbers. In your request, you must specify `db/id`. No other options are currently supported. 
+A ledger id must begin with a network name followed by a `/` and a dbid. Network names and dbids may only contain letters and numbers. In your request, you must specify `db/id`. No other options are currently supported. 
 
-For example, `test/one` is the `one` database in the `one` network. If you specify a network that doesn't exist, then Fluree will create a new network for you, as well as the new database.
+For example, `test/one` is the `one` ledger in the `one` network. If you specify a network that doesn't exist, then Fluree will create a new network for you, as well as the new ledger.
 
 These requests do not need to be signed. 
 

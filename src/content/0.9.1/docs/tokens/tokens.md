@@ -6,9 +6,9 @@ Interacting with Fluree from your application can be done in one of three ways:
 2. GraphQL
 3. An embeddable Fluree client (not yet in production)
 
-For any of these methods, a valid token must be supplied with the database requests (queries, transactions, etc.). 
+For any of these methods, a valid token must be supplied with the ledger requests (queries, transactions, etc.). 
 
-Tokens are tied to a specific authorization record stored in the database and govern the permission of the requests. There are several ways to get a token which are subsequently explained.
+Tokens are tied to a specific authorization record stored in the ledger and govern the permission of the requests. There are several ways to get a token which are subsequently explained.
 
 It is worth noting that transactions are signed using public/private key cryptography. The hosted Fluree abstracts this from your application so that a more common username/password authentication scheme can be utilized.
 
@@ -19,16 +19,16 @@ Interacting with the hosted Fluree is done using secure tokens that have the aut
 
 **Interacting with Fluree only from your app server**
 
-Fluree can be run in a manner similar to a traditional database server, 'behind' your application server. If you choose to utilize it in this way, you simply need to generate a token with the permissions you desire (likely full access) and pass it to your application. You provide the token to your application like you would any secret, typically via an environment variable.
+Fluree can be run in a manner similar to a traditional ledger server, 'behind' your application server. If you choose to utilize it in this way, you simply need to generate a token with the permissions you desire (likely full access) and pass it to your application. You provide the token to your application like you would any secret, typically via an environment variable.
 
 To get a permanent admin token, follow these steps:
 
-1. Identify the authorization record (or create one) that you wish the token to utilize. A sample transaction is provided here if you need to create a new one. Note that, by default, all databases have a built-in `["_role/id", "root"]` role with access to everything inside a database.
+1. Identify the authorization record (or create one) that you wish the token to utilize. A sample transaction is provided here if you need to create a new one. Note that, by default, all ledgers have a built-in `["_role/id", "root"]` role with access to everything inside a ledger.
 2. Generate a token tied to that authorization record either via the Fluree admin dashboard or via an API call
 
 If you need to create an authorization record, see the example provided.
 
-Remember, authorization is governed by rules (stored in the `_rule` collection). Rule predicates (either true/false or more complicated [database functions](#database-functions)) are stored in the `_fn` collection, and listed in the multi-cardinality attribute, `_rule/predicate` as a `ref`. Rules are grouped into roles (stored in the `_role` collection), and roles are assigned to auth entities (`_auth` collection).
+Remember, authorization is governed by rules (stored in the `_rule` collection). Rule predicates (either true/false or more complicated [ledger functions](#ledger-functions)) are stored in the `_fn` collection, and listed in the multi-cardinality attribute, `_rule/predicate` as a `ref`. Rules are grouped into roles (stored in the `_role` collection), and roles are assigned to auth entities (`_auth` collection).
 
 #### Sample rule, role and auth record for admin privileges
 
@@ -57,7 +57,7 @@ curl \
   {
     "_id":   "_role$db-admin", 
     "id":    "db-admin",
-    "doc":   "A role for full access to database.",
+    "doc":   "A role for full access to ledger.",
     "rules": ["_rule$db-admin",  "_rule$db-token", "_rule$db-logs"] 
   },
   {
@@ -95,7 +95,7 @@ mutation addRoleRuleAuth($myAuthTx: JSON){
 /* You can learn more about structuring GraphQL transactions in the section, 'GraphQL Transactions'. */
 
 {
-  "myAuthTx": "[{\"_id\":\"_auth\",\"id\":\"db-admin\",\"doc\":\"A db admin auth that has full data visibility and can generate tokens for other users.\",\"roles\":[\"_role$db-admin\"]},{\"_id\":\"_role$db-admin\",\"id\":\"db-admin\",\"doc\":\"A role for full access to database.\",\"rules\":[\"_rule$db-admin\",\"_rule$db-token\",\"_rule$db-logs\"]},{\"_id\":\"_rule$db-admin\",\"id\":\"db-admin\",\"doc\":\"Rule that grants full access to all collections.\",\"collection\":\"*\",\"collectionDefault\":true,\"ops\":[\"query\",\"transact\"],\"predicate\":[\"_fn$name\",\"true\"]},{\"_id\":\"_rule$db-token\",\"id\":\"db-admin-token\",\"doc\":\"Rule allows token generation for other users.\",\"ops\":[\"token\"],\"predicate\":[\"_fn$name\",\"true\"]},{\"_id\":\"_rule$db-logs\",\"id\":\"db-admin-logs\",\"doc\":\"Rule allows user to access account logs.\",\"ops\":[\"logs\"],\"predicate\":[\"_fn$name\",\"true\"]}]"
+  "myAuthTx": "[{\"_id\":\"_auth\",\"id\":\"db-admin\",\"doc\":\"A db admin auth that has full data visibility and can generate tokens for other users.\",\"roles\":[\"_role$db-admin\"]},{\"_id\":\"_role$db-admin\",\"id\":\"db-admin\",\"doc\":\"A role for full access to ledger.\",\"rules\":[\"_rule$db-admin\",\"_rule$db-token\",\"_rule$db-logs\"]},{\"_id\":\"_rule$db-admin\",\"id\":\"db-admin\",\"doc\":\"Rule that grants full access to all collections.\",\"collection\":\"*\",\"collectionDefault\":true,\"ops\":[\"query\",\"transact\"],\"predicate\":[\"_fn$name\",\"true\"]},{\"_id\":\"_rule$db-token\",\"id\":\"db-admin-token\",\"doc\":\"Rule allows token generation for other users.\",\"ops\":[\"token\"],\"predicate\":[\"_fn$name\",\"true\"]},{\"_id\":\"_rule$db-logs\",\"id\":\"db-admin-logs\",\"doc\":\"Rule allows user to access account logs.\",\"ops\":[\"logs\"],\"predicate\":[\"_fn$name\",\"true\"]}]"
 }
 ```
 

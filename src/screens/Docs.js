@@ -580,7 +580,7 @@ class APITest extends React.Component {
 									/>
 								</FormGroup>
 								<FormGroup controlId="dbid">
-									<ControlLabel>Database</ControlLabel>
+									<ControlLabel>Ledger</ControlLabel>
 									<FormControl
 										type="text"
 										placeholder="test"
@@ -605,10 +605,10 @@ class APITest extends React.Component {
 											/>
 										</FormGroup>
 										<FormGroup controlId="Database">
-											<ControlLabel>Database</ControlLabel>
+											<ControlLabel>Ledger</ControlLabel>
 											<FormControl
 												type="text"
-												placeholder="Database"
+												placeholder="Ledger"
 												value={dbid}
 												onChange={(e) =>
 													this.setState({ dbid: e.target.value })

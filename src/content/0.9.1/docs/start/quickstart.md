@@ -1,6 +1,6 @@
 ### QuickStart
 
-This quickstart includes sample transactions to quickly set up and query a database.
+This quickstart includes sample transactions to quickly set up and query a ledger.
 
 \# | Topic
 -- | -- 
@@ -13,9 +13,9 @@ This quickstart includes sample transactions to quickly set up and query a datab
 
 ### Creating Schema - Collections
 
-First make sure you are logged in. The default username is `test` and password: `fluree`. Now, you can create a new database named whatever you like as long as it follows the pattern of `account.dbname`, i.e. `test.one`.
+First make sure you are logged in. The default username is `test` and password: `fluree`. Now, you can create a new ledger named whatever you like as long as it follows the pattern of `account.dbname`, i.e. `test.one`.
 
-Fluree schema consists of collections and attributes. These are similar to a relational database's tables and columns, however in Fluree both of these concepts are extended and more flexible. Collections organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new collection to hold it. Collections differ from tables in that they are an always-present collection of changes about those entities that can be queried at any point in time, not just the latest changes as a traditional database would do.
+Fluree schema consists of collections and attributes. These are similar to a relational ledger's tables and columns, however in Fluree both of these concepts are extended and more flexible. Collections organize changes about a type of entity, i.e. customers, invoices, employees. So if you have a new entity type, you'd create a new collection to hold it. Collections differ from tables in that they are an always-present collection of changes about those entities that can be queried at any point in time, not just the latest changes as a traditional ledger would do.
 
 Everything is data in Fluree. This includes the schemas, permissions, etc. that actually govern how it works. To add new collections we'll do a transaction the exact way we'd add any new data. Here we'll add our new collections and attributes in two separate transactions to explain what is happening, but they could be done in one.
 
@@ -91,7 +91,7 @@ mutation addCollections ($myCollectionTx: JSON) {
 
 ### Creating Schema - Attributes
 
-Schema attributes are similar to relational database columns, however there are fewer restrictions.
+Schema attributes are similar to relational ledger columns, however there are fewer restrictions.
 Any attribute can be attached to any entity, unless a restriction is put in place using a `spec`.
 
 The transaction sample here adds the following attributes:
@@ -505,17 +505,17 @@ curl  \
 
 ### Permissions Introduction
 
-We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an [expressive predicate rule function](#database-functions) that resolves to either true or false. All permissions are stored in the `_fn` collection and are referenced via a `ref` attribute on `_rule/predicate`.
+We can enable permissions on both query and transaction operations, and the permissions can be as simple as a true/false declaration or an [expressive predicate rule function](#ledger-functions) that resolves to either true or false. All permissions are stored in the `_fn` collection and are referenced via a `ref` attribute on `_rule/predicate`.
 
 Here we'll go through all the steps needed to add a permission that accomplishes two main things:
 
-1. Users can only see `chat` and `person` collection data, but no other data in the database
+1. Users can only see `chat` and `person` collection data, but no other data in the ledger
 2. A user can only create or update a chats of their own (if they are the referenced `chat/person`)
 
 To accomplish this we need to do a few things:
 
-1. Create an actual database user for the chat user(s) along with at least one auth record. Permissions are governed by auth records, users are optional but a user can have multiple auth entities each giving different permissions (the [Fluree Permissions](#fluree-permissions) section explains this in more detail).
-2. Link the `person` entities we created to the database user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` database user entity and then to the `_auth` record itself.
+1. Create an actual ledger user for the chat user(s) along with at least one auth record. Permissions are governed by auth records, users are optional but a user can have multiple auth entities each giving different permissions (the [Fluree Permissions](#fluree-permissions) section explains this in more detail).
+2. Link the `person` entities we created to the ledger user(s) using a `ref` (reference) attribute so we can traverse the graph from the `person` entity to the `_user` ledger user entity and then to the `_auth` record itself.
 3. Create rules to enforce the above desired permissions, and connect them to the user using another `ref` attribute. 
 4. Create an assignable role that contains these rules so we can easily add the role to our chat user(s).
 5. Assign the new role to the user(s).
@@ -524,32 +524,32 @@ To accomplish this we need to do a few things:
 A token (which governs permissions) is tied to a specific `_auth` entity which can directly have roles assigned to it, or default roles can be assigned to a `_user` entity assuming the `_auth` entity is tied to a `_user` via the `_user/auth` attribute. An `_auth` entity can be independent, and is not required to be tied to a `_user`. Most applications we typically use don't work like this (but most cryptos do work like this). We'll get into different ways of leveraging authentication later, but public/private key cryptography is used, however this is abstracted away with hosted Fluree.
 
 
-**>> Execute the example transaction to add a new attribute named `person/user` that allows a `ref` from any of our persons to a database user.**
+**>> Execute the example transaction to add a new attribute named `person/user` that allows a `ref` from any of our persons to a ledger user.**
 
 
-Next, we add a new role called `chatUser` that we can easily assign to all chat users. The role has three rules in it. The first, `viewAllChats`, allows `query` (read) permissions for every attribute in the collection `chat`. The second rule, `viewAllPeople` similarly allows `query` for every attribute in the collection `person`. Note, that every database has two built-in functions, `["_fn$name", "true"]` and `["_fn$name", "false"]`, which either allow or block access, respectively, to a given collection or attribute. The final rule, `editOwnChats`, will restrict `transact` to ensure only chats by the respective `person` can be created or edited.
+Next, we add a new role called `chatUser` that we can easily assign to all chat users. The role has three rules in it. The first, `viewAllChats`, allows `query` (read) permissions for every attribute in the collection `chat`. The second rule, `viewAllPeople` similarly allows `query` for every attribute in the collection `person`. Note, that every ledger has two built-in functions, `["_fn$name", "true"]` and `["_fn$name", "false"]`, which either allow or block access, respectively, to a given collection or attribute. The final rule, `editOwnChats`, will restrict `transact` to ensure only chats by the respective `person` can be created or edited.
 
 **>> Execute the example transaction to add the new role and these three rules.**
 
-The final step is to create a new database user, `_user`. Here we'll create one for `jdoe` and link her user record to the `person` entity we already created, and the `_role` we just created. Remember an `_auth` entity is what actually gets tied to a token, so we need to create one of those too. In this case our `_auth` doesn't do anything, it just acts as a stub for the moment.
+The final step is to create a new ledger user, `_user`. Here we'll create one for `jdoe` and link her user record to the `person` entity we already created, and the `_role` we just created. Remember an `_auth` entity is what actually gets tied to a token, so we need to create one of those too. In this case our `_auth` doesn't do anything, it just acts as a stub for the moment.
 
 The rule predicate function in `editOwnChats` follows the graph of a chat message's relationships to determine if the user can see it. In this case, the `get-all` function will take a chat message and traverse:
 
-`chat message ->> chat/person ->> person/user ->> database user`
+`chat message ->> chat/person ->> person/user ->> ledger user`
 
-The rule stipulates, that if the database user found after following the graph equals the current `?user_id`, then creating a new chat message or editing an existing one is allowed.
+The rule stipulates, that if the ledger user found after following the graph equals the current `?user_id`, then creating a new chat message or editing an existing one is allowed.
 
 **>> Execute the final transaction example.**
 
-Now, refresh the Fluree user interface (it does not automatically refresh with detected new user/roles). Select the database you were working on in the UI sidebar, and you should now have a user listed as `jdoe`. If you select `jdoe`, you'll be using the custom database just for her that you created with the aforementioned rules. Try to query different collections, or create/update chat messages. The rules we've defined here will only allow the described behavior.
+Now, refresh the Fluree user interface (it does not automatically refresh with detected new user/roles). Select the ledger you were working on in the UI sidebar, and you should now have a user listed as `jdoe`. If you select `jdoe`, you'll be using the custom ledger just for her that you created with the aforementioned rules. Try to query different collections, or create/update chat messages. The rules we've defined here will only allow the described behavior.
 
-#### Add a new attribute to link a person to a database user
+#### Add a new attribute to link a person to a ledger user
 
 ```flureeql 
 [{
   "_id":    "_attribute",
   "name":   "person/user",
-  "doc":    "Reference to a database user.",
+  "doc":    "Reference to a ledger user.",
   "type":   "ref",
   "restrictCollection": "_user"
 }]
@@ -562,7 +562,7 @@ Now, refresh the Fluree user interface (it does not automatically refresh with d
    -d '[{
   "_id":    "_attribute",
   "name":   "person/user",
-  "doc":    "Reference to a database user.",
+  "doc":    "Reference to a ledger user.",
   "type":   "ref",
   "restrictCollection": "_user"
 }]' \
@@ -578,7 +578,7 @@ mutation addDBUserAttributes ($myDBUserAttributeTx: JSON) {
 
 {
   "myDBUserAttributeTx": "[
-    { \"_id\": \"_attribute\", \"name\": \"person/user\", \"doc\": \"Reference to a database user.\", \"type\": \"ref\", \"restrictCollection\": \"_user\" }
+    { \"_id\": \"_attribute\", \"name\": \"person/user\", \"doc\": \"Reference to a ledger user.\", \"type\": \"ref\", \"restrictCollection\": \"_user\" }
     ]"
 }
 ```
