@@ -18,7 +18,7 @@ First, we need to create a new predicate, which connects a `person` to a `_auth`
 [{
   "_id":    "_predicate",
   "name":   "person/auth",
-  "doc":    "Reference to a database auth.",
+  "doc":    "Reference to a ledger auth.",
   "type":   "ref",
   "restrictCollection": "_auth"
 }]
@@ -30,7 +30,7 @@ First, we need to create a new predicate, which connects a `person` to a `_auth`
    -d '[{
   "_id":    "_predicate",
   "name":   "person/auth",
-  "doc":    "Reference to a database auth.",
+  "doc":    "Reference to a ledger auth.",
   "type":   "ref",
   "restrictCollection": "_auth"
 }]' \
@@ -44,7 +44,7 @@ mutation addPersonAuthPredicates ($myPersonAuthPredicateTx: JSON) {
 
 {
   "myPersonAuthPredicateTx": "[
-    { \"_id\": \"_predicate\", \"name\": \"person/auth\", \"doc\": \"Reference to a database auth.\", \"type\": \"ref\", \"restrictCollection\": \"_auth\" }
+    { \"_id\": \"_predicate\", \"name\": \"person/auth\", \"doc\": \"Reference to a ledger auth.\", \"type\": \"ref\", \"restrictCollection\": \"_auth\" }
     ]"
 }
 ```
@@ -600,5 +600,5 @@ Results:
 }]
 ```
 
-Rules complement `_predicate` and `_collection` specs to allow for complex permissions in a database.
+Rules complement `_predicate` and `_collection` specs to allow for complex permissions in a ledger.
 

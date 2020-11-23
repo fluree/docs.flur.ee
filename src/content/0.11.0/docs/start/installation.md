@@ -46,13 +46,13 @@ If the above message is not displaying in your terminal, the terminal should pri
 
 > If you see an error "missing 'server' JVM", you need to install Java Server JRE. See [Oracle documentation](https://docs.oracle.com/en/java/) to select the appropriate platform, version (e.g., 8) and operating system.
 
-After you launch Fluree for the first time, you will not have any databases. You will need to create a database to begin. 
+After you launch Fluree for the first time, you will not have any ledgers. You will need to create a ledger to begin. 
 
 Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the [user interface](#user-interface).
 
 ### Exiting and Restarting Fluree
 
-To exit Fluree, simply click `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory](#in-memory-fluree), this will not delete any of the information that was successfully added to your databases (in other words, if you received a 200 response from your transactions, that means it was added to your database). 
+To exit Fluree, simply click `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory](#in-memory-fluree), this will not delete any of the information that was successfully added to your ledgers (in other words, if you received a 200 response from your transactions, that means it was added to your ledger). 
 
 To restart Fluree, navigate to the folder that contains your Fluree instance and run `./flureeDB_start.sh`.
 
@@ -80,10 +80,10 @@ flureeDB-0.11.0/
 - `default_private_key.txt`
 
 #### data/
-The new `data` folder will contain all of your block data, consensus logs, as well as database indexes. This folder can be moved or copied to a different Fluree instance folder and run from the folder if you choose. This is a good option if you want to use a newer Fluree version, but to keep all of your previous databases. 
+The new `data` folder will contain all of your block data, consensus logs, as well as ledger indexes. This folder can be moved or copied to a different Fluree instance folder and run from the folder if you choose. This is a good option if you want to use a newer Fluree version, but to keep all of your previous ledgers. 
 
 #### default_private_key.txt
-This file contains the default private key for your databases. A new (and unique) private key is generated every time you start up a new network, unless you already have a valid private key in `default_private_key.txt`. 
+This file contains the default private key for your ledgers. A new (and unique) private key is generated every time you start up a new network, unless you already have a valid private key in `default_private_key.txt`. 
 
 ### Setting Your Own Private Key
 To use your own private key, first please see the section on [public and private keys](/docs/identity/public-private-keys) to see what is and isn't valid as a private key. 
@@ -97,7 +97,7 @@ You can also run `./fluree_start.sh :keygen` to generate a public key, private k
 You can run Fluree in memory for testing purposes. To do so, simply specify `fdb-consensus-type` as `in-memory` and `fdb-storage-type` as `memory`. At this time, you can only run a single, centralized ledger in memory. 
 
 ### Setting Up a Transactor Group
-Currently, transactor groups only support the Raft consensus algorithm to agree on a shared state for a network of databases. With Raft, a total of `n` servers can support `f` failures: n = 2f + 1. This means that anything less than 3 servers can sustain no failures, 5 servers can sustain two failures. 
+Currently, transactor groups only support the Raft consensus algorithm to agree on a shared state for a network of ledgers. With Raft, a total of `n` servers can support `f` failures: n = 2f + 1. This means that anything less than 3 servers can sustain no failures, 5 servers can sustain two failures. 
 
 You can test a decentralized Fluree on a single computer (different ports) or on multiple computers. Each member of Fluree needs to have its own folder containing `fluree_server.jar`, `fluree_sample.properties`, and `fluree_start.sh`. 
 
@@ -173,8 +173,8 @@ Property | Options | Description
 `fdb-group-log-history` | `int` | Number of historic tx-group raft logs to keep around. Can be as low as 1. Historic logs take up disk space but can be useful for debugging if something goes wrong. High transactional volume servers may want to retain extra logs as there will be more frequent rotation.
 `fdb-storage-type` | `file`, `memory` |  This is where to store index/block segments. Can be replicated on every machine or in a common location all local/group ledgers and FlureeDB library/peers. Currently only `file` is supported. `file` storage is on-disk and replicated on every ledger, `memory` is not currently supported, but this is is replicated on every ledger, but only stored in memory (useful for testing; not currently implemented).
 `fdb-storage-file-directory` | `file path` | For file storage, specify directory to place ledger (blockchain) and db indexes
-`fdb-memory-cache` | `size` | Total memory cache of index segments across all databases. This setting can be changed per-ledger.
-`fdb-memory-reindex` and `fdb-memory-reindex-max` | `size` | These settings apply per-database, make sure all ledgers and query peers have at least this much memory * number of databases you expect to be active on those servers. This setting must be consistent across the entire ledger group.
+`fdb-memory-cache` | `size` | Total memory cache of index segments across all ledgers. This setting can be changed per-ledger.
+`fdb-memory-reindex` and `fdb-memory-reindex-max` | `size` | These settings apply per-ledger, make sure all ledgers and query peers have at least this much memory * number of ledgers you expect to be active on those servers. This setting must be consistent across the entire ledger group.
 `fdb-stats-report-frequency` | `time` | How frequently to report out stats as a log entry in milliseconds, or can use shorthand like 2m for two minutes, 45s for 45 seconds.
 
 #### HTTP API Settings
@@ -189,7 +189,7 @@ Property | Options | Description
 Property | Options | Description   
 -- | -- | --
 `fdb-ledger-port`| `int` | External port to expose for external ledger communication. If using a ledger group behind a load balancer then this should be consistent across the ledger group, i.e. fdb-ledger-port=9795
-`fdb-ledger-private-keys` | `key@network/dbname,` `key@network/dbname` | List each auth identity private key at each network and/or database you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be  used as a default for all databases on that network and it is assumed this server is participating with every database, i.e. `fdb-ledger-private-keys=5...3@networka/dbname`
+`fdb-ledger-private-keys` | `key@network/dbname,` `key@network/dbname` | List each auth identity private key at each network and/or ledger you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be  used as a default for all ledgers on that network and it is assumed this server is participating with every ledger, i.e. `fdb-ledger-private-keys=5...3@networka/dbname`
 `fdb-ledger-servers` | `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,` `networkb/dbname@external.dot.com:9795` | List of seed servers to contact for each network/db. Like fdb-ledger-identities, the db is optional. Every network/db + server address combination should be separated by a comma, i.e. `fdb-ledger-servers=` `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,networkb/` `dbname@external.dot.com:9795`
 
 #### Password and JWT Token Settings
@@ -212,7 +212,7 @@ There is a built-in user interface that can be accessed at `localhost:[port]/`. 
 
 For help using the user interface, read the [Navigating the User Interface](/docs/user-interface) section.
 
-Note that as of version 0.10.0, downloadable Fluree databases do not have a username and password. If you are using an older version of Fluree, you can log into the Master database with username, `master` and password, `fluree` or into the Test database with username, `test`, and password, `fluree`.
+Note that as of version 0.10.0, downloadable Fluree ledgers do not have a username and password. If you are using an older version of Fluree, you can log into the Master ledger with username, `master` and password, `fluree` or into the Test ledger with username, `test`, and password, `fluree`.
 
 ### Fluree with Docker
 

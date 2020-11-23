@@ -90,7 +90,7 @@ A where-array can be comprised of any of the following items in any order:
 
 Item | Function 
 -- | --
-[three-tuple](#three-tuple) | Looks for flakes (pieces of data) in the database that match a provided pattern, and bind variables to the results.
+[three-tuple](#three-tuple) | Looks for flakes (pieces of data) in the ledger that match a provided pattern, and bind variables to the results.
 [four-tuple](#four-tuple) | Same as a simple three-tuple, except the first item in the tuple specifies a particular data source, such as Wikidata, another ledger, or the current ledger at a specific in time.
 [two-tuple variable binding](#two-tuple-variable-binding)| Bind a variable to a value, including to a calculated aggregate values. These variables can be used subsequent where-array items.
 [binding map](#binding-map)| Serves the same function as a two-tuple variable binding, except the syntax is different. 
@@ -122,17 +122,17 @@ Collection Select | `["?movie", "rdf:type", "movie"]` | This service call binds 
 
 #### Four Tuple
 
-Four tuples are exactly the same as three tuples, except that four tuples specify a data source for the `subject, predicate, object` pattern. Currently, Fluree supports querying across multiple Fluree databases and across Wikidata. The following are the sources that can be used.
+Four tuples are exactly the same as three tuples, except that four tuples specify a data source for the `subject, predicate, object` pattern. Currently, Fluree supports querying across multiple Fluree ledgers and across Wikidata. The following are the sources that can be used.
 
 Source | Example | Description 
 -- | -- | --
-This Database | `$fdb` | Default source. The current version of a given Fluree. Can be omitted. 
-This Database at a Previous Point in Time | `$fdb3`, `$fdb2019-03-14T20:59:36.097Z`, `$fdbPT5M`| This database at a specified block. The block is specified either by providing the block integer, ISO-8601 formatted wall clock time, or ISO-8601 formatted duration ago
-Other Fluree Database | `ftest` | Other Fluree database must be specifed in the [prefixes key](#prefixes-key). 
-Other Fluree Database | `ftestPT5M` | Other database at a specified block. The block is specified either by providing the block integer, ISO-8601 formatted wall clock time, or ISO-8601 formatted duration ago
+This ledger | `$fdb` | Default source. The current version of a given Fluree. Can be omitted. 
+This ledger at a Previous Point in Time | `$fdb3`, `$fdb2019-03-14T20:59:36.097Z`, `$fdbPT5M`| This ledger at a specified block. The block is specified either by providing the block integer, ISO-8601 formatted wall clock time, or ISO-8601 formatted duration ago
+Other Fluree ledger | `ftest` | Other Fluree ledger must be specifed in the [prefixes key](#prefixes-key). 
+Other Fluree ledger | `ftestPT5M` | Other ledger at a specified block. The block is specified either by providing the block integer, ISO-8601 formatted wall clock time, or ISO-8601 formatted duration ago
 Wikidata | `$wd` | Wikidata 
 
-For example, the three tuple `["?person", "person/handle", "?handle"]` is equivalent to `["$fdb", "?person", "person/handle", "?handle"]`, because the specified source is the current database. The four tuple, `["$fdbPT2H", "?person", "person/handle", "?handle"]` is matching the given tuple pattern to the subject-predicate-object triples active in the database as of two hours ago. 
+For example, the three tuple `["?person", "person/handle", "?handle"]` is equivalent to `["$fdb", "?person", "person/handle", "?handle"]`, because the specified source is the current ledger. The four tuple, `["$fdbPT2H", "?person", "person/handle", "?handle"]` is matching the given tuple pattern to the subject-predicate-object triples active in the ledger as of two hours ago. 
 
 ```all
 {
@@ -400,7 +400,7 @@ WHERE {
 
 ### Prefixes Key
 
-If we want to query across multiple Fluree databases we can do so by specifying the database in the `prefixes` map. 
+If we want to query across multiple Fluree ledgers we can do so by specifying the ledger in the `prefixes` map. 
 
 In the prefix map, we can specify what ledger we want to query across, in this case `fluree/test`, and we give that source a name, `ftest`. The name given to a source must be only lowercase letters and no numbers. 
 
@@ -453,10 +453,10 @@ WHERE {
 After declaring the source in the prefix, we can access that ledger at any block by specifying the time in the clause. You can specify a time using a block integer (`ftest3`), a duration (`ftestPT5M`), or an ISO-8601 formatted time-string (`ftest2019-03-14T20:59:36.097Z`). The time SHOULD NOT be declared in the prefix map - only in a particular clause. 
 
 *Permissions*
-If you want to access information in different databases, you need to have permissions to access those databases, and those databases need to be running on the same transactor. 
+If you want to access information in different ledgers, you need to have permissions to access those ledgers, and those ledgers need to be running on the same transactor. 
 
-1. If you are accessing outside databases in the **same network** as your current database (i.e. `fluree/one` and `fluree/test`) and **fdb-open-api** is `true`, then you can freely query across databases. 
-2. In any other situation, `fdb-open-api` must be `false`, and your query must be signed. The `_auth` record with which you signed your query will be the one that determines your permissions for each given database. 
+1. If you are accessing outside ledgers in the **same network** as your current ledger (i.e. `fluree/one` and `fluree/test`) and **fdb-open-api** is `true`, then you can freely query across ledgers. 
+2. In any other situation, `fdb-open-api` must be `false`, and your query must be signed. The `_auth` record with which you signed your query will be the one that determines your permissions for each given ledger. 
 
 ### Vars Key
 

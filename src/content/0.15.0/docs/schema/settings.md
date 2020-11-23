@@ -1,7 +1,7 @@
 
 ## _setting
 
-Every database contains a built-in `_setting` collection that defines several database configurations, including the consensus algorithm. You can change these accordingly.
+Every ledger contains a built-in `_setting` collection that defines several ledger configurations, including the consensus algorithm. You can change these accordingly.
 
 Currently the only setting id that is activated is the `_setting` entry with id `root`. 
 
@@ -13,11 +13,11 @@ Key | Description
 `consensus` | Consensus type for this db. Currently only 'Raft' supported.
 `txMax` | Maximum transaction size in bytes. Will default to the network db's value if not present.
 `anonymous` | Reference to auth identity to use for anonymous requests to this db.
-`ledgers` | Reference to auth identities that are allowed to act as ledgers for this database.
+`ledgers` | Reference to auth identities that are allowed to act as ledgers for this ledger.
 
 ### Language
 
-By default, all databases use English as a language. We support:
+By default, all ledgers use English as a language. We support:
 
 - Arabic (`ar`)
 - Bengali (`bn`)
@@ -40,7 +40,7 @@ To see all supported languages, you can also query:
 }
 ```
 
-To see the language your database is currently set to, you can issue the query:
+To see the language your ledger is currently set to, you can issue the query:
 
 ```all
 {
@@ -49,7 +49,7 @@ To see the language your database is currently set to, you can issue the query:
 }
 ```
 
-To change your language, simply set your language setting to the two-letter code for your desired language. For example, to set a database to Russian, you can issue the transaction:
+To change your language, simply set your language setting to the two-letter code for your desired language. For example, to set a ledger to Russian, you can issue the transaction:
 
 ```all 
 [{

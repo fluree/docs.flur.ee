@@ -53,7 +53,7 @@ If the above message is not displaying in your terminal, the terminal should pri
 
 - If you see an error "missing 'server' JVM", you need to install Java Server JRE. See <a href="https://docs.oracle.com/en/java/" target="_blank">Oracle documentation</a> to select the appropriate platform, version (e.g., 8) and operating system.
 
-After you launch Fluree for the first time, you will not have any databases. You will need to create a database to begin.  Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the user interface.
+After you launch Fluree for the first time, you will not have any ledgers. You will need to create a ledger to begin.  Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the user interface.
 
 To learn about the Fluree file system, see the [File System](/guides/infrastructure/file-system) guide.
 
@@ -102,8 +102,8 @@ Property | Options | Description
 `fdb-group-log-history` | `int` | Number of historic tx-group raft logs to keep around. Can be as low as 1. Historic logs take up disk space but can be useful for debugging if something goes wrong. High transactional volume servers may want to retain extra logs as there will be more frequent rotation.
 `fdb-storage-type` | `file`, `memory` |  This is where to store index/block segments. Can be replicated on every machine or in a common location all local/group ledgers and FlureeDB library/peers. Currently only `file` is supported. `file` storage is on-disk and replicated on every ledger, `memory` is not currently supported, but this is is replicated on every ledger, but only stored in memory (useful for testing; not currently implemented).
 `fdb-storage-file-directory` | `file path` | For file storage, specify directory to place ledger (blockchain) and db indexes
-`fdb-memory-cache` | `size` | Total memory cache of index segments across all databases. This setting can be changed per-ledger.
-`fdb-memory-reindex` and `fdb-memory-reindex-max` | `size` | These settings apply per-database, make sure all ledgers and query peers have at least this much memory * number of databases you expect to be active on those servers. This setting must be consistent across the entire ledger group.
+`fdb-memory-cache` | `size` | Total memory cache of index segments across all ledgers. This setting can be changed per-ledger.
+`fdb-memory-reindex` and `fdb-memory-reindex-max` | `size` | These settings apply per-ledger, make sure all ledgers and query peers have at least this much memory * number of ledgers you expect to be active on those servers. This setting must be consistent across the entire ledger group.
 `fdb-stats-report-frequency` | `time` | How frequently to report out stats as a log entry in milliseconds, or can use shorthand like 2m for two minutes, 45s for 45 seconds.
 
 #### HTTP API Settings
@@ -118,7 +118,7 @@ Property | Options | Description
 Property | Options | Description   
 -- | -- | --
 `fdb-ledger-port`| `int` | External port to expose for external ledger communication. If using a ledger group behind a load balancer then this should be consistent across the ledger group, i.e. fdb-ledger-port=9795
-`fdb-ledger-private-keys` | `key@network/dbname,` `key@network/dbname` | List each auth identity private key at each network and/or database you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be  used as a default for all databases on that network and it is assumed this server is participating with every database, i.e. `fdb-ledger-private-keys=5...3@networka/dbname`
+`fdb-ledger-private-keys` | `key@network/dbname,` `key@network/dbname` | List each auth identity private key at each network and/or ledger you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be  used as a default for all ledgers on that network and it is assumed this server is participating with every ledger, i.e. `fdb-ledger-private-keys=5...3@networka/dbname`
 `fdb-ledger-servers` | `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,` `networkb/dbname@external.dot.com:9795` | List of seed servers to contact for each network/db. Like fdb-ledger-identities, the db is optional. Every network/db + server address combination should be separated by a comma, i.e. `fdb-ledger-servers=` `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,networkb/` `dbname@external.dot.com:9795`
 
 #### Password and JWT Token Settings

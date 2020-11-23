@@ -6,7 +6,7 @@ The Docs section is a basic technical overview of key topics, including:
 - Querying 
 - Transacting
 - Schema
-- Database Set-up
+- Ledger Set-up
 - Infrastructure
 
 To view the documentation examples in different programming languages, you can toggle the language options in the sidebar on the top right. 

@@ -105,7 +105,7 @@ flureenjs.close(flureeDbConn);
 
 
 ### **db**
-Returns a queryable database from the connection. The database object represents a point-in-time ledger. As such, the database will not contain block updates submitted after acquisition of the channel.
+Returns a queryable ledger from the connection. The ledger object represents a point-in-time ledger. As such, the ledger will not contain block updates submitted after acquisition of the channel.
 
 #### Parameter(s)
 Key | Value
@@ -115,7 +115,7 @@ Key | Value
 
 
 #### Returns
-Returns a queryable (point-in-time) database as an asynchronous channel.
+Returns a queryable (point-in-time) ledger as an asynchronous channel.
 
 #### Code Example  
      
@@ -132,7 +132,7 @@ flureenjs.close(flureeDbConn);
   
 
 ### **db_schema**
-Generates a schema map for a point-in-time database.
+Generates a schema map for a point-in-time ledger.
 
 #### Parameter(s)
 Name | Value
@@ -140,7 +140,7 @@ Name | Value
 `db-source` | an asynchronous channel created by the `db` command 
 
 #### Returns
-Returns a JavaScript promise that will eventually deliver the schema map for a database.
+Returns a JavaScript promise that will eventually deliver the schema map for a ledger.
 
 #### Code Example  
      
@@ -567,7 +567,7 @@ Name | Value
 A JavaScript promise that eventually contains the results of the query or an error.
 
 #### Code Example   
-An example of a `sparql` call referencing the network, `test` and the database `chat`:
+An example of a `sparql` call referencing the network, `test` and the ledger `chat`:
   
 ```all
     const flureeServerUrl = "http://localhost:8080";

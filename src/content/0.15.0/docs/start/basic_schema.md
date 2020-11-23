@@ -2,21 +2,21 @@
 
 Once you've successfully downloaded or logged into Fluree, we recommend that you start with this section using 'FlureeQL' as your language setting (in the top left). 
 
-This section shows you how to create a simple schema and populate your database with sample data. All of the examples in the Query and Transact sections of the Documentation use the schema located here, so we recommend that you populate a database with this sample data.
+This section shows you how to create a simple schema and populate your ledger with sample data. All of the examples in the Query and Transact sections of the Documentation use the schema located here, so we recommend that you populate a ledger with this sample data.
 
 If you are using the user interface, you can issue all of the code on this page directly on the 'FlureeQL' page of your user interface. Make sure that you select 'Transact'.
 
 If you are using the API, you can issue all these transactions to endpoints ending with `/transact`. 
 
-### New Database
+### New Ledger
 
-Make sure that you have a new database. You can either create a new database through the user interface, through the API for the [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the API for the [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version).
+Make sure that you have a new ledger. You can either create a new ledger through the user interface, through the API for the [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the API for the [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version).
 
 ### Overview
 
-In Fluree, schema are comprised of collections and predicates. A [collection](/docs/schema/collections) is analogous to a relational database table. Every time you want a new type of item in your database, you would create a new collection. For example, collections in your database might be person, company, and city. 
+In Fluree, schema are comprised of collections and predicates. A [collection](/docs/schema/collections) is analogous to a relational ledger table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city. 
 
-Every collection has [predicates](/docs/schema/predicates). Predicates are analogous to relational database columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. The value of those predicates are called, objects (read more about the [subject-predicate-object model](/guides/intro/what-is-fluree#subject-predicate-object-model)).
+Every collection has [predicates](/docs/schema/predicates). Predicates are analogous to relational ledger columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. The value of those predicates are called, objects (read more about the [subject-predicate-object model](/guides/intro/what-is-fluree#subject-predicate-object-model)).
 
 Note that many of the transactions in this section can be combined, but are separated for clarity. 
 
@@ -90,7 +90,7 @@ Transactions not support in SPARQL
 
 ### Adding Predicates
 
-Schema predicates are similar to relational database columns. More information about predicates can be found in the [Predicates](/docs/schema/predicates) section. For now, we recommend you adding this basic schema and walking through the documentation section-by-section without concerning yourself too much with the syntax. 
+Schema predicates are similar to relational ledger columns. More information about predicates can be found in the [Predicates](/docs/schema/predicates) section. For now, we recommend you adding this basic schema and walking through the documentation section-by-section without concerning yourself too much with the syntax. 
 
 The below transaction creates the following predicates: 
 
@@ -378,7 +378,7 @@ Transactions not supported in SPARQL.
 
 ### Adding Sample Data
 
-You can issue the below transaction to add some sample data into your database. The below transaction adds four users, three chats, four comments, three artists, and three movies. 
+You can issue the below transaction to add some sample data into your ledger. The below transaction adds four users, three chats, four comments, three artists, and three movies. 
 
 <pre style="height: 200px;overflow-y: scroll"><code class="language-flureeql">
 [{

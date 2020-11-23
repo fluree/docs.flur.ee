@@ -20,13 +20,13 @@ Location | When Trigged?
 
 ### Function Predicates
 
-There are two built-in smart functions that come with every database, `["_fn/name", true]` and `["_fn/name", false]`, which simply return `true` or `false`, respectively. Below are all of the predicates that you can specify when creating a smart function.
+There are two built-in smart functions that come with every ledger, `["_fn/name", true]` and `["_fn/name", false]`, which simply return `true` or `false`, respectively. Below are all of the predicates that you can specify when creating a smart function.
 
 Predicate | Type | Description
 -- | -- | -- 
 `name` | `string` | Function name
 `params` | `(multi) string` | List of parameters this function supports.
-`code` | `string` | Actual database code
+`code` | `string` | Actual ledger code
 `doc` | `string` | A docstring for this function.
 `language` | `string` |  Programming language used (not yet implemented, currently only Clojure supported)
 `spec` | `JSON` | (not yet implemented) Optional spec for parameters. Spec should be structured as a map, parameter names are keys and the respective spec is the value.
@@ -75,13 +75,13 @@ Function | Arguments | Example | Description | Cost (in fuel)
 `get-all` | `subject` `[path]` | `(contains? (get-all ?s [\"chat/person\" \"person/user\"]) ?user)` | Returns nil or a set of all of a certain predicate (or predicate-path) from an subject. | 9 + length of path
 `valid-email?` | `x` | `(valid-email? (?o))` | Checks whether a value is a valid email using the following pattern, `[a-z0-9!#$%&'*+/=?^_{\|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_{\|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`. | 10
 `re-find` | `pattern` `string` | `(re-find "^[a-zA-Z0-9_][a-zA-Z0-9\.\-_]{0,254}" \"apples1\")` | Checks whether a string follows a given regex pattern. | 10 
-`db` | none | `(== (get db \"dbid\") 2)` | Returns a database object with the following keys: dbid, block, and permissions. | 10
-`query` | `query-string` |  `(query \"{\\\"select\\\":[\\\"*\\\"],\\\"from\\\":\\\"person\\\"}\")` | Allows you to query the current database. You need to doubly-escape the quotation marks in the query string `\"{\\\"select\\\":[\\\"*\\\"],\\\"from\\\":\\\"person\\\"}\"`. | Fuel required for the query. 
-`query` | `select-string` `from-string` `where-string` `block-string` `limit-string` |  `(get (query \"[*]\" [\"book/editor\" \"Penguin\"] nil nil nil) \"book/year\")` | Allows you to query the current database. The select-string should be inputted without any commas. The select-string and can be inputted without any quotation marks, for example, `"[* {person/user [*]}]"`, or you can optionally doubly-escape those strings `"[\\\"*\\\" {\\\"person/user\\\" [\\\"*\\\"]}]"`. | Fuel required for the query.  
+`db` | none | `(== (get db \"dbid\") 2)` | Returns a ledger object with the following keys: dbid, block, and permissions. | 10
+`query` | `query-string` |  `(query \"{\\\"select\\\":[\\\"*\\\"],\\\"from\\\":\\\"person\\\"}\")` | Allows you to query the current ledger. You need to doubly-escape the quotation marks in the query string `\"{\\\"select\\\":[\\\"*\\\"],\\\"from\\\":\\\"person\\\"}\"`. | Fuel required for the query. 
+`query` | `select-string` `from-string` `where-string` `block-string` `limit-string` |  `(get (query \"[*]\" [\"book/editor\" \"Penguin\"] nil nil nil) \"book/year\")` | Allows you to query the current ledger. The select-string should be inputted without any commas. The select-string and can be inputted without any quotation marks, for example, `"[* {person/user [*]}]"`, or you can optionally doubly-escape those strings `"[\\\"*\\\" {\\\"person/user\\\" [\\\"*\\\"]}]"`. | Fuel required for the query.  
 `relationship?` | `startSubject path endSubject` |  `(relationship? [\"_user/username\" \"anna\"] [\"_user/auth\" \"_auth/department\" \"company/_department\"] [\"company/name\" \"Fluree\"])` | Returns a true or false, depending on if there is a relationship between two subjects. Start and end subjects should resolve to either subject _ids or unique two-tuples. For example,  `(?sid)` resolves to a subject _id, `87960930223080` and `["_user/username" "anna"]` are all valid for start or end subjects. The path should be a single predicate or a vector of predicates that potentially connect the two subjects. | 10, plus fuel of query
 `rand` | `max seed` | `(rand 100)` | Returns a random integer from 0 to the `max` number you provided. A seed is optional. | 10
 
-Database function can also be combined, for instance `(inc (max 1.5 2 3))` will return 4. 
+ledger function can also be combined, for instance `(inc (max 1.5 2 3))` will return 4. 
 
 When you write a smart function and add it to the `_fn` collection, you can use the name of that smart function in other smart functions. 
 
@@ -122,7 +122,7 @@ mutation addTenFunc ($addThreeFunTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-Once, `addThree` is in the database, you can create a new function called `addTen`, which uses `addThree`. 
+Once, `addThree` is in the ledger, you can create a new function called `addTen`, which uses `addThree`. 
 
 ```flureeql
 [{

@@ -7,8 +7,8 @@ Action | Command | Explanation
 -- | -- | --
 Connect | <ul style="list-style-type:none; padding-left: 0;"><li>`connect`</li><li>`connect_p`</li></ul> | Connect to a ledger server/group using URL address(es)
 Close | `close` | Closes a connection
-DB | `db` | Returns a queryable database
-DB Schema | `db_schema` | Returns the schema map for a database 
+DB | `db` | Returns a queryable ledger
+DB Schema | `db_schema` | Returns the schema map for a ledger 
 New Ledger | `new_ledger` | Creates a new ledger
 Resolve Ledger | `resolve_ledger` | Resolves a ledger identity in the current connection
 Delete Ledger | `delete_ledger` | Deletes a ledger

@@ -33,7 +33,7 @@ Key | Required? | Description
 [where](#where-clause) | yes | A collection of tuples which contain matching logic and variable binding. The where clause can also contain [unions](#unions), [intermediate aggregate](#intermediate-aggregate-values) values, [binds](#bind), [optional](#optional) clauses, [filter](#filter) clauses.
 [optional](#optional-clauses) | no | A set of tuples, which are optional. In other words, if there is no match, `null` will be added to the matching pattern, rather than removing that pattern.
 [filter](#filter) | no | A set of filters and optional filters.
-[prefixes](#prefixes-and-querying-across-sources) | no | A map of sources, this is usually used for specifying external databases. 
+[prefixes](#prefixes-and-querying-across-sources) | no | A map of sources, this is usually used for specifying external ledgers. 
 `block` | no | Optional time-travel query specified by block number, duration, or wall-clock time as a ISO-8601 formatted string.
 `limit` | no | Optional limit (integer) of results to include. Default is 100.
 `orderBy` | no | Optional variable (string) or two-tuple where the first element is "ASC" or "DESC" and the second element is the variable name. For example, `"?favNums"` or `["ASC", "?favNums"]`
@@ -45,11 +45,11 @@ Key | Required? | Description
 ### Where Clause
 We suggest reading the [Where Clause](#where-clause) section before reading the [Select or Select One Clauses](#select-or-select-one-clauses) section. The where clause is the first part of the query that is resolved. 
 
-Where clauses are a collection of four-tuples. Each tuple is comprised of a source, subject, predicate, and object. Multiple four-tuples strung together allow us to finely filter data, and connect our Fluree to outside triple-store databases. The where clause can also contain [unions](#unions), [intermediate aggregate](#intermediate-aggregate-values) values, [binds](#bind), [optional](#optional) clauses, [filter](#filter) clauses.
+Where clauses are a collection of four-tuples. Each tuple is comprised of a source, subject, predicate, and object. Multiple four-tuples strung together allow us to finely filter data, and connect our Fluree to outside triple-store ledgers. The where clause can also contain [unions](#unions), [intermediate aggregate](#intermediate-aggregate-values) values, [binds](#bind), [optional](#optional) clauses, [filter](#filter) clauses.
 
 Value | Description
 -- | -- 
-`source` | Optional source. If no source included, assume current version database. See [Queries Across Sources](#queries-across-sources).
+`source` | Optional source. If no source included, assume current version ledger. See [Queries Across Sources](#queries-across-sources).
 `subject` | Reference to a subject. Can be an subject id, unique two-tuple, a variable (a string that begins with `?`), or null.
 `predicate` | Reference to a predicate. Can be either subject id, predicate name, or a variable (a string that begins with `?`).  Reverse references are *NOT* supported.
 `object` | Reference to an object. Can be a value, subject id, unique two-tuple, a variable (a string that begins with `?`), or null. <br/> <br/> If your object begins with a `?`, and it is NOT a variable, for example someone's name is `?Fred`, then you can use escape strings in the object, for example: `"\"?Fred\""`.
@@ -498,7 +498,7 @@ subject | `["person/handle", "zsmith"]` | The second element in a where-clause t
 predicate | `"person/favNums"`| The third element (or second, if we omit a source) in a where-clause tuple is the predicate. In this case, the specified predicate is a `multi` predicate of type `int`. We can specify any type and cardinality of predicate.
 object| `"?nums"`| The fourth element is for an object. Rather than specify an object, we bind any of the flake objects specified by subject, `["person/handle", "zsmith"]` and predicate `person/favNums` to the variable `"?nums"`. Variables have to begin with a `?`. These variables can be used in the `select` or `selectOne` statements. 
 
-\* In the above example, because our source is our current database, we can optionally omit the source element (leaving us with the tuple: `[["person/handle", "zsmith"], "person/favNums", "?nums"]`]).
+\* In the above example, because our source is our current ledger, we can optionally omit the source element (leaving us with the tuple: `[["person/handle", "zsmith"], "person/favNums", "?nums"]`]).
 
 Alternatively, if we want to specify every flake that contains favorite numbers, we set the subject as a variable. 
 
@@ -665,7 +665,7 @@ WHERE {
 }
 ```
 
-If we want to see a sample of size, 10, from all the favorite numbers in the database, we could issue the query: 
+If we want to see a sample of size, 10, from all the favorite numbers in the ledger, we could issue the query: 
 
 ```flureeql
 {
@@ -772,7 +772,7 @@ Bob | 2
 Bob | 9
 Bob | 42
 
-If there were any people in our database *without* favorite numbers, they would not appear in this query. However, if we want to preserve all `handle`s, even ones belonging to people without favorite numbers, we could issue this query:
+If there were any people in our ledger *without* favorite numbers, they would not appear in this query. However, if we want to preserve all `handle`s, even ones belonging to people without favorite numbers, we could issue this query:
 
 ```flureeql
 {
@@ -1342,18 +1342,18 @@ Transactions not supported in SPARQL.
 A few things to note with full text searching:
 
 1. The full-text search index is not guaranteed to be fully up-to-date. It may take some time for index to become synchronized.
-2. Full-text search is only available for the current Fluree database. 
+2. Full-text search is only available for the current Fluree ledger. 
 
 ### Prefixes and Querying Across Sources
 
-Each tuple in a where clause is a triple with an optional added piece of information at the beginning (source). This tuple structure allows users to query across multiple points in time and across data sources. Currently, we support querying across multiple Fluree databases and across Wikidata.
+Each tuple in a where clause is a triple with an optional added piece of information at the beginning (source). This tuple structure allows users to query across multiple points in time and across data sources. Currently, we support querying across multiple Fluree ledgers and across Wikidata.
 
-There are several built-in sources that you can simply specify at the beginning of a clause, for example `["$fdb6", "?person", "person/handle", "jdoe"]`. These built in source all begin with a `$`, and they are listed below. Later in this section, we will demonstrate how to use database across different Fluree databases. 
+There are several built-in sources that you can simply specify at the beginning of a clause, for example `["$fdb6", "?person", "person/handle", "jdoe"]`. These built in source all begin with a `$`, and they are listed below. Later in this section, we will demonstrate how to use ledger across different Fluree ledgers. 
 
 Source | Description 
 -- | --
 `$fdb` | Default source. The current version of a given Fluree. Can be omitted. 
-`$fdb3` | Fluree at a specified block, for example `$fdb10` is a given database at block 10. 
+`$fdb3` | Fluree at a specified block, for example `$fdb10` is a given ledger at block 10. 
 `$fdb2019-03-14T20:59:36.097Z` | Fluree at a specified ISO-8601 formatted wall clock time. 
 `$fdbPT5M` | Fluree as of a specified ISO-8601 formatted duration ago. For example, `$fdbPT5M` is as of 5 minutes ago.  
 `$wd` | Wikidata 
@@ -1428,7 +1428,7 @@ WHERE {
 ```
 
 #### Prefixes 
-If we want to query across multiple Fluree databases we can do so by specifying the database in the `prefixes` map. 
+If we want to query across multiple Fluree ledgers we can do so by specifying the ledger in the `prefixes` map. 
 
 ```flureeql
 {
@@ -1571,10 +1571,10 @@ WHERE {
 ```
 
 #### Permissions
-If you want to access information in different databases, you need to have permissions to access those databases, and those databases need to be running on the same transactor. 
+If you want to access information in different ledgers, you need to have permissions to access those ledgers, and those ledgers need to be running on the same transactor. 
 
-1. If you are accessing outside databases in the **same network** as your current database (i.e. `fluree/one` and `fluree/test`) and **fdb-open-api** is `true`, then you can freely query across databases. 
-2. In any other situation, `fdb-open-api` must be `false`, and your query must be signed. The `_auth` record with which you signed your query will be the one that determines your permissions for each given database. 
+1. If you are accessing outside ledgers in the **same network** as your current ledger (i.e. `fluree/one` and `fluree/test`) and **fdb-open-api** is `true`, then you can freely query across ledgers. 
+2. In any other situation, `fdb-open-api` must be `false`, and your query must be signed. The `_auth` record with which you signed your query will be the one that determines your permissions for each given ledger. 
 
 ### WikiData Examples
 
@@ -1680,7 +1680,7 @@ WHERE {
 
 To learn more about querying Wikidata, visit their [documentation](https://www.wikidata.org/wiki/Wikidata:Introduction). Also, stay tuned for our [analytical query lessons](/lessons) coming soon!
 
-Note that cross-database queries can take some time. 
+Note that cross-ledger queries can take some time. 
 
 ### Wikidata Options
 

@@ -42,11 +42,11 @@ Key | Required? | Description
 ### Where Clause
 We suggest reading the [Where Clause](#where-clause) section before reading the [Select or Select One Clauses](#select-or-select-one-clauses) section. The where clause is the first part of the query that is resolved. 
 
-Where clauses are a collection of four-tuples. Each tuple is comprised of a source, subject, predicate, and object. Multiple four-tuples strung together allow us to finely filter data, and connect our Fluree to outside triple-store databases. 
+Where clauses are a collection of four-tuples. Each tuple is comprised of a source, subject, predicate, and object. Multiple four-tuples strung together allow us to finely filter data, and connect our Fluree to outside triple-store ledgers. 
 
 Value | Description
 -- | -- 
-`source` | Optional source. If no source included, assume current version database. See [Queries Across Sources](#queries-across-sources).
+`source` | Optional source. If no source included, assume current version ledger. See [Queries Across Sources](#queries-across-sources).
 `subject` | Reference to a subject. Can be an subject id, unique two-tuple, a variable (a string that begins with `?`), or null.
 `predicate` | Reference to a predicate. Can be either subject id, predicate name, or a variable (a string that begins with `?`).  Reverse references are *NOT* supported.
 `object` | Reference to an object. Can be a value, subject id, unique two-tuple, a variable (a string that begins with `?`), or null.
@@ -149,7 +149,7 @@ subject | `["person/handle", "zsmith"]` | The second element in a where-clause t
 predicate | `"person/favNums"`| The third element (or second, if we omit a source) in a where-clause tuple is the predicate. In this case, the specified predicate is a `multi` predicate of type `int`. We can specify any type and cardinality of predicate.
 object| `"?nums"`| The fourth element is for an object. Rather than specify an object, we bind any of the flake objects specified by subject, `["person/handle", "zsmith"]` and predicate `person/favNums` to the variable `"?nums"`. Variables have to begin with a `?`. These variables can be used in the `select` or `selectOne` statements. 
 
-\* In the above example, because our source is our current database, we can optionally omit the source element (leaving us with the tuple: `[["person/handle", "zsmith"], "person/favNums", "?nums"]`]).
+\* In the above example, because our source is our current ledger, we can optionally omit the source element (leaving us with the tuple: `[["person/handle", "zsmith"], "person/favNums", "?nums"]`]).
 
 Alternatively, if we want to specify every flake that contains favorite numbers, we set the subject as a variable. 
 
@@ -314,7 +314,7 @@ WHERE {
 }
 ```
 
-If we want to see a sample of size, 10, from all the favorite numbers in the database, we could issue the query: 
+If we want to see a sample of size, 10, from all the favorite numbers in the ledger, we could issue the query: 
 
 ```flureeql
 {
@@ -397,7 +397,7 @@ Bob | 2
 Bob | 9
 Bob | 42
 
-If there were any people in our database *without* favorite numbers, they would not appear in this query. However, if we want to preserve all `handle`s, even ones belonging to people without favorite numbers, we could issue this query:
+If there were any people in our ledger *without* favorite numbers, they would not appear in this query. However, if we want to preserve all `handle`s, even ones belonging to people without favorite numbers, we could issue this query:
 
 ```all
 {
@@ -555,12 +555,12 @@ Example results for the above query:
 
 ### Queries Across Sources
 
-Each tuple in a where clause is essentially a triple with an added piece of information at the beginning (source) and at the end (options). This tuple structure allows users to query across multiple points in time and across data sources. Currently, we support querying across Fluree and Wikidata. In the future, we will support additional data sources, as well as the ability to query across multiple Fluree databases. 
+Each tuple in a where clause is essentially a triple with an added piece of information at the beginning (source) and at the end (options). This tuple structure allows users to query across multiple points in time and across data sources. Currently, we support querying across Fluree and Wikidata. In the future, we will support additional data sources, as well as the ability to query across multiple Fluree ledgers. 
 
 Source | Description 
 -- | --
 `$fdb` | Default source. The current version of a given Fluree. Can be omitted. 
-`$fdb3` | Fluree at a specified block, for example `$fdb10` is a given database at block 10. 
+`$fdb3` | Fluree at a specified block, for example `$fdb10` is a given ledger at block 10. 
 `$fdb2019-03-14T20:59:36.097Z` | Fluree at a specified ISO-8601 formatted wall clock time. 
 `$fdbPT5M` | Fluree as of a specified ISO-8601 formatted duration ago. For example, `$fdbPT5M` is as of 5 minutes ago.  
 `$wd` | Wikidata 
@@ -712,7 +712,7 @@ WHERE {
 
 To learn more about querying Wikidata, visit their [documentation](https://www.wikidata.org/wiki/Wikidata:Introduction). Also, stay tuned for our [analytical query lessons](/lessons) coming soon!
 
-Note that cross-database queries can take some time. 
+Note that cross-ledger queries can take some time. 
 
 ### Wikidata Options
 

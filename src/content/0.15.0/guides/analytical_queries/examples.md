@@ -523,7 +523,7 @@ WHERE {
 
 To learn more about querying Wikidata, visit their [documentation](https://www.wikidata.org/wiki/Wikidata:Introduction). Also, stay tuned for our [analytical query lessons](/lessons) coming soon!
 
-Note that cross-database queries can take some time. 
+Note that cross-ledger queries can take some time. 
 
 
 ### Group By

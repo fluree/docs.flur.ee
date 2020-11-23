@@ -26,10 +26,10 @@ Predicate | Type | Description
 `_auth/doc` | `string` | (optional) A docstring for this auth record.
 `_auth/key` | `string` |  (optional) A unique lookup key for this auth record.
 `_auth/type` | `tag` | (optional) The type of authorization this is. Current type tags supported are: `password`. 
-`_auth/secret` | `string` | (optional) The hashed secret. When using this as a `password` `_auth/type`, it is the one-way encrypted password. This predicate is not used anywhere in the database, but you can create an application using logins and passwords with the help of this predicate. 
+`_auth/secret` | `string` | (optional) The hashed secret. When using this as a `password` `_auth/type`, it is the one-way encrypted password. This predicate is not used anywhere in the ledger, but you can create an application using logins and passwords with the help of this predicate. 
 `_auth/hashType` | `tag` | (optional) The type of hashing algorithm used on the `_auth/secret`. 
-`_auth/resetToken` | `string` | (optional) If the user is currently trying to reset a password/secret, an indexed reset token can be stored here allowing quick access to the specific auth record that is being reset. This predicate is not used anywhere in the database, but you can create an application using logins and passwords with the help of this predicate. 
-`_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to use if authenticated via this auth record. If not provided, this `_auth` record will not be able to view or change anything in the database. 
+`_auth/resetToken` | `string` | (optional) If the user is currently trying to reset a password/secret, an indexed reset token can be stored here allowing quick access to the specific auth record that is being reset. This predicate is not used anywhere in the ledger, but you can create an application using logins and passwords with the help of this predicate. 
+`_auth/roles` | `[ref]` | (optional) Multi-cardinality reference to roles to use if authenticated via this auth record. If not provided, this `_auth` record will not be able to view or change anything in the ledger. 
 `_auth/authority` | `[ref]` | (optional) Authorities for this auth record. References another _auth record. Any auth records referenced in `_auth/authority` can sign a transaction in place of this auth record. To use an authority, you must sign your transaction using the authority's auth record. See more the guide for more on [authority](/guides/identity/auth-records#authority). 
 `_auth/fuel` | `long` | Fuel this auth record has. Fuel is used to meter usage in the hosted version of Fluree, but an application can use this predicate to meter fuel usage in the downloadable version as well. 
 
@@ -52,4 +52,4 @@ Predicate | Type | Description
 `_rule/predicates` | `[string]`| (optional) A multi-cardinality list of predicates this rule applies to. The special glob character `*` can be used to indicate all predicates (wildcard).
 `_rule/fns` | `[ref]` | (required) Multi-cardinality reference to `_fn` subject. See the [functions](/docs/schema/functions) for all possible functions. 
 `_rule/ops` | `[tag]` | (required) Multi-cardinality tag of action(s) this rule applies to. Current tags supported are `query` for query/read access, `transact` for transact/write access, and `all` for all operations.
-`_rule/errorMessage` | `string` | (optional) If this rule prevents a transaction from executing, this optional error message can be returned to the client instead of the default error message (which is intentionally generic to limit insights into the database configuration).
+`_rule/errorMessage` | `string` | (optional) If this rule prevents a transaction from executing, this optional error message can be returned to the client instead of the default error message (which is intentionally generic to limit insights into the ledger configuration).

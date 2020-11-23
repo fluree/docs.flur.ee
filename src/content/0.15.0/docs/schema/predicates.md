@@ -1,12 +1,12 @@
 ## Predicates
 
-Schema predicates are similar to relational database columns, however there are fewer restrictions (any predicate can be attached to any subject, unless a restriction is put in place using a spec).
+Schema predicates are similar to relational ledger columns, however there are fewer restrictions (any predicate can be attached to any subject, unless a restriction is put in place using a spec).
 
-Remember that Fluree schema are stored in the database in the same way as any other type of information. This means that because `_predicate` is a type of thing in our database, there is a `_predicate` collection (similar to a relational database table). Furthermore, the `_predicate` collection has its own predicates. 
+Remember that Fluree schema are stored in the ledger in the same way as any other type of information. This means that because `_predicate` is a type of thing in our ledger, there is a `_predicate` collection (similar to a relational ledger table). Furthermore, the `_predicate` collection has its own predicates. 
 
 ### _predicate Predicates
 
-Below are the built-in predicates for the `_predicate` collection. As mentioned  in the [collection section](/docs/schema/collections), you can add additional predicates if you wish. You are also able to delete predicates, although this is strongly discouraged and may break parts of your database.  
+Below are the built-in predicates for the `_predicate` collection. As mentioned  in the [collection section](/docs/schema/collections), you can add additional predicates if you wish. You are also able to delete predicates, although this is strongly discouraged and may break parts of your ledger.  
 
 Predicate | Type | Description
 ---|---|---
@@ -26,8 +26,8 @@ Predicate | Type | Description
 `_predicate/txSpecDoc` | `string` | (optional) Optional docstring to describe the txSpecs. Is thrown when any txSpec fails. 
 `_predicate/restrictCollection` | `string` | (optional) Only applicable to predicates of `ref` (reference) types. It will restrict references to only be allowed from the specified collection.
 `_predicate/restrictTag` | `boolean` | (optional) Only applicable to predicates of type `tag`. If true, a tag, which corresponds to this predicate object must exist before adding predicate-object pair.
-`_predicate/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and database functions won't be permitted on this value.
-`_predicate/fullText` | `boolean` | (optional) If true, full text search enabled on this database. By default, the language for a Fluree database is set to English. You can change the default language in [database settings](/docs/schema/settings).
+`_predicate/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and ledger functions won't be permitted on this value.
+`_predicate/fullText` | `boolean` | (optional) If true, full text search enabled on this ledger. By default, the language for a Fluree ledger is set to English. You can change the default language in [ledger settings](/docs/schema/settings).
 
 ### Predicate Types
 
@@ -126,7 +126,7 @@ Transactions not support in SPARQL
 ```
 
 ### Adding a Predicate to `_predicate`
-`_predicate` is a built-in database collection with built-in predicates. This does not mean, for instance, that you cannot add predicates. For example, you may want to add a `_predicate/longDescription` predicate, where you store a longer version of `_predicate/doc`. 
+`_predicate` is a built-in ledger collection with built-in predicates. This does not mean, for instance, that you cannot add predicates. For example, you may want to add a `_predicate/longDescription` predicate, where you store a longer version of `_predicate/doc`. 
 
 You can do this by adding a new predicate:
 

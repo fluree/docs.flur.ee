@@ -125,7 +125,7 @@ Bob | 2
 Bob | 9
 Bob | 42
 
-If there were any people in our database *without* favorite numbers, they would not appear in this query. However, if we want to preserve all `handle`s, even ones belonging to people without favorite numbers, we could issue this query:
+If there were any people in our ledger *without* favorite numbers, they would not appear in this query. However, if we want to preserve all `handle`s, even ones belonging to people without favorite numbers, we could issue this query:
 
 ```flureeql
 {

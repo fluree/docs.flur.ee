@@ -6,7 +6,7 @@ Identity and access management is a system that uses authentication, authorizati
 
 ### Setting Up
 
-For this example, we'll create a basic illusion database for a magicians' guild. Magicians like to keep their illusions secret, so we'll implement roles for our users which will only allow trusted magicians to see sensitive information, such as how exactly an illusion is performed. We'll leave less sensitive information, like names and basic descriptions open to querying by users who have not gained the trust of the guild.
+For this example, we'll create a basic illusion ledger for a magicians' guild. Magicians like to keep their illusions secret, so we'll implement roles for our users which will only allow trusted magicians to see sensitive information, such as how exactly an illusion is performed. We'll leave less sensitive information, like names and basic descriptions open to querying by users who have not gained the trust of the guild.
 
 ### Open / Closed API
 

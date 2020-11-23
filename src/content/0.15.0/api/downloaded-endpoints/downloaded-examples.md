@@ -17,9 +17,9 @@ Body: Null
 
 ### /new-db
 
-A database id must begin with a network name followed by a `/` and a dbid. Network names and dbids may only contain lowercase letters and numbers. In your request, you must specify `db/id`.
+A ledger id must begin with a network name followed by a `/` and a dbid. Network names and dbids may only contain lowercase letters and numbers. In your request, you must specify `db/id`.
 
-If the network specified does not exist, it creates a new network. This request returns a command id, the request does not wait to database to be fully initialized before returning.
+If the network specified does not exist, it creates a new network. This request returns a command id, the request does not wait to ledger to be fully initialized before returning.
 
 These requests do not need to be signed.
 
@@ -30,7 +30,7 @@ Headers: None
 Body: {"db/id": "test/one"}
 ```
 
-You can also use the `/new-db` endpoint to create a database from a snapshot. See [snapshotting a database](/docs/database-setup/snapshotting-a-database) for more information.
+You can also use the `/new-db` endpoint to create a ledger from a snapshot. See [snapshotting a ledger](/docs/database-setup/snapshotting-a-database) for more information.
 
 ```all
 Action: POST
@@ -43,9 +43,9 @@ Body: {
 
 ### /snapshot
 
-This creates a LOCAL snapshot of a particular ledger - it does not create snapshots on every transactor in the network. A snapshot file can be used to create a database from a snapshot (see [snapshotting](/docs/database-setup/snapshotting-a-database) and [new-db](#-new-db)).
+This creates a LOCAL snapshot of a particular ledger - it does not create snapshots on every transactor in the network. A snapshot file can be used to create a ledger from a snapshot (see [snapshotting](/docs/database-setup/snapshotting-a-database) and [new-db](#-new-db)).
 
-To create a snapshot, simply send an empty POST request to the `/snapshot` endpoint. The below example creates a snapshot of a database with network `dev` and ledger-id `main`.
+To create a snapshot, simply send an empty POST request to the `/snapshot` endpoint. The below example creates a snapshot of a ledger with network `dev` and ledger-id `main`.
 
 ```all
 Action: POST
@@ -67,9 +67,9 @@ Body: {
 
 ### /list-snapshots
 
-This lists all LOCAL snapshot for a particular ledger - it does not list snapshots on every transactor in the network. A snapshot file can be used to create a database from a snapshot (see [snapshotting](/docs/database-setup/snapshotting-a-database) and [new-db](#-new-db)).
+This lists all LOCAL snapshot for a particular ledger - it does not list snapshots on every transactor in the network. A snapshot file can be used to create a ledger from a snapshot (see [snapshotting](/docs/database-setup/snapshotting-a-database) and [new-db](#-new-db)).
 
-To list snapshots, simply send an empty POST request to the `/list-snapshots` endpoint. The below example checks for local snapshots of a database with network `dev` and ledger-id `main`.
+To list snapshots, simply send an empty POST request to the `/list-snapshots` endpoint. The below example checks for local snapshots of a ledger with network `dev` and ledger-id `main`.
 
 ```all
 Action: POST
@@ -178,7 +178,7 @@ Only one configuration change can be in process at once. Attempts to issues simu
 
 All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
 
-An example of an unsigned request to `/query` with the network, `dev` and the database `main`:
+An example of an unsigned request to `/query` with the network, `dev` and the ledger `main`:
 
 ```all
 Action: POST
@@ -459,16 +459,16 @@ Body: [{
 
 ### /query-with
 
-Returns the results of a query using the existing database flakes, including flakes that are provided with the query.
+Returns the results of a query using the existing ledger flakes, including flakes that are provided with the query.
 
 The request expects a map with two key-value pairs:
 
 | Key      | Value                                                                              |
 | -------- | ---------------------------------------------------------------------------------- |
 | `flakes` | An array of valid flakes                                                           |
-| `query`  | A query to issue against the current database plus the flakes in the flakes value. |
+| `query`  | A query to issue against the current ledger plus the flakes in the flakes value. |
 
-The `t` on the flakes provided has to be current with the latest database. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes.
+The `t` on the flakes provided has to be current with the latest ledger. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes.
 
 ```all
 Action: POST
@@ -481,17 +481,17 @@ Body: {
 
 ### /test-transact-with
 
-Given a valid set of flakes that could be added to the database at a given point in time and a transaction, returns the flakes that would be added to a ledger if a given transaction is issued.
+Given a valid set of flakes that could be added to the ledger at a given point in time and a transaction, returns the flakes that would be added to a ledger if a given transaction is issued.
 
 The request expects a map with the following key-value pairs:
 
 | Key      | Value                                                                                                                                                           |
 | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `flakes` | An array of valid flakes                                                                                                                                        |
-| `txn`    | A transaction to issue against the current database plus the flakes in the flakes value. This endpoint does _NOT_ actually write the transaction to the ledger. |
+| `txn`    | A transaction to issue against the current ledger plus the flakes in the flakes value. This endpoint does _NOT_ actually write the transaction to the ledger. |
 | `auth`   | (Optional) The `_auth/id` with which to issue the transaction.                                                                                                  |
 
-The `t` on the flakes provided has to be current with the latest database. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes.
+The `t` on the flakes provided has to be current with the latest ledger. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes.
 
 ```all
 Action: POST
@@ -524,13 +524,13 @@ Action: GET
 Endpoint: http://localhost:8080/fdb/health
 ```
 
-### /ledger-stats
+### /database-stats
 
-A POST request to `/fdb/[NETWORK-NAME]/[DBID]/ledger-stats` provides stats about the requested ledger.
+A POST request to `/fdb/[NETWORK-NAME]/[DBID]/database-stats` provides stats about the requested ledger.
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/ledger-stats
+Endpoint: http://localhost:8080/fdb/dev/main/database-stats
 Headers: None
 Body: None
 ```

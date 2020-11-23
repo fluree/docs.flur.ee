@@ -237,4 +237,4 @@ Transactions not supported in SPARQL.
 A few things to note with full text searching:
 
 1. The full-text search index is not guaranteed to be fully up-to-date. It may take some time for index to become synchronized.
-2. Full-text search is only available for the current Fluree database. 
+2. Full-text search is only available for the current Fluree ledger. 

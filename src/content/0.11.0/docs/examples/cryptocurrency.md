@@ -4,7 +4,7 @@ This example outlines how a user can create a simple cryptocurrency using Fluree
 
 ### Create a Schema
 
-The first step is to create a `wallet` collection with the predicates `wallet/balance`, which tracks the amount of currency each user has, `wallet/user`, which references a database `_user`, and `wallet/Name`, which is a unique name for the subject. 
+The first step is to create a `wallet` collection with the predicates `wallet/balance`, which tracks the amount of currency each user has, `wallet/user`, which references a ledger `_user`, and `wallet/Name`, which is a unique name for the subject. 
 
 ```flureeql
 [{
@@ -452,7 +452,7 @@ mutation addCryptoWoman ($addCryptoWomanTx: JSON) {
 Transactions not supported
 ``` -->
 
-Whereas adding to her own wallet will fail. Even if she doesn't know her current balance, she can use the database function, (`?pO`) to get the previous value of her `wallet/balance`.
+Whereas adding to her own wallet will fail. Even if she doesn't know her current balance, she can use the ledger function, (`?pO`) to get the previous value of her `wallet/balance`.
 
 ```all
 Private Key: 65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19
