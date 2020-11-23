@@ -32,4 +32,4 @@ For queries and transactions, a signature is not required if the option `fdb-ope
 
 More information on [signing queries](/docs/identity/signatures#signed-queries) and [signing transactions](/docs/identity/signatures#signed-transactions) can be found in the linked sections. 
 
-See [JavaScript Library Examples](/library/javascript-library/javascript-examples) for examples of how to use each of the commands.
+See [JavaScript Library Examples](/tools/javascript-library/javascript-examples) for examples of how to use each of the commands.
