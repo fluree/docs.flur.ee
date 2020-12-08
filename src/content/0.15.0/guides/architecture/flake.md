@@ -40,9 +40,9 @@ These Flakes can be represented in a spreadsheet format as follows:
 | 26  | John | Smith |              | jsmith  | _-> 25_ | _-> 88_ |          |
 | 88  |      |       |              |         |         |         | ACME Inc |
 
-So John follows Jane, and works for ACME Inc. It hopefully is clear how Flakes can be viewed as giant spreadsheet, and once seeing the giant spreadsheet how it could instead be visualized as a graph. Fluree, as a graph database, never needs to translate Flakes into a spreadsheet form, but it can be helpful to see this transition to understand how a Flakes ultimately represent a graph. 
+Here we see some relationships in the `follows` and `worksFor` columns. John follows Jane, and works for ACME Inc. Ultimately Flakes,while represented here as both a list/set and a rectangle/spreadsheet, are made available as a high performing graph.
 
-Cells with no values are considered 'sparse' meaning they consume no disk space unlike would happen in a relational database. This is just one of the characterstics Fluree would share with a columnar database, even thought its graph form could be considered a far more powerful than columnar databases.
+Cells with no values are considered 'sparse' meaning they consume no disk space unlike would happen in a relational database. This is just one of the characterstics Fluree would share with a columnar database. In the right use cases, a graph can have some of the benefits of a column database without many of the limitations.
 
 ### Relation to RDF
 
