@@ -18,7 +18,8 @@ A Flake's 6 elements are:
 - `op` -> Operation boolean - if adding Flake or retracting Flake (`true` or `false`)
 - `m` -> Additional metadata for [RDF\*](https://w3c.github.io/rdf-star/) (nil, or a map keys/values)
 
-The following example helps visualize how individual Flakes translate to the giant spreadshee analogy:
+The following example helps visualize how individual Flakes translate to the giant spreadsheet analogy. Take, for example, the following set of Flakes:
+
 ```all
 [25 'firstName' 'Jane'         -42 true]
 [25 'lastName'  'Doe'          -42 true]
@@ -31,6 +32,7 @@ The following example helps visualize how individual Flakes translate to the gia
 [26 'worksFor'   88            -45 true]
 [88 'company'   'ACME Inc"     -10 true]
 ```
+These Flakes can be represented in a spreadsheet format as follows:
 
 |  _id | firstName  | lastName  | email  | username  | follows  | worksFor  | company  |
 |---|---|---|---|---|---|---|---|
@@ -39,6 +41,8 @@ The following example helps visualize how individual Flakes translate to the gia
 | 88  |      |       |              |         |         |         | ACME Inc |
 
 So John follows Jane, and works for ACME Inc. It hopefully is clear how Flakes can be viewed as giant spreadsheet, and once seeing the giant spreadsheet how it could instead be visualized as a graph. Fluree, as a graph database, never needs to translate Flakes into a spreadsheet form, but it can be helpful to see this transition to understand how a Flakes ultimately represent a graph. 
+
+Cells with no values are considered 'sparse' meaning they consume no disk space unlike would happen in a relational database. This is just one of the characterstics Fluree would share with a columnar database, even thought its graph form could be considered a far more powerful than columnar databases.
 
 ### Relation to RDF
 

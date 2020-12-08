@@ -15,7 +15,7 @@
     "architecture": {
         "pageName": "Architecture",
         "subTopics": {
-            "intro": {
+            "flakes": {
                 "headerName": "Flakes",
                 "file": "0.15.0/guides/architecture/flake"
             }
