@@ -7,7 +7,7 @@ Every piece of data inside of a Fluree ledger is held in a data structure called
 - Fast comparisons for queries
 - Information required to provide Fluree's unique feature set
 
-At a basic level, Fluree can be envisioned as a giant spreadsheet of data, with every moment in time creating a new version that can instantly be referenced. Each Flake defines a single cell in that giant spreadsheet, by identifying the row number (subject ID), the column (predicate ID), and the cell's value (called object in RDF). Data in Fluree is much more powerful than if it were in giant spreadsheet however, it is a semantic graph database with time travel and provable provenance. To capture some of this richness, a Flake needs to describe a bit more than just subject, predicate and object. The Flake data structure also allows Fluree to operate queries with characteristics of a columnar database.
+At a basic level, Fluree can be envisioned as a giant spreadsheet of data, with every moment in time creating a new version that can instantly be referenced. Each Flake defines a single cell in that giant spreadsheet, by identifying the row number (subject ID), the column (predicate ID), and the cell's value (called object in RDF). Data in Fluree is much more powerful than if it were in giant spreadsheet however, it is a semantic graph database with time travel and provable provenance. To capture some of this richness, a Flake needs to describe a bit more than just subject, predicate and object.
 
 A Flake's 6 elements are:
 
