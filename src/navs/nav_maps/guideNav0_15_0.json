@@ -12,6 +12,15 @@
             }
         } 
     },
+    "architecture": {
+        "pageName": "Architecture",
+        "subTopics": {
+            "intro": {
+                "headerName": "Flakes",
+                "file": "0.15.0/guides/architecture/flake"
+            }
+        } 
+    },
     "infrastructure": {
         "pageName": "Infrastucture",
         "subTopics": {
