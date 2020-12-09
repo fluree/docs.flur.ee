@@ -18,6 +18,10 @@
             "flakes": {
                 "headerName": "Flakes",
                 "file": "0.15.0/guides/architecture/flake"
+            },
+            "indexes": {
+                "headerName": "Indexes",
+                "file": "0.15.0/guides/architecture/indexes"
             }
         } 
     },
