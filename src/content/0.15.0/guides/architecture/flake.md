@@ -197,7 +197,9 @@ If one wanted to list the hash and email of the person that transacted data for 
            ["?auth", "email", "?email"]]}
 ```
 
-Transactional metadata Flakes, like every Flake, also has a `t` value, but in this case it points to its own subject. The originating transaction string that was signed is not included in the queryable indexes as it is uncommon to want it and would effectively double the amount of storage required for a Fluree ledger. This data is however always contained in the block/ledger log which can always be accessed with a [block query](/docs/query/block-query).
+Transactional metadata Flakes, like every Flake, also has a `t` value. Using a Flake from the example above, `[-86 'hash' 'a5c487' -86 true]`, the `s` and `t` values are both `-86`. This is because the transaction that put this Flake into the ledger is itself. 
+
+It is worth noting that the original transaction string that was signed to prove identity does not get included in the queryable indexes but it is always present in the ledger blocks. This decision was made because it would effectively double the size of every index and it is data that is needed primarily for auditing. To get the original transaction string one can use the `block` query which operates on the ledger and not the indexes. The `block` query can be used to find all data for just a transaction (`t` value), or an entire block which will contain multiple transactions. Permissions are still applied to `block` queries, so users may have filtered views of the results.
 
 ### 't' as Time
 
