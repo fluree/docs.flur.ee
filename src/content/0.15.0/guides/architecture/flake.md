@@ -16,21 +16,23 @@ A Flake's 6 elements are:
 - `o` -> Object - analagous to a cell value in a spreadsheet (mixed type)
 - `t` -> Transaction reference (long negative integer)
 - `op` -> Operation boolean - if adding Flake or retracting Flake (`true` or `false`)
-- `m` -> Additional metadata for [RDF\*](https://w3c.github.io/rdf-star/) (nil, or a map keys/values)
+- `m` -> Additional metadata for [RDF\*](https://w3c.github.io/rdf-star/) (nil, or a map keys/values) and other future functionality
 
 The following example helps visualize how individual Flakes translate to the giant spreadsheet analogy. Take, for example, the following set of Flakes:
 
 ```all
-[25 'firstName' 'Jane'         -42 true]
-[25 'lastName'  'Doe'          -42 true]
-[25 'email'     'jane@doe.com' -86 true]
-[25 'username'  'janedoe'      -42 true]
-[26 'firstName' 'John'         -45 true]
-[26 'lastName'  'Smith'        -45 true]
-[26 'username'  'jsmith'       -45 true]
-[26 'follows'    25            -45 true]
-[26 'worksFor'   88            -45 true]
-[88 'company'   'ACME Inc"     -10 true]
+;; s     p          o             t   op  + (nil 'm' values)
+;;---------------------------------------
+  [25 'firstName' 'Jane'         -42 true]
+  [25 'lastName'  'Doe'          -42 true]
+  [25 'email'     'jane@doe.com' -86 true]
+  [25 'username'  'janedoe'      -42 true]
+  [26 'firstName' 'John'         -45 true]
+  [26 'lastName'  'Smith'        -45 true]
+  [26 'username'  'jsmith'       -45 true]
+  [26 'follows'    25            -45 true]
+  [26 'worksFor'   88            -45 true]
+  [88 'company'   'ACME Inc"     -10 true]
 ```
 These Flakes can be represented in a spreadsheet format as follows:
 
@@ -46,7 +48,7 @@ Cells with no values are considered 'sparse' meaning they consume no disk space 
 
 ### Relation to RDF
 
-A Flake builds on the [W3C RDF](https://www.w3.org/RDF/) standard, often referred to as "triples" (a 3-tuple of subject, predicate, object), to account for the additional functionality Fluree provides.
+A Flake builds on the [W3C RDF](https://www.w3.org/RDF/) standard, often referred to as "triples" (a 3-tuple of subject, predicate, object), to account for the additional functionality Fluree provides. In addition to `s`, `p`, and `o`, Fluree adds:
 
 - The `t` (transaction ref) value points to the subject of the transaction metadata which itself is stored as additional Flakes. This allows every Flake to be tied back to its origins where cryptographic proofs exist to verify the data hasn't been tampered with in addition to the digital signature that ties together the Flake, and the originating transaction, to the identity of the person/machine that created it. In addition the `t` value also represents an atomic notion of time.
 - The `op` is a boolean value that represents assertions and retractions across time. RDF triples have no notion of time - they represent a set of "facts" - which inheritly represent a single moment (time) of truth. Fluree's time travel requires us to know data that used to be true, but not longer is as of a moment in time. A Flake where `op` is equal to `false` in a ledger means it is a fact that used to be true, but no longer is. A `true` value for `op` means it is a newly asserted fact as of that moment in time (represented by the Flake's `t` value).
@@ -222,9 +224,9 @@ While other subject IDs atomically increment with each new subject added within 
 
 Also, when transporting data serialized as JSON, which is logical for a JavaScript environment, numbers are represented as a string. So the 64-bit number of  `-1` as a UTF-8 encoded string consumes just 16 bits, while `-1000000` consumes 64-bits, and `-9223372036854775808` (the max number of transactions) is a 160 bit string. From a transport standpoint smaller numbers mean less bits going across the wire. As a `t` value exists with every Flake, using a smaller numbers results in less data transfer and a faster database. Therefore segmenting a huge chunk of an unsigned 64-bit integer to `t` subject ids would have resulted in more bandwidth.
 
-### Flake vs RDF\*
+### Flake vs RDF\* (RDF-star)
 
-Adding information about triples is the goal of RDF\*, and our Flake format certainly does exactly this with its `t`, `op`, and `m` values. With the exception of `op`, which RDF\* does not contempate as it relates to data over time, it could very much be used to represent both `t` and `m`. In fact we have RDF\* export on the roadmap.
+Adding information about triples is the goal of [RDF\*](https://w3c.github.io/rdf-star/), and our Flake format certainly does exactly this with its `t`, `op`, and `m` values. With the exception of `op`, which RDF\* does not contempate as it relates to data over time, it could very much be used to represent both `t` and `m`. In fact we have RDF\* export on the roadmap.
 
 But the Flake is an internal representation meant to be [highly optimized](#overview) for speed and compact storage. RDF\*, while a capable method of expressing metadata about a triple, is neither compact nor speedy.
 
