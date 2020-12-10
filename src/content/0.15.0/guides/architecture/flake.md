@@ -46,14 +46,6 @@ Here we see some relationships in the `follows` and `worksFor` columns. John fol
 
 Cells with no values are considered 'sparse' meaning they consume no disk space unlike would happen in a relational database. This is just one of the characterstics Fluree would share with a columnar database. In the right use cases, a graph can have some of the benefits of a column database without many of the limitations.
 
-### Relation to RDF
-
-A Flake builds on the [W3C RDF](https://www.w3.org/RDF/) standard, often referred to as "triples" (a 3-tuple of subject, predicate, object), to account for the additional functionality Fluree provides. In addition to `s`, `p`, and `o`, Fluree adds:
-
-- The `t` (transaction ref) value points to the subject of the transaction metadata which itself is stored as additional Flakes. This allows every Flake to be tied back to its origins where cryptographic proofs exist to verify the data hasn't been tampered with in addition to the digital signature that ties together the Flake, and the originating transaction, to the identity of the person/machine that created it. In addition the `t` value also represents an atomic notion of time.
-- The `op` is a boolean value that represents assertions and retractions across time. RDF triples have no notion of time - they represent a set of "facts" - which inheritly represent a single moment (time) of truth. Fluree's time travel requires us to know data that used to be true, but not longer is as of a moment in time. A Flake where `op` is equal to `false` in a ledger means it is a fact that used to be true, but no longer is. A `true` value for `op` means it is a newly asserted fact as of that moment in time (represented by the Flake's `t` value).
-- The `m` meta is a compact form to store additional metadata for a Flake which can include RDF\* data, which in its native form is quite verbose. In addition it offers the flexibility to add new functionality to Fluree in the future (i.e. an expiration time for a Flake similar to the feature in Cassandra). `m` is not currently used.
-
 ### Flakes as Fluree's Foundation
 
 The goal of Fluree is to be built from simple components, and the Flake - sitting at the foundation of Fluree - exemplifies this goal. A Flake can represent any conceivable fact and therefore Fluree, as a collection of Flakes, is a database of provable facts. Facts importantly require time -- that a person is 16 years old is a fact only if the context of time is attached. An assertion of truth without time is therefore not a fact.
@@ -68,6 +60,25 @@ Becauase all of this is stored as Flakes, it means it is all queryable in the id
 In the Flake format, the subject ID (`s`) is a long integer and can be thought of as the row number in the giant spreadsheet analogy. Predicate IDs (`p`), and transaction/time (`t`) are also subjects themselves, so their values in a Flake are pointers to the respective subject that contain additional information about them. Object values (`o`) can hold scalar values according to the defined schema like a string, long integer, GeoJSON, etc - or they can be a reference to another subject thus creating a graph, in which case `o` would hold the referenced subject id value. It therefore is not uncommon that 4 of the 6 tuples in a Flake may all be long integer subject ids (`s`, `p`, `o` and `t`, as ordered in the `spot` index discussed more in the indexing section).
 
 While you generally would not use a subject id in a query (probably because you wouldn't know it ahead of time), utilizing subject ids in a Flake as a long integer allows more compact storage and very fast comparisons. Strings both consume more memory and disk space but also are quite slow for computers to compare. To address the problem of making queries easy without knowing a subject id, Fluree allows you to use any unique predicate + its value to automatically resolve the subject id (i.e. `["username" "janeDoe"]` might resolve to subject id `42979877`). You can have any number of unique predicates, so there are often many ways to resolve a given subject without its long integer id. More information on Subject Identity follows in the next section.
+
+
+### Relation to RDF
+
+A Flake builds on the [W3C RDF](https://www.w3.org/RDF/) standard, often referred to as "triples" (a 3-tuple of subject, predicate, object), to account for the additional functionality Fluree provides. 
+
+In addition to `s`, `p`, and `o`, Fluree adds:
+
+- The `t` (transaction ref) value points to the subject of the transaction metadata which itself is stored as additional Flakes. This allows every Flake to be tied back to its origins where cryptographic proofs exist to verify the data hasn't been tampered with in addition to the digital signature that ties together the Flake, and the originating transaction, to the identity of the person/machine that created it. In addition the `t` value also represents an atomic notion of time.
+- The `op` is a boolean value that represents assertions and retractions across time. RDF triples have no notion of time - they represent a set of "facts" - which inheritly represent a single moment (time) of truth. Fluree's time travel requires us to know data that used to be true, but not longer is as of a moment in time. A Flake where `op` is equal to `false` in a ledger means it is a fact that used to be true, but no longer is. A `true` value for `op` means it is a newly asserted fact as of that moment in time (represented by the Flake's `t` value).
+- The `m` meta is a compact form to store additional metadata for a Flake which can include RDF\* data, which in its native form is quite verbose. In addition it offers the flexibility to add new functionality to Fluree in the future (i.e. an expiration time for a Flake similar to the feature in Cassandra). `m` is not currently used.
+
+**RDF <-> Flakes**
+
+RDF represents an atomic unit of data, while a Flake represents an atomic unit of data _in time_ and _with provenance_. Therefore to make RDF and Flakes interchangable they need to represent the same thing, which means you must first choose a time.
+
+Fluree tries to use concepts of a ledger and database as two related but different things. We refer to a database in Fluree as immutable, and every transaction creates a new database. 1,000 transactions means you have 1,000 immutable databases you can query and each database represents a separate moment in time (this is immensely efficient under the covers as explored in indexing guide).
+
+Triples would sit in a database, Flakes would sit in a ledger (an append-only log). Ignoring provenance for a moment, a database is a set of tripes and is therefore interchangable with RDF. A ledger has `op` values of both `true` and `false` adding and removing facts. A single database at any moment in time however will only have `true` `op` values, so we can ignore `op` when we've locked in time. To get to just `s`, `p`, and `o` however we must also figure out what to do with `t` and `m`. These values could either be dropped, or output as [RDF*](#flake-vs-rdf-rdf-star-) data at the expense of substantially larger file size.
 
 
 ### Subject Identity
@@ -226,7 +237,7 @@ Also, when transporting data serialized as JSON, which is logical for a JavaScri
 
 ### Flake vs RDF\* (RDF-star)
 
-Adding information about triples is the goal of [RDF\*](https://w3c.github.io/rdf-star/), and our Flake format certainly does exactly this with its `t`, `op`, and `m` values. With the exception of `op`, which RDF\* does not contempate as it relates to data over time, it could very much be used to represent both `t` and `m`. In fact we have RDF\* export on the roadmap.
+Adding information about triples is the goal of [RDF\*](https://w3c.github.io/rdf-star/), and our Flake format certainly does exactly this with its `t`, `op`, and `m` values. With the exception of `op`, which RDF\* does not contempate as it relates to data over time, it could be used to represent both `t` and `m`. In fact we have RDF\* export on the roadmap.
 
 But the Flake is an internal representation meant to be [highly optimized](#overview) for speed and compact storage. RDF\*, while a capable method of expressing metadata about a triple, is neither compact nor speedy.
 
