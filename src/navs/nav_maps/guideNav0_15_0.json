@@ -22,6 +22,10 @@
             "indexes": {
                 "headerName": "Indexes",
                 "file": "0.15.0/guides/architecture/indexes"
+            },
+            "blockchain": {
+                "headerName": "Blockchain",
+                "file": "0.15.0/guides/architecture/blockchain"
             }
         } 
     },
