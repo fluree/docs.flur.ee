@@ -45,7 +45,7 @@ The block hash represents a provable state of every current and historic piece o
 
 ### Reproducing state
 
-Fluree acts as an append-only log, where a new block is generated that contains the Flakes that represent the delta in the ledger's state (and updated version of a database). Every previous version can be reproduced by playing the ledger forward from the beiginning of the ledger, but Fluree makes this instantly accessible and queryable via its Time Travel capability - made possibly by Fluree's special bi-temporal indexing method.
+Fluree acts as an append-only log, where a new block is generated that contains the Flakes that represent the delta in the ledger's state (and updated version of a database). Every previous version can be reproduced by playing the ledger forward from the beginning of the ledger, but Fluree makes this instantly accessible and queryable via its Time Travel capability - made possibly by Fluree's special bi-temporal indexing method.
 
 
 ### SmartFunctions (customizable rules)
