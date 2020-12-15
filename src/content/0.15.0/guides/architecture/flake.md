@@ -16,21 +16,23 @@ A Flake's 6 elements are:
 - `o` -> Object - analagous to a cell value in a spreadsheet (mixed type)
 - `t` -> Transaction reference (long negative integer)
 - `op` -> Operation boolean - if adding Flake or retracting Flake (`true` or `false`)
-- `m` -> Additional metadata for [RDF\*](https://w3c.github.io/rdf-star/) (nil, or a map keys/values)
+- `m` -> Additional metadata for [RDF\*](https://w3c.github.io/rdf-star/) (nil, or a map keys/values) and other future functionality
 
 The following example helps visualize how individual Flakes translate to the giant spreadsheet analogy. Take, for example, the following set of Flakes:
 
 ```all
-[25 'firstName' 'Jane'         -42 true]
-[25 'lastName'  'Doe'          -42 true]
-[25 'email'     'jane@doe.com' -86 true]
-[25 'username'  'janedoe'      -42 true]
-[26 'firstName' 'John'         -45 true]
-[26 'lastName'  'Smith'        -45 true]
-[26 'username'  'jsmith'       -45 true]
-[26 'follows'    25            -45 true]
-[26 'worksFor'   88            -45 true]
-[88 'company'   'ACME Inc"     -10 true]
+;; s     p          o             t   op  + (nil 'm' values)
+;;---------------------------------------
+  [25 'firstName' 'Jane'         -42 true]
+  [25 'lastName'  'Doe'          -42 true]
+  [25 'email'     'jane@doe.com' -86 true]
+  [25 'username'  'janedoe'      -42 true]
+  [26 'firstName' 'John'         -45 true]
+  [26 'lastName'  'Smith'        -45 true]
+  [26 'username'  'jsmith'       -45 true]
+  [26 'follows'    25            -45 true]
+  [26 'worksFor'   88            -45 true]
+  [88 'company'   'ACME Inc"     -10 true]
 ```
 These Flakes can be represented in a spreadsheet format as follows:
 
@@ -43,14 +45,6 @@ These Flakes can be represented in a spreadsheet format as follows:
 Here we see some relationships in the `follows` and `worksFor` columns. John follows Jane, and works for ACME Inc. Ultimately Flakes,while represented here as both a list/set and a rectangle/spreadsheet, are made available as a high performing graph.
 
 Cells with no values are considered 'sparse' meaning they consume no disk space unlike would happen in a relational database. This is just one of the characterstics Fluree would share with a columnar database. In the right use cases, a graph can have some of the benefits of a column database without many of the limitations.
-
-### Relation to RDF
-
-A Flake builds on the [W3C RDF](https://www.w3.org/RDF/) standard, often referred to as "triples" (a 3-tuple of subject, predicate, object), to account for the additional functionality Fluree provides.
-
-- The `t` (transaction ref) value points to the subject of the transaction metadata which itself is stored as additional Flakes. This allows every Flake to be tied back to its origins where cryptographic proofs exist to verify the data hasn't been tampered with in addition to the digital signature that ties together the Flake, and the originating transaction, to the identity of the person/machine that created it. In addition the `t` value also represents an atomic notion of time.
-- The `op` is a boolean value that represents assertions and retractions across time. RDF triples have no notion of time - they represent a set of "facts" - which inheritly represent a single moment (time) of truth. Fluree's time travel requires us to know data that used to be true, but not longer is as of a moment in time. A Flake where `op` is equal to `false` in a ledger means it is a fact that used to be true, but no longer is. A `true` value for `op` means it is a newly asserted fact as of that moment in time (represented by the Flake's `t` value).
-- The `m` meta is a compact form to store additional metadata for a Flake which can include RDF\* data, which in its native form is quite verbose. In addition it offers the flexibility to add new functionality to Fluree in the future (i.e. an expiration time for a Flake similar to the feature in Cassandra). `m` is not currently used.
 
 ### Flakes as Fluree's Foundation
 
@@ -66,6 +60,25 @@ Becauase all of this is stored as Flakes, it means it is all queryable in the id
 In the Flake format, the subject ID (`s`) is a long integer and can be thought of as the row number in the giant spreadsheet analogy. Predicate IDs (`p`), and transaction/time (`t`) are also subjects themselves, so their values in a Flake are pointers to the respective subject that contain additional information about them. Object values (`o`) can hold scalar values according to the defined schema like a string, long integer, GeoJSON, etc - or they can be a reference to another subject thus creating a graph, in which case `o` would hold the referenced subject id value. It therefore is not uncommon that 4 of the 6 tuples in a Flake may all be long integer subject ids (`s`, `p`, `o` and `t`, as ordered in the `spot` index discussed more in the indexing section).
 
 While you generally would not use a subject id in a query (probably because you wouldn't know it ahead of time), utilizing subject ids in a Flake as a long integer allows more compact storage and very fast comparisons. Strings both consume more memory and disk space but also are quite slow for computers to compare. To address the problem of making queries easy without knowing a subject id, Fluree allows you to use any unique predicate + its value to automatically resolve the subject id (i.e. `["username" "janeDoe"]` might resolve to subject id `42979877`). You can have any number of unique predicates, so there are often many ways to resolve a given subject without its long integer id. More information on Subject Identity follows in the next section.
+
+
+### Relation to RDF
+
+A Flake builds on the [W3C RDF](https://www.w3.org/RDF/) standard, often referred to as "triples" (a 3-tuple of subject, predicate, object), to account for the additional functionality Fluree provides. 
+
+In addition to `s`, `p`, and `o`, Fluree adds:
+
+- The `t` (transaction ref) value points to the subject of the transaction metadata which itself is stored as additional Flakes. This allows every Flake to be tied back to its origins where cryptographic proofs exist to verify the data hasn't been tampered with in addition to the digital signature that ties together the Flake, and the originating transaction, to the identity of the person/machine that created it. In addition the `t` value also represents an atomic notion of time.
+- The `op` is a boolean value that represents assertions and retractions across time. RDF triples have no notion of time - they represent a set of "facts" - which inheritly represent a single moment (time) of truth. Fluree's time travel requires us to know data that used to be true, but not longer is as of a moment in time. A Flake where `op` is equal to `false` in a ledger means it is a fact that used to be true, but no longer is. A `true` value for `op` means it is a newly asserted fact as of that moment in time (represented by the Flake's `t` value).
+- The `m` meta is a compact form to store additional metadata for a Flake which can include RDF\* data, which in its native form is quite verbose. In addition it offers the flexibility to add new functionality to Fluree in the future (i.e. an expiration time for a Flake similar to the feature in Cassandra). `m` is not currently used.
+
+**RDF <-> Flakes**
+
+RDF represents an atomic unit of data, while a Flake represents an atomic unit of data _in time_ and _with provenance_. Therefore to make RDF and Flakes interchangable they need to represent the same thing, which means you must first choose a time.
+
+Fluree tries to use concepts of a ledger and database as two related but different things. We refer to a database in Fluree as immutable, and every transaction creates a new database. 1,000 transactions means you have 1,000 immutable databases you can query and each database represents a separate moment in time (this is immensely efficient under the covers as explored in indexing guide).
+
+Triples would sit in a database, Flakes would sit in a ledger (an append-only log). Ignoring provenance for a moment, a database is a set of tripes and is therefore interchangable with RDF. A ledger has `op` values of both `true` and `false` adding and removing facts. A single database at any moment in time however will only have `true` `op` values, so we can ignore `op` when we've locked in time. To get to just `s`, `p`, and `o` however we must also figure out what to do with `t` and `m`. These values could either be dropped, or output as [RDF*](#flake-vs-rdf-rdf-star-) data at the expense of substantially larger file size.
 
 
 ### Subject Identity
@@ -184,7 +197,9 @@ If one wanted to list the hash and email of the person that transacted data for 
            ["?auth", "email", "?email"]]}
 ```
 
-Transactional metadata Flakes, like every Flake, also has a `t` value, but in this case it points to its own subject. The originating transaction string that was signed is not included in the queryable indexes as it is uncommon to want it and would effectively double the amount of storage required for a Fluree ledger. This data is however always contained in the block/ledger log which can always be accessed with a [block query](/docs/query/block-query).
+Transactional metadata Flakes, like every Flake, also has a `t` value. Using a Flake from the example above, `[-86 'hash' 'a5c487' -86 true]`, the `s` and `t` values are both `-86`. This is because the transaction that put this Flake into the ledger is itself. 
+
+It is worth noting that the original transaction string that was signed to prove identity does not get included in the queryable indexes but it is always present in the ledger blocks. This decision was made because it would effectively double the size of every index and it is data that is needed primarily for auditing. To get the original transaction string one can use the `block` query which operates on the ledger and not the indexes. The `block` query can be used to find all data for just a transaction (`t` value), or an entire block which will contain multiple transactions. Permissions are still applied to `block` queries, so users may have filtered views of the results.
 
 ### 't' as Time
 
@@ -222,9 +237,9 @@ While other subject IDs atomically increment with each new subject added within 
 
 Also, when transporting data serialized as JSON, which is logical for a JavaScript environment, numbers are represented as a string. So the 64-bit number of  `-1` as a UTF-8 encoded string consumes just 16 bits, while `-1000000` consumes 64-bits, and `-9223372036854775808` (the max number of transactions) is a 160 bit string. From a transport standpoint smaller numbers mean less bits going across the wire. As a `t` value exists with every Flake, using a smaller numbers results in less data transfer and a faster database. Therefore segmenting a huge chunk of an unsigned 64-bit integer to `t` subject ids would have resulted in more bandwidth.
 
-### Flake vs RDF\*
+### Flake vs RDF\* (RDF-star)
 
-Adding information about triples is the goal of RDF\*, and our Flake format certainly does exactly this with its `t`, `op`, and `m` values. With the exception of `op`, which RDF\* does not contempate as it relates to data over time, it could very much be used to represent both `t` and `m`. In fact we have RDF\* export on the roadmap.
+Adding information about triples is the goal of [RDF\*](https://w3c.github.io/rdf-star/), and our Flake format certainly does exactly this with its `t`, `op`, and `m` values. With the exception of `op`, which RDF\* does not contempate as it relates to data over time, it could be used to represent both `t` and `m`. In fact we have RDF\* export on the roadmap.
 
 But the Flake is an internal representation meant to be [highly optimized](#overview) for speed and compact storage. RDF\*, while a capable method of expressing metadata about a triple, is neither compact nor speedy.
 
