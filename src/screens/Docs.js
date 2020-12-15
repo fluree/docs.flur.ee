@@ -48,7 +48,7 @@ class Docs extends React.Component {
 	};
 
 	componentDidMount() {
-		if (this.props.match.path === "/docs/search") {
+		if (this.props.match.path === "/docs/search" || this.props.match.path === "/guides/search") {
 			this.setState({ displaySearch: true });
 			let query = this.props.location.search;
 			let queryPattern = /\?search=/;
@@ -104,8 +104,9 @@ class Docs extends React.Component {
 			this.setState({ hashAnchor: "" });
 		}
 		if (
-			(prevProps.match.path !== "/docs/search") &
-			(this.props.match.path === "/docs/search")
+			((prevProps.match.path !== "/docs/search") &
+			(this.props.match.path === "/docs/search")) || ((prevProps.match.path !== "/guidess/search") &
+			(this.props.match.path === "/guidess/search"))
 		) {
 			this.setState({ displaySearch: true });
 		}
@@ -125,7 +126,7 @@ class Docs extends React.Component {
 
 	getTopicAndLoad = () => {
 		const { nav } = this.state;
-		if (this.props.match.path === "/docs/search") {
+		if (this.props.match.path === "/docs/search" || this.props.match.path === "/guides/search") {
 			this.setState({ displaySearch: true });
 		} else {
 			let promise = new Promise((resolve, reject) => {
@@ -303,8 +304,6 @@ class Docs extends React.Component {
 		} = this.state;
 		const { version } = this.props;
 
-		// console.log(this.props.history);
-		// console.log(nextTopic);
 		return (
 			<div
 				className="row"
@@ -382,6 +381,36 @@ class Docs extends React.Component {
 											type="text"
 											ref={(searchTerm) => (this.input = searchTerm)}
 											placeholder="Search Docs.."
+											name="search"
+										/>
+										<button>
+											<i className="fa fa-search" />
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					)}
+					{this.props.type === "guides" && (
+						<div className="row">
+							<div className="col-xs-6" />
+							<div className="col-xs-6">
+								<div
+									className="mt10 pull-right"
+									style={{ marginRight: "20px" }}
+								>
+									<form
+										onSubmit={(e) => {
+											e.preventDefault();
+											this.props.history.push(
+												`/guides/search?search=${this.input.value}`
+											);
+										}}
+									>
+										<input
+											type="text"
+											ref={(searchTerm) => (this.input = searchTerm)}
+											placeholder="Search Guides.."
 											name="search"
 										/>
 										<button>
