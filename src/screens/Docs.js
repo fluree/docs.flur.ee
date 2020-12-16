@@ -303,7 +303,12 @@ class Docs extends React.Component {
 			nav,
 		} = this.state;
 		const { version } = this.props;
-
+		const guidesNav = getGuideNav(this.props.version);
+		const searchNav = {...nav, ...guidesNav}
+		
+		// console.log("normal",nav)
+		// console.log("guides", guidesNav)
+		// console.log("searchNav", searchNav)
 		return (
 			<div
 				className="row"
@@ -361,7 +366,7 @@ class Docs extends React.Component {
 					}
 					id="body-container"
 				>
-					{this.props.type === "docs" && (
+					{(this.props.type === "docs" || this.props.type === "guides") && (
 						<div className="row">
 							<div className="col-xs-6" />
 							<div className="col-xs-6">
@@ -391,7 +396,7 @@ class Docs extends React.Component {
 							</div>
 						</div>
 					)}
-					{this.props.type === "guides" && (
+					{this.props.type === "false" && (
 						<div className="row">
 							<div className="col-xs-6" />
 							<div className="col-xs-6">
@@ -422,7 +427,7 @@ class Docs extends React.Component {
 						</div>
 					)}
 					{this.state.nav && displaySearch ? (
-						<Search {...this.props} query={this.state.searchValue} nav={nav} />
+						<Search {...this.props} query={this.state.searchValue} docsNav={nav} guidesNav={guidesNav}/>
 					) : (
 						<div>
 							<article
