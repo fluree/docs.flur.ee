@@ -3,7 +3,7 @@
 Passwords are less-secure than private keys, however they may be the best option for your infrastructure. If you have passwords enabled, users only have to manage those passwords, rather than private keys. Once a user signs in and retrieves a token, they can send permissioned queries and transactions without having to worry about signatures. 
 
 ### Password Settings
-There are [several settings](#/docs/getting-started/fluree-anywhere#password-and-jwt-token-settings) that are used to handle passwords and tokens. Two of the main settings are:
+There are [several settings](/docs/getting-started/fluree-anywhere#password-and-jwt-token-settings) that are used to handle passwords and tokens. Two of the main settings are:
 
 `fdb-pw-auth-enable`: by default this is `true`. 
 `fdb-pw-auth-secret`: this can be any string (SAME FOR EACH TX GROUP SERVER??)

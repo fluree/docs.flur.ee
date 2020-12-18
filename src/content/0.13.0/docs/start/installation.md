@@ -92,7 +92,7 @@ This file contains the default private key for your ledgers. A new (and unique) 
 ### Setting Your Own Private Key
 To use your own private key, first please see the section on [public and private keys](/guides/0.15.0/identity/auth-records#generating-a-public-private-key-auth-id-triple) to see what is and isn't valid as a private key. 
 
-If you have a valid private key, encoded with [Base58Check Encoding](/docs/guides/0.15.0/identity/public-private-keys#base58check-encoding), then you can add your private key to a `default_private_key.txt`. You can also change the name of the file that holds the private key by changing the `fdb-group-private-key-file` config option (see below).
+If you have a valid private key, encoded with [Base58Check Encoding](/guides/0.15.0/identity/auth-records#generating-a-public-private-key-auth-id-triple), then you can add your private key to a `default_private_key.txt`. You can also change the name of the file that holds the private key by changing the `fdb-group-private-key-file` config option (see below).
 
 You can also run `./fluree_start.sh :keygen` to generate a public key, private key, and account id. This will not start Fluree, it will just return those three pieces of information.
 
