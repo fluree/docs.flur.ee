@@ -36,3 +36,32 @@ mutation addSr ($addSrTx: JSON) {
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+### Compare and Set / Swap
+
+An atomic compare and set function can protect the integrity of a transaction when it is formed based on the result of a query. Because there could be other transactions in-flight that modify the value between your query results and when your transaction gets executed, the compare-and-set (`cas`) SmartFunction can avoid updating a subject based on a stale value.
+
+Say you wanted to add a 'Dr.' in front of every medical doctor's name. You issue a query for all people whose title is doctor, and do some logic to filter all names that don't already start with 'Dr.'. It happens that Jane Doe and John Smith are missing the Dr. prefix. A `cas` use might look like:
+```flureeql
+[{"_id": 1234 
+  "fullName": "#(cas \"Jane Doe\" \"Dr. Jane Doe\")"},
+  "_id": 5678 
+  "fullName": "#(cas \"John Smith\" \"Dr. John Smith\")"}
+]
+```
+
+If between your query and this transaction getting executed another transaction from another user modified 'John Smith' to 'Johnathan Smith' this transaction will fail. The app developer can decide what to do, perhaps re-run the same query and logic and try the transaction again but with the updated values. 
+
+### cas as a Synthetic Lock
+
+In another example, say you had multiple microservices that required a synthetic lock on a value. `cas` can test that the lock still exists before updating a different value. In this example, each lock can have a unique `lock/id`, and if a lock is active then `isLocked` will be `true`. 
+
+```flureeql
+[{"_id": ["lock/id", 12345] 
+  "isLocked": "#(cas true false)"},
+ {"_id": 5678 
+  "somePredicate": "Some Value"}
+]
+```
+This example will cancel (make `false`) a lock at ["lock/id", 12345] only if the lock is still `true`. If the lock has already been modified to `false` by another transaction, this entire transaction will fail and 'somePredicate' will never get set with 'Some Value'.
+
