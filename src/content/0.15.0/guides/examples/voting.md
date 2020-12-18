@@ -4,15 +4,16 @@ This example outlines how users can vote on proposed changes to the ledger. At t
 
 In our hypothetical example, let's say we've had a network that has been humming along quite smoothly, except that a few rogue users have adopted offensive usernames. Rather than relying on central authority to interpret and enforce community standards, we can create a voting mechanism for whenever a user wants to change their username. In practice, you might want to add rules that prevent users from using certain words in their usernames in the first-place, or initiate a voting process only after a complaint. As previously stated, this is a example is a backbone that can be built upon for real-life applications.
 
-Currently, all the code is written in FlureeQL exclusively. 
+Currently, all the code is written in FlureeQL exclusively.
 
 ### Schema
 
-We will need two additional collections, `vote` and `change` for our example. 
+We will need two additional collections, `vote` and `change` for our example.
 
-The `vote` collection will have a `vote/name`, `vote/yesVotes`, and `vote/noVotes`. The yes and no votes predicates are multi, ref-type predicates that will hold all of the auth records that voted yes or no, respectively, on the proposed change. 
+The `vote` collection will have a `vote/name`, `vote/yesVotes`, and `vote/noVotes`. The yes and no votes predicates are multi, ref-type predicates that will hold all of the auth records that voted yes or no, respectively, on the proposed change.
 
-FlureeQL: 
+FlureeQL:
+
 ```all
 [
  {
@@ -46,11 +47,12 @@ FlureeQL:
 ]
 ```
 
-The `change` collection holds the actual details for the proposed change. It has the following predicates, `change/name`, `change/subject`, `change/predicate`, `change/doc`, `change/vote`, and `change/object`. 
+The `change` collection holds the actual details for the proposed change. It has the following predicates, `change/name`, `change/subject`, `change/predicate`, `change/doc`, `change/vote`, and `change/object`.
 
-`change/subject` is a reference to subject on which we are proposing a change. For example, if we had a collection, group, we could propose a change on a particular `group` subject. If we wanted to vote on the leader of that group, `change/predicate` would reference the `group/leader` predicate, and `change/object` would be the proposed value, for instance, `John Doe`. 
+`change/subject` is a reference to subject on which we are proposing a change. For example, if we had a collection, group, we could propose a change on a particular `group` subject. If we wanted to vote on the leader of that group, `change/predicate` would reference the `group/leader` predicate, and `change/object` would be the proposed value, for instance, `John Doe`.
 
 FlureeQL
+
 ```all
 [{
   "_id": "_predicate",
@@ -96,7 +98,7 @@ FlureeQL
 ]
 ```
 
-Subjects in the `change` collection contains all the details about the change that is proposed, as well as a reference to the relevant vote. You'll notice that the object of the proposed change can only be a string. This is to simplify this example, but in a real application, you might want to be able to vote on changes with other types of objects as well. 
+Subjects in the `change` collection contains all the details about the change that is proposed, as well as a reference to the relevant vote. You'll notice that the object of the proposed change can only be a string. This is to simplify this example, but in a real application, you might want to be able to vote on changes with other types of objects as well.
 
 ### Adding Sample Data
 
@@ -113,7 +115,7 @@ First, we'll create a new predicate, `_auth/descId` (short for descriptive id), 
 
 Before doing any additional work on schema, such as adding smart functions and rules, we should add in sample data. We are going to create 5 users, connect those records to 5 new auth records, and connect those auth records to a role, `voter` (which doesn't have any rules connected to it yet!).
 
-We've generated 5 public-private key and `_auth/id` pairs for each of the users. You can use the ones that we've generated or <a href="/docs/identity/public-private-keys#generating-a-public-private-key-auth-id-triple" target="_blank">generate your own</a> . Note that, in production, you will definitely want to generate your own. 
+We've generated 5 public-private key and `_auth/id` pairs for each of the users. You can use the ones that we've generated or <a href="/guides/identity/auth-records#auth-role-rule-structure" target="_blank">generate your own</a> . Note that, in production, you will definitely want to generate your own.
 
 Public/Private Key and Account Id (`_auth/id`) for `_auth$losDelRio`.
 
@@ -156,6 +158,7 @@ Account id: Tf31KGiwsqnw1TWTWPspxi3AoHTCA1wJNaE
 ```
 
 FlureeQL:
+
 ```all
 [{
     "_id": "_user$losDelRio",
@@ -226,11 +229,11 @@ FlureeQL:
 
 ### Adding Permissions
 
-Before building out our smart functions (`_fn`), we will add permissions to our network. For example, we want to ensure that users can't freely add new auth records, otherwise they'd be able add new auth records and artificially inflate a vote. We do want to make sure that users have access to the `vote` and `change` collections. 
+Before building out our smart functions (`_fn`), we will add permissions to our network. For example, we want to ensure that users can't freely add new auth records, otherwise they'd be able add new auth records and artificially inflate a vote. We do want to make sure that users have access to the `vote` and `change` collections.
 
-All of the permissions transactions can be added at once, but we break them up here for clarity. 
+All of the permissions transactions can be added at once, but we break them up here for clarity.
 
-First, we add four rules that will allow users to transact and view votes and changes. The rules only allow users to view, but not edit, auth records and users. 
+First, we add four rules that will allow users to transact and view votes and changes. The rules only allow users to view, but not edit, auth records and users.
 
 FlureeQL:
 
@@ -269,8 +272,8 @@ FlureeQL:
 }]
 ```
 
-
 FlureeQL:
+
 ```all
 [{
     "_id": "_rule$editOwnUser",
@@ -287,24 +290,26 @@ FlureeQL:
 }]
 ```
 
-We've now added all of the rules we need, so we can add those rules to the `voter` role that we created previously: 
+We've now added all of the rules we need, so we can add those rules to the `voter` role that we created previously:
 
 FlureeQL:
+
 ```all
 [{
     "_id": ["_role/id", "voter"],
-    "rules": [["_rule/id", "editChanges"], ["_rule/id", "editVotes"], ["_rule/id", "editOwnUser"], 
+    "rules": [["_rule/id", "editChanges"], ["_rule/id", "editVotes"], ["_rule/id", "editOwnUser"],
     ["_rule/id", "viewUsers"],["_rule/id", "viewAuth"]]
 }]
 ```
 
-### Preventing Voter Fraud 
+### Preventing Voter Fraud
 
-The `vote/yesVotes` and `vote/noVotes` predicates hold all of the auth records that voted for or against a proposed change. We can add a spec to both of these predicates, which ensures that users only cast votes with their own auth records. 
+The `vote/yesVotes` and `vote/noVotes` predicates hold all of the auth records that voted for or against a proposed change. We can add a spec to both of these predicates, which ensures that users only cast votes with their own auth records.
 
 The rule, `(== (?o) (?auth_id))` checks whether the object being added to the vote, `?o`, belongs to the auth record of the user placing the vote.
 
 FlureeQL:
+
 ```all
 [
     {
@@ -323,19 +328,19 @@ FlureeQL:
 ]
 ```
 
-When working this into a real-life application, you may also add a rule that a user can't change their vote after a certain time (by adding a `vote/expiration` predicate), or can only vote yes OR no. For simplicity's sake, we won't be doing this here. 
+When working this into a real-life application, you may also add a rule that a user can't change their vote after a certain time (by adding a `vote/expiration` predicate), or can only vote yes OR no. For simplicity's sake, we won't be doing this here.
 
-### Proposing a Change 
+### Proposing a Change
 
-Now that we've done our part to prevent voter fraud, we can propose a change. `["_user/username", "softCell"]` wants to change their username to "hardCell", so they propose a change, and create a vote. 
+Now that we've done our part to prevent voter fraud, we can propose a change. `["_user/username", "softCell"]` wants to change their username to "hardCell", so they propose a change, and create a vote.
 
 When we submit a transaction without a signature, it is signed with the default auth record. However, in order to use `softCell`'s auth, we need to sign our transactions with their auth record. We do this by submitting a request to the [`/command` endpoint](/api/downloaded-endpoints/downloaded-examples).
 
-We can also use a tool in the user interface to sign transactions as a particular private key. To access this tool, we need to go to `/flureeql`, select "Transact", and then select "Own Private Key" from the dropdown. 
+We can also use a tool in the user interface to sign transactions as a particular private key. To access this tool, we need to go to `/flureeql`, select "Transact", and then select "Own Private Key" from the dropdown.
 
-If using the user interface, you need to include the private key in the form. If you're not using the user interface, you will need to sign the following transaction with the private key. You will also need to specify softCell's auth in either the form or the [signed transaction](/docs/identity/signatures#signed-transactions).
+If using the user interface, you need to include the private key in the form. If you're not using the user interface, you will need to sign the following transaction with the private key. You will also need to specify softCell's auth in either the form or the [signed transaction](/guides/identity/signatures#signed-transactions).
 
-A request to `/command` will return a `_tx/id`. The `_tx/id` is the unique SHA2-256 of the 'cmd' submitted to the `/command` endpoint. In order to see if the transaction went through successfully, you will need to query: 
+A request to `/command` will return a `_tx/id`. The `_tx/id` is the unique SHA2-256 of the 'cmd' submitted to the `/command` endpoint. In order to see if the transaction went through successfully, you will need to query:
 
 ```all
 {
@@ -344,13 +349,14 @@ A request to `/command` will return a `_tx/id`. The `_tx/id` is the unique SHA2-
 }
 ```
 
-If there is an error in the transaction, that will appear in `_tx/error`. If the transaction was submitted successfully, there will not be a `_tx/error`. 
+If there is an error in the transaction, that will appear in `_tx/error`. If the transaction was submitted successfully, there will not be a `_tx/error`.
 
 If you are using the user interface, the "Results" editor will automatically show you the results of issuing the above query after submitting a command (unless the auth record you are using cannot view subjects in the `_tx` collection).
 
 Soft Cell also adds their auth record to the `vote/yesVotes` predicate.
 
 FlureeQL:
+
 ```all
 Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
 Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
@@ -373,11 +379,12 @@ Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
 
 ### Building Our Smart Functions
 
-Currently, there is nothing stopping Soft Cell from issuing a transaction to change their `_user/username` from `softCell` to `hardCell`. In order to prevent users from editing their usernames without a vote, we need to create a set of smart functions ([ledger functions](#ledger-functions-1)) that we can add to the `_user/username` predicate specification. 
+Currently, there is nothing stopping Soft Cell from issuing a transaction to change their `_user/username` from `softCell` to `hardCell`. In order to prevent users from editing their usernames without a vote, we need to create a set of smart functions ([ledger functions](#ledger-functions-1)) that we can add to the `_user/username` predicate specification.
 
-We can see all the votes related to that subject with a single query. 
+We can see all the votes related to that subject with a single query.
 
 FlureeQL:
+
 ```all
 {
     "select": {"?change": ["*", {"change/vote": ["*"]}]},
@@ -386,11 +393,12 @@ FlureeQL:
 }
 ```
 
-The above query returns *every* change that might have been proposed for `["change/name", "softCellNameChange"]`, including changes to other predicates, such as Soft Cell's `_user/auth` or their `_user/roles`. It also might return other changes proposed for their `_user/username` other than `hardCell`.
+The above query returns _every_ change that might have been proposed for `["change/name", "softCellNameChange"]`, including changes to other predicates, such as Soft Cell's `_user/auth` or their `_user/roles`. It also might return other changes proposed for their `_user/username` other than `hardCell`.
 
-We want to make sure that we are only looking at votes for a given subject that also pertain to the proper predicate and the relevant object. In order to do this, we need add that `change/predicate` is `["_predicate/name", "_user/username"]` and `change/object` is `hardCell`. 
+We want to make sure that we are only looking at votes for a given subject that also pertain to the proper predicate and the relevant object. In order to do this, we need add that `change/predicate` is `["_predicate/name", "_user/username"]` and `change/object` is `hardCell`.
 
 FlureeQL:
+
 ```all
 {
     "select": {"?vote": ["*"]},
@@ -404,6 +412,7 @@ FlureeQL:
 ```
 
 Sample result in FlureeQL:
+
 ```all
 [
   {
@@ -418,15 +427,15 @@ Sample result in FlureeQL:
 ]
 ```
 
-The first two functions we will create build and issue the above query. We will then use these functions to count votes, and eventually decide whether or not changes should be approved. 
+The first two functions we will create build and issue the above query. We will then use these functions to count votes, and eventually decide whether or not changes should be approved.
 
 If, at this point, you cannot understand how these functions fit into the larger applications, do not worry, we will see the entire voting mechanism working in short order. At this point, the most important part is to try and understand the syntax of the individual smart functions.
 
-The function, `voteWhere` constructs the where clause using the `str` function, which concatenates all strings in a given array (all available ledger or smart functions are detailed in [ledger functions](#ledger-functions-1)). 
+The function, `voteWhere` constructs the where clause using the `str` function, which concatenates all strings in a given array (all available ledger or smart functions are detailed in [ledger functions](#ledger-functions-1)).
 
-When we are editing a given subject's predicate in a transaction, we have access to the value we are attempting to input `(?o)`, the id of the subject we are editing `(?sid)`, and the id of the predicate we are editing `(?pid)`, which is all of the information we need in order to compose our where clause. 
+When we are editing a given subject's predicate in a transaction, we have access to the value we are attempting to input `(?o)`, the id of the subject we are editing `(?sid)`, and the id of the predicate we are editing `(?pid)`, which is all of the information we need in order to compose our where clause.
 
-Without escaped quotation marks, our where clause will be: 
+Without escaped quotation marks, our where clause will be:
 
 ```all
 [
@@ -438,6 +447,7 @@ Without escaped quotation marks, our where clause will be:
 ```
 
 FlureeQL:
+
 ```all
 [{
     "_id": "_fn",
@@ -446,21 +456,22 @@ FlureeQL:
 }]
 ```
 
-One of the most useful features of smart functions is that we can put them together. The second function we create issues a query using the `query` smart function. The `query` function takes a string of the query. 
+One of the most useful features of smart functions is that we can put them together. The second function we create issues a query using the `query` smart function. The `query` function takes a string of the query.
 
 The query in our smart function resolves to:
 
 ```all
 {
     "select": {"?vote": ["*"]},
-    "where": [["?change", "change/subject", (?sid)], 
-    ["?change", "change/predicate", (?pid)], 
-    ["?change", "change/object", (?o)], 
+    "where": [["?change", "change/subject", (?sid)],
+    ["?change", "change/predicate", (?pid)],
+    ["?change", "change/object", (?o)],
     ["?change", "change/vote", "?vote"]]
 }
 ```
 
 FlureeQL:
+
 ```all
 [{
         "_id": "_fn",
@@ -471,9 +482,10 @@ FlureeQL:
 
 Using the `(vote)` function, we can access the `vote/yesVotes` and `vote/noVotes`. We first need to use `(nth (vote) 0)` to get the first result in the array.
 
-Then, we can use the `get-all` function, and we specify path that we want to follow in order to get the `vote/noVotes` and `vote/yesVotes` (`["vote/noVotes" \"_id\"]` and `["vote/yesVotes" \"_id\"]`, respectively)`. 
+Then, we can use the `get-all` function, and we specify path that we want to follow in order to get the `vote/noVotes` and `vote/yesVotes` (`["vote/noVotes" \"_id\"]` and `["vote/yesVotes" \"_id\"]`, respectively)`.
 
 FlureeQL:
+
 ```all
 [{
     "_id": "_fn",
@@ -487,11 +499,12 @@ FlureeQL:
 }]
 ```
 
-We want to be able to set both a minimum win percentage, as well as a minimum number of votes for each of our votes. For example, we might want to make every vote have at least 10 yes and no vote, combined. In addition, in order for a vote to pass, we could set a minimum threshhold of 50% or 60%. 
+We want to be able to set both a minimum win percentage, as well as a minimum number of votes for each of our votes. For example, we might want to make every vote have at least 10 yes and no vote, combined. In addition, in order for a vote to pass, we could set a minimum threshhold of 50% or 60%.
 
 First, we create a function, `minWinPercentage` that calculates whether the ratio of yes votes to total votes is above a given percentage. Rather than hard-coding a percentage, we use a `_fn/param`.
 
 FlureeQL:
+
 ```all
 [{
     "_id": "_fn",
@@ -501,21 +514,23 @@ FlureeQL:
 }]
 ```
 
-Then, we create a function, `minVotes`, which checks whether the total number of votes is above a given parameter, `n`. 
+Then, we create a function, `minVotes`, which checks whether the total number of votes is above a given parameter, `n`.
 
 FlureeQL:
+
 ```all
 [{
-    "_id": "_fn", 
+    "_id": "_fn",
     "name": "minVotes",
     "params": ["n"],
     "code": "(> (+ (count (yesVotes))  (count (noVotes))) n)"
 }]
 ```
 
-Finally, we can create a function which checks whether a vote on a given subject, on a given predicate, with the given value passes a certain threshhold of minimum votes and a certain minimum win percentage. In this case, we create a 2 vote minimum with a 0.50 minimum win percentage (note that in our `minWinPercentage` function, we used the `>` sign, which indicates strictly greater than. Therefore, if there are only two votes, one for no and one for yes, this particular vote won't pass. Additionally, the percentage needs to be in decimal form with a leading 0). 
+Finally, we can create a function which checks whether a vote on a given subject, on a given predicate, with the given value passes a certain threshhold of minimum votes and a certain minimum win percentage. In this case, we create a 2 vote minimum with a 0.50 minimum win percentage (note that in our `minWinPercentage` function, we used the `>` sign, which indicates strictly greater than. Therefore, if there are only two votes, one for no and one for yes, this particular vote won't pass. Additionally, the percentage needs to be in decimal form with a leading 0).
 
 FlureeQL:
+
 ```all
 [{
     "_id": "_fn",
@@ -526,9 +541,10 @@ FlureeQL:
 
 ### Adding the Username Spec
 
-At this point we can add the function, `2VotesMajority` to the `_predicate/spec` for `_user/username`. Now, every time a transaction contains a `_user/username`, the `2VotesMajority` will run. 
+At this point we can add the function, `2VotesMajority` to the `_predicate/spec` for `_user/username`. Now, every time a transaction contains a `_user/username`, the `2VotesMajority` will run.
 
 FlureeQL:
+
 ```all
 [{
     "_id": ["_predicate/name", "_user/username"],
@@ -538,9 +554,10 @@ FlureeQL:
 
 ### Testing
 
-The only vote that we have so far is `softCell` voting for their own name change. That means that if we attempt to change Soft Cell's username, it should fail. We should sign this transaction as Soft Cell. 
+The only vote that we have so far is `softCell` voting for their own name change. That means that if we attempt to change Soft Cell's username, it should fail. We should sign this transaction as Soft Cell.
 
 FlureeQL:
+
 ```all
 Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
 Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
@@ -552,6 +569,7 @@ Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
 ```
 
 Response:
+
 ```all
 {
   "_tx/id": "6b9f5fe96564289e267bc5d1611c61021053e8de4e95f0777247239a8b9ca1cd",
@@ -567,6 +585,7 @@ Response:
 We would need at least two more yes votes in order to successfully make this change. We can add two more votes for this name change.
 
 FlureeQL:
+
 ```all
 Private Key: 46e37823bfe73ac2b5e440238cb2b65a1cb4115721f23202e543c454faab8449
 Auth id: TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH
@@ -580,6 +599,7 @@ Auth id: TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH
 The second transaction should be signed as a different auth record.
 
 FlureeQL:
+
 ```all
 Private Key: afa6b042a342845c3bf4ea5fd2690d8548d5169fd18d18081ac8ac9093c2e43c
 Auth id: TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK
@@ -597,12 +617,12 @@ Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
 Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
 
 [{
-    "_id": ["_user/username", "softCell"], 
-    "username": "hardCell" 
+    "_id": ["_user/username", "softCell"],
+    "username": "hardCell"
 }]
-``` 
+```
 
-We now have a fully operational voting system. If we want to add a voting requirement to any other predicates, we would simply have to issue a transaction specifying a new function (or re-using `2VotesMajority`), and adding that function to any `_predicate`. For example, the below transaction would require at least 10 votes with more than 75% voting yes in order to change smart function code. 
+We now have a fully operational voting system. If we want to add a voting requirement to any other predicates, we would simply have to issue a transaction specifying a new function (or re-using `2VotesMajority`), and adding that function to any `_predicate`. For example, the below transaction would require at least 10 votes with more than 75% voting yes in order to change smart function code.
 
 ```
 [{
