@@ -50,15 +50,10 @@ class Wrapper extends React.Component {
     changeVersion= (version) => {
         localStorage.setItem("fluree.doc.version", version)
         let fullPathname = this.props.location.pathname
-        let versionFromURL = fullPathname.substring(fullPathname.indexOf("0"), fullPathname.indexOf("0")+6)
-        //  console.log(fullPathname)
-        // console.log(versionFromURL)
-
+       let versionFromURL = fullPathname.substring(fullPathname.indexOf("0"), fullPathname.indexOf("0")+6)
         let newPathname = fullPathname.replace(versionFromURL, version)
-        //console.log(newPathname)
         this.setState({version: version})
-        this.props.history.push(newPathname)
-       
+        this.props.history.push(newPathname) 
     }
 
     render() {
