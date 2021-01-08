@@ -16,6 +16,7 @@ const docNav0_12_0 = require('./nav_maps/docNav0_12_0.json');
 const docNav0_13_0 = require('./nav_maps/docNav0_13_0.json');
 const docNav0_15_0 = require('./nav_maps/docNav0_15_0.json');
 const docNav0_17_0 = require('./nav_maps/docNav0_17_0.json');
+const docNav1_0_0= require('./nav_maps/docNav1_0_0.json');
 
 // Lesson Navs
 
@@ -52,6 +53,8 @@ export const endpointMap = {
     "0.16.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
                 "ledger-stats", "block-range-with-txn"],
     "0.17.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
+                "ledger-stats", "block-range-with-txn"],
+    "1.0.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
                 "ledger-stats", "block-range-with-txn"]
 }
 
@@ -64,7 +67,8 @@ export const languageMap = {
     "0.14.0": ["flureeql", "graphql", "curl", "sparql"],
     "0.15.0": ["flureeql", "graphql", "curl", "sparql"],
     "0.16.0": ["flureeql", "graphql", "curl", "sparql"],
-    "0.17.0": ["flureeql", "graphql", "curl", "sparql"]
+    "0.17.0": ["flureeql", "graphql", "curl", "sparql"],
+    "1.0.0": ["flureeql", "graphql", "curl", "sparql"]
 }
 
 export function getAPINav(version){
@@ -85,6 +89,8 @@ export function getAPINav(version){
     } else if (version === "0.16.0"){
         return apiNav0_15_0;
     } else if (version === "0.17.0"){
+        return apiNav0_15_0;
+    }  else if (version === "1.0.0"){
         return apiNav0_15_0;
     }
 }
@@ -108,6 +114,8 @@ export function getDocNav(version){
         return docNav0_15_0;
     } else if (version === "0.17.0"){
         return docNav0_17_0;
+    } else if (version === "1.0.0"){
+        return docNav0_17_0;
     }
 }
 
@@ -129,6 +137,8 @@ export function getLessonNav(version) {
     } else if (version === "0.16.0") {
         return lessonNav0_11_0;
     } else if (version === "0.17.0") {
+        return lessonNav0_11_0;
+    } else if (version === "1.0.0") {
         return lessonNav0_11_0;
     }
 }
@@ -152,13 +162,15 @@ export function getLibNav(version){
         return libNav0_15_0;
     } else if (version === "0.17.0"){
         return libNav0_15_0;
+    } else if (version === "1.0.0"){
+        return libNav0_15_0;
     }
 }
 
 export function getGuideNav(version){
     if(version === "0.9.1" || version === "0.10.0" || version === "0.11.0" || version === "0.12.0" || version === "0.13.0" || version === "0.14.0"){
         return guideNav0_10_0;
-    } else if (version === "0.15.0" || version === "0.16.0" || version === "0.17.0"){
+    } else if (version === "0.15.0" || version === "0.16.0" || version === "0.17.0" || version === "1.0.0"){
         return guideNav0_15_0;
     }
 }
@@ -181,6 +193,8 @@ export function getVideoNav(version) {
     } else if (version === "0.16.0"){
         return videoNav0_13_0;
     } else if (version === "0.17.0"){
+        return videoNav0_13_0;
+    }  else if (version === "1.0.0"){
         return videoNav0_13_0;
     }
 }
