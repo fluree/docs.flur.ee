@@ -80,7 +80,7 @@ const Splash = (props) => {
 
 const FPPanel = (props) => {
 	const { version } = props;
-	console.log(version);
+	
 	return (
 		<div
 			style={{
