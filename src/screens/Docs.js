@@ -48,7 +48,10 @@ class Docs extends React.Component {
 	};
 
 	componentDidMount() {
-		if (this.props.match.path === "/docs/search" || this.props.match.path === "/guides/search") {
+		if (
+			this.props.match.path === "/docs/search" ||
+			this.props.match.path === "/guides/search"
+		) {
 			this.setState({ displaySearch: true });
 			let query = this.props.location.search;
 			let queryPattern = /\?search=/;
@@ -60,7 +63,6 @@ class Docs extends React.Component {
 			this.setState({ displaySearch: false });
 		}
 
-		
 		const languages = languageMap[this.props.version];
 		let nav;
 
@@ -104,9 +106,10 @@ class Docs extends React.Component {
 			this.setState({ hashAnchor: "" });
 		}
 		if (
-			((prevProps.match.path !== "/docs/search") &
-			(this.props.match.path === "/docs/search")) || ((prevProps.match.path !== "/guidess/search") &
-			(this.props.match.path === "/guidess/search"))
+			(prevProps.match.path !== "/docs/search") &
+				(this.props.match.path === "/docs/search") ||
+			(prevProps.match.path !== "/guidess/search") &
+				(this.props.match.path === "/guidess/search")
 		) {
 			this.setState({ displaySearch: true });
 		}
@@ -126,7 +129,10 @@ class Docs extends React.Component {
 
 	getTopicAndLoad = () => {
 		const { nav } = this.state;
-		if (this.props.match.path === "/docs/search" || this.props.match.path === "/guides/search") {
+		if (
+			this.props.match.path === "/docs/search" ||
+			this.props.match.path === "/guides/search"
+		) {
 			this.setState({ displaySearch: true });
 		} else {
 			let promise = new Promise((resolve, reject) => {
@@ -146,7 +152,7 @@ class Docs extends React.Component {
 					} else if (this.props.type === "library") {
 						this.loadSection("intro", "intro", nav);
 					} else if (this.props.type === "guides") {
-					this.loadSection("intro", "intro", nav);
+						this.loadSection("intro", "intro", nav);
 					}
 				});
 		}
@@ -304,11 +310,7 @@ class Docs extends React.Component {
 		} = this.state;
 		const { version } = this.props;
 		const guidesNav = getGuideNav(this.props.version);
-		const searchNav = {...nav, ...guidesNav}
-		
-		// console.log("normal",nav)
-		// console.log("guides", guidesNav)
-		// console.log("searchNav", searchNav)
+
 		return (
 			<div
 				className="row"
@@ -360,7 +362,7 @@ class Docs extends React.Component {
 				</div>
 				<div
 					className={
-						this.props.type === "docs" || this.props.type === "library"
+						this.props.type === "docs" || this.props.type === "library" || this.props.type === "guides"
 							? "col-md-8 mb20"
 							: "col-sm-6"
 					}
@@ -427,7 +429,12 @@ class Docs extends React.Component {
 						</div>
 					)}
 					{this.state.nav && displaySearch ? (
-						<Search {...this.props} query={this.state.searchValue} docsNav={nav} guidesNav={guidesNav}/>
+						<Search
+							{...this.props}
+							query={this.state.searchValue}
+							docsNav={nav}
+							guidesNav={guidesNav}
+						/>
 					) : (
 						<div>
 							<article
