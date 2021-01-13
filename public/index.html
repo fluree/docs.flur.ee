@@ -26,6 +26,16 @@
 			gtag("js", new Date());
 			gtag("config", "G-REKSDEB65X");
 		</script>
+		<script>
+			(function () {
+				var zi = document.createElement('script');
+				zi.type = 'text/javascript';
+				zi.async = true;
+				zi.src = 'https://ws.zoominfo.com/pixel/fT1dRRxJQOlsnpEtxyGN';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(zi, s);
+			})();
+		</script>
 		<!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -53,6 +63,9 @@
 
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+	-->
+	<noscript>
+		<img src="https://ws.zoominfo.com/pixel/fT1dRRxJQOlsnpEtxyGN" width="1" height="1" style="display: none;" />
+	</noscript>
 	</body>
 </html>
