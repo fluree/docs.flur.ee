@@ -115,7 +115,7 @@ export function getDocNav(version){
     } else if (version === "0.17.0") {
         return docNav0_17_0;
     } else if (version === "1.0.0") {
-        return docNav0_17_0;
+        return docNav1_0_0;
     }
 }
 
