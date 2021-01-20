@@ -7,7 +7,7 @@
             },
             "installation": {
                 "headerName": "Installation",
-                "file": "0.13.0/docs/start/installation"
+                "file": "1.0.0/docs/start/installation"
             },
             "fluree-on-demand": {
                 "headerName": "Fluree On-Demand",
