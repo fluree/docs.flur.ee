@@ -6,6 +6,7 @@ const apiNav0_11_0 = require('./nav_maps/apiNav0_11_0.json');
 const apiNav0_12_0 = require('./nav_maps/apiNav0_12_0.json');
 const apiNav0_13_0 = require('./nav_maps/apiNav0_13_0.json');
 const apiNav0_15_0 = require('./nav_maps/apiNav0_15_0.json');
+const apiNav0_17_0 = require('./nav_maps/apiNav0_17_0.json');
 
 // Docs Navs
 
@@ -88,10 +89,10 @@ export function getAPINav(version){
         return apiNav0_15_0;
     } else if (version === "0.16.0") {
         return apiNav0_15_0;
-    } else if (version === "0.17.0") {
-        return apiNav0_15_0;
-    }  else if (version === "1.0.0") {
-        return apiNav0_15_0;
+    } else if (version === "0.17.0"){
+        return apiNav0_17_0;
+    }  else if (version === "1.0.0"){
+        return apiNav0_17_0;
     }
 }
 
