@@ -22,7 +22,7 @@ This section is background on the way data is conceptualized in any given ledger
 
 When a Fluree ledger is initialized, a block 1 is created. This block contains certain important metadata, including all the [System Collections](/docs/schema#all-system-collections) needed to make ledger features work.
 
-A ledger at a given block is a ledger. Every block corresponds to a moment in time, and the data in ablock consists of a group of atomic updates made to that ledger at a given point in time. 
+A ledger at a given block is a ledger. Every block corresponds to a moment in time, and the data in a block consists of a group of atomic updates made to that ledger at a given point in time. 
 
 These atomic updates are very specially formatted logs. Each updates is a called a [flakes](#flakes). Flakes are a specific fact at a specific point in time about a specific subject. No two flakes are the same.
 
@@ -71,7 +71,7 @@ The below image shows you a simplified representation of five blocks worth of fl
 Rather than storing a copy of the entire ledger in each block, every block contains only flakes, or facts about entities, that are different as of that block.
 
 ### Collections and Predicates
-A [collection](/docs/schema/collections) is analogous to a relational ledger table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city. 
+A [collection](/docs/schema/collections) is analogous to a relational database table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city. 
 
 Every collection has [predicates](/docs/schema/predicates). Predicates are analogous to relational ledger columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. 
 
