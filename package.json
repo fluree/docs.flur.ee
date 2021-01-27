@@ -22,6 +22,7 @@
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.3.1",
     "react-router-hash-link": "^1.2.1",
+    "react-router-sitemap": "^1.2.0",
     "react-scripts": "^2.1.2",
     "remark": "^10.0.1",
     "remark-slug": "^5.1.1",
