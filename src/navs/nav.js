@@ -7,6 +7,8 @@ const apiNav0_12_0 = require('./nav_maps/apiNav0_12_0.json');
 const apiNav0_13_0 = require('./nav_maps/apiNav0_13_0.json');
 const apiNav0_15_0 = require('./nav_maps/apiNav0_15_0.json');
 const apiNav0_17_0 = require('./nav_maps/apiNav0_17_0.json');
+const apiNav1_0_0 = require('./nav_maps/apiNav1_0_0.json');
+
 
 // Docs Navs
 
@@ -45,17 +47,17 @@ export const endpointMap = {
     "0.10.0": [ "block", "graphql", "history", "multi-query", "query", "signin", "sparql", "transact"],
     "0.11.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with"],
     "0.12.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with"] ,
-    "0.13.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
+    "0.13.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with",
                 "ledger-stats", "block-range-with-txn"],
-    "0.14.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
+    "0.14.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with",
                 "ledger-stats", "block-range-with-txn"],
-    "0.15.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
+    "0.15.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with",
                 "ledger-stats", "block-range-with-txn"],
-    "0.16.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
+    "0.16.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with",
                 "ledger-stats", "block-range-with-txn"],
-    "0.17.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
+    "0.17.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with",
                 "ledger-stats", "block-range-with-txn"],
-    "1.0.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with", 
+    "1.0.0": [ "block", "graphql", "history", "multi-query", "query", "sparql", "transact", "gen-flakes", "query-with", "test-transact-with",
                 "ledger-stats", "block-range-with-txn"]
 }
 
