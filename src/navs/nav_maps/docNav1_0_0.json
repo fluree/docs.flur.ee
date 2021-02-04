@@ -54,6 +54,10 @@
             "sparql": {
                 "headerName": "SPARQL",
                 "file": "0.10.0/docs/query/sparql"
+            },
+            "sql": {
+                "headerName": "SQL",
+                "file": "1.0.0/docs/query/sql"
             }
         }
     },
