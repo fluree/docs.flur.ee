@@ -47,6 +47,10 @@
 				"headerName": "History Query",
 				"file": "0.15.0/docs/query/history-query"
 			},
+			"advanced-query": {
+				"headerName": "Advanced Query",
+				"file": "0.15.0/docs/query/advanced-query"
+			},
 			"graphql": {
 				"headerName": "GraphQL",
 				"file": "0.15.0/docs/query/graphql"
