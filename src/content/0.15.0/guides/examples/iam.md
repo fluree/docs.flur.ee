@@ -60,7 +60,7 @@ You can copy/paste the following schema transaction into the Fluree Admin dashbo
   {
     "_id": "_role#magician",
     "id": "magician",
-    "doc": "A user who has achieved the title of magician. Entrusted with the secrets of the guild",
+    "doc": "A user who has achieved the title of magician. Entrusted with the secrets of the guild"
   }
 ]
 ```
