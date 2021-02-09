@@ -1,6 +1,6 @@
 ## Collections
 
-A collection is analogous to a relational ledger table. Every time you want a **new type of item** in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city.
+A collection is analogous to a relational database table. Every time you want a **new type of item** in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city.
 
 Collections are recorded in the ledger in the same way as any other type of data. The syntax for updating the `_collection` collection or `_collection` predicates is the same as updating any other type of information. Furthermore, if you wanted to add additional predicates to the `_collection` collection, you can. 
 
