@@ -1,6 +1,6 @@
 ## Basic Query
 
-In this section, we show you how to perform basic queries using FlureeQL. All code examples are shown in FlureeQL. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the sidebar, then make sure `Query` is selected in the top-right, as well as in the dropdown). 
+In this section, we show you how to perform basic queries using FlureeQL. All code examples are shown in FlureeQL. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the `Query` dropdown in the sidebar). 
 
 To issue these queries using the API, see `/query` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-query) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version). You can also issue multiple queries at once using the `/multi-query` endpoints in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-multi-query) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version).
 

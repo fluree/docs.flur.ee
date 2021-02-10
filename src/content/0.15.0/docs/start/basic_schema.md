@@ -112,7 +112,7 @@ The below transaction creates the following predicates:
 - `movie/title`
 
 
-<pre style="height: 200px;overflow-y: scroll"><code class="language-flureeql">
+<pre style="height: 600px;overflow-y: scroll"><code class="language-flureeql">
 [{
   "_id":    "_predicate",
   "name":   "person/handle",

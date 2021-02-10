@@ -388,7 +388,7 @@ Transactions not supported in SPARQL.
 
 You can issue the below transaction to add some sample data into your ledger. The below transaction adds four users, three chats, four comments, and three artists. 
 
-<pre style="height: 200px;overflow-y: scroll"><code class="language-flureeql">
+<pre style="height: 400px;overflow-y: scroll"><code class="language-flureeql">
 [{
   "_id":      "person$jdoe",
   "handle":   "jdoe",
@@ -496,7 +496,7 @@ You can issue the below transaction to add some sample data into your ledger. Th
 </code>
 </pre>
 
-<pre style="height: 200px;overflow-y: scroll"><code class="language-curl">
+<pre style="height: 400px;overflow-y: scroll"><code class="language-curl">
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \

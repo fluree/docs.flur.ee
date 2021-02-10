@@ -6,7 +6,7 @@ All of the examples below display SPARQL syntax, regardless of the language sele
 
 ### What is SPARQL?
 
-SPARQL (pronounced "sparkle") is a query-langauge for RDF ledgers. RDF ledgers are also known as triple-store ledgers, and every fact in a triple-store ledger is stored a triple composed of a subject-predicate-object (SPO). The first three elements of a flake (subject, predicate, object) align exactly to triple-store ledgers' SPO triples. This lends itself to connection across Fluree and RDF ledgers. 
+SPARQL (pronounced "sparkle") is a query-langauge for RDF ledgers. RDF ledgers are also known as triple-store ledgers, and every fact in a triple-store ledger is stored in a triple composed of a subject-predicate-object (SPO). The first three elements of a flake (subject, predicate, object) align exactly to triple-store ledgers' SPO triples. This lends itself to connection across Fluree and RDF ledgers. 
 
 You can use SPARQL to:
 
@@ -15,7 +15,7 @@ You can use SPARQL to:
 - Calculate aggregates
 - Create complicated joins
 
-The ability to query across multiple FlureeQL ledgers is not currently supported, although will be supported in future releases.
+The ability to query across multiple FlureeQL ledgers is not currently supported, although it will be supported in future releases.
 
 In additional, SPARQL is strictly a query-language. You cannot use SPARQL to transact data. 
 
