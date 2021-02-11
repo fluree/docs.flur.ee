@@ -244,7 +244,7 @@ You can optionally apply the where filter to a specific collection by including 
 
 ### Block Key
 
-A basic query can optionall have a block key, which issues that query as of a given point in time. The value of the block key can be a block number or a ISO-8601 formatted wall-clock time or duration. 
+A basic query can optionally have a block key, which issues that query as of a given point in time. The value of the block key can be a block number or a ISO-8601 formatted wall-clock time or duration. 
 
 Using a block number: 
 
