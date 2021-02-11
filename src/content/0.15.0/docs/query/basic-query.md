@@ -37,11 +37,14 @@ The value of the select key is always an array. For the purposes of this section
 
 An `*` indicates "select all predicates" using the default options. An `*` may be used in conjunction with other select-array items, especially when the user wants to specify particular options. There are examples of this latter in the list.  
 
-```all
+```flureeql
 {
   "select": ["*"],
   "from": "chat"
 }
+```
+```sparql
+Not supported
 ```
 
 2. Predicate Names: Namespaced or Not
@@ -50,11 +53,15 @@ If a predicate is name-spaced, that means that the collection name is included i
 
 Predicates do not have to be namespaced. The collection can often (but not always be inferred). For example, if selecting from the `chat` collection or a specific chat subject, `instant` is inferred to be `chat/instant`. However, with Fluree's flexible schema a predicate in any collection can be attached to any subject. 
 
-```all
+```flureeql
 {
     "select": ["chat/message", "instant", "*", ],
     "from": "chat"
 }
+```
+
+```sparql
+Not supported
 ```
 
 3. A map, crawling the graph. 
@@ -63,7 +70,7 @@ If selecting predicates that are references, then you can crawl the graph. For e
 
 You'll notice that when you just include `chat/person` in the select-array, your results will only show you the subject id (unique identifer) for the person.
 
-```all
+```flureeql
 {
     "_id": 369435906932739,
     "chat/message": "Hi! I'm a chat from Zach.",
@@ -74,24 +81,36 @@ You'll notice that when you just include `chat/person` in the select-array, your
   },
 ```
 
+```sparql
+Not supported
+```
+
 However, you may want to see the details for that person. To do so, you can include a map in your select array where the key is the predicate you want to crawl and the value is a select array itself. The syntax for this select-array is identical to the syntax for a top-level select-array. 
 
 In addition, it does not matter whether the predicate you are crawling references one or many subjects - the syntax is identical (i.e. per our schema, a chat can only have one person `chat/person`, but a person can have multiple favorite movies `person/favMovies`. ).
 
-```all
+```flureeql
 {
     "select": [    {"person": [ "*", "favMovies", "favNums"] }   ],
     "from": "chat"
 }
 ```
 
+```sparql
+Not supported
+```
+
+
 There is no limit to how many times we crawl the graph. For example, below we are crawling the graph to get the person associated with all the chats, as well as each person's favorite movies and favorite artists. We are also crawling the graph to get all the information about those favorite artists and favorite movies. This may look confusing at first, but a select-array is simply made up of any combination of the listed items with an unlimited amount of nesting. 
 
-```all
+```flureeql
 {
     "select": ["*", {"person": ["*", {"favMovies": ["*"] } , {"favArtists": ["*"] } ]}],
     "from": "chat"
 }
+```
+```sparql
+Not supported
 ```
 
 You can crawl the graph with reversely-referenced predicates as well (see below).
@@ -102,20 +121,28 @@ In our basic schema, we know that a chat can reference a person. A person can be
 
 In the basic schema, a chat references a person via the `chat/person` predicate. We know that the following query works to select all `chat/person`s from the chat collection:
 
-```all
+```flureeql
 {
   "select": ["chat/person"],
   "from": "chat"
 }
 ```
 
+```sparql
+Not supported
+```
+
 In order to get all chats that reference `person`s, we simply add an `_` after the `/`. So `chat/person` becomes `chat/_person`. 
 
-```all
+```flureeql
 {
   "select": ["chat/_person"],
   "from": "person"
 }
+```
+
+```sparql
+Not supported
 ```
 
 Any predicate that is a reference (it is of type `ref`) can be reversely referenced. For example:
@@ -126,41 +153,57 @@ Any predicate that is a reference (it is of type `ref`) can be reversely referen
 
 Reverse references can simply return the subject id (as in the query above) or you can crawl the graph with those preferences. Crawling the graph with a reverse reference has the same syntax and behaves the same way as crawling the graph with a regular reference. 
 
-```all
+```flureeql
 {
   "select": [{"chat/_person": ["*"]}],
   "from": "person"
 }
 ```
 
+```sparql
+Not supported
+```
+
 5. A map with sub-select options
 
 You can specify granular options that only apply to certain predicates. To do so, you need to create a map where the key is the predicate name and the value is an array with the sub-select option map inside. For example: `{"fullName": [{"_as": "name"}]}`. The sub-select option `as` renames `fullName` to `name` in the results. The full list of sub-select options is in the table below. 
 
-```all
+```flureeql
 {
     "select": ["handle", {"fullName": [{"_as": "name"}]}], 
     "from": "person"
 }
 ```
+```sparql
+Not supported
+```
+
 
 A map can BOTH crawl the graph and have sub-select options. For example, `{"comment/_person": ["*", {"_as": "comment", "_limit": 1}]}`
 
 
-```all
+```flureeql
 {
     "select": ["handle", {"comment/_person": ["*", {"_as": "comment", "_limit": 1}]}], 
     "from": "person"
 }
 ```
 
+```sparql
+Not supported
+```
+
 Below is another example using `_recur`. 
 
-```all
+```flureeql
 {
     "select":["handle", {"person/follows": ["handle", {"_recur": 10}]}],
     "from":"person"
 }
+```
+
+```sparql
+Not supported
 ```
 
 Certain sub-select options, such as `_recur` are only relevant for refs. While other options, such as `_limit` are only relevant for `multi` predicates.
@@ -189,11 +232,15 @@ an array of subject ids and unique two-tuples | `[87960930223082, ["person/handl
 
 Any select-array can be combined with any type of `from` key. 
 
-```all
+```flureeql
 {
   "select": ["*", {"chat/_person": ["*", {"_as": "chperson"}]}],
   "from": [87960930223082, ["person/handle", "jdoe"]]
 }
+```
+
+```sparql
+Not supported
 ```
 
 ### Where Key
@@ -210,31 +257,41 @@ Note: You are able to filter string values with `>`, `>=`, `<`, `<=`, although w
 
 You can link multiple specifications with `AND`s or `OR`s, for example `chat/instant > 1517437000000 AND chat/instant < 1517438000000`. You cannot submit a where clause with both an `AND` and an `OR`.
 
-```all
+```flureeql
 {
   "select": ["chat/message", "chat/instant"],
   "where": "chat/instant > 1517437000000"
 }
 ```
 
-```all
+```sparql
+Not supported
+```
+
+```flureeql
 {
   "select": ["chat/message", "chat/instant"],
   "where": "chat/person = 351843720888322 OR chat/instant > 1517437000000"
 }
 ```
+```sparql
+Not supported
+```
 
 
-```all
+```flureeql
 {
   "select": ["handle"],
   "where": "person/handle != \"jdoe\" AND person/_chat"
 }
 ```
+```sparql
+Not supported
+```
 
 You can optionally apply the where filter to a specific collection by including a `from` key in your query map with a collection as the value. 
 
-```all
+```flureeql
 {
   "select": ["handle"],
   "where": "person/handle != \"jdoe\" AND person/_chat",
@@ -242,9 +299,13 @@ You can optionally apply the where filter to a specific collection by including 
 }
 ```
 
+```sparql
+Not supported
+```
+
 ### Block Key
 
-A basic query can optionall have a block key, which issues that query as of a given point in time. The value of the block key can be a block number or a ISO-8601 formatted wall-clock time or duration. 
+A basic query can optionally have a block key, which issues that query as of a given point in time. The value of the block key can be a block number or a ISO-8601 formatted wall-clock time or duration. 
 
 Using a block number: 
 
