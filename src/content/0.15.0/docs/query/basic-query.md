@@ -432,10 +432,13 @@ Key | Value | Description
 
 For example:
 
-```all
+```flureeql
 { 
   "select": ["*"], 
   "from": "person", 
   "opts": { "compact": true, "limit": 10, "offset": 5, "syncTo": 5, "orderBy": "handle" }
 }
+```
+```sparql
+Not supported
 ```
