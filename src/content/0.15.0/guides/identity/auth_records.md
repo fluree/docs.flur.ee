@@ -1,6 +1,6 @@
 ## Auth Records
 
-Auth records control identity in Fluree and are tied specific public-private key pairs. 
+Auth records control identity in Fluree and are tied to specific public-private key pairs. 
 
 ### Generating a Public-Private Key/Auth Id Triple
 
