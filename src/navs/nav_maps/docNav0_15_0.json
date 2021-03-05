@@ -7,7 +7,7 @@
 			},
 			"installation": {
 				"headerName": "Installation",
-				"file": "0.13.0/docs/start/installation"
+				"file": "0.15.0/docs/start/installation"
 			},
 			"fluree-on-demand": {
 				"headerName": "Fluree On-Demand",
@@ -57,7 +57,7 @@
 			},
 			"sparql": {
 				"headerName": "SPARQL",
-				"file": "0.10.0/docs/query/sparql"
+				"file": "0.15.0/docs/query/sparql"
 			}
 		}
 	},
@@ -70,15 +70,15 @@
 			},
 			"adding-data": {
 				"headerName": "Adding Data",
-				"file": "0.10.0/docs/transact/adding-data"
+				"file": "0.15.0/docs/transact/adding-data"
 			},
 			"updating-data": {
 				"headerName": "Updating Data",
-				"file": "0.10.0/docs/transact/updating-data"
+				"file": "0.15.0/docs/transact/updating-data"
 			},
 			"deleting-data": {
 				"headerName": "Deleting Data",
-				"file": "0.10.0/docs/transact/deleting-data"
+				"file": "0.15.0/docs/transact/deleting-data"
 			}
 		}
 	},
@@ -128,19 +128,19 @@
 			},
 			"ledger-settings": {
 				"headerName": "Ledger Settings",
-				"file": "0.13.0/docs/db-setup/ledger-settings"
+				"file": "0.15.0/docs/db-setup/ledger-settings"
 			},
 			"forking-a-db": {
 				"headerName": "Forking a Ledger",
-				"file": "0.10.0/docs/db-setup/forking-a-ledger"
+				"file": "0.15.0/docs/db-setup/forking-a-ledger"
 			},
 			"snapshotting-a-ledger": {
 				"headerName": "Snapshotting a Ledger",
-				"file": "0.11.0/docs/db-setup/snapshotting-a-ledger"
+				"file": "0.15.0/docs/db-setup/snapshotting-a-ledger"
 			},
 			"deleting-a-ledger": {
 				"headerName": "Deleting a Ledger",
-				"file": "0.11.0/docs/db-setup/deleting-a-ledger"
+				"file": "0.15.0/docs/db-setup/deleting-a-ledger"
 			}
 		}
 	},
@@ -149,11 +149,11 @@
 		"subTopics": {
 			"db-infrastructure": {
 				"headerName": "Ledger Infrastructure",
-				"file": "0.10.0/docs/infrastructure/db_infrastructure"
+				"file": "0.15.0/docs/infrastructure/db_infrastructure"
 			},
 			"network-infrastructure": {
 				"headerName": "Network Infrastructure",
-				"file": "0.10.0/docs/infrastructure/network_infrastructure"
+				"file": "0.15.0/docs/infrastructure/network_infrastructure"
 			},
 			"system-collections": {
 				"headerName": "System Collections",
