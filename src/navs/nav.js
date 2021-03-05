@@ -94,7 +94,7 @@ export function getAPINav(version){
     } else if (version === "0.17.0"){
         return apiNav0_17_0;
     }  else if (version === "1.0.0"){
-        return apiNav0_17_0;
+        return apiNav1_0_0;
     }
 }
 
