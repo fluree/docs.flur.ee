@@ -44,10 +44,10 @@ class Wrapper extends React.Component {
 	componentDidMount() {
 		let version = localStorage.getItem("fluree.doc.version");
 		let fullPathname = this.props.location.pathname;
-		let versionFromURL = fullPathname.substring(
-			fullPathname.indexOf("0"),
-			fullPathname.indexOf("0") + 6
-		);
+		// let versionFromURL = fullPathname.substring(
+		// 	fullPathname.indexOf("0"),
+		// 	fullPathname.indexOf("0") + 6
+		// );
 		let newVersion =
 			version && versions.includes(version) ? version : currentVersion;
 		if (version !== newVersion) {
