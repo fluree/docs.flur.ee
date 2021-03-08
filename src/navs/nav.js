@@ -40,6 +40,8 @@ const videoNav0_13_0 = require('./nav_maps/videoNav0_13_0.json');
 // Guide Nav
 const guideNav0_10_0 = require('./nav_maps/guideNav0_10_0.json')
 const guideNav0_15_0 = require('./nav_maps/guideNav0_15_0.json')
+const guideNav0_17_0 = require('./nav_maps/guideNav0_17_0.json')
+const guideNav1_0_0 = require('./nav_maps/guideNav1_0_0.json')
 
 
 export const endpointMap = {
@@ -173,8 +175,12 @@ export function getLibNav(version) {
 export function getGuideNav(version) {
     if(version === "0.9.1" || version === "0.10.0" || version === "0.11.0" || version === "0.12.0" || version === "0.13.0" || version === "0.14.0") {
         return guideNav0_10_0;
-    } else if (version === "0.15.0" || version === "0.16.0" || version === "0.17.0" || version === "1.0.0") {
+    } else if (version === "0.15.0" || version === "0.16.0") {
         return guideNav0_15_0;
+    } else if (version === "0.17.0"){
+        return guideNav0_17_0;
+    } else if (version === "1.0.0") {
+        return guideNav1_0_0;
     }
 }
 
