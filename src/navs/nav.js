@@ -32,6 +32,7 @@ const libNav0_10_0 = require('./nav_maps/libNav0_10_0.json');
 const libNav0_11_0 = require('./nav_maps/libNav0_11_0.json');
 const libNav0_13_0 = require('./nav_maps/libNav0_13_0.json');
 const libNav0_15_0 = require('./nav_maps/libNav0_15_0.json');
+const libNav1_0_0  = require('./nav_maps/libNav1_0_0.json');
 
 // Video Navs
 const videoNav0_10_0 = require('./nav_maps/videoNav0_10_0.json');
@@ -168,7 +169,7 @@ export function getLibNav(version) {
     } else if (version === "0.17.0") {
         return libNav0_15_0;
     } else if (version === "1.0.0") {
-        return libNav0_15_0;
+        return libNav1_0_0;
     }
 }
 
