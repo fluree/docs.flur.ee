@@ -19,6 +19,7 @@ New Ledger | `new_ledger` | Creates a new ledger
 Predicate ID | `predicate_id` | Returns the ID of a predicate
 Predicate Name | `predicate_name` | Returns the name of a predicate
 Resolve Ledger | `resolve_ledger` | Resolves a ledger identity in the current connection
+Search | `search` | Executes a search against a given a db (ledger instance) and flake parts
 Session | `session` | Returns session object for a given ledger
 Subject ID | `subid` | Returns the subject identity for a given object
 
@@ -78,7 +79,6 @@ Action | Function | Explanation
 Forward Time Travel | `forward_time_travel` | Returns a new, queryable db based on a provided db and flake parts
 Is Forward Time travel DB? | `is_forward_time_travel` | Returns true if provided db is a forward-time-travel db
 Query With | `query-with` | Executes a query against the provided DB, with the given flakes applied
-Search | `search` | Executes a search against a given a db (ledger instance) and flake parts
 
 
 

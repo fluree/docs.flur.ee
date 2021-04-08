@@ -1,6 +1,6 @@
 ## Node.js Library Examples
 
-You can dowbload the latest version of the Fluree Node.js library from npm:
+You can download the latest version of the Fluree Node.js library from npm:
 ```all
 npm install @fluree/flureenjs
 ```
@@ -1086,6 +1086,37 @@ flureenjs.close(flureeDbConn);
 ```
 
 
+### **search**
+Returns a promise containing search results based on provided flake parts.
+
+#### Parameter(s)
+Name | Value
+-- | --
+`db-source` | an asynchronous channel created by the `db` function 
+`flake-parts` | an array of flake-parts to use in an index-search. 
+
+#### Returns
+Returns an array of flakes satisfying the search criteria.  
+
+#### Code Example   
+An example of an unsigned request to `query` with the network, `test` and the ledger `chat`:
+     
+```all
+const flureenjs = require('@fluree/flureenjs');
+const flureeServerUrl = "http://localhost:8090";
+var flureeDbConn = flureenjs.connect(flureeServerUrl);
+
+const ledger = "test/chat";
+var myDb = flureenjs.db(flureeDbConn, ledger);
+let flakeParts = [ 17592186044438, 40 ];
+flureenjs.search(myDb, flakeParts)
+  .then( results => {console.log(results);})
+  .catch( error => {console.log('Error ', error);});
+:
+flureenjs.close(flureeDbConn);
+```
+  
+&nbsp;&nbsp;
 ### **session**
 Returns actual session object, containing cache, for a given ledger.
 
@@ -1628,34 +1659,3 @@ flureenjs.close(flureeDbConn);
   
 &nbsp;&nbsp;
 
-### **search**
-Returns a promise containing search results based on provided flake parts.
-
-#### Parameter(s)
-Name | Value
--- | --
-`db-source` | an asynchronous channel created by the `db` function 
-`flake-parts` | an array of flake-parts to use in an index-search. 
-
-#### Returns
-Returns an array of flakes satisfying the search criteria.  
-
-#### Code Example   
-An example of an unsigned request to `query` with the network, `test` and the ledger `chat`:
-     
-```all
-const flureenjs = require('@fluree/flureenjs');
-const flureeServerUrl = "http://localhost:8090";
-var flureeDbConn = flureenjs.connect(flureeServerUrl);
-
-const ledger = "test/chat";
-var myDb = flureenjs.db(flureeDbConn, ledger);
-let flakeParts = [ 17592186044438, 40 ];
-flureenjs.search(myDb, flakeParts)
-  .then( results => {console.log(results);})
-  .catch( error => {console.log('Error ', error);});
-:
-flureenjs.close(flureeDbConn);
-```
-  
-&nbsp;&nbsp;
