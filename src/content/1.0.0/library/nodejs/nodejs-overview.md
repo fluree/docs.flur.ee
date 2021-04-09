@@ -19,7 +19,7 @@ New Ledger | `new_ledger` | Creates a new ledger
 Predicate ID | `predicate_id` | Returns the ID of a predicate
 Predicate Name | `predicate_name` | Returns the name of a predicate
 Resolve Ledger | `resolve_ledger` | Resolves a ledger identity in the current connection
-Search | `search` | Executes a search against a given a db (ledger instance) and flake parts
+Search | `search` | Executes a search against a given db (ledger instance) and flake parts
 Session | `session` | Returns session object for a given ledger
 Subject ID | `subid` | Returns the subject identity for a given object
 

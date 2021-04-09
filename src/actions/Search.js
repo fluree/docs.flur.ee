@@ -33,15 +33,20 @@ export const CreateIndex = (combinedNav) => {
 					subtopic,
 					"headerName",
 				]);
-				let section = require(`../content/${filePath}.md`);
-				docs.push({
-					topic: `${
-						key === "docsNav" ? "/docs" : "/guides"
-					}/${navsKey}/${subtopic}`,
-					headerName: headerName,
-					file: section,
-					type: key,
-				});
+				try {
+					let section = require(`../content/${filePath}.md`);
+					docs.push({
+						topic: `${
+							key === "docsNav" ? "/docs" : "/guides"
+						}/${navsKey}/${subtopic}`,
+						headerName: headerName,
+						file: section,
+						type: key,
+					});					
+				} catch (error) {
+					; //should message support missing content
+				}
+				
 			});
 		});
 	});

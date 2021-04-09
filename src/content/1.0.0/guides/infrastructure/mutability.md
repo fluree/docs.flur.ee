@@ -52,23 +52,10 @@ Currently hiding flakes is only supported when using an open API.
 
 Purging data is not currently supported, but will allow users to completely remove any trace of a flake. Purging data is the most extreme option for mutable, and does NOT maintain the integrity of the blockchain.
 
-### Snapshot No History
-
-Creating a snapshot with no history does not impact the original ledger in any way. However, it does allow a user to create a new ledger from the snapshot that has no historical data. 
-
-A snapshot with no history will have at least three blocks:
-
-- `Genesis Block` with any system collections and predicates, as well as auths, roles, rules, functions, tags, and settings.
-- `Schema Block` with any user-created collections and predicates, excluding any _collection/spec, _predicate/spec, and _predicate/txSpec.
-- `Data Block` with any active flakes (i.e. flakes that have not been retracted). Depending on the size of your active flakes, this may be 1 or more blocks. After all other flakes are added to the ledger, we will then apply any smart functions to collection or predicate specs.
-
-See [/snapshot](/api/downloaded-endpoints/downloaded-examples#-snapshot) to see how to do issue this request.
-
 ### Querying Across Ledgers
 
 One common reason for wanting mutable data is to store personally identifiable information (PII). One common way for dealing with PII is by storing the PII in one ledger and non-sensitive data in a separate ledger. A single query can join data across multiple ledgers (see the [query syntax](/docs/query/analytical-query#prefixes-key) here). 
 
 In this situation, the ledger with PII can be shared only with select users, and information that should be deleted can be handled in any of the ways listed above:
 - hiding data
-- purging data
-- every x days, creating a new PII ledger using a no-history snapshot.
+- purging data.
