@@ -30,17 +30,6 @@ Headers: None
 Body: {"db/id": "test/one"}
 ```
 
-You can also use the `/new-db` endpoint to create a ledger from a snapshot. See [snapshotting a ledger](/docs/ledger-setup/snapshotting-a-ledger) for more information.
-
-```all
-Action: POST
-Endpoint: http://localhost:8080/fdb/new-db
-Body: {
-  "db/id": "test/one",
-  "snapshot": "fluree/demo/snapshot/1573233945064.avro"
-}
-```
-
 ### /nw-state
 
 This provides a status of the Fluree network as recorded by a particular (ledger or transact) server.  Status information includes raft state, list of servers in the Fluree network, list of ledgers, and the current # of transactions queued.
@@ -90,53 +79,6 @@ The result is a map of key/value pairs, for example:
  :voted-for "myserver",
  :open-api true,
  :timeout-ms 666}
-```
-
-### /snapshot
-
-This creates a LOCAL snapshot of a particular ledger - it does not create snapshots on every transactor in the network. A snapshot file can be used to create a ledger from a snapshot (see [snapshotting](/docs/ledger-setup/snapshotting-a-ledger) and [new-db](#-new-db)).
-
-To create a snapshot, simply send an empty POST request to the `/snapshot` endpoint. The below example creates a snapshot of a ledger with network `dev` and ledger-id `main`.
-
-```all
-Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/snapshot
-Headers: None
-Body: Null
-```
-
-You can also create a snapshot with no history by specifying `no-history` true in the in the body, as seen below. See how to do this in the section on [mutability and snapshotting with no history](/docs/ledger-setup/mutability#snapshot-no-history).
-
-```all
-Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/snapshot
-Headers: None
-Body: {
-    "no-history": true
-}
-```
-
-### /list-snapshots
-
-This lists all LOCAL snapshot for a particular ledger - it does not list snapshots on every transactor in the network. A snapshot file can be used to create a ledger from a snapshot (see [snapshotting](/docs/ledger-setup/snapshotting-a-ledger) and [new-db](#-new-db)).
-
-To list snapshots, simply send an empty POST request to the `/list-snapshots` endpoint. The below example checks for local snapshots of a ledger with network `dev` and ledger-id `main`.
-
-```all
-Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/list-snapshots
-Headers: None
-Body: Null
-```
-
-The result is an array listing all the snapshots, for example:
-
-```all
-[
-    "dev/main/snapshot/1587143181823.avro",
-    "dev/main/snapshot/1587140544208.avro",
-    "dev/main/snapshot/1587140743815.avro"
-]
 ```
 
 ### /export
