@@ -76,6 +76,7 @@ Type | Description
 `uuid` | A UUID value. (`_type/uuid`)
 `bytes` | Must input bytes as a lowercase, hex-encoded string (`_type/bytes`)
 `json` | Arbitrary JSON data. The JSON is automatically encoded/decoded (UTF-8) with queries and transactions, and JSON structure can be validated with a `spec`. (`_type/json`)
+`geojson` | Geospatial JSON data. GeoJSON is an open standard format designed to represent simple geographical features. (`_type/geojson`)
 
 ### _tag
 
