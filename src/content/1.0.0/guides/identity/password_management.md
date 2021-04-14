@@ -6,7 +6,7 @@ Passwords are less-secure than private keys, however they may be the best option
 There are [several settings](/docs/getting-started/fluree-anywhere#password-and-jwt-token-settings) that are used to handle passwords and tokens. Two of the main settings are:
 
 `fdb-pw-auth-enable`: by default this is `true`. 
-`fdb-pw-auth-secret`: this can be any string (SAME FOR EACH TX GROUP SERVER??)
+`fdb-pw-auth-secret`: this can be any string. <!-- (SAME FOR EACH TX GROUP SERVER??) -->
 
 Once we ensure these settings are how we like them, we can start our Fluree instance. 
 
