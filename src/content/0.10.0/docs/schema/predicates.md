@@ -121,7 +121,7 @@ mutation addPredicates ($myPredicateTx: JSON) {
 ```
 
 ```sparql
-Transactions not support in SPARQL
+Transactions not supported in SPARQL
 ```
 
 ### Adding a Predicate to `_predicate`
@@ -160,7 +160,7 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 ```
 
 ```sparql
-Transactions not support in SPARQL
+Transactions not supported in SPARQL
 ```
 
 After you add this predicate, you can update any existing predicates to include a long description:
@@ -194,7 +194,7 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 ```
 
 ```sparql
-Transactions not support in SPARQL
+Transactions not supported in SPARQL
 ```
 
 And you can create new predicates with a `_predicate/longDescription`:
@@ -233,7 +233,7 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 ```
 
 ```sparql
-Transactions not support in SPARQL
+Transactions not supported in SPARQL
 ```
 
 ### Updating a Predicate in `_predicate`
@@ -315,7 +315,7 @@ mutation addUpsert ($addUpsertTx: JSON) {
 ```
 
 ```sparql
-Transactions not support in SPARQL
+Transactions not supported in SPARQL
 ```
 
 Now, we allow upsert for the `_predicate/name` predicate.

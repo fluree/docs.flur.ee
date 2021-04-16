@@ -89,7 +89,7 @@ mutation addCollections ($myCollectionTx: JSON) {
 ```
 
 ```sparql
-Transactions not support in SPARQL
+Transactions not supported in SPARQL
 ```
 
 ### Adding a Predicate to `_collection`
@@ -128,7 +128,7 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 ```
 
 ```sparql
-Transactions not support in SPARQL
+Transactions not supported in SPARQL
 ```
 
 After you add this predicate, you can update any existing collections to include a long description:
@@ -162,7 +162,7 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 ```
 
 ```sparql
-Transactions not support in SPARQL
+Transactions not supported in SPARQL
 ```
 
 And you can create new collections with a `_collection/longDescription`:
@@ -199,7 +199,7 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 ```
 
 ```sparql
-Transactions not support in SPARQL
+Transactions not supported in SPARQL
 ```
 
 ### Updating a Predicate in `_collection`
@@ -281,7 +281,7 @@ mutation addUpsert ($addUpsertTx: JSON) {
 ```
 
 ```sparql
-Transactions not support in SPARQL
+Transactions not supported in SPARQL
 ```
 
 Now, we allow upsert for the `_collection/name` predicate.
