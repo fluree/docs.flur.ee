@@ -227,7 +227,7 @@ Only one configuration change can be in process at once. Attempts to issues simu
 
 ### /query
 
-All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/query` with the network, `dev` and the ledger `main`:
 
@@ -392,7 +392,7 @@ Body: [{
 
 ### /graphql Query
 
-All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/graphql`:
 
@@ -608,7 +608,7 @@ A POST request to `/fdb/sub` handles subscriptions. More documentation on this f
 
 ### /new-keys
 
-A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/docs/identity/auth-records#generating-a-public-private-key-auth-id-triple). These requests do not need to be signed.
+A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/guides/identity/auth-records#generating-a-public-private-key-auth-id-triple). These requests do not need to be signed.
 
 ### /generate
 

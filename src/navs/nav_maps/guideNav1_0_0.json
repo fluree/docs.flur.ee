@@ -75,7 +75,7 @@
 			},
 			"signatures": {
 				"headerName": "Signatures",
-				"file": "1.0.0/docs/identity/signatures"
+				"file": "1.0.0/guides/identity/signatures"
 			},
 			"password-management": {
 				"headerName": "Password Management",

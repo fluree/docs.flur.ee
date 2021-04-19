@@ -90,6 +90,6 @@ Set logging | `set_logging` | Set the level of logging for Flureenjs
 
 
 
-More information on [signing queries](/docs/identity/signatures#signed-queries) and [signing transactions](/docs/identity/signatures#signed-transactions) can be found in the linked sections. 
+More information on [signing queries](/guides/1.0.0/identity/signatures#signed-queries) and [signing transactions](/guides/1.0.0/identity/signatures#signed-transactions) can be found in the linked sections. 
 
 See [Node.js Library Examples](/tools/nodejs/nodejs-examples) for examples of how to use each of the commands.
