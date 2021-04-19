@@ -85,7 +85,7 @@ mutation addCollections ($myCollectionTx: JSON) {
 ```
 
 ```sparql
-Transactions not support in SPARQL
+Transactions not supported in SPARQL
 ```
 
 ### Adding Predicates

@@ -46,7 +46,7 @@ When Fluree is done starting up, your terminal will log:
 Starting web server on port: [PORT NUMBER]
 ```
 
-If the above message is not displaying in your terminal, the terminal should print out a relevant error message. Common errors include your chosen port already being in use and not having Java 8 or above installed. 
+If the above message is not displaying in your terminal, the terminal should print out a relevant error message. Common errors include your chosen port already being in use and not having Java 11 or above installed. 
 
 > If you see an error "missing 'server' JVM", you need to install Java Server JRE. See [Oracle documentation](https://docs.oracle.com/en/java/) to select the appropriate platform, version (e.g., 11) and operating system.
 
