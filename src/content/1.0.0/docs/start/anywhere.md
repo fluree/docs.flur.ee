@@ -51,7 +51,7 @@ To change the location of the webserver (setting name `fdb-api-port`), or any ot
 
 If the above message is not displaying in your terminal, the terminal should print out a relevant error message. Common errors include your chosen port already being in use and not having Java 11 or above installed. 
 
-- If you see an error "missing 'server' JVM", you need to install Java Server JRE. See <a href="https://docs.oracle.com/en/java/" target="_blank">Oracle documentation</a> to select the appropriate platform, version (e.g., 8) and operating system.
+- If you see an error "missing 'server' JVM", you need to install Java Server JRE. See <a href="https://docs.oracle.com/en/java/" target="_blank">Oracle documentation</a> to select the appropriate platform, version (e.g., 11) and operating system.
 
 After you launch Fluree for the first time, you will not have any ledgers. You will need to create a ledger to begin.  Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the user interface.
 
