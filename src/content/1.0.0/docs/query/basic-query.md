@@ -208,7 +208,7 @@ The and the third item is a value. String values must be surrounded by escaped q
 
 Note: You are able to filter string values with `>`, `>=`, `<`, `<=`, although we do not recommend it. The results may not be sorted in an expected way, and we do not support any type of customizeable alphabetization. 
 
-You can link multiple specifications with `AND`s or `OR`s, for example `chat/instant > 1517437000000 AND chat/instant < 1517438000000`. You cannot submit a where clause with both an `AND` and an `OR`.
+You can link multiple specifications with `AND`s or `OR`s, for example `chat/instant > 1517437000000 AND chat/instant < 1517438000000`. However, you cannot submit a where clause with both an `AND` and an `OR`.
 
 ```all
 {
@@ -232,15 +232,6 @@ You can link multiple specifications with `AND`s or `OR`s, for example `chat/ins
 }
 ```
 
-You can optionally apply the where filter to a specific collection by including a `from` key in your query map with a collection as the value. 
-
-```all
-{
-  "select": ["handle"],
-  "where": "person/handle != \"jdoe\" AND person/_chat",
-  "from": "person"
-}
-```
 
 ### Block Key
 
