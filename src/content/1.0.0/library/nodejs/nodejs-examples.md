@@ -381,7 +381,7 @@ flureenjs.close(flureeDbConn);
 ```
 
 ### **graphQL**
-All queries and transactions in GraphQL syntax should be issued through the `graphql` function. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All queries and transactions in GraphQL syntax should be issued through the `graphql` function. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/1.0.0/identity/signatures#signed-queries)).
 
 #### Parameter(s)
 Name | Value
@@ -1226,7 +1226,7 @@ A signed message.
 
 
 ### **sparql**
-All queries in SPARQL syntax, regardless of type, should be issued through the `sparql` function. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All queries in SPARQL syntax, regardless of type, should be issued through the `sparql` function. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/1.0.0/identity/signatures#signed-queries)).
 
 #### Parameter(s)
 Name | Value

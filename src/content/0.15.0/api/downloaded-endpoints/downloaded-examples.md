@@ -176,7 +176,7 @@ Only one configuration change can be in process at once. Attempts to issues simu
 
 ### /query
 
-All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/query` with the network, `dev` and the ledger `main`:
 
@@ -341,7 +341,7 @@ Body: [{
 
 ### /graphql Query
 
-All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/docs/identity/signatures#signed-queries)).
+All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/graphql`:
 
@@ -463,9 +463,9 @@ Returns the results of a query using the existing ledger flakes, including flake
 
 The request expects a map with two key-value pairs:
 
-| Key      | Value                                                                              |
-| -------- | ---------------------------------------------------------------------------------- |
-| `flakes` | An array of valid flakes                                                           |
+| Key      | Value                                                                            |
+| -------- | -------------------------------------------------------------------------------- |
+| `flakes` | An array of valid flakes                                                         |
 | `query`  | A query to issue against the current ledger plus the flakes in the flakes value. |
 
 The `t` on the flakes provided has to be current with the latest ledger. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes.
@@ -485,11 +485,11 @@ Given a valid set of flakes that could be added to the ledger at a given point i
 
 The request expects a map with the following key-value pairs:
 
-| Key      | Value                                                                                                                                                           |
-| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `flakes` | An array of valid flakes                                                                                                                                        |
+| Key      | Value                                                                                                                                                         |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `flakes` | An array of valid flakes                                                                                                                                      |
 | `txn`    | A transaction to issue against the current ledger plus the flakes in the flakes value. This endpoint does _NOT_ actually write the transaction to the ledger. |
-| `auth`   | (Optional) The `_auth/id` with which to issue the transaction.                                                                                                  |
+| `auth`   | (Optional) The `_auth/id` with which to issue the transaction.                                                                                                |
 
 The `t` on the flakes provided has to be current with the latest ledger. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes.
 
@@ -557,7 +557,7 @@ A POST request to `/fdb/sub` handles subscriptions. More documentation on this f
 
 ### /new-keys
 
-A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/docs/identity/auth-records#generating-a-public-private-key-auth-id-triple). These requests do not need to be signed.
+A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/guides/identity/auth-records#generating-a-public-private-key-auth-id-triple). These requests do not need to be signed.
 
 ### /generate
 
