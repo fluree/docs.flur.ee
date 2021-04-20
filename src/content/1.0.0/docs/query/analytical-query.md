@@ -309,20 +309,20 @@ Anything within an optional map is resolved and then left outer joined with prev
 
 #### Union Map
 
-A union map take an two-item array as a value. The two items in this array is itself an array comprised of any number of where-items (for example, three-tuples, two-tuples, optional maps, and filter maps). The results of each array of where-items is then outer joined. 
+A union map takes an two-item array as a value. The two items in this array is itself an array comprised of any number of where-items (for example, three-tuples, two-tuples, optional maps, and filter maps). The results of each array of where-items is then outer joined. 
 
 ```all
 {
-  "select": [ "?x", "?y", "?b", "?c"],
+  "select": [ "?x", "?y", "?b", "?c", "?cname", "?pname"],
   "where": [
     { "union": [ 
-        
-        [["?x", "_collection/name", "?na"],
+
+        [["?x", "_collection/name", "?cname"],
         ["?b", 2]],
-        
-        [["?y", "_predicate/name", "?na"],
+
+        [["?y", "_predicate/name", "?pname"],
         ["?c", 8]]
-        
+
         ]
     }
   ]
