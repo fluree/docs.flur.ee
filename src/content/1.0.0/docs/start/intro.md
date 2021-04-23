@@ -27,7 +27,7 @@ There are other resources in this documentation website, such as:
 - [Lessons](/lesson): lessons that guide you through key concepts in Fluree and let you try queries and transaction directly from this site. While the lessons are a good introduction, they are not comprehensive.
 - [Videos](/video): screen captures of how-to-use Fluree combined with relevant narration (some video transcripts are available, and others can be provided by request). The videos are not comprehensive, but are a good reference for particular topics. 
 
-Alternatively, follow this [to-do list generator](https://github.com/fluree/to-do-lists-generator) repo for an introductionary look at integrating Fluree in a React application.
+Alternatively, follow this [to-do list generator](https://github.com/fluree/to-do-lists-generator) repo for an introductionary example of integrating Fluree in a React application.
 
 ### Where Can I Get Help?
 If you can't find the answers you are looking for in our documentation, please let us know! We are always looking to improve the quality of support we provide.
