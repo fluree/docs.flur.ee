@@ -6,7 +6,9 @@ This section shows you how to create a simple schema and populate your ledger wi
 
 If you are using the user interface, you can issue all of the code on this page directly on the 'FlureeQL' page of your user interface. Make sure that you select 'Transact'.
 
-If you are using the API, you can issue all these transactions to endpoints ending with `/transact`. 
+If you are using the API, you can issue all these transactions to endpoints ending with `/transact`.
+
+To view an example application that uses Fluree for data management, visit the [to-do list generator](https://github.com/fluree/to-do-lists-generator) repository.
 
 ### New Ledger
 
