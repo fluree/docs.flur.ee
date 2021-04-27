@@ -1,4 +1,4 @@
-## Start Here
+## Fluree Basics
 
 Once you've successfully downloaded or logged into Fluree, we recommend that you start with this section using 'FlureeQL' as your language setting (in the top left). 
 
