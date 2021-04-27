@@ -1,6 +1,6 @@
 ## Overview
 
-Downloaded endpoints can only be used in the downloadable versions of Fluree. All requests, except requests to `/storage` and `/health`, should be POST requests. The main downloaded endpoints are below, and they are all structured as follows:
+Downloaded endpoints can only be used in the downloadable versions of Fluree. All requests, except requests to `/health`, should be POST requests. The main downloaded endpoints are below, and they are all structured as follows:
 
 `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/[ACTION]`
 
@@ -24,8 +24,6 @@ Other endpoints:
 Action | Verb | Endpoint | Description
 -- | -- | -- | --
 Health | ANY | `/fdb/health` | Returns whether or not the server is ready. 
-Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]` | Get all key-value pairs of a certain type
-Storage | GET | `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]` | Gets the value for the provided key
 Sub | POST | `/fdb/sub` | Handles subscriptions
 
 
