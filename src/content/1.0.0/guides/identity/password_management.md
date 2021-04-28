@@ -27,4 +27,4 @@ When you generate a password, a new auth record is created in your given ledger.
 
 The salt, the normalized password, and the `fdb-pw-auth-secret` are all used to regenerate the private key, and sign a request on behalf of the user. 
 
-When you `generate`, `renew`, or `login`, the response is a token, which then can be used in any subsequent request as authorization by placing the token the Authorization header: `Headers: { Authorization: "Bearer TOKEN-HERE" }`. 
+When you `generate`, `renew`, or `login`, the response is a token, which then can be used in any subsequent request as authorization by placing the token the Authorization header: `Headers: { Authorization: "Bearer TOKEN-HERE" }`. For an implemention example refer to the [Comic Store](https://github.com/fluree/developer-hub) repo located in the Fluree Developer Hub.
