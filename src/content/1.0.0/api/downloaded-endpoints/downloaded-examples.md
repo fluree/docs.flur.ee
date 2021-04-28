@@ -575,7 +575,7 @@ A POST request to `/fdb/sub` handles subscriptions. More documentation on this f
 
 A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/guides/identity/auth-records#generating-a-public-private-key-auth-id-triple). These requests do not need to be signed.
 
-### pw/generate
+### /pw/generate
 
 See the [Password Management Guide](/guides/identity/password-management) for more information.
 
@@ -603,7 +603,7 @@ Body: {
   }
 ```
 
-### pw/renew
+### /pw/renew
 
 See the [Password Management Guide](/guides/identity/password-management) for more information.
 
@@ -620,7 +620,7 @@ Headers: { Authorization: "Bearer TOKEN-HERE" }
 Body: { "expire": "TIME IN EPOCH MS" }
 ```
 
-### pw/login
+### /pw/login
 
 See the [Password Management Guide](/guides/identity/password-management) for more information.
 
