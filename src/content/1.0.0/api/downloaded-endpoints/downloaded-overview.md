@@ -42,9 +42,9 @@ You need password authentication enabled to use these endpoints. See [config opt
 
 Action | Endpoint | Explanation
 -- | -- | --
-[Generate](/api/downloaded-endpoints/downloaded-examples#-generate) | `/fdb/[NETWORK-NAME]/[DBID]/pw/generate` | Returns a valid token for a given user or role. Sets a valid password for that user or role.
-[Renew](/api/downloaded-endpoints/downloaded-examples#-renew) | `/fdb/[NETWORK-NAME]/[DBID]/pw/renew` | Given a token in the header and a new expiration time, returns a new token for a given user or role.
-[Login](/api/downloaded-endpoints/downloaded-examples#-login) | `/fdb/[NETWORK-NAME]/[DBID]/pw/login` | Given a password and user or auth id, returns a valid token.
+[Generate](/api/downloaded-endpoints/downloaded-examples#generate) | `/fdb/[NETWORK-NAME]/[DBID]/pw/generate` | Returns a valid token for a given user or role. Sets a valid password for that user or role.
+[Renew](/api/downloaded-endpoints/downloaded-examples#renew) | `/fdb/[NETWORK-NAME]/[DBID]/pw/renew` | Given a token in the header and a new expiration time, returns a new token for a given user or role.
+[Login](/api/downloaded-endpoints/downloaded-examples#login) | `/fdb/[NETWORK-NAME]/[DBID]/pw/login` | Given a password and user or auth id, returns a valid token.
 
 ### Other endpoints
 
