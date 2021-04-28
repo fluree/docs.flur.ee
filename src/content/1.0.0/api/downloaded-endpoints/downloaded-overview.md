@@ -38,7 +38,7 @@ Test Transact With | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/test-transact-with` |
 
 ### Password Authentication Endpoints
 
-You need password authentication enabled to use these endpoints. See [config options](/docs/getting-started/installation#password-and-jwt-token-settings) for all password authentication options. See the [Password Management Guide](/guides/identity/password-management) for more information.
+You need password authentication enabled to use these endpoints. See [config options](/docs/getting-started/installation#password-and-jwt-token-settings) for all password authentication options. See the [Password Management Guide](/guides/identity/password-management) for more information. For an implementation example refer to the [Comics Store](https://github.com/fluree/developer-hub) repo located in the Fluree Developer Hub.
 
 Action | Endpoint | Explanation
 -- | -- | --
