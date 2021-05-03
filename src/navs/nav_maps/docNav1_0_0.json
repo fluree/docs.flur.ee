@@ -9,6 +9,10 @@
 				"headerName": "Installation",
 				"file": "1.0.0/docs/start/installation"
 			},
+			"fluree-basics": {
+				"headerName": "Fluree Basics",
+				"file": "1.0.0/docs/start/basic_schema"
+			},
 			"fluree-on-demand": {
 				"headerName": "Fluree On-Demand",
 				"file": "1.0.0/docs/start/on-demand"
@@ -20,10 +24,6 @@
 			"ledger-operations": {
 				"headerName": "Ledger Operations",
 				"file": "1.0.0/docs/start/ledger-operations"
-			},
-			"fluree-basics": {
-				"headerName": "Fluree Basics",
-				"file": "1.0.0/docs/start/basic_schema"
 			}
 		},
 		"pageName": "Getting Started"

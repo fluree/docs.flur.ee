@@ -1,6 +1,6 @@
 ## Fluree Basics
 
-Once you've successfully downloaded or logged into Fluree, we recommend that you start with this section using 'FlureeQL' as your language setting (in the top left). 
+Once you've successfully downloaded Fluree, we recommend that you start with this section using 'FlureeQL' as your language setting (in the top left). 
 
 This section shows you how to create a simple schema and populate your ledger with sample data. All of the examples in the Query and Transact sections of the Documentation use the schema located here, so we recommend that you populate a ledger with this sample data.
 
