@@ -4,7 +4,7 @@ Much like a relational database, before storing your records in a Fluree ledger,
 
 Defining and updating schemas is done through regular ledger transactions (in JSON) by writing to the special pre-defined system collections. This also means that all information regarding the schema is stored in the ledger as [flakes](/guides/intro/what-is-fluree#flakes), in the same way as any other type of information.
 
-Most examples in the documentation use the [Basic Schema](/docs/getting-started/start-here#overview). The Basic Schema section provides an introduction to schema, but this section goes into more detail.
+Most examples in the documentation use the [Basic Schema](/docs/getting-started/fluree-basics#overview). The Basic Schema section provides an introduction to schema, but this section goes into more detail.
 
 ### Validation
 

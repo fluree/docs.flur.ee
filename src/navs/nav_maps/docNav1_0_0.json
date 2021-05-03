@@ -21,8 +21,8 @@
 				"headerName": "Ledger Operations",
 				"file": "1.0.0/docs/start/ledger-operations"
 			},
-			"start-here": {
-				"headerName": "Start Here",
+			"fluree-basics": {
+				"headerName": "Fluree Basics",
 				"file": "1.0.0/docs/start/basic_schema"
 			}
 		},
