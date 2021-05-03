@@ -1,6 +1,6 @@
 ## Rule Example
 
-In this section, we will create two roles, level1User and level2User, and connect each role to a person in our [Basic Schema](/docs/getting-started/start-here#overview).
+In this section, we will create two roles, level1User and level2User, and connect each role to a person in our [Basic Schema](/docs/getting-started/fluree-basics#overview).
 
 #### level1User
 

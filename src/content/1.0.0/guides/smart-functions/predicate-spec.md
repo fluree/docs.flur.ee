@@ -4,7 +4,7 @@ A `_predicate/spec` is set of smart functions that are attached to a particular 
 
 If all of the smart functions return true, the transaction will succeed. If any of the smart functions return false, it will fail. 
 
-The examples in this section use the [Basic Schema](/docs/getting-started/start-here#overview).
+The examples in this section use the [Basic Schema](/docs/getting-started/fluree-basics#overview).
 
 ### Example Uses
 
