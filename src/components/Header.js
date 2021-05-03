@@ -45,7 +45,7 @@ class Header extends React.Component {
       return (
             <div id="mainHeader">
                 <LinkContainer to="/" style={{height: "42px"}}>
-                        <img style={{height: "100%"}} alt="Fluree" src={require('../theme/assets/yeti_white_horizontal.png')} />
+                        <img style={{height: "100%"}} alt="Fluree" src={require('../theme/assets/yeti_white_horizontal.png)} />
                 </LinkContainer>
                 <div className="version-toggle" 
                     style={{display: 'inline-block', margin: "auto 0 auto 1.8em"}}>
