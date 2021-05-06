@@ -6,6 +6,18 @@ To see a full list of all accepted smart functions, see [smart function list](/d
 
 We also have a <a href="https://github.com/fluree/smart-function-library" target="_blank">Github repo</a> with basic smart functions you can add to your applications.
 
+For some additional help testing and debugging your smart function implementations, try updating your `logback.xml` configuration file (located in your Fluree directory) so that logging for `fluree.db` is set to `DEBUG`, e.g.
+
+```
+<configuration scan="true">
+    ...
+    <logger name="fluree.db" level="DEBUG"/>
+    ...
+</configuration>
+```
+
+In this setting, Fluree will log the entirety of the Smart Function Stack, so that every time a query/transaction triggers the evaluation of a smart function, you can observe its invocation, context, and result.
+
 ### Role of Smart Functions
 
 Every time a transaction is issued, that transaction might trigger various smart functions. In addition, when an end user issues a query, various smart functions might be triggered. 
