@@ -228,13 +228,13 @@ Fluree publishes a Docker image to [Docker Hub](https://hub.docker.com/repositor
 `latest` - the latest release
 `v1.0` - the latest 1.0.x release (and other versions similarly)
 `v1.0.0-beta1` - specific versions
-`master` - the latest master branch code (unstable!)
+`main` - the latest main branch code (unstable!)
 
 You can run these like so:
 
-`docker run -d --restart=always --expose 8080:8080 fluree/ledger`
+`docker run -d --restart=always -p 8090:8090 fluree/ledger:stable`
 
-...and then access the admin dashboard at http://localhost:8080/
+...and then access the admin dashboard at http://localhost:8090/
 
 ### Download Fluree with Homebrew
 
