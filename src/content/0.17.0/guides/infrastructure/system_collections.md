@@ -142,8 +142,6 @@ Predicate | Type | Description
 
 ### _block
 
-More information about the [`_block` collection](/docs/infrastructure/db-infrastructure#block-metadata).
-
 Key | Description
 ---|---
 `number` | Block number for this block.
@@ -155,8 +153,6 @@ Key | Description
 `sigs` | List of transactor signatures that signed this block (signature of _block/hash). Not included in block hash.
 
 ### _tx
-
-More information about the [`_tx` collection](/docs/infrastructure/db-infrastructure#block-metadata).
 
 Key | Description
 ---|---
