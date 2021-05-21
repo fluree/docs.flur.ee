@@ -16,7 +16,8 @@ Make sure that you have a new ledger. You can either create a new ledger through
 
 ### Overview
 
-In Fluree, schema are comprised of collections and predicates. A [collection](/docs/schema/collections) is analogous to a relational database table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city. 
+In Fluree, schema are comprised of collections and predicates. While Fluree is a graph database, if you come from the relational world you can think of a [collection](/docs/schema/collections) sort of like a database table. 
+Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city. 
 
 Every collection has [predicates](/docs/schema/predicates). Predicates are analogous to relational database columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: person/firstName, person/lastName, and person/age. The value of those predicates are called, objects (read more about the [subject-predicate-object model](/guides/intro/what-is-fluree#subject-predicate-object-model)).
 

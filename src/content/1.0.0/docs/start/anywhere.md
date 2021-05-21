@@ -59,11 +59,11 @@ To learn about the Fluree file system, see the [File System](/guides/infrastruct
 
 #### Exiting and Restarting Fluree
 
-To exit Fluree, simply click `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory]((/guides/infrastructure/file-system), this will not delete any ledgers or invalidate any successful transactions. 
+To exit Fluree, simply type `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory]((/guides/infrastructure/file-system), this will not delete any ledgers or invalidate any successful transactions. 
 
 To restart Fluree, navigate to the folder that contains your Fluree instance and run `./fluree_start.sh`. This will restart your Fluree instance with all your previous networks and ledgers. 
 
-To completely reset your Fluree instance (erasing ALL ledger and transactor group data), you can shut down your instance and delete `data/` and `default_private_key.txt` (or wherever your private key is stored if you changed the ). Don't do this unless you are sure you want to completely delete everything! See more about the Fluree [File System](/guides/infrastructure/file-system) in the guides. 
+To completely reset your Fluree instance (erasing ALL ledger and transactor group data), you can shut down your instance and delete `data/` and `default_private_key.txt` (or wherever your private key has been stored if you changed the default location ). Don't do this unless you are sure you want to completely delete everything! See more about the Fluree [File System](/guides/infrastructure/file-system) in the guides. 
 
 ### Config Options
 
