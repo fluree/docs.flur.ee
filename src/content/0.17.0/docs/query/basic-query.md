@@ -52,7 +52,7 @@ Predicates do not have to be namespaced. The collection can often (but not alway
 
 ```all
 {
-    "select": ["chat/message", "instant", "*", ],
+    "select": ["chat/message", "instant", "*"],
     "from": "chat"
 }
 ```
