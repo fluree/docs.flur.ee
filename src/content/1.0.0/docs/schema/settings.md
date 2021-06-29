@@ -63,3 +63,25 @@ Note that when you change a language, your full-text search may not immediately 
 To see how to use full-text search, see the [guide on full-text search](/guides/analytical-queries/full-text-search).
 
 \* Fluree Full-text search uses [Apache Lucene Smart Chinese Analyzer](https://lucene.apache.org/core/4_0_0/analyzers-smartcn/org/apache/lucene/analysis/cn/smart/SmartChineseAnalyzer.html) for Chinese and mixed Chinese-English text.
+
+### txMax
+
+If not set, a default value of 2mb (i.e., 2e6) is used for the maximum transaction size.
+
+To see the current value of txMax for your ledger, you can issue the query:
+
+```all
+{
+  "select": [ "txMax" ],
+  "from": ["_setting/id", "root"]
+}
+```
+
+To change the value for txMax, you can issue a transaction to specify the size limit in bytes:
+
+```all 
+[{
+    "_id": ["_setting/id", "root"],
+    "txMax": 2e6 
+}]
+```
