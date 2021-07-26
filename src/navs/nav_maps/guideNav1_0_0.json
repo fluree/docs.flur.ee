@@ -30,7 +30,7 @@
 		}
 	},
 	"infrastructure": {
-		"pageName": "Infrastucture",
+		"pageName": "Infrastructure",
 		"subTopics": {
 			"file-system": {
 				"headerName": "File System",

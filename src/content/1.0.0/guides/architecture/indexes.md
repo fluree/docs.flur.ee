@@ -158,7 +158,7 @@ The `post` index includes only flakes that whose predicate is `unique: true`, `i
 
 You can see this index would be able to quickly find any predicate's value. When using a [Subject Identity](/guides/architecture/flakes#subject-identity) to reference a subject in Fluree this is the index that would be used. 
 
-For example, if I was looking for the `s` value for the Subject Identity of `["usernamne", "janedoe"]`, the corresponding match pattern would be:
+For example, if I was looking for the `s` value for the Subject Identity of `["username", "janedoe"]`, the corresponding match pattern would be:
 
 ```all
 = ['username' 'janedoe' ?]

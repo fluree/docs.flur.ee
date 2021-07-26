@@ -93,7 +93,7 @@ Now, we can issue a full text query against any predicate or collection by using
 {
     "select": "?person",
     "where": [
-        ["?person", "fullText:person/handle", "jdoe"]
+        ["?person", "fullText:person/handle", "doe"]
     ]
 }
 ```

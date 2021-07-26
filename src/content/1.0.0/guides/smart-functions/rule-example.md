@@ -62,7 +62,7 @@ For `editOwnChats`, we needed to write a new function, which checks whether the 
 
 The full function is: `(contains? (get-all (?s \"[{chat/person [{person/auth [_id] }] }]\") [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))`. We break it down below:
 
-1. First, we get the chat's, chat/person, and retrieve that person's person/auth, and finally get the _auth's _id: `(?s \"[{chat/person [{person/auth [_id] }] }]\")`.
+1. First, we get the chat's `chat/person`, and retrieve that person's `person/auth`, and finally get the _auth's _id: `(?s \"[{chat/person [{person/auth [_id] }] }]\")`.
 2. Then, we retrieve all (just one in this case) of the _auth _ids by again crawling the results from step 1. `(get-all [\"chat/person\" \"person/auth\" \"_id\"])`.
 3. Finally, we ask, does the set (of one) _id contain the (?auth_id) who is currently making this update. `(contains? (get-all (?s \"[{chat/person [{person/auth [_id] }] }]\") [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))`.
 

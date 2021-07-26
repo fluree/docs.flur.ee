@@ -22,7 +22,7 @@ A basic query must include one of the following select keys: `select`, `selectOn
 
 `select` returns all query results. `select` results are distinct by default, so `select` and `selectDistinct` are equivalent.
 
-`selectOne` is the same as `select`, except it just returns a single value. 
+`selectOne` is the same as `select`, except it just returns a single value instead of a collection.
 
 The value of the select key is always an array. For the purposes of this section, we will call it a `select-array`. The select-array can include any combination of the following items in any order:
 
