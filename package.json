@@ -13,7 +13,6 @@
     "lodash.get": "^4.4.2",
     "marked": "^0.7.0",
     "measure": "^0.1.1",
-    "npm": "^6.5.0",
     "react": "^16.6.3",
     "react-ace": "^6.2.0",
     "react-bootstrap": "^0.32.4",

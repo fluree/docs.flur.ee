@@ -1,18 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "typeface-cooper-hewitt";
+import "../node_modules/video-react/dist/video-react.css";
 import Header from "./components/Header";
-import Lesson from "./screens/Lesson";
+import Landing from "./components/Landing";
 import Docs from "./screens/Docs";
 import Help from "./screens/Help";
-import Landing from "./components/Landing";
+import Lesson from "./screens/Lesson";
 import Video from "./screens/Video";
-
-import "typeface-cooper-hewitt";
+import * as serviceWorker from "./serviceWorker";
 import "./theme/bootstrap.css";
 import "./theme/custom.css";
-import "../node_modules/video-react/dist/video-react.css";
+
 
 export const versions = [
 	"1.0.0",
@@ -43,7 +43,7 @@ class Wrapper extends React.Component {
 
 	componentDidMount() {
 		let version = localStorage.getItem("fluree.doc.version");
-		let fullPathname = this.props.location.pathname;
+		// let fullPathname = this.props.location.pathname;
 		// let versionFromURL = fullPathname.substring(
 		// 	fullPathname.indexOf("0"),
 		// 	fullPathname.indexOf("0") + 6
