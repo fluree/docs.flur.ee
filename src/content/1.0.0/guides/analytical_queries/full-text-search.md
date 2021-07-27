@@ -93,7 +93,7 @@ Now, we can issue a full text query against any predicate or collection by using
 {
     "select": "?person",
     "where": [
-        ["?person", "fullText:person/handle", "jdoe"]
+        ["?person", "fullText:person/fullName"", "doe"]
     ]
 }
 ```
@@ -105,7 +105,7 @@ Now, we can issue a full text query against any predicate or collection by using
    -d '{
     "select": "?person",
     "where": [
-        ["?person", "fullText:person/handle", "jdoe"]
+        ["?person", "fullText:person/fullName", "doe"]
     ]
 }' \
    [HOST]/api/db/query
@@ -118,11 +118,11 @@ Not supported
 ```sparql
 SELECT ?person
 WHERE {
-  ?person fullText:person/handle "jdoe".
+  ?person fullText:person/fullName "doe".
 }
 ```
 
-The above query binds the subject _ids for any person whose full names includes `doe` (not case-sensitive). We can also issue the same query searching any full-text-searchable predicates in the `person` collection. In this case, we would be searching the predicates: `person/fullName` and `person/handle`.
+The above query binds the subject _ids for any person whose `person/fullName` includes the word `doe` (not case-sensitive). We can also issue the same query searching any full-text-searchable predicates in the `person` collection. In this case, we would be searching the predicates: `person/fullName` and `person/handle`.
 
 ```flureeql
 {

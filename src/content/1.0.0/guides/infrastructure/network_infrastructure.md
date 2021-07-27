@@ -16,13 +16,13 @@ This design allows your query servers to linearly scale to any query workload. Y
 
 3. Allows You To Run ledger As a Library
 
-This design opens up the possibility of running your library as a _library_ inside your own application (in-process). This has implications of how you code, as you ask for data as needed with results in the order of _microseconds_, instead of packaging up queries as monolithic requests to send over the wire for responses in the tens, hundreds, or even thousands of milliseconds. Using this pattern, your code becomes simpler, easier to understand, and more efficient.
+This design opens up the possibility of running your ledger as a _library_ inside your own application (in-process). This has implications of how you code, as you ask for data as needed with results in the order of _microseconds_, instead of packaging up queries as monolithic requests to send over the wire for responses in the tens, hundreds, or even thousands of milliseconds. Using this pattern, your code becomes simpler, easier to understand, and more efficient.
 
 ### Query Engine Types
 
 #### Query Peer (Not Currently Implemented)
 
-To meet slightly different goals, we have two flavors of query engines. The main type we call a query 'peer', and like any good peer it has direct access to every ledger, current and historical, and every upate on-hand. It will comes in Java, Clojure flavors, and Javascript and can will be able to run as an independent server exposing a REST and GraphQL APIs for your apps to utlize.
+To meet slightly different goals, we have two flavors of query engines. The main type we call a query 'peer', and like any good peer it has direct access to every ledger, current and historical, and every upate on-hand. It will comes in Java, Clojure flavors, and Javascript and can will be able to run as an independent server exposing a REST and GraphQL APIs for your apps to utilize.
 
 #### Query Client
 

@@ -24,7 +24,7 @@ fluree-[version]/
 
 Key Files: 
 
-* `fluree_sample.properties` - File that specifies the customizeable Fluree properties. 
+* `fluree_sample.properties` - File that specifies the customizable Fluree properties.
 * `fluree_start.sh` - Shell script to launch Fluree.
 * `fluree-ledger.standalone.jar` - Fluree packaged into a JAR file. 
 
@@ -171,7 +171,7 @@ Property | Options | Description
 `fdb-group-servers` | `server-id@host:port, server-id@host:port` | List all servers participating in ledger-group with format of server-id@host:port. All tx-group servers should have this same config.
 `fdb-group-this-server` | `server-id` | Specify which of the above listed server-ids is this server. Note this must be unique for every server in the tx-group, and is likely easiest to supply this setting via environment variable.
 `fdb-group-timeout` | `int` | Tx group's internal communication timeout threshold. Will initiate a leader election between this value and 2x this value if the leader hasn't been heard from. Specify as number of milliseconds, or can use units as well such as 1000ms or 1s. Assuming your tx-group network is local, 1000-3000 ms is a good range. Adjust as needed to avoid unintended leader elections.
-`fdb-group-hearbeat` | `int` | Tx group leader will send out a heartbeat at this interval. By default, will be 1/2 of fdb-group-timeout. This can never be less than fdb-group-timeout, and ideally should be 1/3 to 1/2 of that value. A number in milliseconds can be provided, or can be used with units such as 1000ms or 1s.
+`fdb-group-heartbeat` | `int` | Tx group leader will send out a heartbeat at this interval. By default, will be 1/2 of fdb-group-timeout. This can never be more than fdb-group-timeout, and ideally should be 1/3 to 1/2 of that value. A number in milliseconds can be provided, or can be used with units such as 1000ms or 1s.
 `fdb-group-log-directory` | `file path` | Where to store tx-group raft log files. These logs have fairly frequent disk access. This is always a local filesystem path and must start with either `/` or `./`. Defaults to ./data/group
 `fdb-group-snapshot-threshold` | `int` | A snapshot of the current group state will be taken after this many new commits. Larger values mean larger log files, small values mean lots of snapshots which can be time consuming for large networks. Ideally somewhere in the range of 100 to 1000.
 `fdb-group-log-history` | `int` | Number of historic tx-group raft logs to keep around. Can be as low as 1. Historic logs take up disk space but can be useful for debugging if something goes wrong. High transactional volume servers may want to retain extra logs as there will be more frequent rotation.

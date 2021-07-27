@@ -74,9 +74,7 @@ Transactions are not supported in SPARQL
 
 ### Add Sample Data
 
-According to [Fluree Best Practices](/guides/1.0.0/infrastructure),
-
-after creating a schema, you should add in your sample data or initial data.
+According to [Fluree Best Practices](/guides/1.0.0/infrastructure), after creating a schema you should add in your sample data or initial data.
 
 We'll be creating two users, and two wallets.
 

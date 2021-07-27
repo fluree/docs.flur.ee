@@ -15,7 +15,7 @@ fluree-0.15.0/
 
 Key Files: 
 
-* `fluree_sample.properties` - File that specifies the customizeable Fluree properties. 
+* `fluree_sample.properties` - File that specifies the customizable Fluree properties.
 * `fluree_start.sh` - Shell script to launch Fluree.
 * `fluree_server.jar` - Fluree packaged into a JAR file. 
 * `logback.xml` - Fluree logging options. To change logging options see the [Logback](http://logback.qos.ch/) library documentation.
