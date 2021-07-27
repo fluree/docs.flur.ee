@@ -1,38 +1,26 @@
-import React from "react";
-import {
-	ToggleButtonGroup,
-	ToggleButton,
-	Button,
-	Form,
-	FormGroup,
-	ControlLabel,
-	FormControl,
-} from "react-bootstrap";
-import get from "lodash.get";
-import {
-	fixSidebar,
-	getTopicAndSubTopic,
-	getNextTopic,
-	getPreviousTopic,
-} from "../actions/LoadTopics";
-import { SidebarNav } from "../components/SidebarNav";
-import marked from "marked";
-import { Search } from "../actions/Search";
-import Notifications, { notify } from "react-notify-toast";
-import {
-	getAPINav,
-	getDocNav,
-	getLibNav,
-	getGuideNav,
-	endpointMap,
-	languageMap,
-} from "../navs/nav";
-
-import { parseJSON } from "../flureeFetch";
 import AceEditor from "react-ace";
 import "brace/mode/json";
 import "brace/theme/xcode";
+import get from "lodash.get";
+import marked from "marked";
+import React from "react";
+import {
+	Button, ControlLabel, Form, FormControl, FormGroup, ToggleButton, ToggleButtonGroup
+} from "react-bootstrap";
+import Notifications, { notify } from "react-notify-toast";
+import {
+	fixSidebar, getNextTopic,
+	getPreviousTopic, getTopicAndSubTopic
+} from "../actions/LoadTopics";
+import { Search } from "../actions/Search";
+import { SidebarNav } from "../components/SidebarNav";
+import { parseJSON } from "../flureeFetch";
 import { currentVersion } from "../index";
+import {
+	endpointMap, getAPINav,
+	getDocNav, getGuideNav, getLibNav, languageMap
+} from "../navs/nav";
+
 
 class Docs extends React.Component {
 	state = {
@@ -103,13 +91,13 @@ class Docs extends React.Component {
 		) {
 			document.querySelector(this.state.hashAnchor).scrollIntoView();
 			let currentLanguage = localStorage.getItem("currentLanguage");
-			this.setState({ hashAnchor: "" });
+			this.setState({ hashAnchor: "", language: currentLanguage });
 		}
 		if (
 			(prevProps.match.path !== "/docs/search") &
-				(this.props.match.path === "/docs/search") ||
+			(this.props.match.path === "/docs/search") ||
 			(prevProps.match.path !== "/guidess/search") &
-				(this.props.match.path === "/guidess/search")
+			(this.props.match.path === "/guidess/search")
 		) {
 			this.setState({ displaySearch: true });
 		}
