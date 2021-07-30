@@ -104,12 +104,14 @@ Each where-array item is resolved and then inner joined with the resultset up un
 
 Every piece of data in Fluree can be expressed as `[ subject, predicate, object ]`. To read more about this, see the [Subject-Predicate-Object Model](/guides/intro/what-is-fluree#subject-predicate-object-model) in the `What is Fluree?` guide.
 
-When you include a three-tuple in your where-array, you specify the values for one or two parts of the tuple. The parts you don't specify are either `null` or variables. For example, in this three tuple, `["?person", "person/handle", "?handle"]`, only the predicate `person/handle` is specified. The subject `?person` and the object `?handle` are variables. The below table lists all the possible values for each part of the three tuple. 
+When you include a three-tuple in your where-array, you specify the values for one or two parts of the tuple. The parts you don't specify are either `null` or variables. For example, in this three tuple, `["?person", "person/handle", "?handle"]`, only the predicate `person/handle` is specified. The subject `?person` and the object `?handle` are variables. You can also look-up a data for a known id using the pattern ["?s", "_id", 351843720888320].
+
+The below table lists all the possible values for each part of the three tuple. 
 
 Part | Value
 -- | -- 
 `subject` | Can be an subject id, unique two-tuple, a variable (a string that begins with `?`), or null.
-`predicate`, `predicate+[RECUR-DEPTH]`, or `service call` | Can be either subject id, predicate name, or a variable (a string that begins with `?`).  Reverse references are *NOT* supported. <br/> <br/> If using a predicate name, can add `+` after the predicate name to signify recur. Can also specify how many times to recur, i.e. `person/follows+3`. <br/> <br/> The second item in the clause can also be a service call. All supported service calls are in the subsequent table. 
+`predicate`, `predicate+[RECUR-DEPTH]`, or `service call` | Can be either predicate name, the Fluree reserved word "_id", or a variable (a string that begins with `?`).  Reverse references are *NOT* supported. <br/> <br/> If using a predicate name, can add `+` after the predicate name to signify recur. Can also specify how many times to recur, i.e. `person/follows+3`.<br/><br/>If using "_id", the object should reference a known id. <br/> <br/> The second item in the clause can also be a service call. All supported service calls are in the subsequent table. 
 `object` or `object-function` | Can be a value, subject id, unique two-tuple, a variable (a string that begins with `?`), or null. <br/> <br/> The object can also be a filter function, which contains an existing or a newly declared variable, for example, `(= 20 ?nums)`. The filters follow the same syntax as [filter maps](#filter-maps), and you can read more in that section.  <br/> <br/> If your object begins with a `?`, and it is NOT a variable, for example someone's name is `?Fred`, then you can use escape strings in the object, for example: `"\"?Fred\""`.
 
 A three tuple acts as a pattern in a where-array. First it pulls all the data that matches that given pattern, and then it binds the appropriate variables. Subsequent three tuples are inner-joined. For more information and examples, see [inner joins in Fluree](/guides/analytical-queries/inner-joins-in-fluree).
