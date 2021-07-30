@@ -83,6 +83,7 @@ Property | Options | Description
 `fdb-mode` | `dev` | Currently only the `dev` option is supported (and required!). `Dev` runs a standalone version of Fluree, with a query engine and ledger running together. In the future, `query` and `ledger` will allow you to run  Fluree as a query engine or ledger, respectively.
 `fdb-license-key` | `key` | (Optional) Required for enterprise version
 `fdb-encryption-secret` | `key` | (Optional) Required for enterprise version
+`fdb-json-bigdec-string` | `boolean` | BigDecimals are not currently handled out-of-the-box by JavaScript applications.  This setting determines whether or not to encode java.Math.BigDecimal values as strings for query results, etc.  The default is `true`.
 
 #### Transactor Group Options
 
