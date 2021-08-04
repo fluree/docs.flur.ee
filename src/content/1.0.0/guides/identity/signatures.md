@@ -7,7 +7,7 @@ For both queries and transactions, a signature is not required if the option `fd
 
 In the case of transactions, if you send a transaction to `/transact` or to `/graphql`, the transaction will be signed with a default private key. 
 
-If you do need to specify a signature, such as in the case of testing out user permissions, you can submit a [signed transaction](#signed-transactions) to the `/command` endpoint. As of `v0.13.0`, you can also submitted an unsigned command to the `/command` endpoint, but only `fdb-open-api` is true.
+If you do need to specify a signature, such as in the case of testing out user permissions, you can submit a [signed transaction](#signed-transactions) to the `/command` endpoint. As of `v0.13.0`, you can also submit an unsigned command to the `/command` endpoint, but only when `fdb-open-api` is true.
 
 ### NPM Package
 
@@ -39,7 +39,7 @@ You should submit a POST request should have the following headers: `content-typ
 
 If an authority is signing on behalf of an auth record, then the `_auth/id` of the auth record in question needs to be listed as the `keyId` in the `signature`.
 
-In order to get the actual signature (labelled `sig` above) that goes into the larger signature value, you need to first create a signing string. Formatted as follows: `(request-target): post {uri}\nhost: {host}\nmydate: {formattedDate}\ndigest: SHA-256={digest}`. 
+In order to get the actual signature (labelled `sig` above) that goes into the larger signature value, you need to first create a signing string. Formatted as follows: `(request-target): post {uri}\nmydate: {formattedDate}\ndigest: SHA-256={digest}`. 
 
 Then, you should get the SHA2-256 hash of that signing string, and sign it using Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the `secp256k1 curve`. The resulting signature is DER encoded and returned as a hex-string. In addition, after adding 27 to the recoveryByte, that number is converted into a hex string, and prepended to the rest of the signature. 
 
@@ -56,7 +56,7 @@ The body of a signed query is same query as would be submitted in an unsigned qu
                 content-type:       application/json,
                 mydate:             Thu, 13 Mar 2019 19:24:22 GMT,
                 digest:             SHA-256=ujfvlBjQBa9MNHebH8WpQWP7qQO1L+cI+JH//YvWTq4=,
-                signature:          keyId="na",headers="(request-target) host mydate digest",algorithm="ecdsa-sha256",signature="1c3046022100da65438f46df2950b3c6cb931a73031a9dee9faaf1ea8d8dd1d83d5ac026635f022100aabe5483c7bd10c3a468fe720d0fbec256fa3e904e16ff9f330ef13f7921700b"
+                signature:          keyId="na",headers="(request-target) mydate digest",algorithm="ecdsa-sha256",signature="1c3046022100da65438f46df2950b3c6cb931a73031a9dee9faaf1ea8d8dd1d83d5ac026635f022100aabe5483c7bd10c3a468fe720d0fbec256fa3e904e16ff9f330ef13f7921700b"
             },
       body: { "select": ["*"], "from": "_collection"}
  }

@@ -66,7 +66,6 @@ Function | Arguments | Example | Description | Cost (in fuel)
 `relationship?` | `startSubject path endSubject` |  `(relationship? [\"_user/username\" \"anna\"] [\"_user/auth\" \"_auth/department\" \"company/_department\"] [\"company/name\" \"Fluree\"])` | Returns a true or false, depending on if there is a relationship between two subjects. Start and end subjects should resolve to either subject _ids or unique two-tuples. For example,  `(?sid)` resolves to a subject _id, `87960930223080` and `["_user/username" "anna"]` are all valid for start or end subjects. The path should be a single predicate or a vector of predicates that potentially connect the two subjects. | 10, plus fuel of query
 `rand` | `max seed` | `(rand 100)` | Returns a random integer from 0 to the `max` number you provided. A seed is optional. | 10
 `uuid` | none | `(uuid)` | Returns a UUID. Can be used in predicates of type `string` or `uuid` | 10
-`cas` | `compare-val new-val` | `(cas "hi" "hi again")` | For use as transaction function, if current db value does not equal `compare-val`, the transaction will fail otherwise it will get updated with `new-val` | 20
 
 ledger function can also be combined, for instance `(inc (max 1.5 2 3))` will return 4. 
 
