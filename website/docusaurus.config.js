@@ -3,46 +3,85 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
+  title: 'Fluree Docs',
+  tagline: 'Semantic graph database built with web3 tech',
+  url: 'https://docs.flur.ee',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'fluree', // Usually your GitHub org/user name.
+  projectName: 'docs.flur.ee', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'My Site',
+      hideOnScroll: true,
       logo: {
-        alt: 'My Site Logo',
+        alt: 'Fluree Logo',
         src: 'img/logo.svg',
       },
       items: [
         {
           type: 'doc',
-          docId: 'intro',
+          docId: 'overview/about',
+          position: 'left',
+          label: 'Overview',
+        },
+        {
+          to: '/guides',
+          docId: 'guides/guides',
+          type: 'doc',
+          position: 'left',
+          label: 'Guides'
+        }, 
+        {
+          to: '/refence',
+          docId: 'reference/reference',
+          type: 'doc',
+          position: 'left',
+          label: 'Reference'
+        },
+        {
+          to: '/concepts',
+          docId: 'concepts/concepts',
+          type: 'doc',
+          position: 'left',
+          label: 'Concepts'
+        },
+        {
+          type: 'doc',
+          docId: 'community_page',
+          label: 'Community',
+          position: 'left'
+        },
+
+        // Docusaurus template stuff
+        {
+          type: 'doc',
+          docId: 'tutorials/tutorial_intro',
           position: 'left',
           label: 'Tutorial',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        { to: '/blog', label: 'Blog', position: 'left' },
+
+        // right side of navbar
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
+          href: 'https://github.com/fluree/docs.flur.ee',
+          className: 'header-github-link',
           position: 'right',
+          'aria-label': 'Github repository'
         },
       ],
     },
+    hideableSidebar: true,
     footer: {
-      style: 'dark',
+      style: 'light',
       links: [
         {
           title: 'Docs',
           items: [
             {
               label: 'Tutorial',
-              to: '/docs/intro',
+              to: 'docs/tutorials/tutorial_intro',
             },
           ],
         },
@@ -50,16 +89,12 @@ module.exports = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              label: 'Slack',
+              href: 'https://launchpass.com/flureedb',
             },
             {
               label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              href: 'https://twitter.com/flureepbc',
             },
           ],
         },
@@ -71,13 +106,13 @@ module.exports = {
               to: '/blog',
             },
             {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              label: 'Github',
+              href: 'https://github.com/fluree',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Fluree, PBC. Built with Docusaurus.`
     },
     prism: {
       theme: lightCodeTheme,
@@ -90,15 +125,16 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/fluree/docs.flur.ee',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/blog/',
+            'https://github.com/fluree/docs.flur.ee',
+          // editUrl:
+          //   'https://github.com/fluree/docs.flur.ee/edit/master/website/blog/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
