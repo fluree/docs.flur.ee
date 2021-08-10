@@ -155,11 +155,11 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 ```all
 ;; all books
-@(fdb/query (db conn ledger) {:select {"?book" [:*, {:book/authors [:*]}]}
+@(fdb/query (fdb/db conn ledger) {:select {"?book" [:*, {:book/authors [:*]}]}
                               :where [["?book" "book/title" nil]]})
 
 ;; all non-fiction books
-@(fdb/query (db conn ledger) {:select "?title"
+@(fdb/query (fdb/db conn ledger) {:select "?title"
                               :where [["?book" "book/title" "?title"]
                                       ["?book" "book/tags" "non-fiction"]]})
 
@@ -171,7 +171,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 ```all
 ;; see the history of the "Cryptonomicon" book.
-@(fdb/history-query (db conn ledger) {:history ["book/title" "Cryptonomicon"] :prettyPrint true})
+@(fdb/history-query (fdb/db conn ledger) {:history ["book/title" "Cryptonomicon"] :prettyPrint true})
 ```
 
 #### Block queries
@@ -188,9 +188,9 @@ The `query` function takes a `db` value to execute a query against, as well as a
 In addition to the FlureeQL syntax used above, Fluree also supports queries in other query languages: [SQL](/docs/1.0.0/query/sql), [SPARQL](/docs/1.0.0/query/sparql), [GraphQL](/docs/1.0.0/query/graphql). These can be used from Clojure by supplying a database value and a query string, or, in the case of GraphQL, a query map.
 
 ```all
-@(fdb/sql (db conn ledger) "select * from book")
+@(fdb/sql (fdb/db conn ledger) "select * from book")
 
-@(fdb/sparql (db conn ledger) "SELECT ?title WHERE { ?book fd:book/title ?title; fd:book/tags \"sci-fi\".}")
+@(fdb/sparql (fdb/db conn ledger) "SELECT ?title WHERE { ?book fd:book/title ?title; fd:book/tags \"sci-fi\".}")
 
 @(fdb/graphql conn ledger {:query "{graph { book { _id title}}}"} )
 
@@ -204,5 +204,5 @@ All of the interactions with the Fluree ledger server are performed asynchronous
 ```all
 (require '[clojure.core.async :as async])
 
-(async/<!! (fdb/query-async (db conn ledger) {:select ["*"] :from "book"}))
+(async/<!! (fdb/query-async (fdb/db conn ledger) {:select ["*"] :from "book"}))
 ```
