@@ -47,6 +47,15 @@
             }
         }
     },
+    "clojure": {
+      "pageName": "Clojure Library",
+      "subTopics": {
+        "overview": {
+          "headerName": "Overview",
+          "file": "1.0.0/library/clojure/clojure-overview"
+        }
+      }
+    },
     "other": {
         "pageName": "Other Tools",
         "subTopics": {
