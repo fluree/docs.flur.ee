@@ -52,7 +52,7 @@ Require the api and establish a connection to your Fluree server:
 
 #### Schema
 
-All data transacted into a ledger must conform to a schema. There are some built-in schemas that every ledger starts with that form very useful building blocks for constructing your own. See the [Schema](/docs/1.0.0/schema/overview) documentation for more details.
+All data transacted into a ledger must conform to a schema. We'll transact a basic schema below. See the [Schema](/docs/1.0.0/schema/overview) documentation for more details.
 
 Create a collection, which you can think of as a type of entity, or a relational database table.
 
