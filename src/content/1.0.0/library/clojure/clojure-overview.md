@@ -56,45 +56,45 @@ Create a collection, which you can think of as a type of entity, or a relational
 
 ```all
 ;; creates book and author collections
-@(fdb/transact conn ledger [{:_id :_collection :name :book}
-                            {:_id :_collection :name :author}])
+@(fdb/transact conn ledger [{:_id :_collection :_collection/name :book}
+                            {:_id :_collection :_collection/name :author}])
 
 ;; can also use strings like in the Fluree docs:
-;; {"_id" "_collection" "name" "author"}
+;; {"_id" "_collection" "_collection/name" "author"}
 ```
 
 Create some predicates for the collection, analogous to entity attributes or relational database columns.
 
 ```all
 @(fdb/transact conn ledger [{:_id :_predicate
-                             :name :author/name
-                             :doc "An author's complete name."
-                             :unique true
-                             :type :string
-                             :upsert true}
+                             :_predicate/name :author/name
+                             :_predicate/doc "An author's complete name."
+                             :_predicate/unique true
+                             :_predicate/type :string
+                             :_predicate/upsert true}
 
                             {:_id :_predicate
-                             :name :book/title
-                             :doc "A book's title."
-                             :unique true
-                             :upsert true
-                             :fullText true
-                             :type :string}
+                             :_predicate/name :book/title
+                             :_predicate/doc "A book's title."
+                             :_predicate/unique true
+                             :_predicate/upsert true
+                             :_predicate/fullText true
+                             :_predicate/type :string}
                             {:_id :_predicate
-                             :name :book/notes
-                             :doc "Any notes about the book"
-                             :type :string}
+                             :_predicate/name :book/notes
+                             :_predicate/doc "Any notes about the book"
+                             :_predicate/type :string}
                             {:_id :_predicate
-                             :name :book/authors
-                             :doc "A book's authors."
-                             :type :ref
-                             :multi true
-                             :restrictCollection :author}
+                             :_predicate/name :book/authors
+                             :_predicate/doc "A book's authors."
+                             :_predicate/type :ref
+                             :_predicate/multi true
+                             :_predicate/restrictCollection :author}
                             {:_id :_predicate
-                             :name :book/tags
-                             :doc "Tags for categorizing books."
-                             :type :tag
-                             :multi true}])
+                             :_predicate/name :book/tags
+                             :_predicate/doc "Tags for categorizing books."
+                             :_predicate/type :tag
+                             :_predicate/multi true}])
 
 ```
 
@@ -105,18 +105,18 @@ Insert some subject data that conforms to the schema we've created. See the [Tra
 ```all
 ;; adding data
 @(fdb/transact conn ledger [{:_id :book
-                             :title "Watership Down"
-                             :tags [:rabbits :fiction]
-                             :authors [{:_id :author :name "Richard Adams"}]}
+                             :book/title "Watership Down"
+                             :book/tags [:rabbits :fiction]
+                             :book/authors [{:_id :author :name "Richard Adams"}]}
                             {:_id :book
-                             :title "The Joy of Clojure"
-                             :tags [:programming :non-fiction]
-                             :authors [{:_id :author :name "Michael Fogus"}
+                             :book/title "The Joy of Clojure"
+                             :book/tags [:programming :non-fiction]
+                             :book/authors [{:_id :author :name "Michael Fogus"}
                                        {:_id :author :name "Chris Houser"}]}
                             {:_id :book
-                             :title "Cryptonomicon"
-                             :tags [:fiction :sci-foo]
-                             :authors [{:_id :author :name "Neal Stephensooooon"}]}])
+                             :book/title "Cryptonomicon"
+                             :book/tags [:fiction :sci-foo]
+                             :book/authors [{:_id :author :name "Neal Stephenson"}]}])
 
 @(fdb/transact conn ledger [{:_id [:book/title "Cryptonomicon"]
                              :book/notes "I rly liked it."}])
