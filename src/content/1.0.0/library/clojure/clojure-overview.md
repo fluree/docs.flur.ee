@@ -18,6 +18,8 @@ value | object
 datom | flake
 
 ### Setup
+Make sure you have a running Fluree ledger service to connect to. See the [Getting Started](/docs/1.0.0/getting-started/installation) docs for more details.
+
 Add to the artifact to your dependencies:
 
 Leiningen -
