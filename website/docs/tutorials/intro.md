@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+id: tutorial_intro
 ---
 
 # Tutorial Intro
