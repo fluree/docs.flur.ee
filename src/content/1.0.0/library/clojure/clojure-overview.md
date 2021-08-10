@@ -154,6 +154,9 @@ The syntax for these queries is similar to datalog and eql. These don't support 
 The `query` function takes a `db` value to execute a query against, as well as a query map. See the docs for [Analytical queries](/docs/1.0.0/query/analytical-query) and [Basic queries](/docs/1.0.0/query/overview) for more details.
 
 ```all
+;; store the current immutable database value. See API docs for getting a prior version of a db, applying permissions to a db, and other options.
+(def db (fdb/db conn ledger))
+
 ;; all books
 @(fdb/query (fdb/db conn ledger) {:select {"?book" [:*, {:book/authors [:*]}]}
                               :where [["?book" "book/title" nil]]})
