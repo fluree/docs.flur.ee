@@ -167,20 +167,20 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 #### History queries
 
-[History queries](/docs/1.0.0/query/history-query) can show you the raw history of a subject. Use `prettyPrint` to get back maps of predicate names to object values instead of raw flake data.
+[History queries](/docs/1.0.0/query/history-query) can show you the raw history of a subject. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
 ```all
 ;; see the history of the "Cryptonomicon" book.
-@(fdb/history-query (fdb/db conn ledger) {:history ["book/title" "Cryptonomicon"] :prettyPrint true})
+@(fdb/history-query (fdb/db conn ledger) {:history ["book/title" "Cryptonomicon"] :pretty-print true})
 ```
 
 #### Block queries
 
-[Block queries](/docs/1.0.0/query/block-query) return all of the raw flake data stored in a block. Use `prettyPrint` to get back maps of predicate names to object values instead of raw flake data.
+[Block queries](/docs/1.0.0/query/block-query) return all of the raw flake data stored in a block. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
 ```all
 ;; see all the flakes from block 3
-@(fdb/block-query-async conn ledger {:block 3 :prettyPrint true})
+@(fdb/block-query-async conn ledger {:block 3 :pretty-print true})
 ```
 
 #### Other query languages
