@@ -117,7 +117,7 @@ Insert some subject data that conforms to the schema we've created. See the [Tra
                                        {:_id :author :name "Chris Houser"}]}
                             {:_id :book
                              :book/title "Cryptonomicon"
-                             :book/tags [:fiction :sci-foo]
+                             :book/tags [:fiction :sci-fi]
                              :book/authors [{:_id :author :name "Neal Stephenson"}]}])
 
 @(fdb/transact conn ledger [{:_id [:book/title "Cryptonomicon"]
