@@ -1,4 +1,8 @@
-## Overview
+---
+sidebar_position: 2
+sidebar_label: Local Development
+---
+# Overview
 
 Downloaded endpoints can only be used in the downloadable versions of Fluree. All requests, except requests to `/health`, should be POST requests. The main downloaded endpoints are below, and they are all structured as follows:
 
@@ -6,7 +10,7 @@ Downloaded endpoints can only be used in the downloadable versions of Fluree. Al
 
 - For the downloadable version, unless you changed the default `fdb-api-port`, the full URL is `http://localhost:8080/fdb/[DBNAME]/[ACTION]`
 
-### Main Endpoints
+## Main Endpoints
 
 Action | Endpoint | Explanation
 -- | -- | --
@@ -28,7 +32,7 @@ Command | `/fdb/[NETWORK-NAME]/[DBID]/command` | Commands, such as transactions,
 Reindex | `/fdb/[NETWORK-NAME]/[DBID]/reindex` | Reindexes the specified ledger.
 Hide | `/fdb/[NETWORK-NAME]/[DBID]/hide` | Hides flakes that match the given pattern.
 
-### Test endpoints
+## Test endpoints
 
 Action | Endpoint | Explanation
 -- | -- | --
@@ -36,7 +40,7 @@ Generate Flakes | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/gen-flakes` | Returns th
 Query With | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query-with` | Returns the results of a query using the existing ledger flakes, including flakes that are provided with the query.
 Test Transact With | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/test-transact-with` | Given a valid set of flakes that could be added to the ledger at a given point in time and a transaction, returns the flakes that would be added to a ledger if a given transaction is issued.
 
-### Password Authentication Endpoints
+## Password Authentication Endpoints
 
 You need password authentication enabled to use these endpoints. See [config options](/docs/getting-started/installation#password-and-jwt-token-settings) for all password authentication options. See the [Password Management Guide](/guides/identity/password-management) for more information. For an implementation example refer to the [Comics Store](https://github.com/fluree/developer-hub) repo located in the Fluree Developer Hub.
 
@@ -46,7 +50,7 @@ Action | Endpoint | Explanation
 [Renew](/api/downloaded-endpoints/downloaded-examples#pwrenew) | `/fdb/[NETWORK-NAME]/[DBID]/pw/renew` | Given a token in the header and a new expiration time, returns a new token for a given user or role.
 [Login](/api/downloaded-endpoints/downloaded-examples#pwlogin) | `/fdb/[NETWORK-NAME]/[DBID]/pw/login` | Given a password and user or auth id, returns a valid token.
 
-### Other endpoints
+## Other endpoints
 
 Action | Verb | Endpoint | Description
 -- | -- | -- | --
