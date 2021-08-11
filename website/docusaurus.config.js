@@ -14,10 +14,12 @@ module.exports = {
   projectName: 'docs.flur.ee', // Usually your repo name.
   themeConfig: {
     navbar: {
+      title: 'Fluree',
       hideOnScroll: true,
       logo: {
         alt: 'Fluree Logo',
-        src: 'img/logo.svg',
+        src: 'img/logo_dark.svg',
+        srcDark: 'img/logo_white.svg',
       },
       items: [
         {
