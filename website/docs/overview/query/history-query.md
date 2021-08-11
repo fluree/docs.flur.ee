@@ -4,7 +4,7 @@ In this section, we show you how to view the history of a flake or set of flakes
 
 All FlureeQL queries in this section can be issued to an API endpoint ending in `/history`.
 
-## History Clauses
+## History Clauses {#history-clauses}
 
 A historical query requires a `history` key, which specifies an subject, either by specifiying an subject id, a two-tuple of a unique predicate+object, or an array in flake-format. A historical query can also optionally include a `block` key, which specifies the most recent block for which to list an subject's history.
 
@@ -16,7 +16,7 @@ Key | Required? | Description
 `auth` | no | Optional, an array of `_auth/id`s or `_auth` subject ids. If included, only returns results that were submitted by the included auth records.
 `prettyPrint` | no | Optional, `true` or `false`, whether to pretty print results. Default `false`
 
-## History of Subject at a Single Block
+## History of Subject at a Single Block {#history-of-subject-at-a-single-block}
 
 To view the history of a single subject, you can either specify a subject id or a unique two-tuple.
 
@@ -80,7 +80,7 @@ curl \
 Not supported
 ```
 
-## History of Subject During a Block Range
+## History of Subject During a Block Range {#history-of-subject-during-a-block-range}
 
 To query the history of an subject using an subject id from block 3 to 5:
 
@@ -110,7 +110,7 @@ Not supported
 Not supported
 ```
 
-## History of Subject, Lower Limit
+## History of Subject, Lower Limit {#history-of-subject-lower-limit}
 
 To query the history of an subject using an subject id from block 3 to the most recent block:
 
@@ -140,7 +140,7 @@ Not supported
 Not supported
 ```
 
-## History Query With Flake Format
+## History Query With Flake Format {#history-query-with-flake-format}
 
 Data in Fluree is stored in the form of [flakes](/guides/infrastructure/db-infrastructure#flakes). The flake format is an array where the first three elements specify an [subject, predicate, and object](/guides/infrastructure/db-infrastructure#subject-predicate-object-model) in that order.
 
@@ -206,7 +206,7 @@ curl \
 Not supported
 ```
 
-## Pretty Print History Query
+## Pretty Print History Query {#pretty-print-history-query}
 
 In FlureeQL, you can pretty print the results of a history query by adding `"prettyPrint": true` to your query map. Any format of history query can be pretty printed.
 
@@ -254,7 +254,7 @@ The pretty printed results look as follows:
 }
 ```
 
-## History Query with Auth Information
+## History Query with Auth Information {#history-query-with-auth-information}
 
 To include auth information in the results of a history query, include the `showAuth` key. For example:
 

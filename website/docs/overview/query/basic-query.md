@@ -4,7 +4,7 @@ In this section, we show you how to perform basic queries using FlureeQL. All co
 
 To issue these queries using the API, see `/query` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-query) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version). You can also issue multiple queries at once using the `/multi-query` endpoints in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-multi-query) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version).
 
-## Query Keys
+## Query Keys {#query-keys}
 
 Below are all the possible keys that you can include in a basic select query. Usage examples are in subsequent sections on this page.
 
@@ -16,7 +16,7 @@ Key | Required? | Value | Notes
 `block` | no | Optional time-travel query specified by block number, duration, or wall-clock time as an ISO-8601 formatted string. | See [block key](#block-key)
 `opts` | no | Optional map of options. | See [opts key](#opts-key)
 
-## Select Key
+## Select Key {#select-key}
 
 A basic query must include one of the following select keys: `select`, `selectOne`, or `selectDistinct`.
 
@@ -173,7 +173,7 @@ Key | Description
 `_orderBy` | Specify either a predicate (make sure to use the same name as returned in the results), or a two-tuple, where the first item is either `ASC` or `DESC` and the second item is the predicate name, i.e. `["ASC", "person/handle"]`.  Ordering is done before taking the number of results specified in limit.
 `_compact` | Returns all predicate names in their compact (non-namespaced format). For example, rather than return `person/handle`, would just return `handle`.
 
-## From Key
+## From Key {#from-key}
 
 Either a `from` key or a `where` key are required in a basic query. Your select options are applied to the field of subjects described by the `from`. A `from` key can be any of the following:
 
@@ -194,7 +194,7 @@ Any select-array can be combined with any type of `from` key.
 }
 ```
 
-## Where Key
+## Where Key {#where-key}
 
 A where clause filters a given ledger so that select-options are only applied to the field of subjects that meet the filter criteria. Where clauses are a simple way to apply very basic filters to a query. For more complex queries and filters, we recommend using [Analytical Queries](/docs/query/analytical-query).
 
@@ -229,7 +229,7 @@ You can link multiple specifications with `AND`s or `OR`s, for example `chat/ins
 }
 ```
 
-## Block Key
+## Block Key {#block-key}
 
 A basic query can optionally have a block key, which issues that query as of a given point in time. The value of the block key can be a block number or a ISO-8601 formatted wall-clock time or duration.
 

@@ -8,7 +8,7 @@ smart functions. Each of these system collections and their predicates is discus
 in its respective section. The below list compiles all of the built-in collections
 in one place, and you can follow the link to any particular section for more information.
 
-## All System Collections
+## All System Collections {#all-system-collections}
 
 All ledgers are created with the following collections.
 
@@ -26,7 +26,7 @@ Collection | Description
 [_tx](#_tx) | ledger transactions
 [_setting](#_setting) | ledger settings
 
-## _collection
+## _collection {#_collection}
 <!-- markdownlint-disable MD013 -->
 Predicate | Type | Description
 ---|---|---
@@ -36,7 +36,7 @@ Predicate | Type | Description
 `_collection/specDoc` | `string` | (optional) Optional docstring to describe the specs. Is thrown when any spec fails.
 `_collection/version` | `string` | (optional) For your optional use, if a collection's spec or intended predicates change over time this version number can be used to determine which schema version a particular application may be using.
 
-## _predicate
+## _predicate {#_predicate}
 
 Predicate | Type | Description
 ---|---|---
@@ -59,7 +59,7 @@ Predicate | Type | Description
 `_predicate/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and ledger functions won't be permitted on this value.
 `_predicate/fullText` | `boolean` | (optional) If true, full text search enabled on this ledger. By default, the language for a Fluree ledger is set to English. You can change the default language in [ledger settings](/docs/ledger-setup/ledger-settings).
 
-## _predicate Types
+## _predicate Types {#_predicate-types}
 
 Supported predicate types are as follows:
 
@@ -82,14 +82,14 @@ Type | Description
 `json` | Arbitrary JSON data. The JSON is automatically encoded/decoded (UTF-8) with queries and transactions, and JSON structure can be validated with a `spec`. (`_type/json`)
 `geojson` | Geospatial JSON data. GeoJSON is an open standard format designed to represent simple geographical features. (`_type/geojson`)
 
-## _tag
+## _tag {#_tag}
 
 Predicate | Type | Description
 -- | -- | --
 `id` | `string` | Namespaced tag id
 `doc` | `string` | Optional docstring for tag
 
-## _fn
+## _fn {#_fn}
 
 Predicate | Type | Description
 -- | -- | --
@@ -100,7 +100,7 @@ Predicate | Type | Description
 `language` | `string` |  Programming language used (not yet implemented, currently only Clojure supported)
 `spec` | `JSON` | (not yet implemented) Optional spec for parameters. Spec should be structured as a map, parameter names are keys and the respective spec is the value.
 
-## _user
+## _user {#_user}
 
 Predicate | Type | Description
 -- | -- | --
@@ -108,7 +108,7 @@ Predicate | Type | Description
 `_user/auth` | `[ref]` | (optional) Reference to auth entities available for this user to authenticate. Note if no auth entities exist, the user will be unable to authenticate.
 `_user/roles` | `[ref]` | (optional) References to the default roles that apply to this user. If roles are specified via the `_auth` subject the user is authenticated as, those roles will always override (replace) any role specified here.
 
-## _auth
+## _auth {#_auth}
 
 Predicate | Type | Description
 -- | -- | --
@@ -123,7 +123,7 @@ Predicate | Type | Description
 `_auth/authority` | `[ref]` | (optional) Authorities for this auth record. References another _auth record. Any auth records referenced in `_auth/authority` can sign a transaction in place of this auth record. To use an authority, you must sign your transaction using the authority's auth record. See more about signing transactions and authorities in the Signed Transactions section of the Guides.
 `_auth/fuel` | `long` | Fuel this auth record has. [Fuel](/docs/infrastructure/db-infrastructure#fuel) is used to meter usage in the hosted version of Fluree, but an application can use this predicate to meter fuel usage in the downloadable version as well.
 
-## _role
+## _role {#_role}
 
 Predicate | Type | Description
 -- | -- | --
@@ -131,7 +131,7 @@ Predicate | Type | Description
 `_role/doc` | `string` | (optional) A docstring for this role.
 `_role/rules` | `[ref]` | (required) References to rule entities that this role aggregates.
 
-## _rule
+## _rule {#_rule}
 
 Predicate | Type | Description
 -- | -- | --
@@ -144,7 +144,7 @@ Predicate | Type | Description
 `_rule/ops` | `[tag]` | (required) Multi-cardinality tag of action(s) this rule applies to. Current tags supported are `query` for query/read access, `transact` for transact/write access, and `all` for all operations.
 `_rule/errorMessage` | `string` | (optional) If this rule prevents a transaction from executing, this optional error message can be returned to the client instead of the default error message (which is intentionally generic to limit insights into the ledger configuration).
 
-## _block
+## _block {#_block}
 
 Key | Description
 ---|---
@@ -156,7 +156,7 @@ Key | Description
 `instant` | Instant this block was created, per the transactor.
 `sigs` | List of transactor signatures that signed this block (signature of _block/hash). Not included in block hash.
 
-## _tx
+## _tx {#_tx}
 
 Key | Description
 ---|---
@@ -169,7 +169,7 @@ Key | Description
 `authority` | If this transaction utilized an authority, reference to it.
 `auth` | Reference to the auth id for this transaction.
 
-## _setting
+## _setting {#_setting}
 
 Key | Description
 ---|---

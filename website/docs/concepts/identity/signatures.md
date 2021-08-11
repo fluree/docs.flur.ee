@@ -4,7 +4,7 @@ In Fluree, you can sign both queries and transactions. The signature proves that
  the issuer of a given query or transaction has access to the private key
   associated with the signature.
 
-## `fdb-open-api`
+## `fdb-open-api` {#fdb-open-api}
 
 For both queries and transactions, a signature is not required if the option
  `fdb-open-api` is set to true (default
@@ -21,7 +21,7 @@ If you do need to specify a signature, such as in the case of testing out user
   `/command` endpoint. As of `v0.13.0`, you can also submit an unsigned command
    to the `/command` endpoint, but only when `fdb-open-api` is true.
 
-## NPM Package
+## NPM Package {#npm-package}
 
 Fluree has published a Javascript library that contains helper functions to help
 users sign queries and transactions. This can be downloaded via npm,
@@ -33,7 +33,7 @@ guides you through how to generate keys, sign queries, and sign transactions.
 We recommend using the Javascript library or the user interface for ease of use,
  but you can read more about how to sign queries and transactions manually below.
 
-## User Interface
+## User Interface {#user-interface}
 
 Fluree also has a user interface to help users submit signed queries and transactions.
 
@@ -43,7 +43,7 @@ sign queries and transactions. Note that the hosted version of Fluree does not
 allow you to sign queries, because `fdb-open-api` is set to true for all hosted
 accounts, so a signed query would be ignored regardless.
 
-## Signed Queries
+## Signed Queries {#signed-queries}
 
 If `fdb-open-api` is set to true, then you do not need to sign your queries. In
 fact, the signature in a signed query will be ignored if `fdb-open-api` is set
@@ -53,7 +53,7 @@ If you do need to sign your queries, you should have access to your private key.
 Your private key needs to be
 [connected to a valid auth record](/guides/identity/auth-records) in the ledger.
 
-### Headers
+### Headers {#headers}
 
 You should submit a POST request should have the following headers:
 `content-type`, `mydate`, `digest`, `signature`.
@@ -80,12 +80,12 @@ Elliptic Curve Digital Signature Algorithm (ECDSA), specifically the
 hex-string. In addition, after adding 27 to the recoveryByte, that number is
 converted into a hex string, and prepended to the rest of the signature.
 
-### Body
+### Body {#body}
 
 The body of a signed query is same query as would be submitted in an unsigned
 query.
 
-### Example
+### Example {#example}
 
 ```all
  {
@@ -100,7 +100,7 @@ query.
  }
 ```
 
-## Signed Transactions
+## Signed Transactions {#signed-transactions}
 
 If `fdb-open-api` is set to true, then you do not need to sign your transactions.
 Each ledger comes with a default auth record, which is either provided by you
@@ -128,7 +128,7 @@ When submitting a transaction, the command map of type `tx` (transaction) needs
 to have the following keys in the following order. Documentation on command of
 type `new-db` and `default-key` is forthcoming.
 
-### Command Map
+### Command Map {#command-map}
 
 Key | Description
 --- | ---
@@ -145,7 +145,7 @@ of any transactions this `tx` depends on. If any of the `_tx/id`s either do not
 exist in the ledger or resulted in failed transactions, then the command will
 not succeed.
 
-#### Sig
+#### Sig {#sig}
 
 In order to get the `sig`, you need to get the SHA2-256 hash of the stringified
 command. That hash is then signed using Elliptic Curve Digital Signature
@@ -154,7 +154,7 @@ is DER encoded and returned as a hex-string. In addition, after adding 27 to the
 recoveryByte, that number is converted into a hex string, and prepended to the
 rest of the signature.
 
-### Verifying Signatures
+### Verifying Signatures {#verifying-signatures}
 
 ECDSA allows for recovery of the public key from a signature, so the original
 transaction and signature are the only two things required in order to verify
@@ -163,6 +163,6 @@ independently verify a signature based on the signature + original transaction.
 [Our cryptography GitHub repos](/tools/other/tools#js-cryptography) also have
 functions that allow you to verify any signatures.
 
-### Examples
+### Examples {#examples}
 
 You can see examples of how to use signed transaction in the [example apps](/guides/examples/hub).

@@ -60,7 +60,7 @@ matched every row in the new results (table B). This would result in a table of
 To speed up your queries, you want to order your clauses so that there are matching
 variables in as many subsequent clauses as possible.
 
-## Recursion
+## Recursion {#recursion}
 
 To recur across a relationship, simply add a `+` after a predicate. This will match
 flakes any path length from the original. By default the recur depth is 100. You

@@ -4,7 +4,7 @@ Schema predicates are similar to relational ledger columns, however there are fe
 
 Remember that Fluree schema are stored in the ledger in the same way as any other type of information. This means that because `_predicate` is a type of thing in our ledger, there is a `_predicate` collection (similar to a relational ledger table). Furthermore, the `_predicate` collection has its own predicates.
 
-## _predicate Predicates
+## _predicate Predicates {#_predicate-predicates}
 
 Below are the built-in predicates for the `_predicate` collection. As mentioned  in the [collection section](/docs/schema/collections), you can add additional predicates if you wish. You are also able to delete predicates, although this is strongly discouraged and may break parts of your ledger.  
 
@@ -29,7 +29,7 @@ Predicate | Type | Description
 `_predicate/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and ledger functions won't be permitted on this value.
 `_predicate/fullText` | `boolean` | (optional) If true, full text search enabled on this ledger. By default, the language for a Fluree ledger is set to English. You can change the default language in [ledger settings](/docs/schema/settings).
 
-## Predicate Types
+## Predicate Types {#predicate-types}
 
 Supported predicate types (`_predicate/type`) are as follows:
 
@@ -53,7 +53,7 @@ Type | Description
 
 Notice there is no `array` type. If you want a predicate to have multiple objects (values), you need to specify a `_predicate/type`, and then also specify `"multi": true`.
 
-## Creating Predicates
+## Creating Predicates {#creating-predicates}
 
 In order to create a predicate, you only need to specify what type of subject you are creating (`_predicate`), a name, and a type. The name for a predicate should be namespaced with the relevant collection (as in all predicates in the `person` collection should begin with `person/`). There are also a host of other [predicate predicates](#_predicate-predicates), which are listed in the linked section, but they are not required.
 
@@ -125,7 +125,7 @@ mutation addPredicates ($myPredicateTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-## Adding a Predicate to `_predicate`
+## Adding a Predicate to `_predicate` {#adding-a-predicate-to-_predicate}
 
 `_predicate` is a built-in ledger collection with built-in predicates. This does not mean, for instance, that you cannot add predicates. For example, you may want to add a `_predicate/longDescription` predicate, where you store a longer version of `_predicate/doc`.
 
@@ -237,7 +237,7 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-## Updating a Predicate in `_predicate`
+## Updating a Predicate in `_predicate` {#updating-a-predicate-in-_predicate}
 
 Although you can change built-in collection predicates, we do not recommend doing so, as your changes may break certain aspects of schema validation.
 
@@ -320,7 +320,7 @@ Transactions not supported in SPARQL
 
 Now, we allow upsert for the `_predicate/name` predicate.
 
-## Query All Predicates
+## Query All Predicates {#query-all-predicates}
 
 To see all of the predicates in a collection, you can use an analytical query with a filter, like below. To see all the predicates from any given collection, just replace `_collection` with the name of any collection.
 

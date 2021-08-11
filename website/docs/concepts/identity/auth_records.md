@@ -40,7 +40,7 @@ somewhere!), you must add the auth record to a ledger.
 Any roles that you add to this auth record set permissions for transactions and
 queries that are signed with this auth record.
 
-### Auth/Role/Rule Structure
+### Auth/Role/Rule Structure {#authrolerule-structure}
 
 Individual permissions, such as read and write access to a collection, are
 encoded in rules. The smart functions attached to these rules are listed in the
@@ -94,7 +94,7 @@ independently. However, a common use case is to assign auth entities to ledger
 users (via the `_user/auth` predicate). Users can have multiple auth records,
 but multiple users cannot share the same auth record.
 
-### User and Auth Entities
+### User and Auth Entities {#user-and-auth-entities}
 
 Permissions are always linked to an `_auth` subject that is making the request.
 Roles containing permission rules are referenced from the `_auth` subject (via
@@ -104,7 +104,7 @@ A `_user`, which can be a human or app/system user, can be connected to several
 different `_auth` entities. However, all transactions are performed as `_auth`
 records, not as `_user`s.
 
-### Roles
+### Roles {#roles}
 
 Roles' purpose is simply to group a set of rules under a common name or ID that
 can be easily assigned to a user.
@@ -126,7 +126,7 @@ authenticate. If, for example, a social media website authenticated as a user,
  Note that, by default, all ledgers have a built-in `["_role/id", "root"]` role
  with access to everything inside a ledger.
 
-### Rules
+### Rules {#rules}
 
 Rules control the actual permissions and are stored in the special system
 collection `_rule`. Like all Fluree functionality, it is defined as data that
@@ -134,7 +134,7 @@ collection `_rule`. Like all Fluree functionality, it is defined as data that
 
 See an example of [using rules](/guides/smart-functions/rule-example) here.
 
-### Authority
+### Authority {#authority}
 
 Authority is a feature of Fluree that allows one entity, an authority, to act on
  behalf of another entity, an auth. This feature adds convenience at the expense

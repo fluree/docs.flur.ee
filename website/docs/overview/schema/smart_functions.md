@@ -7,7 +7,7 @@ on how to write the actual function code.
 To learn more about how to use smart functions, see the
 [Smart Functions](/guides/smart-functions/smart-functions) guide.
 
-## _fn
+## _fn {#_fn}
 
 Predicate | Type | Description
 -- | -- | --
@@ -20,7 +20,7 @@ only Clojure supported)
 `spec` | `JSON` | (not yet implemented) Optional spec for parameters. Spec should
 be structured as a map, parameter names are keys and the respective spec is the value.
 
-## Universal Functions For `_fn/code`
+## Universal Functions For `_fn/code` {#universal-functions-for-_fncode}
 
 Clojure is the only language that is currently supported for writing smart functions.
 Only a subset of Clojure functions, as well as several custom functions, are allowed
@@ -163,7 +163,7 @@ mutation addTenFunc ($addTenFunTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-### Context-Dependent Functions
+### Context-Dependent Functions {#context-dependent-functions}
 
 Some available functions are only available in certain contexts. For example, `?o`,
 which gets the object of a triple is relevant for a `_predicate/spec`, but not for

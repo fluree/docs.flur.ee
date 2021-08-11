@@ -14,7 +14,7 @@ Key | Description
 `anonymous` | Reference to auth identity to use for anonymous requests to this db.
 `ledgers` | Reference to auth identities that are allowed to act as ledgers for this ledger.
 
-## Language
+## Language {#language}
 
 By default, all ledgers use English as a language. We support:
 
@@ -63,7 +63,7 @@ To see how to use full-text search, see the [guide on full-text search](/guides/
 
 \* Fluree Full-text search uses [Apache Lucene Smart Chinese Analyzer](https://lucene.apache.org/core/4_0_0/analyzers-smartcn/org/apache/lucene/analysis/cn/smart/SmartChineseAnalyzer.html) for Chinese and mixed Chinese-English text.
 
-### txMax
+### txMax {#txmax}
 
 If not set, a default value of 2mb (i.e., 2e6) is used for the maximum transaction size.
 

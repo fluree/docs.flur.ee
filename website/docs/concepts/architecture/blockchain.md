@@ -7,7 +7,7 @@ keywords:
 ---
 # Blockchain & Fluree's Ledger
 
-## Overview
+## Overview {#overview}
 
 Data integrity and trust is an important capability for many applications. As we
 increasingly share data across boundaries (organizational, geographic, even departmental)
@@ -81,7 +81,7 @@ here:
 - Blockchains operate on a set of agreed upon rules (Fluree SmartFunctions)
 - Blockchain operators come to agreement via a consensus protocol
 
-### Proving Identity
+### Proving Identity {#proving-identity}
 
 Every transaction, at the point is gossiped amongst transaction servers, must be
 digitally signed utilizing asymetric cryptography by way of ECDSA, and specifically
@@ -121,7 +121,7 @@ first time, the transaction can also remove the _auth/id for the user and create
 a new one - meaning it is possible for an end user to utilize a new auth for every
 transaction. While not necessary in most scenarios, the capability is available.
 
-### Tamper resistance
+### Tamper resistance {#tamper-resistance}
 
 Fluree generates a SHA-3 256 hash that is included as the `_tx/hash` predicate value
 for every processed transaction. This is not to be confused with the `_tx/id`, which
@@ -159,7 +159,7 @@ and sending it through the post office so it has a time stamp. The end result is
 largely the same - decentralized consensus is not a requirement to prove tamper
 resistance and integrity, but it may be desirable for other reasons.
 
-### Reproducing state
+### Reproducing state {#reproducing-state}
 
 Fluree acts as an append-only log, where a new block is generated that contains
 the Flakes that represent the delta in the ledger's state (and updated version of
@@ -168,7 +168,7 @@ from the beginning of the ledger, but Fluree makes this instantly accessible and
 queryable via its Time Travel capability - made possibly by Fluree's special bi-temporal
 indexing method.
 
-### SmartFunctions (customizable rules)
+### SmartFunctions (customizable rules) {#smartfunctions-customizable-rules}
 
 SmartFunctions are the way in which end users can build custom rules that govern
 the ledger. They can be utilized for both permissioning and enforcing query (view)
@@ -187,7 +187,7 @@ Fuel is similar to Ethererum Gas but is present to prevent situations like infin
 loops in SmartFunctions, but can also be leveraged to meter usage, bill different
 parties, test different methods of optimization, or other capabilities.
 
-### Consensus
+### Consensus {#consensus}
 
 Fluree uses the Raft protocol for consensus. While we previously suported PBFT,
 it was not being utilized. The code base has a pluggable protocol for consensus

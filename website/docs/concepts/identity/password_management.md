@@ -6,7 +6,7 @@ Passwords are less-secure than private keys, however they may be the best option
    a token, they can send permissioned queries and transactions without having
     to worry about signatures.
 
-## Password Settings
+## Password Settings {#password-settings}
 
 There are [several settings](/docs/getting-started/fluree-anywhere#password-and-jwt-token-settings)
 that are used to handle passwords and tokens. Two of the main settings are:
@@ -16,7 +16,7 @@ that are used to handle passwords and tokens. Two of the main settings are:
 
 Once we ensure these settings are how we like them, we can start our Fluree instance.
 
-### Passwords API
+### Passwords API {#passwords-api}
 
 There are three API endpoints associated with passwords - [generate, renew, and login](/api/downloaded-endpoints/overview#password-authentication-endpoints).
 

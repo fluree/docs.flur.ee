@@ -8,7 +8,7 @@ For example, an auth can be connected to a role that references rules in the `pe
 
 - If at least one of the smart functions returns false, then the transaction is rejected, or, in the case of a query, the results are returned without `person/handle`.
 
-## Rules Usage
+## Rules Usage {#rules-usage}
 
 Predicate and collection specs apply exclusively to transactions, and are universal for everyone in the ledger. Rules, as explained above, can be used for queries as well as transactions. Rules can control what end users* in a ledger see and do. They cannot control what a node-operator or administrator of a hosted Fluree ledger can see, but they can control what those individual can do (transact). Anyone who is running their own node in Fluree, or who is the administrator of a hosted Fluree ledger, always has full access to **view** any item in any ledger in their network. Query peers, however, can be connected to a Fluree ledger or network as a permissioned user.
 

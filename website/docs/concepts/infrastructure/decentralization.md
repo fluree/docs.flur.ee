@@ -22,7 +22,7 @@ source - something that can be done with or without decentralization (Fluree use
 often use public blockchains to publish hashes to - i.e. Bitcoin, Ethereum or
 Litecoin).
 
-## Setting Up Decentralized Servers
+## Setting Up Decentralized Servers {#setting-up-decentralized-servers}
 
 You would typically establish a decentralized network after creating an initial
 [schema](/docs/schema) and set of [SmartFunctions](/guides/smart-functions/smart-functions)
@@ -48,7 +48,7 @@ with their private key. From there, a challenge is issued that must be signed
 (to avoid any replay attacks), and the servers participate in a Diffie-Hellman key
 exchange to encrypt traffic between them.
 
-## Forming Blocks
+## Forming Blocks {#forming-blocks}
 
 All valid, signed transactions sent to the network are forwarded to the other connected
 servers via the [consensus](/guides/infrastructure/consensus-algorithms) protocol's

@@ -1,9 +1,9 @@
-# About Fluree
+# About Fluree 
 
 This page will host a quick "elevator pitch" style description of the value proposition of Fluree.
 For now, it has the content from the Getting Started Intro page copied into it.
 
-## Intro
+## Intro {#intro}
 
 The Docs section is a basic technical overview of key topics, including:
 
@@ -27,7 +27,7 @@ the language options in the left sidebar.
 
 In that same sidebar, you can also jump to other sections.
 
-## Other Resources
+## Other Resources {#other-resources}
 
 There are other resources in this documentation website, such as:
 
@@ -48,7 +48,7 @@ Alternatively, follow this
 [to-do list generator](https://github.com/fluree/to-do-lists-generator) repo for
 an introduction to integrating Fluree in a React application.
 
-## Where Can I Get Help?
+## Where Can I Get Help? {#get-help}
 
 If you can't find the answers you are looking for in our documentation, please
 let us know! We are always looking to improve the quality of support we provide.

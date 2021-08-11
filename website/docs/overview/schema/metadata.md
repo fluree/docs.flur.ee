@@ -2,7 +2,7 @@
 
 When a new block is added, that block may have many transactions. Each block has automatically generated metadata, as does each transaction. You can also add [custom metadata](/docs/transact/basics#adding-custom-metadata).
 
-## _block
+## _block {#_block}
 
 Key | Description
 ---|---
@@ -14,7 +14,7 @@ Key | Description
 `instant` | Instant this block was created, per the transactor.
 `sigs` | List of transactor signatures that signed this block (signature of _block/hash). Not included in block hash.
 
-## _tx
+## _tx {#_tx}
 
 Key | Description
 ---|---

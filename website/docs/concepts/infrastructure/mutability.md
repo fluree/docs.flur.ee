@@ -3,7 +3,7 @@
 While Fluree is an immutable ledger, there are several features that provide some
 flexibility around hiding and removing data.
 
-## Deleting Data
+## Deleting Data {#deleting-data}
 
 There is the standard way of [deleting data](/docs/transact/deleting-data). Using
 this method, the data will not appear in a query against the current ledger, however
@@ -19,7 +19,7 @@ If you do not need to remove the traces of a certain piece of deleted data, then
 this is a good option. Deleting data in this matter maintains the full integrity
 of your blockchain.
 
-## Hiding Flakes
+## Hiding Flakes {#hiding-flakes}
 
 > BETA FEATURE
 
@@ -70,13 +70,13 @@ if you understand the full repercussions.
 
 Currently hiding flakes is only supported when using an open API.
 
-## Purging Data
+## Purging Data {#purging-data}
 
 Purging data is not currently supported, but will allow users to completely remove
 any trace of a flake. Purging data is the most extreme option for mutable, and does
 NOT maintain the integrity of the blockchain.
 
-## Querying Across Ledgers
+## Querying Across Ledgers {#querying-across-ledgers}
 
 One common reason for wanting mutable data is to store personally identifiable information
 (PII). One common way for dealing with PII is by storing the PII in one ledger and

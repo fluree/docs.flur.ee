@@ -12,7 +12,7 @@ user. In this example, we'll be using Fluree's Password API to handle authentica
 smart functions and the `_rule` collection to handle authorization, and the `_role`
 and `_auth` collections to set up our user roles.
 
-## Setting Up
+## Setting Up {#setting-up}
 
 For this example, we'll create a basic illusion ledger for a magicians' guild. Magicians
 like to keep their illusions secret, so we'll implement roles for our users which
@@ -21,7 +21,7 @@ an illusion is performed. We'll leave less sensitive information, like names and
 basic descriptions open to querying by users who have not gained the trust of the
 guild.
 
-### Open / Closed API
+### Open / Closed API {#open--closed-api}
 
 For the purposes of this example, we'd recommend setting the API to open, especially
 when adding or editing the ledger schema. With the API set to open, any queries
@@ -33,7 +33,7 @@ will be rejected outright. If you are receiving unexpected results for your quer
 (i.e. Postman and Insomnia do not require quotations for setting strings in header
 value fields).
 
-### Initial Schema
+### Initial Schema {#initial-schema}
 
 You can copy/paste the following schema transaction into the Fluree Admin dashboard,
 to create the `illusion` collection and user roles in the ledger.
@@ -88,7 +88,7 @@ to create the `illusion` collection and user roles in the ledger.
 ]
 ```
 
-### Seed Data
+### Seed Data {#seed-data}
 
 ```flureeql
 [
@@ -122,7 +122,7 @@ to create the `illusion` collection and user roles in the ledger.
 ]
 ```
 
-### Registering & Logging In Users
+### Registering & Logging In Users {#registering--logging-in-users}
 
 We'll be using the [Password Authentication API](/guides/identity/password-management)
 to create our users. Using your API testing software, send a POST request with the
@@ -167,7 +167,7 @@ user.
 }
 ```
 
-### Query Permissions
+### Query Permissions {#query-permissions}
 
 Let's try to query some illusions. With a valid JWT set in the Authorization header,
 send the following query to your Fluree ledger's `query` endpoint.
@@ -234,7 +234,7 @@ collection should only return the `illusion/name`, `illusion/description`, and
 `illusion/difficulty` predicates, while the "magician" user should have access to
 all of the predicates.
 
-### Transaction Permissions
+### Transaction Permissions {#transaction-permissions}
 
 Now that we have querying permissions set for our user roles, let's talk transaction
 rules. Obviously, we don't want any "initiates" making changes to the `illusion`

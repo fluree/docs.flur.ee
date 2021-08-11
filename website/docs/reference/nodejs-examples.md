@@ -11,7 +11,7 @@ npm install @fluree/flureenjs
 
 The following functions are available in the Node.js api library. JavaScript promises are used to return results from long-running processes.
 
-## **account_id**
+## **account_id** {#account_id}
 
 Returns an account id from either a 1) public key **or** 2) a message and its signature.
 
@@ -19,7 +19,7 @@ When provided a message and signature, the corresponding account id is
 returned only if the signature is valid. An exception is thrown when the
 signature is invalid.
 
-### Parameter(s)
+### Parameter(s) {#parameters}
 
 Name | Value
 -- | --
@@ -28,11 +28,11 @@ Name | Value
 `message` | a message
 `signature` | a signature, a hash of your message signed using your private key.
 
-### Returns
+### Returns {#returns}
 
 The associated account id.
 
-### Code Example  
+### Code Example {#code-example}
 
 Examples of account_id function:
   
@@ -54,12 +54,12 @@ Examples of account_id function:
   }
 ```
 
-## **block_event__GT_map**
+## **block_event__GT_map** {#block_event__gt_map}
 
 Accepts block event data from a `listen` event, mapping flakes to either the `:added` key or `:retracted` key. The maps of data are organized by subject and include full predicate names.
 
 <!-- markdownlint-disable MD024 -->
-### Parameter(s)
+### Parameter(s) {#parameters-1}
 
 Name | Value
 -- | --
@@ -67,11 +67,11 @@ Name | Value
 `ledger` | a string identifying both the network and ledger-id
 `block-event-data` | block event data provided via `listen`
 
-### Return(s)
+### Return(s) {#returns-1}
 
 Returns the original block data, with flakes broken out into additions and retractions.
 
-### Code Example
+### Code Example {#code-example-1}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -91,11 +91,11 @@ console.log("Added listener?", listenerAdded?);
 : 
 ```
 
-## **block_query**
+## **block_query** {#block_query}
 
 FlureeQL [block queries](/docs/query/block-query) should be submitted to the `block_query` function. This does not include other types of queries (basic queries, history queries, etc) that might reference a "block" key. This only includes queries that are returning flakes from a block or set of blocks.
 
-### Parameter(s)
+### Parameter(s) {#parameters-2}
 
 Name | Value
 -- | --
@@ -104,11 +104,11 @@ Name | Value
 `query-map` | a map of key/value pairs defining the query
 `options` | an optional map of key/value pairs. Options can also be included in the `query-map` using the `:opts` keyword.  When using a closed-api, either the `:auth` or `:jwt` should be included in the options map.
 
-### Returns
+### Returns {#returns-2}
 
 A JavaScript promise that eventually contains the results of the query or an error.
 
-### Code Example  
+### Code Example {#code-example-2}
 
 An example of an unsigned request to `block_query`:
   
@@ -129,22 +129,22 @@ flureenjs.block_query(flureeDbConn, ledger, myQuery)
 flureenjs.close(flureeDbConn);
 ```
 
-## **collection_id**
+## **collection_id** {#collection_id}
 
 Returns a JavaScript promise that eventually contains either the ID (integer) of a collection or nil if the collection does not exist.
 
-### Parameter(s)
+### Parameter(s) {#parameters-3}
 
 Name | Value
 -- | --
 `db-source` | an asynchronous channel created by the `db` function
 `collection` | name of a collection
 
-### Returns
+### Returns {#returns-3}
 
 The ID of a collection or nil when the collection does not exist.
 
-### Code Example  
+### Code Example {#code-example-3}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -165,22 +165,22 @@ flureenjs.db_p(flureeDbConn, ledger)
 flureenjs.close(flureeDbConn);
 ```
 
-## **collection_flakes**
+## **collection_flakes** {#collection_flakes}
 
 Returns the `spot` index range for the requested collection.
 
-### Paraneter(s)
+### Paraneter(s) {#paraneters}
 
 Name | Value
 -- | --
 `db-source` | an asynchronous channel created by the `db` function
 `collection` | name of a collection
 
-### Returns
+### Returns {#returns-4}
 
 The `spot` index for the requested collection is returned.
 
-### Code Example
+### Code Example {#code-example-4}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -201,7 +201,7 @@ flureenjs.db_p(flureeDbConn, ledger)
 flureenjs.close(flureeDbConn);
 ```
 
-## **connect**
+## **connect** {#connect}
 
 Connect to a ledger server using an URL address. If using a ledger group, multiple addresses can be supplied, separated by a comma.  
 
@@ -210,18 +210,18 @@ There are 2 versions of the connect function:
 * `connect` returns a connection object
 * `connect_p` returns a connection object via a promise
   
-### Parameter(s)
+### Parameter(s) {#parameters-4}
 
 Name | Value
 -- | --
 `server-string` | a string identifying one or more ledger servers
 `options` | a JSON object containing configuration options.  The following option is currently supported: `keep-alive-fn`: a JavaScript function that is executed when a connection is abruptly dropped.
 
-### Returns
+### Returns {#returns-5}
 
 Returns a connection object.
 
-### Code Examples  
+### Code Examples {#code-examples}
 
 An example of the `connect` function:
 
@@ -284,21 +284,21 @@ function flureeConnect(url, options){
     flureeConnect(flureeServerUrl, options);    
 ```
 
-## **close**
+## **close** {#close}
 
 Close a connection to a ledger server/group.
   
-### Parameter(s)
+### Parameter(s) {#parameters-5}
 
 Name | Value
 -- | --
 `connection` | a connection object created using the `connect` or `connect_p` function
 
-### Returns
+### Returns {#returns-6}
 
 Returns a boolean, false when the connection is not currently open; otherwise, true.
 
-### Code Example  
+### Code Example {#code-example-5}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -309,11 +309,11 @@ var flureeDbConn = flureenjs.connect(flureeServerUrl);
 flureenjs.close(flureeDbConn);
 ```
 
-## **close_listener**
+## **close_listener** {#close_listener}
 
 Closes a listener associated with a given connection, ledger and key
 
-### Parameter(s)
+### Parameter(s) {#parameters-6}
 
 Name | Value
 -- | --
@@ -321,11 +321,11 @@ Name | Value
 `ledger` | a string identifying both the network and ledger-id
 `key` | same arbitrary key provided to the `listen` function
 
-### Returns
+### Returns {#returns-7}
 
 Returns true if a callback function was associated with the key and removed.  Otherwise. nil is returned.
 
-### Code Example  
+### Code Example {#code-example-6}
   
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -342,22 +342,22 @@ console.log("Closed listener?", listenerClosed?);
 flureenjs.close(flureeDbConn);
 ```
   
-## **db**
+## **db** {#db}
 
 Returns a queryable ledger from the connection. The ledger object represents a point-in-time ledger. As such, the ledger will not contain block updates submitted after acquisition of the channel.
 
-### Parameter(s)
+### Parameter(s) {#parameters-7}
 
 Key | Value
 -- | --
 `connection` | a connection object created using the `connect` or `connect_p` function
 `ledger` | a string identifying both the network and ledger-id
 
-### Returns
+### Returns {#returns-8}
 
 Returns a queryable (point-in-time) ledger as an asynchronous channel.
 
-### Code Example  
+### Code Example {#code-example-7}
 
 Code example without an explicit wait.  This works well when the ledger/database is not immediately needed.
 
@@ -393,22 +393,22 @@ flureenjs.db_p(flureeDbConn, ledger)
 flureenjs.close(flureeDbConn);
 ```
 
-## **delete_ledger**
+## **delete_ledger** {#delete_ledger}
 
 Deletes a ledger, such that a user will no longer be able to query or transact against that ledger. Currently, the files associated with the ledger are not physically deleted from disk. You can choose to delete those files yourself - or keep them. You will not be able to create a new ledger with the same name as the deleted ledger.
 
-### Parameter(s)
+### Parameter(s) {#parameters-8}
 
 Name | Value
 -- | --
 `connection` | a connection object created using the `connect` or `connect_p` function
 `ledger` | a string identifying both the network and ledger-id
 
-### Returns
+### Returns {#returns-9}
 
 Returns a promise that eventually contains the results.
 
-### Code Example  
+### Code Example {#code-example-8}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -420,11 +420,11 @@ flureenjs.delete_ledger(flureeDbConn, "test/deleteme");
 flureenjs.close(flureeDbConn);
 ```
 
-## **graphQL**
+## **graphQL** {#graphql}
 
 All queries and transactions in GraphQL syntax should be issued through the `graphql` function. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/1.0.0/identity/signatures#signed-queries)).
 
-### Parameter(s)
+### Parameter(s) {#parameters-9}
 
 Name | Value
 -- | --
@@ -433,11 +433,11 @@ Name | Value
 `query` | JSON-encoded string containing the graphQL query
 `options` | an optional map of key/value pairs
 
-### Returns
+### Returns {#returns-10}
 
 A JavaScript promise that eventually contains the results of the query.
 
-### Code Example  
+### Code Example {#code-example-9}
 
 An example of an unsigned query to `graphql`:
   
@@ -460,11 +460,11 @@ An example of an unsigned query to `graphql`:
     flureenjs.close(myConn);
 ```
   
-## **history_query**
+## **history_query** {#history_query}
 
 FlureeQL [history queries](/docs/query/history-query) should be submitted to the `history` function. This function only supports queries like those in the linked section.
 
-### Parameter(s)
+### Parameter(s) {#parameters-10}
 
 Name | Value
 -- | --
@@ -472,11 +472,11 @@ Name | Value
 `query-map` | a map of key/value pairs defining the query
 `options` | an optional map of key/value pairs. Options can also be included in the `query-map` using the `:opts` keyword.  
 
-### Returns
+### Returns {#returns-11}
 
 A JavaScript promise that eventually contains the results of the query or an error.
 
-### Code Example
+### Code Example {#code-example-10}
 
 An example of an unsigned request to `history_query`:
   
@@ -501,11 +501,11 @@ flureenjs.history_query(myDb, myQuery)
 flureenjs.close(flureeDbConn);
 ```
 
-## **http_signature**
+## **http_signature** {#http_signature}
 
 Takes an http request and creates an http signature using a private key.
 
-### Parameter(s)
+### Parameter(s) {#parameters-11}
 
 Name | Value
 -- | --
@@ -515,11 +515,11 @@ Name | Value
 `private-key` | the private key to use for signing the request
 `auth` | an optional auth ID associated with the request
 
-### Returns
+### Returns {#returns-12}
 
 Returns a signed http request.
 
-### Code Example  
+### Code Example {#code-example-11}
   
 ```all
   const flureenjs = require('@fluree/flureenjs');
@@ -539,22 +539,22 @@ Returns a signed http request.
 :
 ```
 
-## **ledger_info**
+## **ledger_info** {#ledger_info}
 
 Returns promise with ledger's status as a map, including index, indexes, block, and status.  If ledger doesn't exist, returns an empty map.
 
-### Parameter(s)
+### Parameter(s) {#parameters-12}
 
 Name | Value
 -- | --
 `connection` | a connection object created using the `connect` or `connect_p` function
 `ledger` | a string identifying both the network and ledger-id
 
-### Returns
+### Returns {#returns-13}
 
 Returns a map with information about the requested ledger.
 
-### Code Example  
+### Code Example {#code-example-12}
   
 ```all
   const flureenjs = require('@fluree/flureenjs');
@@ -575,21 +575,21 @@ Returns a map with information about the requested ledger.
 :
 ```
 
-## **ledger_list**
+## **ledger_list** {#ledger_list}
 
 Returns a promise that eventually contains a list of ledgers that the connected server is currently serving.
 
-### Parameter(s)
+### Parameter(s) {#parameters-13}
 
 Name | Value
 -- | --
 `connection` | a connection object created using the `connect` or `connect_p` function
 
-### Returns
+### Returns {#returns-14}
 
 Returns a list of ledgers serviced by the connected Fluree instance.
 
-### Code Example  
+### Code Example {#code-example-13}
   
 ```all
   const flureenjs = require('@fluree/flureenjs');
@@ -610,23 +610,23 @@ Returns a list of ledgers serviced by the connected Fluree instance.
 :
 ```
 
-## **ledger_stats**
+## **ledger_stats** {#ledger_stats}
 
 Returns a promise with ledger's stats, including db size and # of flakes.
 If ledger doesn't exist, will return an empty map.
 
-### Parameter(s)
+### Parameter(s) {#parameters-14}
 
 Name | Value
 -- | --
 `connection` | a connection object created using the `connect` or `connect_p` function
 `ledger` | a string identifying both the network and ledger-id
 
-### Returns
+### Returns {#returns-15}
 
 Returns a map with information about the requested ledger.
 
-### Code Example  
+### Code Example {#code-example-14}
   
 ```all
   const flureenjs = require('@fluree/flureenjs');
@@ -647,11 +647,11 @@ Returns a map with information about the requested ledger.
 :
 ```
 
-## **listen**
+## **listen** {#listen}
 
 Listens to all events of a given ledger. Supply a ledger identity, any key, and a two-argument function that will be called with each event. The key is any arbitrary key, and is only used to close the listener via close-listener, otherwise it is transparent to the listener. The callback function's first argument is the event header/metadata and the second argument is the event data itself.
 
-### Parameter(s)
+### Parameter(s) {#parameters-15}
 
 Name | Value
 -- | --
@@ -660,11 +660,11 @@ Name | Value
 `key` | any arbitrary id
 `callback` | callback function/handler
 
-### Returns
+### Returns {#returns-16}
 
 Returns true if the listener is successfully added.  Otherwise, an exception is returned.
 
-### Code Example
+### Code Example {#code-example-15}
   
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -684,21 +684,21 @@ console.log("Added listener?", listenerAdded?);
 :
 ```
   
-## **listeners**
+## **listeners** {#listeners}
 
 Return a list of listeners currently registered for each ledger along with their respective keys.
 
-### Parameter(s)
+### Parameter(s) {#parameters-16}
 
 Name | Value
 -- | --
 `connection` | a connection object created using the `connect` or `connect_p` function
 
-### Returns
+### Returns {#returns-17}
 
 Returns a list of listeners registered for the given connection object.
 
-### Code Example  
+### Code Example {#code-example-16}
   
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -713,11 +713,11 @@ console.log('listeners: ', myListeners);
 flureenjs.close(flureeDbConn);
 ```
 
-## **monitor_tx**
+## **monitor_tx** {#monitor_tx}
 
 Monitors a ledger for a specific transaction id included in a block. Returns a promise that will eventually contain a response or an exception if the timeout period has expired.  Also, the response itself may contain an exception, if the transaction resulted in an exception.
 
-### Parameter(s)
+### Parameter(s) {#parameters-17}
 
 Name | Value
 -- | --
@@ -726,11 +726,11 @@ Name | Value
 `transaction-id` | the transaction id returned by the `transact` function
 `timeout` | timeout, in milliseconds
 
-### Returns
+### Returns {#returns-18}
 
 A JavaScript promise that eventually returns the results from the monitor_tx function.
 
-### Code Example  
+### Code Example {#code-example-17}
 
 An example of an unsigned request to `monitor_tx`:
   
@@ -750,11 +750,11 @@ flureenjs.monitor_tx (flureeDbConn, ledger, myTxId, 6000)
 flureenjs.close(flureeDbConn);
 ```
 
-## **multi_query**
+## **multi_query** {#multi_query}
 
 If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/docs/query/advanced-query#multiple-queries)), that should be done through the `multi_query` function.
 
-### Parameter(s)
+### Parameter(s) {#parameters-18}
 
 Name | Value
 -- | --
@@ -762,11 +762,11 @@ Name | Value
 `query-map` | a map of key/value pairs defining the query
 `options` | an optional map of key/value pairs. Options can also be included in the `query-map` using the `:opts` keyword.
 
-### Returns
+### Returns {#returns-19}
 
 A JavaScript promise that eventually contains the results of the query or an error.
 
-### Code Example  
+### Code Example {#code-example-18}
 
 An example of an unsigned request to `multi_query`:
   
@@ -792,11 +792,11 @@ flureenjs.multi_query(myDb, myMultiQuery)
 flureenjs.close(flureeDbConn);
 ```
 
-## **new_ledger**
+## **new_ledger** {#new_ledger}
 
 Creates a new ledger given a "network/id". If the network specified does not exist, it creates a new network. This request returns a transaction id; the process does not wait for the ledger to be fully initialized before returning.
 
-### Parameter(s)
+### Parameter(s) {#parameters-19}
 
 Name | Value
 -- | --
@@ -804,7 +804,7 @@ Name | Value
 `ledger` | a string identifying both the network and ledger-id
 `options` | an optional map of key/value pairs  
 
-#### Option(s)  
+#### Option(s) {#options}
 
 Key | Value
 -- | --
@@ -814,11 +814,11 @@ Key | Value
 `:fork`  | If forking an existing ledger, reference to ledger. Must exist in network
 `:forkBlock` | If fork is provided, optionally provide the block to fork at. Defaults to latest known.
 
-### Returns
+### Returns {#returns-20}
 
 A JavaScript promise that eventually contains a transaction id.  The transaction id can be used to query the results of the new ledger creation.
 
-### Code Example  
+### Code Example {#code-example-19}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -833,30 +833,30 @@ flureenjs.new_ledger( flureeDbConn, ledger )
 flureenjs.close(flureeDbConn);
 ```
 
-## **new_private_key**
+## **new_private_key** {#new_private_key}
 
 Generates a new private-public key pair using the Node.js (bundled) crypto module key. If the module is not available, an exception is thrown.
 
-### Parameter(s)
+### Parameter(s) {#parameters-20}
 
 Not applicable.
 
-### Returns
+### Returns {#returns-21}
 
 A map containing the `private` key, `public` key and account (or auth) `id`.
 
-### Code Example
+### Code Example {#code-example-20}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
 let { private, public, id } = flureenjs.new_private_key();
 ```
 
-## **password-generate**
+## **password-generate** {#password-generate}
 
 Generates a password auth record for an existing role, or a user.  The user may exist, or if createUser? is true, the user is created.
 
-### Parameter(s)
+### Parameter(s) {#parameters-21}
 
 Name | Value
 -- | --
@@ -866,11 +866,11 @@ Name | Value
 `user` | a string value associated with the _user/username predicate
 `opts` | An optional map of key-value pairs.  Supported options are:<br />  -  `create-user?`: indicator whether or not to create the _user record.
 
-### Returns
+### Returns {#returns-22}
 
 Returns a promise that eventually contains the token or an exception
 
-### Code Example
+### Code Example {#code-example-21}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -893,11 +893,11 @@ flureenjs.password_generate(flureeDbConn, ledger, pwd, user, opts)
 flureenjs.close(flureeDbConn);
 ```
 
-## **password_login**
+## **password_login** {#password_login}
 
 Attempts to authenitcate against a ledger for a provided password and either a user or auth.  Returns a JWT, if successful.
 
-### Parameter(s)
+### Parameter(s) {#parameters-22}
 
 Name | Value
 -- | --
@@ -908,11 +908,11 @@ Name | Value
 `auth` | a string value associated with the _auth/id predicate
 `expire` | requested time to expire token, specified in milliseconds
 
-### Returns
+### Returns {#returns-23}
 
 Returns a promise that eventually contains the token or an exception
 
-### Code Example
+### Code Example {#code-example-22}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -935,22 +935,22 @@ flureenjs.password_login(flureeDbConn, ledger, pwd, user, expire)
 flureenjs.close(flureeDbConn);
 ```
 
-## **predicate_id**
+## **predicate_id** {#predicate_id}
 
 Returns a JavaScript promise that eventually contains either the id of a predicate or nil if the predicate does not exist.  Predicates can be indentified by name or unique tuple.
 
-### Parameter(s)
+### Parameter(s) {#parameters-23}
 
 Name | Value
 -- | --
 `db-source` | an asynchronous channel created by the `db` function
 `predicate` | name of a predicate
 
-### Returns
+### Returns {#returns-24}
 
 The id of a predicate or nil when the predicate does not exist.
 
-### Code Example  
+### Code Example {#code-example-23}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -971,22 +971,22 @@ var myDb = flureenjs.db(flureeDbConn, ledger);
 flureenjs.close(flureeDbConn);
 ```
   
-## **predicate_name**
+## **predicate_name** {#predicate_name}
 
 Returns a JavaScript promise that eventually contains either the id of a predicate or nil if the predicate does not exist.  Predicates can be indentified by name or unique tuple.
 
-### Parameter(s)
+### Parameter(s) {#parameters-24}
 
 Name | Value
 -- | --
 `db-source` | an asynchronous channel created by the `db` function
 `predicate` | identifier of a predicate
 
-### Returns
+### Returns {#returns-25}
 
 The name of a predicate or nil when the predicate does not exist.
 
-### Code Example  
+### Code Example {#code-example-24}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -1006,23 +1006,23 @@ var myDb = flureenjs.db(flureeDbConn, ledger);
 flureenjs.close(flureeDbConn);
 ```
 
-## **public_key**
+## **public_key** {#public_key}
 
 Returns a public key from a message and a signature.
 If the message is not correctly signed, an exception is thrown.
 
-### Parameter(s)
+### Parameter(s) {#parameters-25}
 
 Name | Value
 -- | --
 `message` | a string
 `signature` | the signature derived from the message and a private key
 
-### Returns
+### Returns {#returns-26}
 
 The derived public key, or an exception if the message was not signed correctly.
 
-### Code Example
+### Code Example {#code-example-25}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -1035,21 +1035,21 @@ let public = flureenjs.public_key(message, signature);
   
 &nbsp;&nbsp;
 
-## **public_key_from_private**
+## **public_key_from_private** {#public_key_from_private}
 
 Returns a public key given a private key.
 
-### Parameter(s)
+### Parameter(s) {#parameters-26}
 
 Name | Value
 -- | --
 `private` | the private key
 
-### Returns
+### Returns {#returns-27}
 
 The associated public key.
 
-### Code Example
+### Code Example {#code-example-26}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -1059,11 +1059,11 @@ let public = flureenjs.public_key_from_private(private);
   
 &nbsp;&nbsp;
 
-## **query**
+## **query** {#query}
 
 All single queries in FlureeQL syntax that include a `select` key should be issued through the `query` function.
 
-### Parameter(s)
+### Parameter(s) {#parameters-27}
 
 Name | Value
 -- | --
@@ -1071,11 +1071,11 @@ Name | Value
 `query-map` | a map of key/value pairs defining the query
 `options` | an optional map of key/value pairs
 
-### Returns
+### Returns {#returns-28}
 
 A JavaScript promise that eventually contains the results of the query or an error.
 
-### Code Example
+### Code Example {#code-example-27}
 
 An example of an unsigned request to `query` with the network, `test` and the ledger `chat`:
 
@@ -1103,11 +1103,11 @@ flureenjs.close(flureeDbConn);
   
 &nbsp;&nbsp;
 
-## **renew_token**
+## **renew_token** {#renew_token}
 
 Attempts to renew a valid token.  If the token is not valid or has expired, an exception is thrown.
 
-### Parameter(s)
+### Parameter(s) {#parameters-28}
 
 Name | Value
 -- | --
@@ -1115,11 +1115,11 @@ Name | Value
 `jwt` | a valid JSON Web Token
 `expire` | requested time to expire token, specified in milliseconds (optional)
 
-### Returns
+### Returns {#returns-29}
 
 Returns a promise that eventually contains the token or an exception
 
-### Code Example
+### Code Example {#code-example-28}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -1147,7 +1147,7 @@ token = flureenjs.renew_token(flureeDbConn,token, expire);
 flureenjs.close(flureeDbConn);
 ```
 
-## **resolve_ledger**
+## **resolve_ledger** {#resolve_ledger}
 
 Resolves a ledger identity in the form of 'network/ledger-or-alias' and returns a two-tuple of [network ledger].  An alias lookup is always performed first, and if an alias doesn't exist it is assumed the provided name is a ledger id.  If you are providing a ledger id, and wish to skip an alias lookup, a prefix of '$' can be used for the name portion of the ledger-id.
 
@@ -1156,18 +1156,18 @@ Resolves a ledger identity in the form of 'network/ledger-or-alias' and returns 
 * testnet/testledger - Look for ledger with an alias or id of testledger on network testnet.
 * testnet/$testledger - look for a ledger with id testledger on network testnet (skip alias lookup).
 
-### Parameter(s)
+### Parameter(s) {#parameters-29}
 
 Name | Value
 -- | --
 `connection` | a connection object created using the `connect` or `connect_p` function
 `ledger` | a string identifying both the network and ledger-id
 
-### Returns
+### Returns {#returns-30}
 
 Returns a two-tuple of [network ledger-id]
 
-### Code Example  
+### Code Example {#code-example-29}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -1181,22 +1181,22 @@ var myTuple = flureenjs.resolve_ledger(flureeDbConn, ledger);
 flureenjs.close(flureeDbConn);
 ```
 
-## **search**
+## **search** {#search}
 
 Returns a promise containing search results based on provided flake parts.
 
-### Parameter(s)
+### Parameter(s) {#parameters-30}
 
 Name | Value
 -- | --
 `db-source` | an asynchronous channel created by the `db` function
 `flake-parts` | an array of flake-parts to use in an index-search.
 
-### Returns
+### Returns {#returns-31}
 
 Returns an array of flakes satisfying the search criteria.  
 
-### Code Example
+### Code Example {#code-example-30}
 
 An example of an unsigned request to `query` with the network, `test` and the ledger `chat`:
 
@@ -1217,22 +1217,22 @@ flureenjs.close(flureeDbConn);
   
 &nbsp;&nbsp;
 
-## **session**
+## **session** {#session}
 
 Returns actual session object, containing cache, for a given ledger.
 
-### Parameter(s)
+### Parameter(s) {#parameters-31}
 
 Name | Value
 -- | --
 `connection` | a connection object created using the `connect` or `connect_p` function
 `ledger` | a string identifying both the network and ledger-id
 
-### Returns
+### Returns {#returns-32}
 
 A JavaScript promise that eventually contains the session object.
 
-### Code Example
+### Code Example {#code-example-31}
 
 ```all
     const flureenjs = require('@fluree/flureenjs');
@@ -1243,7 +1243,7 @@ A JavaScript promise that eventually contains the session object.
     :
 ```
 
-## **set_default_key**
+## **set_default_key** {#set_default_key}
 
 Sets a new default private key for an entire tx-group, network or db level.
 The request will only succeed if signed by the default private key for the tx-group,
@@ -1253,7 +1253,7 @@ the tx-group or the network.
 It will overwrite any existing default private key. The eventual result of the function
 is either true, when request succeeded, or false, otherwise.
 
-### Parameter(s)
+### Parameter(s) {#parameters-32}
 
 Name | Value
 -- | --
@@ -1263,11 +1263,11 @@ Name | Value
 `private-key` | <ul><li>New private key for one of the following scenarios:</li><li>- tx-group, when neither `network` nor `ledger-id` is supplied</li><li>- network, when the `network` is supplied but the `ledger-id` is not provided</li><li>- ledger, when both the `network` and `ledger-id` are supplied</li></ul>
 `options` | <ul><li>An optional map of key-value pairs.  The following keys are supported:</li><li>- `nonce` - Any long/64-bit integer value that will make this transaction unique.  By default epoch milliseconds is used.</li><li>- `expire` - When this request should expire if not yet attempted. Defaults to 5 minutes.</li><li>- `signing-key`- private key to use in signing request</li></ul>
 
-### Returns
+### Returns {#returns-33}
 
 A JavaScript promise that eventually contains the results.
 
-### Code Example
+### Code Example {#code-example-32}
 
 ```all
     const flureenjs = require('@fluree/flureenjs');
@@ -1289,42 +1289,42 @@ A JavaScript promise that eventually contains the results.
     :
 ```
 
-## **set_logging**
+## **set_logging** {#set_logging}
 
 Set the level of logging for Flureenjs.
 
-### Parameter(s)
+### Parameter(s) {#parameters-33}
 
 Name | Value
 -- | --
 `options` | an optional map of key/value pairs. Currently, only the level of logging can be set. `level` - valid values are `severe`, `warning`, `info`,`config`, `fine`, `finer`, `finest`
 
-### Returns
+### Returns {#returns-34}
 
 Not applicable.
 
-### Code Example
+### Code Example {#code-example-33}
 
 ```all
     flureenjs.set_logging({level: "info"});
 ```
 
-## **sign**
+## **sign** {#sign}
 
 Returns a signature for a message given a private key.
 
-### Parameter(s)
+### Parameter(s) {#parameters-34}
 
 Name | Value
 -- | --
 `message` | a string
 `private-key` | a private key
 
-### Returns
+### Returns {#returns-35}
 
 A signed message.
 
-### Code Example
+### Code Example {#code-example-34}
 
 ```all
   const flureenjs = require('@fluree/flureenjs');
@@ -1334,11 +1334,11 @@ A signed message.
   let signature = flureenjs.sign(message,private);
 ```
 
-## **sparql**
+## **sparql** {#sparql}
 
 All queries in SPARQL syntax, regardless of type, should be issued through the `sparql` function. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/1.0.0/identity/signatures#signed-queries)).
 
-### Parameter(s)
+### Parameter(s) {#parameters-35}
 
 Name | Value
 -- | --
@@ -1346,11 +1346,11 @@ Name | Value
 `query` |  a string containing a SPARQL query
 `options` | an optional map of key/value pairs
 
-### Returns
+### Returns {#returns-36}
 
 A JavaScript promise that eventually contains the results of the query or an error.
 
-### Code Example
+### Code Example {#code-example-35}
 
 An example of an unsigned request to `sparql` with the network, `test` and the ledger `chat`:
   
@@ -1377,11 +1377,11 @@ An example of an unsigned request to `sparql` with the network, `test` and the l
     flureenjs.close(flureeDbConn);
 ```
   
-## **sql**
+## **sql** {#sql}
 
 Executes a query based on supported SQL syntax.
 
-### Parameter(s)
+### Parameter(s) {#parameters-36}
 
 Name | Value
 -- | --
@@ -1389,11 +1389,11 @@ Name | Value
 `query-map` | a map of key/value pairs defining the query
 `options` | an optional map of key/value pairs
 
-### Returns
+### Returns {#returns-37}
 
 A JavaScript promise that eventually contains the results of the query or an error.
 
-### Code Example
+### Code Example {#code-example-36}
 
 An example of an unsigned request to `query` with the network, `test` and the ledger `chat`:
 
@@ -1418,22 +1418,22 @@ flureenjs.close(flureeDbConn);
   
 &nbsp;&nbsp;
 
-## **subid**
+## **subid** {#subid}
 
 Returns a JavaScript promise that eventually contains either the subject id of a subject or nil if the subject does not exist.
 
-### Parameter(s)
+### Parameter(s) {#parameters-37}
 
 Name | Value
 -- | --
 `db-source` | an asynchronous channel created by the `db` function
 `subject` | string identifying the subject identity
 
-### Returns
+### Returns {#returns-38}
 
 The id of a subject or nil when the subject identity does not exist.
 
-### Code Example  
+### Code Example {#code-example-37}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -1454,7 +1454,7 @@ flureenjs.subject_id( myDb, mySubject) )
 flureenjs.close(flureeDbConn);
 ```
   
-## **transact**
+## **transact** {#transact}
 
 Submits a transaction for a ledger. Returns a promise that will eventually have the result of the tx, the txid (if :txid-only option used), or an exception either due to an invalid transaction or if the timeout occurs prior to a response.
 
@@ -1476,7 +1476,7 @@ Options is a map with the following possible keys:
                    transactors. The txid can be used to look up/monitor the response at a later time.
 * timeout     - will respond with an exception if timeout reached before response available.
 
-### Parameter(s)
+### Parameter(s) {#parameters-38}
 
 Name | Value
 -- | --
@@ -1485,11 +1485,11 @@ Name | Value
 `transaction` | a map of key/value pairs defining the transaction
 `options` | an optional map of key/value pairs
 
-### Returns
+### Returns {#returns-39}
 
 A JavaScript promise that eventually contains the transaction id or an error.
 
-### Code Example  
+### Code Example {#code-example-38}
 
 An example of an unsigned request to `transact`:
   
@@ -1551,7 +1551,7 @@ flureenjs.transact(flureeDbConn, ledger, myTxn, myOpts)
 flureenjs.close(flureeDbConn);
 ```
 
-## **tx__GT_command**
+## **tx__GT_command** {#tx__gt_command}
 
 Helper function to fill out the parts of the transaction that are incomplete,
 producing a signed command.
@@ -1571,7 +1571,7 @@ If successful, will return a map with four keys:
 * id   - the ID for this unique request - in case you want to look it up later, sha3 of 'cmd'
 * db   - the ledger for this transaction
 
-### Parameter(s)
+### Parameter(s) {#parameters-39}
 
 Name | Value
 -- | --
@@ -1579,11 +1579,11 @@ Name | Value
 `transaction` | a map of key/value pairs defining the transaction
 `options` | an optional map of key/value pairs.
 
-### Returns
+### Returns {#returns-40}
 
 A JavaScript promise that eventually contains the results, or an exception.
 
-### Code Example
+### Code Example {#code-example-39}
 
 ```all
 const flureenjs = require('@fluree/flureenjs');
@@ -1603,7 +1603,7 @@ flureenjs.tx__GT_command(flureeDbConn, ledger, myTxn, myOpts)
   .catch( error => {console.log('Error ', error);});    
 ```
 
-## Testing: Generate Flakes
+## Testing: Generate Flakes {#testing-generate-flakes}
 
 The functions `forward_time_travel` and `query-with` provide the ability to
 run what-if scenarios against a ledger.
