@@ -40,8 +40,6 @@ mutation updatePerson($myUpdatePersonTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-<br/>
-
 Update using subject id:
 
 ```flureeql
