@@ -10,7 +10,7 @@ In this section, we will create two roles, level1User and level2User, and connec
 
    The level2User will be allowed to view all chats, view all comments, edit their own chats, and view all people, including people's full names, who people follow, and people's favorite artists.
 
-## Add Predicate: person/auth
+## Add Predicate: person/auth {#add-predicate-personauth}
 
 First, we need to create a new predicate, which connects a `person` to a `_auth`.
 
@@ -53,7 +53,7 @@ mutation addPersonAuthPredicates ($myPersonAuthPredicateTx: JSON) {
 Transactions not supported in SPARQL.
 ```
 
-## Add level1User Role, Rules
+## Add level1User Role, Rules {#add-level1user-role-rules}
 
 Next, we add the role `level1User`, which holds three rules `viewAllChats`, `viewAllPeopleHandles`, and `editOwnChats`.
 
@@ -173,7 +173,7 @@ mutation addRole ($level1RoleTx: JSON) {
 Transactions not supported in SPARQL.
 ```
 
-## Add level2User Role, Rule
+## Add level2User Role, Rule {#add-level2user-role-rule}
 
 Next, we add the role `level2User`, which holds three rules `viewAllChats`, `viewAllPeople`, and `editOwnChats`.
 
@@ -258,7 +258,7 @@ mutation addRole ($level2RoleTx: JSON) {
 Transactions not supported in SPARQL.
 ```
 
-## Create Auth Records
+## Create Auth Records {#create-auth-records}
 
 In order for the people to sign their own transactions and queries, we need to create auth records. Unless we are using [authorities](/guides/identity/auth-records#authority), the `_auth/id` for each auth record needs to be connected to a [public-private key pair](/guides/identity/auth-records).
 
@@ -349,11 +349,11 @@ mutation addUserAuth($myUserAuthTx: JSON){
 Transactions not supported in SPARQL.
 ```
 
-## Testing Our Rules
+## Testing Our Rules {#testing-our-rules}
 
 To test these rules, you will need to submit signed queries and transactions. You can do this either through the user interface or by through the API. More information is in the [signatures section](/guides/identity/signatures).
 
-### Testing The Level 1 Roles
+### Testing The Level 1 Roles {#testing-the-level-1-roles}
 
 A level1User should be allowed to view all chats, edit their own chats, and view all people's handles. They should not be able to see any other information.
 
@@ -447,7 +447,7 @@ Results:
 }]
 ```
 
-### Testing The Level 2 Roles
+### Testing The Level 2 Roles {#testing-the-level-2-roles}
 
 A level2User should be allowed to view all chats, view all comments, view all people, and edit their own chats.
 

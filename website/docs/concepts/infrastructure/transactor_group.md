@@ -7,7 +7,7 @@ can be found in the [tx-group-ex-dirs Github repo](https://github.com/fluree/tx-
 
 Simply `git clone https://github.com/fluree/tx-group-ex-dirs.git` to begin.
 
-## Setting Up a Transactor Group in Different Folders
+## Setting Up a Transactor Group in Different Folders {#setting-up-a-transactor-group-in-different-folders}
 
 You can run a transactor group on three different ports on the same server by housing
 each transactor's data and configuration in a different folder. When running this
@@ -54,7 +54,7 @@ INFO  fluree.db.peer.http-api -
 You can try creating new ledgers, making transactions, etc, and all of the work
 will be replicated on each of the three instances of Fluree that are running.
 
-## Setting Up a Transactor Group in One Folder
+## Setting Up a Transactor Group in One Folder {#setting-up-a-transactor-group-in-one-folder}
 
 You can run a transactor group on three different ports on the same server and in
 the same folder by providing each running instance a different properties file,
@@ -110,7 +110,7 @@ INFO  fluree.db.peer.http-api -
 You can try creating new ledgers, making transactions, etc, and all of the work
 will be replicated on each of the three instances of Fluree that are running.
 
-## Dynamically Add a Server
+## Dynamically Add a Server {#dynamically-add-a-server}
 
 To dynamically add a server, you must have a valid transactor group up and running.
 Let's use the configuration above where we run 3 Fluree instances out of the same
@@ -206,7 +206,7 @@ on your network's connectivity, you may want to increase :fdb-group-catch-up-rou
 
 This is a beta feature, so if you encounter any issues, please email `support@flur.ee`.
 
-## Dynamically Removing a Server
+## Dynamically Removing a Server {#dynamically-removing-a-server}
 
 If you have a server running, you can dynamically remove a server by issue a request
 like the below to any server in the network (including the server to be removed).

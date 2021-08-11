@@ -7,7 +7,7 @@ keywords:
 ---
 # Fluree Indexing
 
-## Overview
+## Overview {#overview}
 
 _This guide is a work in progress, additional details will be added._
 
@@ -43,7 +43,7 @@ that Jane 'follows', but `opst` would be used to find everyone that 'follows'
 Jane. As a graph, relationships automatically can be traversed in both
 directions and the reverse direction is the job of `opst`.
 
-### Immutable Indexes
+### Immutable Indexes {#immutable-indexes}
 
 Fluree uses immutable data structures to do what it does efficiently -
 everything is shared, nothing is copied. When Fluree is working through slices
@@ -69,7 +69,7 @@ calculated representation and only consumes the memory resources consisting of d
 in terms of pointers to Flakes. Representations that are not longer used are thrown
 away via an LRU cache, so Fluree won't consume more resources than it is given.
 
-### Persisted Indexes
+### Persisted Indexes {#persisted-indexes}
 
 While the prior section focused on index data that resides in-memory, as a data
 platform that guarantees ACID compliance Fluree must durably persist that data to
@@ -116,7 +116,7 @@ This gives Fluree the ability to linearly scale its query servers while allowing
 them to effectively run at in-memory speeds -- even with a fraction of memory that
 the entire database consumes.
 
-### spot Index
+### spot Index {#spot-index}
 
 Simplifying a Flake to just `s`, `p` and `o`, consider the following 3-tuple Flakes
 which are sorted in `spo` order:
@@ -208,7 +208,7 @@ Filtered Flakes:
 [26 'follows'    25] ;; John follows the subject id 25 (Jane)
 ```
 
-### psot Index
+### psot Index {#psot-index}
 
 The `psot` index helps answer questions related to finding subjects that contain
 a specific predicate.
@@ -230,7 +230,7 @@ we rearrange it below to help illustrate.
 ['username'  25 'janedoe'     ]
 ```
 
-### post Index
+### post Index {#post-index}
 
 The `post` index includes only flakes that whose predicate is `unique: true`,
 `index: true`, and also include all refs `type: ref`.
@@ -274,7 +274,7 @@ end:    < ['firstName' 'K' ?]
 Here we've introduced a range scan. Technically every index match, even the `=`
 match we have been using previously, returns a range of matching values.
 
-### opst Index
+### opst Index {#opst-index}
 
 The `opst` index only contains Flakes with reference predicates (`type: ref`),
 and is used to crawl the graph in reverse order.

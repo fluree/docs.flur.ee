@@ -10,7 +10,7 @@ Auth records handle *identity*. Smart functions handle *permissions*. By default
 
 See below for all the built-in predicates for users, auths, roles, and rules. See the guides on the [user-auth-role-rule structure](/guides/identity/auth-records) and a [rule example](/guides/smart-functions/rule-example)
 
-## _user
+## _user {#_user}
 
 Predicate | Type | Description
 -- | -- | --
@@ -18,7 +18,7 @@ Predicate | Type | Description
 `_user/auth` | `[ref]` | (optional) Reference to auth entities available for this user to authenticate. Note if no auth entities exist, the user will be unable to authenticate.
 `_user/roles` | `[ref]` | (optional) References to the default roles that apply to this user. If roles are specified via the `_auth` subject the user is authenticated as, those roles will always override (replace) any role specified here.
 
-## _auth
+## _auth {#_auth}
 
 Predicate | Type | Description
 -- | -- | --
@@ -33,7 +33,7 @@ Predicate | Type | Description
 `_auth/authority` | `[ref]` | (optional) Authorities for this auth record. References another _auth record. Any auth records referenced in `_auth/authority` can sign a transaction in place of this auth record. To use an authority, you must sign your transaction using the authority's auth record. See more the guide for more on [authority](/guides/identity/auth-records#authority).
 `_auth/fuel` | `long` | Fuel this auth record has. Fuel is used to meter usage in the hosted version of Fluree, but an application can use this predicate to meter fuel usage in the downloadable version as well.
 
-## _role
+## _role {#_role}
 
 Predicate | Type | Description
 -- | -- | --
@@ -41,7 +41,7 @@ Predicate | Type | Description
 `_role/doc` | `string` | (optional) A docstring for this role.
 `_role/rules` | `[ref]` | (required) References to rule entities that this role aggregates.
 
-## _rule
+## _rule {#_rule}
 
 Predicate | Type | Description
 -- | -- | --

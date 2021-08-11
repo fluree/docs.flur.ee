@@ -17,7 +17,7 @@ upon for real-life applications.
 
 Currently, all the code is written in FlureeQL exclusively.
 
-## Schema
+## Schema {#schema}
 
 We will need two additional collections, `vote` and `change` for our example.
 
@@ -123,7 +123,7 @@ object of the proposed change can only be a string. This is to simplify this exa
 but in a real application, you might want to be able to vote on changes with other
 types of objects as well.
 
-### Adding Sample Data
+### Adding Sample Data {#adding-sample-data}
 
 First, we'll create a new predicate, `_auth/descId` (short for descriptive id),
 which will help us easily identify auth records.
@@ -258,7 +258,7 @@ FlureeQL:
 }]
 ```
 
-### Adding Permissions
+### Adding Permissions {#adding-permissions}
 
 Before building out our smart functions (`_fn`), we will add permissions to our
 network. For example, we want to ensure that users can't freely add new auth records,
@@ -342,7 +342,7 @@ FlureeQL:
 }]
 ```
 
-### Preventing Voter Fraud
+### Preventing Voter Fraud {#preventing-voter-fraud}
 
 The `vote/yesVotes` and `vote/noVotes` predicates hold all of the auth records that
 voted for or against a proposed change. We can add a spec to both of these predicates,
@@ -375,7 +375,7 @@ When working this into a real-life application, you may also add a rule that a u
 can't change their vote after a certain time (by adding a `vote/expiration` predicate),
 or can only vote yes OR no. For simplicity's sake, we won't be doing this here.
 
-### Proposing a Change
+### Proposing a Change {#proposing-a-change}
 
 Now that we've done our part to prevent voter fraud, we can propose a change.
 `["_user/username", "softCell"]` wants to change their username to "hardCell", so
@@ -436,7 +436,7 @@ Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
 }]
 ```
 
-### Building Our Smart Functions
+### Building Our Smart Functions {#building-our-smart-functions}
 
 Currently, there is nothing stopping Soft Cell from issuing a transaction to change
 their `_user/username` from `softCell` to `hardCell`. In order to prevent users
@@ -639,7 +639,7 @@ FlureeQL:
 }]
 ```
 
-### Adding the Username Spec
+### Adding the Username Spec {#adding-the-username-spec}
 
 At this point we can add the function, `2VotesMajority` to the `_predicate/spec`
 for `_user/username`. Now, every time a transaction contains a `_user/username`,
@@ -654,7 +654,7 @@ FlureeQL:
 }]
 ```
 
-### Testing
+### Testing {#testing}
 
 The only vote that we have so far is `softCell` voting for their own name change.
 That means that if we attempt to change Soft Cell's username, it should fail. We

@@ -4,7 +4,7 @@ In this section, we show you how to select all flakes from a block or a selectio
 
 To issue these queries using the API, see `/block` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-block) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version).
 
-## Block Clauses
+## Block Clauses {#block-clauses}
 
 A block query requires a `block` key, which specifies a block or range of blocks to return. There are a variety of options for how to format this value. They are listed below.
 
@@ -15,7 +15,7 @@ Key | Required? | Description
 `block` | yes | A block or range of blocks to return, options for the format of this value are listed below.
 `prettyPrint` | no | Optional, `true` or `false`, whether to pretty print results. Default `false`
 
-### Query Single block
+### Query Single block {#query-single-block}
 
 To query a single block, you specify the block number, an ISO-8601 formatted wall clock time, or an ISO-8601 formatted duration.
 
@@ -73,7 +73,7 @@ Not supported
 Not supported
 ```
 
-### Query Block Range
+### Query Block Range {#query-block-range}
 
 To query a range of block, specify a lower and upper limit (inclusive).
 
@@ -103,7 +103,7 @@ query  {
 Not supported
 ```
 
-### Query Block Range, Lower Limit
+### Query Block Range, Lower Limit {#query-block-range-lower-limit}
 
 To query a range of block, starting with a lower limit, specify just the lower limit (inclusive).
 
@@ -132,7 +132,7 @@ query  {
 Not supported
 ```
 
-## Pretty Print Block Query
+## Pretty Print Block Query {#pretty-print-block-query}
 
 In FlureeQL, you can pretty print the results of a block query by adding `"prettyPrint": true` to your query map. Any format of block query can be pretty printed.
 

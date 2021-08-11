@@ -1,6 +1,6 @@
 # Updating Data
 
-## Updating
+## Updating {#updating}
 
 In order to update data, you can reference an existing subject by using its `_id` or, for any predicate marked as unique as a two-tuple, i.e. `["_user/username", "dsanchez"]`. Predicates that you wish to update should be included as key-value pairs.
 
@@ -76,7 +76,7 @@ mutation updateById ($myUpdateByIdTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-## Upserting
+## Upserting {#upserting}
 
 You can upsert data if you have a unique predicate marked, `"upsert": true`. In this case, when a transaction with a tempid resolves to an existing subject, `"_action": "upsert"` is inferred.
 

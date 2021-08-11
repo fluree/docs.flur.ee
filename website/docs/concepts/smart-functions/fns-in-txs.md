@@ -38,7 +38,7 @@ mutation addSr ($addSrTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-## Compare and Set / Swap
+## Compare and Set / Swap {#compare-and-set--swap}
 
 An atomic compare and set function can protect the integrity of a transaction when it is formed based on the result of a query. Because there could be other transactions in-flight that modify the value between your query results and when your transaction gets executed, the compare-and-set (`cas`) SmartFunction can avoid updating a subject based on a stale value.
 
@@ -54,7 +54,7 @@ Say you wanted to add a 'Dr.' in front of every medical doctor's name. You issue
 
 If between your query and this transaction getting executed another transaction from another user modified 'John Smith' to 'Johnathan Smith' this transaction will fail. The app developer can decide what to do, perhaps re-run the same query and logic and try the transaction again but with the updated values.
 
-### cas as a Synthetic Lock
+### cas as a Synthetic Lock {#cas-as-a-synthetic-lock}
 
 In another example, say you had multiple microservices that required a synthetic lock on a value. `cas` can test that the lock still exists before updating a different value. In this example, each lock can have a unique `lock/id`, and if a lock is active then `isLocked` will be `true`.
 

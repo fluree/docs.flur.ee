@@ -14,7 +14,7 @@ fluree-0.15.0/
 └── LICENSE
 ```
 
-## Key Files
+## Key Files {#key-files}
 
 * `fluree_sample.properties` - File that specifies the customizable Fluree properties.
 * `fluree_start.sh` - Shell script to launch Fluree.
@@ -39,31 +39,31 @@ fluree-0.15.0/
 └── LICENSE
 ```
 
-### New Items
+### New Items {#new-items}
 
 * `data/`
 * `default_private_key.txt`
 
-### data/
+### data/ {#data}
 
 The new `data` folder will contain all of your block data, consensus logs, as well
 as ledger indexes. This folder can be moved or copied to a different Fluree instance
 folder and run from the folder if you choose. This is a good option if you want
 to use a newer Fluree version, but to keep all of your previous ledgers.
 
-### default_private_key.txt
+### default_private_key.txt {#default_private_keytxt}
 
 This file contains the default private key for your ledgers. A new (and unique)
 private key is generated every time you start up a new network, unless you already
 have a valid private key in `default_private_key.txt`.
 
-## Reset Fluree
+## Reset Fluree {#reset-fluree}
 
 To completely reset your Fluree instance (erasing ALL ledger and transactor group
 data), you can shut down your instance and delete `data/` and `default_private_key.txt`.
 Don't do this unless you are sure you want to completely delete everything!
 
-## Block Files and Index Files
+## Block Files and Index Files {#block-files-and-index-files}
 
 Block files and indexes are stored in the folder listed in your settings as `fdb-storage-file-directory`.
 

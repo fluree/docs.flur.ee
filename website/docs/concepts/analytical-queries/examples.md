@@ -4,7 +4,7 @@
 
 <!--
 
-#### Query examples:
+#### Query examples: {#query-examples}
 
 In the [Basic Schema](/docs/getting-started/basic-schema), we gave each person a set of favorite numbers. If we want to view all of `zsmith`'s flakes, which contain the values of his favorite numbers, our query could be:
 
@@ -174,7 +174,7 @@ WHERE {
 }
 ```
 
-#### Unions
+#### Unions {#unions}
 
 A `union` map in a where clause allow variables to match multiple graph patterns. 
 

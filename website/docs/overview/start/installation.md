@@ -2,7 +2,7 @@
 
 If you already have a hosted version of Fluree, you can jump to [User Interface](#user-interface). To request a hosted version of Fluree, you can sign up on [our site](https://www.flur.ee/), but note that free hosted versions may be limited.
 
-## Installing Fluree Locally
+## Installing Fluree Locally {#installing-fluree-locally}
 
 Download and unzip: [latest stable version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-stable.zip).
 
@@ -28,11 +28,11 @@ Key Files:
 * `fluree_start.sh` - Shell script to launch Fluree.
 * `fluree-ledger.standalone.jar` - Fluree packaged into a JAR file.
 
-## Dependencies
+## Dependencies {#dependencies}
 
 Fluree requires Java 11 or above. To verify that your version of Java, you can type `java -version` in the terminal.
 
-## Launching Fluree
+## Launching Fluree {#launching-fluree}
 
 To run Fluree with all the default options, navigate to the directory where you downloaded Fluree in the terminal then launch Fluree with the following command:
 
@@ -54,7 +54,7 @@ After you launch Fluree for the first time, you will not have any ledgers. You w
 
 Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the [user interface](#user-interface).
 
-## Exiting and Restarting Fluree
+## Exiting and Restarting Fluree {#exiting-and-restarting-fluree}
 
 To exit Fluree, simply type `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory](#in-memory-fluree), this will not delete any of the information that was successfully added to your ledgers (in other words, if you received a 200 response from your transactions, that means it was added to your ledger).
 
@@ -78,20 +78,20 @@ fluree-[version]/
 └── LICENSE
 ```
 
-### New Items
+### New Items {#new-items}
 
 * `data/`
 * `default_private_key.txt`
 
-### data/
+### data/ {#data}
 
 The new `data` folder will contain all of your block data, consensus logs, as well as ledger indexes. This folder can be moved or copied to a different Fluree instance folder and run from the folder if you choose. This is a good option if you want to use a newer Fluree version, but to keep all of your previous ledgers.
 
-### default_private_key.txt
+### default_private_key.txt {#default_private_keytxt}
 
 This file contains the default private key for your ledgers. A new (and unique) private key is generated every time you start up a new network, unless you already have a valid private key in `default_private_key.txt`.
 
-## Setting Your Own Private Key
+## Setting Your Own Private Key {#setting-your-own-private-key}
 
 To use your own private key, first please see the section on [public and private keys](/guides/0.15.0/identity/auth-records#generating-a-public-private-key-auth-id-triple) to see what is and isn't valid as a private key.
 
@@ -99,11 +99,11 @@ If you have a valid private key, encoded with [Base58Check Encoding](/guides/0.1
 
 You can also run `./fluree_start.sh :keygen` to generate a public key, private key, and account id. This will not start Fluree, it will just return those three pieces of information.
 
-## In-Memory Fluree
+## In-Memory Fluree {#in-memory-fluree}
 
 You can run Fluree in memory for testing purposes. To do so, simply specify `fdb-consensus-type` as `in-memory` and `fdb-storage-type` as `memory`. At this time, you can only run a single, centralized ledger in memory.
 
-## Setting Up a Transactor Group
+## Setting Up a Transactor Group {#setting-up-a-transactor-group}
 
 Currently, transactor groups only support the Raft consensus algorithm to agree on a shared state for a network of ledgers. With Raft, a total of `n` servers can support `f` failures: n = 2f + 1. This means that anything less than 3 servers can sustain no failures, 5 servers can sustain two failures.
 
@@ -123,11 +123,11 @@ Other configuration options that are relevant to setting up a transactor group a
 
 See the full explanation for those settings in [config options](#config-options).
 
-## Changing Transactor Group Config
+## Changing Transactor Group Config {#changing-transactor-group-config}
 
 Currently, you cannot change the configuration on Fluree network after that network has started up.
 
-## Config Options
+## Config Options {#config-options}
 
 Note: not all of these configuration options are currently being used. Some options are ignored for the time being, because the related features aren't yet released. We are working on updating this section.
 
@@ -141,7 +141,7 @@ You can set various configuration options as either environment variables, Java 
 
 Environment variables take precedence over both configuration options listed as Java property flags and those in the `fluree_sample.properties` file. Java property flags, in turn, take precedence over config options listed in the `fluree_sample.properties` file.
 
-### Base Settings
+### Base Settings {#base-settings}
 
 Property | Options | Description
 -- | -- | --
@@ -166,7 +166,7 @@ Property | Options | Description
 </configuration>
 ```
 
-### Transactor Group Options
+### Transactor Group Options {#transactor-group-options}
 
 Property | Options | Description
 -- | -- | --
@@ -189,14 +189,14 @@ Property | Options | Description
 `fdb-memory-reindex` and `fdb-memory-reindex-max` | `size` | These settings apply per-ledger, make sure all ledgers and query peers have at least this much memory * number of ledgers you expect to be active on those servers. This setting must be consistent across the entire ledger group.
 `fdb-stats-report-frequency` | `time` | How frequently to report out stats as a log entry in milliseconds, or can use shorthand like 2m for two minutes, 45s for 45 seconds.
 
-### HTTP API Settings
+### HTTP API Settings {#http-api-settings}
 
 Property | Options | Description
 -- | -- | --
 `fdb-api-port` | `int` | Port in which the query peers will respond to API calls from clients
 `fdb-open-api` | `boolean` | If fdb-open-api is true, will allow full access on above port for any request and will utilize default auth identity to regulate query/read permissions. If false, every request must be signed, and the auth id associated with the signature will determine query/read permissions.
 
-### Decentralized Ledger Settings
+### Decentralized Ledger Settings {#decentralized-ledger-settings}
 
 Property | Options | Description
 -- | -- | --
@@ -204,7 +204,7 @@ Property | Options | Description
 `fdb-ledger-private-keys` | `key@network/dbname,` `key@network/dbname` | List each auth identity private key at each network and/or ledger you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be  used as a default for all ledgers on that network and it is assumed this server is participating with every ledger, i.e. `fdb-ledger-private-keys=5...3@networka/dbname`
 `fdb-ledger-servers` | `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,` `networkb/dbname@external.dot.com:9795` | List of seed servers to contact for each network/db. Like fdb-ledger-identities, the db is optional. Every network/db + server address combination should be separated by a comma, i.e. `fdb-ledger-servers=` `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,networkb/` `dbname@external.dot.com:9795`
 
-### Password and JWT Token Settings
+### Password and JWT Token Settings {#password-and-jwt-token-settings}
 
 Property | Options | Description
 -- | -- | --
@@ -215,7 +215,7 @@ Property | Options | Description
 `fdb-pw-auth-jwt-max-exp` | `time in milliseconds, i.e. 86400000` |  Maximum allowed expiration time per JWT token in milliseconds. Blank means any amount of time is valid. (86400000 ms in 24 hours, 31536000000 in 1 year)
 `fdb-pw-auth-jwt-max-renewal` | `time, i.e. 1y or 2d` | If renewal JWT tokens are allowed (blank if not allowed), maximum time from initial issuance a token can be renewed for in ms. To make this 'forever', use the maximum long value (9223372036854775807). For example, if you had a JWT token that expires after 120 seconds, but want to allow an active user to not be challenged for a password for up to 1 day, enter "1d" here and an unexpired token can be renewed as many times as desired (swapped for an 'fresh' token) so long as the original token issued from the password was less then this time period ago.
 
-## User Interface
+## User Interface {#user-interface}
 
 There is a built-in user interface that can be accessed at `localhost:[port]/`. If you did not change the port or IP address, it will be on `localhost:8080/`.
 
@@ -223,7 +223,7 @@ For help using the user interface, read the [Navigating the User Interface](/doc
 
 Note that as of version 0.10.0, downloadable Fluree ledgers do not have a username and password. If you are using an older version of Fluree, you can log into the Master ledger with username, `master` and password, `fluree` or into the Test ledger with username, `test`, and password, `fluree`.
 
-## Fluree with Docker
+## Fluree with Docker {#fluree-with-docker}
 
 Fluree publishes a Docker image to [Docker Hub](https://hub.docker.com/repository/docker/fluree/ledger). We publish the following tags:
 
@@ -239,7 +239,7 @@ You can run these like so:
 
 ...and then access the admin dashboard at <http://localhost:8090/>
 
-## Download Fluree with Homebrew
+## Download Fluree with Homebrew {#download-fluree-with-homebrew}
 
 NOTE: These docs are for a future 1.0.0 beta release. They do not yet work
 as of 1.0.0-beta1.
@@ -270,10 +270,10 @@ brew uninstall flureedb
 brew untap fluree/flureedb
 ```
 
-## Download Fluree with Chocolatey
+## Download Fluree with Chocolatey {#download-fluree-with-chocolatey}
 
 This feature is coming soon.
 
-## Fluree Command Line Tool
+## Fluree Command Line Tool {#fluree-command-line-tool}
 
 We have a command line tool that you can [download](https://fluree-cli-releases-public.s3.amazonaws.com/fluree_cli-latest.zip) to explore your ledger even without Fluree running. To see all the tool's capabilities, visit the [documentation](https://github.com/fluree/fluree.cli).

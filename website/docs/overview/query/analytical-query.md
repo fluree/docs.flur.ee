@@ -17,7 +17,7 @@ This section covers analytical queries using the FlureeQL syntax. All code examp
 
 To issue these queries using the API, see `/query` in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-query) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version). You can also issue multiple queries at once using the `/multi-query` endpoints in [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-multi-query) or [Fluree On-Demand](/api/hosted-endpoints) (you will need to change the version).
 
-## Query Keys
+## Query Keys {#query-keys}
 
 FlureeQL Analytical Queries are also structured as a JSON object/map and may contain the following keys:
 
@@ -32,7 +32,7 @@ Key | Required? | Description
 
 This page covers every available option for analytical queries, to see [examples](/guides/analytical-queries/analytical-query-examples), visit the relevant guide.
 
-## Select Key
+## Select Key {#select-key}
 
 `select` returns all relevant results, `selectOne` returns one result, and `selectDistinct` only returns unique results. Exactly one of the select keys is required.
 
@@ -46,7 +46,7 @@ The value for the select key can be any of the items in the following table. You
 
 If your select value only has one item, then you can either wrap it in square brackets or not  (i.e.  `{ "select": ["?var"] }` or `{ "select": "?var" }`). If your select key is an array, then your results will also return an array.
 
-### Valid Aggregate Functions
+### Valid Aggregate Functions {#valid-aggregate-functions}
 
 All the following are valid aggregate functions. These below functions can only be applied to variables- you cannot provide your own array. In addition, they cannot be nested within each other- for example `(rand (sample 2 ?age))` is NOT valid.
 
@@ -81,7 +81,7 @@ If select a mixture of aggregate and non-aggregate variables, the results of the
 }
 ```
 
-## Where Key
+## Where Key {#where-key}
 
 The value for the where key is an array- we'll call it a where-array in this section. Each item of the where-array acts to filter data, bind variables, or perform other complex data actions. The order of the items in a where-array is extremeley important, as each item is resolved sequentially.
 
@@ -99,7 +99,7 @@ Item | Function
 
 Each where-array item is resolved and then inner joined with the resultset up until that point. See the [Analytical Query](/guides/analytical-queries/inner-joins-in-fluree) guide for more information.
 
-### Three Tuple
+### Three Tuple {#three-tuple}
 
 Every piece of data in Fluree can be expressed as `[ subject, predicate, object ]`. To read more about this, see the [Subject-Predicate-Object Model](/guides/intro/what-is-fluree#subject-predicate-object-model) in the `What is Fluree?` guide.
 
@@ -121,7 +121,7 @@ Full Text Search a Collection | `["?movie", "fullText:movie", "redemption"]` | T
 Full Text Search a Predicate | `["?movie", "fullText:movie/title", "redemption"]` | This service call searches for the word `redemption` in `movie/title`s. This only works if the `movie/title` predicate is enabled for full text search. See the [Full Text Search](/guides/analytical-queries/full-text-search) guide for more examples and details.
 Collection Select | `["?movie", "rdf:type", "movie"]` | This service call binds all subject ids where the subject belongs to the `movie`. collection to the provided variable, `?movie`.
 
-### Four Tuple
+### Four Tuple {#four-tuple}
 
 Four tuples are exactly the same as three tuples, except that four tuples specify a data source for the `subject, predicate, object` pattern. Currently, Fluree supports querying across multiple Fluree ledgers and across Wikidata. The following are the sources that can be used.
 
@@ -144,7 +144,7 @@ For example, the three tuple `["?person", "person/handle", "?handle"]` is equiva
 }
 ```
 
-### Two Tuple Variable Binding
+### Two Tuple Variable Binding {#two-tuple-variable-binding}
 
 You can bind a variable to an aggregate value. As mentioned above, where-array items are resolved in the order in which they appear. This means that aggregates do NOT take into account the where-array item that come later in the array. To bind an intermediate aggregate value, just specify a two-tuple with the first item as a variable and the second item as the aggregate function. For example `["?maxBlock",  "#(max ?bNum)"]`.
 
@@ -198,7 +198,7 @@ You can also simply specify values as the second item in the tuple. This binds t
 ]}
 ```
 
-### Binding Map
+### Binding Map {#binding-map}
 
 Binding works the same as intermediate aggregate values, except the syntax is different.
 
@@ -290,7 +290,7 @@ WHERE {
 }
 ```
 
-### Optional Map
+### Optional Map {#optional-map}
 
 An optional map is map where the key is `optional`, and the value is an array of where-items (you can include any where-items within an optional map, such as three-tuples, four-tuples, two-tuple variable bindings, other optional maps, etc).
 
@@ -307,7 +307,7 @@ For example:
 
 Anything within an optional map is resolved and then left outer joined with previous results. In other words, optional maps do not remove any entries from the existing resultset - any rows from the original resultset that do not have a match are bound with `null`. For a more in-depth explanation of optional clauses, see the [optional clauses](/guides/analytical-queries/optional-clauses) guide.
 
-### Union Map
+### Union Map {#union-map}
 
 A union map takes an two-item array as a value. The two items in this array is itself an array comprised of any number of where-items (for example, three-tuples, two-tuples, optional maps, and filter maps). The results of each array of where-items is then outer joined.
 
@@ -329,7 +329,7 @@ A union map takes an two-item array as a value. The two items in this array is i
 }
 ```
 
-### Filter Map
+### Filter Map {#filter-map}
 
 A filter map has the key `filter`, and the value is an number of filter functions. Currently, all filter functions should be written using Clojure. The following are all of the accepted filter functions:
 
@@ -398,7 +398,7 @@ WHERE {
 }
 ```
 
-## Prefixes Key
+## Prefixes Key {#prefixes-key}
 
 If we want to query across multiple Fluree ledgers we can do so by specifying the ledger in the `prefixes` map.
 
@@ -458,7 +458,7 @@ If you want to access information in different ledgers, you need to have permiss
 1. If you are accessing outside ledgers in the **same network** as your current ledger (i.e. `fluree/one` and `fluree/test`) and **fdb-open-api** is `true`, then you can freely query across ledgers.
 2. In any other situation, `fdb-open-api` must be `false`, and your query must be signed. The `_auth` record with which you signed your query will be the one that determines your permissions for each given ledger.
 
-## Vars Key
+## Vars Key {#vars-key}
 
 The `vars` key takes a map where the keys are variable names and the values are the variable values. These variables will be substituted into the given query.
 
@@ -505,7 +505,7 @@ WHERE {
 }
 ```
 
-## Opts Key
+## Opts Key {#opts-key}
 
 Key | Value | Description
 -- | -- | --

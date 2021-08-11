@@ -7,7 +7,7 @@ Using the Node.js library, a Node.js service can be configured as a fully-functi
 
 The available functions are below.
 
-## Main
+## Main {#main}
 
 Action | Function | Explanation
 -- | -- | --
@@ -27,7 +27,7 @@ Search | `search` | Executes a search against a given db (ledger instance) and f
 Session | `session` | Returns session object for a given ledger
 Subject ID | `subid` | Returns the subject identity for a given object
 
-## Queries
+## Queries {#queries}
 
 Action | Function | Explanation
 -- | -- | --
@@ -40,7 +40,7 @@ Query | `query` | Query in FlureeQL syntax
 SPARQL | `sparql` | Queries in SPARQL syntax, as a string
 SQL | `sql` | Queries in SQL syntax
 
-## Transactions
+## Transactions {#transactions}
 
 Action | Function | Explanation
 -- | -- | --
@@ -48,7 +48,7 @@ Monitor Transaction | `monitor_tx` | Returns the results of the monitor transact
 Transact | `transact` | Submits a transaction for a ledger
 Create Command from transaction | `tx__GT_command` | Helper function taking a transaction, filling out incomplete parts, to produce a signed command.
 
-## Auth-related
+## Auth-related {#auth-related}
 
 Action | Function | Explanation
 -- | -- | --
@@ -59,7 +59,7 @@ Public Key from Message | `public_key` | Returns a public key from a message and
 New Private Key | `new_private_key` | Generates a new private key, returned in a map, along with the public key and account ID.
 Sign | `sign` | Returns a signature for a message given a private key.
 
-## Password Auth
+## Password Auth {#password-auth}
 
 Action | Function | Explanation
 -- | -- | --
@@ -67,7 +67,7 @@ Generate Password | `password_generate` | Attempts to generate a new user-auth.
 Password Login | `password_login` | Validates user and password combination against a ledger, returning a JSON Web Token (JWT) if successful.
 Renew Token | `renew_token` | Renews a valid JWT
 
-## Listener
+## Listener {#listener}
 
 Action | Function | Explanation
 -- | -- | --
@@ -76,7 +76,7 @@ Listen | `listen` | Listens to all events of a given ledger
 Close Listener | `close_listener` | Closes a listener
 Listeners | `listeners` | Returns a list of listeners currently registered for each ledger
 
-## Testing
+## Testing {#testing}
 
 Action | Function | Explanation
 -- | -- | --
@@ -84,7 +84,7 @@ Forward Time Travel | `forward_time_travel` | Returns a new, queryable db based 
 Is Forward Time travel DB? | `is_forward_time_travel` | Returns true if provided db is a forward-time-travel db
 Query With | `query-with` | Executes a query against the provided DB, with the given flakes applied
 
-## Other
+## Other {#other}
 
 Action | Function | Explanation
 -- | -- | --

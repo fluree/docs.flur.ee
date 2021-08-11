@@ -52,7 +52,7 @@ mutation addPeople ($myPeopleTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-## Nested Transactions
+## Nested Transactions {#nested-transactions}
 
 If you are updating or creating a new subject, for example a new chat and that chat contains a reference to a new subject, such as the `chat/person`, then you can use two transactions: one to create the chat, and the second to create the person.
 

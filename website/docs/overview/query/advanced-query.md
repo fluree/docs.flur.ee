@@ -4,7 +4,7 @@ In this section, we show you different advanced query capabilities.
 
 Different query types in this section should be issued to different API endpoints. View the `CURL` versions of the examples to see the proper endpoint for each query type.
 
-## Crawling the Graph
+## Crawling the Graph {#crawling-the-graph}
 
 Subjects refer (join) to other subjects via any predicate that is of type `ref`. Every `ref` predicate relationship can be traversed, and can be done so in both directions -- forward and reverse.
 

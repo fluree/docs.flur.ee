@@ -4,7 +4,7 @@ This section details how to use SPARQL to query a Fluree. If you don't already k
 
 All of the examples below display SPARQL syntax, regardless of the language selected in the top-left. In addition, all queries on this page can be submitted to endpoints ending in `/sparql`.
 
-## What is SPARQL?
+## What is SPARQL? {#what-is-sparql}
 
 SPARQL (pronounced "sparkle") is a query-langauge for RDF ledgers. RDF ledgers are also known as triple-store ledgers, and every fact in a triple-store ledger is stored in a triple composed of a subject-predicate-object (SPO). The first three elements of a flake (subject, predicate, object) align exactly to triple-store ledgers' SPO triples. This lends itself to connection across Fluree and RDF ledgers.
 
@@ -25,7 +25,7 @@ SPARQL queries, as supported in FlureeQL are comprised of a:
 - [WHERE clause](#where-clause)
 - [Sources](#sources)
 
-## SELECT Clause
+## SELECT Clause {#select-clause}
 
 In the SELECT clause, list all the variables that you want returned in your results. Variables must begin with a `?`. It does not matter what you call each variable, as long as you list those variables in your WHERE clause.
 
@@ -53,7 +53,7 @@ Function | Example | Description
 `SUM` |  `SELECT (SUM(?favNums) AS ?sum)` |  Returns the sum of the values.
 `VARIANCE` | `SELECT (VARIANCE(?favNums) AS ?variance)`| Returns the variance of the values.
 
-## WHERE Clause
+## WHERE Clause {#where-clause}
 
 WHERE clauses are comprised of a series of triples, which correspond to subject-predicate-object. By stringing multiple triples together, we can create fairly complex queries and easily follow relationships across entities.
 
@@ -85,7 +85,7 @@ object| `?fullName` | Because the object is a variable, we are not looking for a
 
 Both the first and the second triples use the `?person` variable, which means that only entities that match both of the triples will be returned. For example, if an subject does not have a `person/fullName` predicate, then it will not be included in the results (to include it in the results, you must include an [OPTIONAL](#optional-clause) clause).
 
-## Multiple Triples
+## Multiple Triples {#multiple-triples}
 
 If two triples contain the same subject, then we can shorten the triples by using a semicolon `;` after the first clause and omitting the subject in all subsequent triples that share a subject. Make sure that the final clause in the group is has a period `.` at the end.
 
@@ -120,7 +120,7 @@ WHERE {
 
 All the queries with the `?person fd:person/handle "jdoe", "zsmith"` triple will return null results, because the comma `,` is not an `or` statement. Our triple, `?person fd:person/handle "jdoe", "zsmith".` is looking for an subject with a `person/handle` that matches both `jdoe` and `zsmith`. This cannot exist in our current ledger, because `person/handle` is not a multi-type of predicate.
 
-## OPTIONAL Clauses
+## OPTIONAL Clauses {#optional-clauses}
 
 Within the WHERE clause, you may include OPTIONAL clauses. For example, the below query will return all horses, including horses that may or may not have a mother listed.
 
@@ -132,7 +132,7 @@ SELECT DISTINCT ?horse ?horseLabel ?mother
 }
 ```
 
-## Sources
+## Sources {#sources}
 
 Prefixes, like `wdt:`, `fd:`, `wd:` tell us where to look for the data in a given clause. If we specify a number as an subject, it is assumed that we are referring to the current Fluree.
 
@@ -158,7 +158,7 @@ Each triple in a query refers to a particular dataset. A single triple cannot re
 
 Additionally, if a clause contains no prefixes, for example `?creator ?label ?name.`, then we assume that the clause is referring to the current Fluree. However, if the clause is referring to an outside source, such as Wikidata, then you can simply add a prefix to any of the variables, for example `?creator wd:?label ?name.`
 
-## Additional Options
+## Additional Options {#additional-options}
 
 In addition to the items listed here, SPARQL supports additional options, such as additional aggregate functions, UNIONs, nested SELECT clauses, and FILTER and OPTIONAL clauses. While submitting a SPARQL query to Fluree with these additional options may not throw an error, these options will be ignored. We will expand SPARQL support in subsequent releases.
 
@@ -171,7 +171,7 @@ ORDER BY | `SELECT ... WHERE {...} ORDER BY ?nums` | To sort the results, specif
 PRETTY-PRINT | `SELECT ... WHERE {...} PRETTY-PRINT`| By default, SPARQL queries are returned as a vector without any result labels. If you would like labels with your results, you can specify `PRETTY-PRINT` at the end of your query.
 Language Labels | See [language labels](#language-labels)  | For more information, see the [Wikidata documentation on Service labels](https://en.wikibooks.org/wiki/SPARQL/SERVICE_-_Label)
 
-## Language Labels
+## Language Labels {#language-labels}
 
 If you are returning Wikidata labels from your SPARQL query, the labels will automatically be returned with English labels. However, if you would like alternative languages, you can simply add `SERVICE wikibase:label { bd:serviceParam wikibase:language "ru". }` to the bottom of your WHERE clause, and replace the value of the triple with any language (or set of languages) that you would like. If you include more than one language label, Wikidata will include label in the first language that is available, for example if you list Spanish, then Italian, if no Spanish label is found, Wikidata will look for an Italian label, or simply return the Q-id if no labels are found. More about this in the [Wikidata documentation on Service labels](https://en.wikibooks.org/wiki/SPARQL/SERVICE_-_Label).
 

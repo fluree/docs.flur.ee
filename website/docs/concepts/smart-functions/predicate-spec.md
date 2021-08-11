@@ -6,7 +6,7 @@ If all of the smart functions return true, the transaction will succeed. If any 
 
 The examples in this section use the [Basic Schema](/docs/getting-started/fluree-basics#overview).
 
-## Example Uses
+## Example Uses {#example-uses}
 
 1. Ensure an object is non-negative.
 2. Ensure a string is less than 20 characters long.
@@ -16,7 +16,7 @@ Predicate specs may also be more complicated and may involve information about t
 
 The decision of whether to add a restriction like this to `_rule/fns` or to `_predicate/spec` is based on whether that rule is universal or not. For example, you might want to have most people only able delete their own chats, but some people, i.e. moderators, who can delete any chat. If the rule is not universal, you want to add it to `_rule/fns`. If the rule is universal, you want to add it to `_predicate/spec`.
 
-## Example: favNums non-negative
+## Example: favNums non-negative {#example-favnums-non-negative}
 
 If we want to make sure that `person/favNums` is always non-negative, we need to first create a smart function and then reference that function in the `person/favNums` predicate spec. Note, we can perform these transactions at the same time, but we separate them here for clarity.
 

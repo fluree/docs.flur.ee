@@ -3,7 +3,7 @@
 This example outlines how a user can create a simple cryptocurrency using Fluree.
 The user will be able to check their own balance and add to other users' balances.
 
-## Create a Schema
+## Create a Schema {#create-a-schema}
 
 The first step is to create a `wallet` collection with the predicates `wallet/balance`,
 which tracks the amount of currency each user has, `wallet/user`, which references
@@ -75,7 +75,7 @@ mutation cryptoSchema ($mycryptoSchemaTx: JSON) {
 Transactions are not supported in SPARQL
 ```
 
-### Add Sample Data
+### Add Sample Data {#add-sample-data}
 
 According to [Fluree Best Practices](/guides/1.0.0/infrastructure), after creating
 a schema you should add in your sample data or initial data.
@@ -105,7 +105,7 @@ We'll be creating two users, and two wallets.
     }]
 ```
 
-### Deciding Who Can Edit What
+### Deciding Who Can Edit What {#deciding-who-can-edit-what}
 
 Now, we are going to create rules around who can edit which predicates. Note that
 there are many ways of building the same application. The steps in this tutorial
@@ -247,7 +247,7 @@ in production, you should generate your own public/private/auth id triple.
 }]
 ```
 
-### Ensure Balance Non-Negative
+### Ensure Balance Non-Negative {#ensure-balance-non-negative}
 
 Next, we add an `_predicate/spec` that makes sure our `wallet/balance` is never
 negative. The code for this is `(< -1 (?o))`. To see how to write smart functions,
@@ -303,7 +303,7 @@ mutation nonNegativeBalance ($nonNegativeBalanceTx: JSON) {
 Transactions are not supported in SPARQL
 ```
 
-### Restrict Crypto Spending
+### Restrict Crypto Spending {#restrict-crypto-spending}
 
 At this point, we have a fairly useless cryptocurrency. Anyone can transact anyone
 else's`wallet/balance`, and there are no protections against someone transacting
@@ -363,7 +363,7 @@ mutation restrictCrypto ($restrictCryptoTx: JSON) {
 }
 ```
 
-### Testing Our Crypto
+### Testing Our Crypto {#testing-our-crypto}
 
 We are not quite done with our example yet, but we can test it to this point.
 
@@ -600,7 +600,7 @@ mutation addCryptoMan ($addCryptoManTx: JSON) {
 Transactions not supported
 ``` -->
 
-### Crypto Spent = Crypto Received
+### Crypto Spent = Crypto Received {#crypto-spent--crypto-received}
 
 For this next section, we can submit the following transactions with the default
 private key, so we can return to submitting requests to the `/transact` endpoint
@@ -675,7 +675,7 @@ mutation cryptoSpentReceived ($cryptoSpentReceivedTx: JSON) {
 Transactions not supported
 ```
 
-### Final Test
+### Final Test {#final-test}
 
 Now, all the pieces of our cryptocurrency are in place. We have created a cryptocurrency
 with the following features:
