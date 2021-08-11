@@ -1,3 +1,10 @@
+---
+sidebar_label: Flakes
+sidebar_position: 1
+keywords:
+    - architecture
+    - flake
+---
 # Anatomy of a Flake
 
 ## Overview

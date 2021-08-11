@@ -1,3 +1,10 @@
+---
+sidebar_label: Indexes
+sidebar_position: 2
+keywords:
+    - architecture
+    - indexing
+---
 # Fluree Indexing
 
 ## Overview

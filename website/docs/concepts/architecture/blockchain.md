@@ -1,3 +1,10 @@
+---
+sidebar_label: Blockchain
+sidebar_position: 3
+keywords:
+    - architecture
+    - blockchain
+---
 # Blockchain & Fluree's Ledger
 
 ## Overview
