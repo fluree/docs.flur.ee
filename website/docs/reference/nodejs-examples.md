@@ -338,7 +338,6 @@ console.log("Closed listener?", listenerClosed?);
 :
 flureenjs.close(flureeDbConn);
 ```
-
 ## **db** {#db}
 
 Returns a queryable ledger from the connection. The ledger object represents a point-in-time ledger. As such, the ledger will not contain block updates submitted after acquisition of the channel.
@@ -454,7 +453,6 @@ An example of an unsigned query to `graphql`:
     :
     flureenjs.close(myConn);
 ```
-
 ## **history_query** {#history_query}
 
 FlureeQL [history queries](/docs/query/history-query) should be submitted to the `history` function. This function only supports queries like those in the linked section.
@@ -515,7 +513,6 @@ Takes an http request and creates an http signature using a private key.
 Returns a signed http request.
 
 ### Code Example {#code-example-11}
-
 ```all
   const flureenjs = require('@fluree/flureenjs');
   const flureeUrl = "http://localhost:8090";
@@ -550,7 +547,6 @@ Returns promise with ledger's status as a map, including index, indexes, block, 
 Returns a map with information about the requested ledger.
 
 ### Code Example {#code-example-12}
-
 ```all
   const flureenjs = require('@fluree/flureenjs');
   const flureeServerUrl = "http://localhost:8090";
@@ -585,7 +581,6 @@ Returns a promise that eventually contains a list of ledgers that the connected 
 Returns a list of ledgers serviced by the connected Fluree instance.
 
 ### Code Example {#code-example-13}
-
 ```all
   const flureenjs = require('@fluree/flureenjs');
   const flureeServerUrl = "http://localhost:8090";
@@ -622,7 +617,6 @@ If ledger doesn't exist, will return an empty map.
 Returns a map with information about the requested ledger.
 
 ### Code Example {#code-example-14}
-
 ```all
   const flureenjs = require('@fluree/flureenjs');
   const flureeServerUrl = "http://localhost:8090";
@@ -678,7 +672,6 @@ console.log("Added listener?", listenerAdded?);
 :
 :
 ```
-
 ## **listeners** {#listeners}
 
 Return a list of listeners currently registered for each ledger along with their respective keys.
@@ -694,7 +687,6 @@ Return a list of listeners currently registered for each ledger along with their
 Returns a list of listeners registered for the given connection object.
 
 ### Code Example {#code-example-16}
-
 ```all
 const flureenjs = require('@fluree/flureenjs');
 const flureeServerUrl = "http://localhost:8090";
@@ -1363,7 +1355,6 @@ An example of an unsigned request to `sparql` with the network, `test` and the l
     :
     flureenjs.close(flureeDbConn);
 ```
-
 ## **sql** {#sql}
 
 Executes a query based on supported SQL syntax.
@@ -1438,7 +1429,6 @@ flureenjs.subject_id( myDb, mySubject) )
 :
 flureenjs.close(flureeDbConn);
 ```
-
 ## **transact** {#transact}
 
 Submits a transaction for a ledger. Returns a promise that will eventually have the result of the tx, the txid (if :txid-only option used), or an exception either due to an invalid transaction or if the timeout occurs prior to a response.

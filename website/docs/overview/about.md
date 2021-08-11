@@ -1,4 +1,4 @@
-# About Fluree
+# About Fluree 
 
 This page will host a quick "elevator pitch" style description of the value proposition of Fluree.
 For now, it has the content from the Getting Started Intro page copied into it.
