@@ -19,11 +19,11 @@ A federated Fluree is a group of ledgers shared by a network. In addition to all
 
 You can find more in-depth information about both individual ledger [infrastructure](/guides/infrastructure/file-system) and [network infrastructure](/guides/infrastructure/network-infrastructure) in later sections.
 
-## Data Model
+## Data Model {#data-model}
 
 This section is background on the way data is conceptualized in any given ledger in Fluree. This section covers topics like flakes, blocks, and the subject-predicate-object model.
 
-### Overview
+### Overview {#overview}
 
 When a Fluree ledger is initialized, a block 1 is created. This block contains certain important metadata, including all the [System Collections](/docs/schema#all-system-collections) needed to make ledger features work.
 
@@ -76,7 +76,7 @@ The below image shows you a simplified representation of five blocks worth of fl
 
 Rather than storing a copy of the entire ledger in each block, every block contains only flakes, or facts about entities, that are different as of that block.
 
-### Collections and Predicates
+### Collections and Predicates {#collections-and-predicates}
 
 A [collection](/docs/schema/collections) is analogous to a relational database table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city.
 
@@ -84,7 +84,7 @@ Every collection has [predicates](/docs/schema/predicates). Predicates are analo
 
 Together, collections, and predicates make up a Fluree schema.
 
-### Subject-Predicate-Object Model
+### Subject-Predicate-Object Model {#subject-predicate-object-model}
 
 Every item in the ledger is called a `subject`. When you create a new subject, you need to specify what collection it belongs to (for example, a person). When you create that subject, we automatically generate an `_id` for it. This `_id` is a long integer, which uniquely references that subject in the ledger.
 
@@ -94,7 +94,7 @@ In addition to subjects and predicates, we have something called objects in Flur
 
 All together, a subject, predicate, and object together is called a triple. These triples, or [RDF triples](https://www.w3.org/TR/rdf-concepts/), are a standard structure for data, which allows Fluree to be compatible with other triple-store databases. You can also take the triples created by the Fluree transactor and ingest them into a query engine that can interpret triples.
 
-### Flakes
+### Flakes {#flakes}
 
 Flakes are modified RDF triples. Because each block in a Fluree represents the ledger at a different point in time, flakes not only contain a subject-object-predicate, but also a time `t`, and a boolean (`true`/`false`). The sixth element of a  flake is a JSON-object for metadata. It is not fully implemented.
 
@@ -126,7 +126,7 @@ If you issue a [block query](/docs/query/block-query), you can see all the flake
 
 \* Really, when looking at a flake, the predicate name would not be displayed. Rather the predicate, like every other item in a Fluree ledger is a subject, and it has a subject id. So that predicate's subject id appears in the flake, not the name.
 
-### Block Metadata
+### Block Metadata {#block-metadata}
 
 After the user issues a transaction, a Fluree transactor creates new [flakes](#flakes), which represent the changes made to the ledger at that given point in time. In addition to those flakes, there are also new flakes, which represent the metadata for that block (this is distinct from the sixth element of a flake, where metadata for an individual flake will be stored - not currently implemented).
 

@@ -4,7 +4,7 @@ A collection is analogous to a relational database table. Every time you want a 
 
 Collections are recorded in the ledger in the same way as any other type of data. The syntax for updating the `_collection` collection or `_collection` predicates is the same as updating any other type of information. Furthermore, if you wanted to add additional predicates to the `_collection` collection, you can.
 
-## _collection Predicates
+## _collection Predicates {#_collection-predicates}
 
 Below are the built-in predicates for the `_collection` collection. As mentioned above, you can add additional predicates if you wish. You are also able to delete predicates, although this is strongly discouraged and may break parts of your ledger.  
 
@@ -16,7 +16,7 @@ Predicate | Type | Description
 `_collection/specDoc` | `string` | (optional) Optional docstring to describe the specs. Is thrown when any spec fails.
 `_collection/version` | `string` | (optional) For your optional use, if a collection's spec or intended predicates change over time this version number can be used to determine which schema version a particular application may be using.
 
-## Creating Collections
+## Creating Collections {#creating-collections}
 
 Creating collections is done in the same way as creating any other type of subject in the ledger. In the below example, we create four new collections: person, chat, comment, and artist. We strongly discourage adding smart functions to your `_collection/spec` when you initially create a collection. If you would like a `_collection/spec`, visit the [functions](/docs/schema/functions) section to understand how to incorporate smart functions into your schema.
 
@@ -92,7 +92,7 @@ mutation addCollections ($myCollectionTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-## Adding a Predicate to `_collection`
+## Adding a Predicate to `_collection` {#adding-a-predicate-to-_collection}
 
 `_collection` is a built-in ledger collection with built-in predicates. This does not mean, for instance, that you cannot add predicates. For example, you may want to add a `_collection/longDescription` predicate, where you store a longer version of `_collection/doc`.
 
@@ -202,7 +202,7 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-## Updating a Predicate in `_collection`
+## Updating a Predicate in `_collection` {#updating-a-predicate-in-_collection}
 
 Although you can change built-in collection predicates, we do not recommend doing so, as your changes may break certain aspects of schema validation.
 

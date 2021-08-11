@@ -84,7 +84,7 @@ that = 98.
 ```
 
 <!-- 
-### Left-Outer Join Walkthrough
+### Left-Outer Join Walkthrough {#left-outer-join-walkthrough}
 
 Here is a query that does not have any optional clauses:
 

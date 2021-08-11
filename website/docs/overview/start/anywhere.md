@@ -5,7 +5,7 @@ There are two options for running Fluree:
 - [Fluree On-Demand](/docs/getting-started/fluree-on-demand)
 - Fluree Anywhere
 
-## Download
+## Download {#download}
 
 To run Fluree, you need Java 11 or above. To verify your version of Java, you can type `java -version` in the terminal.
 
@@ -28,7 +28,7 @@ Or, you can get the [latest version of Fluree](https://s3.amazonaws.com/fluree-r
 
 You can also download the latest Fluree with [Homebrew](/tools/other/tools#fluree-through-homebrew), [Docker](/tools/other/tools#fluree-on-docker), and [Chocolatey](/tools/other/tools#fluree-with-chocolatey) (coming soon).
 
-## Launching and Exiting Fluree
+## Launching and Exiting Fluree {#launching-and-exiting-fluree}
 
 To run Fluree with all the default options, navigate to the directory where you downloaded Fluree in the terminal then launch Fluree with the following command:
 
@@ -47,7 +47,7 @@ When Fluree is done starting up, your terminal will log (exact log message may b
 
 To change the location of the webserver (setting name `fdb-api-port`), or any other settings, see [Config Options](#config-options).
 
-### Troubleshooting
+### Troubleshooting {#troubleshooting}
 
 If the above message is not displaying in your terminal, the terminal should print out a relevant error message. Common errors include your chosen port already being in use and not having Java 11 or above installed.
 
@@ -57,7 +57,7 @@ After you launch Fluree for the first time, you will not have any ledgers. You w
 
 To learn about the Fluree file system, see the [File System](/guides/infrastructure/file-system) guide.
 
-### Exiting and Restarting Fluree
+### Exiting and Restarting Fluree {#exiting-and-restarting-fluree}
 
 To exit Fluree, simply type `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory]((/guides/infrastructure/file-system), this will not delete any ledgers or invalidate any successful transactions.
 
@@ -65,7 +65,7 @@ To restart Fluree, navigate to the folder that contains your Fluree instance and
 
 To completely reset your Fluree instance (erasing ALL ledger and transactor group data), you can shut down your instance and delete `data/` and `default_private_key.txt` (or wherever your private key has been stored if you changed the default location ). Don't do this unless you are sure you want to completely delete everything! See more about the Fluree [File System](/guides/infrastructure/file-system) in the guides.
 
-## Config Options
+## Config Options {#config-options}
 
 The `fluree_sample.properties` contains all configurable properties, as well as short descriptions of the properties themselves. To change properties, you can change the properties file or you can supply environment variables or Java property flags (for example, `./fluree_start.sh -Dfdb-api-port=8081`). Environment variables take precedence over both configuration options listed as Java property flags and those in the `fluree_sample.properties` file. Java property flags, in turn, take precedence over config options listed in the `fluree_sample.properties` file.
 
@@ -76,7 +76,7 @@ To learn about different configurations in-depth, see the following guides:
 - [Consensus Algorithms](/guides/infrastructure/consensus-algorithms)
 - [Password Management](/guides/identity/password-management)
 
-### Base Settings
+### Base Settings {#base-settings}
 
 Property | Options | Description
 -- | -- | --
@@ -85,7 +85,7 @@ Property | Options | Description
 `fdb-encryption-secret` | `key` | (Optional) Required for enterprise version
 `fdb-json-bigdec-string` | `boolean` | BigDecimals are not currently handled out-of-the-box by JavaScript applications.  This setting determines whether or not to encode java.Math.BigDecimal values as strings for query results, etc.  The default is `true`.
 
-### Transactor Group Options
+### Transactor Group Options {#transactor-group-options}
 
 Property | Options | Description
 -- | -- | --
@@ -107,14 +107,14 @@ Property | Options | Description
 `fdb-memory-reindex` and `fdb-memory-reindex-max` | `size` | These settings apply per-ledger, make sure all ledgers and query peers have at least this much memory * number of ledgers you expect to be active on those servers. This setting must be consistent across the entire ledger group.
 `fdb-stats-report-frequency` | `time` | How frequently to report out stats as a log entry in milliseconds, or can use shorthand like 2m for two minutes, 45s for 45 seconds.
 
-### HTTP API Settings
+### HTTP API Settings {#http-api-settings}
 
 Property | Options | Description
 -- | -- | --
 `fdb-api-port` | `int` | Port in which the query peers will respond to API calls from clients
 `fdb-open-api` | `boolean` | If fdb-open-api is true, will allow full access on above port for any request and will utilize default auth identity to regulate query/read permissions. If false, every request must be signed, and the auth id associated with the signature will determine query/read permissions.
 
-### Decentralized Ledger Settings
+### Decentralized Ledger Settings {#decentralized-ledger-settings}
 
 Property | Options | Description
 -- | -- | --
@@ -122,7 +122,7 @@ Property | Options | Description
 `fdb-ledger-private-keys` | `key@network/dbname,` `key@network/dbname` | List each auth identity private key at each network and/or ledger you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be  used as a default for all ledgers on that network and it is assumed this server is participating with every ledger, i.e. `fdb-ledger-private-keys=5...3@networka/dbname`
 `fdb-ledger-servers` | `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,` `networkb/dbname@external.dot.com:9795` | List of seed servers to contact for each network/db. Like fdb-ledger-identities, the db is optional. Every network/db + server address combination should be separated by a comma, i.e. `fdb-ledger-servers=` `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,networkb/` `dbname@external.dot.com:9795`
 
-### Password and JWT Token Settings
+### Password and JWT Token Settings {#password-and-jwt-token-settings}
 
 Property | Options | Description
 -- | -- | --

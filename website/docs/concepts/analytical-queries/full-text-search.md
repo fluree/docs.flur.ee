@@ -240,7 +240,7 @@ mutation unmakeFullText ($myFullTextRemoveTx: JSON) {
 Transactions not supported in SPARQL.
 ```
 
-## Note
+## Note {#note}
 
 A few things to note with full text searching:
 

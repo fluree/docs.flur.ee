@@ -8,7 +8,7 @@ Because FlureeQL is a JSON format, this allows queries to be more easily compose
 
 All GraphQL queries and transactions can issued should be run through the [hosted endpoints](/api/hosted-endpoints) (you will need to change version) or [downloaded endpoints](/api/downloaded-endpoints/downloaded-examples#-graphql-query) ending in `/graphql`.
 
-## Queries
+## Queries {#queries}
 
 Using GraphQL, you can only retrieve predicates from within the namespace that you specify. In the below example, we indicate that we are looking in the `chat` collection.
 
@@ -42,7 +42,7 @@ However, in order to retrieve references using GraphQL, the `restrictCollection`
 }
 ```
 
-## Wildcards
+## Wildcards {#wildcards}
 
 GraphQL does not usually support the use of wildcards ( `*`), so most GraphQL interfaces will show an error when you attempt to use a wildcard. However, if you submit, the following query, the expected results will be returned.
 
@@ -57,7 +57,7 @@ GraphQL does not usually support the use of wildcards ( `*`), so most GraphQL in
 }
 ```
 
-## Reverse References
+## Reverse References {#reverse-references}
 
 In addition to retrieving information in a forward-direction, we can also traverse the graph backwards.
 
@@ -90,7 +90,7 @@ Using FlureeQL
 }
 ```
 
-## Block Queries
+## Block Queries {#block-queries}
 
 In order to query a specific block or range of blocks in GraphQL, you need to use a specific type of block query and specify the range of blocks you would like to see.
 
@@ -118,7 +118,7 @@ query  {
 }
 ```
 
-## Search by Id or Ident
+## Search by Id or Ident {#search-by-id-or-ident}
 
 To query a specific subject id, you can use the `_id` option, as seen below.
 
@@ -155,7 +155,7 @@ To query a unique two-tuple, you can use the `ident` option, as seen below.
 }
 ```
 
-## Sort By
+## Sort By {#sort-by}
 
 GraphQL queries allow you to sort any field at any level in the graph. In order to perform a sort, you need to specify both the attribute name and whether you would like to sort the values by ascending or descending values.
 
@@ -215,7 +215,7 @@ Query with sort. Get all people, sorted alphabetically by full name, and get eac
 }
 ```
 
-## Transactions
+## Transactions {#transactions}
 
 We can perform transactions in GraphQL by passing a variable to a GraphQL mutation. This variable should contain a JSON-formatted parcel of data without line breaks.
 
@@ -235,13 +235,13 @@ mutation addPeople ($myPeopleTx: JSON) {
 
 If you are using the UI, you can place your variable in the "Query Variables" section on the lower left hand side of the GraphQL interface. If you are using the API, you should add a new key, "variables" to your request body and include your variables (more information in the API sections on [hosted](/api/hosted-endpoints) and [downloaded](/api/downloaded-endpoints/downloaded-examples#-graphql-transaction) GraphQL endpoints.  
 
-## Other Features
+## Other Features {#other-features}
 
 Fluree's version of GraphQL supports both variables (as evident in [Transactions](#transactions)) and fragments.
 
 We support introspection and type queries, as well.
 
-## Sub-Select Queries
+## Sub-Select Queries {#sub-select-queries}
 
 Simply list the options inside of parentheses immediately after the chosen predicate. For example, we can limit the `chat_Via_person` predicates to only show 10 chats (in GraphQL, reverse references use _Via_ rather than /_).
 

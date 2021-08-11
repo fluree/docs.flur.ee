@@ -6,14 +6,14 @@ If all of the smart functions return true, the transaction will succeed. If any 
 
 The examples in this section use the [Basic Schema](/docs/getting-started/fluree-basics#overview).
 
-## Example Uses
+## Example Uses {#example-uses}
 
 1. Certain predicates are required.
 2. If a certain predicate is included, other predicates are required.
 
 The main use for `_collection/spec` is to require, or to conditionally require, certain predicates. For example, you might want to require `person/fullName`. Any transaction that would leave a person without a full name would be rejected. This includes creating a new person without a full name or deleting a full name from a person.
 
-## Example: person/fullName Required
+## Example: person/fullName Required {#example-personfullname-required}
 
 If we want to make `person/fullName` required, we need to first create a smart function and then reference that function in the `person` collection spec.
 

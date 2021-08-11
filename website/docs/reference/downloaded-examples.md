@@ -6,7 +6,7 @@ sidebar_label: Local Examples
 
 In order to ensure speed of processing queries and transactions, different types of queries and transactions should be issued to different endpoints. All requests, unless otherwise specified, should be POST requests.
 
-## /dbs
+## /dbs {#dbs}
 
 A POST request with an empty object or a GET request to `/fdb/dbs` returns all the dbs in the transactor group. These requests do not need to be signed.
 
@@ -19,7 +19,7 @@ Headers: None
 Body: Null
 ```
 
-## /new-db
+## /new-db {#new-db}
 
 A ledger id must begin with a network name followed by a `/` and a dbid. Network names and dbids may only contain lowercase letters and numbers. In your request, you must specify `db/id`.
 
@@ -34,7 +34,7 @@ Headers: None
 Body: {"db/id": "test/one"}
 ```
 
-## /nw-state
+## /nw-state {#nw-state}
 
 This provides a status of the Fluree network as recorded by a particular (ledger or transact) server.  Status information includes raft state, list of servers in the Fluree network, list of ledgers, and the current # of transactions queued.
 
@@ -85,7 +85,7 @@ The result is a map of key/value pairs, for example:
  :timeout-ms 666}
 ```
 
-## /export
+## /export {#export}
 
 This endpoint exports an existing ledger into either `xml` or `ttl`.
 
@@ -106,7 +106,7 @@ Headers: None
 Body: { "format": "xml" , "block": 10 }
 ```
 
-## /delete-db
+## /delete-db {#delete-db}
 
 This deletes a ledger. Deleting a ledger means that a user will no longer be able to query or transact against that ledger, but currently the actual ledger files will not be deleted on disk. You can choose to delete those files yourself - or keep them. You will not be able to create a new ledger with the same name as the deleted ledger.
 
@@ -131,7 +131,7 @@ Headers {:content-type :application/json,
  Body: {"db/id": "NETWORK/DBID", "auth": "AUTH-ID"}
 ```
 
-## /add-server
+## /add-server {#add-server}
 
 This endpoint attempts to dynamically add server to the network. Please note, this is a beta feature in 0.13.0
 
@@ -154,7 +154,7 @@ If a majority of the network agrees to the configuration change, `GHI` will then
 
 Only one configuration change can be in process at once. Attempts to issues simultaneous additions or removals will be rejected.
 
-## /remove-server
+## /remove-server {#remove-server}
 
 This endpoint attempts to dynamically remove a server from the network. Please note, this is a beta feature in 0.13.0
 
@@ -171,7 +171,7 @@ If a majority of the network agrees to the configuration change, then `GHI` will
 
 Only one configuration change can be in process at once. Attempts to issues simultaneous additions or removals will be rejected.
 
-## /query
+## /query {#query}
 
 All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/identity/signatures#signed-queries)).
 
@@ -198,7 +198,7 @@ Headers: {
 Body: { "select": ["*"], "from": "_collection"}
 ```
 
-## /multi-query
+## /multi-query {#multi-query}
 
 If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/docs/query/advanced-query#multiple-queries)), that should be done through the `/multi-query` endpoint.
 
@@ -275,7 +275,7 @@ The response will have a status of 207, and it will only return the response for
 }
 ```
 
-## /block
+## /block {#block}
 
 FlureeQL [block queries](/docs/query/block-query) should be submitted to the `/block` endpoint. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries like those in the linked section - queries that are returning flakes from a block or set of blocks.
 
@@ -288,7 +288,7 @@ Headers: None
 Body: { "block": 5 }
 ```
 
-## /history
+## /history {#history}
 
 FlureeQL [history queries](/docs/query/history-query) should be submitted to the `/history` endpoint. This only includes queries like those in the linked section.
 
@@ -304,7 +304,7 @@ Body: {
 }
 ```
 
-## /transact
+## /transact {#transact}
 
 All unsigned transactions, except transaction issued through the GraphQL syntax, should be issued to the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact` endpoint.
 
@@ -336,7 +336,7 @@ Body: [{
   }]
 ```
 
-## /graphql Query
+## /graphql Query {#graphql-query}
 
 All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/identity/signatures#signed-queries)).
 
@@ -358,7 +358,7 @@ Body: {"query": "{ graph {
 }"}
 ```
 
-## /graphql Transaction
+## /graphql Transaction {#graphql-transaction}
 
 All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your GraphQL transaction like a query ([signing queries](/docs/0.16.0/identity/signatures#signed-)).
 
@@ -378,7 +378,7 @@ Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
 }}
 ```
 
-## /sparql
+## /sparql {#sparql}
 
 All queries in SPARQL syntax, regardless of type, should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/0.16.0/identity/signatures#signed-queries)).
 
@@ -397,7 +397,7 @@ Body: "SELECT ?chat ?message ?person ?instant ?comments
  }"
 ```
 
-## /sql
+## /sql {#sql}
 
 All queries in SQL syntax should be issued through the
 `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sql` endpoint. If you do not have
@@ -420,11 +420,11 @@ Body: "SELECT ?chat ?message ?person ?instant ?comments
  }"
 ```
 
-## /command
+## /command {#command}
 
 To see examples of sending a request to the `/command` endpoint, see [signed transactions](/guides/0.16.0/identity/signatures#signed-transactions).
 
-## /reindex
+## /reindex {#reindex}
 
 Available in `0.11.7` or higher. Reindexes the specified ledger.
 
@@ -449,7 +449,7 @@ This request may take some time to return. It will return a map, such as the fol
 }
 ```
 
-## /hide
+## /hide {#hide}
 
 This is a beta feature. To read about how it works, visit [hiding flakes](/docs/ledger-setup/mutability#hiding-flakes).
 
@@ -463,7 +463,7 @@ Body: {
 }
 ```
 
-## /gen-flakes
+## /gen-flakes {#gen-flakes}
 
 Returns the list of flakes that would be added to a ledger if a given transaction is issued. The body of this request is simply the transaction. Note that this is a test endpoint. This does _NOT_ write the returned flakes to the ledger.
 
@@ -477,7 +477,7 @@ Body: [{
   }]
 ```
 
-## /query-with
+## /query-with {#query-with}
 
 Returns the results of a query using the existing ledger flakes, including flakes that are provided with the query.
 
@@ -499,7 +499,7 @@ Body: {
   "flakes": [[351843720888321, 1002, "JoAnne", -5, true, nil]]}
 ```
 
-## /test-transact-with
+## /test-transact-with {#test-transact-with}
 
 Given a valid set of flakes that could be added to the ledger at a given point in time and a transaction, returns the flakes that would be added to a ledger if a given transaction is issued.
 
@@ -522,7 +522,7 @@ Body: {
   "flakes": [[351843720888321, 1002, "JoAnne", -5, true, nil]]}
 ```
 
-## /block-range-with-txn
+## /block-range-with-txn {#block-range-with-txn}
 
 A POST request to `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn` returns block stats, as well as flakes and transactions for the specified block(s).
 
@@ -535,7 +535,7 @@ Body: {
   "end": 2}
 ```
 
-## /health
+## /health {#health}
 
 A GET request to `/fdb/health` returns whether the server is ready or not. You are not able to test this endpoint in the sidebar. These requests do not need to be signed.
 
@@ -544,7 +544,7 @@ Action: GET
 Endpoint: http://localhost:8080/fdb/health
 ```
 
-## /database-stats
+## /database-stats {#database-stats}
 
 A POST request to `/fdb/[NETWORK-NAME]/[DBID]/database-stats` provides stats about the requested ledger.
 
@@ -555,7 +555,7 @@ Headers: None
 Body: None
 ```
 
-## /storage
+## /storage {#storage}
 
 A GET request to `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]` returns all key-value pairs of a certain type. You are not able to test this endpoint in the sidebar. These requests do not need to be signed.
 
@@ -571,15 +571,15 @@ Action: GET
 Endpoint: http://localhost:8080/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]
 ```
 
-## /sub
+## /sub {#sub}
 
 A POST request to `/fdb/sub` handles subscriptions. More documentation on this feature coming soon. You are not able to test this endpoint in the sidebar. These requests do not need to be signed.
 
-## /new-keys
+## /new-keys {#new-keys}
 
 A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/guides/identity/auth-records#generating-a-public-private-key-auth-id-triple). These requests do not need to be signed.
 
-## /pw/generate
+## /pw/generate {#pwgenerate}
 
 See the [Password Management Guide](/guides/identity/password-management) for more information.
 
@@ -607,7 +607,7 @@ Body: {
   }
 ```
 
-## /pw/renew
+## /pw/renew {#pwrenew}
 
 See the [Password Management Guide](/guides/identity/password-management) for more information.
 
@@ -624,7 +624,7 @@ Headers: { Authorization: "Bearer TOKEN-HERE" }
 Body: { "expire": "TIME IN EPOCH MS" }
 ```
 
-## /pw/login
+## /pw/login {#pwlogin}
 
 See the [Password Management Guide](/guides/identity/password-management) for more information.
 

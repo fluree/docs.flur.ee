@@ -11,7 +11,7 @@ algorithm you use is specified in the `fdb-consensus-type` config setting (look
 at [config settings](/docs/getting-started/fluree-anywhere#config-options) for more
 information).
 
-## Raft
+## Raft {#raft}
 
 [Raft](https://raft.github.io/raft.pdf) is a consensus algorithm that is designed
 to be easy to understand. Raft is well-suited for networks that are more trusted,
@@ -27,7 +27,7 @@ Resources:
 - [Github Pages for Raft](https://raft.github.io/) for visualizations and links
   to more resources.
 
-## PBFT
+## PBFT {#pbft}
 
 [Practical Byzantine Fault Tolerance](http://pmg.csail.mit.edu/papers/osdi99.pdf)
 (PBFT) is a Byzantine fault tolerant algorithm designed for asnychronous environments

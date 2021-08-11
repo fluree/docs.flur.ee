@@ -18,7 +18,7 @@ with `/transact`.
 To view an example application that uses Fluree for data management, visit the
 [to-do list generator](https://github.com/fluree/to-do-lists-generator) repository.
 
-## New Ledger
+## New Ledger {#new-ledger}
 
 Make sure that you have a new ledger. You can either create a new ledger through
 the user interface, through the API for the
@@ -26,7 +26,7 @@ the user interface, through the API for the
 the API for the [Fluree On-Demand](/api/hosted-endpoints) (you will need to change
 the version).
 
-## Overview
+## Overview {#overview}
 
 In Fluree, schema are comprised of collections and predicates. While Fluree is a
 graph database, if you come from the relational world you can think of a
@@ -43,7 +43,7 @@ person/lastName, and person/age. The value of those predicates are called, objec
 Note that many of the transactions in this section can be combined, but are separated
 for clarity.
 
-## Adding Collections
+## Adding Collections {#adding-collections}
 
 The below transaction adds five new collections: `person`, `chat`, `comment`, `artist`,
 and `movie`. You can issue this transaction in your user interface. The syntax is
@@ -114,7 +114,7 @@ mutation addCollections ($myCollectionTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-## Adding Predicates
+## Adding Predicates {#adding-predicates}
 
 Schema predicates are similar to relational ledger columns. More information about
 predicates can be found in the [Predicates](/docs/schema/predicates) section. For
@@ -428,7 +428,7 @@ GraphQL Transactions'. */
 Transactions not supported in SPARQL.
 ```
 
-## Adding Sample Data
+## Adding Sample Data {#adding-sample-data}
 
 You can issue the below transaction to add some sample data into your ledger. The
 below transaction adds four users, three chats, four comments, three artists, and

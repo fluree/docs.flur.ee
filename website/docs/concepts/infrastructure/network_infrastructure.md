@@ -2,7 +2,7 @@
 
 When running Fluree, you are typically running a single 'network' and you have a transactor group configured to operate that network. Each network can have millions of ledgers, and you can think of a network like a top-level domain name, i.e. .com, .net, .org. It is the most coarse type of segmentation available in Fluree.
 
-## Benefits of Different Server Types
+## Benefits of Different Server Types {#benefits-of-different-server-types}
 
 In Fluree, the role of a server handling queries (query server) is separated from that providing updates (a transactor). This serves several purposes:
 
@@ -18,23 +18,23 @@ In Fluree, the role of a server handling queries (query server) is separated fro
 
    This design opens up the possibility of running your ledger as a _library_ inside your own application (in-process). This has implications of how you code, as you ask for data as needed with results in the order of _microseconds_, instead of packaging up queries as monolithic requests to send over the wire for responses in the tens, hundreds, or even thousands of milliseconds. Using this pattern, your code becomes simpler, easier to understand, and more efficient.
 
-## Query Engine Types
+## Query Engine Types {#query-engine-types}
 
-## Query Peer (Not Currently Implemented)
+## Query Peer (Not Currently Implemented) {#query-peer-not-currently-implemented}
 
 To meet slightly different goals, we have two flavors of query engines. The main type we call a query 'peer', and like any good peer it has direct access to every ledger, current and historical, and every upate on-hand. It will comes in Java, Clojure flavors, and Javascript and can will be able to run as an independent server exposing a REST and GraphQL APIs for your apps to utilize.
 
-## Query Client
+## Query Client {#query-client}
 
 The second flavor is lighter-weight and we call it a query 'client'. The client is designed to run in-process in the client tier and will be available in JavaScript. This allows it to run embedded in your web apps, web sites, as well as the JavaScript engines in iOS/Android for your mobile apps. A query client is typically talking to a single ledger as a single user, and getting streamed only the permissioned updates that pertain to what the user is looking at through our built-in query introspection. Your apps get new features, essentially for ‘free’, of real-time updates, rewind/time-travel and a development pattern that greatly simplifies client app development.
 
 For framework users, we will be offering a React wrapper and intend to release an Angular wrapper along with others. Reactive extensions can be used, but are essentially rendered redundant and unnecessary by Fluree, which just 'handles it' transparently for you.
 
-## Transactors and Transactor Groups
+## Transactors and Transactor Groups {#transactors-and-transactor-groups}
 
 The transactor server type handles updates. You can run a single server or set of servers in the role of transactor. If you run a set of transactors as a transactor group, they will act as a single node, as far as consensus is concerned. You can scale transactors in your transactor group as necessary.
 
-## Consensus Algorithms
+## Consensus Algorithms {#consensus-algorithms}
 
 If running Fluree in a decentralized manner, you need to choose a consensus algorithm. The consensus algorithm determines how each node in your network agrees upon a series of states (blocks).
 

@@ -9,7 +9,7 @@ This page will hold the landing page for the Reference Docs with cards that link
 
 For now, it has the Reference Intro markdown copied below:
 
-## Intro
+## Intro {#intro}
 
 There are two sets of endpoints in Fluree, depending on whether you are using the downloaded or the hosted version of Fluree.
 
@@ -20,7 +20,7 @@ As you read through the API documentation, you can test the endpoints using the 
 
 Note that any changes you make to your ledger using this toolbar are actually issued to your ledgers. If you add data, that data will be added to your ledger, and if you delete data, that data will be deleted from your ledger, etc.
 
-### Toolbar - Downloaded
+### Toolbar - Downloaded {#toolbar---downloaded}
 
 Make sure that you have a local version of Fluree running.
 
@@ -28,7 +28,7 @@ Select "Downloaded" on the toolbar.
 
 If you haven't changed your `fdb-api-port` or the IP address, your IP Address will be <http://localhost:8080>. Your network is the first part of your ledger name, before the `/`, i.e. `test/one` is in the `test` network with dbid `one`.
 
-### Toolbar - Hosted
+### Toolbar - Hosted {#toolbar---hosted}
 
 Select "Hosted" on the top of the toolbar. In order to submit any queries or transactions, you'll need to make sure your password is set up, and then signin.
 

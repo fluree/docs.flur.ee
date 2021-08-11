@@ -7,7 +7,7 @@ keywords:
 ---
 # Anatomy of a Flake
 
-## Overview
+## Overview {#overview}
 
 Every piece of data inside of a Fluree ledger is held in a data structure called
 a Flake. A Flake is an atomic unit of information and can represent any conceivable
@@ -75,7 +75,7 @@ what would happen in a relational database. This is just one of the charactersti
 Fluree would share with a columnar database. In the right use cases, a graph can
 have some of the benefits of a column database without many of the limitations.
 
-### Flakes as Fluree's Foundation
+### Flakes as Fluree's Foundation {#flakes-as-flurees-foundation}
 
 The goal of Fluree is to be built from simple components, and the Flake - sitting
 at the foundation of Fluree - exemplifies this goal. A Flake can represent any conceivable
@@ -122,7 +122,7 @@ have any number of unique predicates, so there are often many ways to resolve a
 given subject without its long integer id. More information on Subject Identity
 follows in the next section.
 
-### Relation to RDF
+### Relation to RDF {#relation-to-rdf}
 
 A Flake builds on the [W3C RDF](https://www.w3.org/RDF/) standard, often referred
 to as "triples" (a 3-tuple of subject, predicate, object), to account for the additional
@@ -150,7 +150,7 @@ In addition to `s`, `p`, and `o`, Fluree adds:
   (i.e. an expiration time for a Flake similar to the feature in Cassandra). `m`
   is not currently used.
 
-#### RDF <-> Flakes
+#### RDF <-> Flakes {#rdf---flakes}
 
 RDF represents an atomic unit of data, while a Flake represents an atomic unit of
 data _in time_ and _with provenance_. Therefore to make RDF and Flakes interchangable
@@ -171,7 +171,7 @@ and removing facts. A single database at any moment in time however will only ha
 values could either be dropped, or output as [RDF\*](#flake-vs-rdf-rdf-star-) data
 at the expense of substantially larger file size.
 
-### Subject Identity
+### Subject Identity {#subject-identity}
 
 RDF calls a unique entity or object a "subject". All Flakes for a given subject have
 the identical subject id, which is long integer value in the `s` element of the Flake.
@@ -220,7 +220,7 @@ Therefore, the following three FlureeQL queries would return identical results:
 {"select": ["*"] from ["username", "janedoe"]}
 ```
 
-### Flake Partitioning
+### Flake Partitioning {#flake-partitioning}
 
 Flake partitioning is the strategy to group similar data together so it is most likely
 to satisfy as many queries as possible with the fewest chunks of the index(s) needed.
@@ -317,7 +317,7 @@ below:
 This results in similar data being grouped together in the indexes, reducing the
 chunks of index segments needed for common usage patterns.
 
-### Utilizing 't' values
+### Utilizing 't' values {#utilizing-t-values}
 
 The `t` value in a Flake is the subject ID of the transactional metadata that describes
 how the Flake entered the ledger. It allows every Flake to be traced back to the
@@ -377,7 +377,7 @@ for just a transaction (`t` value), or an entire block which will contain multip
 transactions. Permissions are still applied to `block` queries, so users may have
 filtered views of the results.
 
-### 't' as Time
+### 't' as Time {#t-as-time}
 
 Every new subject, being placed into its respective [collection](/docs/schema/collections),
 atomically increments its subject id as described in [flake partitioning](#flake-partitioning).
@@ -429,7 +429,7 @@ query its data to find the nearest `t`. Examples:
 {"select": ["*"], "from": "person", "block": "2019-12-08T13:11:05Z"}
 ```
 
-### Why Negative t Values?
+### Why Negative t Values? {#why-negative-t-values}
 
 As discussed in [Flake Partitioning](#flake-partitioning), all Flakes are grouped
 numerically near similar data (using the defined \_collection) by subject id (a
@@ -460,7 +460,7 @@ As a `t` value exists with every Flake, using a smaller numbers results in less
 data transfer and a faster database. Therefore segmenting a huge chunk of an unsigned
 64-bit integer to `t` subject ids would have resulted in more bandwidth.
 
-### Flake vs RDF\* (RDF-star)
+### Flake vs RDF\* (RDF-star) {#flake-vs-rdf-rdf-star}
 
 Adding information about triples is the goal of [RDF\*](https://w3c.github.io/rdf-star/),
 and our Flake format certainly does exactly this with its `t`, `op`, and `m` values.
