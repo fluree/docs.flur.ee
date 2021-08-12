@@ -1,15 +1,31 @@
 ---
 sidebar_position: 1
 keywords:
-    - reference
+  - reference
 ---
+
 # Reference
 
 This page will hold the landing page for the Reference Docs with cards that link to the main tools and things we want to highlight.
 
-For now, it has the Reference Intro markdown copied below:
+For now, it has the Reference Intro and Library Overview markdown copied below:
 
-## Intro {#intro}
+## Library Intro {#library-intro}
+
+The following libraries are available for development in JavaScript-based applications.
+
+- Javascript Library
+
+  > Using the JavaScript library, as an extension of our linear-scaling query peer service, makes trusted data readily accessible in the browser.
+
+- Node.js Library
+
+  > Using the Node.js library, a node service can be configured as a fully-functioning query peer.
+
+- FlureeWorker Library
+  > The FlureeWorker library, utilized as a browser service worker, provides trusted data locally to your browser application.
+
+## Endpoints Intro {#intro}
 
 There are two sets of endpoints in Fluree, depending on whether you are using the downloaded or the hosted version of Fluree.
 
