@@ -13,6 +13,17 @@ module.exports = {
   organizationName: 'fluree', // Usually your GitHub org/user name.
   projectName: 'docs.flur.ee', // Usually your repo name.
   themeConfig: {
+	colorMode: {
+
+		// light | dark
+		defaultMode: 'light',
+
+		// remove default sun-moon icons for dark mode switch
+		switchConfig: {
+			darkIcon: ' ',
+			lightIcon: ' '
+		}
+	},
     navbar: {
       title: 'Fluree',
       hideOnScroll: true,
@@ -21,6 +32,8 @@ module.exports = {
         src: 'img/logo_dark.svg',
         srcDark: 'img/logo_white.svg',
       },
+
+	  // Navbar links - left aligned
       items: [
         {
           type: 'doc',
@@ -65,7 +78,7 @@ module.exports = {
         },
         { to: '/blog', label: 'Blog', position: 'left' },
 
-        // right side of navbar
+        // Navbar links - right aligned
         {
           href: 'https://github.com/fluree/docs.flur.ee',
           className: 'header-github-link',
@@ -74,7 +87,9 @@ module.exports = {
         },
       ],
     },
-    hideableSidebar: true,
+	// Config for collapsing sidebar
+	hideableSidebar: true,
+
     footer: {
       style: 'light',
       links: [
@@ -116,6 +131,7 @@ module.exports = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Fluree, PBC. Built with Docusaurus.`
     },
+	// Config for themeing syntax highlighting
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
@@ -132,7 +148,7 @@ module.exports = {
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
+          // TODO: Please change this to your repo.
           editUrl:
             'https://github.com/fluree/docs.flur.ee',
           // editUrl:
