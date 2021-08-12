@@ -231,7 +231,7 @@ const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 ```
 
-&nbsp;&nbsp;
+
 
 An example of the `connect_p` function:
 
@@ -251,7 +251,7 @@ flureenjs.connect_p(flureeServerUrl)
     })
 ```  
 
-&nbsp;&nbsp;
+
 
 An example of using `connect_p` with `keep-alive-fn` option:
 
@@ -373,7 +373,7 @@ var myDb = flureenjs.db(flureeDbConn, ledger);
 flureenjs.close(flureeDbConn);
 ```  
 
-&nbsp;&nbsp;
+
 
 Code example using a promise.
 
@@ -1033,7 +1033,7 @@ const signature = flureenjs.sign(message, private);
 let public = flureenjs.public_key(message, signature);
 ```
   
-&nbsp;&nbsp;
+
 
 ## **public_key_from_private** {#public_key_from_private}
 
@@ -1057,7 +1057,7 @@ let { private } = flureenjs.new_private_key();
 let public = flureenjs.public_key_from_private(private);
 ```
   
-&nbsp;&nbsp;
+
 
 ## **query** {#query}
 
@@ -1101,7 +1101,7 @@ flureenjs.query(myDb, myQuery)
 flureenjs.close(flureeDbConn);
 ```
   
-&nbsp;&nbsp;
+
 
 ## **renew_token** {#renew_token}
 
@@ -1215,7 +1215,7 @@ flureenjs.search(myDb, flakeParts)
 flureenjs.close(flureeDbConn);
 ```
   
-&nbsp;&nbsp;
+
 
 ## **session** {#session}
 
@@ -1416,7 +1416,7 @@ flureenjs.sql(myDb, myQuery)
 flureenjs.close(flureeDbConn);
 ```
   
-&nbsp;&nbsp;
+
 
 ## **subid** {#subid}
 
@@ -1512,8 +1512,8 @@ flureenjs.transact(flureeDbConn, ledger, myTxn)
 flureenjs.close(flureeDbConn);
 ```
 
-&nbsp;&nbsp;
-&nbsp;&nbsp;
+
+
 
 An example of a signed request to `transact`:
   
@@ -1720,7 +1720,7 @@ flureenjs.forward_time_travel(myDb, flakes)
 flureenjs.close(flureeDbConn);
 ```
   
-&nbsp;&nbsp;
+
 
 ## **is_forward_time_travel**
 
@@ -1761,7 +1761,7 @@ flureenjs.forward_time_travel(myDb, flakes)
 flureenjs.close(flureeDbConn);
 ```
   
-&nbsp;&nbsp;
+
 
 ## **query-with**
 
@@ -1801,4 +1801,4 @@ flureenjs.query_with(myDb, queryMap)
 flureenjs.close(flureeDbConn);
 ```
   
-&nbsp;&nbsp;
+
