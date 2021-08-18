@@ -9,7 +9,7 @@ An example of an unsigned request to `/dbs`.
 
 ```all
 Action: POST or GET
-Endpoint: http://localhost:8080/fdb/dbs
+Endpoint: http://localhost:8090/fdb/dbs
 Headers: None
 Body: Null
 ```
@@ -19,7 +19,7 @@ Creates a new ledger given a "db/id". If the network specified does not exist, i
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/new-db
+Endpoint: http://localhost:8090/fdb/new-db
 Headers: None
 Body: {"db/id": "NETWORK/DBID"}
 ```
@@ -31,7 +31,7 @@ All single queries in FlureeQL syntax that include a `select` key should be issu
 An example of an unsigned request to `/query` with the network, `dev` and the ledger `main`:
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/query
+Endpoint: http://localhost:8090/fdb/dev/main/query
 Headers: None
 Body: { "select": ["*"], "from": "_collection"}
 ```
@@ -39,7 +39,7 @@ Body: { "select": ["*"], "from": "_collection"}
 An example of a signed request to `/query`:
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/query
+Endpoint: http://localhost:8090/fdb/dev/main/query
 Headers: {
                 content-type:       application/json,
                 mydate:             Thu, 13 Mar 2019 19:24:22 GMT,
@@ -55,7 +55,7 @@ If you are submitting multiple FlureeQL queries at once (using the [multi-query 
 An example of an unsigned request to `/multi-query`:
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/multi-query
+Endpoint: http://localhost:8090/fdb/dev/main/multi-query
 Headers: None
 Body: { "query1": { "select": ["*"], "from": "_collection"}, 
         "query2": { "select": ["*"], "from": "_predicate"}}
@@ -67,7 +67,7 @@ FlureeQL [block queries](/docs/query/block-query) should be submitted to the `/b
 An example of an unsigned request to `/block`:
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/block
+Endpoint: http://localhost:8090/fdb/dev/main/block
 Headers: None
 Body: { "block": 5 }
 ```
@@ -79,7 +79,7 @@ FlureeQL [history queries](/docs/query/history-query) should be submitted to the
 An example of an unsigned request to `/history`:
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/history
+Endpoint: http://localhost:8090/fdb/dev/main/history
 Headers: None
 Body: {
   "history": ["person/handle", "zsmith"],
@@ -97,7 +97,7 @@ An example of an unsigned request to `/transact`:
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/transact
+Endpoint: http://localhost:8090/fdb/dev/main/transact
 Headers: None
 Body: [{
     "_id":    "_user",
@@ -112,7 +112,7 @@ All queries and transactions in GraphQL syntax should be issued through the `/fd
 An example of an unsigned request to `/graphql`:
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/graphql
+Endpoint: http://localhost:8090/fdb/dev/main/graphql
 Headers: None
 Body: {"query": "{ graph {
   chat {
@@ -133,7 +133,7 @@ All queries and transactions in GraphQL syntax should be issued through the `/fd
 An example of an unsigned request to `/graphql`:
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/graphql
+Endpoint: http://localhost:8090/fdb/dev/main/graphql
 Headers: None
 Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
   transact(tx: $myPeopleTx)
@@ -152,7 +152,7 @@ All queries in SPARQL syntax, regardless of type, should be issued through the `
 An example of an unsigned request to `/sparql`:
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/sparql
+Endpoint: http://localhost:8090/fdb/dev/main/sparql
 Headers: None
 Body: "SELECT ?chat ?message ?person ?instant ?comments
  WHERE {
@@ -174,7 +174,7 @@ A GET request to `/fdb/health` returns whether the server is ready or not. You a
 
 ```all
 Action: GET
-Endpoint: http://localhost:8080/fdb/health
+Endpoint: http://localhost:8090/fdb/health
 ```
 
 ### /storage
@@ -183,14 +183,14 @@ A GET request to `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]` returns a
 
 ```all
 Action: GET
-Endpoint: http://localhost:8080/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]
+Endpoint: http://localhost:8090/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]
 ```
 
 A GET request to `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]` returns the value for the provided key.
 
 ```all
 Action: GET
-Endpoint: http://localhost:8080/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]
+Endpoint: http://localhost:8090/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]
 ```
 
 ### /sub
@@ -216,7 +216,7 @@ These requests do not need to be signed.
 An example of a request to `/new-db`:
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/new-db
+Endpoint: http://localhost:8090/fdb/new-db
 Body: {
   "db/id": "test.one"
 }

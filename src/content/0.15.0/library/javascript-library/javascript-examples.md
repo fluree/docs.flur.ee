@@ -7,7 +7,7 @@ npm install @fluree/flureedb
 
 The following commands are available in the JavaScript api library. JavaScript promises are used to return results from long-running processes.   
 
->*For the following examples, it is assumed that you are using the downloaded Fluree Community Edition.  Unless you changed the default* `fdb-api-port`*, the full URL is* `http://localhost:8080/`
+>*For the following examples, it is assumed that you are using the downloaded Fluree Community Edition.  Unless you changed the default* `fdb-api-port`*, the full URL is* `http://localhost:8090/`
 
 ### **connect**
 Connect to a ledger server using an URL address. If using a ledger group, multiple addresses can be supplied, separated by a comma.  
@@ -29,14 +29,14 @@ Returns a connection object.
 #### JavaScript Example  
 An example of the `connect` command:
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var myConn = flureedb.connect(flureeServerUrl);
 ```   
 &nbsp;&nbsp;
 
 An example of the `connect_p` command:
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 flureedb.connect_p(flureeServerUrl)
 .then(conn => { 
   // execute a query or transaction
@@ -69,15 +69,15 @@ function flureeConnect(url, options){
     .catch(error => {
         console.error("Error connecting to Fluree DB", error);
         //  [  1.771s] [server] "Server contact error: " 
-        //  "xhttp error - http://localhost:8080/fdb/health" 
-        //  {:url "http://localhost:8080/fdb/health", :error :xhttp/http-error}
+        //  "xhttp error - http://localhost:8090/fdb/health" 
+        //  {:url "http://localhost:8090/fdb/health", :error :xhttp/http-error}
         // -> gracefully shutdown
         // -> or add re-try logic
     }) 
 
     :
     :
-    const downloadedInstance = "http://localhost:8080"
+    const downloadedInstance = "http://localhost:8090"
     const options = {keepAlive: true};
     flureeConnect(downloadedInstance, options);
 ```
@@ -96,7 +96,7 @@ Returns a boolean, false when the connection is not currently open; otherwise, t
 #### JavaScript Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var myConn = flureedb.connect(flureeServerUrl);
 :
 :
@@ -120,7 +120,7 @@ Returns a queryable ledger as an asynchronous channel.
 #### JavaScript Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn = flureedb.connect(flureeServerUrl);
 var myDb = flureedb.db(myConn, myLedgerName);
@@ -144,7 +144,7 @@ Returns a JavaScript promise that will eventually deliver the schema map for a l
 #### JavaScript Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn = flureedb.connect(flureeServerUrl);
 var myDb = flureedb.db(myConn, myLedgerName);
@@ -182,7 +182,7 @@ A JavaScript promise that eventually contains a transaction id.  The transaction
 #### JavaScript Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/invoice";
 var myConn = flureedb.connect(flureeServerUrl);
 flureedb.new_ledger( myConn, myLedgerName )
@@ -209,7 +209,7 @@ Returns a promise that eventually the results
 #### JavaScript Example  
 
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var myConn = flureedb.connect(flureeServerUrl);
 
 flureedb.delete_ledger(myConn, "test/deleteme");
@@ -235,7 +235,7 @@ A JavaScript promise that eventually contains the results of the query or an err
 An example of a query with the network, `test` and the ledger `chat`:
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn = flureedb.connect(flureeServerUrl);
 var myDb = flureedb.db(myConn, myLedgerName);
@@ -273,7 +273,7 @@ A JavaScript promise that eventually contains the results of the query or an err
 An example of a `multi_query`:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn = flureedb.connect(flureeServerUrl);
 var myDb = flureedb.db(myConn, myLedgerName);
@@ -310,7 +310,7 @@ A JavaScript promise that eventually contains the results of the query or an err
 An example of a `block_query`:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn = flureedb.connect(flureeServerUrl);
 :
@@ -343,7 +343,7 @@ A JavaScript promise that eventually contains the results of the query or an err
 An example of a `block_range`:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn = flureedb.connect(flureeServerUrl);
 :
@@ -373,7 +373,7 @@ A JavaScript promise that eventually contains the results of the query or an err
 An example of a `history_query`:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn = flureedb.connect(flureeServerUrl);
 var myDb = flureedb.db(myConn, myLedgerName);
@@ -427,7 +427,7 @@ A JavaScript promise that eventually contains the transaction id or an error.
 An example of `transact` using the default private-key for the ledger to sign the transaction:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn = flureedb.connect(flureeServerUrl);
 :
@@ -456,7 +456,7 @@ const publicKey = '...';
 const privateKey = '...';
 const auth = getSinFromPublicKey(publicKey);
 :
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn = flureedb.connect(flureeServerUrl);
 :
@@ -499,7 +499,7 @@ A JavaScript promise that eventually returns the results from the monitor_tx com
 An example of `monitor_tx`:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn = flureedb.connect(flureeServerUrl);
 :
@@ -530,7 +530,7 @@ Returns true if the listener is successfully added.  Otherwise, an exception is 
 #### JavaScript Example  
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn;
 
@@ -577,7 +577,7 @@ Returns true if a callback function was associated with the key and removed.  Ot
 #### JavaScript Example  
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var myConn = flureedb.connect(flureeServerUrl);
 :
@@ -605,7 +605,7 @@ Returns a list of listeners registered for the given connection object.
 #### JavaScript Example  
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var myConn = flureedb.connect(flureeServerUrl);
 :
 :

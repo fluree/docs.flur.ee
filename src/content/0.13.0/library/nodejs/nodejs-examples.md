@@ -28,7 +28,7 @@ Returns a connection object.
 #### Code Examples  
 An example of the `connect` command:
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 ```   
 &nbsp;&nbsp;
@@ -37,7 +37,7 @@ An example of the `connect_p` command:
 ```all
 var flureeDbConn;
 var flureeIsAvailable = false;
-const flureeUrl = "http://localhost:8080";
+const flureeUrl = "http://localhost:8090";
 flureenjs.connect_p(flureeUrl)
     .then(conn => {
         flureeDbConn = conn;
@@ -69,15 +69,15 @@ function flureeConnect(url, options){
     .catch(error => {
         console.error("Error connecting to Fluree DB", error);
         //  [  1.771s] [server] "Server contact error: " 
-        //  "xhttp error - http://localhost:8080/fdb/health" 
-        //  {:url "http://localhost:8080/fdb/health", :error :xhttp/http-error}
+        //  "xhttp error - http://localhost:8090/fdb/health" 
+        //  {:url "http://localhost:8090/fdb/health", :error :xhttp/http-error}
         // -> gracefully shutdown
         // -> or add re-try logic
     }) 
 
     :
     :
-    const downloadedInstance = "http://localhost:8080"
+    const downloadedInstance = "http://localhost:8090"
     const options = {keepAlive: true};
     flureeConnect(downloadedInstance, options);    
 ```
@@ -96,7 +96,7 @@ Returns a boolean, false when the connection is not currently open; otherwise, t
 #### Code Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 :
 :
@@ -120,7 +120,7 @@ Returns a queryable (point-in-time) ledger as an asynchronous channel.
 #### Code Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/chat";
@@ -145,7 +145,7 @@ Returns a JavaScript promise that will eventually deliver the schema map for a l
 #### Code Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/chat";
@@ -184,7 +184,7 @@ A JavaScript promise that eventually contains a transaction id.  The transaction
 #### Code Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/invoice";
@@ -216,7 +216,7 @@ Returns a two-tuple of [network ledger-id]
 #### Code Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/chat";
@@ -242,7 +242,7 @@ Returns a promise that eventually the results.
 
 #### Code Example  
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 flureenjs.delete_ledger(flureeDbConn, "test/deleteme");
@@ -266,7 +266,7 @@ The id of a collection or nil when the collection does not exist.
 #### Code Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/chat";
@@ -298,7 +298,7 @@ The id of a predicate or nil when the predicate does not exist.
 #### Code Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/chat";
@@ -330,7 +330,7 @@ The id of a subject or nil when the subject identity does not exist.
 #### Code Example  
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/chat";
@@ -364,7 +364,7 @@ A JavaScript promise that eventually contains the results of the query or an err
 An example of an unsigned request to `q` with the network, `test` and the ledger `chat`:
      
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/chat";
@@ -403,7 +403,7 @@ A JavaScript promise that eventually contains the results of the query or an err
 An example of an unsigned request to `multi_query`:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/chat";
@@ -441,7 +441,7 @@ A JavaScript promise that eventually contains the results of the query or an err
 An example of an unsigned request to `block_query`:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/chat";
@@ -473,7 +473,7 @@ A JavaScript promise that eventually contains the results of the query or an err
 An example of an unsigned request to `block_range`:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/chat";
@@ -502,7 +502,7 @@ A JavaScript promise that eventually contains the results of the query or an err
 An example of an unsigned request to `history_query`:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 
 const myLedgerName = "test/chat";
@@ -556,7 +556,7 @@ const publicKey = '...';
 const privateKey = '...';
 const auth = getSinFromPublicKey(publicKey);
 :
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 const myLedgerName = "test/chat";
 :
@@ -632,7 +632,7 @@ import { getSinFromPublicKey } from '@fluree/crypto-utils';
 const publicKey = '...';
 const privateKey = '...';
 const auth = getSinFromPublicKey(publicKey);
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 :
 flureenjs.connect_p(flureeServerUrl)
   .then(conn => 
@@ -676,7 +676,7 @@ import { getSinFromPublicKey } from '@fluree/crypto-utils';
 const publicKey = '...';
 const privateKey = '...';
 const auth = getSinFromPublicKey(publicKey);
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 :
 flureenjs.connect_p(flureeServerUrl)
   .then(conn => 
@@ -743,7 +743,7 @@ A JavaScript promise that eventually contains the transaction id or an error.
 An example of an unsigned request to `transact`:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 :
@@ -772,7 +772,7 @@ const publicKey = '...';
 const privateKey = '...';
 const auth = getSinFromPublicKey(publicKey);
 :
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 :
@@ -815,7 +815,7 @@ A JavaScript promise that eventually returns the results from the monitor_tx com
 An example of an unsigned request to `monitor_tx`:
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 :
@@ -848,7 +848,7 @@ A JavaScript promise that eventually contains the results of the query.
 An example of an unsigned query to `graphql`:
   
 ```all
-    const flureeServerUrl = "http://localhost:8080";
+    const flureeServerUrl = "http://localhost:8090";
     const myLedgerName = "test/chat";
     var flureeDbConn = flureenjs.connect(flureeServerUrl);
     :
@@ -882,7 +882,7 @@ A JavaScript promise that eventually contains the results of the query or an err
 An example of an unsigned request to `sparql` with the network, `test` and the ledger `chat`:
   
 ```all
-    const flureeServerUrl = "http://localhost:8080";
+    const flureeServerUrl = "http://localhost:8090";
     const myLedgerName = "test/chat";
     var flureeDbConn = flureenjs.connect(flureeServerUrl);
     var myDb = flureenjs.db(flureeDbConn, myLedgerName);
@@ -921,7 +921,7 @@ Returns true if the listener is successfully added.  Otherwise, an exception is 
 #### Code Example  
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 :
@@ -952,7 +952,7 @@ Returns true if a callback function was associated with the key and removed.  Ot
 #### Code Example  
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 const myLedgerName = "test/chat";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 :
@@ -980,7 +980,7 @@ Returns a list of listeners registered for the given connection object.
 #### Code Example  
   
 ```all
-const flureeServerUrl = "http://localhost:8080";
+const flureeServerUrl = "http://localhost:8090";
 var flureeDbConn = flureenjs.connect(flureeServerUrl);
 :
 :

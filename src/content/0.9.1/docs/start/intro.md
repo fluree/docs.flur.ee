@@ -149,4 +149,4 @@ The password that you set for the master ledger, by default, is the same passwor
 
 ### Launch Packaged UI
 
-If Fluree is running on `fdb-group-port` 8080, then there is a built-in user interface that can be accessed at `localhost:8080/index.html`.
+If Fluree is running on `fdb-group-port` 8090, then there is a built-in user interface that can be accessed at `localhost:8090/index.html`.

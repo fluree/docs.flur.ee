@@ -470,7 +470,7 @@ class Docs extends React.Component {
 class APITest extends React.Component {
 	state = {
 		host: "downloaded",
-		ip: "http://localhost:8080",
+		ip: "http://localhost:8090",
 		network: "test",
 		endpoints: [],
 		dbid: "one",
@@ -594,7 +594,7 @@ class APITest extends React.Component {
 									<ControlLabel>IP Address</ControlLabel>
 									<FormControl
 										type="text"
-										placeholder="http://localhost:8080"
+										placeholder="http://localhost:8090"
 										value={ip}
 										onChange={(e) => this.setState({ ip: e.target.value })}
 									/>

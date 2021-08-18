@@ -10,7 +10,7 @@ An example of an unsigned request to `/dbs`.
 
 ```all
 Action: POST or GET
-Endpoint: http://localhost:8080/fdb/dbs
+Endpoint: http://localhost:8090/fdb/dbs
 Headers: None
 Body: Null
 ```
@@ -25,7 +25,7 @@ These requests do not need to be signed.
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/new-db
+Endpoint: http://localhost:8090/fdb/new-db
 Headers: None
 Body: {"db/id": "test/one"}
 ```
@@ -34,7 +34,7 @@ You can also use the `/new-db` endpoint to create a ledger from a snapshot. See 
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/new-db
+Endpoint: http://localhost:8090/fdb/new-db
 Body: {
   "db/id": "test/one",
   "snapshot": "fluree/demo/snapshot/1573233945064.avro"
@@ -49,7 +49,7 @@ To create a snapshot, simply send an empty POST request to the `/snapshot` endpo
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/snapshot
+Endpoint: http://localhost:8090/fdb/dev/main/snapshot
 Headers: None
 Body: Null
 ```
@@ -63,14 +63,14 @@ You can optionally specify a format (`xml` or `ttl`). If none provided, defaults
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/export
+Endpoint: http://localhost:8090/fdb/dev/main/export
 Headers: None
 Body: {"format": "ttl"}
 ```
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/export
+Endpoint: http://localhost:8090/fdb/dev/main/export
 Headers: None
 Body: { "format": "xml" , "block": 10 }
 ```
@@ -81,7 +81,7 @@ This deletes a ledger. Deleting a ledger means that a user will no longer be abl
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/delete-db
+Endpoint: http://localhost:8090/fdb/delete-db
 Headers: None
 Body: {"db/id": "NETWORK/DBID"}
 ```
@@ -100,7 +100,7 @@ Then, once `GHI` is running a request needs to be sent to either of the two serv
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/add-server
+Endpoint: http://localhost:8090/fdb/add-server
 Headers: None
 Body: {"server": "GHI"}
 ```
@@ -117,7 +117,7 @@ Let's say you have three servers running, `ABC`, `DEF`, and `GHI`. If you want t
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/remove-server
+Endpoint: http://localhost:8090/fdb/remove-server
 Headers: None
 Body: {"server": "GHI"}
 ```
@@ -134,7 +134,7 @@ An example of an unsigned request to `/query` with the network, `dev` and the le
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/query
+Endpoint: http://localhost:8090/fdb/dev/main/query
 Headers: None
 Body: { "select": ["*"], "from": "_collection"}
 ```
@@ -143,7 +143,7 @@ An example of a signed request to `/query`:
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/query
+Endpoint: http://localhost:8090/fdb/dev/main/query
 Headers: {
                 content-type:       application/json,
                 mydate:             Thu, 13 Mar 2019 19:24:22 GMT,
@@ -161,7 +161,7 @@ An example of an unsigned request to `/multi-query`:
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/multi-query
+Endpoint: http://localhost:8090/fdb/dev/main/multi-query
 Headers: None
 Body: { "query1": { "select": ["*"], "from": "_collection"},
         "query2": { "select": ["*"], "from": "_predicate"}}
@@ -171,7 +171,7 @@ An example of a signed request to `/multi-query`:
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/multi-query
+Endpoint: http://localhost:8090/fdb/dev/main/multi-query
 Headers: {
                 content-type:       application/json,
                 mydate:             Thu, 13 Mar 2019 19:24:22 GMT,
@@ -190,7 +190,7 @@ An example of an unsigned request to `/block`:
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/block
+Endpoint: http://localhost:8090/fdb/dev/main/block
 Headers: None
 Body: { "block": 5 }
 ```
@@ -203,7 +203,7 @@ An example of an unsigned request to `/history`:
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/history
+Endpoint: http://localhost:8090/fdb/dev/main/history
 Headers: None
 Body: {
   "history": ["person/handle", "zsmith"],
@@ -221,7 +221,7 @@ An example of an unsigned request to `/transact`:
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/transact
+Endpoint: http://localhost:8090/fdb/dev/main/transact
 Headers: None
 Body: [{
     "_id":    "_user",
@@ -235,7 +235,7 @@ An example of setting your own custom timeout is below. The value provided to `R
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/transact
+Endpoint: http://localhost:8090/fdb/dev/main/transact
 Headers: {"Request-Timeout": 10000 }
 Body: [{
     "_id":    "_user",
@@ -251,7 +251,7 @@ An example of an unsigned request to `/graphql`:
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/graphql
+Endpoint: http://localhost:8090/fdb/dev/main/graphql
 Headers: None
 Body: {"query": "{ graph {
   chat {
@@ -273,7 +273,7 @@ An example of an unsigned request to `/graphql`:
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/graphql
+Endpoint: http://localhost:8090/fdb/dev/main/graphql
 Headers: None
 Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
   transact(tx: $myPeopleTx)
@@ -293,7 +293,7 @@ An example of an unsigned request to `/sparql`:
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/sparql
+Endpoint: http://localhost:8090/fdb/dev/main/sparql
 Headers: None
 Body: "SELECT ?chat ?message ?person ?instant ?comments
  WHERE {
@@ -316,7 +316,7 @@ Available in `0.11.7` or higher. Reindexes the specified ledger.
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/reindex
+Endpoint: http://localhost:8090/fdb/dev/main/reindex
 Headers: None
 Body: None
 ```
@@ -341,7 +341,7 @@ Returns the list of flakes that would be added to a ledger if a given transactio
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/gen-flakes
+Endpoint: http://localhost:8090/fdb/dev/main/gen-flakes
 Headers: None
 Body: [{
     "_id":    "person",
@@ -364,7 +364,7 @@ The `t` on the flakes provided has to be current with the latest ledger. For exa
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/query-with
+Endpoint: http://localhost:8090/fdb/dev/main/query-with
 Headers: None
 Body: {
   "query": {"select": ["*"], "from": "person"},
@@ -387,7 +387,7 @@ The `t` on the flakes provided has to be current with the latest ledger. For exa
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/test-transact-with
+Endpoint: http://localhost:8090/fdb/dev/main/test-transact-with
 Headers: None
 Body: {
   "tx": [{ "_id": "person", "handle": "kReeves" }],
@@ -400,7 +400,7 @@ A POST request to `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn` returns bloc
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/block-range-with-txn
+Endpoint: http://localhost:8090/fdb/dev/main/block-range-with-txn
 Headers: None
 Body: {
   "start": 1,
@@ -413,7 +413,7 @@ A GET request to `/fdb/health` returns whether the server is ready or not. You a
 
 ```all
 Action: GET
-Endpoint: http://localhost:8080/fdb/health
+Endpoint: http://localhost:8090/fdb/health
 ```
 
 ### /database-stats
@@ -422,7 +422,7 @@ A POST request to `/fdb/[NETWORK-NAME]/[DBID]/database-stats` provides stats abo
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/database-stats
+Endpoint: http://localhost:8090/fdb/dev/main/database-stats
 Headers: None
 Body: None
 ```
@@ -433,14 +433,14 @@ A GET request to `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]` returns a
 
 ```all
 Action: GET
-Endpoint: http://localhost:8080/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]
+Endpoint: http://localhost:8090/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]
 ```
 
 A GET request to `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]` returns the value for the provided key.
 
 ```all
 Action: GET
-Endpoint: http://localhost:8080/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]
+Endpoint: http://localhost:8090/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]
 ```
 
 ### /sub
@@ -468,7 +468,7 @@ The below request will return a valid token for the user, which has permissions 
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/pw/generate
+Endpoint: http://localhost:8090/fdb/dev/main/pw/generate
 Headers:
 Body: {
 	"password": "appleSaucePanFried",
@@ -487,7 +487,7 @@ This endpoint returns a valid JWT token. You need to pass a NON-expired JWT toke
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/pw/renew
+Endpoint: http://localhost:8090/fdb/dev/main/pw/renew
 Headers: { Authorization: "Bearer TOKEN-HERE" }
 Body: { "expire": "TIME IN EPOCH MS" }
 ```
@@ -503,7 +503,7 @@ Body: { "expire": "TIME IN EPOCH MS" }
 
 ```all
 Action: POST
-Endpoint: http://localhost:8080/fdb/dev/main/pw/login
+Endpoint: http://localhost:8090/fdb/dev/main/pw/login
 Headers: { Authorization: "Bearer TOKEN-HERE" }
 Body: {
   "user": "myUsername",

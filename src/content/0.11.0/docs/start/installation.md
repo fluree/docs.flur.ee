@@ -208,7 +208,7 @@ Property | Options | Description
 
 ### User Interface
 
-There is a built-in user interface that can be accessed at `localhost:[port]/`. If you did not change the port or IP address, it will be on `localhost:8080/`.
+There is a built-in user interface that can be accessed at `localhost:[port]/`. If you did not change the port or IP address, it will be on `localhost:8090/`.
 
 For help using the user interface, read the [Navigating the User Interface](/docs/user-interface) section.
 

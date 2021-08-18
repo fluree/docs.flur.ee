@@ -39,9 +39,9 @@ To run Fluree with all the default options, navigate to the directory where you 
 When Fluree is done starting up, your terminal will log (exact log message may be different based on version): 
 
 ```all
-- Starting web server on port: 8080 with an open API. -
+- Starting web server on port: 8090 with an open API. -
 -
-- http://localhost:8080 -
+- http://localhost:8090 -
 -
 ```
 

@@ -165,7 +165,7 @@ Example of `connStatus` results
  message: "Connection is ready."}
 
 {status:  500
-  message: "Server contact error: xhttp error - http://localhost:8080/fdb/health"} 
+  message: "Server contact error: xhttp error - http://localhost:8090/fdb/health"} 
 ```
 
 
