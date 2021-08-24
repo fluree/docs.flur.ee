@@ -4,7 +4,7 @@ The javascript library, as an extension of our linear-scaling query peer service
 
 | Action              | Command                                                                                        | Explanation                                                         |
 | ------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Connect             | <ul style="list-style-type:none; padding-left: 0;"><li>`connect`</li><li>`connect_p`</li></ul> | Connect to a ledger server/group using URL address(es)              |
+| Connect             | <ul><li>`connect`</li><li>`connect_p`</li></ul> | Connect to a ledger server/group using URL address(es)              |
 | Close               | `close`                                                                                        | Closes a connection                                                 |
 | DB                  | `db`                                                                                           | Returns a queryable ledger                                          |
 | DB Schema           | `db_schema`                                                                                    | Returns the schema map for a ledger                                 |
