@@ -14,19 +14,6 @@ The Docs section is a basic technical overview of key topics, including:
 - Ledger Set-up
 - Infrastructure
 
-To view the documentation examples in different programming languages, you can toggle
-the language options in the left sidebar.
-
-<p align="center">
-    <img
-        width="600px"
-        height="116px"
-        src="https://s3.amazonaws.com/fluree-docs/language-options.png"
-        alt="A button toolbar with four options: FlureeQL, GraphQL, curl, and SPARQL"/>
-</p>
-
-In that same sidebar, you can also jump to other sections.
-
 ## Other Resources {#other-resources}
 
 There are other resources in this documentation website, such as:

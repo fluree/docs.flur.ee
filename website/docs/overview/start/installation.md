@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Installing Fluree
 
 If you already have a hosted version of Fluree, you can jump to [User Interface](#user-interface). To request a hosted version of Fluree, you can sign up on [our site](https://www.flur.ee/), but note that free hosted versions may be limited.
