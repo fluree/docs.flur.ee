@@ -70,13 +70,8 @@ module.exports = {
         },
 
         // Docusaurus template stuff
-        {
-          type: 'doc',
-          docId: 'tutorials/tutorial_intro',
-          position: 'left',
-          label: 'Tutorial',
-        },
-        { to: '/blog', label: 'Blog', position: 'left' },
+
+        // { to: '/blog', label: 'Blog', position: 'left' },
 
         // Navbar links - right aligned
         {
@@ -146,14 +141,14 @@ module.exports = {
           editUrl:
             'https://github.com/fluree/docs.flur.ee',
         },
-        blog: {
-          showReadingTime: true,
-          // TODO: Please change this to your repo.
-          editUrl:
-            'https://github.com/fluree/docs.flur.ee',
-          // editUrl:
-          //   'https://github.com/fluree/docs.flur.ee/edit/master/website/blog/',
-        },
+        // blog: {
+        //   showReadingTime: true,
+        //   // TODO: Please change this to your repo.
+        //   editUrl:
+        //     'https://github.com/fluree/docs.flur.ee',
+        //   // editUrl:
+        //   //   'https://github.com/fluree/docs.flur.ee/edit/master/website/blog/',
+        // },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
