@@ -1,3 +1,6 @@
+---
+sidebar_position: 4
+---
 # Fluree Anywhere
 
 There are two options for running Fluree:
