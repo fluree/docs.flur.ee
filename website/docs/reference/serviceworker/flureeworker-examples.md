@@ -86,7 +86,7 @@ Message sent to FlureeWorker to register a query for a Fluree ledger. When updat
 | `action` | `registerQuery`                                                                                                                                                                                                                                                                   |
 | `conn`   | connection id associated with ledger                                                                                                                                                                                                                                              |
 | `ref`    | reference within application                                                                                                                                                                                                                                                      |
-| `params` | <ul style="list-style-type:none; padding-left: 0;"><li>a JavaScript array, containing by position:</li><li>- ref (reference within application, returned with message `setState`)</li><li>- query (string; FlureeQL syntax)</li><li>- opts (TBD)</li><li>- forceUpdate (TBD)</li></ul> |
+| `params` | <ul><li>a JavaScript array, containing by position:</li><li>- ref (reference within application, returned with message `setState`)</li><li>- query (string; FlureeQL syntax)</li><li>- opts (TBD)</li><li>- forceUpdate (TBD)</li></ul> |
 
 ## **reset** {#reset}
 
@@ -148,7 +148,7 @@ Message received from FlureeWorker after processing a `close` request.
 | `event`                                                                                                                   | `connClosed`                                                                                                                                                                                                                   |
 | `conn`                                                                                                                    | connection id from original message                                                                                                                                                                                            |
 | `ref`                                                                                                                     | reference from original message                                                                                                                                                                                                |
-| `data` <ul style="list-style-type:none; padding-left: 0;"><li>\* `status`</li><li>\* `error`</li><li>\* `message`</li></ul> | result of `close` connection request <ul style="list-style-type:none; padding-left: 0;"><li>http-status of the result (e.g., 200)</li><li>optional field, indictes error category when returned</li><li>text message</li></ul> |
+| `data` <ul><li>\* `status`</li><li>\* `error`</li><li>\* `message`</li></ul> | result of `close` connection request <ul><li>http-status of the result (e.g., 200)</li><li>optional field, indictes error category when returned</li><li>text message</li></ul> |
 
 Examples of `close` results
 
@@ -172,7 +172,7 @@ Message received from FlureeWoker after processing a `connect` request.
 | `event`                                                                                                | `connStatus`                                                                                                                                                       |
 | `conn`                                                                                                 | connection id from original message                                                                                                                                |
 | `ref`                                                                                                  | reference from original message                                                                                                                                    |
-| `data` <ul style="list-style-type:none; padding-left: 0;"><li>\* `status`</li><li>\* `message`</li></ul> | result of `connect` connection request <ul style="list-style-type:none; padding-left: 0;"><li>http-status of the result (e.g., 200)</li><li>text message</li></ul> |
+| `data` <ul><li>\* `status`</li><li>\* `message`</li></ul> | result of `connect` connection request <ul><li>http-status of the result (e.g., 200)</li><li>text message</li></ul> |
 
 Example of `connStatus` results
 
@@ -195,7 +195,7 @@ Message received from FlureeWorker after processing a `login` request.
 | `event`                                                                                                                    | `login`                                                                                                                                                                                                                                                                            |
 | `conn`                                                                                                                     | connection id from original message                                                                                                                                                                                                                                                |
 | `ref`                                                                                                                      | reference from original message                                                                                                                                                                                                                                                    |
-| `data` <ul style="list-style-type:none; padding-left: 0;"><li>\* `status`</li><li>\* `result`</li><li>\* `message`</li></ul> | result of `login` connection request <ul style="list-style-type:none; padding-left: 0;"><li>http-status of the result (e.g., 200)</li><li>username and JSON web token of authenticated login</li><li>text message of result, generally indicates an authentication error</li></ul> |
+| `data` <ul><li>\* `status`</li><li>\* `result`</li><li>\* `message`</li></ul> | result of `login` connection request <ul><li>http-status of the result (e.g., 200)</li><li>username and JSON web token of authenticated login</li><li>text message of result, generally indicates an authentication error</li></ul> |
 
 Example of `login` results
 
@@ -218,7 +218,7 @@ Triggered when FlureeWorker receives ledger updates from the Fluree network. The
 | `event`                                                                                                                 | `setState`                                                                                                                                                                                                                                                        |
 | `conn`                                                                                                                  | connection id from original message                                                                                                                                                                                                                               |
 | `ref`                                                                                                                   | reference from original message                                                                                                                                                                                                                                   |
-| `data`<ul style="list-style-type:none; padding-left: 0;"><li>\* `status`</li><li>\* `result`</li><li>\* `error`</li></ul> | result reprocessing registered queries <ul style="list-style-type:none; padding-left: 0;"><li>status (e.g., "error", "loaded")</li><li>result of reprocessing register query(ies)</li><li>identifies error when execution of a regisstered query failed</li></ul> |
+| `data`<ul><li>\* `status`</li><li>\* `result`</li><li>\* `error`</li></ul> | result reprocessing registered queries <ul><li>status (e.g., "error", "loaded")</li><li>result of reprocessing register query(ies)</li><li>identifies error when execution of a regisstered query failed</li></ul> |
 
 Example of `setState` results
 

@@ -7,7 +7,7 @@ module.exports = {
   tagline: 'Semantic graph database built with web3 tech',
   url: 'https://docs.flur.ee',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'fluree', // Usually your GitHub org/user name.
