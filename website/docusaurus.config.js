@@ -4,14 +4,14 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'Fluree Docs',
-  tagline: 'Semantic graph database built with web3 tech',
+  tagline: 'Semantic graph data management system built with web3 tech',
   url: 'https://docs.flur.ee',
   baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'fluree', // Usually your GitHub org/user name.
-  projectName: 'docs.flur.ee', // Usually your repo name.
+  organizationName: 'fluree', 		// GitHub org name.
+  projectName: 'docs.flur.ee', 		// Repo name.
   themeConfig: {
 	colorMode: {
 
@@ -64,13 +64,12 @@ module.exports = {
         },
         {
           type: 'doc',
-          docId: 'community_page',
+          docId: 'community',
           label: 'Community',
           position: 'left'
         },
 
         // Docusaurus template stuff
-
         // { to: '/blog', label: 'Blog', position: 'left' },
 
         // Navbar links - right aligned
@@ -113,10 +112,10 @@ module.exports = {
         {
           title: 'More',
           items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
+            // {
+            //   label: 'Blog',
+            //   to: '/blog',
+            // },
             {
               label: 'Github',
               href: 'https://github.com/fluree',
