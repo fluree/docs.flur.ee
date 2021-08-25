@@ -1,6 +1,6 @@
 ## Clojure
 
-[![cljdoc badge](https://cljdoc.org/badge/com.fluree/db)](https://cljdoc.org/d/com.fluree/db/CURRENT)
+<!-- [![cljdoc badge](https://cljdoc.org/badge/com.fluree/db)](https://cljdoc.org/d/com.fluree/db/CURRENT) -->
 
 Fluree has a Clojure client.
 
@@ -10,14 +10,15 @@ If you are familiar with Datomic, Datahike, Datascript, or Crux (or other Clojur
 
 Here's a quick glossary of how your knowledge may map on to Fluree's terminology:
 
-Clojure Triple-Store+ term | Fluree term
--- | --
-entity | subject
-attribute | predicate
-value | object
-datom | flake
+| Clojure Triple-Store+ term | Fluree term |
+| -------------------------- | ----------- |
+| entity                     | subject     |
+| attribute                  | predicate   |
+| value                      | object      |
+| datom                      | flake       |
 
 ### Setup
+
 Make sure you have a running Fluree ledger service to connect to. See the [Getting Started](/docs/1.0.0/getting-started/installation) docs for more details.
 
 Add to the artifact to your dependencies:
@@ -202,7 +203,6 @@ In addition to the FlureeQL syntax used above, Fluree also supports queries in o
 ### Async API
 
 All of the interactions with the Fluree ledger server are performed asynchronously, returning a promise. If you prefer to work with `core.async` channels instead of promises, there are `-async` variants of all the functions mentioned here that will return a `core.async` channel which will receive the result when the operation has finished.
-
 
 ```all
 (require '[clojure.core.async :as async])
