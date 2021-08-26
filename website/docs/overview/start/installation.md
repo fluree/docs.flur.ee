@@ -221,7 +221,7 @@ Property | Options | Description
 
 ## User Interface {#user-interface}
 
-There is a built-in user interface that can be accessed at `localhost:[port]/`. If you did not change the port or IP address, it will be on `localhost:8080/`.
+There is a built-in user interface that can be accessed at `localhost:[port]/`. If you did not change the port or IP address, it will be on `localhost:8090/`.
 
 For help using the user interface, read the [Navigating the User Interface](/docs/user-interface) section.
 
@@ -244,9 +244,6 @@ You can run these like so:
 ...and then access the admin dashboard at <http://localhost:8090/>
 
 ## Download Fluree with Homebrew {#download-fluree-with-homebrew}
-
-NOTE: These docs are for a future 1.0.0 beta release. They do not yet work
-as of 1.0.0-beta1.
 
 On a Mac machine, you can download Fluree using Homebrew by running:
 
@@ -274,9 +271,7 @@ brew uninstall flureedb
 brew untap fluree/flureedb
 ```
 
-## Download Fluree with Chocolatey {#download-fluree-with-chocolatey}
-
-This feature is coming soon.
+See the code for our Homebrew set up on our [Github repo](https://github.com/fluree/homebrew-flureedb).
 
 ## Fluree Command Line Tool {#fluree-command-line-tool}
 

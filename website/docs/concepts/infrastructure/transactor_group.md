@@ -20,7 +20,7 @@ ones specified in `fdb-group-servers`. An example below:
 <!-- markdownlint-disable MD013 -->
 Key | Fluree-1 | Fluree-2 | Fluree-3
 -- | -- | -- | --
-fdb-api-port | 8080 | 8081 | 8082
+fdb-api-port | 8090 | 8081 | 8082
 fdb-group-this-server | myserver1 | myserver2 | myserver3
 fdb-group-servers  | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792 | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792 | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792
 
@@ -45,9 +45,9 @@ When you see a log like the below, you can `cmd + click` on the URL to open the
 admin UI for each server.
 
 ```all
-INFO  fluree.db.peer.http-api - Starting web server on port: 8080 with an open API.
+INFO  fluree.db.peer.http-api - Starting web server on port: 8090 with an open API.
 INFO  fluree.db.peer.http-api -
-INFO  fluree.db.peer.http-api - http://localhost:8080
+INFO  fluree.db.peer.http-api - http://localhost:8090
 INFO  fluree.db.peer.http-api -
 ```
 
@@ -74,7 +74,7 @@ An example below:
 
 Key | Fluree-1 | Fluree-2 | Fluree-3
 -- | -- | -- | --
-fdb-api-port | 8080 | 8081 | 8082
+fdb-api-port | 8090 | 8081 | 8082
 fdb-group-log-directory |  data/a/group/ | data/b/group/ | data/c/group/
 fdb-storage-file-directory | data/a/ledger/ | data/b/ledger/ | data/c/ledger/
 fdb-group-this-server | myserver1 | myserver2 | myserver3
@@ -101,9 +101,9 @@ When you see a log like the below, you can `cmd + click` on the URL to open the
 admin UI for each server.
 
 ```all
-INFO  fluree.db.peer.http-api - Starting web server on port: 8080 with an open API.
+INFO  fluree.db.peer.http-api - Starting web server on port: 8090 with an open API.
 INFO  fluree.db.peer.http-api -
-INFO  fluree.db.peer.http-api - http://localhost:8080
+INFO  fluree.db.peer.http-api - http://localhost:8090
 INFO  fluree.db.peer.http-api -
 ```
 
@@ -120,7 +120,7 @@ The settings for the first three servers are as follows:
 
 Key | Fluree-1 | Fluree-2 | Fluree-3
 -- | -- | -- | --
-fdb-api-port | 8080 | 8081 | 8082
+fdb-api-port | 8090 | 8081 | 8082
 fdb-group-log-directory |  data/a/group/ | data/b/group/ | data/c/group/
 fdb-storage-file-directory | data/a/ledger/ | data/b/ledger/ | data/c/ledger/
 fdb-group-this-server | myserver1 | myserver2 | myserver3
@@ -187,7 +187,7 @@ INFO  f.d.ledger.consensus.tcp - TCP read channel closed for server: myserver4. 
   curl \
    -H "Content-Type: application/json" \
    -d '{"server": "myserver4"}' \
-   http://localhost:8080/fdb/add-server
+   http://localhost:8090/fdb/add-server
 ```
 
 If adding the server is successful, you should see a log like:
@@ -215,5 +215,5 @@ like the below to any server in the network (including the server to be removed)
   curl \
    -H "Content-Type: application/json" \
    -d '{"server": "myserver1"}' \
-   http://localhost:8080/fdb/remove-server
+   http://localhost:8090/fdb/remove-server
 ```

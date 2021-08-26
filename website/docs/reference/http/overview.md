@@ -1,6 +1,6 @@
 ---
-sidebar_position: 2
-sidebar_label: Local Development
+sidebar_position: 1
+sidebar_label: Overview
 ---
 # Overview
 
@@ -8,7 +8,7 @@ Downloaded endpoints can only be used in the downloadable versions of Fluree. Al
 
 `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/[ACTION]`
 
-- For the downloadable version, unless you changed the default `fdb-api-port`, the full URL is `http://localhost:8080/fdb/[DBNAME]/[ACTION]`
+- For the downloadable version, unless you changed the default `fdb-api-port`, the full URL is `http://localhost:8090/fdb/[DBNAME]/[ACTION]`
 
 ## Main Endpoints {#main-endpoints}
 

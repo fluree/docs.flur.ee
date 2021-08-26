@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Overview
 
 Using the FlureeWorker library, a browser [service worker](https://developers.google.com/web/fundamentals/primers/service-workers) can create a local query peer within the browser, making trusted data readily available.

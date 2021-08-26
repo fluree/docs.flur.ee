@@ -1,8 +1,8 @@
 ---
-sidebar_position: 5
+sidebar_position: 2
 ---
 
-# Node Library Examples
+# Node Examples
 
 You can download the latest version of the Fluree Node.js library from npm:
 

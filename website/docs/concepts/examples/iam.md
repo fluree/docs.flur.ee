@@ -126,7 +126,7 @@ to create the `illusion` collection and user roles in the ledger.
 
 We'll be using the [Password Authentication API](/guides/identity/password-management)
 to create our users. Using your API testing software, send a POST request with the
-following body to `http://localhost:8080/fdb/[NETWORK-NAME]/[DBID]/pw/generate`.
+following body to `http://localhost:8090/fdb/[NETWORK-NAME]/[DBID]/pw/generate`.
 
 ```flureeql
 {
