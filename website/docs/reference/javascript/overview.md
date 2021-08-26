@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Overview
 
 The javascript library, as an extension of our linear-scaling query peer service, makes data readily accessible. We get trusted data to the access point quickly. It runs in the browser, using a web socket to connect to a ledger server/group. The main commands are below.

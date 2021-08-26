@@ -1,4 +1,8 @@
-# FlureeWorker Library Examples
+---
+sidebar_position: 2
+---
+
+# FlureeWorker
 
 You can dowbload the latest version of the FlureeWorker library from npm:
 
