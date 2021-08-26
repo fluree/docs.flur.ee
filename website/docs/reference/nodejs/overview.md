@@ -1,7 +1,7 @@
 ---
-sidebar_position: 4
+sidebar_position: 1
 ---
-# Node Library Overview
+# Overview
 
 Using the Node.js library, a Node.js service can be configured as a fully-functioning query peer.  After establishing an initial connection, a web socket is used to communicate to a ledger server/group.  
 

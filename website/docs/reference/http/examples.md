@@ -1,8 +1,8 @@
 ---
-sidebar_position: 3
-sidebar_label: Local Examples
+sidebar_position: 2
+sidebar_label: Examples
 ---
-# Downloaded Endpoint Examples
+# HTTP Examples
 
 In order to ensure speed of processing queries and transactions, different types of queries and transactions should be issued to different endpoints. All requests, unless otherwise specified, should be POST requests.
 

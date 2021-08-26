@@ -1,4 +1,8 @@
-# JavaScript Library Examples
+---
+sidebar_position: 2
+---
+
+# Javascript Examples
 
 You can dowbload the latest version of the Fluree JavaScript library from npm:
 
