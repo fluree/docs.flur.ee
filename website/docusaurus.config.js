@@ -7,8 +7,8 @@ module.exports = {
   tagline: 'Semantic graph data management system built with web3 tech',
   url: 'https://docs.flur.ee',
   baseUrl: '/',
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'fluree', 		// GitHub org name.
   projectName: 'docs.flur.ee', 		// Repo name.
@@ -89,12 +89,12 @@ module.exports = {
       links: [
         {
           title: 'Docs',
-          items: [
-            {
-              label: 'Tutorial',
-              to: 'docs/tutorials/tutorial_intro',
-            },
-          ],
+          // items: [
+          //   {
+          //     label: 'Tutorial',
+          //     to: 'docs/tutorials/tutorial_intro',
+          //   },
+          // ],
         },
         {
           title: 'Community',
