@@ -23,14 +23,14 @@ To view an example application that uses Fluree for data management, visit the
 Make sure that you have a new ledger. You can either create a new ledger through
 the user interface, through the API for the
 [Fluree Anywhere](/api/downloaded-endpoints/downloaded-examples#-new-db) or through
-the API for the [Fluree On-Demand](/api/hosted-endpoints) (you will need to change
+the API for the [Fluree On-Demand](on-demand.md) (you will need to change
 the version).
 
 ## Overview {#overview}
 
 In Fluree, schema are comprised of collections and predicates. While Fluree is a
 graph database, if you come from the relational world you can think of a
-[collection](/docs/schema/collections) sort of like a database table.
+[collection](../overview/schema/collections.md) sort of like a database table.
 Every time you want a new type of item in your ledger, you would create a new collection.
 For example, collections in your ledger might be person, company, and city.
 

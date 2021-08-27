@@ -78,7 +78,7 @@ Rather than storing a copy of the entire ledger in each block, every block conta
 
 ### Collections and Predicates {#collections-and-predicates}
 
-A [collection](/docs/schema/collections) is analogous to a relational database table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city.
+A [collection](../overview/schema/collections.md) is analogous to a relational database table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city.
 
 Every collection has [predicates](/docs/schema/predicates). Predicates are analogous to relational ledger columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: `person/firstName`, `person/lastName`, and `person/age`.
 

@@ -258,7 +258,7 @@ memory once the available memory becomes full.
 Because the first item sorted in our `spot` index is `s`, the subject ID (64-bit
 signed integer), we want similar data to have subject ids that are next to each
 other. Fluree accomplishes this by ensuring every new subject goes into a defined
-[collection](/docs/schema/collections), and each collection is allocated a range
+[collection](../../overview/schema/collections.md), and each collection is allocated a range
 of subject ids. When a new subject is created, it gets assigned its `s` value with
 the next available subject id in that collection.
 
@@ -379,7 +379,7 @@ filtered views of the results.
 
 ### 't' as Time {#t-as-time}
 
-Every new subject, being placed into its respective [collection](/docs/schema/collections),
+Every new subject, being placed into its respective [collection](../../overview/schema/collections.md),
 atomically increments its subject id as described in [flake partitioning](#flake-partitioning).
 `t`, for reasons [explained below](#why-negative-t-values-), atomically decrements.
 
@@ -441,7 +441,7 @@ longer than the universe has existed. In the unlikely case subject ids ever ran
 out, they could always be migrated to a number > 64 bits to increase the range.
 
 While other subject IDs atomically increment with each new subject added within
-their respective [collection](/docs/schema/collections), `t` values decrement atomically.
+their respective [collection](../../overview/schema/collections.md), `t` values decrement atomically.
 Because Fluree uses a 64-bit integer for subject Ids, the same usable number range
 for `t` could have been achieved by using an unsigned integer and avoiding the special
 treatment for negative `t` values. The reason this was decided against is to be

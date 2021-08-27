@@ -1,6 +1,6 @@
-# Functions
+# SmartFunctions
 
-Smart functions are the engine for setting permissions in Fluree. This section lists
+SmartFunctions are the engine for setting permissions in Fluree. This section lists
 all built-in predicates that can be added to a function, as well as information
 on how to write the actual function code.
 
@@ -20,7 +20,7 @@ only Clojure supported)
 `spec` | `JSON` | (not yet implemented) Optional spec for parameters. Spec should
 be structured as a map, parameter names are keys and the respective spec is the value.
 
-## Universal Functions For `_fn/code` {#universal-functions-for-_fncode}
+## Universal Functions For `_fn/code` {#universal-functions}
 
 Clojure is the only language that is currently supported for writing smart functions.
 Only a subset of Clojure functions, as well as several custom functions, are allowed

@@ -335,7 +335,7 @@ Body: [{
   }]
 ```
 
-## /graphql Query {#graphql-query}
+## /graphql Query {#graphql}
 
 All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/identity/signatures#signed-queries)).
 

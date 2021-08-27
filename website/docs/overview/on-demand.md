@@ -5,7 +5,7 @@ There are two options for running Fluree:
 - Fluree On-Demand
 - [Fluree Anywhere](/docs/getting-started/fluree-anywhere)
 
-With Fluree On-Demand, we'll host your ledgers for you, and you are able to login and interact with your ledgers via a web interface, as well as via [API endpoints](/api/hosted-endpoints/overview). With Fluree On-Demand, you can <a href="https://flur.ee/getstarted/" target="_blank">sign up</a> or an account and start using Fluree right away.
+With Fluree On-Demand, we'll host your ledgers for you, and you are able to login and interact with your ledgers via a web interface. With Fluree On-Demand, you can [sign up](https://flur.ee/getstarted/) for an account and start using Fluree right away.
 
 You will have less control of your Fluree instance:
 
@@ -15,4 +15,4 @@ You will have less control of your Fluree instance:
 - Centralized ledgers only.
 - Metered usage - we use fuel to meter and track usage. Fuel is reset daily.
 
-We recommend Fluree On-Demand for anyone testing Fluree out or using Fluree for small-scale demos or proofs-of-concept. If this is right for you, you can <a href="https://flur.ee/getstarted/" target="_blank">sign up</a> today.
+We recommend Fluree On-Demand for anyone testing Fluree out or using Fluree for small-scale demos or proofs-of-concept. If this is right for you, you can [sign up](https://flur.ee/getstarted/) today.

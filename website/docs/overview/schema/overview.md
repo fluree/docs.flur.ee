@@ -28,7 +28,7 @@ All ledgers are created with the following collections.
 
 | Collection                               | Description                                                                                   |
 | ---------------------------------------- | --------------------------------------------------------------------------------------------- |
-| [\_collection](/docs/schema/collections) | Schema collections list                                                                       |
+| [\_collection](../../overview/schema/collections.md) | Schema collections list                                                                       |
 | [\_predicate](/docs/schema/predicates)   | Schema predicate definition                                                                   |
 | [\_tag](/docs/schema/tags)               | Tags                                                                                          |
 | [\_fn](/docs/schema/functions)           | ledger functions                                                                              |

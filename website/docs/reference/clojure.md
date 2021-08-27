@@ -4,7 +4,7 @@
 
 Fluree has a Clojure client.
 
-## A note on terminology
+## A note on terminology {#a-note-on-terminology}
 
 If you are familiar with Datomic, Datahike, Datascript, or Crux (or other Clojure triple-store+ databases) you may wonder at the difference in terminology between those databases and Fluree. Fluree uses [RDF](https://en.wikipedia.org/wiki/Resource_Description_Framework) terminology to describe the relationships between entities, or subjects.
 
@@ -17,7 +17,7 @@ Here's a quick glossary of how your knowledge may map on to Fluree's terminology
 | value                      | object      |
 | datom                      | flake       |
 
-## Setup
+## Setup {#setup}
 
 Make sure you have a running Fluree ledger service to connect to. See the [Getting Started](/docs/1.0.0/getting-started/installation) docs for more details.
 
@@ -47,11 +47,11 @@ Require the api and establish a connection to your Fluree server:
 @(fdb/new-ledger conn ledger)
 ```
 
-## Transacting
+## Transacting {#transacting}
 
 `transact` is used to make any changes to the ledger, either adding data or schema. It's all data, and it all uses the same api to effect changes.
 
-### Schema
+### Schema {#schema}
 
 All data transacted into a ledger must conform to a schema. We'll transact a basic schema below. See the [Schema](/docs/1.0.0/schema/overview) documentation for more details.
 
@@ -101,7 +101,7 @@ Create some predicates for the collection, analogous to entity attributes or rel
 
 ```
 
-### Data
+### Data {#data}
 
 Insert some subject data that conforms to the schema we've created. See the [Transact](/docs/1.0.0/transact) documentation for more details.
 
@@ -146,9 +146,9 @@ Insert some subject data that conforms to the schema we've created. See the [Tra
 
 ```
 
-## Querying
+## Querying {#querying}
 
-### Analytical queries
+### Analytical queries {#analytical-queries}
 
 The syntax for these queries is similar to datalog and eql. These don't support keywords for matching on flake values in the `:where` clause.
 
@@ -169,7 +169,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 ```
 
-### History queries
+### History queries {#history-queries}
 
 [History queries](/docs/1.0.0/query/history-query) can show you the raw history of a subject. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
@@ -178,7 +178,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 @(fdb/history-query (fdb/db conn ledger) {:history ["book/title" "Cryptonomicon"] :pretty-print true})
 ```
 
-### Block queries
+### Block queries {#block-queries}
 
 [Block queries](/docs/1.0.0/query/block-query) return all of the raw flake data stored in a block. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
@@ -187,7 +187,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 @(fdb/block-query-async conn ledger {:block 3 :pretty-print true})
 ```
 
-### Other query languages
+### Other query languages {#other-query-languages}
 
 In addition to the FlureeQL syntax used above, Fluree also supports queries in other query languages: [SQL](/docs/1.0.0/query/sql), [SPARQL](/docs/1.0.0/query/sparql), [GraphQL](/docs/1.0.0/query/graphql). These can be used from Clojure by supplying a database value and a query string, or, in the case of GraphQL, a query map.
 
@@ -200,7 +200,7 @@ In addition to the FlureeQL syntax used above, Fluree also supports queries in o
 
 ```
 
-## Async API
+## Async API {#async-api}
 
 All of the interactions with the Fluree ledger server are performed asynchronously, returning a promise. If you prefer to work with `core.async` channels instead of promises, there are `-async` variants of all the functions mentioned here that will return a `core.async` channel which will receive the result when the operation has finished.
 
