@@ -1,12 +1,11 @@
-# Examples
+<!-- # Examples
 
  Additional examples are coming soon
 
-<!--
 
 #### Query examples: {#query-examples}
 
-In the [Basic Schema](/docs/getting-started/basic-schema), we gave each person a set of favorite numbers. If we want to view all of `zsmith`'s flakes, which contain the values of his favorite numbers, our query could be:
+In the [Basic Schema](../../guides/schema/1.md), we gave each person a set of favorite numbers. If we want to view all of `zsmith`'s flakes, which contain the values of his favorite numbers, our query could be:
 
 ```flureeql
 {
@@ -412,7 +411,7 @@ WHERE {
 
 #### Artist Example 
 
-Using the [Basic Schema](/docs/getting-started/basic-schema), we will be able to use analytical queries to connect up a `person/favArtists` (stored in Fluree) to their artworks (stored in Wikidata).
+Using the [Basic Schema](../../guides/schema/1.md), we will be able to use analytical queries to connect up a `person/favArtists` (stored in Fluree) to their artworks (stored in Wikidata).
 
 We can retrieve the names of artworks created by jdoe's favorite artists. Our full query is below. We will discuss each of the where clause tuples individually. 
 
@@ -691,4 +690,4 @@ WHERE {
     ?creator    wd:?label                ?name.
 }
 LIMIT 5
-``` -->
+```  -->

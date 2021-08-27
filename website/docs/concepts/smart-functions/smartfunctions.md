@@ -1,10 +1,10 @@
-# Smart Functions
+# SmartFunctions
 
-Smart functions are the engine for setting permissions in Fluree. This section details the role of smart functions.
+SmartFunctions are the engine for setting permissions in Fluree. This section details the role of smart functions.
 
-To see a full list of all accepted smart functions, see [smart function list](/docs/schema/functions#universal-functions-for-_fn-code).
+To see a full list of all accepted smart functions, see [smart function list](../../overview/schema/smartfunctions#universal-functions).
 
-We also have a <a href="https://github.com/fluree/smart-function-library" target="_blank">Github repo</a> with basic smart functions you can add to your applications.
+We also have a [Github repo](https://github.com/fluree/smart-function-library) with basic smart functions you can add to your applications.
 
 For some additional help testing and debugging your smart function implementations, try updating your `logback.xml` configuration file (located in your Fluree directory) so that logging for `fluree.db` is set to `DEBUG`, e.g.
 

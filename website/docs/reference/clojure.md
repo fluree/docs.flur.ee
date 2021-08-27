@@ -152,7 +152,7 @@ Insert some subject data that conforms to the schema we've created. See the [Tra
 
 The syntax for these queries is similar to datalog and eql. These don't support keywords for matching on flake values in the `:where` clause.
 
-The `query` function takes a `db` value to execute a query against, as well as a query map. See the docs for [Analytical queries](/docs/1.0.0/query/analytical-query) and [Basic queries](/docs/1.0.0/query/overview) for more details.
+The `query` function takes a `db` value to execute a query against, as well as a query map. See the docs for [Analytical queries](/docs/1.0.0/query/analytical_query) and [Basic queries](/docs/1.0.0/query/overview) for more details.
 
 ```clojure
 ;; store the current immutable database value. See API docs for getting a prior version of a db, applying permissions to a db, and other options.
@@ -171,7 +171,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 ### History queries {#history-queries}
 
-[History queries](/docs/1.0.0/query/history-query) can show you the raw history of a subject. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
+[History queries](/docs/1.0.0/query/history_query) can show you the raw history of a subject. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
 ```clojure
 ;; see the history of the "Cryptonomicon" book.
@@ -180,11 +180,11 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 ### Block queries {#block-queries}
 
-[Block queries](/docs/1.0.0/query/block-query) return all of the raw flake data stored in a block. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
+[Block queries](/docs/1.0.0/query/block_query) return all of the raw flake data stored in a block. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
 ```clojure
 ;; see all the flakes from block 3
-@(fdb/block-query-async conn ledger {:block 3 :pretty-print true})
+@(fdb/block_query-async conn ledger {:block 3 :pretty-print true})
 ```
 
 ### Other query languages {#other-query-languages}

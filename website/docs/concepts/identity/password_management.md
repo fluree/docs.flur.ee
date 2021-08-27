@@ -8,7 +8,7 @@ Passwords are less-secure than private keys, however they may be the best option
 
 ## Password Settings {#password-settings}
 
-There are [several settings](/docs/getting-started/fluree-anywhere#password-and-jwt-token-settings)
+There are [several settings](../../overview/start/fluree_anywhere#password-and-jwt-token-settings)
 that are used to handle passwords and tokens. Two of the main settings are:
 
 `fdb-pw-auth-enable`: by default this is `true`.
@@ -18,7 +18,7 @@ Once we ensure these settings are how we like them, we can start our Fluree inst
 
 ### Passwords API {#passwords-api}
 
-There are three API endpoints associated with passwords - [generate, renew, and login](/api/downloaded-endpoints/overview#password-authentication-endpoints).
+There are three API endpoints associated with passwords - [generate, renew, and login](../../reference/http/overview.md#password-authentication-endpoints).
 
 When you generate a password, a new auth record is created in your given ledger.
  For example:

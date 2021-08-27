@@ -139,7 +139,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/fluree/docs.flur.ee',
+            'https://github.com/fluree/docs.flur.ee/tree/docs-overhaul/website',
         },
         // blog: {
         //   showReadingTime: true,

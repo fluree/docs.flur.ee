@@ -14,4 +14,4 @@ The crypto-base library (available through npm, `npm install @fluree/crypto-base
 
 ## Clojurescript Cryptography {#clojurescript-cryptography}
 
-The Clojurescript library, `fluree.crypto`, is available on <a href="https://clojars.org/fluree.crypto" target="_blank">clojars</a>, and the code is on <a href="https://github.com/fluree/fluree.crypto" target="_blank">GitHub</a>.
+The Clojurescript library, `fluree.crypto`, is available on [clojars](https://clojars.org/fluree.crypto), and the code is on [GitHub](https://github.com/fluree/fluree.crypto).

@@ -1,10 +1,10 @@
 # Other Fluree Tools
 
-## Fluree on Docker {#fluree-on-docker}
+## Fluree on Docker {#docker}
 
 You can use Fluree through Docker (see [Github repo](https://github.com/fluree/fluree-docker-example)).
 
-## Fluree Command Line Tool {#fluree-command-line-tool}
+## Fluree CLI {#fluree-cli}
 
 We have a command line tool that you can [download](https://fluree-cli-releases-public.s3.amazonaws.com/fluree_cli-latest.zip) to explore your ledger even without Fluree running. To see all the tool's capabilities, visit the [documentation](https://github.com/fluree/fluree.cli).
 

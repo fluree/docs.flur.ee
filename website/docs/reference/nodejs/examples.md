@@ -94,7 +94,7 @@ console.log("Added listener?", listenerAdded?);
 
 ## **block_query** {#block_query}
 
-FlureeQL [block queries](/docs/query/block-query) should be submitted to the `block_query` function. This does not include other types of queries (basic queries, history queries, etc) that might reference a "block" key. This only includes queries that are returning flakes from a block or set of blocks.
+FlureeQL [block queries](/docs/query/block_query) should be submitted to the `block_query` function. This does not include other types of queries (basic queries, history queries, etc) that might reference a "block" key. This only includes queries that are returning flakes from a block or set of blocks.
 
 ### Parameter(s) {#parameters-2}
 
@@ -457,7 +457,7 @@ An example of an unsigned query to `graphql`:
 
 ## **history_query** {#history_query}
 
-FlureeQL [history queries](/docs/query/history-query) should be submitted to the `history` function. This function only supports queries like those in the linked section.
+FlureeQL [history queries](../../overview/query/history_query.md) should be submitted to the `history` function. This function only supports queries like those in the linked section.
 
 ### Parameter(s) {#parameters-10}
 
@@ -747,7 +747,7 @@ flureenjs.close(flureeDbConn);
 
 ## **multi_query** {#multi_query}
 
-If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/docs/query/advanced-query#multiple-queries)), that should be done through the `multi_query` function.
+If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/docs/query/advanced_query#multiple-queries)), that should be done through the `multi_query` function.
 
 ### Parameter(s) {#parameters-18}
 

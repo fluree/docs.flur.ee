@@ -73,7 +73,7 @@ Fluree version, but to keep all of your previous ledgers.
 
 Block files are never overwritten. For example, when the transactions for block
 2 are issued, they will be written to a file for block 2 and never modified. If
-using versioned blocks (see [Mutable Fluree](/guides/infrastructure/mutability)),
+using versioned blocks (see [Mutable Fluree](./mutability.md)),
 block files may be renamed.
 
 There are four different types of indexes that are written to file. These indexes
@@ -85,5 +85,5 @@ sort flakes by:
 * predicate-object-subject-time : indexed predicates are written to this index
 
 The frequency at which new index files are written depends on your
-[ledger configuration](/docs/getting-started/fluree-anywhere#config-options), specifically,
+[ledger configuration](../../overview/start/fluree_anywhere#config-options), specifically,
 the `fdb-memory-reindex` option.
