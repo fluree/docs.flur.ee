@@ -40,4 +40,4 @@ If running Fluree in a decentralized manner, you need to choose a consensus algo
 
 The consensus algorithm for a network is specified in each ledger in the `_setting/consensus` predicate.
 
-We currently support Raft only, and you can learn more in the [Consensus Algorithm](/guides/infrastructure/consensus-algorithms) section.
+We currently support Raft only, and you can learn more in the [Consensus Algorithm](../../concepts/infrastructure/consensus_algorithms.md) section.

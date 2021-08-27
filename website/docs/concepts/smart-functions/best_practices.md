@@ -1,4 +1,4 @@
-# Best Practices
+# Smart Function Best Practices
 
 In a traditional application, there are three layers:
 
@@ -11,16 +11,17 @@ In the case of Fluree, some of the business logic can be located in the ledger l
 In a decentralized ledger, before any given block is committed, the network confirms
 the validity of the proposed transaction. A transaction is only valid if the syntax
 is correct, the types (i.e. string, int, long) for each predicate are correct, and
-all triggered smart functions return true. The exact method that the network reaches
-an agreed upon shared state is determined by each ledger's [consensus algorithm](/docs/ledger-setup/ledger-settings#consensus-algorithms).
+all triggered [smart functions](../../concepts/smart-functions/smartfunctions.md) return true.
+The exact method that the network reaches an agreed upon shared state is determined
+by each ledger's [consensus algorithm](../../concepts/infrastructure/consensus_algorithms.md).
 
 Because smart functions restrict what you can transact at the ledger level, it is
 important to build up your Fluree application layer-by-layer. Specifically:
 
 1. Create a Schema
 
-    Your initial schema should only specify collection and predicates, without any
-    smart functions.
+   Your initial schema should only specify collection and predicates, without any
+   smart functions.
 
 2. Add Sample/Initial Data
 
@@ -38,8 +39,7 @@ important to build up your Fluree application layer-by-layer. Specifically:
    Because smart functions restrict what can be done in a ledger, and because you
    can use your custom functions in other custom functions, it makes sense to add
    your functions in order of complexity. This will allow you to test those functions,
-   and you will be able to use previous functions as building blocks in future
-   functions.
+   and you will be able to use previous functions as building blocks in future functions.
 
 These best practices are employed in the examples on this site, so you can refer
 back to these steps to see how they are used.

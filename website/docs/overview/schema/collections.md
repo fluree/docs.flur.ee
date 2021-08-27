@@ -12,13 +12,13 @@ Predicate | Type | Description
 ---|---|---
 `_collection/name` | `string` | (required) The name of the collection. Collection names are aliases to an underlying collection integer identifier, and therefore it is possible to change collection alias to a different collection ID.
 `_collection/doc` | `string` | (optional) Optional docstring describing this collection.
-`_collection/spec` | [`ref`] | (optional) A multi-cardinality list of reference to the `_fn` collection. These specs restricts what is allowed in this collection. To see how to write a function, see the [function section](/docs/schema/functions).
+`_collection/spec` | [`ref`] | (optional) A multi-cardinality list of reference to the `_fn` collection. These specs restricts what is allowed in this collection. To see how to write a function, see the [function section](./smartfunctions.md).
 `_collection/specDoc` | `string` | (optional) Optional docstring to describe the specs. Is thrown when any spec fails.
 `_collection/version` | `string` | (optional) For your optional use, if a collection's spec or intended predicates change over time this version number can be used to determine which schema version a particular application may be using.
 
 ## Creating Collections {#creating-collections}
 
-Creating collections is done in the same way as creating any other type of subject in the ledger. In the below example, we create four new collections: person, chat, comment, and artist. We strongly discourage adding smart functions to your `_collection/spec` when you initially create a collection. If you would like a `_collection/spec`, visit the [functions](/docs/schema/functions) section to understand how to incorporate smart functions into your schema.
+Creating collections is done in the same way as creating any other type of subject in the ledger. In the below example, we create four new collections: person, chat, comment, and artist. We strongly discourage adding smart functions to your `_collection/spec` when you initially create a collection. If you would like a `_collection/spec`, visit the [functions](./smartfunctions.md) section to understand how to incorporate smart functions into your schema.
 
 ```flureeql
 [{

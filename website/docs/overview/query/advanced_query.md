@@ -267,7 +267,7 @@ Key | Description
 
 ## Recursion
 
-Recur is a sub-select option, which uses recursion to follow `ref` predicates that reference another subject in the same collection. For example, in the [Basic Schema](/docs/getting-started/basic-schema), we have a predicate, `person/follows`, which is a `ref` that points to another person.
+Recur is a sub-select option, which uses recursion to follow `ref` predicates that reference another subject in the same collection. For example, in the [Basic Schema](../../guides/schema/1.md), we have a predicate, `person/follows`, which is a `ref` that points to another person.
 
 Normally, if we want to query who a person follows, we would submit this query.
 

@@ -132,7 +132,7 @@ query  {
 Not supported
 ```
 
-## Pretty Print Block Query {#pretty-print-block-query}
+## Pretty Print Block Query {#pretty-print-block_query}
 
 In FlureeQL, you can pretty print the results of a block query by adding `"prettyPrint": true` to your query map. Any format of block query can be pretty printed.
 

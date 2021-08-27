@@ -150,7 +150,7 @@ In addition to `s`, `p`, and `o`, Fluree adds:
   (i.e. an expiration time for a Flake similar to the feature in Cassandra). `m`
   is not currently used.
 
-#### RDF <-> Flakes {#rdf---flakes}
+#### RDF <-> Flakes {#rdf-flakes}
 
 RDF represents an atomic unit of data, while a Flake represents an atomic unit of
 data _in time_ and _with provenance_. Therefore to make RDF and Flakes interchangable

@@ -1,6 +1,6 @@
 # Rule Example
 
-In this section, we will create two roles, level1User and level2User, and connect each role to a person in our [Basic Schema](/docs/getting-started/fluree-basics#overview).
+In this section, we will create two roles, level1User and level2User, and connect each role to a person in our [Basic Schema](../../guides/schema/1.md).
 
 1. level1User
 
@@ -260,9 +260,9 @@ Transactions not supported in SPARQL.
 
 ## Create Auth Records {#create-auth-records}
 
-In order for the people to sign their own transactions and queries, we need to create auth records. Unless we are using [authorities](/guides/identity/auth-records#authority), the `_auth/id` for each auth record needs to be connected to a [public-private key pair](/guides/identity/auth-records).
+In order for the people to sign their own transactions and queries, we need to create auth records. Unless we are using [authorities](../../concepts/identity/auth_records#authority), the `_auth/id` for each auth record needs to be connected to a [public-private key pair](../../concepts/identity/auth_records).
 
-There are several different ways to [generate public-private key/auth id triples](/guides/identity/auth-records#generating-a-public-private-key-auth-id-triple), and you can either choose to use your own or follow along with the ones provided in our example. Note that if you are using this is a real application, you should create your own.
+There are several different ways to [generate public-private key/auth id triples](../../concepts/identity/auth_records#generating-a-public-private-key-auth-id-triple), and you can either choose to use your own or follow along with the ones provided in our example. Note that if you are using this is a real application, you should create your own.
 
 Public/Private Key and Account Id (`_auth/id`) for `_auth$jdoe`.
 
@@ -351,7 +351,7 @@ Transactions not supported in SPARQL.
 
 ## Testing Our Rules {#testing-our-rules}
 
-To test these rules, you will need to submit signed queries and transactions. You can do this either through the user interface or by through the API. More information is in the [signatures section](/guides/identity/signatures).
+To test these rules, you will need to submit signed queries and transactions. You can do this either through the user interface or by through the API. More information is in the [signatures section](../../concepts/identity/signatures).
 
 ### Testing The Level 1 Roles {#testing-the-level-1-roles}
 

@@ -1,6 +1,6 @@
 # SPARQL
 
-This section details how to use SPARQL to query a Fluree. If you don't already know SPARQL, we recommend you use [Analytical Queries](/docs/query/analytical-query), as they have the same capabilities as SPARQL queries.
+This section details how to use SPARQL to query a Fluree. If you don't already know SPARQL, we recommend you use [Analytical Queries](./analytical_query.md), as they have the same capabilities as SPARQL queries.
 
 All of the examples below display SPARQL syntax, regardless of the language selected in the top-left. In addition, all queries on this page can be submitted to endpoints ending in `/sparql`.
 
@@ -57,7 +57,7 @@ Function | Example | Description
 
 WHERE clauses are comprised of a series of triples, which correspond to subject-predicate-object. By stringing multiple triples together, we can create fairly complex queries and easily follow relationships across entities.
 
-Note: If you have already looked at [FlureeQL Analytical Queries](/docs/query/analytical-query), then this section will look very familiar. FlureeQL Analytical Queries use the same concept of binding variables across triples, although the syntax is slightly different. In addition, the source of the data in a given triple is specified as a prefix, rather than as the first item in a five-tuple. We'll explain this fully later.
+Note: If you have already looked at [FlureeQL Analytical Queries](./analytical_query.md), then this section will look very familiar. FlureeQL Analytical Queries use the same concept of binding variables across triples, although the syntax is slightly different. In addition, the source of the data in a given triple is specified as a prefix, rather than as the first item in a five-tuple. We'll explain this fully later.
 
 The basic building block of WHERE clause is the triple. To start, let's take a look at a WHERE clause with a single triple `WHERE { ?person fd:person/handle "jdoe".}`.
 

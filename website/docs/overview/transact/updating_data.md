@@ -4,7 +4,7 @@
 
 In order to update data, you can reference an existing subject by using its `_id` or, for any predicate marked as unique as a two-tuple, i.e. `["_user/username", "dsanchez"]`. Predicates that you wish to update should be included as key-value pairs.
 
-When referencing an existing subject,  `"_action": "update"` is inferred. Note: When updating and upserting, you can use [nested transactions](/docs/transact/adding-data#nested-transactions).
+When referencing an existing subject,  `"_action": "update"` is inferred. Note: When updating and upserting, you can use [nested transactions](/docs/transact/adding_data#nested-transactions).
 
 Update using a two-tuple with a unique predicate. i.e. `person/handle` and relevant object:  
 

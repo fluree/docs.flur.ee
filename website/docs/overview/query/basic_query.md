@@ -2,7 +2,7 @@
 
 In this section, we show you how to perform basic queries using FlureeQL. All code examples are shown in FlureeQL. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the `Query` dropdown in the sidebar).
 
-To issue these queries using the API, see [`/query`](../../reference/http/examples#query). 
+To issue these queries using the API, see [`/query`](../../reference/http/examples#query).
 You can also issue multiple queries at once using the [`/multi-query`](../../reference/http/examples#multi-query).
 
 ## Query Keys {#query-keys}
@@ -197,7 +197,7 @@ Any select-array can be combined with any type of `from` key.
 
 ## Where Key {#where-key}
 
-A where clause filters a given ledger so that select-options are only applied to the field of subjects that meet the filter criteria. Where clauses are a simple way to apply very basic filters to a query. For more complex queries and filters, we recommend using [Analytical Queries](/docs/query/analytical-query).
+A where clause filters a given ledger so that select-options are only applied to the field of subjects that meet the filter criteria. Where clauses are a simple way to apply very basic filters to a query. For more complex queries and filters, we recommend using [Analytical Queries](./analytical_query.md).
 
 Where clause statements are simple expressions like `chat/instant > 1517437000000` where the first item is a predicate (not surrounded by quotation marks). This predicate must be indexed (it is either a `ref`, `tag`, or labelled as `unique` or `index`), and it cannot be a reversely-referenced predicate.
 

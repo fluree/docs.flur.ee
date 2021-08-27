@@ -142,7 +142,7 @@ Not supported
 
 ## History Query With Flake Format {#history-query-with-flake-format}
 
-Data in Fluree is stored in the form of [flakes](/guides/infrastructure/db-infrastructure#flakes). The flake format is an array where the first three elements specify an [subject, predicate, and object](/guides/infrastructure/db-infrastructure#subject-predicate-object-model) in that order.
+Data in Fluree is stored in the form of [flakes](../../concepts/architecture/flakes.md). The flake format is an array where the first three elements specify an [subject, predicate, and object](../../concepts/what-is-fluree#subject-predicate-object-model) in that order.
 
 You do not need to specify every single part of flake in order to use this format. However, note that the order of items in the flake-format is important, so you will need to include null values if you are skipping any items.
 

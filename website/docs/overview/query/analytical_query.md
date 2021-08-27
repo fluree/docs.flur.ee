@@ -15,7 +15,7 @@ We utilized concepts of logic programming and variable binding to give an immens
 
 This section covers analytical queries using the FlureeQL syntax. All code examples are shown in FlureeQL. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the sidebar, then make sure `Query` is selected in the top-right, as well as in the dropdown).
 
-To issue these queries using the API, see [`/query`](../../reference/http/examples#query). 
+To issue these queries using the API, see [`/query`](../../reference/http/examples#query).
 You can also issue multiple queries at once using the [`/multi-query`](../../reference/http/examples#multi-query) endpoint.
 
 ## Query Keys {#query-keys}
@@ -31,7 +31,7 @@ Key | Required? | Description
 [vars](#vars-key) | no | Optional map of variable bindings.
 [opts](#opts-key) | no | Optional map where options like `limit`, `orderBy`, `prettyPrint`, and `wikipediaOpts` can be specified.
 
-This page covers every available option for analytical queries, to see [examples](/guides/analytical-queries/analytical-query-examples), visit the relevant guide.
+This page covers every available option for analytical queries, to see [examples](/guides/analytical-queries/analytical_query-examples), visit the relevant guide.
 
 ## Select Key {#select-key}
 

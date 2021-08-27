@@ -5,6 +5,6 @@ as Fluree tools and connectors, visit the [Developer Hub](https://github.com/flu
 
 ## Quick Links {#quick-links}
 
-- [Supply Chain](https://github.com/fluree/example-supply-chain)
-- [Cryptocurrency](/guides/examples/cryptocurrency)
-- [Voting](/guides/examples/voting)
+- [Create a cryptocurrency](cryptocurrency/1.md)
+- [Voting Application](voting-app/1.md)
+- [Supply Chain Application](https://github.com/fluree/example-supply-chain)
