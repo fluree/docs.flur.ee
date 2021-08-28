@@ -49,7 +49,7 @@ The value of the select key is always an array. For the purposes of this section
 
     Predicates do not have to be namespaced. The collection can often (but not always be inferred). For example, if selecting from the `chat` collection or a specific chat subject, `instant` is inferred to be `chat/instant`. However, with Fluree's flexible schema a predicate in any collection can be attached to any subject.
 
-    ```all
+    ```json
     {
         "select": ["chat/message", "instant", "*"],
         "from": "chat"
@@ -62,7 +62,7 @@ The value of the select key is always an array. For the purposes of this section
 
     You'll notice that when you just include `chat/person` in the select-array, your results will only show you the subject id (unique identifer) for the person.
 
-    ```all
+    ```json
     {
         "_id": 369435906932739,
         "chat/message": "Hi! I'm a chat from Zach.",
@@ -77,7 +77,7 @@ The value of the select key is always an array. For the purposes of this section
 
     In addition, it does not matter whether the predicate you are crawling references one or many subjects - the syntax is identical (i.e. per our schema, a chat can only have one person `chat/person`, but a person can have multiple favorite movies `person/favMovies`. ).
 
-    ```all
+    ```json
     {
         "select": [    {"person": [ "*", "favMovies", "favNums"] }   ],
         "from": "chat"
@@ -86,7 +86,7 @@ The value of the select key is always an array. For the purposes of this section
 
     There is no limit to how many times we crawl the graph. For example, below we are crawling the graph to get the person associated with all the chats, as well as each person's favorite movies and favorite artists. We are also crawling the graph to get all the information about those favorite artists and favorite movies. This may look confusing at first, but a select-array is simply made up of any combination of the listed items with an unlimited amount of nesting.
 
-    ```all
+    ```json
     {
         "select": ["*", {"person": ["*", {"favMovies": ["*"] } , {"favArtists": ["*"] } ]}],
         "from": "chat"
@@ -101,7 +101,7 @@ The value of the select key is always an array. For the purposes of this section
 
     In the basic schema, a chat references a person via the `chat/person` predicate. We know that the following query works to select all `chat/person`s from the chat collection:
 
-    ```all
+    ```json
     {
       "select": ["chat/person"],
       "from": "chat"
@@ -110,7 +110,7 @@ The value of the select key is always an array. For the purposes of this section
 
     In order to get all chats that reference `person`s, we simply add an `_` after the `/`. So `chat/person` becomes `chat/_person`.
 
-    ```all
+    ```json
     {
       "select": ["chat/_person"],
       "from": "person"
@@ -125,7 +125,7 @@ The value of the select key is always an array. For the purposes of this section
 
     Reverse references can simply return the subject id (as in the query above) or you can crawl the graph with those preferences. Crawling the graph with a reverse reference has the same syntax and behaves the same way as crawling the graph with a regular reference.
 
-    ```all
+    ```json
     {
       "select": [{"chat/_person": ["*"]}],
       "from": "person"
@@ -136,7 +136,7 @@ The value of the select key is always an array. For the purposes of this section
 
     You can specify granular options that only apply to certain predicates. To do so, you need to create a map where the key is the predicate name and the value is an array with the sub-select option map inside. For example: `{"fullName": [{"_as": "name"}]}`. The sub-select option `as` renames `fullName` to `name` in the results. The full list of sub-select options is in the table below.
 
-    ```all
+    ```json
     {
         "select": ["handle", {"fullName": [{"_as": "name"}]}], 
         "from": "person"
