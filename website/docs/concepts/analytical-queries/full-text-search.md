@@ -5,7 +5,7 @@ a given collection. In order to do this, you first need to enable full text sear
 on any predicates you want to be able to search. For example, we're going to enable
 full text search on `person/fullName`, `person/handle`, and `chat/message`.
 
-```flureeql
+```json
 [{
     "_id": ["_predicate/name", "person/fullName"],
     "fullText": true
@@ -20,7 +20,7 @@ full text search on `person/fullName`, `person/handle`, and `chat/message`.
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -56,14 +56,14 @@ Transactions not supported in SPARQL.
 A predicate can be removed from the full-text search index (and thus from full-text
 search capability) at any time by simply setting `fullText` to false:
 
-```flureeql
+```json
 [{
     "_id": ["_predicate/name", "person/fullName"],
     "fullText": false
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -92,7 +92,7 @@ Now, we can issue a full text query against any predicate or collection by using
 a special predicate, `fullText:PREDICATE` or `fullText:COLLECTION`, which acts
 as a service call. For example:
 
-```flureeql
+```json
 {
     "select": "?person",
     "where": [
@@ -101,7 +101,7 @@ as a service call. For example:
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -130,7 +130,7 @@ includes the word `doe` (not case-sensitive). We can also issue the same query
 searching any full-text-searchable predicates in the `person` collection. In
 this case, we would be searching the predicates: `person/fullName` and `person/handle`.
 
-```flureeql
+```json
 {
     "select": "?person",
     "where": [
@@ -139,7 +139,7 @@ this case, we would be searching the predicates: `person/fullName` and `person/h
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -166,7 +166,7 @@ WHERE {
 We can combine a full-text search service call clause with any other clause, for
 example:
 
-```flureeql
+```json
 {
     "select": ["?person", "?nums", "?age"
     "where": [
@@ -177,7 +177,7 @@ example:
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -208,14 +208,14 @@ WHERE {
 A predicate can be removed from the full-text search index (and thus from full-text
 search capability) at any time by simply setting `fullText` to false:
 
-```flureeql
+```json
 [{
     "_id": ["_predicate/name", "person/fullName"],
     "fullText": false
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \

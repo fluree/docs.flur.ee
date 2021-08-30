@@ -38,7 +38,7 @@ value fields).
 You can copy/paste the following schema transaction into the Fluree Admin dashboard,
 to create the `illusion` collection and user roles in the ledger.
 
-```flureeql
+```json
 [
   {
     "_id": "_collection",
@@ -90,7 +90,7 @@ to create the `illusion` collection and user roles in the ledger.
 
 ### Seed Data {#seed-data}
 
-```flureeql
+```json
 [
   {
     "_id": "illusion#1",
@@ -128,7 +128,7 @@ We'll be using the [Password Authentication API](/guides/identity/password-manag
 to create our users. Using your API testing software, send a POST request with the
 following body to `http://localhost:8090/fdb/[NETWORK-NAME]/[DBID]/pw/generate`.
 
-```flureeql
+```json
 {
   "user": "greenhorn",
   "password": "alakazam",
@@ -159,7 +159,7 @@ user to the `pw/login` endpoint will return a JWT to use for authentication as w
 The following object would be included in the POST request body to login the created
 user.
 
-```flureeql
+```json
 {
   "user": "greenhorn",
   "password": "alakazam",
@@ -172,7 +172,7 @@ user.
 Let's try to query some illusions. With a valid JWT set in the Authorization header,
 send the following query to your Fluree ledger's `query` endpoint.
 
-```flureeql
+```json
 {
   "select": ["*"],
   "from": "illusion"
@@ -188,7 +188,7 @@ to our roles, so that our users can access the appropriate data for their trust 
 Transact the following array in the admin dashboard to give our each role appropriate
 query permissions for the `illusion` collection:
 
-```flureeql
+```json
 [
   {
     "_id": "_rule#initiatePermission",
@@ -244,7 +244,7 @@ one? That's as easy as updating our existing `magicianPermission` rule to allow 
 In the admin dashboard, transact the following block to allow "magician" users the
 ability to update and add to the `illusion` collection.
 
-```flureeql
+```json
 [
   {
     "_id": ["_rule/id", "magicianPermission"],
@@ -259,7 +259,7 @@ tag to the `_rule/ops` predicate to allow query & transaction operations.
 Now, try transacting the following block as an "initiate", and then attempt the
 same transaction as a "magician" user.
 
-```flureeql
+```json
 [
   {
     "_id": "illusion#new",

@@ -87,7 +87,7 @@ query.
 
 ### Example {#example}
 
-```all
+```http
  {
       method: 'POST',
       headers: {

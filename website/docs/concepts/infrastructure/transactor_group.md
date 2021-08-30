@@ -26,7 +26,7 @@ fdb-group-servers  | myserver1@localhost:9790,myserver2@localhost:9791,myserver3
 
 To start this up very quickly, you can clone down the tx-group-ex-dirs repo.
 
-```all
+```bash
 git clone https://github.com/fluree/tx-group-ex-dirs.git
 ```
 
@@ -44,7 +44,7 @@ and `fluree-3/`, respectively.  In each of those terminal windows, you can issue
 When you see a log like the below, you can `cmd + click` on the URL to open the
 admin UI for each server.
 
-```all
+```bash
 INFO  fluree.db.peer.http-api - Starting web server on port: 8090 with an open API.
 INFO  fluree.db.peer.http-api -
 INFO  fluree.db.peer.http-api - http://localhost:8090
@@ -82,7 +82,7 @@ fdb-group-servers  | myserver1@localhost:9790,myserver2@localhost:9791,myserver3
 
 To start this up very quickly, you can clone down the tx-group-ex-dirs repo.
 
-```all
+```bash
 git clone https://github.com/fluree/tx-group-ex-dirs.git
 ```
 
@@ -100,7 +100,7 @@ respectively.
 When you see a log like the below, you can `cmd + click` on the URL to open the
 admin UI for each server.
 
-```all
+```bash
 INFO  fluree.db.peer.http-api - Starting web server on port: 8090 with an open API.
 INFO  fluree.db.peer.http-api -
 INFO  fluree.db.peer.http-api - http://localhost:8090
@@ -128,7 +128,7 @@ fdb-group-servers  | myserver1@localhost:9790,myserver2@localhost:9791,myserver3
 
 To start this up, we can clone down the tx-group-ex-dirs repo.
 
-```all
+```bash
 git clone https://github.com/fluree/tx-group-ex-dirs.git
 ```
 
@@ -170,7 +170,7 @@ First we need to start `myserver4`. To do this, you can open a terminal and issu
 
 You'll see some logs like:
 
-```all
+```bash
 INFO  fluree.db.peer.http-api - Starting web server on port: 8083 with an open API.
 INFO  fluree.db.peer.http-api -
 INFO  fluree.db.peer.http-api - http://localhost:8083
@@ -183,7 +183,7 @@ INFO  f.d.ledger.consensus.tcp - TCP read channel closed for server: myserver4. 
 2. Issue a request to any active server (in this case, to server `myserver1`) to
   add `myserver4`.
 
-```all
+```bash
   curl \
    -H "Content-Type: application/json" \
    -d '{"server": "myserver4"}' \
@@ -192,13 +192,13 @@ INFO  f.d.ledger.consensus.tcp - TCP read channel closed for server: myserver4. 
 
 If adding the server is successful, you should see a log like:
 
-```all
+```bash
 Committing myserver4 add to the network configuration. Change command id: eeeda1b7-c939-4eea-885c-96b0e87f394b
 ```
 
 If it was not successfully added, you'll see a message like:
 
-```all
+```bash
 WARN  fluree.raft.leader - Server myserver4 did not sync in the allotted number
 of rounds. Please delete this server's files, and attempt to add again. Depending
 on your network's connectivity, you may want to increase :fdb-group-catch-up-rounds.
@@ -211,7 +211,7 @@ This is a beta feature, so if you encounter any issues, please email `support@fl
 If you have a server running, you can dynamically remove a server by issue a request
 like the below to any server in the network (including the server to be removed).
 
-```all
+```bash
   curl \
    -H "Content-Type: application/json" \
    -d '{"server": "myserver1"}' \

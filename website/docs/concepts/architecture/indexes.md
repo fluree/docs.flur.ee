@@ -150,7 +150,7 @@ Tell me everything about John Smith
 
 Query:
 
-```all
+```json
 // Fluree will lookup ["username", "jsmith"] and resolve it to s = 26
  {"select": ["*"], 
  "from": ["username", "jsmith"]}
@@ -181,7 +181,7 @@ Tell me who John Smith follows
 
 Query:
 
-```all
+```json
 {"select": ["?following"], 
  "where": [[26 "follows" "?following"]]}
 
