@@ -36,7 +36,7 @@ The value of the select key is always an array. For the purposes of this section
   
    An `*` indicates "select all predicates" using the default options. An `*` may be used in conjunction with other select-array items, especially when the user wants to specify particular options. There are examples of this latter in the list.  
   
-   ```all
+   ```json
     {
       "select": ["*"],
       "from": "chat"
@@ -145,7 +145,7 @@ The value of the select key is always an array. For the purposes of this section
 
     A map can BOTH crawl the graph and have sub-select options. For example, `{"comment/_person": ["*", {"_as": "comment", "_limit": 1}]}`
 
-    ```all
+    ```json
     {
         "select": ["handle", {"comment/_person": ["*", {"_as": "comment", "_limit": 1}]}], 
         "from": "person"
@@ -154,7 +154,7 @@ The value of the select key is always an array. For the purposes of this section
 
     Below is another example using `_recur`.
 
-    ```all
+    ```json
     {
         "select":["handle", {"person/follows": ["handle", {"_recur": 10}]}],
         "from":"person"
@@ -187,7 +187,7 @@ an array of subject ids and unique two-tuples | `[87960930223082, ["person/handl
 
 Any select-array can be combined with any type of `from` key.
 
-```all
+```json
 {
   "select": ["*", {"chat/_person": ["*", {"_as": "chperson"}]}],
   "from": [87960930223082, ["person/handle", "jdoe"]]
@@ -208,21 +208,21 @@ Note: You are able to filter string values with `>`, `>=`, `<`, `<=`, although w
 
 You can link multiple specifications with `AND`s or `OR`s, for example `chat/instant > 1517437000000 AND chat/instant < 1517438000000`. However, you cannot submit a where clause with both an `AND` and an `OR`.
 
-```all
+```json
 {
   "select": ["chat/message", "chat/instant"],
   "where": "chat/instant > 1517437000000"
 }
 ```
 
-```all
+```json
 {
   "select": ["chat/message", "chat/instant"],
   "where": "chat/person = 351843720888322 OR chat/instant > 1517437000000"
 }
 ```
 
-```all
+```json
 {
   "select": ["handle"],
   "where": "person/handle != \"jdoe\" AND person/_chat"
@@ -235,7 +235,7 @@ A basic query can optionally have a block key, which issues that query as of a g
 
 Using a block number:
 
-```flureeql
+```json
 {
   "select": ["*"],
   "from": "chat",
@@ -243,7 +243,7 @@ Using a block number:
 }
 ```
 
-```curl
+```bash
  curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -273,7 +273,7 @@ Using a block number:
 
 Using an ISO-8601 formatted wall clock time:
 
- ```flureeql
+ ```json
 {
   "select": ["*"],
   "from": "chat",
@@ -281,7 +281,7 @@ Using an ISO-8601 formatted wall clock time:
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -310,7 +310,7 @@ Not supported
 
 Using an ISO-8601 formatted duration (as of 5 minutes ago):
 
- ```flureeql
+ ```json
 {
   "select": ["*"],
   "from": "chat",
@@ -318,7 +318,7 @@ Using an ISO-8601 formatted duration (as of 5 minutes ago):
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -361,7 +361,7 @@ Key | Value | Description
 
 For example:
 
-```all
+```json
 { 
   "select": ["*"], 
   "from": "person", 

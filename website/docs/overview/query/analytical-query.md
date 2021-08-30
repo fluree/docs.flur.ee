@@ -74,7 +74,7 @@ If using `groupBy`, aggregates are applied only to the values within that group.
 
 If select a mixture of aggregate and non-aggregate variables, the results of the aggregate are returned alongside every non-aggregate value. To see what this looks like, try issuing the below query against the basic schema.
 
-```all
+```json
 {
   "select": ["?nums", "(avg ?nums)"],
   "where": [["?person", "person/favNums", "?nums"]]
@@ -135,7 +135,7 @@ Wikidata | `$wd` | Wikidata
 
 For example, the three tuple `["?person", "person/handle", "?handle"]` is equivalent to `["$fdb", "?person", "person/handle", "?handle"]`, because the specified source is the current ledger. The four tuple, `["$fdbPT2H", "?person", "person/handle", "?handle"]` is matching the given tuple pattern to the subject-predicate-object triples active in the ledger as of two hours ago.
 
-```all
+```json
 {
   "select": "?nums",
   "where": [["?person", "rdf:type", "person"],
@@ -150,8 +150,9 @@ You can bind a variable to an aggregate value. As mentioned above, where-array i
 
 Valid functions are the same as the ones listed in [Valid Aggregate Functions](#valid-aggregate-functions). You can also use the aggregate modifier (`distinct`) explained in the valid aggregate section (you can use the `as` modifier, but this will simply by ignored). A function must be preceded with a `#`.
 
-```flureeql
-{"select": "?hash", 
+```json
+{
+ "select": "?hash", 
  "where": [
     ["?s", "_block/number", "?bNum"],
     ["?maxBlock",  "#(max ?bNum)"],
@@ -160,7 +161,7 @@ Valid functions are the same as the ones listed in [Valid Aggregate Functions](#
 ]}
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -190,8 +191,9 @@ WHERE {
 
 You can also simply specify values as the second item in the tuple. This binds the given variable to the value provided.
 
-```all
-{"select": "?person", 
+```json
+{
+ "select": "?person", 
  "where": [
     ["?handle",  "jdoe"],
      ["?person", "person/handle", "?handle"]
@@ -206,7 +208,7 @@ A `bind` map (or multiple maps), can be declared anywhere in the where clause. T
 
 The map is comprised of keys that correspond to variables, and values. For example, `{"bind": {"?handle": "dsanchez"}}`. You can bind multiple variables in the same map, as well, for example `{"bind": {"?handle": "dsanchez", "?person": 351843720888324}}`.
 
-```flureeql
+```json
 {
   "select": [ "?person", "?handle"],
   "where": [
@@ -220,7 +222,7 @@ The map is comprised of keys that correspond to variables, and values. For examp
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -252,7 +254,7 @@ WHERE {
 
 Like intermediate aggregate clauses, binds can use aggregate functions. See the [Valid Aggregate Functions](#valid-aggregate-functions) list above.
 
-```flureeql
+```json
 {"select": "?hash", 
  "where": [
     ["?s", "_block/number", "?bNum"],
@@ -262,7 +264,7 @@ Like intermediate aggregate clauses, binds can use aggregate functions. See the 
 ]}
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -296,7 +298,7 @@ An optional map is map where the key is `optional`, and the value is an array of
 
 For example:
 
-```all
+```json
 { "optional": [ 
     [ "?person", "person/fullName", "?name"], 
     ["?favNums", 1223],
@@ -311,7 +313,7 @@ Anything within an optional map is resolved and then left outer joined with prev
 
 A union map takes an two-item array as a value. The two items in this array is itself an array comprised of any number of where-items (for example, three-tuples, two-tuples, optional maps, and filter maps). The results of each array of where-items is then outer joined.
 
-```all
+```json
 {
   "select": [ "?x", "?y", "?b", "?c", "?cname", "?pname"],
   "where": [
@@ -363,7 +365,7 @@ strEnds | `(strEnds ?message \"Amy.\")` | Returns true if the string ends with t
 
 An example query:
 
-```flureeql
+```json
 {
     "select": ["?handle", "?num"],
     "where": [  ["?person", "person/handle", "?handle"], 
@@ -372,7 +374,7 @@ An example query:
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -406,7 +408,7 @@ In the prefix map, we can specify what ledger we want to query across, in this c
 
 Now we can use `ftest` as a source in any clause.
 
-```flureeql
+```json
 {
     "prefixes": {
       "ftest": "fluree/test"
@@ -417,7 +419,7 @@ Now we can use `ftest` as a source in any clause.
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -464,7 +466,7 @@ The `vars` key takes a map where the keys are variable names and the values are 
 
 For example, in the below query `?handle` will be replaced with `dsanchez` anywhere it appears in the query.
 
-```flureeql
+```json
 {
     "select": "?handle",
     "where": [  
@@ -475,7 +477,7 @@ For example, in the below query `?handle` will be replaced with `dsanchez` anywh
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \

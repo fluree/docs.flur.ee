@@ -14,7 +14,7 @@ Using GraphQL, you can only retrieve predicates from within the namespace that y
 
 Therefore, we can only retrieve predicates like `_id`, `message`, `person`, or `comments`, which are in the `chat` namespace.
 
-```all
+```graphql
 { graph {
   chat {
     _id
@@ -28,7 +28,7 @@ Fluree allows any reference predicate to point to any subject, regardless of col
 
 However, in order to retrieve references using GraphQL, the `restrictCollection` property of that predicate has to be set to a valid collection. This second example retrieves not only the `_id` and `message` for each chat, but the `_id` and `handle` predicates for the `person` associated with each `chat`.
 
-```all
+```graphql
 { graph {
   chat {
     _id
@@ -46,7 +46,7 @@ However, in order to retrieve references using GraphQL, the `restrictCollection`
 
 GraphQL does not usually support the use of wildcards ( `*`), so most GraphQL interfaces will show an error when you attempt to use a wildcard. However, if you submit, the following query, the expected results will be returned.
 
-```all
+```graphql
 # Note this may show an error in your GraphQL tool, but it will return the expected result. 
 
 { graph {
@@ -65,7 +65,7 @@ The syntax for doing so differs from FlureeQL to GraphQL. While FlureeQL uses th
 
 Using GraphQL:
 
-```all
+```graphql
 { graph {
   person {
     chat_Via_person {
@@ -80,7 +80,7 @@ Using GraphQL:
 
 Using FlureeQL
 
-```all
+```json
 {
   "select": [
     "*",
@@ -96,7 +96,7 @@ In order to query a specific block or range of blocks in GraphQL, you need to us
 
 Querying a single block
 
-```all
+```graphql
 query  {
   block(from: 3, to: 3)
 }
@@ -104,7 +104,7 @@ query  {
 
 Querying a range of blocks
 
-```all
+```graphql
 query  {
   block(from: 3, to: 5)
 }
@@ -112,7 +112,7 @@ query  {
 
 Querying a range of blocks starting from a lower limit
 
-```all
+```graphql
 query  {
   block(from: 3)
 }
@@ -122,7 +122,7 @@ query  {
 
 To query a specific subject id, you can use the `_id` option, as seen below.
 
-```all
+```graphql
 { graph {
   chat(_id: 369435906932737) {
     _id
@@ -137,7 +137,7 @@ To query a specific subject id, you can use the `_id` option, as seen below.
 
 To query a unique two-tuple, you can use the `ident` option, as seen below.
 
-```all
+```graphql
 # Note this may show an error in your GraphQL tool, but it will return the expected result. 
 
 { graph {
@@ -161,7 +161,7 @@ GraphQL queries allow you to sort any field at any level in the graph. In order 
 
 In the below example, we are sorting chat messages in alphabetical order.
 
-```all
+```graphql
 { graph {
   chat (sort: {attribute: "message", order: ASC}) {
     _id
@@ -174,7 +174,7 @@ In the below example, we are sorting chat messages in alphabetical order.
 
 The below query sorts every person alphabetically by their full name, and then sorts all of their comments by message.
 
-```all
+```graphql
 { graph {
    person (sort: {attribute: "fullName", order: ASC}) {
     fullName
@@ -189,7 +189,7 @@ The below query sorts every person alphabetically by their full name, and then s
 
 Query with sort. Get all chat messages sorted alphabetically by message.
 
-```all
+```graphql
 { graph {
   chat (sort: {attribute: "message", order: ASC}) {
     _id
@@ -202,7 +202,7 @@ Query with sort. Get all chat messages sorted alphabetically by message.
 
 Query with sort. Get all people, sorted alphabetically by full name, and get each person's chat messages sorted from oldest to newest.
 
-```all
+```graphql
 { graph {
    person (sort: {attribute: "fullName", order: ASC}) {
     fullName
@@ -223,7 +223,7 @@ As you can see in the below example, in order to add people, we store the JSON-f
 
 We also need to ensure that all `"` are escaped, like so `\"`. If you use `$` anywhere in your transaction, that also needs to be escaped. If using GraphQL for transactions, we recommend using `#` as the delimiting characters in tempids (i.e. `person#1` rather than `person$1`), as `#` does not need to be escaped.
 
-```all
+```graphql
 mutation addPeople ($myPeopleTx: JSON) {
   transact(tx: $myPeopleTx)
 }
@@ -253,7 +253,7 @@ Key | Description
 `recur` | Number of times (integer) to follow a relationship. Only for `ref` predicates.
 `as` | Alternate name for a predicate. Only for `ref` predicates.
 
-```all
+```graphql
 { graph {
   person {
     _id
