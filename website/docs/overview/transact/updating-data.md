@@ -8,14 +8,14 @@ When referencing an existing subject,  `"_action": "update"` is inferred. Note: 
 
 Update using a two-tuple with a unique predicate. i.e. `person/handle` and relevant object:  
 
-```flureeql
+```json
 [{
   "_id":      ["person/handle", "dsanchez"],
   "age": 71
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -42,14 +42,14 @@ Transactions not supported in SPARQL
 
 Update using subject id:
 
-```flureeql
+```json
 [{
   "_id":      351843720888324,
   "age": 71
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -80,7 +80,7 @@ You can upsert data if you have a unique predicate marked, `"upsert": true`. In 
 
 We can make `person/handle` a upsertable predicate with the following
 
-```all
+```json
 [{
     "_id": ["_predicate/name", "person/handle"],
     "upsert": true
@@ -89,7 +89,7 @@ We can make `person/handle` a upsertable predicate with the following
 
 After issuing the above transaction, we can issue the below transaction, which will just update jdoe's age, rather than creating a new person.
 
-```flureeql
+```json
 [{
   "_id":      "person",
   "handle":   "jdoe",
@@ -97,7 +97,7 @@ After issuing the above transaction, we can issue the below transaction, which w
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \

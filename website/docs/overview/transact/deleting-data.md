@@ -4,14 +4,14 @@
 
 To delete/retract an entire subject, use the `_id` key along with only `"_action": "delete"`. This deletes (retracts) the subject all predicates. In addition, all of the references for that subject anywhere in the ledger are also retracted.
 
-```flureeql
+```json
 [{
   "_id":      ["person/handle", "zsmith"],
   "_action":  "delete"
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -42,14 +42,14 @@ To delete only specific predicate-objects within an subject, specify the key/val
 
 You can delete (retract) a single predicate by setting the value of `_id` to a two-tuple of the predicate and predicate value, and then setting the predicate to null. `"_action": "delete"` is inferred.
 
-```flureeql
+```json
 [{
   "_id":      ["person/handle", "jdoe"],
   "age":   null
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -80,7 +80,7 @@ To delete (retract) only a single object from a multi predicate, specify the pre
 
 For example, to delete just the number, 98, from   `["person/handle", "jdoe"]`'s favorite numbers, we would issue:
 
-```flureeql
+```json
 [{
   "_id":      ["person/handle", "jdoe"],
   "favNums":   [98],
@@ -88,7 +88,7 @@ For example, to delete just the number, 98, from   `["person/handle", "jdoe"]`'s
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -116,14 +116,14 @@ Transactions not supported in SPARQL
 
 To delete all of `["person/handle", "jdoe"]`'s favorite numbers, we would issue:
 
-```flureeql
+```json
 [{
   "_id":      ["person/handle", "jdoe"],
   "favNums":  null
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
