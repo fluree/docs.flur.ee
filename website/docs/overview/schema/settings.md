@@ -31,7 +31,7 @@ By default, all ledgers use English as a language. We support:
 
 To see all supported languages, you can also query:
 
-```all
+```json
 {
     "select": {"?tag": ["*"]},
     "where": [["?tag", "_tag/id", "?id"]],
@@ -41,7 +41,7 @@ To see all supported languages, you can also query:
 
 To see the language your ledger is currently set to, you can issue the query:
 
-```all
+```json
 {
   "select": [ "language" ],
   "from": ["_setting/id", "root"]
@@ -50,7 +50,7 @@ To see the language your ledger is currently set to, you can issue the query:
 
 To change your language, simply set your language setting to the two-letter code for your desired language. For example, to set a ledger to Russian, you can issue the transaction:
 
-```all
+```json
 [{
     "_id": ["_setting/id", "root"],
     "language": "ru" 
@@ -69,7 +69,7 @@ If not set, a default value of 2mb (i.e., 2e6) is used for the maximum transacti
 
 To see the current value of txMax for your ledger, you can issue the query:
 
-```all
+```json
 {
   "select": [ "txMax" ],
   "from": ["_setting/id", "root"]
@@ -78,7 +78,7 @@ To see the current value of txMax for your ledger, you can issue the query:
 
 To change the value for txMax, you can issue a transaction to specify the size limit in bytes:
 
-```all
+```json
 [{
     "_id": ["_setting/id", "root"],
     "txMax": 2e6 

@@ -59,7 +59,7 @@ In order to create a predicate, you only need to specify what type of subject yo
 
 If you would like a `_predicate/spec` or `txSpec`, which limits that allowed values for a predicate, see the [function](/docs/schema/functions) section.
 
-```flureeql
+```json
 [{
   "_id":    "_predicate",
   "name":   "person/handle",
@@ -83,7 +83,7 @@ If you would like a `_predicate/spec` or `txSpec`, which limits that allowed val
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -131,7 +131,7 @@ Transactions not supported in SPARQL
 
 You can do this by adding a new predicate:
 
-```flureeql
+```json
 [{
     "_id": "_predicate",
     "name": "_predicate/longDescription",
@@ -139,7 +139,7 @@ You can do this by adding a new predicate:
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -167,14 +167,14 @@ Transactions not supported in SPARQL
 
 After you add this predicate, you can update any existing predicates to include a long description:
 
-```flureeql
+```json
 [{
     "_id": ["_predicate/name", "person/handle"],
     "longDescription": "I have a lot to say about this predicate, so this is a longer description about the person/handle predicate"
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -201,7 +201,7 @@ Transactions not supported in SPARQL
 
 And you can create new predicates with a `_predicate/longDescription`:
 
-```flureeql
+```json
 [{
     "_id": "_predicate",
     "name": "_user/age",
@@ -210,7 +210,7 @@ And you can create new predicates with a `_predicate/longDescription`:
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -243,14 +243,14 @@ Although you can change built-in collection predicates, we do not recommend doin
 
 One commonly-requested safe change, however, is to allow `_predicate/name` to be upsertable. By default, `_predicate/name` does not allow upsert, meaning if you try to create a new predicate with the name of already existing predicate, an error will be thrown. You can change this, however, by editing the predicate, `_predicate/name`. To see all the existing predicates for the `_predicate/name` predicate, you can issue the following query:
 
-```flureeql
+```json
 {
     "select": ["*"],
     "from": ["_predicate/name", "_predicate/name"]
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -274,7 +274,7 @@ WHERE {
 
 The default features of `_predicate/name` are:
 
-```all
+```json
 {
   "_predicate/name": "_predicate/name",
   "_predicate/doc": "Predicate name",
@@ -286,14 +286,14 @@ The default features of `_predicate/name` are:
 
 As we can see, there is no `upsert` key in the predicate, so by default upsert is false. To change this, we can issue:
 
-```flureeql
+```json
 [{
     "_id": ["_predicate/name", "_predicate/name"],
     "upsert": true
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -324,7 +324,7 @@ Now, we allow upsert for the `_predicate/name` predicate.
 
 To see all of the predicates in a collection, you can use an analytical query with a filter, like below. To see all the predicates from any given collection, just replace `_collection` with the name of any collection.
 
-```flureeql
+```json
 {
     "select": {"?predicate": ["*"]},
     "where": [
@@ -334,7 +334,7 @@ To see all of the predicates in a collection, you can use an analytical query wi
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
