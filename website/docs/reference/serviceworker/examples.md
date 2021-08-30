@@ -6,7 +6,7 @@ sidebar_position: 2
 
 You can dowbload the latest version of the FlureeWorker library from npm:
 
-```all
+```bash
 npm install @fluree/flureeworker
 ```
 
@@ -156,7 +156,7 @@ Message received from FlureeWorker after processing a `close` request.
 
 Examples of `close` results
 
-```all
+```http
 {status:  200
  message: "Connection closed."}
 
@@ -180,7 +180,7 @@ Message received from FlureeWoker after processing a `connect` request.
 
 Example of `connStatus` results
 
-```all
+```http
 {status:  200
  message: "Connection is ready."}
 
@@ -203,7 +203,7 @@ Message received from FlureeWorker after processing a `login` request.
 
 Example of `login` results
 
-```all
+```http
 {status:  200
  result: {username: "sam" token: "eyJhbGc..."}}
 
@@ -226,7 +226,7 @@ Triggered when FlureeWorker receives ledger updates from the Fluree network. The
 
 Example of `setState` results
 
-```all
+```http
 {status: "loaded",
  result:[{"_id":369435906932739,"buyer":{"_id":351843720888324,"name":"ABC Flurian Group"},"id":"113","cost":75000,"items":["db","mobile app","app server","db server"],"seller":{"_id":351843720888321,"name":"Fluree"}},{"_id":369435906932738,"buyer":{"_id":351843720888324,"name":"ABC Flurian Group"},"id":"112","cost":2500,"items":["db"],"seller":{"_id":351843720888321,"name":"Fluree"}},{"_id":369435906932737,"buyer":{"_id":351843720888323,"name":"Leh-x Flurian Services"},"id":"111","cost":5000,"items":["db","application","server","mobile app"],"seller":{"_id":351843720888321,"name":"Fluree"}}]}
 ```
