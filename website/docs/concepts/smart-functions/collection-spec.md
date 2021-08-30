@@ -19,7 +19,7 @@ If we want to make `person/fullName` required, we need to first create a smart f
 
 It might be tempting to think that, because this smart function pertains to one specific predicate, then we should use a predicate spec. However, we could be creating new people with the following transaction:
 
-```all
+```json
 [{
   "_id": "person",
   "handle": "gWash"
@@ -36,7 +36,7 @@ Note, in our smart function, we first use our `?sid` to find the `person/fullNam
 
 In the below transaction, we first attach the `_fn$fullNameReq` to the `person` collection, and write a `specDoc`. The `specDoc` is the custom error message that will display when this smart function returns false. In the second part of the transaction, we create the relevant smart function, `fullNameReq`.
 
-```flureeql
+```json
 [{
   "_id": ["_collection/name", "person"],
   "spec": ["_fn$fullNameReq"],
@@ -49,7 +49,7 @@ In the below transaction, we first attach the `_fn$fullNameReq` to the `person` 
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -82,14 +82,14 @@ Transactions not supported in SPARQL
 
 After we add this `_collection/spec`, the following transaction should fail:
 
-```flureeql
+```json
 [{
     "_id": "person",
     "handle": "noFullName"
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \

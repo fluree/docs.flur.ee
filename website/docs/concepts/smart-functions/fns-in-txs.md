@@ -6,14 +6,14 @@ To use smart functions directly in transactions, we need to put our code inside 
 
 For example, to add ", Sr." to the end of a person's full name, we can use two built-in smart functions, `str` and `?pO`. `str` concatenates strings, and `?pO` retrieves the previous object. In this case, we expect the final object of `person/fullName` to be `Jane Doe, Sr.`.
 
-```flureeql
+```json
 [{
   "_id": ["person/handle", "jdoe"],
   "fullName": "#(str (?pO) \", Sr.\")"
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -44,7 +44,7 @@ An atomic compare and set function can protect the integrity of a transaction wh
 
 Say you wanted to add a 'Dr.' in front of every medical doctor's name. You issue a query for all people whose title is doctor, and do some logic to filter all names that don't already start with 'Dr.'. It happens that Jane Doe and John Smith are missing the Dr. prefix. A `cas` use might look like:
 
-```flureeql
+```json
 [{"_id": 1234 
   "fullName": "#(cas \"Jane Doe\" \"Dr. Jane Doe\")"},
   "_id": 5678 
@@ -58,7 +58,7 @@ If between your query and this transaction getting executed another transaction 
 
 In another example, say you had multiple microservices that required a synthetic lock on a value. `cas` can test that the lock still exists before updating a different value. In this example, each lock can have a unique `lock/id`, and if a lock is active then `isLocked` will be `true`.
 
-```flureeql
+```json
 [{"_id": ["lock/id", 12345] 
   "isLocked": "#(cas true false)"},
  {"_id": 5678 

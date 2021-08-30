@@ -14,7 +14,7 @@ In this section, we will create two roles, level1User and level2User, and connec
 
 First, we need to create a new predicate, which connects a `person` to a `_auth`.
 
-```flureeql
+```json
 [{
   "_id":    "_predicate",
   "name":   "person/auth",
@@ -24,7 +24,7 @@ First, we need to create a new predicate, which connects a `person` to a `_auth`
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -d '[{
@@ -67,7 +67,7 @@ The full function is: `(contains? (get-all (?s \"[{chat/person [{person/auth [_i
 2. Then, we retrieve all (just one in this case) of the _auth_ids by again crawling the results from step 1. `(get-all [\"chat/person\" \"person/auth\" \"_id\"])`.
 3. Finally, we ask, does the set (of one) _id contain the (?auth_id) who is currently making this update. `(contains? (get-all (?s \"[{chat/person [{person/auth [_id] }] }]\") [\"chat/person\" \"person/auth\" \"_id\"]) (?auth_id))`.
 
-```flureeql
+```json
 [
   {
     "_id": "_role",
@@ -110,7 +110,7 @@ The full function is: `(contains? (get-all (?s \"[{chat/person [{person/auth [_i
 ]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -181,7 +181,7 @@ We've already created the rules, `viewAllChats` and `editOwnChats`, so we just n
 
 We will need to create two new rules, `viewAllPeople` and `viewAllComments`.
 
-```flureeql
+```json
 [
   {
     "_id": "_role",
@@ -210,7 +210,7 @@ We will need to create two new rules, `viewAllPeople` and `viewAllComments`.
 ]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -d '[
@@ -282,7 +282,7 @@ Account id: TfFzb1tZDkGMBqWr8xMmRVvYmNYFKH9aNpi
 
 Now, we'll create the auth records and connect them to both the relevant roles and people. `jdoe` will be a level 1 user, and `zsmith` will be level 2.
 
-```flureeql
+```json
 [
   {
     "_id": ["person/handle", "jdoe"],
@@ -307,7 +307,7 @@ Now, we'll create the auth records and connect them to both the relevant roles a
 ]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -d '[
@@ -361,7 +361,7 @@ When we sign queries as `jdoe`, with a private key of `1787cab58d5b146a049f220c9
 
 Query All Chats
 
-```all
+```json
 {
   "select": ["*", {"chat/comments": ["*"]}],
   "from": "chat"
@@ -370,7 +370,7 @@ Query All Chats
 
 Results:
 
-```all
+```json
 [
   {
     "chat/message": "This is a sample chat from Jane!",
@@ -392,7 +392,7 @@ When we query all people:
 
 Query:
 
-```all
+```json
 {
   "select": ["*"],
   "from": "person"
@@ -401,7 +401,7 @@ Query:
 
 Results:
 
-```all
+```json
 [
   {
     "person/handle": "zsmith",
@@ -420,7 +420,7 @@ Results:
 
 `jdoe` can edit an old chat.
 
-```all
+```json
 [{
   "_id": 369435906932737,
   "message": "I *can* change this"
@@ -429,7 +429,7 @@ Results:
 
 `jdoe` can also create a new chat, as herself.
 
-```all
+```json
 [{
   "_id": "chat",
   "message": "Hey there!",
@@ -439,7 +439,7 @@ Results:
 
 `jdoe` cannot create a new chat as `zsmith`, or anyone else.
 
-```all
+```json
 [{
   "_id": "chat",
   "message": "What's up?",
@@ -455,7 +455,7 @@ When we sign queries as `zsmith`, with a private key of `c0588115314065f7949f87f
 
 Query All Chats
 
-```all
+```json
 {
   "select": ["*"],
   "from": "chat"
@@ -464,7 +464,7 @@ Query All Chats
 
 Results:
 
-```all
+```json
   {
     "chat/message": "Hey there!",
     "chat/person": {
@@ -498,7 +498,7 @@ When we query all people:
 
 Query:
 
-```all
+```json
 {
   "select": ["*"],
   "from": "person"
@@ -507,7 +507,7 @@ Query:
 
 Results:
 
-```all
+```json
 [
   {
     "person/auth": {
@@ -570,7 +570,7 @@ Results:
 
 `zsmith` can create a new chat, as himself.
 
-```all
+```json
 [{
   "_id": "chat",
   "message": "Hi, I'm Zach!",
@@ -580,7 +580,7 @@ Results:
 
 `zsmith` cannot create a new chat as `jdoe`, or anyone else.
 
-```all
+```json
 [{
   "_id": "chat",
   "message": "I'm trying to impersonate jdoe",

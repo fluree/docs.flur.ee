@@ -33,7 +33,7 @@ These atomic updates are very specially formatted logs. Each update is a called 
 
 Below is an example of ledger block. We will go into detail about the contents of the transaction response in the [Block Metadata](#block-metadata) section. However, below you can see that, among other things, every block contains a hash, a timestamp, and the size of the block data (block-bytes). This block also contains an array of nine flakes. These flakes contain all the data that is added, updated, or deleted in block 5, as compared to block 4.
 
-```all
+```json
 {
   "tempids": {
     "chat$1": 4299262263297
