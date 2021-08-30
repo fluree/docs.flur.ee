@@ -8,7 +8,7 @@ We also have a <a href="https://github.com/fluree/smart-function-library" target
 
 For some additional help testing and debugging your smart function implementations, try updating your `logback.xml` configuration file (located in your Fluree directory) so that logging for `fluree.db` is set to `DEBUG`, e.g.
 
-```all
+```xml
 <configuration scan="true">
     ...
     <logger name="fluree.db" level="DEBUG"/>
