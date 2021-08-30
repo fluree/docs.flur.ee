@@ -154,7 +154,7 @@ Property | Options | Description
 `fdb-json-bigdec-string` | `boolean` | BigDecimals are not currently handled out-of-the-box by JavaScript applications.  This setting determines whether or not to encode java.Math.BigDecimal values as strings for query results, etc.  The default is `true`.
 `logback.configurationFile` | `file path` | Path to a `logback.xml` file. If it is in the current file, you need to specify `./logback.xml`. A sample `logback.xml` file is below. You can set the level of logging that you want to see (`INFO`, `DEBUG`, `TRACE`), as well as how frequently you want the your logback file scanned for updates. For more information, you can visit [the logback manual](https://logback.qos.ch/manual/index.html).
 
-```all
+```xml
 <configuration scan="true" scanPeriod="10 seconds">
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
