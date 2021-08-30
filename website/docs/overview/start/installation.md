@@ -46,7 +46,7 @@ To run Fluree with all the default options, navigate to the directory where you 
 
 When Fluree is done starting up, your terminal will log:
 
-```all
+```bash
 Starting web server on port: [PORT NUMBER]
 ```
 
@@ -137,7 +137,7 @@ Note: not all of these configuration options are currently being used. Some opti
 
 For example, if you want to set `fdb-api-port` and `fdb-mode` when starting up Fluree, you would run:
 
-```all
+```bash
 ./fluree_start.sh -Dfdb-mode=transactor -Dfdb-api-port=8081
 ```
 
@@ -247,27 +247,27 @@ You can run these like so:
 
 On a Mac machine, you can download Fluree using Homebrew by running:
 
-```all
+```bash
 brew tap fluree/flureedb
 ```
 
-```all
+```bash
 brew install flureedb
 ```
 
 To run Fluree after installing it, run:
 
-```all
+```bash
 fluree
 ```
 
 To uninstall, run:
 
-```all
+```bash
 brew uninstall flureedb
 ```
 
-```all
+```bash
 brew untap fluree/flureedb
 ```
 
