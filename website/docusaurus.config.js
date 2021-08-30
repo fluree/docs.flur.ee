@@ -129,7 +129,7 @@ module.exports = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
-      additionalLanguages: ['turtle', 'sparql', 'clojure']
+      additionalLanguages: ['turtle', 'sparql', 'clojure', 'http']
     },
   },
   presets: [
