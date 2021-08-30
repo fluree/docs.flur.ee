@@ -257,7 +257,7 @@ The below transaction creates the following predicates:
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -434,7 +434,7 @@ You can issue the below transaction to add some sample data into your ledger. Th
 below transaction adds four users, three chats, four comments, three artists, and
 three movies.
 
-```flureeql
+```json
 [{
   "_id":      "person$jdoe",
   "handle":   "jdoe",
@@ -541,7 +541,7 @@ three movies.
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
