@@ -58,4 +58,4 @@ Fluree, while executing SmartFunctions, calculates a utilization metric called F
 
 ### Consensus
 
-Fluree uses the Raft protocol for consensus. While we previously suported PBFT, it was not being utilized. The code base has a pluggable protocol for consensus and new consensus protocols can be added.
+Fluree uses the Raft protocol for consensus. While we previously suported PBFT, we have since deprecated that functionality. The code base has a pluggable protocol for consensus and new consensus protocols can be added.
