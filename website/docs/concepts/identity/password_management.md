@@ -23,7 +23,7 @@ There are three API endpoints associated with passwords - [generate, renew, and 
 When you generate a password, a new auth record is created in your given ledger.
  For example:
 
-```all
+```json
 [{
     "_id": 105553116267496,
     "_auth/id": "Tf9Sn7cR3dRpdVJYXiRYY2TeNhJLpb2eLDS",

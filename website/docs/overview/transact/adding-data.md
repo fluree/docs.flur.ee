@@ -4,7 +4,7 @@ In order to add data, you must use a [temporary id](/docs/transact/basics#tempor
 
 The keys can contain the full predicate name including the namespace, i.e. `chat/message` or you can leave off the namespace if it is the same as the collection the subject is within. i.e. when the subject is within the `chat` collection, just `message` can be used which is translated to `chat/message` by Fluree.
 
-```flureeql
+```json
 [{
   "_id":      "person",
   "handle":   "oRamirez",
@@ -17,7 +17,7 @@ The keys can contain the full predicate name including the namespace, i.e. `chat
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -58,7 +58,7 @@ If you are updating or creating a new subject, for example a new chat and that c
 
 FlureeQL example:
 
-```all
+```json
 [{
   "_id":     "chat",
   "message": "This is my first comment ever! So smart.",
@@ -77,7 +77,7 @@ Alternatively, you can nest transactions by simply declaring the new person dire
 
 FlureeQL example:
 
-```all
+```json
 [{
   "_id":     "chat",
   "message": "I have something to say!",

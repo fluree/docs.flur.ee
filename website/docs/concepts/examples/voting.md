@@ -27,7 +27,7 @@ of the auth records that voted yes or no, respectively, on the proposed change.
 
 FlureeQL:
 
-```all
+```json
 [
  {
   "_id": "_collection",
@@ -72,7 +72,7 @@ value, for instance, `John Doe`.
 
 FlureeQL
 
-```all
+```json
 [{
   "_id": "_predicate",
   "name": "change/name",
@@ -128,7 +128,7 @@ types of objects as well.
 First, we'll create a new predicate, `_auth/descId` (short for descriptive id),
 which will help us easily identify auth records.
 
-```flureeql
+```json
 [{
   "_id": "_predicate",
   "name": "_auth/descId",
@@ -189,7 +189,7 @@ Account id: Tf31KGiwsqnw1TWTWPspxi3AoHTCA1wJNaE
 
 FlureeQL:
 
-```all
+```json
 [{
     "_id": "_user$losDelRio",
     "username": "losDelRio",
@@ -273,7 +273,7 @@ The rules only allow users to view, but not edit, auth records and users.
 
 FlureeQL:
 
-```all
+```json
 [{
     "_id": "_rule$editVotes",
     "fns": [["_fn/name", "true"]],
@@ -310,7 +310,7 @@ FlureeQL:
 
 FlureeQL:
 
-```all
+```json
 [{
     "_id": "_rule$editOwnUser",
     "fns": ["_fn$editOwnUser"],
@@ -333,7 +333,7 @@ role that we created previously:
 
 FlureeQL:
 
-```all
+```json
 [{
     "_id": ["_role/id", "voter"],
     "rules": [["_rule/id", "editChanges"], ["_rule/id", "editVotes"], ["_rule/id",
@@ -353,7 +353,7 @@ The rule, `(== (?o) (?auth_id))` checks whether the object being added to the vo
 
 FlureeQL:
 
-```all
+```json
 [
     {
         "_id": "_fn$ownAuth",
@@ -398,7 +398,7 @@ A request to `/command` will return a `_tx/id`. The `_tx/id` is the unique
 SHA2-256 of the 'cmd' submitted to the `/command` endpoint. In order to see if the
 transaction went through successfully, you will need to query:
 
-```all
+```json
 {
   "select": ["*"],
   "from": ["_tx/id", TRANSACTION ID HERE ]
@@ -419,7 +419,9 @@ FlureeQL:
 ```all
 Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
 Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
+```
 
+```json
 [{
     "_id": "change",
     "name": "softCellNameChange",
@@ -448,7 +450,7 @@ We can see all the votes related to that subject with a single query.
 
 FlureeQL:
 
-```all
+```json
 {
     "select": {"?change": ["*", {"change/vote": ["*"]}]},
     "where": [["?change", "change/subject", "?subject"],
@@ -468,7 +470,7 @@ we need add that `change/predicate` is `["_predicate/name", "_user/username"]` a
 
 FlureeQL:
 
-```all
+```json
 {
     "select": {"?vote": ["*"]},
     "where": [["?change", "change/subject", "?subject"],
@@ -482,7 +484,7 @@ FlureeQL:
 
 Sample result in FlureeQL:
 
-```all
+```json
 [
   {
     "vote/name": "softCellNameVote",
@@ -516,7 +518,7 @@ information we need in order to compose our where clause.
 
 Without escaped quotation marks, our where clause will be:
 
-```all
+```json
 [
     ["?change", "change/subject", (?sid)],
     ["?change", "change/predicate", (?pid)],
@@ -527,7 +529,7 @@ Without escaped quotation marks, our where clause will be:
 
 FlureeQL:
 
-```all
+```json
 [{
     "_id": "_fn",
     "name": "voteWhere",
@@ -544,7 +546,7 @@ The second function we create issues a query using the `query` smart function. T
 
 The query in our smart function resolves to:
 
-```all
+```json
 {
     "select": {"?vote": ["*"]},
     "where": [["?change", "change/subject", (?sid)],
@@ -556,7 +558,7 @@ The query in our smart function resolves to:
 
 FlureeQL:
 
-```all
+```json
 [{
         "_id": "_fn",
         "name": "vote",
@@ -574,7 +576,7 @@ and `["vote/yesVotes" \"_id\"]`, respectively)`.
 
 FlureeQL:
 
-```all
+```json
 [{
     "_id": "_fn",
     "name": "noVotes",
@@ -598,7 +600,7 @@ a percentage, we use a `_fn/param`.
 
 FlureeQL:
 
-```all
+```json
 [{
     "_id": "_fn",
     "name": "minWinPercentage",
@@ -612,7 +614,7 @@ votes is above a given parameter, `n`.
 
 FlureeQL:
 
-```all
+```json
 [{
     "_id": "_fn",
     "name": "minVotes",
@@ -631,7 +633,7 @@ Additionally, the percentage needs to be in decimal form with a leading 0).
 
 FlureeQL:
 
-```all
+```json
 [{
     "_id": "_fn",
     "name": "2VotesMajority",
@@ -647,7 +649,7 @@ the `2VotesMajority` will run.
 
 FlureeQL:
 
-```all
+```json
 [{
     "_id": ["_predicate/name", "_user/username"],
     "spec": [["_fn/name", "2VotesMajority"]]
@@ -665,7 +667,9 @@ FlureeQL:
 ```all
 Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
 Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
+```
 
+```json
 [{
     "_id": ["_user/username", "softCell"],
     "username": "hardCell"
@@ -674,7 +678,7 @@ Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
 
 Response:
 
-```all
+```json
 {
   "_tx/id": "6b9f5fe96564289e267bc5d1611c61021053e8de4e95f0777247239a8b9ca1cd",
   "_tx/auth": {
@@ -695,7 +699,9 @@ FlureeQL:
 ```all
 Private Key: 46e37823bfe73ac2b5e440238cb2b65a1cb4115721f23202e543c454faab8449
 Auth id: TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH
+```
 
+```json
 [{
     "_id": ["vote/name", "softCellNameVote"],
     "yesVotes": [["_auth/id", "TfFoQ4yB3vFn3th7Vce36Cb45fDau255GdH"]]
@@ -709,7 +715,9 @@ FlureeQL:
 ```all
 Private Key: afa6b042a342845c3bf4ea5fd2690d8548d5169fd18d18081ac8ac9093c2e43c
 Auth id: TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK
+```
 
+```json
 [{
     "_id": ["vote/name", "softCellNameVote"],
     "yesVotes": [["_auth/id", "TfBvBxdxcXNrDQY8aNcYmoUuA2TC1CTiWAK"]]
@@ -722,7 +730,9 @@ transaction as Soft Cell's auth record.
 ```all
 Private Key: 4b288665f5e5f9b1078d3c54f916a86433557fbc16ffcb8de827104739c84ed4
 Auth id: TfHzKHsTdXVhbjskqesPTi6ZqwXHghFb1yK
+```
 
+```json
 [{
     "_id": ["_user/username", "softCell"],
     "username": "hardCell"

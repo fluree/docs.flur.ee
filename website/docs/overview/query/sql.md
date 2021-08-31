@@ -24,7 +24,7 @@ Queries involving a single collection can use short form variables. For example,
 to find all the known values of the `person/firstName` and `person/lastName`
 predicates for all subjects within the person collection, we can use the query:
 
-```SQL
+```sql
 SELECT firstName, lastName FROM person
 ```
 
@@ -49,7 +49,7 @@ for a subject id (`_id` predicate) directly however, you must use the special
 For example, to list the subject id and name for every subject within the
 "person" collection, you'd issue the following query:
 
-```SQL
+```sql
 SELECT $, name FROM person
 ```
 
@@ -96,13 +96,13 @@ used.
 For example, the following SQL query finds the name and job title for all
 subjects in a database holding a job:
 
-```SQL
+```sql
 SELECT person.name, job.title FROM person JOIN job ON person.job = job.$
 ```
 
 That Fluree SQL query is equivalent to the following FlureeQL query:
 
-```JSON
+```json
 {
   "select": [ "?personName" "?jobTitle" ],
   "where": [

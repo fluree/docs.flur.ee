@@ -214,7 +214,7 @@ Subject Identities for Jane Doe (written as JSON in this example):
 In most cases for Fluree, any Subject Identity can be used to refer to a subject.
 Therefore, the following three FlureeQL queries would return identical results:
 
-```all
+```json
 {"select": ["*"] from 45839457}
 {"select": ["*"] from ["email", "jane@doe.com"]}
 {"select": ["*"] from ["username", "janedoe"]}
@@ -348,14 +348,14 @@ metadata, might look like:
 As the `t` value is just another subject id, it can also be queried like any other
 data. The following would return all of the metadata about transaction -42:
 
-```all
+```json
 {"select": ["*"] from -42}
 ```
 
 If one wanted to list the hash and email of the person that transacted data for every
 transaction, the following query would suffice:
 
-```all
+```json
 {"select": ["?t", "?hash", "?email"],
  "where": [["?t",    "hash",  "?hash"],
            ["?t",    "auth",  "?auth"],
@@ -411,7 +411,7 @@ value.
 To see `_block/instant` and all other block metadata for all blocks in a ledger,
 query:
 
-```all
+```json
 {"select": ["*"], "from": "_block"}
 ```
 
@@ -420,7 +420,7 @@ To issue a query to a database as of a previous moment in time, a block number,
 uses `t` under the covers - providing a value other than `t` will prompt Fluree to
 query its data to find the nearest `t`. Examples:
 
-```all
+```json
 // Using a block number, looks up _block/transactions to get to 't'
 {"select": ["*"], "from": "person", "block": 2}
 // Using a 't' value, no conversion needed to 't'

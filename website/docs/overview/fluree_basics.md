@@ -50,7 +50,7 @@ and `movie`. You can issue this transaction in your user interface. The syntax i
 explained in the [Transact](/docs/transact/basics) section. For now, we recommend
 you adding this basic schema and walking through the documentation section-by-section.
 
-```flureeql
+```json
 [{
  "_id": "_collection",
  "name": "person"
@@ -73,7 +73,7 @@ you adding this basic schema and walking through the documentation section-by-se
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -140,7 +140,7 @@ The below transaction creates the following predicates:
 - `artist/name`
 - `movie/title`
 
-```flureeql
+```json
 [{
   "_id":    "_predicate",
   "name":   "person/handle",
@@ -257,7 +257,7 @@ The below transaction creates the following predicates:
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -434,7 +434,7 @@ You can issue the below transaction to add some sample data into your ledger. Th
 below transaction adds four users, three chats, four comments, three artists, and
 three movies.
 
-```flureeql
+```json
 [{
   "_id":      "person$jdoe",
   "handle":   "jdoe",
@@ -541,7 +541,7 @@ three movies.
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \

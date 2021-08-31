@@ -2,7 +2,7 @@
 
 In this section, we show you different advanced query capabilities.
 
-Different query types in this section should be issued to different API endpoints. View the `CURL` versions of the examples to see the proper endpoint for each query type.
+Different query types in this section should be issued to different API endpoints. View the `curl` versions of the examples to see the proper endpoint for each query type.
 
 ## Crawling the Graph {#crawling-the-graph}
 
@@ -12,7 +12,7 @@ For a forward traversal example, note our predicate `chat/person` which is of ty
 
 In order to also include the person details, we add to our select cause with a sub-query within our original query. This new query would look like:
 
-```flureeql
+```json
 {
   "select": [
     "*",
@@ -22,7 +22,7 @@ In order to also include the person details, we add to our select cause with a s
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -69,7 +69,7 @@ In FlureeQl, this syntax is declarative and looks like the shape of the data you
 
 As mentioned, these relationships can also be traversed in reverse. If instead of listing the person for every chat, what if we wanted to find all chats for a  person? Instead of selecting from `chat`, lets select from `person` and follow the same `chat/person` predicate but in the reverse direction. This query looks like:
 
-```flureeql
+```json
 {
   "select": [
     "*",
@@ -79,7 +79,7 @@ As mentioned, these relationships can also be traversed in reverse. If instead o
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -123,7 +123,7 @@ This special syntax indicates the same relationship, but in reverse. You'll now 
 
 For fun, you can add another sub-query to follow the chat message back to the person. Even though in this case it is redundant, and circular, Fluree exists happily in this paradox:
 
-```flureeql
+```json
 {
   "select": [
     "*",
@@ -133,7 +133,7 @@ For fun, you can add another sub-query to follow the chat message back to the pe
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -203,7 +203,7 @@ Key | Description
 
 For example, you can issue the following query:
 
-```all
+```json
 {
     "select": ["handle", "fullName"], 
     "from": "person"
@@ -212,7 +212,7 @@ For example, you can issue the following query:
 
 However, if you want to return `fullName` as `name`, you can issue the following query:
 
-```all
+```json
 {
     "select": ["handle", {"fullName": [{"_as": "name"}]}], 
     "from": "person"
@@ -221,7 +221,7 @@ However, if you want to return `fullName` as `name`, you can issue the following
 
 If you have a `ref` predicate, you can include any relevant sub-select options directly in the array where you specified any predicates you wanted to include:
 
-```all
+```json
 {
     "select": ["handle", {"comment/_person": ["*", {"_as": "comment", "_limit": 1}]}], 
     "from": "person"
@@ -230,7 +230,7 @@ If you have a `ref` predicate, you can include any relevant sub-select options d
 
 You can also sort each comment by `comment/message`.
 
-```all
+```json
 {
     "select": ["handle", {"comment/_person": ["*", {"_as": "comment", "_orderBy": "comment/message", "_limit": 1}]}], 
     "from": "person"
@@ -249,7 +249,7 @@ Key | Description
 `recur` | Number of times (integer) to follow a relationship. See [Recursion](#recursion). Only for `ref` predicates.
 `as` | Alternate name for a predicate. Only for `ref` predicates.
 
-```all
+```graphql
 { graph {
   person {
     _id
@@ -271,14 +271,14 @@ Recur is a sub-select option, which uses recursion to follow `ref` predicates th
 
 Normally, if we want to query who a person follows, we would submit this query.
 
-```flureeql
+```json
 {
     "select":["handle", {"person/follows": ["handle"]}],
     "from":"person"
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -313,14 +313,14 @@ curl \
 
 However, if you want to keep following the `person/follows` relationship, we can specify the number of times we want to follow the given relationship in the following manner:
 
-```flureeql
+```json
 {
     "select":["handle", {"person/follows": ["handle", {"_recur": 10}]}],
     "from":"person"
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -359,7 +359,7 @@ FlureeQL allows you to submit multiple queries at once by using the multi-query 
 
 For example, this query selects all chats and people at once.
 
-```flureeql
+```json
 {
     "chatQuery": {
         "select": ["*"],
@@ -372,7 +372,7 @@ For example, this query selects all chats and people at once.
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -414,7 +414,7 @@ curl \
 
 Any errors will be returned in a header, called `X-Fdb-Errors`. For example, incorrectCollection is attempting to query a collection that does not exist.
 
-```all
+```json
 {
     "incorrectCollection": {
         "select": ["*"],
@@ -429,7 +429,7 @@ Any errors will be returned in a header, called `X-Fdb-Errors`. For example, inc
 
 In FlureeQL, the response will have a status of 207, and it will only return the response for `personQuery`.
 
-```flureeql
+```json
 {
     "personQuery": [
       {

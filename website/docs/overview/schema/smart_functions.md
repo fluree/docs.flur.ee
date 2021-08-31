@@ -87,7 +87,7 @@ name of that smart function in other smart functions.
 For example, you can add a function called, `addThree` that adds 3 to any number,
 `n`.
 
-```flureeql
+```json
 [{
     "_id": "_fn",
     "name": "addThree",
@@ -96,7 +96,7 @@ For example, you can add a function called, `addThree` that adds 3 to any number
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -127,7 +127,7 @@ Transactions not supported in SPARQL
 Once, `addThree` is in the ledger, you can create a new function called `addTen`,
 which uses `addThree`.
 
-```flureeql
+```json
 [{
     "_id": "_fn",
     "name": "addTen",
@@ -136,7 +136,7 @@ which uses `addThree`.
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \

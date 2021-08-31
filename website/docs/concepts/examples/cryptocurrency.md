@@ -9,7 +9,7 @@ The first step is to create a `wallet` collection with the predicates `wallet/ba
 which tracks the amount of currency each user has, `wallet/user`, which references
 a database `_user`, and `wallet/Name`, which is a unique name for the subject.
 
-```flureeql
+```json
 [{
     "_id": "_collection",
     "name": "wallet"
@@ -33,7 +33,7 @@ a database `_user`, and `wallet/Name`, which is a unique name for the subject.
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -82,7 +82,7 @@ a schema you should add in your sample data or initial data.
 
 We'll be creating two users, and two wallets.
 
-```all
+```json
 [{
     "_id": "_user$cryptoMan",
     "username": "cryptoMan"
@@ -128,7 +128,7 @@ First, we use `str` to create a query-string, `(str \"{\\\"select\\\":
 [{\\\"wallet/user\\\": [{\\\"_user/auth\\\": [\\\"_id\\\"]}]}], \\\"from\\\": \"
 (?sid) \" }\")`. The resulting query will be:
 
-```all
+```json
 {
   "select": [{"wallet/user": [{"_user/auth": ["_id]}]}],
   "from": SUBJECT-ID
@@ -143,7 +143,7 @@ use `get-all` to retrieve the `_id` of the `_user/auth`.
 see if the set of `_id`s for the current `wallet/user`s contains the `_id` of the
 `_auth` currently making the update `(?auth_id)`.
 
-```all
+```json
 [{
     "_id": "_fn$ownWallet",
     "name": "ownWallet?",
@@ -165,7 +165,7 @@ see if the set of `_id`s for the current `wallet/user`s contains the `_id` of th
 Then, we'll use the built-in smart functions, `true` and `false` to make sure `wallet/balance`
 can be updated by anyone, and the `wallet/user` cannot be edited by anyone.
 
-```all
+```json
 [{
     "_id": "_rule$editAnyCryptoBalance",
     "id": "editAnyCryptoBalance",
@@ -192,7 +192,7 @@ Now, we have three rules that we need to connect to the auth records. First, we'
 create a new predicate, `_auth/descId` (short for descriptive id), which will help
 us easily identify auth records.
 
-```flureeql
+```json
 [{
   "_id": "_predicate",
   "name": "_auth/descId",
@@ -215,7 +215,7 @@ directly in the downloadable version of Fluree.
 In the below example, we use a valid auth id/private key pair. If using this example
 in production, you should generate your own public/private/auth id triple.
 
-```flureeql
+```json
 [{
     "_id": "_role$cryptoUser",
     "id": "cryptoUser",
@@ -256,7 +256,7 @@ you can go to the [Smart Function](/guides/1.0.0/smart-functions) section.
 Note, this transaction, and many of the subsequent transactions can be combined.
 We separate out these transactions here for demonstration purposes.
 
-```flureeql
+```json
 [{  "_id":  ["_predicate/name", "wallet/balance"],
     "spec": ["_fn$nonNegative?"],
     "specDoc": "Balance cannot be negative."
@@ -268,7 +268,7 @@ We separate out these transactions here for demonstration purposes.
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -311,7 +311,7 @@ your `wallet/balance` to 0. In order to prevent this, we can create a rule that
 only allows you to withdraw from your own `wallet/balance` or deposit in another
 user's `wallet/balance`.
 
-```flureeql
+```json
 [{
         "_id": "_fn$subtractOwnAddOthers?",
         "name": "subtractOwnAddOthers?",
@@ -327,7 +327,7 @@ user's `wallet/balance`.
     }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -388,10 +388,12 @@ went through successfully, you will need to query:
 ```all
 Private Key: 745f3040cbfba59ba158fc4ab295d95eb4596666c4c275380491ac658cf8b60c
 Auth id: TfDao2xAPN1ewfoZY6BJS16NfwZ2QYJ2cF2
+```
 
+```json
 {
   "select": ["*"],
-  "from": ["_tx/id", TRANSACTION ID HERE ]
+  "from": ["_tx/id", 'TRANSACTION ID HERE' ]
 }
 ```
 
@@ -405,7 +407,9 @@ auth record you are using cannot view subjects in the `_tx` collection).
 ```all
 Private Key: 745f3040cbfba59ba158fc4ab295d95eb4596666c4c275380491ac658cf8b60c
 Auth id: TfDao2xAPN1ewfoZY6BJS16NfwZ2QYJ2cF2
+```
 
+```json
 [{
     "_id": ["wallet/name", "cryptoWoman"],
     "balance": 205
@@ -450,7 +454,9 @@ TRANSACTION ID HERE ] }` in order to see the error.
 ```all
 Private Key: 745f3040cbfba59ba158fc4ab295d95eb4596666c4c275380491ac658cf8b60c
 Auth id: TfDao2xAPN1ewfoZY6BJS16NfwZ2QYJ2cF2
+```
 
+```json
 [{
     "_id": ["wallet/name", "cryptoMan"],
     "balance": 205
@@ -490,7 +496,9 @@ succeed.
 ```all
 Private Key: 65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19
 Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
+```
 
+```json
 [{
     "_id": ["wallet/name", "cryptoWoman"],
     "balance": 195
@@ -530,7 +538,9 @@ her `wallet/balance`.
 ```all
 Private Key: 65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19
 Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
+```
 
+```json
 [{
     "_id": ["wallet/name", "cryptoWoman"],
     "balance": "#(+ (?pO) 5)"
@@ -567,7 +577,9 @@ Removing money from cryptoMan's wallet will also fail.
 ```all
 Private Key: 65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19
 Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
+```
 
+```json
 [{
     "_id": ["wallet/name", "cryptoMan"],
     "balance": "#(- (?pO) 5)"
@@ -622,7 +634,7 @@ and sums all the false flakes in a transaction for the given `_predicate`. We wa
 to make sure that the sum of all of the `wallet/balance`s being retracted equals
 the sum of those being added.
 
-```flureeql
+```json
 [{
     "_id": ["_predicate/name", "wallet/balance"],
     "txSpec": ["_fn$evenCryptoBalance"],
@@ -637,7 +649,7 @@ the sum of those being added.
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -698,7 +710,9 @@ to be equal".
 ```all
 Private Key: 65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19
 Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
+```
 
+```json
 [{
     "_id": ["wallet/name", "cryptoMan"],
     "balance": "#(+ (?pO) 10)"
@@ -745,10 +759,12 @@ can initiate the transaction. We can sign it as cryptoMan, and it will go throug
 
 But if we sign it as cryptoWoman, it will return an error.
 
-```flureeql
+```all
 Private Key: 65a55074e1de61e08845d4dc5b997260f5f8c20b39b8070e7799bf92a006ad19
 Auth id: Tf6mUADU4SDa3yFQCn6D896NSdnfgQfzTAP
+```
 
+```json
 [{
     "_id": ["wallet/name", "cryptoMan"],
     "balance": "#(- (?pO) 10)"

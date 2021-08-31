@@ -46,7 +46,7 @@ To run Fluree with all the default options, navigate to the directory where you 
 
 When Fluree is done starting up, your terminal will log:
 
-```all
+```bash
 Starting web server on port: [PORT NUMBER]
 ```
 
@@ -137,7 +137,7 @@ Note: not all of these configuration options are currently being used. Some opti
 
 For example, if you want to set `fdb-api-port` and `fdb-mode` when starting up Fluree, you would run:
 
-```all
+```bash
 ./fluree_start.sh -Dfdb-mode=transactor -Dfdb-api-port=8081
 ```
 
@@ -154,7 +154,7 @@ Property | Options | Description
 `fdb-json-bigdec-string` | `boolean` | BigDecimals are not currently handled out-of-the-box by JavaScript applications.  This setting determines whether or not to encode java.Math.BigDecimal values as strings for query results, etc.  The default is `true`.
 `logback.configurationFile` | `file path` | Path to a `logback.xml` file. If it is in the current file, you need to specify `./logback.xml`. A sample `logback.xml` file is below. You can set the level of logging that you want to see (`INFO`, `DEBUG`, `TRACE`), as well as how frequently you want the your logback file scanned for updates. For more information, you can visit [the logback manual](https://logback.qos.ch/manual/index.html).
 
-```all
+```xml
 <configuration scan="true" scanPeriod="10 seconds">
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -247,27 +247,27 @@ You can run these like so:
 
 On a Mac machine, you can download Fluree using Homebrew by running:
 
-```all
+```bash
 brew tap fluree/flureedb
 ```
 
-```all
+```bash
 brew install flureedb
 ```
 
 To run Fluree after installing it, run:
 
-```all
+```bash
 fluree
 ```
 
 To uninstall, run:
 
-```all
+```bash
 brew uninstall flureedb
 ```
 
-```all
+```bash
 brew untap fluree/flureedb
 ```
 

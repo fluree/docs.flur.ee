@@ -36,7 +36,7 @@ The value of the select key is always an array. For the purposes of this section
   
    An `*` indicates "select all predicates" using the default options. An `*` may be used in conjunction with other select-array items, especially when the user wants to specify particular options. There are examples of this latter in the list.  
   
-   ```all
+   ```json
     {
       "select": ["*"],
       "from": "chat"
@@ -49,7 +49,7 @@ The value of the select key is always an array. For the purposes of this section
 
     Predicates do not have to be namespaced. The collection can often (but not always be inferred). For example, if selecting from the `chat` collection or a specific chat subject, `instant` is inferred to be `chat/instant`. However, with Fluree's flexible schema a predicate in any collection can be attached to any subject.
 
-    ```all
+    ```json
     {
         "select": ["chat/message", "instant", "*"],
         "from": "chat"
@@ -62,7 +62,7 @@ The value of the select key is always an array. For the purposes of this section
 
     You'll notice that when you just include `chat/person` in the select-array, your results will only show you the subject id (unique identifer) for the person.
 
-    ```all
+    ```json
     {
         "_id": 369435906932739,
         "chat/message": "Hi! I'm a chat from Zach.",
@@ -77,7 +77,7 @@ The value of the select key is always an array. For the purposes of this section
 
     In addition, it does not matter whether the predicate you are crawling references one or many subjects - the syntax is identical (i.e. per our schema, a chat can only have one person `chat/person`, but a person can have multiple favorite movies `person/favMovies`. ).
 
-    ```all
+    ```json
     {
         "select": [    {"person": [ "*", "favMovies", "favNums"] }   ],
         "from": "chat"
@@ -86,7 +86,7 @@ The value of the select key is always an array. For the purposes of this section
 
     There is no limit to how many times we crawl the graph. For example, below we are crawling the graph to get the person associated with all the chats, as well as each person's favorite movies and favorite artists. We are also crawling the graph to get all the information about those favorite artists and favorite movies. This may look confusing at first, but a select-array is simply made up of any combination of the listed items with an unlimited amount of nesting.
 
-    ```all
+    ```json
     {
         "select": ["*", {"person": ["*", {"favMovies": ["*"] } , {"favArtists": ["*"] } ]}],
         "from": "chat"
@@ -101,7 +101,7 @@ The value of the select key is always an array. For the purposes of this section
 
     In the basic schema, a chat references a person via the `chat/person` predicate. We know that the following query works to select all `chat/person`s from the chat collection:
 
-    ```all
+    ```json
     {
       "select": ["chat/person"],
       "from": "chat"
@@ -110,7 +110,7 @@ The value of the select key is always an array. For the purposes of this section
 
     In order to get all chats that reference `person`s, we simply add an `_` after the `/`. So `chat/person` becomes `chat/_person`.
 
-    ```all
+    ```json
     {
       "select": ["chat/_person"],
       "from": "person"
@@ -125,7 +125,7 @@ The value of the select key is always an array. For the purposes of this section
 
     Reverse references can simply return the subject id (as in the query above) or you can crawl the graph with those preferences. Crawling the graph with a reverse reference has the same syntax and behaves the same way as crawling the graph with a regular reference.
 
-    ```all
+    ```json
     {
       "select": [{"chat/_person": ["*"]}],
       "from": "person"
@@ -136,7 +136,7 @@ The value of the select key is always an array. For the purposes of this section
 
     You can specify granular options that only apply to certain predicates. To do so, you need to create a map where the key is the predicate name and the value is an array with the sub-select option map inside. For example: `{"fullName": [{"_as": "name"}]}`. The sub-select option `as` renames `fullName` to `name` in the results. The full list of sub-select options is in the table below.
 
-    ```all
+    ```json
     {
         "select": ["handle", {"fullName": [{"_as": "name"}]}], 
         "from": "person"
@@ -145,7 +145,7 @@ The value of the select key is always an array. For the purposes of this section
 
     A map can BOTH crawl the graph and have sub-select options. For example, `{"comment/_person": ["*", {"_as": "comment", "_limit": 1}]}`
 
-    ```all
+    ```json
     {
         "select": ["handle", {"comment/_person": ["*", {"_as": "comment", "_limit": 1}]}], 
         "from": "person"
@@ -154,7 +154,7 @@ The value of the select key is always an array. For the purposes of this section
 
     Below is another example using `_recur`.
 
-    ```all
+    ```json
     {
         "select":["handle", {"person/follows": ["handle", {"_recur": 10}]}],
         "from":"person"
@@ -187,7 +187,7 @@ an array of subject ids and unique two-tuples | `[87960930223082, ["person/handl
 
 Any select-array can be combined with any type of `from` key.
 
-```all
+```json
 {
   "select": ["*", {"chat/_person": ["*", {"_as": "chperson"}]}],
   "from": [87960930223082, ["person/handle", "jdoe"]]
@@ -208,21 +208,21 @@ Note: You are able to filter string values with `>`, `>=`, `<`, `<=`, although w
 
 You can link multiple specifications with `AND`s or `OR`s, for example `chat/instant > 1517437000000 AND chat/instant < 1517438000000`. However, you cannot submit a where clause with both an `AND` and an `OR`.
 
-```all
+```json
 {
   "select": ["chat/message", "chat/instant"],
   "where": "chat/instant > 1517437000000"
 }
 ```
 
-```all
+```json
 {
   "select": ["chat/message", "chat/instant"],
   "where": "chat/person = 351843720888322 OR chat/instant > 1517437000000"
 }
 ```
 
-```all
+```json
 {
   "select": ["handle"],
   "where": "person/handle != \"jdoe\" AND person/_chat"
@@ -235,7 +235,7 @@ A basic query can optionally have a block key, which issues that query as of a g
 
 Using a block number:
 
-```flureeql
+```json
 {
   "select": ["*"],
   "from": "chat",
@@ -243,7 +243,7 @@ Using a block number:
 }
 ```
 
-```curl
+```bash
  curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -273,7 +273,7 @@ Using a block number:
 
 Using an ISO-8601 formatted wall clock time:
 
- ```flureeql
+ ```json
 {
   "select": ["*"],
   "from": "chat",
@@ -281,7 +281,7 @@ Using an ISO-8601 formatted wall clock time:
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -310,7 +310,7 @@ Not supported
 
 Using an ISO-8601 formatted duration (as of 5 minutes ago):
 
- ```flureeql
+ ```json
 {
   "select": ["*"],
   "from": "chat",
@@ -318,7 +318,7 @@ Using an ISO-8601 formatted duration (as of 5 minutes ago):
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -361,7 +361,7 @@ Key | Value | Description
 
 For example:
 
-```all
+```json
 { 
   "select": ["*"], 
   "from": "person", 

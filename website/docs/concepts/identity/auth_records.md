@@ -29,7 +29,7 @@ There are many ways to generate valid public-private key/auth id triple:
 Once you have a valid auth record (and you have saved the private key
 somewhere!), you must add the auth record to a ledger.
 
-```all
+```json
 [{
     "_id": "_auth",
     "id": "kh90sdlsdmyFakeAuthId",
@@ -159,7 +159,7 @@ Private Key:            a12f89d64f966d431ea4fff850baf01f501438ccea53b6f6bb041e9e
 
 To test this out, we can add two auth records:
 
-```all
+```json
 [{
     "_id": "_auth$IT",
     "id": "Tf5q9TVMoJ2MSATxN5XhAizBMSBEUGuy8aU",
@@ -192,7 +192,9 @@ The IT Team (the authority in this case) has to verify whether or not the person
 ```all
 Auth Record:    Alba
 Private Key:    a12f89d64f966d431ea4fff850baf01f501438ccea53b6f6bb041e9eed559a76
+```
 
+```json
 [{
     "_id": "person", 
     "handle": "aJohnson", 

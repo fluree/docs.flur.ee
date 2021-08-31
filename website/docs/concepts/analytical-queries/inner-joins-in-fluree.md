@@ -5,7 +5,7 @@ tuple acts as a pattern in a where-array. First it pulls all the data that match
 that given pattern, and then it binds the appropriate variables. For example, we
 can issue the following query:
 
-```all
+```json
 {
     "select": ["?person", "?handle"],
     "where": [["?person", "person/handle", "?handle"]]
@@ -66,7 +66,7 @@ To recur across a relationship, simply add a `+` after a predicate. This will ma
 flakes any path length from the original. By default the recur depth is 100. You
 can also specify a certain path length by adding an integer after the `+`.
 
-```flureeql
+```json
 {
     "select": ["?followHandle"],
     "where": [
@@ -77,7 +77,7 @@ can also specify a certain path length by adding an integer after the `+`.
 }
 ```
 
-```curl
+```bash
  curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -107,7 +107,7 @@ WHERE {
 
 Below is an example specifying a maximum recursion depth.
 
-```flureeql
+```json
 {
     "select": ["?followHandle"],
     "where": [
@@ -119,7 +119,7 @@ Below is an example specifying a maximum recursion depth.
 }
 ```
 
-```curl
+```bash
  curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \

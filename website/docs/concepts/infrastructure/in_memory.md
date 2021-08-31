@@ -12,7 +12,7 @@ Full-text indexing and full-text search are not available when running Fluree in
 
 To try this out, we can clone down the tx-group-ex-dirs repo.
 
-```all
+```bash
 git clone https://github.com/fluree/tx-group-ex-dirs.git
 ```
 

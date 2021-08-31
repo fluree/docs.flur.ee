@@ -19,7 +19,7 @@ Every transaction item must have an _id predicate to refer to the subject we are
 
 FlureeQL example:
 
-```all
+```json
 [{
     "_id":    "_user",
     "username": "eWasswa"
@@ -30,7 +30,7 @@ However, if you would like to reference that tempid somewhere else in your trans
 
 FlureeQL example:
 
-```all
+```json
 [{
     "_id":    "_user$lEliasz",
     "username": "lEliasz",
@@ -52,7 +52,7 @@ FlureeQL example:
 
 When issuing a transaction, you can include your own metadata. For example, if you want to include a `_tx/note`, you can issue the below transaction to create the relevant predicate (field):
 
-```all
+```json
 [{
     "_id": "_predicate",
     "name": "_tx/note",
@@ -62,7 +62,7 @@ When issuing a transaction, you can include your own metadata. For example, if y
 
 And, then, whenever you issue a transaction, you are able to include a _tx/note.
 
-```all
+```json
 [{
     "_id": "_user",
     "username": "abc"

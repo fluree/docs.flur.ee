@@ -22,14 +22,14 @@ To view the history of a single subject, you can either specify a subject id or 
 
 For example, to query the history of an subject at block 4:
 
-```flureeql
+```json
 {
   "history": 369435906932737,
   "block": 4
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -52,14 +52,14 @@ Not supported
 
 To query the history at block 4 of an subject using a two-tuple of a unique predicate and value:
 
-```flureeql
+```json
 {
   "history": ["person/handle", "zsmith"],
   "block": 4
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -84,14 +84,14 @@ Not supported
 
 To query the history of an subject using an subject id from block 3 to 5:
 
-```flureeql
+```json
 {
   "history": 369435906932737,
   "block": [3, 5]
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -114,14 +114,14 @@ Not supported
 
 To query the history of an subject using an subject id from block 3 to the most recent block:
 
-```flureeql
+```json
 {
   "history": 369435906932737,
   "block": [3]
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -150,13 +150,13 @@ In the flake-format, either a predicate or a subject is required.
 
 For example, to query the history of updates to the `person/follows` predicate on the `["person/handle", "zsmith"]` subject, you could issue the following query:
 
-```flureeql
+```json
 {
   "history": [["person/handle", "zsmith"], "person/follows"]
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -180,13 +180,13 @@ Note that because we are not specifying any other parts of the flake-format, we 
 
 If, however, we were interested in looking at flakes that matched any subject with the predicate, `person/handle`, and the object, `jdoe`, we would issue:
 
-```flureeql
+```json
 {
   "history": [null, "person/handle", "jdoe"]
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -210,14 +210,14 @@ Not supported
 
 In FlureeQL, you can pretty print the results of a history query by adding `"prettyPrint": true` to your query map. Any format of history query can be pretty printed.
 
-```flureeql
+```json
 {
   "history": [null, "person/handle", "jdoe"],
   "prettyPrint": true
 }
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -d '{
@@ -240,7 +240,7 @@ Not supported
 
 The pretty printed results look as follows:
 
-```all
+```json
 {
   "4": {
     "asserted": [
@@ -258,7 +258,7 @@ The pretty printed results look as follows:
 
 To include auth information in the results of a history query, include the `showAuth` key. For example:
 
-```all
+```json
 {
   "history": [null, "_collection/name"],
   "showAuth": true
@@ -267,7 +267,7 @@ To include auth information in the results of a history query, include the `show
 
 This could return results like:
 
-```all
+```json
 [
   {
     "block": 2,
@@ -306,7 +306,7 @@ This could return results like:
 
 You are also able to filter history query results to only incldue results corresponding to a particular auth record or auth records.
 
-```all
+```json
 {
   "history": [ null, "_collection/name"],
   "showAuth": true,
@@ -316,7 +316,7 @@ You are also able to filter history query results to only incldue results corres
 
 This returns the following results:
 
-```all
+```json
 [
   {
     "block": 2,

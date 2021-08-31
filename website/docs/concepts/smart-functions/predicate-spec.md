@@ -22,7 +22,7 @@ If we want to make sure that `person/favNums` is always non-negative, we need to
 
 Create a Non-Negative Function:
 
-```flureeql
+```json
 [{
     "_id": "_fn",
     "name": "nonNegative?",
@@ -31,7 +31,7 @@ Create a Non-Negative Function:
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -60,14 +60,14 @@ Transactions not supported in SPARQL
 
 Add function to the `_predicate/spec` for `person/favNums`:
 
-```flureeql
+```json
 [{
     "_id": ["_predicate/name", "person/favNums"],
     "spec": [["_fn/name", "nonNegative?"]]
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -94,7 +94,7 @@ Transactions not supported in SPARQL
 
 If you try to issue the following transaction, it will fail, because -4 is negative.
 
-```flureeql
+```json
 [{
     "_id": "person",
     "handle": "aJay",
@@ -102,7 +102,7 @@ If you try to issue the following transaction, it will fail, because -4 is negat
 }]
 ```
 
-```curl
+```bash
 curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \

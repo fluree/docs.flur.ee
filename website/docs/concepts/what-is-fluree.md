@@ -33,7 +33,7 @@ These atomic updates are very specially formatted logs. Each update is a called 
 
 Below is an example of ledger block. We will go into detail about the contents of the transaction response in the [Block Metadata](#block-metadata) section. However, below you can see that, among other things, every block contains a hash, a timestamp, and the size of the block data (block-bytes). This block also contains an array of nine flakes. These flakes contain all the data that is added, updated, or deleted in block 5, as compared to block 4.
 
-```all
+```json
 {
   "tempids": {
     "chat$1": 4299262263297
@@ -70,7 +70,7 @@ We can think of the ledger at any given point in time as the combination of all 
 
 The below image shows you a simplified representation of five blocks worth of flakes. In the first two blocks, we create our simple schema (a user with a `user/handle` and a `user/chat`). In block 3, we add a new user named 'bob' and a chat message for Bob. In block 4, we create a new user with the handle 'jane', and finally in block 5, we attribute a chat to 'jane'.
 
-<p class="text-center">
+<p className="text-center">
     <img width="600px" height="220px" src="https://s3.amazonaws.com/fluree-docs/flakeLogBlocks1-5.png" alt="A table with the columns: 'subject', 'predicate', 'object', 'block', and 'add.' There are seven rows in this table, and each contains sample data, which is explained in the accompanying paragraph"/>
 </p>
 

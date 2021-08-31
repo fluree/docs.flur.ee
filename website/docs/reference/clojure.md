@@ -25,19 +25,19 @@ Add to the artifact to your dependencies:
 
 Leiningen -
 
-```clj
+```clojure
 [com.fluree/db "1.0.0-rc22"]
 ```
 
 deps.edn -
 
-```clj
+```clojure
 com.fluree/db {:mvn/version "1.0.0-rc22"}
 ```
 
 Require the api and establish a connection to your Fluree server:
 
-```clj
+```clojure
 (require '[fluree.db.api :as fdb])
 
 (def conn (fdb/connect "http://localhost:8090"))
@@ -57,7 +57,7 @@ All data transacted into a ledger must conform to a schema. We'll transact a bas
 
 Create a collection, which you can think of as a type of entity, or a relational database table.
 
-```clj
+```clojure
 ;; creates book and author collections
 @(fdb/transact conn ledger [{:_id :_collection :_collection/name :book}
                             {:_id :_collection :_collection/name :author}])
@@ -68,7 +68,7 @@ Create a collection, which you can think of as a type of entity, or a relational
 
 Create some predicates for the collection, analogous to entity attributes or relational database columns.
 
-```clj
+```clojure
 @(fdb/transact conn ledger [{:_id :_predicate
                              :_predicate/name :author/name
                              :_predicate/doc "An author's complete name."
@@ -105,7 +105,7 @@ Create some predicates for the collection, analogous to entity attributes or rel
 
 Insert some subject data that conforms to the schema we've created. See the [Transact](/docs/1.0.0/transact) documentation for more details.
 
-```clj
+```clojure
 ;; adding data
 @(fdb/transact conn ledger [{:_id :book
                              :book/title "Watership Down"
@@ -154,7 +154,7 @@ The syntax for these queries is similar to datalog and eql. These don't support 
 
 The `query` function takes a `db` value to execute a query against, as well as a query map. See the docs for [Analytical queries](/docs/1.0.0/query/analytical-query) and [Basic queries](/docs/1.0.0/query/overview) for more details.
 
-```clj
+```clojure
 ;; store the current immutable database value. See API docs for getting a prior version of a db, applying permissions to a db, and other options.
 (def db (fdb/db conn ledger))
 
@@ -173,7 +173,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 [History queries](/docs/1.0.0/query/history-query) can show you the raw history of a subject. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
-```clj
+```clojure
 ;; see the history of the "Cryptonomicon" book.
 @(fdb/history-query (fdb/db conn ledger) {:history ["book/title" "Cryptonomicon"] :pretty-print true})
 ```
@@ -182,7 +182,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 [Block queries](/docs/1.0.0/query/block-query) return all of the raw flake data stored in a block. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
-```clj
+```clojure
 ;; see all the flakes from block 3
 @(fdb/block-query-async conn ledger {:block 3 :pretty-print true})
 ```
@@ -191,7 +191,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 In addition to the FlureeQL syntax used above, Fluree also supports queries in other query languages: [SQL](/docs/1.0.0/query/sql), [SPARQL](/docs/1.0.0/query/sparql), [GraphQL](/docs/1.0.0/query/graphql). These can be used from Clojure by supplying a database value and a query string, or, in the case of GraphQL, a query map.
 
-```clj
+```clojure
 @(fdb/sql (fdb/db conn ledger) "select * from book")
 
 @(fdb/sparql (fdb/db conn ledger) "SELECT ?title WHERE { ?book fd:book/title ?title; fd:book/tags \"sci-fi\".}")
@@ -204,7 +204,7 @@ In addition to the FlureeQL syntax used above, Fluree also supports queries in o
 
 All of the interactions with the Fluree ledger server are performed asynchronously, returning a promise. If you prefer to work with `core.async` channels instead of promises, there are `-async` variants of all the functions mentioned here that will return a `core.async` channel which will receive the result when the operation has finished.
 
-```clj
+```clojure
 (require '[clojure.core.async :as async])
 
 (async/<!! (fdb/query-async (fdb/db conn ledger) {:select ["*"] :from "book"}))

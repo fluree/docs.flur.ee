@@ -69,7 +69,7 @@ object | `jdoe` | We are looking for results where the subject can be anything, 
 
 We can combine this simple triple, `?person fd:person/handle "jdoe"` with additional triples, for example:
 
-```all
+```sparql
 SELECT ?person
 WHERE {
   ?person fd:person/handle "jdoe".
@@ -89,7 +89,7 @@ Both the first and the second triples use the `?person` variable, which means th
 
 If two triples contain the same subject, then we can shorten the triples by using a semicolon `;` after the first clause and omitting the subject in all subsequent triples that share a subject. Make sure that the final clause in the group is has a period `.` at the end.
 
-```all
+```sparql
 SELECT ?person ?fullName ?favNums
 WHERE {
   ?person fd:person/handle "jdoe";
@@ -100,7 +100,7 @@ WHERE {
 
 If two triples contain the same subject and the same predicate, then we can shorten the triples by using a comma `,` after the first clause and omitting both the subject and predicate in all subsequent clauses that share both a subject and a predicate. Spacing, tabs, and new-lines do not effect the result of the query. In the examples, we write both objects on the same line for readability. The below query won't return anything, because no person has two different handles.
 
-```all
+```sparql
 SELECT ?person
 WHERE {
   ?person fd:person/handle "jdoe", "zsmith".
@@ -109,7 +109,7 @@ WHERE {
 
 We can also combine semicolons `;` and commas `,`. In the below example, we moved `fd:person/handle "jdoe", "zsmith"` to the bottom of the group of clauses for readability- it does not change the results of the query.
 
-```all
+```sparql
 SELECT ?person ?fullName ?favNums
 WHERE {
   ?person fd:person/fullName ?fullName;
@@ -124,7 +124,7 @@ All the queries with the `?person fd:person/handle "jdoe", "zsmith"` triple will
 
 Within the WHERE clause, you may include OPTIONAL clauses. For example, the below query will return all horses, including horses that may or may not have a mother listed.
 
-```all
+```sparql
 SELECT DISTINCT ?horse ?horseLabel ?mother 
 {
  ?horse wdt:P31/wdt:P279* wd:Q726 .    
@@ -146,7 +146,7 @@ Prefix | Source
 
 Note that if you are including a prefix that is supported by Wikidata, but external to it, i.e. `rdfs`, then you need to add a PREFIX clause to the top of your query. For example:
 
-```all
+```sparql
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT ...
 WHERE {
@@ -177,7 +177,7 @@ If you are returning Wikidata labels from your SPARQL query, the labels will aut
 
 For example, adding this SERVICE clause will return all labels in Russian:
 
-```all
+```sparql
 SELECT DISTINCT...
 WHERE {
   ...

@@ -11,7 +11,7 @@ A POST request with an empty object or a GET request to `/fdb/dbs` returns all t
 
 An example of an unsigned request to `/dbs`.
 
-```all
+```http
 Action: POST or GET
 Endpoint: http://localhost:8090/fdb/dbs
 Headers: None
@@ -26,7 +26,7 @@ If the network specified does not exist, it creates a new network. This request 
 
 These requests do not need to be signed.
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/new-db
 Headers: None
@@ -39,7 +39,7 @@ This provides a status of the Fluree network as recorded by a particular (ledger
 
 To retrieve the status, simply send an empty POST request to the `/nw-state` endpoint.
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/nw-state
 Headers: None
@@ -48,7 +48,7 @@ Body: None
 
 The result is a map of key/value pairs, for example:
 
-```all
+```http
 {:snapshot-term 11,
  :latest-index 19940,
  :snapshot-index 19800,
@@ -91,14 +91,14 @@ This endpoint exports an existing ledger into either `xml` or `ttl`.
 You can optionally specify a block (as an integer). If none provided, defaults to the most recent block.
 You can optionally specify a format (`xml` or `ttl`). If none provided, defaults to `ttl`.
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/export
 Headers: None
 Body: {"format": "ttl"}
 ```
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/export
 Headers: None
@@ -111,7 +111,7 @@ This deletes a ledger. Deleting a ledger means that a user will no longer be abl
 
 Use the following request when Fluree server is running in open-api mode (i.e., fdb-open-api=true)
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/delete-db
 Headers: None
@@ -120,7 +120,7 @@ Body: {"db/id": "NETWORK/DBID"}
 
 When the Fluree server is running in closed-api mode (i.e., fdb-open-api=false), the request must be signed. The process to sign the delete-db request is the similar to signing queries and transactions; only the end-point is different. .
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/delete-db
 Headers {:content-type :application/json,
@@ -136,13 +136,13 @@ This endpoint attempts to dynamically add server to the network. Please note, th
 
 Let's say you have two servers running, `ABC` and `DEF`, in order to get a third server, `GHI` to join the network, you need to start up server `GHI` with the following properties. Note the properties can be set in a property file or environment variables as well:
 
-```all
+```http
 ./fluree_start.sh -Dfdb-join?=true -Dfdb-group-servers=ABC@localhost:9790,DEF@localhost:9791,GHI@localhost:9792 -Dfdb-group-this-server=GHI -Dfdb-group-log-directory=data/GHI/raft/ -Dfdb-storage-file-directory=data/GHI/fdb/ -Dfdb-api-port=8092
 ```
 
 Then, once `GHI` is running a request needs to be sent to either of the two servers already in the network, `ABC` or `DEF`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/add-server
 Headers: None
@@ -159,7 +159,7 @@ This endpoint attempts to dynamically remove a server from the network. Please n
 
 Let's say you have three servers running, `ABC`, `DEF`, and `GHI`. If you want to shut down any of the servers, you can issue a request to any of the servers to shut down a given server.
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/remove-server
 Headers: None
@@ -176,7 +176,7 @@ All single queries in FlureeQL syntax that include a `select` key should be issu
 
 An example of an unsigned request to `/query` with the network, `dev` and the ledger `main`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/query
 Headers: None
@@ -185,7 +185,7 @@ Body: { "select": ["*"], "from": "_collection"}
 
 An example of a signed request to `/query`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/query
 Headers: {
@@ -203,7 +203,7 @@ If you are submitting multiple FlureeQL queries at once (using the [multi-query 
 
 An example of an unsigned request to `/multi-query`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/multi-query
 Headers: None
@@ -213,7 +213,7 @@ Body: { "query1": { "select": ["*"], "from": "_collection"},
 
 An example of a signed request to `/multi-query`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/multi-query
 Headers: {
@@ -230,7 +230,7 @@ To build the body of this query, create unique names for your queries, and set t
 
 For example, this query selects all chats and people at once.
 
-```all
+```json
 {
     "chatQuery": {
         "select": ["*"],
@@ -245,7 +245,7 @@ For example, this query selects all chats and people at once.
 
 Any errors will be returned in a header, called `X-Fdb-Errors`. For example, incorrectCollection is attempting to query a collection that does not exist.
 
-```all
+```json
 {
     "incorrectCollection": {
         "select": ["*"],
@@ -260,7 +260,7 @@ Any errors will be returned in a header, called `X-Fdb-Errors`. For example, inc
 
 The response will have a status of 207, and it will only return the response for `personQuery`.
 
-```all
+```json
 {
     "personQuery": [
       {
@@ -280,7 +280,7 @@ FlureeQL [block queries](/docs/query/block-query) should be submitted to the `/b
 
 An example of an unsigned request to `/block`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/block
 Headers: None
@@ -293,7 +293,7 @@ FlureeQL [history queries](/docs/query/history-query) should be submitted to the
 
 An example of an unsigned request to `/history`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/history
 Headers: None
@@ -311,7 +311,7 @@ If you do not have `fdb-open-api` set to true (it is true by default), then you 
 
 An example of an unsigned request to `/transact`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/transact
 Headers: None
@@ -325,7 +325,7 @@ By specifying a `Request-Timeout` header, you can set a transaction timeout. The
 
 An example of setting your own custom timeout is below. The value provided to `Request-Timeout` is in milliseconds.
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/transact
 Headers: {"Request-Timeout": 10000 }
@@ -341,7 +341,7 @@ All queries and transactions in GraphQL syntax should be issued through the `/fd
 
 An example of an unsigned request to `/graphql`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/graphql
 Headers: None
@@ -363,7 +363,7 @@ All queries and transactions in GraphQL syntax should be issued through the `/fd
 
 An example of an unsigned request to `/graphql`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/graphql
 Headers: None
@@ -383,7 +383,7 @@ All queries in SPARQL syntax, regardless of type, should be issued through the `
 
 An example of an unsigned request to `/sparql`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/sparql
 Headers: None
@@ -406,7 +406,7 @@ queries](/guides/0.16.0/identity/signatures#signed-queries)).
 
 An example of an unsigned request to `/sql`:
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/sql
 Headers: None
@@ -427,7 +427,7 @@ To see examples of sending a request to the `/command` endpoint, see [signed tra
 
 Available in `0.11.7` or higher. Reindexes the specified ledger.
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/reindex
 Headers: None
@@ -436,7 +436,7 @@ Body: None
 
 This request may take some time to return. It will return a map, such as the following:
 
-```all
+```json
 {
     "block": 13,
     "t": -27,
@@ -452,7 +452,7 @@ This request may take some time to return. It will return a map, such as the fol
 
 This is a beta feature. To read about how it works, visit [hiding flakes](/docs/ledger-setup/mutability#hiding-flakes).
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/hide
 Headers: None
@@ -466,7 +466,7 @@ Body: {
 
 Returns the list of flakes that would be added to a ledger if a given transaction is issued. The body of this request is simply the transaction. Note that this is a test endpoint. This does _NOT_ write the returned flakes to the ledger.
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/gen-flakes
 Headers: None
@@ -489,7 +489,7 @@ The request expects a map with two key-value pairs:
 
 The `t` on the flakes provided has to be current with the latest ledger. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes.
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/query-with
 Headers: None
@@ -512,7 +512,7 @@ The request expects a map with the following key-value pairs:
 
 The `t` on the flakes provided has to be current with the latest ledger. For example, if you used `gen-flakes`, but then issued a transaction, you will need to use `gen-flakes` again to generate new valid flakes.
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/test-transact-with
 Headers: None
@@ -525,7 +525,7 @@ Body: {
 
 A POST request to `/fdb/[NETWORK-NAME]/[DBID]/block-range-with-txn` returns block stats, as well as flakes and transactions for the specified block(s).
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/block-range-with-txn
 Headers: None
@@ -538,7 +538,7 @@ Body: {
 
 A GET request to `/fdb/health` returns whether the server is ready or not. You are not able to test this endpoint in the sidebar. These requests do not need to be signed.
 
-```all
+```http
 Action: GET
 Endpoint: http://localhost:8090/fdb/health
 ```
@@ -547,7 +547,7 @@ Endpoint: http://localhost:8090/fdb/health
 
 A POST request to `/fdb/[NETWORK-NAME]/[DBID]/database-stats` provides stats about the requested ledger.
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/database-stats
 Headers: None
@@ -558,14 +558,14 @@ Body: None
 
 A GET request to `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]` returns all key-value pairs of a certain type. You are not able to test this endpoint in the sidebar. These requests do not need to be signed.
 
-```all
+```http
 Action: GET
 Endpoint: http://localhost:8090/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]
 ```
 
 A GET request to `/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]` returns the value for the provided key.
 
-```all
+```http
 Action: GET
 Endpoint: http://localhost:8090/fdb/storage/[NETWORK-NAME]/[DBNAME-OR-DBID]/[TYPE]/[KEY]
 ```
@@ -595,7 +595,7 @@ If using a closed API, this request needs to contain a valid token in the header
 
 The below request will return a valid token for the user, which has permissions that correspond to the listed user's roles.
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/pw/generate
 Headers:
@@ -616,7 +616,7 @@ This endpoint returns a valid JWT token. You need to pass a NON-expired JWT toke
 | ------ | -------- | -------------------------------------------------- |
 | expire | false    | Expiration time in epoch ms from now. i.e. `1000`. |
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/pw/renew
 Headers: { Authorization: "Bearer TOKEN-HERE" }
@@ -634,7 +634,7 @@ See the [Password Management Guide](/guides/identity/password-management) for mo
 | auth     | false    | You must pass in your `_auth_id` . Either a user or auth must be provided.      |
 | expire   | false    | Requested time to expire in epoch milliseconds, i.e. `1000`.                    |
 
-```all
+```http
 Action: POST
 Endpoint: http://localhost:8090/fdb/dev/main/pw/login
 Headers: { Authorization: "Bearer TOKEN-HERE" }

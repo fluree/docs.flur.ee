@@ -20,7 +20,7 @@ Predicate | Type | Description
 
 Creating collections is done in the same way as creating any other type of subject in the ledger. In the below example, we create four new collections: person, chat, comment, and artist. We strongly discourage adding smart functions to your `_collection/spec` when you initially create a collection. If you would like a `_collection/spec`, visit the [functions](/docs/schema/functions) section to understand how to incorporate smart functions into your schema.
 
-```flureeql
+```json
 [{
  "_id": "_collection",
  "name": "person",
@@ -47,7 +47,7 @@ Creating collections is done in the same way as creating any other type of subje
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -98,7 +98,7 @@ Transactions not supported in SPARQL
 
 You can do this by adding a new predicate:
 
-```flureeql
+```json
 [{
     "_id": "_predicate",
     "name": "_collection/longDescription",
@@ -106,7 +106,7 @@ You can do this by adding a new predicate:
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -134,14 +134,14 @@ Transactions not supported in SPARQL
 
 After you add this predicate, you can update any existing collections to include a long description:
 
-```flureeql
+```json
 [{
     "_id": ["_collection/name", "person"],
     "longDescription": "I have a lot to say about this collection, so this is a longer description about the person collection"
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -168,7 +168,7 @@ Transactions not supported in SPARQL
 
 And you can create new collections with a `_collection/longDescription`:
 
-```flureeql
+```json
 [{
     "_id": "_collection",
     "name": "animal",
@@ -176,7 +176,7 @@ And you can create new collections with a `_collection/longDescription`:
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -208,14 +208,14 @@ Although you can change built-in collection predicates, we do not recommend doin
 
 One commonly-requested safe change, however, is to allow `_collection/name` to be upsertable. By default, `_collection/name` does not allow upsert, meaning if you try to create a new collection with the name of already existing collection, an error will be thrown. You can change this, however, by editing the predicate, `_collection/name`. To see all the existing predicates for the `_collection/name` predicate, you can issue the following query:
 
-```flureeql
+```json
 {
     "select": ["*"],
     "from": ["_predicate/name", "_collection/name"]
 }
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
@@ -239,7 +239,7 @@ WHERE {
 
 The default features of `_collection` name are:
 
-```all
+```json
 {
   "_predicate/name": "_collection/name",
   "_predicate/doc": "Schema collection name",
@@ -251,14 +251,14 @@ The default features of `_collection` name are:
 
 As we can see, there is no `upsert` key in the predicate, so by default upsert is false. To change this, we can issue:
 
-```flureeql
+```json
 [{
     "_id": ["_predicate/name", "_collection/name"],
     "upsert": true
 }]
 ```
 
-```curl
+```bash
   curl \
    -H "Content-Type: application/json" \
    -H "Authorization: Bearer $FLUREE_TOKEN" \
