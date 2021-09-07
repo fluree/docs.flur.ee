@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Analytical Query
 
 FlureeQL Analytical Queries are used to answer more sophisticated questions about your data.
@@ -150,6 +153,14 @@ You can bind a variable to an aggregate value. As mentioned above, where-array i
 
 Valid functions are the same as the ones listed in [Valid Aggregate Functions](#valid-aggregate-functions). You can also use the aggregate modifier (`distinct`) explained in the valid aggregate section (you can use the `as` modifier, but this will simply by ignored). A function must be preceded with a `#`.
 
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
+
 ```json
 {
  "select": "?hash", 
@@ -160,6 +171,10 @@ Valid functions are the same as the ones listed in [Valid Aggregate Functions](#
     ["?s", "_block/hash", "?hash"]
 ]}
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -175,9 +190,17 @@ Valid functions are the same as the ones listed in [Valid Aggregate Functions](#
    [HOST]/api/db/query
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 Not supported
 ```
+
+</TabItem>
+
+<TabItem value="sparql">
 
 ```sparql
 SELECT ?hash
@@ -188,6 +211,9 @@ WHERE {
   ?s fdb:_block/hash ?hash.
 }
 ```
+
+</TabItem>
+</Tabs>
 
 You can also simply specify values as the second item in the tuple. This binds the given variable to the value provided.
 
@@ -208,6 +234,14 @@ A `bind` map (or multiple maps), can be declared anywhere in the where clause. T
 
 The map is comprised of keys that correspond to variables, and values. For example, `{"bind": {"?handle": "dsanchez"}}`. You can bind multiple variables in the same map, as well, for example `{"bind": {"?handle": "dsanchez", "?person": 351843720888324}}`.
 
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
+
 ```json
 {
   "select": [ "?person", "?handle"],
@@ -221,6 +255,10 @@ The map is comprised of keys that correspond to variables, and values. For examp
   ]
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -240,9 +278,17 @@ The map is comprised of keys that correspond to variables, and values. For examp
    [HOST]/api/db/query
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 Not supported
 ```
+
+</TabItem>
+
+<TabItem value="sparql">
 
 ```sparql
 SELECT ?person ?handle
@@ -252,7 +298,18 @@ WHERE {
 }
 ```
 
+</TabItem>
+</Tabs>
+
 Like intermediate aggregate clauses, binds can use aggregate functions. See the [Valid Aggregate Functions](#valid-aggregate-functions) list above.
+
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
 
 ```json
 {"select": "?hash", 
@@ -263,6 +320,10 @@ Like intermediate aggregate clauses, binds can use aggregate functions. See the 
     ["?s", "_block/hash", "?hash"]
 ]}
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -278,9 +339,17 @@ Like intermediate aggregate clauses, binds can use aggregate functions. See the 
    [HOST]/api/db/query
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 Not supported
 ```
+
+</TabItem>
+
+<TabItem value="sparql">
 
 ```sparql
 SELECT ?hash
@@ -291,6 +360,9 @@ WHERE {
   ?s fdb:_block/hash ?hash.
 }
 ```
+
+</TabItem>
+</Tabs>
 
 ### Optional Map {#optional-map}
 
@@ -365,6 +437,14 @@ strEnds | `(strEnds ?message \"Amy.\")` | Returns true if the string ends with t
 
 An example query:
 
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
+
 ```json
 {
     "select": ["?handle", "?num"],
@@ -373,6 +453,10 @@ An example query:
                 { "filter": [ "(> 10 ?num)", "(= \"jdoe\" ?handle)"] }]
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -387,9 +471,17 @@ An example query:
    [HOST]/api/db/query
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 Not supported
 ```
+
+</TabItem>
+
+<TabItem value="sparql">
 
 ```sparql
 SELECT ?handle ?num
@@ -400,6 +492,9 @@ WHERE {
 }
 ```
 
+</TabItem>
+</Tabs>
+
 ## Prefixes Key {#prefixes-key}
 
 If we want to query across multiple Fluree ledgers we can do so by specifying the ledger in the `prefixes` map.
@@ -407,6 +502,14 @@ If we want to query across multiple Fluree ledgers we can do so by specifying th
 In the prefix map, we can specify what ledger we want to query across, in this case `fluree/test`, and we give that source a name, `ftest`. The name given to a source must be only lowercase letters and no numbers.
 
 Now we can use `ftest` as a source in any clause.
+
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
 
 ```json
 {
@@ -418,6 +521,10 @@ Now we can use `ftest` as a source in any clause.
                 ["ftest", ["person/handle", "zsmith"], "person/favNums", "?nums"] ]
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -434,9 +541,17 @@ Now we can use `ftest` as a source in any clause.
    [HOST]/api/db/query
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 Not supported.
 ```
+
+</TabItem>
+
+<TabItem value="sparql">
 
 ```sparql
 // SPARQL Note: When using SPARQL, omit the `$` in front-of built-in sources. In addition, if you want to specify an `ISO-8601` formatted wall clock time, replace all the `:` with `;`. For example, `"SELECT ?s ?o WHERE {  ?s   fdb2019-03-14T20;59;36;097Z:person/handle  ?o.}`. 
@@ -452,6 +567,9 @@ WHERE {
 }
 ```
 
+</TabItem>
+</Tabs>
+
 After declaring the source in the prefix, we can access that ledger at any block by specifying the time in the clause. You can specify a time using a block integer (`ftest3`), a duration (`ftestPT5M`), or an ISO-8601 formatted time-string (`ftest2019-03-14T20:59:36.097Z`). The time SHOULD NOT be declared in the prefix map - only in a particular clause.
 
 *Permissions*
@@ -466,6 +584,14 @@ The `vars` key takes a map where the keys are variable names and the values are 
 
 For example, in the below query `?handle` will be replaced with `dsanchez` anywhere it appears in the query.
 
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
+
 ```json
 {
     "select": "?handle",
@@ -476,6 +602,10 @@ For example, in the below query `?handle` will be replaced with `dsanchez` anywh
     }
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -492,9 +622,17 @@ For example, in the below query `?handle` will be replaced with `dsanchez` anywh
    [HOST]/api/db/query
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 Not supported
 ```
+
+</TabItem>
+
+<TabItem value="sparql">
 
 ```sparql
 // Althought the SPARQL 1.1 spec supports multiple values for any given variable, currently Fluree only support a 1:1 relationship 
@@ -506,6 +644,9 @@ WHERE {
   ?person fdb:person/handle ?handle.
 }
 ```
+
+</TabItem>
+</Tabs>
 
 ## Opts Key {#opts-key}
 
