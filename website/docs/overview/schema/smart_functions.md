@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Functions
 
 Smart functions are the engine for setting permissions in Fluree. This section lists
@@ -87,6 +90,14 @@ name of that smart function in other smart functions.
 For example, you can add a function called, `addThree` that adds 3 to any number,
 `n`.
 
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
+
 ```json
 [{
     "_id": "_fn",
@@ -95,6 +106,10 @@ For example, you can add a function called, `addThree` that adds 3 to any number
     "code": "(+ 3 n)"
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -109,6 +124,10 @@ curl \
    [HOST]/api/db/transact
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 mutation addTenFunc ($addThreeFunTx: JSON) {
   transact(tx: $addThreeFunTx)
@@ -120,12 +139,27 @@ mutation addTenFunc ($addThreeFunTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
 
+</TabItem>
+</Tabs>
+
 Once, `addThree` is in the ledger, you can create a new function called `addTen`,
 which uses `addThree`.
+
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
 
 ```json
 [{
@@ -135,6 +169,10 @@ which uses `addThree`.
     "code": "(+ 7 (addThree n))"
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -148,6 +186,10 @@ curl \
    [HOST]/api/db/transact
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 mutation addTenFunc ($addTenFunTx: JSON) {
   transact(tx: $addTenFunTx)
@@ -159,9 +201,16 @@ mutation addTenFunc ($addTenFunTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+</TabItem>
+</Tabs>
 
 ### Context-Dependent Functions {#context-dependent-functions}
 

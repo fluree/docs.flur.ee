@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Collections
 
 A collection is analogous to a relational database table. Every time you want a **new type of item** in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city.
@@ -20,6 +23,14 @@ Predicate | Type | Description
 
 Creating collections is done in the same way as creating any other type of subject in the ledger. In the below example, we create four new collections: person, chat, comment, and artist. We strongly discourage adding smart functions to your `_collection/spec` when you initially create a collection. If you would like a `_collection/spec`, visit the [functions](/docs/schema/functions) section to understand how to incorporate smart functions into your schema.
 
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
+
 ```json
 [{
  "_id": "_collection",
@@ -46,6 +57,10 @@ Creating collections is done in the same way as creating any other type of subje
   "version": 1 
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -77,6 +92,10 @@ Creating collections is done in the same way as creating any other type of subje
 }]' \
    [HOST]/api/db/transact
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 mutation addCollections ($myCollectionTx: JSON) {
@@ -88,15 +107,30 @@ mutation addCollections ($myCollectionTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+</TabItem>
+</Tabs>
 
 ## Adding a Predicate to `_collection` {#adding-a-predicate-to-_collection}
 
 `_collection` is a built-in ledger collection with built-in predicates. This does not mean, for instance, that you cannot add predicates. For example, you may want to add a `_collection/longDescription` predicate, where you store a longer version of `_collection/doc`.
 
 You can do this by adding a new predicate:
+
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
 
 ```json
 [{
@@ -105,6 +139,10 @@ You can do this by adding a new predicate:
     "type": "string"
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -117,6 +155,10 @@ You can do this by adding a new predicate:
 }]' \
    [HOST]/api/db/transact
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 mutation addLongDesc ($addLongDescTx: JSON) {
@@ -128,11 +170,26 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
 
+</TabItem>
+</Tabs>
+
 After you add this predicate, you can update any existing collections to include a long description:
+
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
 
 ```json
 [{
@@ -140,6 +197,10 @@ After you add this predicate, you can update any existing collections to include
     "longDescription": "I have a lot to say about this collection, so this is a longer description about the person collection"
 }]
 ```
+
+</TabItem>
+
+<TabItem value="json">
 
 ```bash
   curl \
@@ -152,6 +213,10 @@ After you add this predicate, you can update any existing collections to include
    [HOST]/api/db/transact
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 mutation addLongDesc ($addLongDescTx: JSON) {
   transact(tx: $addLongDescTx)
@@ -162,11 +227,26 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
 
+</TabItem>
+</Tabs>
+
 And you can create new collections with a `_collection/longDescription`:
+
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
 
 ```json
 [{
@@ -175,6 +255,10 @@ And you can create new collections with a `_collection/longDescription`:
     "longDescription": "I have a lot to say about this collection, so this is a longer description about the animal collection"
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -188,6 +272,10 @@ And you can create new collections with a `_collection/longDescription`:
    [HOST]/transact
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 mutation addLongDesc ($addLongDescTx: JSON) {
   transact(tx: $addLongDescTx)
@@ -198,9 +286,16 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+</TabItem>
+</Tabs>
 
 ## Updating a Predicate in `_collection` {#updating-a-predicate-in-_collection}
 
@@ -208,12 +303,24 @@ Although you can change built-in collection predicates, we do not recommend doin
 
 One commonly-requested safe change, however, is to allow `_collection/name` to be upsertable. By default, `_collection/name` does not allow upsert, meaning if you try to create a new collection with the name of already existing collection, an error will be thrown. You can change this, however, by editing the predicate, `_collection/name`. To see all the existing predicates for the `_collection/name` predicate, you can issue the following query:
 
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
+
 ```json
 {
     "select": ["*"],
     "from": ["_predicate/name", "_collection/name"]
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -226,9 +333,17 @@ One commonly-requested safe change, however, is to allow `_collection/name` to b
    [HOST]/api/db/query
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 Not supported
 ```
+
+</TabItem>
+
+<TabItem value="sparql">
 
 ```sparql
 SELECT ?predicate
@@ -236,6 +351,9 @@ WHERE {
     ?predicate fd:_predicate/name "_collection/name".
 }
 ```
+
+</TabItem>
+</Tabs>
 
 The default features of `_collection` name are:
 
@@ -251,12 +369,24 @@ The default features of `_collection` name are:
 
 As we can see, there is no `upsert` key in the predicate, so by default upsert is false. To change this, we can issue:
 
+<Tabs
+defaultValue="json"
+values={[{label: 'FlureeQL', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'SparQL', value: 'sparql'}]}>
+<TabItem value="json">
+
 ```json
 [{
     "_id": ["_predicate/name", "_collection/name"],
     "upsert": true
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -269,6 +399,10 @@ As we can see, there is no `upsert` key in the predicate, so by default upsert i
    [HOST]/api/db/transact
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 mutation addUpsert ($addUpsertTx: JSON) {
   transact(tx: $addUpsertTx)
@@ -279,8 +413,15 @@ mutation addUpsert ($addUpsertTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+</TabItem>
+</Tabs>
 
 Now, we allow upsert for the `_collection/name` predicate.
