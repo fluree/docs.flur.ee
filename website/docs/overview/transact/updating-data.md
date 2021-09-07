@@ -13,10 +13,10 @@ Update using a two-tuple with a unique predicate. i.e. `person/handle` and relev
 
 <Tabs
 defaultValue="json"
-values={[{label: 'JSON', value: 'json'},
+values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
-{label: 'Sparql', value: 'sparql'}]}>
+{label: 'SparQL', value: 'sparql'}]}>
 <TabItem value="json">
 
 ```json
@@ -70,10 +70,10 @@ Update using subject id:
 
 <Tabs
 defaultValue="json"
-values={[{label: 'JSON', value: 'json'},
+values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
-{label: 'Sparql', value: 'sparql'}]}>
+{label: 'SparQL', value: 'sparql'}]}>
 <TabItem value="json">
 
 ```json
@@ -140,10 +140,10 @@ After issuing the above transaction, we can issue the below transaction, which w
 
 <Tabs
 defaultValue="json"
-values={[{label: 'JSON', value: 'json'},
+values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
-{label: 'Sparql', value: 'sparql'}]}>
+{label: 'SparQL', value: 'sparql'}]}>
 <TabItem value="json">
 
 ```json

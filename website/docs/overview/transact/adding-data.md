@@ -9,10 +9,10 @@ The keys can contain the full predicate name including the namespace, i.e. `chat
 
 <Tabs
 defaultValue="json"
-values={[{label: 'JSON', value: 'json'},
+values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
-{label: 'Sparql', value: 'sparql'}]}>
+{label: 'SparQL', value: 'sparql'}]}>
 <TabItem value="json">
 
 ```json

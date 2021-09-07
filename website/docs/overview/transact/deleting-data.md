@@ -9,10 +9,10 @@ To delete/retract an entire subject, use the `_id` key along with only `"_action
 
 <Tabs
 defaultValue="json"
-values={[{label: 'JSON', value: 'json'},
+values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
-{label: 'Sparql', value: 'sparql'}]}>
+{label: 'SparQL', value: 'sparql'}]}>
 <TabItem value="json">
 
 ```json
@@ -70,10 +70,10 @@ You can delete (retract) a single predicate by setting the value of `_id` to a t
 
 <Tabs
 defaultValue="json"
-values={[{label: 'JSON', value: 'json'},
+values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
-{label: 'Sparql', value: 'sparql'}]}>
+{label: 'SparQL', value: 'sparql'}]}>
 <TabItem value="json">
 
 ```json
@@ -131,10 +131,10 @@ For example, to delete just the number, 98, from   `["person/handle", "jdoe"]`'s
 
 <Tabs
 defaultValue="json"
-values={[{label: 'JSON', value: 'json'},
+values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
-{label: 'Sparql', value: 'sparql'}]}>
+{label: 'SparQL', value: 'sparql'}]}>
 <TabItem value="json">
 
 ```json
@@ -190,10 +190,10 @@ To delete all of `["person/handle", "jdoe"]`'s favorite numbers, we would issue:
 
 <Tabs
 defaultValue="json"
-values={[{label: 'JSON', value: 'json'},
+values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
-{label: 'Sparql', value: 'sparql'}]}>
+{label: 'SparQL', value: 'sparql'}]}>
 <TabItem value="json">
 
 ```json
