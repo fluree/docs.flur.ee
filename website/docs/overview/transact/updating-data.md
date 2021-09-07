@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Updating Data
 
 ## Updating {#updating}
@@ -6,7 +9,15 @@ In order to update data, you can reference an existing subject by using its `_id
 
 When referencing an existing subject,  `"_action": "update"` is inferred. Note: When updating and upserting, you can use [nested transactions](/docs/transact/adding-data#nested-transactions).
 
-Update using a two-tuple with a unique predicate. i.e. `person/handle` and relevant object:  
+Update using a two-tuple with a unique predicate. i.e. `person/handle` and relevant object: 
+
+<Tabs
+defaultValue="json"
+values={[{label: 'JSON', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'Sparql', value: 'sparql'}]}>
+<TabItem value="json">
 
 ```json
 [{
@@ -14,6 +25,10 @@ Update using a two-tuple with a unique predicate. i.e. `person/handle` and relev
   "age": 71
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -26,6 +41,10 @@ curl \
    [HOST]/api/db/transact
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 mutation updatePerson($myUpdatePersonTx: JSON) {
   transact(tx: $myUpdatePersonTx)
@@ -36,11 +55,26 @@ mutation updatePerson($myUpdatePersonTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
 
+</TabItem>
+</Tabs>
+
 Update using subject id:
+
+<Tabs
+defaultValue="json"
+values={[{label: 'JSON', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'Sparql', value: 'sparql'}]}>
+<TabItem value="json">
 
 ```json
 [{
@@ -48,6 +82,10 @@ Update using subject id:
   "age": 71
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -60,6 +98,10 @@ curl \
   [HOST]/api/db/transact
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 mutation updateById ($myUpdateByIdTx: JSON) {
   transact(tx: $myUpdateByIdTx)
@@ -70,9 +112,16 @@ mutation updateById ($myUpdateByIdTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+</TabItem>
+</Tabs>
 
 ## Upserting {#upserting}
 
@@ -89,6 +138,14 @@ We can make `person/handle` a upsertable predicate with the following
 
 After issuing the above transaction, we can issue the below transaction, which will just update jdoe's age, rather than creating a new person.
 
+<Tabs
+defaultValue="json"
+values={[{label: 'JSON', value: 'json'},
+{label: 'Curl', value: 'bash'},
+{label: 'GraphQL', value: 'graphql'},
+{label: 'Sparql', value: 'sparql'}]}>
+<TabItem value="json">
+
 ```json
 [{
   "_id":      "person",
@@ -96,6 +153,10 @@ After issuing the above transaction, we can issue the below transaction, which w
   "age":      26
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -109,6 +170,10 @@ curl \
    https://$FLUREE_ACCOUNT.flur.ee/api/db/transact
    ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 mutation updateById ($myUpdateByIdTx: JSON) {
   transact(tx: $myUpdateByIdTx)
@@ -119,6 +184,13 @@ mutation updateById ($myUpdateByIdTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+</TabItem>
+</Tabs>
