@@ -21,7 +21,6 @@ values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
 {label: 'SPARQL', value: 'sparql'}]}>
-
 <TabItem value="json">
 
 ```json
