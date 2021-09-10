@@ -239,11 +239,12 @@ A basic query can optionally have a block key, which issues that query as of a g
 Using a block number:
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -300,11 +301,12 @@ values={[{label: 'FlureeQL', value: 'json'},
 Using an ISO-8601 formatted wall clock time:
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
  ```json
@@ -360,11 +362,12 @@ Not supported
 Using an ISO-8601 formatted duration (as of 5 minutes ago):
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
  ```json

@@ -91,11 +91,12 @@ For example, you can add a function called, `addThree` that adds 3 to any number
 `n`.
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -154,11 +155,12 @@ Once, `addThree` is in the ledger, you can create a new function called `addTen`
 which uses `addThree`.
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json

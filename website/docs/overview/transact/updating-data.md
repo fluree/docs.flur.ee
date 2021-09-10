@@ -12,11 +12,12 @@ When referencing an existing subject,  `"_action": "update"` is inferred. Note: 
 Update using a two-tuple with a unique predicate. i.e. `person/handle` and relevant object: 
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -69,11 +70,12 @@ Transactions not supported in SPARQL
 Update using subject id:
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -139,11 +141,12 @@ We can make `person/handle` a upsertable predicate with the following
 After issuing the above transaction, we can issue the below transaction, which will just update jdoe's age, rather than creating a new person.
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json

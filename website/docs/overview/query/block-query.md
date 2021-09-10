@@ -25,11 +25,12 @@ To query a single block, you specify the block number, an ISO-8601 formatted wal
 Using a block number:
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -76,11 +77,12 @@ Not supported
 Using an ISO-8601 formatted wall-clock time:
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -127,11 +129,12 @@ Not supported
 To query a range of block, specify a lower and upper limit (inclusive).
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -180,11 +183,12 @@ Not supported
 To query a range of block, starting with a lower limit, specify just the lower limit (inclusive).
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -232,11 +236,12 @@ Not supported
 In FlureeQL, you can pretty print the results of a block query by adding `"prettyPrint": true` to your query map. Any format of block query can be pretty printed.
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json

@@ -16,11 +16,12 @@ For a forward traversal example, note our predicate `chat/person` which is of ty
 In order to also include the person details, we add to our select cause with a sub-query within our original query. This new query would look like:
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -96,11 +97,12 @@ In FlureeQl, this syntax is declarative and looks like the shape of the data you
 As mentioned, these relationships can also be traversed in reverse. If instead of listing the person for every chat, what if we wanted to find all chats for a  person? Instead of selecting from `chat`, lets select from `person` and follow the same `chat/person` predicate but in the reverse direction. This query looks like:
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -173,11 +175,12 @@ This special syntax indicates the same relationship, but in reverse. You'll now 
 For fun, you can add another sub-query to follow the chat message back to the person. Even though in this case it is redundant, and circular, Fluree exists happily in this paradox:
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -344,11 +347,12 @@ Recur is a sub-select option, which uses recursion to follow `ref` predicates th
 Normally, if we want to query who a person follows, we would submit this query.
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -409,11 +413,12 @@ curl \
 However, if you want to keep following the `person/follows` relationship, we can specify the number of times we want to follow the given relationship in the following manner:
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
@@ -478,11 +483,12 @@ FlureeQL allows you to submit multiple queries at once by using the multi-query 
 For example, this query selects all chats and people at once.
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json

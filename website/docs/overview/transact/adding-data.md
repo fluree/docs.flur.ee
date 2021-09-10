@@ -8,11 +8,12 @@ In order to add data, you must use a [temporary id](/docs/transact/basics#tempor
 The keys can contain the full predicate name including the namespace, i.e. `chat/message` or you can leave off the namespace if it is the same as the collection the subject is within. i.e. when the subject is within the `chat` collection, just `message` can be used which is translated to `chat/message` by Fluree.
 
 <Tabs
-defaultValue="json"
-values={[{label: 'FlureeQL', value: 'json'},
-{label: 'Curl', value: 'bash'},
-{label: 'GraphQL', value: 'graphql'},
-{label: 'SPARQL', value: 'sparql'}]}>
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
 <TabItem value="json">
 
 ```json
