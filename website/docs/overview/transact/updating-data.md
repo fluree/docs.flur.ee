@@ -16,7 +16,7 @@ defaultValue="json"
 values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
-{label: 'SparQL', value: 'sparql'}]}>
+{label: 'SPARQL', value: 'sparql'}]}>
 <TabItem value="json">
 
 ```json
@@ -73,7 +73,7 @@ defaultValue="json"
 values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
-{label: 'SparQL', value: 'sparql'}]}>
+{label: 'SPARQL', value: 'sparql'}]}>
 <TabItem value="json">
 
 ```json
@@ -143,7 +143,7 @@ defaultValue="json"
 values={[{label: 'FlureeQL', value: 'json'},
 {label: 'Curl', value: 'bash'},
 {label: 'GraphQL', value: 'graphql'},
-{label: 'SparQL', value: 'sparql'}]}>
+{label: 'SPARQL', value: 'sparql'}]}>
 <TabItem value="json">
 
 ```json
