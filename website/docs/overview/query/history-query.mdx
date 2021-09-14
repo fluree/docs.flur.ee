@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # History Query
 
 In this section, we show you how to view the history of a flake or set of flakes.
@@ -22,12 +25,25 @@ To view the history of a single subject, you can either specify a subject id or 
 
 For example, to query the history of an subject at block 4:
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
 {
   "history": 369435906932737,
   "block": 4
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -40,17 +56,37 @@ curl \
 [HOST]/api/db/history
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 {
   history(subject: "369435906932737", block: 4)
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Not supported
 ```
 
+</TabItem>
+</Tabs>
+
 To query the history at block 4 of an subject using a two-tuple of a unique predicate and value:
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
 ```json
 {
@@ -58,6 +94,10 @@ To query the history at block 4 of an subject using a two-tuple of a unique pred
   "block": 4
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -70,26 +110,50 @@ curl \
  [HOST]/api/db/history
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 {
   history(subject: "[\"person/handle\", \"zsmith\"]", block: 4)
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Not supported
 ```
+
+</TabItem>
+</Tabs>
 
 ## History of Subject During a Block Range {#history-of-subject-during-a-block-range}
 
 To query the history of an subject using an subject id from block 3 to 5:
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
 {
   "history": 369435906932737,
   "block": [3, 5]
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -102,24 +166,48 @@ curl \
 [HOST]/api/db/history
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 Not supported
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Not supported
 ```
+
+</TabItem>
+</Tabs>
 
 ## History of Subject, Lower Limit {#history-of-subject-lower-limit}
 
 To query the history of an subject using an subject id from block 3 to the most recent block:
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
 {
   "history": 369435906932737,
   "block": [3]
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -132,13 +220,24 @@ curl \
 [HOST]/api/db/history
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 Not supported
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Not supported
 ```
+
+</TabItem>
+</Tabs>
 
 ## History Query With Flake Format {#history-query-with-flake-format}
 
@@ -150,11 +249,24 @@ In the flake-format, either a predicate or a subject is required.
 
 For example, to query the history of updates to the `person/follows` predicate on the `["person/handle", "zsmith"]` subject, you could issue the following query:
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
 {
   "history": [["person/handle", "zsmith"], "person/follows"]
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -165,6 +277,10 @@ curl \
 }' \
   [HOST]/api/db/history
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 {
@@ -172,19 +288,39 @@ curl \
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Not supported
 ```
 
+</TabItem>
+</Tabs>
+
 Note that because we are not specifying any other parts of the flake-format, we can simply omit them.
 
 If, however, we were interested in looking at flakes that matched any subject with the predicate, `person/handle`, and the object, `jdoe`, we would issue:
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
 ```json
 {
   "history": [null, "person/handle", "jdoe"]
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -196,19 +332,39 @@ curl \
   [HOST]/api/db/history
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 {
   history(subject: "[null, \"person/handle\", \"jdoe\"]")
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Not supported
 ```
 
+</TabItem>
+</Tabs>
+
 ## Pretty Print History Query {#pretty-print-history-query}
 
 In FlureeQL, you can pretty print the results of a history query by adding `"prettyPrint": true` to your query map. Any format of history query can be pretty printed.
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
 ```json
 {
@@ -216,6 +372,10 @@ In FlureeQL, you can pretty print the results of a history query by adding `"pre
   "prettyPrint": true
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -227,6 +387,10 @@ curl \
  [HOST]/api/db/block
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 {
   history(subject: "[\"person/handle\", \"jdoe\"]",
@@ -234,9 +398,16 @@ curl \
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Not supported
 ```
+
+</TabItem>
+</Tabs>
 
 The pretty printed results look as follows:
 

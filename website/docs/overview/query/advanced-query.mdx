@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Advanced Query
 
 In this section, we show you different advanced query capabilities.
@@ -12,6 +15,15 @@ For a forward traversal example, note our predicate `chat/person` which is of ty
 
 In order to also include the person details, we add to our select cause with a sub-query within our original query. This new query would look like:
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
 {
   "select": [
@@ -21,6 +33,10 @@ In order to also include the person details, we add to our select cause with a s
   "from": "chat"
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -35,6 +51,10 @@ In order to also include the person details, we add to our select cause with a s
 }' \
    [HOST]/api/db/query
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 { graph {
@@ -52,6 +72,10 @@ In order to also include the person details, we add to our select cause with a s
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
  SELECT ?chat ?message ?person ?instant ?fullName ?handle
  WHERE {
@@ -63,11 +87,23 @@ In order to also include the person details, we add to our select cause with a s
  }
  ```
 
+</TabItem>
+</Tabs>
+
 In FlureeQl, this syntax is declarative and looks like the shape of the data you want returned. These sub-queries can continue to whatever depth of the graph you'd like, and for as many ref predicates as you like. Circular graph references are fine and are embraced.
 
 ## Crawling the Graph, in Reverse
 
 As mentioned, these relationships can also be traversed in reverse. If instead of listing the person for every chat, what if we wanted to find all chats for a  person? Instead of selecting from `chat`, lets select from `person` and follow the same `chat/person` predicate but in the reverse direction. This query looks like:
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
 ```json
 {
@@ -78,6 +114,10 @@ As mentioned, these relationships can also be traversed in reverse. If instead o
   "from": "person"
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -92,6 +132,10 @@ curl \
 }' \
    https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 { graph {
@@ -106,6 +150,10 @@ curl \
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
  SELECT ?person ?fullName ?handle ?chat ?message ?instant 
  WHERE {
@@ -117,11 +165,23 @@ curl \
  }
 ```
 
+</TabItem>
+</Tabs>
+
 In FlureeQl and SPARQL, note the underscore `_` that was added to `chat/person`, making it instead `chat/_person`. In GraphQL, note `chat_Via_person`.
 
 This special syntax indicates the same relationship, but in reverse. You'll now see all people, with all their chat messages.
 
 For fun, you can add another sub-query to follow the chat message back to the person. Even though in this case it is redundant, and circular, Fluree exists happily in this paradox:
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
 ```json
 {
@@ -132,6 +192,10 @@ For fun, you can add another sub-query to follow the chat message back to the pe
   "from": "person"
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -146,6 +210,10 @@ curl \
 }' \
    https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 { graph {
@@ -165,6 +233,10 @@ curl \
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
  SELECT ?person ?fullName ?handle ?chat ?message ?instant ?personChat
  WHERE {
@@ -176,6 +248,9 @@ curl \
             fd:chat/instant  ?instant.
  }
 ```
+
+</TabItem>
+</Tabs>
 
 ## Sub-Selection Options
 
@@ -271,12 +346,25 @@ Recur is a sub-select option, which uses recursion to follow `ref` predicates th
 
 Normally, if we want to query who a person follows, we would submit this query.
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
 {
     "select":["handle", {"person/follows": ["handle"]}],
     "from":"person"
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -288,6 +376,10 @@ curl \
 }' \
    [HOST]/api/db/query
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 { graph {
@@ -302,6 +394,10 @@ curl \
 }}
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
  SELECT ?person ?handle ?follows
  WHERE {
@@ -311,7 +407,19 @@ curl \
  }
 ```
 
+</TabItem>
+</Tabs>
+
 However, if you want to keep following the `person/follows` relationship, we can specify the number of times we want to follow the given relationship in the following manner:
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
 ```json
 {
@@ -319,6 +427,10 @@ However, if you want to keep following the `person/follows` relationship, we can
     "from":"person"
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -330,6 +442,10 @@ curl \
 }' \
    [HOST]/api/db/query
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 { graph {
@@ -345,9 +461,16 @@ curl \
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Not supported
 ```
+
+</TabItem>
+</Tabs>
 
 The results will only return recursions for as long as their new information in a given recursion. For example, the result of the above query only returns a recursion that is two entities deep. This is because after we follow the `person/follows` relationship twice (in this given example), it will start returning the same information.
 
@@ -358,6 +481,15 @@ FlureeQL allows you to submit multiple queries at once by using the multi-query 
  In order to do this, create unique names for your queries, and set those as the keys of the your JSON query. The values of the keys should be the queries themselves. If you are using GraphQL, you can simply nest your second, third, etc requests within the `graph` level of the request.
 
 For example, this query selects all chats and people at once.
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
 ```json
 {
@@ -372,6 +504,10 @@ For example, this query selects all chats and people at once.
 }
 ```
 
+</TabItem>
+
+<TabItem value="bash">
+
 ```bash
 curl \
    -H "Content-Type: application/json" \
@@ -379,6 +515,10 @@ curl \
    -d '{"chatQuery": {"select": ["*"],"from": "chat"},"personQuery": {"select": ["*"],"from": "person"}}' \
    [HOST]/api/db/multi-query
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 { graph {
@@ -399,6 +539,10 @@ curl \
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 # Although you can submit the below query in SPARQL, unconnected groups of triples will simply return all permutations of grouped results, i.e. every chat will be returned with every person. 
 
@@ -411,6 +555,9 @@ curl \
  }
 
 ```
+
+</TabItem>
+</Tabs>
 
 Any errors will be returned in a header, called `X-Fdb-Errors`. For example, incorrectCollection is attempting to query a collection that does not exist.
 

@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Fluree Basics
 
 Once you've successfully downloaded Fluree, we recommend that you start with this
@@ -50,28 +53,43 @@ and `movie`. You can issue this transaction in your user interface. The syntax i
 explained in the [Transact](/docs/transact/basics) section. For now, we recommend
 you adding this basic schema and walking through the documentation section-by-section.
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
-[{
- "_id": "_collection",
- "name": "person"
-},
-{
- "_id": "_collection",
- "name": "chat"
-},
-{
- "_id": "_collection",
- "name": "comment"
-},
-{
- "_id": "_collection",
- "name": "artist"
-},
-{
- "_id": "_collection",
- "name": "movie"
-}]
+[
+  {
+    "_id": "_collection",
+    "name": "person"
+  },
+  {
+    "_id": "_collection",
+    "name": "chat"
+  },
+  {
+    "_id": "_collection",
+    "name": "comment"
+  },
+  {
+    "_id": "_collection",
+    "name": "artist"
+  },
+  {
+    "_id": "_collection",
+    "name": "movie"
+  }
+]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -100,6 +118,9 @@ you adding this basic schema and walking through the documentation section-by-se
    [HOST]/api/db/transact
 ```
 
+</TabItem>
+<TabItem value="graphql">
+
 ```graphql
 mutation addCollections ($myCollectionTx: JSON) {
   transact(tx: $myCollectionTx)
@@ -110,9 +131,15 @@ mutation addCollections ($myCollectionTx: JSON) {
 }
 ```
 
+</TabItem>
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+</TabItem>
+</Tabs>
 
 ## Adding Predicates {#adding-predicates}
 
@@ -140,122 +167,136 @@ The below transaction creates the following predicates:
 - `artist/name`
 - `movie/title`
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
-[{
-  "_id":    "_predicate",
-  "name":   "person/handle",
-  "doc":    "The person's unique handle",
-  "unique": true,
-  "type":   "string"
-},
-{
-  "_id":   "_predicate",
-  "name":  "person/fullName",
-  "doc":   "The person's full name.",
-  "type":  "string",
-  "index": true
-},
-{
-  "_id": "_predicate",
-  "name": "person/age",
-  "doc": "The person's age in years",
-  "type": "int",
-  "index": true
-},
-{
-  "_id":   "_predicate",
-  "name":  "person/follows",
-  "doc":   "Any persons this subject follows",
-  "type": "ref",
-  "restrictCollection": "person"
-},
-{
-  "_id":    "_predicate",
-  "name":   "person/favNums",
-  "doc":    "The person's favorite numbers",
-  "type":   "int",
-  "multi":  true
-},
-{
-  "_id":    "_predicate",
-  "name":   "person/favArtists",
-  "doc":    "The person's favorite artists",
-  "type":   "ref",
-  "restrictCollection": "artist",
-  "multi":  true
-},
-{
-  "_id":    "_predicate",
-  "name":   "person/favMovies",
-  "doc":    "The person's favorite movies",
-  "type":   "ref",
-  "restrictCollection": "movie",
-  "multi":  true
-},
-{
-  "_id":  "_predicate",
-  "name": "person/user",
-  "type": "ref",
-  "restrictCollection": "_user"
-},
-{
-  "_id":  "_predicate",
-  "name": "chat/message",
-  "doc":  "A chat message",
-  "type": "string",
-  "fullText": true
-},
-{
-  "_id":  "_predicate",
-  "name": "chat/person",
-  "doc":  "A reference to the person that created the message",
-  "type": "ref",
-  "restrictCollection": "person"
-},
-{
-  "_id":   "_predicate",
-  "name":  "chat/instant",
-  "doc":   "The instant in time when this chat happened.",
-  "type":  "instant",
-  "index": true
-},
-{
-  "_id":       "_predicate",
-  "name":      "chat/comments",
-  "doc":       "A reference to comments about this message",
-  "type":      "ref",
-  "component": true,
-  "multi":     true,
-  "restrictCollection": "comment"
-},
-{
-  "_id":  "_predicate",
-  "name": "comment/message",
-  "doc":  "A comment message.",
-  "type": "string",
-  "fullText": true
-},
-{
-  "_id":  "_predicate",
-  "name": "comment/person",
-  "doc":  "A reference to the person that made the comment",
-  "type": "ref",
-  "restrictCollection": "person"
-},
-{
-  "_id": "_predicate",
-  "name": "artist/name",
-  "type": "string",
-  "unique": true
-},
-{
-  "_id": "_predicate",
-  "name": "movie/title",
-  "type": "string",
-  "fullText": true,
-  "unique": true
-}]
+[
+  {
+    "_id": "_predicate",
+    "name": "person/handle",
+    "doc": "The person's unique handle",
+    "unique": true,
+    "type": "string"
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/fullName",
+    "doc": "The person's full name.",
+    "type": "string",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/age",
+    "doc": "The person's age in years",
+    "type": "int",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/follows",
+    "doc": "Any persons this subject follows",
+    "type": "ref",
+    "restrictCollection": "person"
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/favNums",
+    "doc": "The person's favorite numbers",
+    "type": "int",
+    "multi": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/favArtists",
+    "doc": "The person's favorite artists",
+    "type": "ref",
+    "restrictCollection": "artist",
+    "multi": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/favMovies",
+    "doc": "The person's favorite movies",
+    "type": "ref",
+    "restrictCollection": "movie",
+    "multi": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "person/user",
+    "type": "ref",
+    "restrictCollection": "_user"
+  },
+  {
+    "_id": "_predicate",
+    "name": "chat/message",
+    "doc": "A chat message",
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "chat/person",
+    "doc": "A reference to the person that created the message",
+    "type": "ref",
+    "restrictCollection": "person"
+  },
+  {
+    "_id": "_predicate",
+    "name": "chat/instant",
+    "doc": "The instant in time when this chat happened.",
+    "type": "instant",
+    "index": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "chat/comments",
+    "doc": "A reference to comments about this message",
+    "type": "ref",
+    "component": true,
+    "multi": true,
+    "restrictCollection": "comment"
+  },
+  {
+    "_id": "_predicate",
+    "name": "comment/message",
+    "doc": "A comment message.",
+    "type": "string",
+    "fullText": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "comment/person",
+    "doc": "A reference to the person that made the comment",
+    "type": "ref",
+    "restrictCollection": "person"
+  },
+  {
+    "_id": "_predicate",
+    "name": "artist/name",
+    "type": "string",
+    "unique": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "movie/title",
+    "type": "string",
+    "fullText": true,
+    "unique": true
+  }
+]
 ```
+
+</TabItem>
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -375,7 +416,10 @@ The below transaction creates the following predicates:
    [HOST]/api/db/transact
 ```
 
-```graphql
+</TabItem>
+<TabItem value="graphql">
+
+````graphql
 mutation addPeoplePredicates ($myPersonTx: JSON) {
   transact(tx: $myPersonTx)
 }
@@ -392,7 +436,7 @@ mutation addArtistPredicates ($myArtistTx: JSON) {
   transact(tx: $myArtistTx)
 }
 
-/* You can learn more about structuring GraphQL transactions in the section, 
+/* You can learn more about structuring GraphQL transactions in the section,
 GraphQL Transactions'. */
 
 {"myPersonTx": "[{\"_id\":\"_predicate\",\"name\":\"person/handle\",\"doc\":
@@ -424,9 +468,15 @@ GraphQL Transactions'. */
 }
 ```
 
+</TabItem>
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL.
-```
+````
+
+</TabItem>
+</Tabs>
 
 ## Adding Sample Data {#adding-sample-data}
 
@@ -434,112 +484,126 @@ You can issue the below transaction to add some sample data into your ledger. Th
 below transaction adds four users, three chats, four comments, three artists, and
 three movies.
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
-[{
-  "_id":      "person$jdoe",
-  "handle":   "jdoe",
-  "fullName": "Jane Doe",
-  "age": 25,
-  "favNums":  [1223, 12, 98, 0, -2],
-  "favArtists": ["artist$1", "artist$2", "artist$3"],
-  "follows": "person$zsmith",
-  "favMovies": ["movie$1", "movie$2", "movie$3"]
-},
-{
-  "_id":      "person$zsmith",
-  "handle":   "zsmith",
-  "fullName": "Zach Smith",
-  "age": 63,
-  "favNums": [5, 645, 28, -1, 1223],
-  "favArtists": ["artist$1"],
-  "follows": "person$jdoe",
-  "favMovies": ["movie$2", "movie$3"]
-},
-{
-  "_id":      "person$anguyen",
-  "handle":   "anguyen",
-  "fullName": "Amy Nguyen",
-  "age": 34,
-  "favNums": [7,  98, 0, 2],
-  "favArtists": ["artist$2", "artist$3"],
-  "follows": "person$jdoe",
-  "favMovies": ["movie$3"]
-},
-{
-  "_id":      "person$dsanchez",
-  "handle":   "dsanchez",
-  "fullName": "Diana Sanchez",
-  "age": 70,
-  "favNums": [9, 1950],
-  "favArtists": ["artist$2"],
-  "follows": "person$anguyen",
-  "favMovies": ["movie$1", "movie$2", "movie$3"]
-},
-{
-  "_id":     "chat",
-  "message": "Hi! I'm chat from Jane.",
-  "person":  "person$jdoe",
-  "instant": "#(- (now) 20000)",
-  "comments": ["comment$zsmith", "comment$anguyen"]
-},
-{
-  "_id":     "chat",
-  "message": "Hi! I'm a chat from Diana.",
-  "person":  "person$dsanchez",
-  "instant": "#(- (now) 5000)",
-  "comments": ["comment$zsmithagain", "comment$anguyenagain"]
-},
-{
-  "_id":     "chat",
-  "message": "Hi! I'm a chat from Zach.",
-  "person":  "person$zsmith",
-  "instant": "#(now)"
-},
-{
-  "_id":     "comment$zsmith",
-  "message": "Zsmith is responding!",
-  "person": "person$zsmith"
-},
-{
-  "_id":     "comment$anguyen",
-  "message": "Hi Jane!",
-  "person": "person$anguyen"
-},
-{
+[
+  {
+    "_id": "person$jdoe",
+    "handle": "jdoe",
+    "fullName": "Jane Doe",
+    "age": 25,
+    "favNums": [1223, 12, 98, 0, -2],
+    "favArtists": ["artist$1", "artist$2", "artist$3"],
+    "follows": "person$zsmith",
+    "favMovies": ["movie$1", "movie$2", "movie$3"]
+  },
+  {
+    "_id": "person$zsmith",
+    "handle": "zsmith",
+    "fullName": "Zach Smith",
+    "age": 63,
+    "favNums": [5, 645, 28, -1, 1223],
+    "favArtists": ["artist$1"],
+    "follows": "person$jdoe",
+    "favMovies": ["movie$2", "movie$3"]
+  },
+  {
+    "_id": "person$anguyen",
+    "handle": "anguyen",
+    "fullName": "Amy Nguyen",
+    "age": 34,
+    "favNums": [7, 98, 0, 2],
+    "favArtists": ["artist$2", "artist$3"],
+    "follows": "person$jdoe",
+    "favMovies": ["movie$3"]
+  },
+  {
+    "_id": "person$dsanchez",
+    "handle": "dsanchez",
+    "fullName": "Diana Sanchez",
+    "age": 70,
+    "favNums": [9, 1950],
+    "favArtists": ["artist$2"],
+    "follows": "person$anguyen",
+    "favMovies": ["movie$1", "movie$2", "movie$3"]
+  },
+  {
+    "_id": "chat",
+    "message": "Hi! I'm chat from Jane.",
+    "person": "person$jdoe",
+    "instant": "#(- (now) 20000)",
+    "comments": ["comment$zsmith", "comment$anguyen"]
+  },
+  {
+    "_id": "chat",
+    "message": "Hi! I'm a chat from Diana.",
+    "person": "person$dsanchez",
+    "instant": "#(- (now) 5000)",
+    "comments": ["comment$zsmithagain", "comment$anguyenagain"]
+  },
+  {
+    "_id": "chat",
+    "message": "Hi! I'm a chat from Zach.",
+    "person": "person$zsmith",
+    "instant": "#(now)"
+  },
+  {
+    "_id": "comment$zsmith",
+    "message": "Zsmith is responding!",
+    "person": "person$zsmith"
+  },
+  {
+    "_id": "comment$anguyen",
+    "message": "Hi Jane!",
+    "person": "person$anguyen"
+  },
+  {
     "_id": "comment$zsmithagain",
     "message": "Welcome Diana!",
     "person": "person$zsmith"
-},
-{
+  },
+  {
     "_id": "comment$anguyenagain",
     "message": "Welcome Diana! This is Amy.",
     "person": "person$anguyen"
-},
-{
-  "_id": "artist$1",
-  "name": "Gustav Klimt"
-},
-{
-  "_id": "artist$2",
-  "name": "Augusta Savage"
-},
-{
-  "_id": "artist$3",
-  "name": "Jean-Michel Basquiat"
-},
-{
-"_id": "movie$1",
-"title": "The Shawshank Redemption"
-},
-{
-"_id": "movie$2",
-"title": "Hot Fuzz"
-},
-{
-"_id": "movie$3",
-"title": "Gran Torino"
-}]
+  },
+  {
+    "_id": "artist$1",
+    "name": "Gustav Klimt"
+  },
+  {
+    "_id": "artist$2",
+    "name": "Augusta Savage"
+  },
+  {
+    "_id": "artist$3",
+    "name": "Jean-Michel Basquiat"
+  },
+  {
+    "_id": "movie$1",
+    "title": "The Shawshank Redemption"
+  },
+  {
+    "_id": "movie$2",
+    "title": "Hot Fuzz"
+  },
+  {
+    "_id": "movie$3",
+    "title": "Gran Torino"
+  }
+]
 ```
+
+</TabItem>
+<TabItem value="bash">
 
 ```bash
 curl \
@@ -649,8 +713,11 @@ curl \
 "_id": "movie$3",
 "title": "Gran Torino"
 }]' \
-   [HOST]/api/db/transact  
+   [HOST]/api/db/transact
 ```
+
+</TabItem>
+<TabItem value="graphql">
 
 ```graphql
 mutation addSampleData ($mySampleDataTx: JSON) {
@@ -692,6 +759,12 @@ mutation addSampleData ($mySampleDataTx: JSON) {
 }
 ```
 
+</TabItem>
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL.
 ```
+
+</TabItem>
+</Tabs>

@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Predicates
 
 Schema predicates are similar to relational ledger columns, however there are fewer restrictions (any predicate can be attached to any subject, unless a restriction is put in place using a spec).
@@ -59,6 +62,15 @@ In order to create a predicate, you only need to specify what type of subject yo
 
 If you would like a `_predicate/spec` or `txSpec`, which limits that allowed values for a predicate, see the [function](/docs/schema/functions) section.
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
 [{
   "_id":    "_predicate",
@@ -82,6 +94,10 @@ If you would like a `_predicate/spec` or `txSpec`, which limits that allowed val
   "restrictCollection": "person"
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -110,6 +126,10 @@ If you would like a `_predicate/spec` or `txSpec`, which limits that allowed val
 }]' \
    [HOST]/transact
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 mutation addPredicates ($myPredicateTx: JSON) {
@@ -121,15 +141,31 @@ mutation addPredicates ($myPredicateTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+</TabItem>
+</Tabs>
 
 ## Adding a Predicate to `_predicate` {#adding-a-predicate-to-_predicate}
 
 `_predicate` is a built-in ledger collection with built-in predicates. This does not mean, for instance, that you cannot add predicates. For example, you may want to add a `_predicate/longDescription` predicate, where you store a longer version of `_predicate/doc`.
 
 You can do this by adding a new predicate:
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
 ```json
 [{
@@ -138,6 +174,10 @@ You can do this by adding a new predicate:
     "type": "string"
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -150,6 +190,10 @@ You can do this by adding a new predicate:
 }]' \
    [HOST]/transact
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 mutation addLongDesc ($addLongDescTx: JSON) {
@@ -161,11 +205,27 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
 
+</TabItem>
+</Tabs>
+
 After you add this predicate, you can update any existing predicates to include a long description:
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
 ```json
 [{
@@ -173,6 +233,10 @@ After you add this predicate, you can update any existing predicates to include 
     "longDescription": "I have a lot to say about this predicate, so this is a longer description about the person/handle predicate"
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -184,6 +248,10 @@ After you add this predicate, you can update any existing predicates to include 
 }]' \
    [HOST]/transact
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 mutation addLongDesc ($addLongDescTx: JSON) {
@@ -195,11 +263,27 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
 
+</TabItem>
+</Tabs>
+
 And you can create new predicates with a `_predicate/longDescription`:
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
 ```json
 [{
@@ -209,6 +293,10 @@ And you can create new predicates with a `_predicate/longDescription`:
     "longDescription": "I have a lot to say about this predicate, so this is a longer description about the _user/age predicate"
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -223,6 +311,10 @@ And you can create new predicates with a `_predicate/longDescription`:
    [HOST]/transact
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 mutation addLongDesc ($addLongDescTx: JSON) {
   transact(tx: $addLongDescTx)
@@ -233,9 +325,16 @@ mutation addLongDesc ($addLongDescTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
+
+</TabItem>
+</Tabs>
 
 ## Updating a Predicate in `_predicate` {#updating-a-predicate-in-_predicate}
 
@@ -243,12 +342,25 @@ Although you can change built-in collection predicates, we do not recommend doin
 
 One commonly-requested safe change, however, is to allow `_predicate/name` to be upsertable. By default, `_predicate/name` does not allow upsert, meaning if you try to create a new predicate with the name of already existing predicate, an error will be thrown. You can change this, however, by editing the predicate, `_predicate/name`. To see all the existing predicates for the `_predicate/name` predicate, you can issue the following query:
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
 {
     "select": ["*"],
     "from": ["_predicate/name", "_predicate/name"]
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -261,9 +373,17 @@ One commonly-requested safe change, however, is to allow `_predicate/name` to be
    [HOST]/query
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 Not supported
 ```
+
+</TabItem>
+
+<TabItem value="sparql">
 
 ```sparql
 SELECT ?predicate
@@ -271,6 +391,9 @@ WHERE {
     ?predicate fd:_predicate/name "_predicate/name".
 }
 ```
+
+</TabItem>
+</Tabs>
 
 The default features of `_predicate/name` are:
 
@@ -286,12 +409,25 @@ The default features of `_predicate/name` are:
 
 As we can see, there is no `upsert` key in the predicate, so by default upsert is false. To change this, we can issue:
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
 [{
     "_id": ["_predicate/name", "_predicate/name"],
     "upsert": true
 }]
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -304,6 +440,10 @@ As we can see, there is no `upsert` key in the predicate, so by default upsert i
    [HOST]/transact
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 mutation addUpsert ($addUpsertTx: JSON) {
   transact(tx: $addUpsertTx)
@@ -314,15 +454,30 @@ mutation addUpsert ($addUpsertTx: JSON) {
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Transactions not supported in SPARQL
 ```
 
+</TabItem>
+</Tabs>
 Now, we allow upsert for the `_predicate/name` predicate.
 
 ## Query All Predicates {#query-all-predicates}
 
 To see all of the predicates in a collection, you can use an analytical query with a filter, like below. To see all the predicates from any given collection, just replace `_collection` with the name of any collection.
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
 ```json
 {
@@ -333,6 +488,10 @@ To see all of the predicates in a collection, you can use an analytical query wi
         ]
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -348,10 +507,21 @@ To see all of the predicates in a collection, you can use an analytical query wi
    [HOST]/query
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 Not currently supported
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Not currently supported
 ```
+
+</TabItem>
+</Tabs>

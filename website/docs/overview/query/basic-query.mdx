@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Basic Query
 
 In this section, we show you how to perform basic queries using FlureeQL. All code examples are shown in FlureeQL. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the `Query` dropdown in the sidebar).
@@ -235,6 +238,15 @@ A basic query can optionally have a block key, which issues that query as of a g
 
 Using a block number:
 
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
+
 ```json
 {
   "select": ["*"],
@@ -243,6 +255,10 @@ Using a block number:
 }
 ```
 
+</TabItem>
+
+<TabItem value="bash">
+
 ```bash
  curl \
    -H "Content-Type: application/json" \
@@ -250,6 +266,10 @@ Using a block number:
    -d '{"select": ["*"], "from": "chat", "block": 2}' \
    [HOST]/api/db/query
 ```
+
+</TabItem>
+
+<TabItem value="graphql">
 
 ```graphql
 { graph (block: 2) {
@@ -262,6 +282,10 @@ Using a block number:
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
  SELECT ?chat ?message ?person ?instant
  WHERE {
@@ -271,7 +295,19 @@ Using a block number:
  }
  ```
 
+</TabItem>
+</Tabs>
+
 Using an ISO-8601 formatted wall clock time:
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
  ```json
 {
@@ -280,6 +316,10 @@ Using an ISO-8601 formatted wall clock time:
   "block": "2017-11-14T20:59:36.097Z"
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -293,6 +333,10 @@ Using an ISO-8601 formatted wall clock time:
    https://$FLUREE_ACCOUNT.flur.ee/api/db/query
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 { graph (block: "2018-03-08T09:57:13.861Z") {
   chat {
@@ -304,11 +348,27 @@ Using an ISO-8601 formatted wall clock time:
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Not supported
 ```
 
+</TabItem>
+</Tabs>
+
 Using an ISO-8601 formatted duration (as of 5 minutes ago):
+
+<Tabs
+  defaultValue="json"
+  values={[{label: 'FlureeQL', value: 'json'},
+  {label: 'Curl', value: 'bash'},
+  {label: 'GraphQL', value: 'graphql'},
+  {label: 'SPARQL', value: 'sparql'}]}
+>
+<TabItem value="json">
 
  ```json
 {
@@ -317,6 +377,10 @@ Using an ISO-8601 formatted duration (as of 5 minutes ago):
   "block": "PT5M"
 }
 ```
+
+</TabItem>
+
+<TabItem value="bash">
 
 ```bash
   curl \
@@ -330,6 +394,10 @@ Using an ISO-8601 formatted duration (as of 5 minutes ago):
    [HOST]/api/db/query
 ```
 
+</TabItem>
+
+<TabItem value="graphql">
+
 ```graphql
 { graph (block: "PT5M") {
   chat {
@@ -341,9 +409,16 @@ Using an ISO-8601 formatted duration (as of 5 minutes ago):
 }
 ```
 
+</TabItem>
+
+<TabItem value="sparql">
+
 ```sparql
 Not supported
 ```
+
+</TabItem>
+</Tabs>
 
 ## Opts Key
 
