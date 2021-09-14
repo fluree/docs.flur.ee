@@ -26,7 +26,7 @@ Download and unzip: [latest stable version of Fluree](https://s3.amazonaws.com/f
 
 Or, you can get the [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip). 
 
-You can also download the latest Fluree with [Homebrew](/tools/other/tools#fluree-through-homebrew), [Docker](/tools/other/tools#fluree-on-docker), and [Chocolatey](/tools/other/tools#fluree-with-chocolatey) (coming soon).
+You can also download the latest Fluree with [Homebrew](/tools/other/tools#fluree-through-homebrew) or [Docker](/tools/other/tools#fluree-on-docker).
 
 ### Launching and Exiting Fluree
 
