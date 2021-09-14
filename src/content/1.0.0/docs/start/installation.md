@@ -37,7 +37,7 @@ Fluree requires Java 11 or above. To verify that your version of Java, you can t
 To run Fluree with all the default options, navigate to the directory where you downloaded Fluree in the terminal then launch Fluree with the following command:
 
 > For Mac or Linux systems: `./fluree_start.sh`
-> For Windows systems, you have to download a Bash emulator, like [Git For Windows](https://gitforwindows.org/) to properly run Fluree. In your Bash emulator, you can run `./fluree_start.sh` to start Fluree. Alternatively on Windows, you will be able to [download Fluree with Chocolatey](#download-fluree-with-chocolatey).
+> For Windows systems, you have to download a Bash emulator, like [Git For Windows](https://gitforwindows.org/) to properly run Fluree. In your Bash emulator, you can run `./fluree_start.sh` to start Fluree.
 
 When Fluree is done starting up, your terminal will log:
 
@@ -268,10 +268,6 @@ brew uninstall flureedb
 ```all
 brew untap fluree/flureedb
 ```
-
-### Download Fluree with Chocolatey
-
-This feature is coming soon.
 
 ### Fluree Command Line Tool
 
