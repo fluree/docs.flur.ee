@@ -54,7 +54,7 @@ Examples of account_id function:
   }
 ```
 
-## **block_event\_\_GT_map** {#block_event\_\_gt_map} {#block_event__gt_map-block_event__gt_map}
+## **block_event_to_map**  {#block_event_to_map}
 
 Accepts block event data from a `listen` event, mapping flakes to either the `:added` key or `:retracted` key. The maps of data are organized by subject and include full predicate names.
 
@@ -94,7 +94,7 @@ console.log("Added listener?", listenerAdded?);
 
 ## **block_query** {#block_query}
 
-FlureeQL [block queries](/docs/query/block_query) should be submitted to the `block_query` function. This does not include other types of queries (basic queries, history queries, etc) that might reference a "block" key. This only includes queries that are returning flakes from a block or set of blocks.
+FlureeQL [block queries](/overview/query/block_query.md) should be submitted to the `block_query` function. This does not include other types of queries (basic queries, history queries, etc) that might reference a "block" key. This only includes queries that are returning flakes from a block or set of blocks.
 
 ### Parameter(s) {#parameters-2}
 
@@ -417,7 +417,7 @@ flureenjs.close(flureeDbConn);
 
 ## **graphQL** {#graphql}
 
-All queries and transactions in GraphQL syntax should be issued through the `graphql` function. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/1.0.0/identity/signatures#signed-queries)).
+All queries and transactions in GraphQL syntax should be issued through the `graphql` function. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/concepts/identity/signatures.md#signed-queries)).
 
 ### Parameter(s) {#parameters-9}
 
@@ -457,7 +457,7 @@ An example of an unsigned query to `graphql`:
 
 ## **history_query** {#history_query}
 
-FlureeQL [history queries](../../overview/query/history_query.md) should be submitted to the `history` function. This function only supports queries like those in the linked section.
+FlureeQL [history queries](/overview/query/history_query.md) should be submitted to the `history` function. This function only supports queries like those in the linked section.
 
 ### Parameter(s) {#parameters-10}
 
@@ -747,7 +747,7 @@ flureenjs.close(flureeDbConn);
 
 ## **multi_query** {#multi_query}
 
-If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/docs/query/advanced_query#multiple-queries)), that should be done through the `multi_query` function.
+If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/overview/query/advanced_query.md#multiple-queries)), that should be done through the `multi_query` function.
 
 ### Parameter(s) {#parameters-18}
 
@@ -1323,7 +1323,7 @@ A signed message.
 
 ## **sparql** {#sparql}
 
-All queries in SPARQL syntax, regardless of type, should be issued through the `sparql` function. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/1.0.0/identity/signatures#signed-queries)).
+All queries in SPARQL syntax, regardless of type, should be issued through the `sparql` function. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/concepts/identity/signatures.md#signed-queries)).
 
 ### Parameter(s) {#parameters-35}
 

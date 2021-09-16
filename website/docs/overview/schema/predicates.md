@@ -6,7 +6,7 @@ Remember that Fluree schema are stored in the ledger in the same way as any othe
 
 ## _predicate Predicates {#_predicate-predicates}
 
-Below are the built-in predicates for the `_predicate` collection. As mentioned  in the [collection section](../../overview/schema/collections.md), you can add additional predicates if you wish. You are also able to delete predicates, although this is strongly discouraged and may break parts of your ledger.  
+Below are the built-in predicates for the `_predicate` collection. As mentioned  in the [collection section](/overview/schema/collections.md), you can add additional predicates if you wish. You are also able to delete predicates, although this is strongly discouraged and may break parts of your ledger.  
 
 Predicate | Type | Description
 ---|---|---
@@ -19,15 +19,15 @@ Predicate | Type | Description
 `_predicate/upsert` | `boolean` | (optional) Only applicable to predicates marked as `unique`. If a new subject transaction using this predicate resolves to an existing subject, update that subject. By default the transaction will throw an exception if a conflict with a `unique` predicate exists.
 `_predicate/noHistory` | `boolean` | (optional) By default, all history is kept. If you wish to turn this off for a certain subject, set this flag to true. Queries, regardless of time travel, will always show the current value.
 `_predicate/component` | `boolean` | (optional) For type 'ref' predicates only. Mark true if this predicate refers to a subject which only exists as part of the parent subject. If true, and the parent subject is deleted, the subject referenced by this predicate will also be deleted automatically. (Default false.)
-`_predicate/spec` | [`ref`] | (optional) A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. These specs restricts what is allowed in this _predicate. To see how to write a function, see the [function section](/docs/schema/functions).  
+`_predicate/spec` | [`ref`] | (optional) A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. These specs restricts what is allowed in this _predicate. To see how to write a function, see the [function section](/overview/schema/smartfunctions.md).  
 `_predicate/specDoc` | `string` | (optional) Optional docstring to describe the specs. Is thrown when any spec fails.
 `_predicate/deprecated` | `boolean` | (Not in production yet, optional) True if this v is deprecated.  Reads and writes are still allowed, but might give warnings in the API.
-`_predicate/txSpec` | [`ref`] | (optional)  A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. This predicate allows you to set specifications for all of the flakes pertaining to a certain predicate. To see how to write a function, see the [function section](/docs/schema/functions).
+`_predicate/txSpec` | [`ref`] | (optional)  A multi-cardinality list of `ref`s, which reference entities in the `_fn` collection. This predicate allows you to set specifications for all of the flakes pertaining to a certain predicate. To see how to write a function, see the [function section](/overview/schema/smartfunctions.md).
 `_predicate/txSpecDoc` | `string` | (optional) Optional docstring to describe the txSpecs. Is thrown when any txSpec fails.
 `_predicate/restrictCollection` | `string` | (optional) Only applicable to predicates of `ref` (reference) types. It will restrict references to only be allowed from the specified collection.
 `_predicate/restrictTag` | `boolean` | (optional) Only applicable to predicates of type `tag`. If true, a tag, which corresponds to this predicate object must exist before adding predicate-object pair.
 `_predicate/encrypted` | `boolean` | (Not in production yet, optional) Expects the value to come in as an encrypted string. Type checking will be disabled, and ledger functions won't be permitted on this value.
-`_predicate/fullText` | `boolean` | (optional) If true, full text search enabled on this ledger. By default, the language for a Fluree ledger is set to English. You can change the default language in [ledger settings](/docs/schema/settings).
+`_predicate/fullText` | `boolean` | (optional) If true, full text search enabled on this ledger. By default, the language for a Fluree ledger is set to English. You can change the default language in [ledger settings](/overview/schema/settings.md).
 
 ## Predicate Types {#predicate-types}
 
@@ -57,7 +57,7 @@ Notice there is no `array` type. If you want a predicate to have multiple object
 
 In order to create a predicate, you only need to specify what type of subject you are creating (`_predicate`), a name, and a type. The name for a predicate should be namespaced with the relevant collection (as in all predicates in the `person` collection should begin with `person/`). There are also a host of other [predicate predicates](#_predicate-predicates), which are listed in the linked section, but they are not required.
 
-If you would like a `_predicate/spec` or `txSpec`, which limits that allowed values for a predicate, see the [function](/docs/schema/functions) section.
+If you would like a `_predicate/spec` or `txSpec`, which limits that allowed values for a predicate, see the [function](/overview/schema/smartfunctions.md) section.
 
 ```flureeql
 [{

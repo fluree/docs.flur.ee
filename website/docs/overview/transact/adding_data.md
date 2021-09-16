@@ -1,6 +1,6 @@
 # Adding Data
 
-In order to add data, you must use a [temporary id](../../overview/transact/basics#temporary-ids), i.e. `"chat$1"`. In this case, `"_action": "add"` is inferred. Any predicates that you wish to add to this subject should be included as key-value pairs.
+In order to add data, you must use a [temporary id](/overview/transact/basics.md#temporary-ids), i.e. `"chat$1"`. In this case, `"_action": "add"` is inferred. Any predicates that you wish to add to this subject should be included as key-value pairs.
 
 The keys can contain the full predicate name including the namespace, i.e. `chat/message` or you can leave off the namespace if it is the same as the collection the subject is within. i.e. when the subject is within the `chat` collection, just `message` can be used which is translated to `chat/message` by Fluree.
 

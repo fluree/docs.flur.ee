@@ -3,42 +3,26 @@
 This page will host a quick "elevator pitch" style description of the value proposition of Fluree.
 For now, it has the content from the Getting Started Intro page copied into it.
 
-## Intro {#intro}
-
-The Docs section is a basic technical overview of key topics, including:
-
-- Start-up
-- Querying
-- Transacting
-- Schema
-- Ledger Set-up
-- Infrastructure
-
 ## Other Resources {#other-resources}
+
+> TODO Rewrite this Section
 
 There are other resources in this documentation website, such as:
 
-- [API](/api): API endpoints for both download Fluree, as well as Fluree-On-Demand.
-- [Tools](/tools): documentation for our Javascript, NodeJS, FlureeWorker, and
+- [What is Fluree?](/concepts/what-is-fluree.md)
+- [Guides and Lessons](/guides/guides.md): Walkthroughs and How-to's of important areas of Fluree.
+- [Reference](/reference/reference.md): Reference docs for our Javascript, NodeJS, FlureeWorker, and
   other libraries.
-- [Guides](/guides): in-depth articles on important themes, such as
-  [What is Fluree?](/guides/intro/what-is-fluree) and identity management.
-- [Lessons](/lesson): lessons that guide you through key concepts in Fluree and
-  let you try queries and transaction directly from this site. While the lessons
-  are a good introduction, they are not comprehensive.
-- [Videos](/video): screen captures of how-to-use Fluree combined with relevant
-  narration (some video transcripts are available, and others can be provided by
-  request). The videos are not comprehensive, but are a good reference for particular
-  topics.
+- [Concepts](/concepts/concepts.md): Discussions of key concepts in Fluree.
 
-Alternatively, follow this
-[to-do list generator](https://github.com/fluree/to-do-lists-generator) repo for
-an introduction to integrating Fluree in a React application.
+To get started, work through the steps in this [to-do list generator](https://github.com/fluree/to-do-lists-generator)
+repo for an introduction to integrating Fluree in a React application.
 
 ## Where Can I Get Help? {#get-help}
 
 If you can't find the answers you are looking for in our documentation, please
 let us know! We are always looking to improve the quality of support we provide.
 
-You can send an email to <support@flur.ee> or you can
-[join our Slack](https://launchpass.com/flureedb) for support and community.
+You can [post to our Github Discussions](https://github.com/fluree/db/discussions) to ask questions
+of the community, [join our Slack](https://launchpass.com/flureedb), or send an email to
+[support@flur.ee](mailto:support@flur.ee).

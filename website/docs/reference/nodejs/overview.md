@@ -91,6 +91,4 @@ Action | Function | Explanation
 Set Default Key | `set_default_key` | Sets a new private key for an entire tx_group, network or ledger.  
 Set logging | `set_logging` | Set the level of logging for Flureenjs
 
-More information on [signing queries](/guides/1.0.0/identity/signatures#signed-queries) and [signing transactions](/guides/1.0.0/identity/signatures#signed-transactions) can be found in the linked sections.
-
-See [Node.js Library Examples](/tools/nodejs/nodejs-examples) for examples of how to use each of the commands.
+More information on [signing queries](/concepts/identity/signatures.md#signed-queries) and [signing transactions](/concepts/identity/signatures.md#signed-transactions) can be found in the linked sections.

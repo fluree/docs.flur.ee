@@ -15,8 +15,8 @@ We utilized concepts of logic programming and variable binding to give an immens
 
 This section covers analytical queries using the FlureeQL syntax. All code examples are shown in FlureeQL. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the sidebar, then make sure `Query` is selected in the top-right, as well as in the dropdown).
 
-To issue these queries using the API, see [`/query`](../../reference/http/examples#query).
-You can also issue multiple queries at once using the [`/multi-query`](../../reference/http/examples#multi-query) endpoint.
+To issue these queries using the API, see [`/query`](/reference/http/examples.md#query).
+You can also issue multiple queries at once using the [`/multi-query`](/reference/http/examples.md#multi-query) endpoint.
 
 ## Query Keys {#query-keys}
 
@@ -26,12 +26,12 @@ Key | Required? | Description
 -- | -- | --
 [select, selectOne, or selectDistinct](#select-key) | yes | `select` returns all relevant results, `selectOne` returns one result, and `selectDistinct` only returns unique results. [See select key](#select-key)
 [where](#where-key) | yes | A collection of tuples which allow for complex filtering of data.
-`block` | no | Optional block specified by block number, duration, or wall-clock time as a ISO-8601 formatted string. This applies a block to every part of the query that does not have a block specified. It follows the same syntax as the [block key in basic queries](/docs/query/overview#block-key).
+`block` | no | Optional block specified by block number, duration, or wall-clock time as a ISO-8601 formatted string. This applies a block to every part of the query that does not have a block specified. It follows the same syntax as the [block key in basic queries](/overview/query/basic_query.md#block-key).
 [prefixes](#prefixes-key) | no | Optional map of outside sources.
 [vars](#vars-key) | no | Optional map of variable bindings.
 [opts](#opts-key) | no | Optional map where options like `limit`, `orderBy`, `prettyPrint`, and `wikipediaOpts` can be specified.
 
-This page covers every available option for analytical queries, to see [examples](/guides/analytical-queries/analytical_query-examples), visit the relevant guide.
+<!-- This page covers every available option for analytical queries, to see [examples](/concepts/analytical-queries/examples.md), visit the relevant guide. -->
 
 ## Select Key {#select-key}
 
@@ -40,7 +40,7 @@ This page covers every available option for analytical queries, to see [examples
 Item | Example | Description
 -- | -- | --
 Variable | `"?apple"` | Variables are declared in the `where` clause
-Variable Select-Array | `{"?var1": ["*"]}` <br/>  <br/> `{"?var1": ["*", {"chat/person": ["*"]}]}` | A map where the key is a valid variable and the value is a valid [select-array](/docs/query/overview#select-key). This only works when the variable is bound to subject ids.
+Variable Select-Array | `{"?var1": ["*"]}` <br/>  <br/> `{"?var1": ["*", {"chat/person": ["*"]}]}` | A map where the key is a valid variable and the value is a valid [select-array](/overview/query/basic_query.md#select-key). This only works when the variable is bound to subject ids.
 Aggregate variable | `"(avg ?nums)"` | Any valid variables can be wrapped in an aggregate function. All valid aggregate functions are listed in the table below.
 
 The value for the select key can be any of the items in the following table. Your select key can be multiple of these select items. In the case that it is multiple items, these items should be wrapped in `[ ]`. For example `[ "?var1", "(sum ?var2)", {"?var3": ["*"] }, "?var4" ]`.
@@ -98,11 +98,11 @@ Item | Function
 [union map](#union-map) | The two parts of a union map are outer joined.
 [filter map](#filter-map) | Filters the results up that point in the query.
 
-Each where-array item is resolved and then inner joined with the resultset up until that point. See the [Analytical Query](/guides/analytical-queries/inner-joins-in-fluree) guide for more information.
+Each where-array item is resolved and then inner joined with the resultset up until that point. See the [Analytical Query](/concepts/analytical-queries/inner-joins-in-fluree.md) guide for more information.
 
 ### Three Tuple {#three-tuple}
 
-Every piece of data in Fluree can be expressed as `[ subject, predicate, object ]`. To read more about this, see the [Subject-Predicate-Object Model](/guides/intro/what-is-fluree#subject-predicate-object-model) in the `What is Fluree?` guide.
+Every piece of data in Fluree can be expressed as `[ subject, predicate, object ]`. To read more about this, see the [Subject-Predicate-Object Model](/concepts/what-is-fluree.md#subject-predicate-object-model) in the `What is Fluree?` guide.
 
 When you include a three-tuple in your where-array, you specify the values for one or two parts of the tuple. The parts you don't specify are either `null` or variables. For example, in this three tuple, `["?person", "person/handle", "?handle"]`, only the predicate `person/handle` is specified. The subject `?person` and the object `?handle` are variables. You can also look-up a data for a known id using the pattern ["?s", "_id", 351843720888320].
 
@@ -114,12 +114,12 @@ Part | Value
 `predicate`, `predicate+[RECUR-DEPTH]`, or `service call` | Can be either predicate name, the Fluree reserved word "_id", or a variable (a string that begins with `?`).  Reverse references are *NOT* supported. <br/> <br/> If using a predicate name, can add `+` after the predicate name to signify recur. Can also specify how many times to recur, i.e. `person/follows+3`.<br/><br/>If using "_id", the object should reference a known id. <br/> <br/> The second item in the clause can also be a service call. All supported service calls are in the subsequent table.
 `object` or `object-function` | Can be a value, subject id, unique two-tuple, a variable (a string that begins with `?`), or null. <br/> <br/> The object can also be a filter function, which contains an existing or a newly declared variable, for example, `(= 20 ?nums)`. The filters follow the same syntax as [filter maps](#filter-maps), and you can read more in that section.  <br/> <br/> If your object begins with a `?`, and it is NOT a variable, for example someone's name is `?Fred`, then you can use escape strings in the object, for example: `"\"?Fred\""`.
 
-A three tuple acts as a pattern in a where-array. First it pulls all the data that matches that given pattern, and then it binds the appropriate variables. Subsequent three tuples are inner-joined. For more information and examples, see [inner joins in Fluree](/guides/analytical-queries/inner-joins-in-fluree).
+A three tuple acts as a pattern in a where-array. First it pulls all the data that matches that given pattern, and then it binds the appropriate variables. Subsequent three tuples are inner-joined. For more information and examples, see [inner joins in Fluree](/concepts/analytical-queries/inner-joins-in-fluree.md).
 
 Supported Service Call | Example Three-tuple | Description
 -- | -- | --
-Full Text Search a Collection | `["?movie", "fullText:movie", "redemption"]` | This service call searches for the word `redemption` in any predicates in the movie collection that are enabled for full text search. See the [Full Text Search](/guides/analytical-queries/full-text-search) guide for more examples and details.
-Full Text Search a Predicate | `["?movie", "fullText:movie/title", "redemption"]` | This service call searches for the word `redemption` in `movie/title`s. This only works if the `movie/title` predicate is enabled for full text search. See the [Full Text Search](/guides/analytical-queries/full-text-search) guide for more examples and details.
+Full Text Search a Collection | `["?movie", "fullText:movie", "redemption"]` | This service call searches for the word `redemption` in any predicates in the movie collection that are enabled for full text search. See the [Full Text Search](/concepts/analytical-queries/full-text-search.md) guide for more examples and details.
+Full Text Search a Predicate | `["?movie", "fullText:movie/title", "redemption"]` | This service call searches for the word `redemption` in `movie/title`s. This only works if the `movie/title` predicate is enabled for full text search. See the [Full Text Search](/concepts/analytical-queries/full-text-search.md) guide for more examples and details.
 Collection Select | `["?movie", "rdf:type", "movie"]` | This service call binds all subject ids where the subject belongs to the `movie`. collection to the provided variable, `?movie`.
 
 ### Four Tuple {#four-tuple}
@@ -306,7 +306,7 @@ For example:
 }
 ```
 
-Anything within an optional map is resolved and then left outer joined with previous results. In other words, optional maps do not remove any entries from the existing resultset - any rows from the original resultset that do not have a match are bound with `null`. For a more in-depth explanation of optional clauses, see the [optional clauses](/guides/analytical-queries/optional-clauses) guide.
+Anything within an optional map is resolved and then left outer joined with previous results. In other words, optional maps do not remove any entries from the existing resultset - any rows from the original resultset that do not have a match are bound with `null`. For a more in-depth explanation of optional clauses, see the [optional clauses](/concepts/analytical-queries/optional-clauses.md) guide.
 
 ### Union Map {#union-map}
 

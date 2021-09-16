@@ -6,7 +6,7 @@ If you don't already know and want to use GraphQL, we definitely recommend using
 
 Because FlureeQL is a JSON format, this allows queries to be more easily composed within your programming code and is built to support Fluree's advanced capabilities like graph recursion.
 
-All GraphQL queries and transactions can issued should be run through the [`/graphql`](../../reference/http/examples#graphql) endpoint.
+All GraphQL queries and transactions can issued should be run through the [`/graphql`](/reference/http/examples.md#graphql) endpoint.
 
 ## Queries {#queries}
 
@@ -233,7 +233,7 @@ mutation addPeople ($myPeopleTx: JSON) {
 }
 ```
 
-If you are using the UI, you can place your variable in the "Query Variables" section on the lower left hand side of the GraphQL interface. If you are using the API, you should add a new key, `"variables"` to your request body and include your variables (more information in the [`/graphql` reference section](../../reference/http/examples#graphql) on GraphQL endpoints.  
+If you are using the UI, you can place your variable in the "Query Variables" section on the lower left hand side of the GraphQL interface. If you are using the API, you should add a new key, `"variables"` to your request body and include your variables (more information in the [`/graphql` reference section](/reference/http/examples.md#graphql) on GraphQL endpoints.  
 
 ## Other Features {#other-features}
 

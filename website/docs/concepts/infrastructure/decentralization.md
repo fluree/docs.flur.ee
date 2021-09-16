@@ -25,14 +25,14 @@ Litecoin).
 ## Setting Up Decentralized Servers {#setting-up-decentralized-servers}
 
 You would typically establish a decentralized network after creating an initial
-[schema](../../overview/schema/overview.md) and set of [SmartFunctions](../../concepts/smart-functions/smartfunctions.md)
+[schema](/overview/schema/overview.md) and set of [SmartFunctions](/concepts/smart-functions/smartfunctions.md)
 the group has agreed to. If any party in the decentralized network didn't agree
 to this base set of "rules", that can simply be expressed by not participating.
 
-The [identity](../../concepts/identity/auth_records.md) of each participant must exist in
+The [identity](/concepts/identity/auth_records.md) of each participant must exist in
 the ledger in the form of an _auth record, and generally they will have full access
 to the ledger in order to properly validate transactions. While it is possible to
-limit ledger access to particpants, [consensus](../../concepts/infrastructure/consensus_algorithms.md)
+limit ledger access to particpants, [consensus](/concepts/infrastructure/consensus_algorithms.md)
 will dictate that > 50% of the network can validate -- and validation requires you
 have access to all of the data needed to do so. Because Fluree can combine multiple
 ledgers dynamically, if different permissions were required for decentralized participants
@@ -40,10 +40,10 @@ it would generally be advised to utilize multiple ledgers instead of a single on
 
 Each decentralized party will connect to other ledger servers in the same way any
 query server connects - with a set of IP addresses, presumably those of other decentralized
-participants, and they connect with their respective [identity](../../concepts/identity/auth_records.md).
+participants, and they connect with their respective [identity](/concepts/identity/auth_records.md).
 The data the ledger will release to that identity will depend on the permissions
-(via [SmartFunctions](../../concepts/smart-functions/smartfunctions.md)). The servers prove
-their identity by [signing](../../concepts/identity/signatures.md) the connection request
+(via [SmartFunctions](/concepts/smart-functions/smartfunctions.md)). The servers prove
+their identity by [signing](/concepts/identity/signatures.md) the connection request
 with their private key. From there, a challenge is issued that must be signed
 (to avoid any replay attacks), and the servers participate in a Diffie-Hellman key
 exchange to encrypt traffic between them.
@@ -51,7 +51,7 @@ exchange to encrypt traffic between them.
 ## Forming Blocks {#forming-blocks}
 
 All valid, signed transactions sent to the network are forwarded to the other connected
-servers via the [consensus](../../concepts/infrastructure/consensus_algorithms.md) protocol's
+servers via the [consensus](/concepts/infrastructure/consensus_algorithms.md) protocol's
 log. This feature can be turned off, and a custom mechanism of forwarding transactions
 can be utilized - this could be important if decentralized participants did have
 different permissions.
@@ -60,7 +60,7 @@ Via the configured consensus protocol, the leader will broadcast the transaction
 IDs that will constitute the next block. Each participant can independently process
 those transactions to create a new block on their own, and the new resulting block
 hash they independently compute is signed with their
-[identity](../../concepts/identity/auth_records) and forwarded to the leader.
+[identity](/concepts/identity/auth_records.md) and forwarded to the leader.
 
 The leader, after processing the transactions and computing its own block hash,
 will collect the signed block hashes from decentralized participants. Once > 50%

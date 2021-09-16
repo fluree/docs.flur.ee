@@ -11,9 +11,9 @@ In the case of Fluree, some of the business logic can be located in the ledger l
 In a decentralized ledger, before any given block is committed, the network confirms
 the validity of the proposed transaction. A transaction is only valid if the syntax
 is correct, the types (i.e. string, int, long) for each predicate are correct, and
-all triggered [smart functions](../../concepts/smart-functions/smartfunctions.md) return true.
+all triggered [smart functions](/concepts/smart-functions/smartfunctions.md) return true.
 The exact method that the network reaches an agreed upon shared state is determined
-by each ledger's [consensus algorithm](../../concepts/infrastructure/consensus_algorithms.md).
+by each ledger's [consensus algorithm](/concepts/infrastructure/consensus_algorithms.md).
 
 Because smart functions restrict what you can transact at the ledger level, it is
 important to build up your Fluree application layer-by-layer. Specifically:

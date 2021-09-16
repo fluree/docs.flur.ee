@@ -19,7 +19,8 @@ Here's a quick glossary of how your knowledge may map on to Fluree's terminology
 
 ## Setup {#setup}
 
-Make sure you have a running Fluree ledger service to connect to. See the [Getting Started](/docs/1.0.0/getting-started/installation) docs for more details.
+Make sure you have a running Fluree ledger service to connect to. See the
+[Getting Started](/overview/getting-started.md) docs for more details.
 
 Add to the artifact to your dependencies:
 
@@ -53,7 +54,7 @@ Require the api and establish a connection to your Fluree server:
 
 ### Schema {#schema}
 
-All data transacted into a ledger must conform to a schema. We'll transact a basic schema below. See the [Schema](/docs/1.0.0/schema/overview) documentation for more details.
+All data transacted into a ledger must conform to a schema. We'll transact a basic schema below. See the [Schema](/overview/schema/overview.md) documentation for more details.
 
 Create a collection, which you can think of as a type of entity, or a relational database table.
 
@@ -103,7 +104,7 @@ Create some predicates for the collection, analogous to entity attributes or rel
 
 ### Data {#data}
 
-Insert some subject data that conforms to the schema we've created. See the [Transact](/docs/1.0.0/transact) documentation for more details.
+Insert some subject data that conforms to the schema we've created. See the [Transact](/overview/transact/basics.md) documentation for more details.
 
 ```clj
 ;; adding data
@@ -152,7 +153,7 @@ Insert some subject data that conforms to the schema we've created. See the [Tra
 
 The syntax for these queries is similar to datalog and eql. These don't support keywords for matching on flake values in the `:where` clause.
 
-The `query` function takes a `db` value to execute a query against, as well as a query map. See the docs for [Analytical queries](/docs/1.0.0/query/analytical_query) and [Basic queries](/docs/1.0.0/query/overview) for more details.
+The `query` function takes a `db` value to execute a query against, as well as a query map. See the docs for [Analytical queries](/overview/query/analytical_query.md) and [Basic queries](/overview/query/basic_query.md) for more details.
 
 ```clj
 ;; store the current immutable database value. See API docs for getting a prior version of a db, applying permissions to a db, and other options.
@@ -171,7 +172,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 ### History queries {#history-queries}
 
-[History queries](/docs/1.0.0/query/history_query) can show you the raw history of a subject. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
+[History queries](/overview/query/history_query.md) can show you the raw history of a subject. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
 ```clj
 ;; see the history of the "Cryptonomicon" book.
@@ -180,7 +181,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 ### Block queries {#block-queries}
 
-[Block queries](/docs/1.0.0/query/block_query) return all of the raw flake data stored in a block. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
+[Block queries](/overview/query/block_query.md) return all of the raw flake data stored in a block. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
 ```clj
 ;; see all the flakes from block 3
@@ -189,7 +190,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 ### Other query languages {#other-query-languages}
 
-In addition to the FlureeQL syntax used above, Fluree also supports queries in other query languages: [SQL](/docs/1.0.0/query/sql), [SPARQL](/docs/1.0.0/query/sparql), [GraphQL](/docs/1.0.0/query/graphql). These can be used from Clojure by supplying a database value and a query string, or, in the case of GraphQL, a query map.
+In addition to the FlureeQL syntax used above, Fluree also supports queries in other query languages: [SQL](/overview/query/sql.md), [SPARQL](/overview/query/sparql.md), [GraphQL](/overview/query/graphql.md). These can be used from Clojure by supplying a database value and a query string, or, in the case of GraphQL, a query map.
 
 ```clj
 @(fdb/sql (fdb/db conn ledger) "select * from book")

@@ -3,7 +3,7 @@
 There are two options for running Fluree:
 
 - Fluree On-Demand
-- [Fluree Anywhere](../overview/start/fluree_anywhere)
+- [Fluree Anywhere](/overview/start/fluree_anywhere.md)
 
 With Fluree On-Demand, we'll host your ledgers for you, and you are able to login and interact with your ledgers via a web interface. With Fluree On-Demand, you can [sign up](https://flur.ee/getstarted/) for an account and start using Fluree right away.
 

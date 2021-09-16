@@ -5,7 +5,7 @@ all built-in predicates that can be added to a function, as well as information
 on how to write the actual function code.
 
 To learn more about how to use smart functions, see the
-[Smart Functions](/guides/smart-functions/smart-functions) guide.
+[Smart Functions](/concepts/smart-functions/smartfunctions.md) guide.
 
 ## _fn {#_fn}
 
@@ -163,7 +163,7 @@ mutation addTenFunc ($addTenFunTx: JSON) {
 Transactions not supported in SPARQL
 ```
 
-### Context-Dependent Functions {#context-dependent-functions}
+## Context-Dependent Functions {#context-dependent-functions}
 
 Some available functions are only available in certain contexts. For example, `?o`,
 which gets the object of a triple is relevant for a `_predicate/spec`, but not for

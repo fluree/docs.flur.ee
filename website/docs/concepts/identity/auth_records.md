@@ -40,7 +40,7 @@ somewhere!), you must add the auth record to a ledger.
 Any roles that you add to this auth record set permissions for transactions and
 queries that are signed with this auth record.
 
-### Auth/Role/Rule Structure {#authrolerule-structure}
+### Auth/Role/Rule Structure {#auth-role-rule-structure}
 
 Individual permissions, such as read and write access to a collection, are
 encoded in rules. The smart functions attached to these rules are listed in the
@@ -132,7 +132,7 @@ Rules control the actual permissions and are stored in the special system
 collection `_rule`. Like all Fluree functionality, it is defined as data that
  you can transact as you would any data.
 
-See an example of [using rules](../../concepts/smart-functions/rule_example.md) here.
+See an example of [using rules](/concepts/smart-functions/rule_example.md) here.
 
 ### Authority {#authority}
 
