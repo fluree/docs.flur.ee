@@ -5,7 +5,7 @@ sidebar_position: 4
 
 There are two options for running Fluree:
 
-- [Fluree On-Demand](/overview/on-demand.md)
+- [Fluree On-Demand](/overview/on_demand.md)
 - Fluree Anywhere
 
 ## Download {#download}
