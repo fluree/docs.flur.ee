@@ -8,4 +8,4 @@ The difference between `_predicate/spec` and `_predicate/txSpec` is that smart f
 
 ## Usage {#usage}
 
-Predicate txSpec are mainly used to ensure that the balance spent is equal to the balance received. You can see an example of this in the [cryptocurrency example](/guides/examples/cryptocurrency).
+Predicate txSpec are mainly used to ensure that the balance spent is equal to the balance received. You can see an example of this in the [cryptocurrency example](/overview/demos/cryptocurrency/1.md).

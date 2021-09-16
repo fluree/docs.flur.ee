@@ -5,8 +5,8 @@ import TabItem from '@theme/TabItem';
 
 In this section, we show you how to perform basic queries using FlureeQL. All code examples are shown in FlureeQL. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the `Query` dropdown in the sidebar).
 
-To issue these queries using the API, see [`/query`](../../reference/http/examples#query).
-You can also issue multiple queries at once using the [`/multi-query`](../../reference/http/examples#multi-query).
+To issue these queries using the API, see [`/query`](/reference/http/examples.md#query).
+You can also issue multiple queries at once using the [`/multi-query`](/reference/http/examples.md#multi-query).
 
 ## Query Keys {#query-keys}
 

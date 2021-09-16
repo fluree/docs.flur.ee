@@ -172,7 +172,7 @@ Only one configuration change can be in process at once. Attempts to issues simu
 
 ## /query {#query}
 
-All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](../../concepts/identity/signatures#signed-queries)).
+All single queries in FlureeQL syntax that include a `select` key should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/query` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/concepts/identity/signatures.md#signed-queries)).
 
 An example of an unsigned request to `/query` with the network, `dev` and the ledger `main`:
 
@@ -199,7 +199,7 @@ Body: { "select": ["*"], "from": "_collection"}
 
 ## /multi-query {#multi-query}
 
-If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/docs/query/advanced_query#multiple-queries)), that should be done through the `/multi-query` endpoint.
+If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/overview/query/advanced_query.md#multiple-queries)), that should be done through the `/multi-query` endpoint.
 
 An example of an unsigned request to `/multi-query`:
 
@@ -276,7 +276,7 @@ The response will have a status of 207, and it will only return the response for
 
 ## /block {#block}
 
-FlureeQL [block queries](/docs/query/block_query) should be submitted to the `/block` endpoint. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries like those in the linked section - queries that are returning flakes from a block or set of blocks.
+FlureeQL [block queries](/overview/query/block_query.md) should be submitted to the `/block` endpoint. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries like those in the linked section - queries that are returning flakes from a block or set of blocks.
 
 An example of an unsigned request to `/block`:
 
@@ -289,7 +289,7 @@ Body: { "block": 5 }
 
 ## /history {#history}
 
-FlureeQL [history queries](../../overview/query/history_query.md) should be submitted to the `/history` endpoint. This only includes queries like those in the linked section.
+FlureeQL [history queries](/overview/query/history_query.md) should be submitted to the `/history` endpoint. This only includes queries like those in the linked section.
 
 An example of an unsigned request to `/history`:
 
@@ -307,7 +307,7 @@ Body: {
 
 All unsigned transactions, except transaction issued through the GraphQL syntax, should be issued to the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact` endpoint.
 
-If you do not have `fdb-open-api` set to true (it is true by default), then you cannot use the `/transact` endpoint. You'll need to use the [`/command` endpoint](#-command).
+If you do not have `fdb-open-api` set to true (it is true by default), then you cannot use the `/transact` endpoint. You'll need to use the [`/command` endpoint](#command).
 
 An example of an unsigned request to `/transact`:
 
@@ -337,7 +337,7 @@ Body: [{
 
 ## /graphql Query {#graphql}
 
-All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](../../concepts/identity/signatures#signed-queries)).
+All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/concepts/identity/signatures.md#signed-queries)).
 
 An example of an unsigned request to `/graphql`:
 
@@ -359,7 +359,7 @@ Body: {"query": "{ graph {
 
 ## /graphql Transaction {#graphql-transaction}
 
-All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your GraphQL transaction like a query ([signing queries](/docs/0.16.0/identity/signatures#signed-)).
+All queries and transactions in GraphQL syntax should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your GraphQL transaction like a query ([signing queries](/concepts/identity/signatures.md#signed-queries)).
 
 An example of an unsigned request to `/graphql`:
 
@@ -379,7 +379,7 @@ Body: {"query": "mutation addPeople ($myPeopleTx: JSON) {
 
 ## /sparql {#sparql}
 
-All queries in SPARQL syntax, regardless of type, should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/guides/0.16.0/identity/signatures#signed-queries)).
+All queries in SPARQL syntax, regardless of type, should be issued through the `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` endpoint. If you do not have `fdb-open-api` set to true (it is true by default), then you'll need to sign your query ([signing queries](/concepts/identity/signatures.md#signed-queries)).
 
 An example of an unsigned request to `/sparql`:
 
@@ -402,7 +402,7 @@ All queries in SQL syntax should be issued through the
 `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sql` endpoint. If you do not have
 `fdb-open-api` set to true (it is true by default), then you'll need to sign
 your query ([signing
-queries](/guides/0.16.0/identity/signatures#signed-queries)).
+queries](/concepts/identity/signatures.md#signed-queries)).
 
 An example of an unsigned request to `/sql`:
 
@@ -421,7 +421,7 @@ Body: "SELECT ?chat ?message ?person ?instant ?comments
 
 ## /command {#command}
 
-To see examples of sending a request to the `/command` endpoint, see [signed transactions](/guides/0.16.0/identity/signatures#signed-transactions).
+To see examples of sending a request to the `/command` endpoint, see [signed transactions](/concepts/identity/signatures.md#signed-transactions).
 
 ## /reindex {#reindex}
 
@@ -450,7 +450,8 @@ This request may take some time to return. It will return a map, such as the fol
 
 ## /hide {#hide}
 
-This is a beta feature. To read about how it works, visit [hiding flakes](/docs/ledger-setup/mutability#hiding-flakes).
+This is a beta feature. To read about how it works, visit
+[hiding flakes](/concepts/infrastructure/mutability.md#hiding-flakes).
 
 ```http
 Action: POST
@@ -576,11 +577,11 @@ A POST request to `/fdb/sub` handles subscriptions. More documentation on this f
 
 ## /new-keys {#new-keys}
 
-A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](../../concepts/identity/auth_records#generating-a-public-private-key-auth-id-triple). These requests do not need to be signed.
+A POST request with an empty object or a GET request to `/fdb/new-keys` returns a valid public key, private key, and auth-id. Learn more about [how identity is established in Fluree](/concepts/identity/auth_records.md#generating-a-public-private-key-auth-id-triple). These requests do not need to be signed.
 
 ## /pw/generate {#pwgenerate}
 
-See the [Password Management Guide](../../concepts/identity/password-management) for more information.
+See the [Password Management Guide](/concepts/identity/password_management.md) for more information.
 
 Returns a valid token for a given user or role. Sets a valid password for that user or role.
 
@@ -608,7 +609,7 @@ Body: {
 
 ## /pw/renew {#pwrenew}
 
-See the [Password Management Guide](../../concepts/identity/password-management) for more information.
+See the [Password Management Guide](/concepts/identity/password_management.md) for more information.
 
 This endpoint returns a valid JWT token. You need to pass a NON-expired JWT token in the header, and an expiration time (in epoch milliseconds from now), to the body of the request.
 
@@ -625,7 +626,7 @@ Body: { "expire": "TIME IN EPOCH MS" }
 
 ## /pw/login {#pwlogin}
 
-See the [Password Management Guide](../../concepts/identity/password-management) for more information.
+See the [Password Management Guide](/concepts/identity/password_management.md) for more information.
 
 | Keys     | Required | Explanations                                                                    |
 | -------- | -------- | ------------------------------------------------------------------------------- |

@@ -4,7 +4,7 @@ A `_predicate/spec` is set of smart functions that are attached to a particular 
 
 If all of the smart functions return true, the transaction will succeed. If any of the smart functions return false, it will fail.
 
-The examples in this section use the [Basic Schema](../../guides/schema/1.md).
+The examples in this section use the [Basic Schema](/guides/schema/1.md).
 
 ## Example Uses {#example-uses}
 

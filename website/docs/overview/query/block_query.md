@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 In this section, we show you how to select all flakes from a block or a selection of blocks. Fluree allows you to select data from an entire block or block range. All of these queries can be issued through the API or the user interface (select `FlureeQL` in the sidebar, then make sure `Query` is selected in the top-right, and `Block` is selected in the dropdown).
 
-To issue these queries using the API, see [`/block`](../../reference/http/examples#block).
+To issue these queries using the API, see [`/block`](/reference/http/examples.md#block).
 
 ## Block Clauses {#block-clauses}
 

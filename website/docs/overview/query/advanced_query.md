@@ -342,7 +342,7 @@ Key | Description
 
 ## Recursion
 
-Recur is a sub-select option, which uses recursion to follow `ref` predicates that reference another subject in the same collection. For example, in the [Basic Schema](../../guides/schema/1.md), we have a predicate, `person/follows`, which is a `ref` that points to another person.
+Recur is a sub-select option, which uses recursion to follow `ref` predicates that reference another subject in the same collection. For example, in the [Basic Schema](/guides/schema/1.md), we have a predicate, `person/follows`, which is a `ref` that points to another person.
 
 Normally, if we want to query who a person follows, we would submit this query.
 
@@ -476,7 +476,7 @@ The results will only return recursions for as long as their new information in 
 
 ## Multiple Queries
 
-FlureeQL allows you to submit multiple queries at once by using the [multi-query endpoint](../../reference/http/examples#multi-query) .
+FlureeQL allows you to submit multiple queries at once by using the [multi-query endpoint](/reference/http/examples.md#multi-query) .
 
  In order to do this, create unique names for your queries, and set those as the keys of the your JSON query. The values of the keys should be the queries themselves. If you are using GraphQL, you can simply nest your second, third, etc requests within the `graph` level of the request.
 

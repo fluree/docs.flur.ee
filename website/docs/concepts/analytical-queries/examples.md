@@ -5,7 +5,7 @@
 
 #### Query examples: {#query-examples}
 
-In the [Basic Schema](../../guides/schema/1.md), we gave each person a set of favorite numbers. If we want to view all of `zsmith`'s flakes, which contain the values of his favorite numbers, our query could be:
+In the [Basic Schema](/guides/schema/1.md), we gave each person a set of favorite numbers. If we want to view all of `zsmith`'s flakes, which contain the values of his favorite numbers, our query could be:
 
 ```flureeql
 {
@@ -411,7 +411,7 @@ WHERE {
 
 #### Artist Example 
 
-Using the [Basic Schema](../../guides/schema/1.md), we will be able to use analytical queries to connect up a `person/favArtists` (stored in Fluree) to their artworks (stored in Wikidata).
+Using the [Basic Schema](/guides/schema/1.md), we will be able to use analytical queries to connect up a `person/favArtists` (stored in Fluree) to their artworks (stored in Wikidata).
 
 We can retrieve the names of artworks created by jdoe's favorite artists. Our full query is below. We will discuss each of the where clause tuples individually. 
 
@@ -644,7 +644,7 @@ Example results for the above query in FlureeQL.
 
 By default, any Wikidata queries are run with a limit of 100, an offset of 0, English as the label language, and returning only distinct values. Any of these options can be overwritten by specifying Wikidata options in the `wikidataOpts` key-value pair in an analytical query. 
 
-Below is an example of using `wikidataOpts` in a query. In SPARQL, you cannot currently specify Wikidata options other than `language` (see [language labels](/docs/query/sparql#language-labels))
+Below is an example of using `wikidataOpts` in a query. In SPARQL, you cannot currently specify Wikidata options other than `language` (see [language labels](/overview/query/sparql.md#language-labels))
 
 ```flureeql
 {

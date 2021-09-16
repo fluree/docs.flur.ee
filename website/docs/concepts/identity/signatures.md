@@ -8,7 +8,7 @@ In Fluree, you can sign both queries and transactions. The signature proves that
 
 For both queries and transactions, a signature is not required if the option
  `fdb-open-api` is set to true (default
- [config option](../../overview/start/fluree_anywhere#config-options) for the
+ [config option](/overview/start/fluree_anywhere.md#config-options) for the
   downloaded version of Fluree)
  In fact, the signature in signed query will be ignored if `fdb-open-api` is set
   to true.
@@ -51,7 +51,7 @@ to true.
 
 If you do need to sign your queries, you should have access to your private key.
 Your private key needs to be
-[connected to a valid auth record](../../concepts/identity/auth_records) in the ledger.
+[connected to a valid auth record](/concepts/identity/auth_records.md) in the ledger.
 
 ### Headers {#headers}
 
@@ -104,12 +104,12 @@ query.
 
 If `fdb-open-api` is set to true, then you do not need to sign your transactions.
 Each ledger comes with a default auth record, which is either provided by you
-or automatically generated (see [config options](../../overview/start/fluree_anywhere#config-options)).
+or automatically generated (see [config options](/overview/start/fluree_anywhere.md#config-options)).
 If`fdb-open-api` is set to true, then all transactions submitted to `/transact`
 will be signed with this default private key unless otherwise specified.
 
 All signed transactions need to be submitted to the
-[`/command` endpoint](../../reference/http/examples#command).
+[`/command` endpoint](/reference/http/examples.md#command).
 Transactions can be sent to the `/command` endpoint, regardless of whether
 `fdb-open-api` is true or not. All transactions submitted will be attributed to
 the auth record that signs the transactions, not the default auth record
@@ -160,9 +160,9 @@ ECDSA allows for recovery of the public key from a signature, so the original
 transaction and signature are the only two things required in order to verify
 that a signature is valid. There are online tools that allow you to
 independently verify a signature based on the signature + original transaction.
-[Our cryptography GitHub repos](../../reference/crypto#js-cryptography) also have
+[Our cryptography GitHub repos](/reference/crypto.md#js-cryptography) also have
 functions that allow you to verify any signatures.
 
 ### Examples {#examples}
 
-You can see examples of how to use signed transaction in the [example apps](../../overview/demos/developer-hub.md).
+You can see examples of how to use signed transaction in the [example apps](/overview/demos/developer-hub.md).

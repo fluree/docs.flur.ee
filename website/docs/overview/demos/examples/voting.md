@@ -144,7 +144,7 @@ have any rules connected to it yet!).
 
 We've generated 5 public-private key and `_auth/id` pairs for each of the users.
 You can use the ones that we've generated or
-[generate your own](../identity/auth_records#auth-role-rule-structure).
+[generate your own](concepts/identity/auth_records.md#auth-role-rule-structure).
 Note that, in production, you will definitely want to generate your own.
 
 Public/Private Key and Account Id (`_auth/id`) for `_auth$losDelRio`.
@@ -383,7 +383,7 @@ they propose a change, and create a vote.
 
 When we submit a transaction without a signature, it is signed with the default auth
 record. However, in order to use `softCell`'s auth, we need to sign our transactions
-with their auth record. We do this by submitting a request to the [`/command` endpoint](../../reference/http/examples).
+with their auth record. We do this by submitting a request to the [`/command` endpoint](/reference/http/examples.md).
 
 We can also use a tool in the user interface to sign transactions as a particular
 private key. To access this tool, we need to go to `/flureeql`, select "Transact",
@@ -392,7 +392,7 @@ and then select "Own Private Key" from the dropdown.
 If using the user interface, you need to include the private key in the form. If
 you're not using the user interface, you will need to sign the following transaction
 with the private key. You will also need to specify softCell's auth in either the
-form or the [signed transaction](../../concepts/identity/signatures#signed-transactions).
+form or the [signed transaction](/concepts/identity/signatures.md#signed-transactions).
 
 A request to `/command` will return a `_tx/id`. The `_tx/id` is the unique
 SHA2-256 of the 'cmd' submitted to the `/command` endpoint. In order to see if the

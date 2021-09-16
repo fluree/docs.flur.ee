@@ -77,7 +77,7 @@ Transactions are not supported in SPARQL
 
 ### Add Sample Data {#add-sample-data}
 
-According to [Fluree Best Practices](../../../concepts/infrastructure/best_practices.md), after creating
+According to [Fluree Best Practices](/concepts/infrastructure/best_practices.md), after creating
 a schema you should add in your sample data or initial data.
 
 We'll be creating two users, and two wallets.
@@ -207,9 +207,9 @@ and `cryptoWoman` users.
 
 In order to sign transactions as a particular auth record, that auth record's `_auth/id`
 needs to be connected to a public/private key pair. To learn more, you can read
-about how [to derive an auth/id](../../../concepts/identity/auth_records.md) from a public key.
+about how [to derive an auth/id](/concepts/identity/auth_records.md) from a public key.
 You can also
-[generate a public key, private key, and auth id](../../../concepts/identity/auth_records#generating_keys)
+[generate a public key, private key, and auth id](/concepts/identity/auth_records.md#generating_keys)
 directly in the downloadable version of Fluree.
 
 In the below example, we use a valid auth id/private key pair. If using this example
@@ -251,7 +251,7 @@ in production, you should generate your own public/private/auth id triple.
 
 Next, we add an `_predicate/spec` that makes sure our `wallet/balance` is never
 negative. The code for this is `(< -1 (?o))`. To see how to write smart functions,
-you can go to the [SmartFunction](/guides/1.0.0/smart-functions) section.
+you can go to the [SmartFunction](/guides/advanced/smart-functions/1.md) section.
 
 Note, this transaction, and many of the subsequent transactions can be combined.
 We separate out these transactions here for demonstration purposes.
@@ -370,7 +370,7 @@ We are not quite done with our example yet, but we can test it to this point.
 When we submit a transaction without a signature, it is signed with the default
 auth record. However, to add or subtract balance from a wallet, we need to sign
 our transactions as a particular auth record. We do this by submitting a request
-to the [`/command` endpoint](../../reference/http/examples).
+to the [`/command` endpoint](/reference/http/examples.md).
 
 We can also use a tool in the user interface to sign transactions as a particular
 private key. To access this tool, we need to go to `/flureeql`, select "Transact",
@@ -380,7 +380,7 @@ The first item we will attempt is cryptoMan adding 5 to cryptoMan's own `wallet/
 If using the user interface, you need to include the private key in the form. If
 you're not using the user interface, you will need to sign the following transaction
 with the private key. You will also need to specify cryptoMan's auth in either the
-form or the [signed transaction](/guides/1.0.0/identity/signatures#signed-transactions).
+form or the [signed transaction](/concepts/identity/signatures.md#signed-transactions).
 
 A request to `/command` will return a `_tx/id`. In order to see if the transaction
 went through successfully, you will need to query:

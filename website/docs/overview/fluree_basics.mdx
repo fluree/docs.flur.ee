@@ -23,25 +23,24 @@ To view an example application that uses Fluree for data management, visit the
 
 ## New Ledger {#new-ledger}
 
-Make sure that you have a new ledger. You can either create a new ledger through
-the user interface, through the API for the
-[Fluree Anywhere](../../reference/http/examples#-new-db) or through
-the API for the [Fluree On-Demand](on-demand.md) (you will need to change
-the version).
+Make sure that you have a new ledger.
+
+You can either create a new ledger through the Admin UI or via the
+[HTTP API](/reference/http/examples.md#new-db).
 
 ## Overview {#overview}
 
 In Fluree, schema are comprised of collections and predicates. While Fluree is a
 graph database, if you come from the relational world you can think of a
-[collection](../overview/schema/collections.md) sort of like a database table.
+[collection](/overview/schema/collections.md) sort of like a database table.
 Every time you want a new type of item in your ledger, you would create a new collection.
 For example, collections in your ledger might be person, company, and city.
 
-Every collection has [predicates](../overview/schema/predicates.md). Predicates are analogous
+Every collection has [predicates](/overview/schema/predicates.md). Predicates are analogous
 to relational database columns. The features of a collection are its predicates.
 For example, the person collection might have the following predicates: person/firstName,
 person/lastName, and person/age. The value of those predicates are called, objects
-(read more about the [subject-predicate-object model](../concepts/what-is-fluree#subject-predicate-object-model)).
+(read more about the [subject-predicate-object model](/concepts/what-is-fluree.md#subject-predicate-object-model)).
 
 Note that many of the transactions in this section can be combined, but are separated
 for clarity.
@@ -50,7 +49,7 @@ for clarity.
 
 The below transaction adds five new collections: `person`, `chat`, `comment`, `artist`,
 and `movie`. You can issue this transaction in your user interface. The syntax is
-explained in the [Transact](/docs/transact/basics) section. For now, we recommend
+explained in the [Transact](/overview/transact/basics.md) section. For now, we recommend
 you adding this basic schema and walking through the documentation section-by-section.
 
 <Tabs
@@ -144,7 +143,7 @@ Transactions not supported in SPARQL
 ## Adding Predicates {#adding-predicates}
 
 Schema predicates are similar to relational ledger columns. More information about
-predicates can be found in the [Predicates](../overview/schema/predicates.md) section. For
+predicates can be found in the [Predicates](/overview/schema/predicates.md) section. For
 now, we recommend you adding this basic schema and walking through the documentation
 section-by-section without concerning yourself too much with the syntax.
 
