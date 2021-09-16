@@ -25,7 +25,7 @@ This section is background on the way data is conceptualized in any given ledger
 
 ### Overview {#overview}
 
-When a Fluree ledger is initialized, a block 1 is created. This block contains certain important metadata, including all the [System Collections](./infrastructure/system_collections.md) needed to make ledger features work.
+When a Fluree ledger is initialized, a block 1 is created. This block contains certain important metadata, including all the [System Collections](/concepts/infrastructure/system_collections.md) needed to make ledger features work.
 
 A ledger at a given block is a ledger. Every block corresponds to a moment in time, and the data in a block consists of a group of atomic updates made to that ledger at a given point in time.
 
@@ -78,9 +78,9 @@ Rather than storing a copy of the entire ledger in each block, every block conta
 
 ### Collections and Predicates {#collections-and-predicates}
 
-A [collection](/overview/schema/collections.md) is analogous to a relational database table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city.
+A [collection](/overview/schema/collections.mdx) is analogous to a relational database table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city.
 
-Every collection has [predicates](/overview/schema/predicates.md). Predicates are analogous to relational ledger columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: `person/firstName`, `person/lastName`, and `person/age`.
+Every collection has [predicates](/overview/schema/predicates.mdx). Predicates are analogous to relational ledger columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: `person/firstName`, `person/lastName`, and `person/age`.
 
 Together, collections, and predicates make up a Fluree schema.
 
@@ -122,7 +122,7 @@ Time | - 15
 Boolean | True
 Metadata | {}
 
-If you issue a [block query](/overview/query/block_query.md), you can see all the flakes issued at a given block.  
+If you issue a [block query](/overview/query/block_query.mdx), you can see all the flakes issued at a given block.  
 
 \* Really, when looking at a flake, the predicate name would not be displayed. Rather the predicate, like every other item in a Fluree ledger is a subject, and it has a subject id. So that predicate's subject id appears in the flake, not the name.
 

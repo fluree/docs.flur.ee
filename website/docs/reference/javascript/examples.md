@@ -287,7 +287,7 @@ flureedb.close(myConn);
 
 ## **multi_query** {#multi_query}
 
-If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/overview/query/advanced_query.md#multiple-queries)), that should be done through the `multi_query` command.
+If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/overview/query/advanced_query.mdx#multiple-queries)), that should be done through the `multi_query` command.
 
 ### Parameter(s) {#parameters-7}
 
@@ -327,7 +327,7 @@ flureedb.close(myConn);
 
 ## **block_query** {#block_query}
 
-FlureeQL [block queries](/overview/query/block_query.md) should be submitted to the `block_query` command. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries that are returning flakes from a block or set of blocks.
+FlureeQL [block queries](/overview/query/block_query.mdx) should be submitted to the `block_query` command. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries that are returning flakes from a block or set of blocks.
 
 ### Parameter(s) {#parameters-8}
 
@@ -399,7 +399,7 @@ flureedb.close(myConn);
 
 ## history-query {#history-query}
 
-FlureeQL [history queries](/overview/query/history_query.md) should be submitted to the `history` command. This command only includes queries like those in the linked section.
+FlureeQL [history queries](/overview/query/history_query.mdx) should be submitted to the `history` command. This command only includes queries like those in the linked section.
 
 ### Parameter(s) {#parameters-10}
 

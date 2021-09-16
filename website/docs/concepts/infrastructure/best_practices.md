@@ -12,7 +12,7 @@ In a decentralized ledger, before any given block is committed, the network conf
 the validity of the proposed transaction. A transaction is only valid if the syntax
 is correct, the types (i.e. string, int, long) for each predicate are correct, and
 all triggered smart functions return true. The exact method that the network reaches
-an agreed upon shared state is determined by each ledger's [consensus algorithm](./consensus_algorithms.md).
+an agreed upon shared state is determined by each ledger's [consensus algorithm](/concepts/infrastructure/consensus_algorithms.md).
 
 Because smart functions restrict what you can transact at the ledger level, it is
 important to build up your Fluree application layer-by-layer. Specifically:

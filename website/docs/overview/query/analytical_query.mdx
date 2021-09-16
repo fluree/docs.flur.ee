@@ -26,7 +26,7 @@ Key | Required? | Description
 -- | -- | --
 [select, selectOne, or selectDistinct](#select-key) | yes | `select` returns all relevant results, `selectOne` returns one result, and `selectDistinct` only returns unique results. [See select key](#select-key)
 [where](#where-key) | yes | A collection of tuples which allow for complex filtering of data.
-`block` | no | Optional block specified by block number, duration, or wall-clock time as a ISO-8601 formatted string. This applies a block to every part of the query that does not have a block specified. It follows the same syntax as the [block key in basic queries](/overview/query/basic_query.md#block-key).
+`block` | no | Optional block specified by block number, duration, or wall-clock time as a ISO-8601 formatted string. This applies a block to every part of the query that does not have a block specified. It follows the same syntax as the [block key in basic queries](/overview/query/basic_query.mdx#block-key).
 [prefixes](#prefixes-key) | no | Optional map of outside sources.
 [vars](#vars-key) | no | Optional map of variable bindings.
 [opts](#opts-key) | no | Optional map where options like `limit`, `orderBy`, `prettyPrint`, and `wikipediaOpts` can be specified.
@@ -40,7 +40,7 @@ Key | Required? | Description
 Item | Example | Description
 -- | -- | --
 Variable | `"?apple"` | Variables are declared in the `where` clause
-Variable Select-Array | `{"?var1": ["*"]}` <br/>  <br/> `{"?var1": ["*", {"chat/person": ["*"]}]}` | A map where the key is a valid variable and the value is a valid [select-array](/overview/query/basic_query.md#select-key). This only works when the variable is bound to subject ids.
+Variable Select-Array | `{"?var1": ["*"]}` <br/>  <br/> `{"?var1": ["*", {"chat/person": ["*"]}]}` | A map where the key is a valid variable and the value is a valid [select-array](/overview/query/basic_query.mdx#select-key). This only works when the variable is bound to subject ids.
 Aggregate variable | `"(avg ?nums)"` | Any valid variables can be wrapped in an aggregate function. All valid aggregate functions are listed in the table below.
 
 The value for the select key can be any of the items in the following table. Your select key can be multiple of these select items. In the case that it is multiple items, these items should be wrapped in `[ ]`. For example `[ "?var1", "(sum ?var2)", {"?var3": ["*"] }, "?var4" ]`.

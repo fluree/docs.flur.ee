@@ -199,7 +199,7 @@ Body: { "select": ["*"], "from": "_collection"}
 
 ## /multi-query {#multi-query}
 
-If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/overview/query/advanced_query.md#multiple-queries)), that should be done through the `/multi-query` endpoint.
+If you are submitting multiple FlureeQL queries at once (using the [multi-query syntax](/overview/query/advanced_query.mdx#multiple-queries)), that should be done through the `/multi-query` endpoint.
 
 An example of an unsigned request to `/multi-query`:
 
@@ -276,7 +276,7 @@ The response will have a status of 207, and it will only return the response for
 
 ## /block {#block}
 
-FlureeQL [block queries](/overview/query/block_query.md) should be submitted to the `/block` endpoint. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries like those in the linked section - queries that are returning flakes from a block or set of blocks.
+FlureeQL [block queries](/overview/query/block_query.mdx) should be submitted to the `/block` endpoint. This does not include other types of queries (basic queries, history queries, etc) that might have a "block" key. This only includes queries like those in the linked section - queries that are returning flakes from a block or set of blocks.
 
 An example of an unsigned request to `/block`:
 
@@ -289,7 +289,7 @@ Body: { "block": 5 }
 
 ## /history {#history}
 
-FlureeQL [history queries](/overview/query/history_query.md) should be submitted to the `/history` endpoint. This only includes queries like those in the linked section.
+FlureeQL [history queries](/overview/query/history_query.mdx) should be submitted to the `/history` endpoint. This only includes queries like those in the linked section.
 
 An example of an unsigned request to `/history`:
 

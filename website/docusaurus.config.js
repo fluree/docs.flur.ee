@@ -81,8 +81,8 @@ module.exports = {
         },
       ],
     },
-	// Config for collapsing sidebar
-	hideableSidebar: true,
+    // Config for collapsing sidebar
+    hideableSidebar: true,
 
     footer: {
       style: 'light',

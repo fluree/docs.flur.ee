@@ -5,7 +5,7 @@ flexibility around hiding and removing data.
 
 ## Deleting Data {#deleting_data}
 
-There is the standard way of [deleting data](/overview/transact/deleting_data.md). Using
+There is the standard way of [deleting data](/overview/transact/deleting_data.mdx). Using
 this method, the data will not appear in a query against the current ledger, however
 the record of that data being added and deleted from the ledger are still present.
 
@@ -35,7 +35,7 @@ A `hide` request can have the following keys:
 Key | Required? | Description
 -- | -- | --
 hide | yes | Subject id, unique two-tuple, or flake-format
-block | no | Optional block or range of blocks to return, options for the format of this value are the same as for block or history queries (see in [history](/overview/query/history_query.md)).
+block | no | Optional block or range of blocks to return, options for the format of this value are the same as for block or history queries (see in [history](/overview/query/history_query.mdx)).
 local | no | Defaults to `true`. Whether to hide flakes locally or across the entire network. Currently hiding flakes is only supported for a single server.
 
 To hide flakes, you specify a given flake patten, such as
@@ -81,7 +81,7 @@ NOT maintain the integrity of the blockchain.
 One common reason for wanting mutable data is to store personally identifiable information
 (PII). One common way for dealing with PII is by storing the PII in one ledger and
 non-sensitive data in a separate ledger. A single query can join data across multiple
-ledgers (see the [query syntax](/overview/query/analytical_query.md#prefixes-key) here).
+ledgers (see the [query syntax](/overview/query/analytical_query.mdx#prefixes-key) here).
 
 In this situation, the ledger with PII can be shared only with select users, and
 information that should be deleted can be handled in any of the ways listed above:

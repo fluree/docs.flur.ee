@@ -1,7 +1,7 @@
 # Decentralization
 
 Fluree Enterprise Edition can be run as a decentralized ledger across organizational
-boundaries. This differs from a [Fluree Transactor Group](./transactor_group.md),
+boundaries. This differs from a [Fluree Transactor Group](/concepts/infrastructure/transactor_group.md),
 which is designed to run within a single organization and can scale transaction load
 while providing redundancy.
 

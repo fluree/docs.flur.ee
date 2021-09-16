@@ -2,7 +2,7 @@
 
 SmartFunctions are the engine for setting permissions in Fluree. This section details the role of smart functions.
 
-To see a full list of all accepted smart functions, see [smart function list](/overview/schema/smartfunctions.md#universal-functions).
+To see a full list of all accepted smart functions, see [smart function list](/overview/schema/smartfunctions.mdx#universal-functions).
 
 We also have a [Github repo](https://github.com/fluree/smart-function-library) with basic smart functions you can add to your applications.
 

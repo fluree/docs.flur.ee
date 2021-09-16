@@ -153,7 +153,7 @@ Insert some subject data that conforms to the schema we've created. See the [Tra
 
 The syntax for these queries is similar to datalog and eql. These don't support keywords for matching on flake values in the `:where` clause.
 
-The `query` function takes a `db` value to execute a query against, as well as a query map. See the docs for [Analytical queries](/overview/query/analytical_query.md) and [Basic queries](/overview/query/basic_query.md) for more details.
+The `query` function takes a `db` value to execute a query against, as well as a query map. See the docs for [Analytical queries](/overview/query/analytical_query.mdx) and [Basic queries](/overview/query/basic_query.mdx) for more details.
 
 ```clojure
 ;; store the current immutable database value. See API docs for getting a prior version of a db, applying permissions to a db, and other options.
@@ -172,7 +172,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 ### History queries {#history-queries}
 
-[History queries](/overview/query/history_query.md) can show you the raw history of a subject. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
+[History queries](/overview/query/history_query.mdx) can show you the raw history of a subject. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
 ```clojure
 ;; see the history of the "Cryptonomicon" book.
@@ -181,7 +181,7 @@ The `query` function takes a `db` value to execute a query against, as well as a
 
 ### Block queries {#block-queries}
 
-[Block queries](/overview/query/block_query.md) return all of the raw flake data stored in a block. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
+[Block queries](/overview/query/block_query.mdx) return all of the raw flake data stored in a block. Use `:pretty-print` to get back maps of predicate names to object values instead of raw flake data.
 
 ```clojure
 ;; see all the flakes from block 3

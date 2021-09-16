@@ -28,14 +28,14 @@ All ledgers are created with the following collections.
 
 | Collection                               | Description                                                                                   |
 | ---------------------------------------- | --------------------------------------------------------------------------------------------- |
-| [\_collection](./collections.md) | Schema collections list                                                                       |
-| [\_predicate](./predicates.md)   | Schema predicate definition                                                                   |
-| [\_tag](./tags.md)               | Tags                                                                                          |
-| [\_fn](./smartfunctions.md)           | ledger functions                                                                              |
-| [\_user](./identity#_user)    | ledger users                                                                                  |
-| [\_auth](./identity#_auth)    | Auth records. Every db interaction is performed by an auth record which governs permissions.  |
-| [\_role](./identity#_role)    | Roles group multiple permission rules to an assignable category, like 'employee', 'customer'. |
-| [\_rule](./identity#_rule)    | Permission rules                                                                              |
-| [\_block](./metadata#_block)  | Block metadata                                                                                |
-| [\_tx](./metadata#_tx)        | ledger transactions                                                                           |
-| [\_setting](./settings.md)       | ledger settings                                                                               |
+| [\_collection](/overview/schema/collections.mdx) | Schema collections list                                                                       |
+| [\_predicate](/overview/schema/predicates.mdx)   | Schema predicate definition                                                                   |
+| [\_tag](/overview/schema/tags.md)               | Tags                                                                                          |
+| [\_fn](/overview/schema/smartfunctions.mdx)           | ledger functions                                                                              |
+| [\_user](/overview/schema/identity.md#_user)    | ledger users                                                                                  |
+| [\_auth](/overview/schema/identity.md#_auth)    | Auth records. Every db interaction is performed by an auth record which governs permissions.  |
+| [\_role](/overview/schema/identity.md#_role)    | Roles group multiple permission rules to an assignable category, like 'employee', 'customer'. |
+| [\_rule](/overview/schema/identity.md#_rule)    | Permission rules                                                                              |
+| [\_block](/overview/schema/metadata.md#_block)  | Block metadata                                                                                |
+| [\_tx](/overview/schema/metadata.md#_tx)        | ledger transactions                                                                           |
+| [\_setting](/overview/schema/settings.md)       | ledger settings                                                                               |
