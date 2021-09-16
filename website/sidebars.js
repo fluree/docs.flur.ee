@@ -66,8 +66,8 @@ module.exports = {
         },
       ]
     },
-    'overview/ledger-operations',
-    'overview/on-demand',
+    'overview/ledger_operations',
+    'overview/on_demand',
     {
       type: 'category',
       label: 'Example Apps',

@@ -6,7 +6,7 @@ This section discusses the ledger operations that are possible with Fluree.
 
 You can create a new ledger through the user interface, or through the APIs.
 
-See the section for [creating a new ledger in Fluree Anywere](/reference/http/examples.md#new-db).  You will need to change your version number to test the feature in [Fluree On-Demand](on-demand.md).
+See the section for [creating a new ledger in Fluree Anywere](/reference/http/examples.md#new-db).  You will need to change your version number to test the feature in [Fluree On-Demand](/overview/on_demand.md).
 
 ## Forking a Ledger {#forking-a-ledger}
 
