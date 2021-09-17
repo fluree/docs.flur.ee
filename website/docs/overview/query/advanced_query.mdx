@@ -16,6 +16,7 @@ For a forward traversal example, note our predicate `chat/person` which is of ty
 In order to also include the person details, we add to our select cause with a sub-query within our original query. This new query would look like:
 
 <Tabs
+  groupId="fluree-lang-options"
   defaultValue="json"
   values={[{label: 'FlureeQL', value: 'json'},
   {label: 'Curl', value: 'bash'},
@@ -26,10 +27,7 @@ In order to also include the person details, we add to our select cause with a s
 
 ```json
 {
-  "select": [
-    "*",
-    {"chat/person": ["*"]}
-  ],
+  "select": ["*", { "chat/person": ["*"] }],
   "from": "chat"
 }
 ```
@@ -57,18 +55,19 @@ In order to also include the person details, we add to our select cause with a s
 <TabItem value="graphql">
 
 ```graphql
-{ graph {
-  chat {
-    _id
-    instant
-    message
-    person {
+{
+  graph {
+    chat {
       _id
-      fullName
-      handle
-    } 
+      instant
+      message
+      person {
+        _id
+        fullName
+        handle
+      }
+    }
   }
-}
 }
 ```
 
@@ -85,7 +84,7 @@ In order to also include the person details, we add to our select cause with a s
     ?person fd:person/fullName ?fullName;
             fd:person/handle ?handle.
  }
- ```
+```
 
 </TabItem>
 </Tabs>
@@ -94,9 +93,10 @@ In FlureeQl, this syntax is declarative and looks like the shape of the data you
 
 ## Crawling the Graph, in Reverse
 
-As mentioned, these relationships can also be traversed in reverse. If instead of listing the person for every chat, what if we wanted to find all chats for a  person? Instead of selecting from `chat`, lets select from `person` and follow the same `chat/person` predicate but in the reverse direction. This query looks like:
+As mentioned, these relationships can also be traversed in reverse. If instead of listing the person for every chat, what if we wanted to find all chats for a person? Instead of selecting from `chat`, lets select from `person` and follow the same `chat/person` predicate but in the reverse direction. This query looks like:
 
 <Tabs
+  groupId="fluree-lang-options"
   defaultValue="json"
   values={[{label: 'FlureeQL', value: 'json'},
   {label: 'Curl', value: 'bash'},
@@ -107,10 +107,7 @@ As mentioned, these relationships can also be traversed in reverse. If instead o
 
 ```json
 {
-  "select": [
-    "*",
-    {"chat/_person": ["*"]}
-  ],
+  "select": ["*", { "chat/_person": ["*"] }],
   "from": "person"
 }
 ```
@@ -138,15 +135,16 @@ curl \
 <TabItem value="graphql">
 
 ```graphql
-{ graph {
-  person {
-    chat_Via_person {
-      _id
-      instant
-      message
+{
+  graph {
+    person {
+      chat_Via_person {
+        _id
+        instant
+        message
+      }
     }
   }
-}
 }
 ```
 
@@ -155,7 +153,7 @@ curl \
 <TabItem value="sparql">
 
 ```sparql
- SELECT ?person ?fullName ?handle ?chat ?message ?instant 
+ SELECT ?person ?fullName ?handle ?chat ?message ?instant
  WHERE {
     ?person fd:person/fullName ?fullName;
             fd:person/handle    ?handle;
@@ -175,6 +173,7 @@ This special syntax indicates the same relationship, but in reverse. You'll now 
 For fun, you can add another sub-query to follow the chat message back to the person. Even though in this case it is redundant, and circular, Fluree exists happily in this paradox:
 
 <Tabs
+  groupId="fluree-lang-options"
   defaultValue="json"
   values={[{label: 'FlureeQL', value: 'json'},
   {label: 'Curl', value: 'bash'},
@@ -185,10 +184,7 @@ For fun, you can add another sub-query to follow the chat message back to the pe
 
 ```json
 {
-  "select": [
-    "*",
-    {"chat/_person": ["*", {"chat/person": ["*"]}]}
-  ],
+  "select": ["*", { "chat/_person": ["*", { "chat/person": ["*"] }] }],
   "from": "person"
 }
 ```
@@ -216,20 +212,21 @@ curl \
 <TabItem value="graphql">
 
 ```graphql
-{ graph {
-  person {
-    chat_Via_person {
-      _id
-      instant
-      message
-      person {
+{
+  graph {
+    person {
+      chat_Via_person {
+        _id
+        instant
+        message
+        person {
           _id
           fullName
           handle
+        }
       }
     }
   }
-}
 }
 ```
 
@@ -260,28 +257,28 @@ A basic select clause may look something like this: `["handle", "fullName"]`. Su
 
 You have already seen a similar pattern with ref predicates. For example in the FlureeQL statement: `"select": ["*", {"chat/_person": ["*"]}]`. The nested select, or sub-select, statement is `{"chat/_person": ["*"]}`.
 
-Within a given select statement, there may be multiple nested select statements in the FlureeQL syntax. GraphQL, by design, is entirely comprised of nested statements.  
+Within a given select statement, there may be multiple nested select statements in the FlureeQL syntax. GraphQL, by design, is entirely comprised of nested statements.
 
 ### In FlureeQL
 
 There are several sub-select options you specify. Certain options, such as `_recur` are only relevant for refs. While other options, such as `_limit` are only relevant for `multi` predicates.
 
-Key | Description
--- | --
-`_limit` | Limit (integer) of results to include. For `multi` predicates. By default, returns 100.  
-`_offset` | Offset (integer) number results to include. For `multi` predicates. By default, offset is 0.
-`_recur` | Number of times (integer) to follow a relationship. See [Recursion](#recursion). For `ref` predicates.
-`_component` | Whether to automatically crawl the graph for component entities. Overrides the top-level option. For `ref` predicates.
-`_as` | An alternate name for the predicate that is being referenced.
-`_orderBy` | Specify either a predicate (make sure to use the same name as returned in the results), or a two-tuple, where the first item is either `ASC` or `DESC` and the second item is the predicate name, i.e. `["ASC", "person/handle"]`.  Ordering is done before taking the number of results specified in limit.
-`_compact` | Returns all predicate names in their compact (non-namespaced format). For example, rather than return `person/handle`, would just return `handle`.
+| Key          | Description                                                                                                                                                                                                                                                                                                 |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `_limit`     | Limit (integer) of results to include. For `multi` predicates. By default, returns 100.                                                                                                                                                                                                                     |
+| `_offset`    | Offset (integer) number results to include. For `multi` predicates. By default, offset is 0.                                                                                                                                                                                                                |
+| `_recur`     | Number of times (integer) to follow a relationship. See [Recursion](#recursion). For `ref` predicates.                                                                                                                                                                                                      |
+| `_component` | Whether to automatically crawl the graph for component entities. Overrides the top-level option. For `ref` predicates.                                                                                                                                                                                      |
+| `_as`        | An alternate name for the predicate that is being referenced.                                                                                                                                                                                                                                               |
+| `_orderBy`   | Specify either a predicate (make sure to use the same name as returned in the results), or a two-tuple, where the first item is either `ASC` or `DESC` and the second item is the predicate name, i.e. `["ASC", "person/handle"]`. Ordering is done before taking the number of results specified in limit. |
+| `_compact`   | Returns all predicate names in their compact (non-namespaced format). For example, rather than return `person/handle`, would just return `handle`.                                                                                                                                                          |
 
 For example, you can issue the following query:
 
 ```json
 {
-    "select": ["handle", "fullName"], 
-    "from": "person"
+  "select": ["handle", "fullName"],
+  "from": "person"
 }
 ```
 
@@ -289,8 +286,8 @@ However, if you want to return `fullName` as `name`, you can issue the following
 
 ```json
 {
-    "select": ["handle", {"fullName": [{"_as": "name"}]}], 
-    "from": "person"
+  "select": ["handle", { "fullName": [{ "_as": "name" }] }],
+  "from": "person"
 }
 ```
 
@@ -298,8 +295,11 @@ If you have a `ref` predicate, you can include any relevant sub-select options d
 
 ```json
 {
-    "select": ["handle", {"comment/_person": ["*", {"_as": "comment", "_limit": 1}]}], 
-    "from": "person"
+  "select": [
+    "handle",
+    { "comment/_person": ["*", { "_as": "comment", "_limit": 1 }] }
+  ],
+  "from": "person"
 }
 ```
 
@@ -307,37 +307,47 @@ You can also sort each comment by `comment/message`.
 
 ```json
 {
-    "select": ["handle", {"comment/_person": ["*", {"_as": "comment", "_orderBy": "comment/message", "_limit": 1}]}], 
-    "from": "person"
+  "select": [
+    "handle",
+    {
+      "comment/_person": [
+        "*",
+        { "_as": "comment", "_orderBy": "comment/message", "_limit": 1 }
+      ]
+    }
+  ],
+  "from": "person"
 }
 ```
 
 ### In GraphQL
 
-Simply list the options inside of parentheses immediately after the chosen predicate. For example, we can limit the `chat_Via_person` predicates to only show 10 chats (in GraphQL, reverse references use _Via_ rather than /_).
+Simply list the options inside of parentheses immediately after the chosen predicate. For example, we can limit the `chat_Via_person` predicates to only show 10 chats (in GraphQL, reverse references use _Via_ rather than /\_).
 
 Note that in GraphQL, the options do not have a leading underscore. In GraphQL, the options that you can include are:
 
-Key | Description
--- | --
-`limit` | Limit (integer) of results to include. Only for `multi` and `ref` predicates.
-`recur` | Number of times (integer) to follow a relationship. See [Recursion](#recursion). Only for `ref` predicates.
-`as` | Alternate name for a predicate. Only for `ref` predicates.
+| Key     | Description                                                                                                 |
+| ------- | ----------------------------------------------------------------------------------------------------------- |
+| `limit` | Limit (integer) of results to include. Only for `multi` and `ref` predicates.                               |
+| `recur` | Number of times (integer) to follow a relationship. See [Recursion](#recursion). Only for `ref` predicates. |
+| `as`    | Alternate name for a predicate. Only for `ref` predicates.                                                  |
 
 ```graphql
-{ graph {
-  person {
-    _id
-    handle
-    chat_Via_person (limit: 10) {
-      instant
-      message
-      comments {
+{
+  graph {
+    person {
+      _id
+      handle
+      chat_Via_person(limit: 10) {
+        instant
         message
+        comments {
+          message
+        }
       }
     }
   }
-}}
+}
 ```
 
 ## Recursion
@@ -347,6 +357,7 @@ Recur is a sub-select option, which uses recursion to follow `ref` predicates th
 Normally, if we want to query who a person follows, we would submit this query.
 
 <Tabs
+  groupId="fluree-lang-options"
   defaultValue="json"
   values={[{label: 'FlureeQL', value: 'json'},
   {label: 'Curl', value: 'bash'},
@@ -357,8 +368,8 @@ Normally, if we want to query who a person follows, we would submit this query.
 
 ```json
 {
-    "select":["handle", {"person/follows": ["handle"]}],
-    "from":"person"
+  "select": ["handle", { "person/follows": ["handle"] }],
+  "from": "person"
 }
 ```
 
@@ -413,6 +424,7 @@ curl \
 However, if you want to keep following the `person/follows` relationship, we can specify the number of times we want to follow the given relationship in the following manner:
 
 <Tabs
+  groupId="fluree-lang-options"
   defaultValue="json"
   values={[{label: 'FlureeQL', value: 'json'},
   {label: 'Curl', value: 'bash'},
@@ -423,8 +435,8 @@ However, if you want to keep following the `person/follows` relationship, we can
 
 ```json
 {
-    "select":["handle", {"person/follows": ["handle", {"_recur": 10}]}],
-    "from":"person"
+  "select": ["handle", { "person/follows": ["handle", { "_recur": 10 }] }],
+  "from": "person"
 }
 ```
 
@@ -448,13 +460,13 @@ curl \
 <TabItem value="graphql">
 
 ```graphql
-{ graph {
-  person {
-    _id
-    handle
-    follows (recur: 10) {
+{
+  graph {
+    person {
+      _id
+      handle
+      follows(recur: 10) {
         _id
-
       }
     }
   }
@@ -478,11 +490,12 @@ The results will only return recursions for as long as their new information in 
 
 FlureeQL allows you to submit multiple queries at once by using the [multi-query endpoint](/reference/http/examples.md#multi-query) .
 
- In order to do this, create unique names for your queries, and set those as the keys of the your JSON query. The values of the keys should be the queries themselves. If you are using GraphQL, you can simply nest your second, third, etc requests within the `graph` level of the request.
+In order to do this, create unique names for your queries, and set those as the keys of the your JSON query. The values of the keys should be the queries themselves. If you are using GraphQL, you can simply nest your second, third, etc requests within the `graph` level of the request.
 
 For example, this query selects all chats and people at once.
 
 <Tabs
+  groupId="fluree-lang-options"
   defaultValue="json"
   values={[{label: 'FlureeQL', value: 'json'},
   {label: 'Curl', value: 'bash'},
@@ -493,14 +506,14 @@ For example, this query selects all chats and people at once.
 
 ```json
 {
-    "chatQuery": {
-        "select": ["*"],
-        "from": "chat"
-    },
-    "personQuery": {
-         "select": ["*"],
-        "from": "person"
-    }
+  "chatQuery": {
+    "select": ["*"],
+    "from": "chat"
+  },
+  "personQuery": {
+    "select": ["*"],
+    "from": "person"
+  }
 }
 ```
 
@@ -521,21 +534,22 @@ curl \
 <TabItem value="graphql">
 
 ```graphql
-{ graph {
-  chat {
-    _id
-    comments {
+{
+  graph {
+    chat {
+      _id
+      comments {
+        message
+      }
+      instant
       message
     }
-    instant
-    message
-  }  
-  person {
-    _id
-    handle
-    fullName
+    person {
+      _id
+      handle
+      fullName
+    }
   }
-}
 }
 ```
 
@@ -544,7 +558,7 @@ curl \
 <TabItem value="sparql">
 
 ```sparql
-# Although you can submit the below query in SPARQL, unconnected groups of triples will simply return all permutations of grouped results, i.e. every chat will be returned with every person. 
+# Although you can submit the below query in SPARQL, unconnected groups of triples will simply return all permutations of grouped results, i.e. every chat will be returned with every person.
 
  SELECT ?chat ?message ?instant ?person ?handle ?fullName
  WHERE {
@@ -563,14 +577,14 @@ Any errors will be returned in a header, called `X-Fdb-Errors`. For example, inc
 
 ```json
 {
-    "incorrectCollection": {
-        "select": ["*"],
-        "from": "apples"
-    },
-    "personQuery": {
-         "select": ["*"],
-        "from": "person"
-    }
+  "incorrectCollection": {
+    "select": ["*"],
+    "from": "apples"
+  },
+  "personQuery": {
+    "select": ["*"],
+    "from": "person"
+  }
 }
 ```
 
