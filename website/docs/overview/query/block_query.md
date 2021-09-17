@@ -228,10 +228,18 @@ query  {
 Not supported
 ```
 
+<<<<<<< HEAD:website/docs/overview/query/block_query.mdx
+<<<<<<< HEAD:website/docs/overview/query/block-query.mdx
 </TabItem>
 </Tabs>
 
+## Pretty Print Block Query {#pretty-print-block-query}
+=======
 ## Pretty Print Block Query {#pretty-print-block_query}
+>>>>>>> 253c1be (WIP fixing brokenLinks):website/docs/overview/query/block_query.mdx
+=======
+## Pretty Print Block Query {#pretty-print-block_query}
+>>>>>>> f79dca3bcee5f836d295061362afd85b3b6e2fdf:website/docs/overview/query/block_query.md
 
 In FlureeQL, you can pretty print the results of a block query by adding `"prettyPrint": true` to your query map. Any format of block query can be pretty printed.
 

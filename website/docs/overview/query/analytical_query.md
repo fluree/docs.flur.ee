@@ -26,7 +26,11 @@ Key | Required? | Description
 -- | -- | --
 [select, selectOne, or selectDistinct](#select-key) | yes | `select` returns all relevant results, `selectOne` returns one result, and `selectDistinct` only returns unique results. [See select key](#select-key)
 [where](#where-key) | yes | A collection of tuples which allow for complex filtering of data.
+<<<<<<< HEAD:website/docs/overview/query/analytical_query.mdx
 `block` | no | Optional block specified by block number, duration, or wall-clock time as a ISO-8601 formatted string. This applies a block to every part of the query that does not have a block specified. It follows the same syntax as the [block key in basic queries](/overview/query/basic_query.mdx#block-key).
+=======
+`block` | no | Optional block specified by block number, duration, or wall-clock time as a ISO-8601 formatted string. This applies a block to every part of the query that does not have a block specified. It follows the same syntax as the [block key in basic queries](/overview/query/basic_query.md#block-key).
+>>>>>>> f79dca3bcee5f836d295061362afd85b3b6e2fdf:website/docs/overview/query/analytical_query.md
 [prefixes](#prefixes-key) | no | Optional map of outside sources.
 [vars](#vars-key) | no | Optional map of variable bindings.
 [opts](#opts-key) | no | Optional map where options like `limit`, `orderBy`, `prettyPrint`, and `wikipediaOpts` can be specified.
