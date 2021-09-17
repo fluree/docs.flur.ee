@@ -40,11 +40,7 @@ Key | Required? | Description
 Item | Example | Description
 -- | -- | --
 Variable | `"?apple"` | Variables are declared in the `where` clause
-<<<<<<< HEAD:website/docs/overview/query/analytical_query.mdx
 Variable Select-Array | `{"?var1": ["*"]}` <br/>  <br/> `{"?var1": ["*", {"chat/person": ["*"]}]}` | A map where the key is a valid variable and the value is a valid [select-array](/overview/query/basic_query.mdx#select-key). This only works when the variable is bound to subject ids.
-=======
-Variable Select-Array | `{"?var1": ["*"]}` <br/>  <br/> `{"?var1": ["*", {"chat/person": ["*"]}]}` | A map where the key is a valid variable and the value is a valid [select-array](/overview/query/basic_query.md#select-key). This only works when the variable is bound to subject ids.
->>>>>>> f79dca3bcee5f836d295061362afd85b3b6e2fdf:website/docs/overview/query/analytical_query.md
 Aggregate variable | `"(avg ?nums)"` | Any valid variables can be wrapped in an aggregate function. All valid aggregate functions are listed in the table below.
 
 The value for the select key can be any of the items in the following table. Your select key can be multiple of these select items. In the case that it is multiple items, these items should be wrapped in `[ ]`. For example `[ "?var1", "(sum ?var2)", {"?var3": ["*"] }, "?var4" ]`.
