@@ -13,10 +13,10 @@ A block query requires a `block` key, which specifies a block or range of blocks
 
 A block query can also optionally include a `prettyPrint` key, which pretty prints the results if `true`.
 
-Key | Required? | Description
--- | -- | --
-`block` | yes | A block or range of blocks to return, options for the format of this value are listed below.
-`prettyPrint` | no | Optional, `true` or `false`, whether to pretty print results. Default `false`
+| Key           | Required? | Description                                                                                  |
+| ------------- | --------- | -------------------------------------------------------------------------------------------- |
+| `block`       | yes       | A block or range of blocks to return, options for the format of this value are listed below. |
+| `prettyPrint` | no        | Optional, `true` or `false`, whether to pretty print results. Default `false`                |
 
 ### Query Single block {#query-single-block}
 
@@ -25,6 +25,7 @@ To query a single block, you specify the block number, an ISO-8601 formatted wal
 Using a block number:
 
 <Tabs
+  groupId="fluree-lang-options"
   defaultValue="json"
   values={[{label: 'FlureeQL', value: 'json'},
   {label: 'Curl', value: 'bash'},
@@ -58,7 +59,7 @@ curl \
 <TabItem value="graphql">
 
 ```graphql
-query  {
+query {
   block(from: 3, to: 3)
 }
 ```
@@ -77,6 +78,7 @@ Not supported
 Using an ISO-8601 formatted wall-clock time:
 
 <Tabs
+  groupId="fluree-lang-options"
   defaultValue="json"
   values={[{label: 'FlureeQL', value: 'json'},
   {label: 'Curl', value: 'bash'},
@@ -129,6 +131,7 @@ Not supported
 To query a range of block, specify a lower and upper limit (inclusive).
 
 <Tabs
+  groupId="fluree-lang-options"
   defaultValue="json"
   values={[{label: 'FlureeQL', value: 'json'},
   {label: 'Curl', value: 'bash'},
@@ -139,7 +142,7 @@ To query a range of block, specify a lower and upper limit (inclusive).
 
 ```json
 {
-  "block": [3,5]
+  "block": [3, 5]
 }
 ```
 
@@ -162,7 +165,7 @@ curl \
 <TabItem value="graphql">
 
 ```graphql
-query  {
+query {
   block(from: 3, to: 5)
 }
 ```
@@ -183,6 +186,7 @@ Not supported
 To query a range of block, starting with a lower limit, specify just the lower limit (inclusive).
 
 <Tabs
+  groupId="fluree-lang-options"
   defaultValue="json"
   values={[{label: 'FlureeQL', value: 'json'},
   {label: 'Curl', value: 'bash'},
@@ -215,7 +219,7 @@ curl \
 <TabItem value="graphql">
 
 ```graphql
-query  {
+query {
   block(from: 3)
 }
 ```
@@ -236,6 +240,7 @@ Not supported
 In FlureeQL, you can pretty print the results of a block query by adding `"prettyPrint": true` to your query map. Any format of block query can be pretty printed.
 
 <Tabs
+  groupId="fluree-lang-options"
   defaultValue="json"
   values={[{label: 'FlureeQL', value: 'json'},
   {label: 'Curl', value: 'bash'},
