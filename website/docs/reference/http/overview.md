@@ -28,7 +28,7 @@ Transact | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/transact` | Transactions in Flu
 GraphQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/graphql` | Queries or transactions in GraphQL syntax, as a string
 SPARQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` | Queries in SPARQL syntax, as a string
 SQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sql` | Queries in SQL syntax, as a string
-Command | `/fdb/[NETWORK-NAME]/[DBID]/command` | Commands, such as transactions, with a signature in the body. See [signing transactions](/guides/identity/signatures#signed-transactions).
+Command | `/fdb/[NETWORK-NAME]/[DBID]/command` | Commands, such as transactions, with a signature in the body. See [signing transactions](/concepts/identity/signatures.md#signed-transactions).
 Reindex | `/fdb/[NETWORK-NAME]/[DBID]/reindex` | Reindexes the specified ledger.
 Hide | `/fdb/[NETWORK-NAME]/[DBID]/hide` | Hides flakes that match the given pattern.
 
@@ -42,13 +42,13 @@ Test Transact With | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/test-transact-with` |
 
 ## Password Authentication Endpoints {#password-authentication-endpoints}
 
-You need password authentication enabled to use these endpoints. See [config options](/docs/getting-started/installation#password-and-jwt-token-settings) for all password authentication options. See the [Password Management Guide](/guides/identity/password-management) for more information. For an implementation example refer to the [Comics Store](https://github.com/fluree/developer-hub) repo located in the Fluree Developer Hub.
+You need password authentication enabled to use these endpoints. See [config options](/overview/start/installation.md#password-and-jwt-token-settings) for all password authentication options. See the [Password Management Guide](/concepts/identity/password_management.md) for more information. For an implementation example refer to the [Comics Store](https://github.com/fluree/developer-hub) repo located in the Fluree Developer Hub.
 
 Action | Endpoint | Explanation
 -- | -- | --
-[Generate](/api/downloaded-endpoints/downloaded-examples#pwgenerate) | `/fdb/[NETWORK-NAME]/[DBID]/pw/generate` | Returns a valid token for a given user or role. Sets a valid password for that user or role.
-[Renew](/api/downloaded-endpoints/downloaded-examples#pwrenew) | `/fdb/[NETWORK-NAME]/[DBID]/pw/renew` | Given a token in the header and a new expiration time, returns a new token for a given user or role.
-[Login](/api/downloaded-endpoints/downloaded-examples#pwlogin) | `/fdb/[NETWORK-NAME]/[DBID]/pw/login` | Given a password and user or auth id, returns a valid token.
+[Generate](/reference/http/examples.md#pwgenerate) | `/fdb/[NETWORK-NAME]/[DBID]/pw/generate` | Returns a valid token for a given user or role. Sets a valid password for that user or role.
+[Renew](/reference/http/examples.md#pwrenew) | `/fdb/[NETWORK-NAME]/[DBID]/pw/renew` | Given a token in the header and a new expiration time, returns a new token for a given user or role.
+[Login](/reference/http/examples.md#pwlogin) | `/fdb/[NETWORK-NAME]/[DBID]/pw/login` | Given a password and user or auth id, returns a valid token.
 
 ## Other endpoints {#other-endpoints}
 
@@ -62,6 +62,4 @@ Network Status | ANY | `/fdb/nw-state` | Returns status of Fluree network, raft 
 
 For both queries and transactions, a signature is not required if the option `fdb-open-api` is set to true (default for the downloaded version of Fluree).
 
-More information on [signing queries](/guides/identity/signatures#signed-queries) and [signing transactions](/guides/identity/signatures#signed-transactions) can be found in the linked sections.
-
-See [Downloaded Endpoint Examples](/api/downloaded-endpoints/downloaded-examples) for examples of how to use each of the endpoints.
+More information on [signing queries](/concepts/identity/signatures.md#signed-queries) and [signing transactions](/concepts/identity/signatures.md#signed-transactions) can be found in the linked sections.

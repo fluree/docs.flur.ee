@@ -5,7 +5,7 @@ sidebar_position: 4
 
 There are two options for running Fluree:
 
-- [Fluree On-Demand](/docs/getting-started/fluree-on-demand)
+- [Fluree On-Demand](/overview/on_demand.md)
 - Fluree Anywhere
 
 ## Download {#download}
@@ -29,7 +29,7 @@ Download and unzip: [latest stable version of Fluree](https://s3.amazonaws.com/f
 
 Or, you can get the [latest version of Fluree](https://s3.amazonaws.com/fluree-releases-public/fluree-latest.zip).
 
-You can also download the latest Fluree with [Homebrew](/tools/other/tools#fluree-through-homebrew), [Docker](/tools/other/tools#fluree-on-docker), and [Chocolatey](/tools/other/tools#fluree-with-chocolatey) (coming soon).
+You can also download the latest Fluree with [Homebrew](/overview/start/installation.md#homebrew) and [Docker](/overview/start/installation.md#docker).
 
 ## Launching and Exiting Fluree {#launching-and-exiting-fluree}
 
@@ -56,17 +56,17 @@ If the above message is not displaying in your terminal, the terminal should pri
 
 - If you see an error "missing 'server' JVM", you need to install Java Server JRE. See <a href="https://docs.oracle.com/en/java/" target="_blank">Oracle documentation</a> to select the appropriate platform, version (e.g., 11) and operating system.
 
-After you launch Fluree for the first time, you will not have any ledgers. You will need to create a ledger to begin.  Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the user interface.
+After you launch Fluree for the first time, you will not have any ledgers. You will need to create a ledger to begin.  Creating a ledger and any other interaction with Fluree can happen either through the [API](/reference/http/examples.md#new-db) or through the user interface.
 
-To learn about the Fluree file system, see the [File System](/guides/infrastructure/file-system) guide.
+To learn about the Fluree file system, see the [File System](/concepts/infrastructure/file_system.md) guide.
 
 ### Exiting and Restarting Fluree {#exiting-and-restarting-fluree}
 
-To exit Fluree, simply type `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory]((/guides/infrastructure/file-system), this will not delete any ledgers or invalidate any successful transactions.
+To exit Fluree, simply type `ctrl + c` to quit the current process on your terminal. Unless you were running [Fluree in memory](/concepts/infrastructure/file_system.md), this will not delete any ledgers or invalidate any successful transactions.
 
 To restart Fluree, navigate to the folder that contains your Fluree instance and run `./fluree_start.sh`. This will restart your Fluree instance with all your previous networks and ledgers.
 
-To completely reset your Fluree instance (erasing ALL ledger and transactor group data), you can shut down your instance and delete `data/` and `default_private_key.txt` (or wherever your private key has been stored if you changed the default location ). Don't do this unless you are sure you want to completely delete everything! See more about the Fluree [File System](/guides/infrastructure/file-system) in the guides.
+To completely reset your Fluree instance (erasing ALL ledger and transactor group data), you can shut down your instance and delete `data/` and `default_private_key.txt` (or wherever your private key has been stored if you changed the default location ). Don't do this unless you are sure you want to completely delete everything! See more about the Fluree [File System](/concepts/infrastructure/file_system.md) in the guides.
 
 ## Config Options {#config-options}
 
@@ -74,10 +74,10 @@ The `fluree_sample.properties` contains all configurable properties, as well as 
 
 To learn about different configurations in-depth, see the following guides:
 
-- Running Fluree [In-Memory](/guides/infrastructure/in-memory)
-- Running a [Transactor Group](/guides/infrastructure/transactor-group)
-- [Consensus Algorithms](/guides/infrastructure/consensus-algorithms)
-- [Password Management](/guides/identity/password-management)
+- Running Fluree [In-Memory](/concepts/infrastructure/in_memory.md)
+- Running a [Transactor Group](/concepts/infrastructure/transactor_group.md)
+- [Consensus Algorithms](/concepts/infrastructure/consensus_algorithms.md)
+- [Password Management](/concepts/identity/password_management.md)
 
 ### Base Settings {#base-settings}
 
@@ -92,10 +92,10 @@ Property | Options | Description
 
 Property | Options | Description
 -- | -- | --
-`fdb-consensus-type` | `raft` or `in-memory` | Currently `raft` is the only option consensus type supported for transactor groups. See the [in-memory](/guides/infrastructure/in-memory) guide on how to run Fluree in memory.
-`fdb-join?` | `boolean` | (Optional) Set this to true if a server is attempting to dynamically join a network. See the [transactor-group](/guides/infrastructure/transactor-group) guide on how to run Fluree as a transactor group and dynamically change the network configuration.
-`fdb-group-catch-up-rounds` | `int` | By default, set to 10. The number of rounds the tx group leader will wait for a new server to catch up get caught up to the network, when dynamically joining a network. See the [transactor-group](/guides/infrastructure/transactor-group) guide on how to run Fluree as a transactor group and dynamically change the network configuration.
-`fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. Must be a [valid private key](/guides/identity/auth-records#generating-a-public-private-key-auth-id-triple). This takes precedent over `fdb-group-private-key-file`.
+`fdb-consensus-type` | `raft` or `in-memory` | Currently `raft` is the only option consensus type supported for transactor groups. See the [in-memory](/concepts/infrastructure/in_memory.md) guide on how to run Fluree in memory.
+`fdb-join?` | `boolean` | (Optional) Set this to true if a server is attempting to dynamically join a network. See the [transactor-group](/concepts/infrastructure/transactor_group.md) guide on how to run Fluree as a transactor group and dynamically change the network configuration.
+`fdb-group-catch-up-rounds` | `int` | By default, set to 10. The number of rounds the tx group leader will wait for a new server to catch up get caught up to the network, when dynamically joining a network. See the [transactor-group](/concepts/infrastructure/transactor_group.md) guide on how to run Fluree as a transactor group and dynamically change the network configuration.
+`fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. Must be a [valid private key](/concepts/identity/auth_records.md#generating-a-public-private-key-auth-id-triple). This takes precedent over `fdb-group-private-key-file`.
 `fdb-group-private-key-file` | `file path` | If fdb-group-private-key is not provided, we'll look for it in this file. If not found in this file, we'll generate a default one and place it in this file.
 `fdb-group-servers` | `server-id@host:port, server-id@host:port` | List all servers participating in ledger-group with format of server-id@host:port. All tx-group servers should have this same config.
 `fdb-group-this-server` | `server-id` | Specify which of the above listed server-ids is this server. Note this must be unique for every server in the tx-group, and is likely easiest to supply this setting via environment variable.

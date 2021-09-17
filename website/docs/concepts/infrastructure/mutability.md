@@ -3,9 +3,9 @@
 While Fluree is an immutable ledger, there are several features that provide some
 flexibility around hiding and removing data.
 
-## Deleting Data {#deleting-data}
+## Deleting Data {#deleting_data}
 
-There is the standard way of [deleting data](/docs/transact/deleting-data). Using
+There is the standard way of [deleting data](/overview/transact/deleting_data.mdx). Using
 this method, the data will not appear in a query against the current ledger, however
 the record of that data being added and deleted from the ledger are still present.
 
@@ -35,14 +35,14 @@ A `hide` request can have the following keys:
 Key | Required? | Description
 -- | -- | --
 hide | yes | Subject id, unique two-tuple, or flake-format
-block | no | Optional block or range of blocks to return, options for the format of this value are the same as for block or history queries (see in [history](/docs/query/history-query)).
+block | no | Optional block or range of blocks to return, options for the format of this value are the same as for block or history queries (see in [history](/overview/query/history_query.mdx)).
 local | no | Defaults to `true`. Whether to hide flakes locally or across the entire network. Currently hiding flakes is only supported for a single server.
 
 To hide flakes, you specify a given flake patten, such as
 `[null, "person/handle", "jdoe"]`. In this case, any flakes where the predicate
 is `person/handle`, and the object is `jdoe` will be matched, and hidden. To see
 all the flakes it would impact, you could issue the following query to the `/history`
-endpoint ([see example](/api/downloaded-endpoints/downloaded-examples#-history)).
+endpoint ([see example](/reference/http/examples.md#history)).
 
 You can also add a `block` key-value pair, which limits the blocks hidden (this
 works in the same way as the block key in history queries).
@@ -55,7 +55,7 @@ works in the same way as the block key in history queries).
 }
 ```
 
-To see an example of `hide` request, see the [API section on /hide](/api/downloaded-endpoints/downloaded-examples#-hide).
+To see an example of `hide` request, see the [API section on /hide](/reference/http/examples.md#hide).
 
 When flakes are hidden, the original block files are renamed with a version tag,
 for example `000000000000005:v1.fdbd`. A new `000000000000005.fdbd` is created that
@@ -81,7 +81,7 @@ NOT maintain the integrity of the blockchain.
 One common reason for wanting mutable data is to store personally identifiable information
 (PII). One common way for dealing with PII is by storing the PII in one ledger and
 non-sensitive data in a separate ledger. A single query can join data across multiple
-ledgers (see the [query syntax](/docs/query/analytical-query#prefixes-key) here).
+ledgers (see the [query syntax](/overview/query/analytical_query.mdx#prefixes-key) here).
 
 In this situation, the ledger with PII can be shared only with select users, and
 information that should be deleted can be handled in any of the ways listed above:

@@ -1,10 +1,10 @@
-# Smart Functions
+# SmartFunctions
 
-Smart functions are the engine for setting permissions in Fluree. This section details the role of smart functions.
+SmartFunctions are the engine for setting permissions in Fluree. This section details the role of smart functions.
 
-To see a full list of all accepted smart functions, see [smart function list](/docs/schema/functions#universal-functions-for-_fn-code).
+To see a full list of all accepted smart functions, see [smart function list](/overview/schema/smartfunctions.mdx#universal-functions).
 
-We also have a <a href="https://github.com/fluree/smart-function-library" target="_blank">Github repo</a> with basic smart functions you can add to your applications.
+We also have a [Github repo](https://github.com/fluree/smart-function-library) with basic smart functions you can add to your applications.
 
 For some additional help testing and debugging your smart function implementations, try updating your `logback.xml` configuration file (located in your Fluree directory) so that logging for `fluree.db` is set to `DEBUG`, e.g.
 
@@ -28,8 +28,8 @@ Smart functions are stored in the `_fn` collection. From the `_fn` collection, s
 
 Location | When Trigged?
 -- | --
-[_rule/fns](/guides/smart-functions/rules) | When an `_auth` record containing a given `_rule` issues a query or transaction containing the `_collection` or `_predicates` specified in the rule.
-[_collection/spec](/guides/smart-functions/collection-spec) | When transaction containing the specified `_collection` is issued, regardless of the issuer.
-[_predicate/spec](/guides/smart-functions/predicate-spec) | When transaction containing the specified `_predicate` is issued, regardless of issuer (once per specified predicate).
-[_predicate/txSpec](/guides/smart-functions/predicate-tx-spec) | When transaction containing the specified `_predicate` is issued, regardless of who issuer (once per transaction).
-[In transactions](/guides/smart-functions/fns-in-txs) | You can use smart functions directly in transactions, but their role and behavior is slightly different.
+[_rule/fns](concepts/smart-functions/rules.md) | When an `_auth` record containing a given `_rule` issues a query or transaction containing the `_collection` or `_predicates` specified in the rule.
+[_collection/spec](concepts/smart-functions/collection_spec.md) | When transaction containing the specified `_collection` is issued, regardless of the issuer.
+[_predicate/spec](concepts/smart-functions/predicate_spec.md) | When transaction containing the specified `_predicate` is issued, regardless of issuer (once per specified predicate).
+[_predicate/txSpec](concepts/smart-functions/predicate_tx_spec.md) | When transaction containing the specified `_predicate` is issued, regardless of who issuer (once per transaction).
+[In transactions](concepts/smart-functions/fns_in_txs.md) | You can use smart functions directly in transactions, but their role and behavior is slightly different.

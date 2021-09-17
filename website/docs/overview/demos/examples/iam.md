@@ -124,7 +124,7 @@ to create the `illusion` collection and user roles in the ledger.
 
 ### Registering & Logging In Users {#registering--logging-in-users}
 
-We'll be using the [Password Authentication API](/guides/identity/password-management)
+We'll be using the [Password Authentication API](/concepts/identity/password_management.md)
 to create our users. Using your API testing software, send a POST request with the
 following body to `http://localhost:8090/fdb/[NETWORK-NAME]/[DBID]/pw/generate`.
 

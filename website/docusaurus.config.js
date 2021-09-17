@@ -7,8 +7,8 @@ module.exports = {
   tagline: 'Semantic graph data management system built with web3 tech',
   url: 'https://docs.flur.ee',
   baseUrl: '/',
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'fluree', 		// GitHub org name.
   projectName: 'docs.flur.ee', 		// Repo name.
@@ -81,20 +81,20 @@ module.exports = {
         },
       ],
     },
-	// Config for collapsing sidebar
-	hideableSidebar: true,
+    // Config for collapsing sidebar
+    hideableSidebar: true,
 
     footer: {
       style: 'light',
       links: [
         {
           title: 'Docs',
-          items: [
-            {
-              label: 'Tutorial',
-              to: 'docs/tutorials/tutorial_intro',
-            },
-          ],
+          // items: [
+          //   {
+          //     label: 'Tutorial',
+          //     to: 'docs/tutorials/tutorial_intro',
+          //   },
+          // ],
         },
         {
           title: 'Community',
@@ -139,7 +139,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/fluree/docs.flur.ee',
+            'https://github.com/fluree/docs.flur.ee/tree/docs-overhaul/website',
         },
         // blog: {
         //   showReadingTime: true,

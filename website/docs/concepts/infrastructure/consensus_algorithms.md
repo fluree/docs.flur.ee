@@ -8,7 +8,7 @@ case, and whether your network is more or less trusted.
 Currently, Fluree supports the Raft consensus algorithm. The next algorithm we will
 release is the PBFT (Practical Byzantine Fault Tolerance) algorithm. The consensus
 algorithm you use is specified in the `fdb-consensus-type` config setting (look
-at [config settings](/docs/getting-started/fluree-anywhere#config-options) for more
+at [config settings](/overview/start/fluree_anywhere.md#config-options) for more
 information).
 
 ## Raft {#raft}

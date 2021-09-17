@@ -17,7 +17,7 @@ A private Fluree is a group of ledgers run on a single server, hosted either by 
 
 A federated Fluree is a group of ledgers shared by a network. In addition to all the features of a private instance of Fluree, running Fluree federated provides additional data integrity. With a federated Fluree, the network uses an agreed-upon consensus algorithm to reach a shared state.  
 
-You can find more in-depth information about both individual ledger [infrastructure](/guides/infrastructure/file-system) and [network infrastructure](/guides/infrastructure/network-infrastructure) in later sections.
+You can find more in-depth information about both individual ledger [infrastructure](/concepts/infrastructure/file_system.md) and [network infrastructure](/concepts/infrastructure/network_infrastructure.md) in later sections.
 
 ## Data Model {#data-model}
 
@@ -25,7 +25,7 @@ This section is background on the way data is conceptualized in any given ledger
 
 ### Overview {#overview}
 
-When a Fluree ledger is initialized, a block 1 is created. This block contains certain important metadata, including all the [System Collections](/docs/schema#all-system-collections) needed to make ledger features work.
+When a Fluree ledger is initialized, a block 1 is created. This block contains certain important metadata, including all the [System Collections](/concepts/infrastructure/system_collections.md) needed to make ledger features work.
 
 A ledger at a given block is a ledger. Every block corresponds to a moment in time, and the data in a block consists of a group of atomic updates made to that ledger at a given point in time.
 
@@ -78,9 +78,9 @@ Rather than storing a copy of the entire ledger in each block, every block conta
 
 ### Collections and Predicates {#collections-and-predicates}
 
-A [collection](/docs/schema/collections) is analogous to a relational database table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city.
+A [collection](/overview/schema/collections.mdx) is analogous to a relational database table. Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, and city.
 
-Every collection has [predicates](/docs/schema/predicates). Predicates are analogous to relational ledger columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: `person/firstName`, `person/lastName`, and `person/age`.
+Every collection has [predicates](/overview/schema/predicates.mdx). Predicates are analogous to relational ledger columns. The features of a collection are its predicates. For example, the person collection might have the following predicates: `person/firstName`, `person/lastName`, and `person/age`.
 
 Together, collections, and predicates make up a Fluree schema.
 
@@ -122,7 +122,7 @@ Time | - 15
 Boolean | True
 Metadata | {}
 
-If you issue a [block query](/docs/query/block-query), you can see all the flakes issued at a given block.  
+If you issue a [block query](/overview/query/block_query.mdx), you can see all the flakes issued at a given block.  
 
 \* Really, when looking at a flake, the predicate name would not be displayed. Rather the predicate, like every other item in a Fluree ledger is a subject, and it has a subject id. So that predicate's subject id appears in the flake, not the name.
 
@@ -130,6 +130,6 @@ If you issue a [block query](/docs/query/block-query), you can see all the flake
 
 After the user issues a transaction, a Fluree transactor creates new [flakes](#flakes), which represent the changes made to the ledger at that given point in time. In addition to those flakes, there are also new flakes, which represent the metadata for that block (this is distinct from the sixth element of a flake, where metadata for an individual flake will be stored - not currently implemented).
 
-This metadata is also in the form of flakes, and it is recorded in the ledger in the same way as any other information. The difference is that metadata flakes are automatically generated and cannot be edited. Some custom metadata can be [included in your transaction](/docs/transact/basics#adding-custom-metadata).
+This metadata is also in the form of flakes, and it is recorded in the ledger in the same way as any other information. The difference is that metadata flakes are automatically generated and cannot be edited. Some custom metadata can be [included in your transaction](overview/transact/basics.md#adding-custom-metadata).
 
 Metadata for each transaction is stored in the `_block` and `_tx` collections. Both `_block` and `_tx` are search-able in the same way as any other information in the ledger.

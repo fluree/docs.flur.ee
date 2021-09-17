@@ -1,6 +1,6 @@
 # Metadata
 
-When a new block is added, that block may have many transactions. Each block has automatically generated metadata, as does each transaction. You can also add [custom metadata](/docs/transact/basics#adding-custom-metadata).
+When a new block is added, that block may have many transactions. Each block has automatically generated metadata, as does each transaction. You can also add [custom metadata](overview/transact/basics.md#adding-custom-metadata).
 
 ## _block {#_block}
 

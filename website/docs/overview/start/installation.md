@@ -56,7 +56,7 @@ If the above message is not displaying in your terminal, the terminal should pri
 
 After you launch Fluree for the first time, you will not have any ledgers. You will need to create a ledger to begin.
 
-Creating a ledger and any other interaction with Fluree can happen either through the [API](/api/downloaded-endpoints/downloaded-examples#-new-db) or through the [user interface](#user-interface).
+Creating a ledger and any other interaction with Fluree can happen either through the [API](/reference/http/examples.md#new-db) or through the [user interface](#user-interface).
 
 ## Exiting and Restarting Fluree {#exiting-and-restarting-fluree}
 
@@ -97,9 +97,9 @@ This file contains the default private key for your ledgers. A new (and unique) 
 
 ## Setting Your Own Private Key {#setting-your-own-private-key}
 
-To use your own private key, first please see the section on [public and private keys](/guides/0.15.0/identity/auth-records#generating-a-public-private-key-auth-id-triple) to see what is and isn't valid as a private key.
+To use your own private key, first please see the section on [public and private keys](/concepts/identity/auth_records.md#generating_keys) to see what is and isn't valid as a private key.
 
-If you have a valid private key, encoded with [Base58Check Encoding](/guides/0.15.0/identity/auth-records#generating-a-public-private-key-auth-id-triple), then you can add your private key to a `default_private_key.txt`. You can also change the name of the file that holds the private key by changing the `fdb-group-private-key-file` config option (see below).
+If you have a valid private key, encoded with [Base58Check Encoding](/concepts/identity/auth_records.md#generating_keys), then you can add your private key to a `default_private_key.txt`. You can also change the name of the file that holds the private key by changing the `fdb-group-private-key-file` config option (see below).
 
 You can also run `./fluree_start.sh :keygen` to generate a public key, private key, and account id. This will not start Fluree, it will just return those three pieces of information.
 
@@ -176,7 +176,7 @@ Property | Options | Description
 -- | -- | --
 `fdb-join?` | `boolean` | (Optional) Set this to true if a server is attempting to dynamically join a network. By default, false.
 `fdb-group-catch-up-rounds` | `int` | By default, set to 10. The number of rounds the tx group leader will wait for a new server that is
-`fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. Must be a [valid private key](/guides/1.0.0/identity/auth-records#generating-a-public-private-keyauth-id-triple). This takes precedent over `fdb-group-private-key-file`.
+`fdb-group-private-key` | `key` | (Optional) Main private key for ledger group. Will auto-generate if none provided. Must be a [valid private key](/concepts/identity/auth_records.md#generating_keys). This takes precedent over `fdb-group-private-key-file`.
 `fdb-group-private-key-file` | `file path` | If fdb-group-private-key is not provided, we'll look for it in this file. If not found in this file, we'll generate a default one and place it in this file.
 `fdb-group-servers` | `server-id@host:port, server-id@host:port` | List all servers participating in ledger-group with format of server-id@host:port. All tx-group servers should have this same config.
 `fdb-group-this-server` | `server-id` | Specify which of the above listed server-ids is this server. Note this must be unique for every server in the tx-group, and is likely easiest to supply this setting via environment variable.
@@ -223,11 +223,9 @@ Property | Options | Description
 
 There is a built-in user interface that can be accessed at `localhost:[port]/`. If you did not change the port or IP address, it will be on `localhost:8090/`.
 
-For help using the user interface, read the [Navigating the User Interface](/docs/user-interface) section.
-
 Note that as of version 0.10.0, downloadable Fluree ledgers do not have a username and password. If you are using an older version of Fluree, you can log into the Master ledger with username, `master` and password, `fluree` or into the Test ledger with username, `test`, and password, `fluree`.
 
-## Fluree with Docker {#fluree-with-docker}
+## Fluree with Docker {#docker}
 
 Fluree publishes a Docker image to [Docker Hub](https://hub.docker.com/repository/docker/fluree/ledger). We publish the following tags:
 
@@ -243,7 +241,7 @@ You can run these like so:
 
 ...and then access the admin dashboard at <http://localhost:8090/>
 
-## Download Fluree with Homebrew {#download-fluree-with-homebrew}
+## Download Fluree with Homebrew {#homebrew}
 
 On a Mac machine, you can download Fluree using Homebrew by running:
 
@@ -273,6 +271,6 @@ brew untap fluree/flureedb
 
 See the code for our Homebrew set up on our [Github repo](https://github.com/fluree/homebrew-flureedb).
 
-## Fluree Command Line Tool {#fluree-command-line-tool}
+## Fluree Command Line Tool {#fluree-cli}
 
 We have a command line tool that you can [download](https://fluree-cli-releases-public.s3.amazonaws.com/fluree_cli-latest.zip) to explore your ledger even without Fluree running. To see all the tool's capabilities, visit the [documentation](https://github.com/fluree/fluree.cli).

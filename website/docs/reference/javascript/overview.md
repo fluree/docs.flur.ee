@@ -24,5 +24,3 @@ The javascript library, as an extension of our linear-scaling query peer service
 | Listen              | `listen`                                                                                       | Listens to all events of a given ledger                             |
 | Close Listener      | `close_listener`                                                                               | Closes a listener                                                   |
 | Listeners           | `listeners`                                                                                    | Returns a list of listeners currently registered for each ledger    |
-
-See [JavaScript Library Examples](/tools/javascript-library/javascript-examples) for examples of how to use each of the commands.
