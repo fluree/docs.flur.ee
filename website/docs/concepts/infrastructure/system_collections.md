@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # System Collections
 
 When a new ledger is created, the first transaction, issued automatically by Fluree,

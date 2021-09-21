@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Inner Joins in Fluree
 
 The three tuple is the base component for analytical queries in Fluree. A three

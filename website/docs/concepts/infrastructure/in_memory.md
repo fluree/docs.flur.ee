@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # In-Memory Fluree
 
 You can run Fluree in memory for testing purposes. To run Fluree in-memory, you

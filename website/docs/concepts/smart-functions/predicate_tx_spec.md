@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Predicate Tx Spec
 
 A `_predicate/txSpec` is set of smart functions that are attached to a particular predicate. Any time that predicate appears in a transaction, regardless of who issues the transaction, the smart functions attached to the `_predicate/txSpec` will execute.

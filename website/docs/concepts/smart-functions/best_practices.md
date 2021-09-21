@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # Smart Function Best Practices
 
 In a traditional application, there are three layers:

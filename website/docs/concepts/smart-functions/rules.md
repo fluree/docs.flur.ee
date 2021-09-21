@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # Rules
 
 When creating a rule, you specify a collection, predicate/s, and smart functions. That rule can then be connected to particular auth records.

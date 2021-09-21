@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Optional Clauses
 
 Optional clauses are equivalent to left-outer joins. If a variable within an optional

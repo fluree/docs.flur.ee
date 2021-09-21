@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # File System
 
 Before you start Fluree for the first time, the contents of the Fluree directory
