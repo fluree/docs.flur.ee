@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # _setting Collection
 
 Every ledger contains a built-in `_setting` collection that defines several ledger configurations, including the consensus algorithm. You can change these accordingly.

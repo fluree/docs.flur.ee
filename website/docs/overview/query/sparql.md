@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # SPARQL
 
 This section details how to use SPARQL to query a Fluree. If you don't already know SPARQL, we recommend you use [Analytical Queries](/overview/query/analytical_query.mdx), as they have the same capabilities as SPARQL queries.

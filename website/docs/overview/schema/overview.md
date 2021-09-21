@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Schema Overview
 
 Much like a relational database, before storing your records in a Fluree ledger, you must first register a schema which consists of collections (similar to tables) and predicates (similar to columns).

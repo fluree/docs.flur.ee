@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # SQL
 
 Structured Query Language, or SQL, is one of the most widely used database query
