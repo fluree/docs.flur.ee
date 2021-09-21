@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # GraphQL
 
 Fluree supports queries and transactions using GraphQL. GraphQL supports a more limited set of query capability than FlureeQL. Fluree's version of GraphQL supports a wide-range of GraphQL features, but not all of them.

@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # Rule Example
 
 In this section, we will create two roles, level1User and level2User, and connect each role to a person in our [Basic Schema](/guides/schema/1.md).

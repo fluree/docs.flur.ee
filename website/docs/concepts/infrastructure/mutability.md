@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # Mutable Fluree
 
 While Fluree is an immutable ledger, there are several features that provide some

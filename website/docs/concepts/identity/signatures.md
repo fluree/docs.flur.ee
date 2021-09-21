@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Signatures
 
 In Fluree, you can sign both queries and transactions. The signature proves that

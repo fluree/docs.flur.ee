@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # Functions in Transactions
 
 Smart functions can also be used directly in transaction to derive a particular value. The role of smart functions directly used in transactions is to derive objects NOT to accept/reject transactions.

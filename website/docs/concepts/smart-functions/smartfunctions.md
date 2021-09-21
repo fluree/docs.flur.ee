@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # SmartFunctions
 
 SmartFunctions are the engine for setting permissions in Fluree. This section details the role of smart functions.

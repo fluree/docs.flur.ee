@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Password Management
 
 Passwords are less-secure than private keys, however they may be the best option

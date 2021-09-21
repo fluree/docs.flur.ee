@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Auth Records
 
 Auth records control identity in Fluree and are tied to specific public-private

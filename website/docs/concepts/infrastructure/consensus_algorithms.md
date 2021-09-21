@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # Consensus Algorithms
 
 Consensus algorithms decide how new blocks are committed to a chain, as well as

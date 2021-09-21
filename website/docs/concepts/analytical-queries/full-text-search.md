@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Full Text Search
 
 You can use analytical queries to search objects of a given predicate or within

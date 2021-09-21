@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Network Infrastructure
 
 When running Fluree, you are typically running a single 'network' and you have a transactor group configured to operate that network. Each network can have millions of ledgers, and you can think of a network like a top-level domain name, i.e. .com, .net, .org. It is the most coarse type of segmentation available in Fluree.
