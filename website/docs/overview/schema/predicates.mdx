@@ -11,7 +11,7 @@ Schema predicates are similar to relational ledger columns, however there are fe
 
 Remember that Fluree schema are stored in the ledger in the same way as any other type of information. This means that because `_predicate` is a type of thing in our ledger, there is a `_predicate` collection (similar to a relational ledger table). Furthermore, the `_predicate` collection has its own predicates.
 
-## \_predicate Predicates {#\_predicate-predicates}
+## _predicate Predicates {#predicate-predicates}
 
 Below are the built-in predicates for the `_predicate` collection. As mentioned in the [collection section](/overview/schema/collections.mdx), you can add additional predicates if you wish. You are also able to delete predicates, although this is strongly discouraged and may break parts of your ledger.
 
@@ -159,7 +159,7 @@ Transactions not supported in SPARQL
 </TabItem>
 </Tabs>
 
-## Adding a Predicate to `_predicate` {#adding-a-predicate-to-\_predicate}
+## Adding a Predicate to `_predicate` {#adding-a-predicate-to-predicate}
 
 `_predicate` is a built-in ledger collection with built-in predicates. This does not mean, for instance, that you cannot add predicates. For example, you may want to add a `_predicate/longDescription` predicate, where you store a longer version of `_predicate/doc`.
 
@@ -352,7 +352,7 @@ Transactions not supported in SPARQL
 </TabItem>
 </Tabs>
 
-## Updating a Predicate in `_predicate` {#updating-a-predicate-in-\_predicate}
+## Updating a Predicate in `_predicate` {#updating-a-predicate-in-predicate}
 
 Although you can change built-in collection predicates, we do not recommend doing so, as your changes may break certain aspects of schema validation.
 
