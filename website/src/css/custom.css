@@ -23,6 +23,11 @@
   --ifm-font-family-monospace: 'Courier New', monospace;
 }
 
+.navbar-home-link {
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
 .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.1);
   display: block;
