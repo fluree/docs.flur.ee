@@ -4,6 +4,8 @@
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
+ @import url('http://fonts.cdnfonts.com/css/cooper-hewitt');
+ @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 /* You can override the default Infima variables here. */
 :root {
@@ -15,6 +17,10 @@
   --ifm-color-primary-lighter: #3cd0ff;
   --ifm-color-primary-lightest: #65daff;
   --ifm-code-font-size: 95%;
+  --ifm-heading-font-family: 'Cooper Hewitt', sans-serif;
+  --ifm-heading-font-weight: 705;
+  --ifm-font-family-base: "Open Sans", sans-serif;
+  --ifm-font-family-monospace: 'Courier New', monospace;
 }
 
 .docusaurus-highlight-code-line {
