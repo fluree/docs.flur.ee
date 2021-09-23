@@ -25,16 +25,23 @@ module.exports = {
 		}
 	},
     navbar: {
-      title: 'Fluree',
+      // title: 'Fluree',
       hideOnScroll: true,
       logo: {
-        alt: 'Fluree Logo',
-        src: 'img/logo_dark.svg',
-        srcDark: 'img/logo_white.svg',
+        alt: 'Fluree Yeti Logo',
+        src: 'img/dark_horizontal.svg',
+        srcDark: 'img/white_horizontal.svg',
+        href: 'https://flur.ee'
       },
 
 	  // Navbar links - left aligned
       items: [
+        {
+          to: '/',
+          position: 'left',
+          label: '/Docs',
+          className: 'navbar-home-link'
+        },
         {
           type: 'doc',
           docId: 'overview/about',
