@@ -29,17 +29,18 @@ module.exports = {
       hideOnScroll: true,
       logo: {
         alt: 'Fluree Yeti Logo',
-        src: 'img/dark_horizontal.svg',
-        srcDark: 'img/white_horizontal.svg',
+        src: 'img/Dark Horizontal.svg',
+        srcDark: 'img/White Horizontal.svg',
         href: 'https://flur.ee'
       },
 
 	  // Navbar links - left aligned
       items: [
         {
+          label: '/docs',
           to: '/',
+          activeBaseRegex: '(^/)',
           position: 'left',
-          label: '/Docs',
           className: 'navbar-home-link'
         },
         {
