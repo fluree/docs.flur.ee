@@ -120,8 +120,8 @@ module.exports = {
 					    to: '/docs/guides/tools',
 					  },
 					  {
-						  label: 'Dev Hub',
-						  to: '/docs/overview/demos/developer-hub'
+						label: 'Dev Hub',
+						to: '/docs/overview/demos/developer-hub'
 					  },
 					],
 				},
