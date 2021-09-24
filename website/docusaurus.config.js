@@ -3,164 +3,204 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'Fluree Docs',
-  tagline: 'Semantic graph data management system built with web3 tech',
-  url: 'https://docs.flur.ee',
-  baseUrl: '/',
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
-  favicon: 'img/favicon.ico',
-  organizationName: 'fluree', 		// GitHub org name.
-  projectName: 'docs.flur.ee', 		// Repo name.
-  themeConfig: {
-	colorMode: {
+	title: 'Fluree Docs',
+	tagline: 'Semantic graph data management system built with web3 tech',
+	url: 'https://docs.flur.ee',
+	baseUrl: '/',
+	onBrokenLinks: 'throw',
+	onBrokenMarkdownLinks: 'throw',
+	favicon: 'img/favicon.ico',
+	organizationName: 'fluree', 		// GitHub org name.
+	projectName: 'docs.flur.ee', 		// Repo name.
+	themeConfig: {
+		colorMode: {
 
-		// light | dark
-		defaultMode: 'light',
+			// light | dark
+			defaultMode: 'light',
 
-		// remove default sun-moon icons for dark mode switch
-		switchConfig: {
-			darkIcon: ' ',
-			lightIcon: ' '
-		}
+			// remove default sun-moon icons for dark mode switch
+			switchConfig: {
+				darkIcon: ' ',
+				lightIcon: ' '
+			}
+		},
+		navbar: {
+			// title: 'Fluree',
+			hideOnScroll: true,
+			logo: {
+				alt: 'Fluree Yeti Logo',
+				src: 'img/Dark Horizontal.svg',
+				srcDark: 'img/White Horizontal.svg',
+				href: 'https://flur.ee'
+			},
+
+			// Navbar links - left aligned
+			items: [
+				{
+					label: '/docs',
+					to: '/',
+					activeBaseRegex: '(^/)',
+					position: 'left',
+					className: 'navbar-home-link'
+				},
+				{
+					type: 'doc',
+					docId: 'overview/about',
+					position: 'left',
+					label: 'Overview',
+				},
+				{
+					to: '/guides',
+					docId: 'guides/guides',
+					type: 'doc',
+					position: 'left',
+					label: 'Guides'
+				},
+				{
+					to: '/refence',
+					docId: 'reference/reference',
+					type: 'doc',
+					position: 'left',
+					label: 'Reference'
+				},
+				{
+					to: '/concepts',
+					docId: 'concepts/concepts',
+					type: 'doc',
+					position: 'left',
+					label: 'Concepts'
+				},
+				{
+					type: 'doc',
+					docId: 'community',
+					label: 'Community',
+					position: 'left'
+				},
+
+				// Docusaurus template stuff
+				// { to: '/blog', label: 'Blog', position: 'left' },
+
+				// Navbar links - right aligned
+				{
+					href: 'https://github.com/fluree/docs.flur.ee',
+					className: 'header-github-link',
+					position: 'right',
+					'aria-label': 'Github repository'
+				},
+			],
+		},
+		// Config for collapsing sidebar
+		hideableSidebar: true,
+
+		footer: {
+			style: 'dark',
+			logo: {
+				alt: 'Fluree Yeti Logo',
+				src: 'img/White Horizontal.svg',
+				href: 'https://flur.ee'
+			},
+			copyright: `
+				Copyright © ${new Date().getFullYear()} Fluree, PBC. 
+				Built with ♥️, Docusaurus, and Diataxis.
+			`,
+			links: [
+				{
+					title: 'Docs',
+					items: [
+					  {
+					    label: 'Get Started',
+					    to: 'docs/overview/getting-started',
+					  },
+					  {
+					    label: 'Guides',
+					    to: 'docs/guides/guides',
+					  },
+					  {
+					    label: 'Tools',
+					    to: '/docs/guides/tools',
+					  },
+					  {
+						  label: 'Dev Hub',
+						  to: '/docs/overview/demos/developer-hub'
+					  },
+					],
+				},
+				{
+					title: 'Community',
+					items: [
+						{
+							label: 'Community Board',
+							href: 'https://github.com/fluree/db/discussions'
+						},
+						{
+							label: 'Slack',
+							href: 'https://launchpass.com/flureedb',
+						},
+						{
+							label: 'Twitter',
+							href: 'https://twitter.com/flureepbc',
+						},
+						{
+							label: 'r/Fluree',
+							href: 'https://reddit.com/r/Fluree'
+						},
+					],
+				},
+				{
+					title: 'Media',
+					items: [
+						// {
+						//   label: 'Blog',
+						//   to: '/blog',
+						// },
+						{
+							label: 'Blog',
+							href: 'https://flur.ee/blog'
+						},
+						{
+							label: 'YouTube',
+							href: 'https://youtube.com/c/fluree'
+						},
+						{
+							label: 'Dev.to',
+							href: 'https://dev.to/fluree'
+						},
+						{
+							label: 'Github',
+							href: 'https://github.com/fluree',
+						},
+					],
+				},
+			],
+		},
+		// Config for themeing syntax highlighting
+		prism: {
+			theme: lightCodeTheme,
+			darkTheme: darkCodeTheme,
+			additionalLanguages: ['turtle', 'sparql', 'clojure', 'http', 'xml-doc']
+		},
 	},
-    navbar: {
-      // title: 'Fluree',
-      hideOnScroll: true,
-      logo: {
-        alt: 'Fluree Yeti Logo',
-        src: 'img/Dark Horizontal.svg',
-        srcDark: 'img/White Horizontal.svg',
-        href: 'https://flur.ee'
-      },
-
-	  // Navbar links - left aligned
-      items: [
-        {
-          label: '/docs',
-          to: '/',
-          activeBaseRegex: '(^/)',
-          position: 'left',
-          className: 'navbar-home-link'
-        },
-        {
-          type: 'doc',
-          docId: 'overview/about',
-          position: 'left',
-          label: 'Overview',
-        },
-        {
-          to: '/guides',
-          docId: 'guides/guides',
-          type: 'doc',
-          position: 'left',
-          label: 'Guides'
-        }, 
-        {
-          to: '/refence',
-          docId: 'reference/reference',
-          type: 'doc',
-          position: 'left',
-          label: 'Reference'
-        },
-        {
-          to: '/concepts',
-          docId: 'concepts/concepts',
-          type: 'doc',
-          position: 'left',
-          label: 'Concepts'
-        },
-        {
-          type: 'doc',
-          docId: 'community',
-          label: 'Community',
-          position: 'left'
-        },
-
-        // Docusaurus template stuff
-        // { to: '/blog', label: 'Blog', position: 'left' },
-
-        // Navbar links - right aligned
-        {
-          href: 'https://github.com/fluree/docs.flur.ee',
-          className: 'header-github-link',
-          position: 'right',
-          'aria-label': 'Github repository'
-        },
-      ],
-    },
-    // Config for collapsing sidebar
-    hideableSidebar: true,
-
-    footer: {
-      style: 'light',
-      links: [
-        {
-          title: 'Docs',
-          // items: [
-          //   {
-          //     label: 'Tutorial',
-          //     to: 'docs/tutorials/tutorial_intro',
-          //   },
-          // ],
-        },
-        {
-          title: 'Community',
-          items: [
-            {
-              label: 'Slack',
-              href: 'https://launchpass.com/flureedb',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/flureepbc',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            // {
-            //   label: 'Blog',
-            //   to: '/blog',
-            // },
-            {
-              label: 'Github',
-              href: 'https://github.com/fluree',
-            },
-          ],
-        },
-      ],
-      copyright: `Copyright © ${new Date().getFullYear()} Fluree, PBC. Built with Docusaurus.`
-    },
-	// Config for themeing syntax highlighting
-    prism: {
-      theme: lightCodeTheme,
-      darkTheme: darkCodeTheme,
-      additionalLanguages: ['turtle', 'sparql', 'clojure', 'http', 'xml-doc']
-    },
-  },
-  presets: [
-    [
-      '@docusaurus/preset-classic',
-      {
-        docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/fluree/docs.flur.ee/tree/docs-overhaul/website',
-        },
-        // blog: {
-        //   showReadingTime: true,
-        //   // TODO: Please change this to your repo.
-        //   editUrl:
-        //     'https://github.com/fluree/docs.flur.ee',
-        //   // editUrl:
-        //   //   'https://github.com/fluree/docs.flur.ee/edit/master/website/blog/',
-        // },
-        theme: {
-          customCss: require.resolve('./src/css/custom.css'),
-        },
-      },
-    ],
-  ],
+	presets: [
+		[
+			'@docusaurus/preset-classic',
+			{
+				docs: {
+					sidebarPath: require.resolve('./sidebars.js'),
+					editUrl:
+						'https://github.com/fluree/docs.flur.ee/tree/docs-overhaul/website',
+				},
+				// blog: {
+				//   showReadingTime: true,
+				//   // TODO: Please change this to your repo.
+				//   editUrl:
+				//     'https://github.com/fluree/docs.flur.ee',
+				//   // editUrl:
+				//   //   'https://github.com/fluree/docs.flur.ee/edit/master/website/blog/',
+				// },
+				theme: {
+					customCss: require.resolve('./src/css/custom.css'),
+				},
+			},
+		],
+	],
 };
