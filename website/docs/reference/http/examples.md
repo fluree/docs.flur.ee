@@ -448,6 +448,29 @@ This request may take some time to return. It will return a map, such as the fol
 }
 ```
 
+## /reindex-fulltext {#reindex-fulltext}
+
+```http
+Action: POST
+Endpoint: http://localhost:8090/fdb/dev/main/reindex-fulltext
+Headers: None
+Body: None
+```
+
+This request may take some time to return. It will return a map, such as the following:
+
+```json
+{
+    "block": 13,
+    "t": -27,
+    "stats": {
+        "flakes": 899990,
+        "size": 41435614,
+        "indexed": 13
+    }
+}
+```
+
 ## /hide {#hide}
 
 This is a beta feature. To read about how it works, visit
