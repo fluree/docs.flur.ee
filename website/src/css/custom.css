@@ -24,19 +24,51 @@
   --ifm-font-family-base: "Open Sans", sans-serif;
   --ifm-font-family-monospace: 'Courier New', monospace;
   --ifm-code-font-size: 95%;
+
+  /* Navbar */
+  --ifm-navbar-padding-vertical: 0px;
+}
+
+.navbar {
+  padding-top: .1rem;
+  padding-left: .3rem;
 }
 
 .navbar__brand {
   margin-right: 0;
 }
 
+.navbar__logo {
+  height: 1.5rem;
+  align-self: baseline;
+  justify-self: right;
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
 .navbar-home-link {
+  align-self: center;
+  padding-right: .6rem;
+  padding-left: .8rem;
+  padding-bottom: .5rem;
   font-weight: 600;
   font-size: 1.4rem;
 }
 
 .navbar-home-link:hover{
   opacity: 0.6;
+}
+
+.menu__link--sublist::after{
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1.3rem 1.3rem;
+}
+
+.menu__link--sublist::before{
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1.3rem 1.3rem;
+}
+
+.padding-top--md {
+  padding-top: 1.5rem !important;
 }
 
 .docusaurus-highlight-code-line {

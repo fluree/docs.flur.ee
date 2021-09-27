@@ -1,4 +1,4 @@
-# Other Fluree Tools
+# Fluree Tools
 
 ## Fluree on Docker {#docker}
 
