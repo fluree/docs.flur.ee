@@ -26,6 +26,7 @@ SPARQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sparql` | Queries in SPARQL synta
 SQL | `/fdb/[NETWORK-NAME]/[DBNAME-OR-DBID]/sql` | Queries in SQL syntax, as a string
 Command | `/fdb/[NETWORK-NAME]/[DBID]/command` | Commands, such as transactions, with a signature in the body. See [signing transactions](/guides/identity/signatures#signed-transactions).
 Reindex | `/fdb/[NETWORK-NAME]/[DBID]/reindex` | Reindexes the specified ledger.
+Reindex-fulltext | `/fdb/[NETWORK-NAME]/[DBID]/reindex` | Reindexes the fullText index on the specified ledger
 Hide | `/fdb/[NETWORK-NAME]/[DBID]/hide` | Hides flakes that match the given pattern.
 
 ### Test endpoints
