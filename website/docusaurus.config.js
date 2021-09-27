@@ -12,7 +12,9 @@ module.exports = {
 	favicon: 'img/favicon.ico',
 	organizationName: 'fluree', 		// GitHub org name.
 	projectName: 'docs.flur.ee', 		// Repo name.
-	themeConfig: {
+	themeConfig:
+	    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+		{
 		colorMode: {
 
 			// light | dark
@@ -183,6 +185,7 @@ module.exports = {
 	presets: [
 		[
 			'@docusaurus/preset-classic',
+			/** @type {import('@docusaurus/preset-classic').Options} */
 			{
 				docs: {
 					sidebarPath: require.resolve('./sidebars.js'),
