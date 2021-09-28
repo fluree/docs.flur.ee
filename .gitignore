@@ -4,3 +4,4 @@ lib/
 build/
 .DS_Store
 npm-debug.log
+algolia.env
