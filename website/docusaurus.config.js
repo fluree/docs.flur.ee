@@ -5,7 +5,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 module.exports = {
 	title: 'Fluree Docs',
 	tagline: 'Semantic graph data management system built with web3 tech',
-	url: 'https://docs.flur.ee',
+	url: 'https://docs.dev.flur.ee',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
 	onBrokenMarkdownLinks: 'throw',
