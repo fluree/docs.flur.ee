@@ -12,9 +12,8 @@ module.exports = {
 	favicon: 'img/favicon.ico',
 	organizationName: 'fluree', 		// GitHub org name.
 	projectName: 'docs.flur.ee', 		// Repo name.
-	themeConfig:
-	    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-		{
+	/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+	themeConfig: {
 		colorMode: {
 
 			// light | dark
@@ -181,6 +180,11 @@ module.exports = {
 			darkTheme: darkCodeTheme,
 			additionalLanguages: ['turtle', 'sparql', 'clojure', 'http', 'xml-doc']
 		},
+		algolia: {
+			apiKey: 'fa7cc560f2dd3b1ea562bb88583144e2',
+			appId: 'R1SW8X3WU6',
+			indexName: 'fluree-docs-overhaul'
+		}
 	},
 	presets: [
 		[
