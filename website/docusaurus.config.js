@@ -183,7 +183,7 @@ module.exports = {
 		algolia: {
 			apiKey: 'fa7cc560f2dd3b1ea562bb88583144e2',
 			appId: 'R1SW8X3WU6',
-			indexName: 'fluree-docs-overhaul'
+			indexName: 'fluree-docs*'
 		}
 	},
 	presets: [
