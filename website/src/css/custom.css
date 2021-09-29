@@ -48,6 +48,7 @@
 
 .navbar-home-link {
   align-self: center;
+  color: var(--ifm-color-primary);
   padding-right: .6rem;
   padding-left: .8rem;
   padding-bottom: .5rem;

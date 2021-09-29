@@ -15,7 +15,6 @@ module.exports = {
 	/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 	themeConfig: {
 		colorMode: {
-
 			// light | dark
 			defaultMode: 'light',
 
@@ -28,6 +27,7 @@ module.exports = {
 		navbar: {
 			// title: 'Fluree',
 			hideOnScroll: true,
+			// Main logo which links to fluree marketing site
 			logo: {
 				alt: 'Fluree Yeti Logo',
 				src: 'img/Dark Horizontal.svg',
@@ -38,9 +38,9 @@ module.exports = {
 			// Navbar links - left aligned
 			items: [
 				{
+					// Home Link
 					label: '/docs',
 					to: '/',
-					activeBaseRegex: '(^/)',
 					position: 'left',
 					className: 'navbar-home-link'
 				},
@@ -183,8 +183,9 @@ module.exports = {
 		algolia: {
 			apiKey: 'fa7cc560f2dd3b1ea562bb88583144e2',
 			appId: 'R1SW8X3WU6',
-			indexName: 'fluree-docs*'
-		}
+			indexName: 'flureedocs'
+		},
+		baseUrlIssueBanner: false, // Defaults to `true`
 	},
 	presets: [
 		[
