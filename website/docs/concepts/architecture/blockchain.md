@@ -34,7 +34,7 @@ problems around data which will vary from use case to use case, and for that rea
 customers have a large amount of control of how these technologies are utilized.
 Where a capability is transparent, it is 'always on' (like
 [merkle tree](https://en.wikipedia.org/wiki/Merkle_tree) generation from new
-[Flakes](flakes)). Other capabilities have tradeoffs, and Fluree
+[Flakes](docs/concepts/architecture/flakes)). Other capabilities have tradeoffs, and Fluree
 tries to give the end user a large degree of control on what they feel is important
 for their use case, letting them focus on the parts that are important to them and
 keeping the parts that are not out of the way.
