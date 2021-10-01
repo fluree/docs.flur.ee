@@ -7,6 +7,7 @@ module.exports = {
 	tagline: 'Semantic graph data management system built with web3 tech',
 	url: 'http://docs.dev.flur.ee',
 	baseUrl: '/',
+	trailingSlash: true,
 	onBrokenLinks: 'throw',
 	onBrokenMarkdownLinks: 'throw',
 	favicon: 'img/favicon.ico',
