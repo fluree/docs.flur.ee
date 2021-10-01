@@ -1,7 +1,7 @@
 {
   "index_name": "flureedocs",
   "start_urls": [
-    "http://new.docs.flur.ee.s3-website.us-east-2.amazonaws.com/"
+    "http://docs.dev.flur.ee/"
   ],
   "stop_urls": [],
   "use_anchors": true,
