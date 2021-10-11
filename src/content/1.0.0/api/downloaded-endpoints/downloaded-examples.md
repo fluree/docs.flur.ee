@@ -445,6 +445,31 @@ This request may take some time to return. It will return a map, such as the fol
 }
 ```
 
+### /reindex-fulltext
+
+Available in `0.11.7` or higher. Reindexes the specified ledger.
+
+```all
+Action: POST
+Endpoint: http://localhost:8090/fdb/dev/main/reindex-fulltext
+Headers: None
+Body: None
+```
+
+This request may take some time to return. It will return a map, such as the following:
+
+```all
+{
+    "block": 13,
+    "t": -27,
+    "stats": {
+        "flakes": 899990,
+        "size": 41435614,
+        "indexed": 13
+    }
+}
+```
+
 ### /hide
 
 This is a beta feature. To read about how it works, visit [hiding flakes](/docs/ledger-setup/mutability#hiding-flakes).
