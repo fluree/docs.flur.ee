@@ -4,32 +4,29 @@ import styles from './HomepageFeatures.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('../../static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Secure Ledger Technology',
+    Svg: require('../../static/img/graph yeti.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Fluree is built on a distributed ledger, with built-in security, data provenance, and decentralization features.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('../../static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Powerful Graph Database',
+    Svg: require('../../static/img/chart yeti.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Fluree serves your data via a semanticly connected graph database with a flexible query language and time travel capabilities.  
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('../../static/img/undraw_docusaurus_react.svg').default,
+    title: 'Built for Developers',
+    Svg: require('../../static/img/lying down yeti.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Fully open source, extensible, and progammable, Fluree has been built with developer experience in mind. 
       </>
     ),
   },
