@@ -33,7 +33,7 @@ module.exports = {
 				alt: 'Fluree Yeti Logo',
 				src: 'img/Dark Horizontal.svg',
 				srcDark: 'img/White Horizontal.svg',
-				href: 'https://flur.ee'
+				href: 'https://flur.ee',
 			},
 
 			// Navbar links - left aligned
@@ -73,8 +73,7 @@ module.exports = {
 					label: 'Concepts'
 				},
 				{
-					type: 'doc',
-					docId: 'community',
+					to: 'community/',
 					label: 'Community',
 					position: 'left'
 				},
@@ -131,7 +130,7 @@ module.exports = {
 					title: 'Community',
 					items: [
 						{
-							label: 'Community Board',
+							label: 'Forum',
 							href: 'https://github.com/fluree/db/discussions'
 						},
 						{
@@ -151,10 +150,6 @@ module.exports = {
 				{
 					title: 'Media',
 					items: [
-						// {
-						//   label: 'Blog',
-						//   to: '/blog',
-						// },
 						{
 							label: 'Blog',
 							href: 'https://flur.ee/blog'

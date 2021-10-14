@@ -1,0 +1,33 @@
+.community {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.communityCard {
+  border: 1px solid var(--ifm-color-secondary-dark);
+  border-radius: var(--ifm-global-radius);
+  padding-top: .7rem;
+  padding-left: 1rem;
+  min-height: 19rem;
+}
+
+html[data-theme='dark'] .communityCard {
+  border: 1px solid var(--ifm-background-color-primary-darkest);
+  background-color: var(--ifm-background-color-primary-lighter);
+}
+
+html[data-theme='light'] .communityCard:hover {
+  filter: brightness(.8)
+}
+
+html[data-theme='dark'] .communityCard:hover {
+  filter: brightness(1.2)
+}
+
+.communitySvg {
+  height: 6rem;
+  width: 6rem;
+}
+
