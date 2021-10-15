@@ -20,11 +20,5 @@
 			 M190.5,188.7c-4.9,0-8.9-4-8.9-8.9c0-4.9,4-8.9,8.9-8.9c4.9,0,8.9,4,8.9,8.9C199.4,184.7,195.4,188.7,190.5,188.7z"/>
 	</g>
 </g>
-<g id="Spacing_Guide" class="st2">
-	<rect class="st3" width="85.4" height="85.4"/>
-	<rect class="st3" width="341.8" height="85.4"/>
-	<rect y="256.3" class="st3" width="341.8" height="85.4"/>
-	<rect class="st3" width="85.4" height="341.8"/>
-	<rect x="256.4" class="st3" width="85.4" height="341.8"/>
-</g>
+
 </svg>
