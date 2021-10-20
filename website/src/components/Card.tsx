@@ -8,11 +8,11 @@ export default function Card({ title, description, href }) {
     </div>
     <div className="card__body">
       <p>
-{description}
+      {description}
       </p>
     </div>
     <div className="card__footer">
-      <a href='' className="button button--secondary button--block">See All</a>
+               <a href={href} className="button button--secondary button--block">See All</a>
     </div>
   </div>
 </div>
