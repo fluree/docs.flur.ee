@@ -120,6 +120,18 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   width: 36vh;
 }
 
+html[data-theme='dark'] .card {
+  background-color: #22272e;
+}
+
+html[data-theme='dark'] .box__a p {
+  color: var(--ifm-color-secondary);
+}
+
+html[data-theme='dark'] .card__header {
+  color: var(--ifm-color-secondary);
+}
+
 .text__body {
   white-space: normal;
 }
