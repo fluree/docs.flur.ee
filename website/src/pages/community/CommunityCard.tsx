@@ -3,10 +3,10 @@ import ThemedImage from '@theme/ThemedImage';
 import styles from './Community.module.css';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Link from '@docusaurus/Link';
-import { CommunityDetails } from './index';
+import { CardDetails } from '../../components/CardDetails.interface';
 
 export default function CommunityCard(
-        { title, description, link, svgPath, svgPathDark }: CommunityDetails
+        { title, description, link, svgPath, svgPathDark }: CardDetails
     ): JSX.Element {
     return (
         <article className='col col--4'>

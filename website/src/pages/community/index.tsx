@@ -2,16 +2,10 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import CommunityCard from './CommunityCard';
 import styles from './Community.module.css';
+import { CardDetails } from '../../components/CardDetails.interface';
 
-export interface CommunityDetails {
-  title: string,
-  svgPath: string,
-  svgPathDark?: string,
-  description: string,
-  link: string
-}
 
-const CommunityList: CommunityDetails[] = [
+const CommunityList: CardDetails[] = [
 {
   title: 'Github',
   svgPath: '/img/github-icon-light.svg',
