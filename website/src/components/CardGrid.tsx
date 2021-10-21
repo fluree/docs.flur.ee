@@ -1,6 +1,29 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
 
+const CardDetails = [
+  {
+    title: 'Network Infrastructure',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    to: '/docs/concepts/infrastructure/network_infrastructure/',
+  },
+  {
+    title: 'Auth',  
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    to: '/docs/concepts/identity/auth_records/'
+  },
+  {
+    title: 'Smart Functions',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    to: '/docs/concepts/smart-functions/smartfunctions/'
+  },
+  {
+    title: 'Analytical Queries',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    to: '/docs/concepts/analytical-queries/inner-joins-in-fluree/'
+  },
+]
+
 const Card = ({ title, description, to }) => {
   return(
   <>
@@ -28,16 +51,9 @@ export default function CardGrid() {
   return (
     <section>
       <div className='container'>
-        <div className='col'>
+        <div className='col col--6'>
           <div className='row'>
-            <Card title={'Network Infrastructure'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'} to={'/docs/concepts/infrastructure/network_infrastructure/'}></Card>
-            <Card title={'Auth'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'} to={'/docs/concepts/identity/auth_records/'}></Card>
-          </div>
-        </div>
-        <div className='col'>
-          <div className='row'>
-            <Card title={'Smart Functions'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'} to={'/docs/concepts/smart-functions/smartfunctions/'}></Card>
-            <Card title={'Analytical Queries'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'} to={'/docs/concepts/analytical-queries/inner-joins-in-fluree/'}></Card>
+            <Card title description to ></Card>
           </div>
         </div>
       </div>
