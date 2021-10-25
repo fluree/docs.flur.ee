@@ -15,7 +15,7 @@ module.exports = {
   overview: [
     'overview/about',
     // 'overview/faq',
-    'overview/getting-started',
+    'overview/getting_started',
     {
       type: 'category',
       label: 'General Info',
