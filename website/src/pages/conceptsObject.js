@@ -2,25 +2,25 @@ const ConceptCardDetails = [
   {
     title: 'Network Infrastructure',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      "Understanding Fluree's network infrastructure to work for your needs.",
     link: '/docs/concepts/infrastructure/network_infrastructure/',
   },
   {
     title: 'Auth',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'The Auth collection holds auth records, which are crucial for issuing permission based roles.',
     link: '/docs/concepts/identity/auth_records/',
   },
   {
     title: 'Smart Functions',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Smart functions are functions written in Clojure, they can be triggered a number of ways, like during queries or transactions.',
     link: '/docs/concepts/smart-functions/smartfunctions/',
   },
   {
     title: 'Analytical Queries',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Analytical queries help get the most out of your data within Fluree.',
     link: '/docs/concepts/analytical-queries/inner-joins-in-fluree/',
   },
 ];
