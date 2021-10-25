@@ -12,7 +12,7 @@ Passwords are less-secure than private keys, however they may be the best option
 
 ## Password Settings {#password-settings}
 
-There are [several settings](/overview/start/fluree_anywhere.md#password-and-jwt-token-settings)
+There are [several settings](/reference/fluree_config.md#password-and-jwt-token-settings)
 that are used to handle passwords and tokens. Two of the main settings are:
 
 `fdb-pw-auth-enable`: by default this is `true`.

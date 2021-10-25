@@ -89,5 +89,5 @@ sort flakes by:
 * predicate-object-subject-time : indexed predicates are written to this index
 
 The frequency at which new index files are written depends on your
-[ledger configuration](/overview/start/fluree_anywhere.md#config-options), specifically,
+[ledger configuration](/reference/fluree_config.md), specifically,
 the `fdb-memory-reindex` option.

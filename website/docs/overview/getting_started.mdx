@@ -95,17 +95,16 @@ fluree-[version]/
 └── LICENSE
 ```
 
-### New Items {#new-items}
+## New Items {#new-items}
 
-- `data/`
-- `default_private_key.txt`
+There are few things which Fluree will write to the file system when a fresh ledger is started. The [data/ directory](#data) contains all of the raft state as well as the block files for each ledger in the fluree instance and a new file called [default_private_key.txt](#default_private_key) which contains the unique private key used for the root account in your ledgers.
 
 ### data/ {#data}
 
 The new `data` directory contains 2 directories; group/ and ledger/. 
 Group/ contains all fo the raft files as well as a directory of raft snapshots. Ledger/ contains all of your ledger indexes. These are organized within sub-directories which are named according to the names you gave your ledgers in Fluree. This data directory can be moved or copied to a different Fluree instance directory and run from the directory if you choose. This is a good option if you want to use a newer Fluree version, but keep all of your previous ledgers.
 
-### default_private_key.txt {#default_private_keytxt}
+### default_private_key.txt {#default_private_key}
 
 This file contains the default private key for your ledgers. A new (and unique) private key is generated every time you start up a new network, unless you already have a valid private key in `default_private_key.txt`.
 

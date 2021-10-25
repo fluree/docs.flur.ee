@@ -12,7 +12,7 @@ In Fluree, you can sign both queries and transactions. The signature proves that
 
 For both queries and transactions, a signature is not required if the option
  `fdb-open-api` is set to true (default
- [config option](/overview/start/fluree_anywhere.md#config-options) for the
+ [config option](/reference/fluree_config.md) for the
   downloaded version of Fluree)
  In fact, the signature in signed query will be ignored if `fdb-open-api` is set
   to true.
@@ -108,7 +108,7 @@ query.
 
 If `fdb-open-api` is set to true, then you do not need to sign your transactions.
 Each ledger comes with a default auth record, which is either provided by you
-or automatically generated (see [config options](/overview/start/fluree_anywhere.md#config-options)).
+or automatically generated (see [config options](/reference/fluree_config.md)).
 If`fdb-open-api` is set to true, then all transactions submitted to `/transact`
 will be signed with this default private key unless otherwise specified.
 
