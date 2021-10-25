@@ -189,6 +189,7 @@ module.exports = {
   ],
   reference: [
     'reference/reference',
+    'reference/fluree_config',
     {
       type: 'category',
       label: 'HTTP endpoints',

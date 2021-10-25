@@ -46,7 +46,3 @@ Other configuration options that are relevant to setting up a transactor group a
 `fdb-group-timeout`, `fdb-group-heartbeat`, `fdb-group-log-directory`, `fdb-group-snapshot-threshhold`, `fdb-group-log-history`.
 
 See the full explanation for those settings in [config options](#config-options).
-
-## Changing Transactor Group Config {#changing-transactor-group-config}
-
-Currently, you cannot change the configuration on Fluree network after that network has started up.
