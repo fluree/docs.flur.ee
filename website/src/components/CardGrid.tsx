@@ -6,7 +6,7 @@ export default function CardGrid({ Object }) {
   return (
     <section>
       <div className='container'>
-        <div className='col col--6'>
+        <div className='col'>
           <div className='row'>
             { Object.map((props, index) => (
               <Card key={index} {...props} />
