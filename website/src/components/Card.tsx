@@ -10,7 +10,7 @@ export default function Card({ title, description, link }: CardDetails): JSX.Ele
      <div className="card-demo">
   <div className="card">
     <div className="card__header">
-      <h3>{title}</h3>
+      <h2>{title}</h2>
     </div>
     <div className="card__body text__body">
       <p>
