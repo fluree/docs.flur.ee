@@ -121,6 +121,10 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: var(--ifm-color-primary);
 }
 
+.box__a:hover {
+  background-color: var(--ifm-color-primary-darkest);
+}
+
 .card {
   height: 10.5rem;
 }
