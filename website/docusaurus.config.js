@@ -110,7 +110,7 @@ module.exports = {
 					items: [
 					  {
 					    label: 'Get Started',
-					    to: 'docs/overview/getting-started',
+					    to: 'docs/overview/getting_started',
 					  },
 					  {
 					    label: 'Guides',
