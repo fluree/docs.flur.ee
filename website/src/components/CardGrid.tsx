@@ -4,8 +4,7 @@ import Card from './Card';
 
 export default function CardGrid({ cardDetails }) {
   return (
-    <section>
-      <div className='container'>
+    <section className='container'>
         <div className='col'>
           <div className='row'>
             { cardDetails.map((props, index) => (
@@ -13,7 +12,6 @@ export default function CardGrid({ cardDetails }) {
             ))}
           </div>
         </div>
-      </div>
    </section>
  )
 }
