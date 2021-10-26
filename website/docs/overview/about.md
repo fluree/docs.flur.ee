@@ -13,7 +13,7 @@ There are other resources in this documentation website, such as:
 - [Guides and Lessons](/guides/guides.md): Walkthroughs and How-to's of important areas of Fluree.
 - [Reference](/reference/reference.md): Reference docs for our Javascript, NodeJS, FlureeWorker, and
   other libraries.
-- [Concepts](/concepts/concepts.md): Discussions of key concepts in Fluree.
+- [Concepts](/concepts/concepts.mdx): Discussions of key concepts in Fluree.
 
 To get started, work through the steps in this [to-do list generator](https://github.com/fluree/to-do-lists-generator)
 repo for an introduction to integrating Fluree in a React application.
