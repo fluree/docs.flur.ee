@@ -127,6 +127,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 .box__a p {
   height: 8rem;
+  line-height: 1.8;
 }
 
 html[data-theme='dark'] .card {
