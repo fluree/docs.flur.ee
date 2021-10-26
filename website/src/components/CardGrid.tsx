@@ -2,13 +2,13 @@ import React from 'react';
 import Card from './Card';
 
 
-export default function CardGrid({ Object }) {
+export default function CardGrid({ cardDetails }) {
   return (
     <section>
       <div className='container'>
         <div className='col'>
           <div className='row'>
-            { Object.map((props, index) => (
+            { cardDetails.map((props, index) => (
               <Card key={index} {...props} />
             ))}
           </div>
