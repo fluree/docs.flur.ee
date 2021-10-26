@@ -118,11 +118,12 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: var(--ifm-color-primary);
   font-weight: 400;
   white-space: normal;
+  min-height: max-content;
 }
 
 @media screen and (min-width: 1440px) {
   .card__link {
-    max-width: 22vw;
+    max-width: 25vw;
   }
 }
 
@@ -137,7 +138,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 
 .card__link p {
-  min-height: 8rem;
+  min-height: 100%;
 }
 
 html[data-theme='dark'] .card {
