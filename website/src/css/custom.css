@@ -4,7 +4,7 @@
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
- @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 /* You can override the default Infima variables here. */
 :root {
@@ -19,7 +19,7 @@
 
   /* Fonts */
   --ifm-heading-font-family: 'Open Sans', sans-serif;
-  --ifm-font-family-base: "Open Sans", sans-serif;
+  --ifm-font-family-base: 'Open Sans', sans-serif;
   --ifm-font-family-monospace: 'Courier New', monospace;
   --ifm-code-font-size: 95%;
 
@@ -114,7 +114,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 
 .card__link {
-  max-width: 40vh;
+  max-width: 20vw;
   background-color: var(--ifm-color-primary);
   font-weight: 400;
   white-space: normal;
