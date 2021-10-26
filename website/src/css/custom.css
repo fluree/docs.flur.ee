@@ -118,6 +118,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 .card__link {
   width: 36vh;
   background-color: var(--ifm-color-primary);
+  font-weight: 400;
 }
 
 .card__link:hover {

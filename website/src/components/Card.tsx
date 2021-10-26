@@ -6,7 +6,7 @@ import {CardDetails} from '../components/CardDetails.interface'
 export default function Card({ title, description, link }: CardDetails): JSX.Element {
   return(
   <>
-   <Link to={link} className="button button--secondary button--block card__link margin--md">
+   <Link to={link} className="button button--secondary button--block margin--md card__link">
      <div className="card-demo">
   <div className="card">
     <div className="card__header">
