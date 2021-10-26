@@ -115,17 +115,17 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   /* any other colors you wish to overwrite */
 }
 
-.box__a {
+.card__link {
   height: 26vh;
   width: 36vh;
   background-color: var(--ifm-color-primary);
 }
 
-.box__a:hover {
+.card__link:hover {
   background-color: var(--ifm-color-primary-darkest);
 }
 
-.box__a p {
+.card__link p {
   height: 8rem;
   line-height: 1.8;
 }
@@ -134,15 +134,15 @@ html[data-theme='dark'] .card {
   background-color: #22272e;
 }
 
-html[data-theme='dark'] .box__a {
+html[data-theme='dark'] .card__link {
   background-color: var(--ifm-color-primary-dark);
 }
 
-html[data-theme='dark'] .box__a:hover {
+html[data-theme='dark'] .card__link:hover {
   background-color: var(--ifm-color-primary-darkest);
 }
 
-html[data-theme='dark'] .box__a p {
+html[data-theme='dark'] .card__link p {
   color: var(--ifm-color-secondary);
 }
 
