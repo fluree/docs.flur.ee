@@ -114,10 +114,22 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 
 .card__link {
-  max-width: 20vw;
+  max-width: 40vw;
   background-color: var(--ifm-color-primary);
   font-weight: 400;
   white-space: normal;
+}
+
+@media screen and (min-width: 1440px) {
+  .card__link {
+    max-width: 22vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .card__link {
+    max-width: 60vw;
+  }
 }
 
 .card__link:hover {
