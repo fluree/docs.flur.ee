@@ -116,7 +116,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 
 .box__a {
-  height: 21vh;
+  height: 26vh;
   width: 36vh;
   background-color: var(--ifm-color-primary);
 }
@@ -125,8 +125,8 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: var(--ifm-color-primary-darkest);
 }
 
-.card {
-  height: 10.5rem;
+.box__a p {
+  height: 8rem;
 }
 
 html[data-theme='dark'] .card {
