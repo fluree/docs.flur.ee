@@ -7,7 +7,7 @@ export default function CardGrid({ cardDetails }) {
     <section className='container'>
         <div className='col'>
           <div className='row'>
-            { cardDetails.map((props, index) => (
+            {cardDetails.map((props, index) => (
               <Card key={index} {...props} />
             ))}
           </div>
