@@ -1,4 +1,4 @@
-const ConceptCardDetails = [
+export const ConceptCardDetails = [
   {
     title: 'Network Infrastructure',
     description:
@@ -24,5 +24,3 @@ const ConceptCardDetails = [
     link: '/docs/concepts/analytical-queries/inner-joins-in-fluree/',
   },
 ];
-
-export default ConceptCardDetails;
