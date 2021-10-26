@@ -20,7 +20,7 @@ Here's a quick glossary of how your knowledge may map on to Fluree's terminology
 ## Setup {#setup}
 
 Make sure you have a running Fluree ledger service to connect to. See the
-[Getting Started](/overview/getting_started.md) docs for more details.
+[Getting Started](/overview/getting_started.mdx) docs for more details.
 
 Add to the artifact to your dependencies:
 

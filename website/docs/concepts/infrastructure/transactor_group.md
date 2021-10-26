@@ -4,14 +4,19 @@ sidebar_position: 2
 
 # Transactor Group
 
-Example directories for
-[Setting Up a Transactor Group in Different Folders](#setting-up-a-transactor-group-in-different-folders)
-and [Setting Up a Transactor Group in One Folder](#setting-up-a-transactor-group-in-one-folder)
-can be found in the [tx-group-ex-dirs Github repo](https://github.com/fluree/tx-group-ex-dirs).
+You can organize your project for running a transactor group in a few different ways.
+We have example directories for setting up a transactor group in:
 
-Simply `git clone https://github.com/fluree/tx-group-ex-dirs.git` to begin.
+- [Different Folders](#setting-up-a-transactor-group-in-different-folders)
+- [One Folder](#setting-up-a-transactor-group-in-one-folder)
 
-## Setting Up a Transactor Group in Different Folders {#setting-up-a-transactor-group-in-different-folders}
+These set-ups can be found in the [transactor-group-examples Github repo](https://github.com/fluree/transactor-group-examples). Begin by running the following command from your terminal:
+
+```bash
+git clone https://github.com/fluree/transactor-group-examples.git
+```
+
+## Transactor Group in Different Folders {#transactor-group-in-different-folders}
 
 You can run a transactor group on three different ports on the same server by housing
 each transactor's data and configuration in a different folder. When running this
@@ -21,17 +26,16 @@ every server has the exact same `fdb-group-servers`. Finally, each server must h
 a different `fdb-group-this-server`, and that server name needs to be one of the
 ones specified in `fdb-group-servers`. An example below:
 
-<!-- markdownlint-disable MD013 -->
 Key | Fluree-1 | Fluree-2 | Fluree-3
 -- | -- | -- | --
 fdb-api-port | 8090 | 8081 | 8082
 fdb-group-this-server | myserver1 | myserver2 | myserver3
-fdb-group-servers  | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792 | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792 | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792
+fdb-group-servers  | myserver1@localhost:9790, myserver2@localhost:9791, myserver3@localhost:9792 | myserver1@localhost:9790, myserver2@localhost:9791, myserver3@localhost:9792 | myserver1@localhost:9790, myserver2@localhost:9791, myserver3@localhost:9792
 
-To start this up very quickly, you can clone down the tx-group-ex-dirs repo.
+To start this up very quickly, you can clone down the transactor-group-examples repo.
 
 ```bash
-git clone https://github.com/fluree/tx-group-ex-dirs.git
+git clone https://github.com/fluree/transactor-group-examples.git
 ```
 
 Then you can navigate to `different-folders/`. You'll see that `different-folders/`
@@ -58,7 +62,7 @@ INFO  fluree.db.peer.http-api -
 You can try creating new ledgers, making transactions, etc, and all of the work
 will be replicated on each of the three instances of Fluree that are running.
 
-## Setting Up a Transactor Group in One Folder {#setting-up-a-transactor-group-in-one-folder}
+## Transactor Group in One Folder {#transactor-group-in-one-folder}
 
 You can run a transactor group on three different ports on the same server and in
 the same folder by providing each running instance a different properties file,
@@ -82,12 +86,12 @@ fdb-api-port | 8090 | 8081 | 8082
 fdb-group-log-directory |  data/a/group/ | data/b/group/ | data/c/group/
 fdb-storage-file-directory | data/a/ledger/ | data/b/ledger/ | data/c/ledger/
 fdb-group-this-server | myserver1 | myserver2 | myserver3
-fdb-group-servers  | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792 | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792 | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792
+fdb-group-servers  | myserver1@localhost:9790, myserver2@localhost:9791, myserver3@localhost:9792 | myserver1@localhost:9790, myserver2@localhost:9791, myserver3@localhost:9792 | myserver1@localhost:9790, myserver2@localhost:9791, myserver3@localhost:9792
 
-To start this up very quickly, you can clone down the tx-group-ex-dirs repo.
+To start this up very quickly, you can clone down the transactor-group-examples repo.
 
 ```bash
-git clone https://github.com/fluree/tx-group-ex-dirs.git
+git clone https://github.com/fluree/transactor-group-examples.git
 ```
 
 Then you can navigate to `same-folder/` directory. You'll need to download any version
@@ -128,12 +132,12 @@ fdb-api-port | 8090 | 8081 | 8082
 fdb-group-log-directory |  data/a/group/ | data/b/group/ | data/c/group/
 fdb-storage-file-directory | data/a/ledger/ | data/b/ledger/ | data/c/ledger/
 fdb-group-this-server | myserver1 | myserver2 | myserver3
-fdb-group-servers  | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792 | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792 | myserver1@localhost:9790,myserver2@localhost:9791,myserver3@localhost:9792
+fdb-group-servers  | myserver1@localhost:9790, myserver2@localhost:9791, myserver3@localhost:9792 | myserver1@localhost:9790, myserver2@localhost:9791, myserver3@localhost:9792 | myserver1@localhost:9790, myserver2@localhost:9791, myserver3@localhost:9792
 
-To start this up, we can clone down the tx-group-ex-dirs repo.
+To start this up, we can clone down the transactor-group-examples repo.
 
 ```bash
-git clone https://github.com/fluree/tx-group-ex-dirs.git
+git clone https://github.com/fluree/transactor-group-examples.git
 ```
 
 Then you can navigate to `dynamic-config-change/` directory. You'll need to download

@@ -16,8 +16,8 @@ const HomepageHeader = () => {
         <div className={styles.buttons} >
           <Link
             className="button button--secondary margin-horiz--lg"
-            to="/docs/overview/start/installation">
-            Installation
+            to="/docs/overview/getting_started">
+            Get Started
           </Link>
           <Link
             className="button button--secondary margin-horiz--lg"
