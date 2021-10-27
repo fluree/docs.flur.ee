@@ -3,5 +3,6 @@ export interface CardDetails {
     svgPath?: string,
     svgPathDark?: string,
     description: string,
-    link: string
+    link: string,
+    Svg?: string
   }

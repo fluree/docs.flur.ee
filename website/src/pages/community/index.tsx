@@ -4,15 +4,14 @@ import CommunityCard from './CommunityCard';
 import styles from './Community.module.css';
 import { CardDetails } from '../../components/CardDetails.interface';
 
-
 const CommunityList: CardDetails[] = [
-{
-  title: 'Github',
-  svgPath: '/img/github-icon-light.svg',
-  svgPathDark: '/img/github-icon-dark.svg',
-  description: 'Where all the magic happens. All our source code lives here. Come check out our repos, projects, and get involved!',
-  link: 'https://github.com/fluree'
-},
+  {
+    title: 'Github',
+    svgPath: '/img/github-icon-light.svg',
+    svgPathDark: '/img/github-icon-dark.svg',
+    description: 'Where all the magic happens. All our source code lives here. Come check out our repos, projects, and get involved!',
+    link: 'https://github.com/fluree'
+  },
   {
     title: 'Community Forum',
     svgPath: '/img/forum.svg',

@@ -3,7 +3,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-	title: 'Fluree Docs',
+	title: 'Fluree Developers',
 	tagline: 'Semantic graph data management system built with web3 tech',
 	url: 'https://docs.dev.flur.ee',
 	baseUrl: '/',
@@ -15,6 +15,7 @@ module.exports = {
 	projectName: 'docs.flur.ee', 		// Repo name.
 	/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 	themeConfig: {
+		image: './static/img/Dark Stacked.png',
 		colorMode: {
 			// light | dark
 			defaultMode: 'light',
@@ -92,7 +93,6 @@ module.exports = {
 		},
 		// Config for collapsing sidebar
 		hideableSidebar: true,
-
 		footer: {
 			style: 'dark',
 			logo: {
@@ -102,7 +102,7 @@ module.exports = {
 			},
 			copyright: `
 				Copyright © ${new Date().getFullYear()} Fluree, PBC. 
-				Built with ♥️, Docusaurus, and Diataxis.
+				Built with Docusaurus, Diataxis, and ♥️.
 			`,
 			links: [
 				{
