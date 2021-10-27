@@ -7,7 +7,7 @@ export default function Card({ title, description, link }: CardDetails): JSX.Ele
   return(
   <>
    <Link to={link} className="button button--secondary button--block margin--md card__link">
-     <div className="card-demo">
+
   <div className="card">
     <div className="card__header">
       <h2>{title}</h2>
@@ -20,7 +20,6 @@ export default function Card({ title, description, link }: CardDetails): JSX.Ele
     <div className="card__footer">
     </div>
   </div>
-    </div>
     </Link>
     </>
 );
