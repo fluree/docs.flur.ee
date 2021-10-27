@@ -138,10 +138,6 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: var(--ifm-color-primary-darkest);
 }
 
-/* .card__link p {
-  min-height: max-content;
-} */
-
 .card {
   height: 100%;
 }
