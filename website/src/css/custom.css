@@ -115,12 +115,16 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 .card__link {
   width: 42vw;
+  color: var(--ifm-color-gray-900);
   background-color: var(--ifm-color-primary);
   font-weight: 400;
   white-space: normal;
   display: grid;
   grid-auto-flow: column;
   padding: 1rem !important;
+  font-size: calc(0.875rem * var(--ifm-button-size-multiplier));
+  line-height: 1.5;
+  text-align: center;
 }
 
 @media screen and (min-width: 1440px) {
@@ -143,6 +147,8 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 .card__link:hover {
   background-color: var(--ifm-color-primary-darkest);
+  text-decoration: none;
+  color: var(--ifm-color-gray-900);
 }
 
 /* .card {
