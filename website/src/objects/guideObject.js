@@ -2,25 +2,25 @@ export const GuideCardDetails = [
   {
     title: 'Query Basics',
     description:
-      "Understanding Fluree's network infrastructure, different server types, query peers and transactor groups, as well as Consensus algorithms when running a decentralized Fluree.",
+      'Practice the basics of querying data in Fluree by using various query keys, correct query structure, using two tuples, and more.',
     link: '/docs/guides/querying/query-basics/1/',
   },
   {
     title: 'Flakes and Blocks',
     description:
-      'How to generate a Public-Private Key, understand the relationship of the different collections that enable persmissioning (Auth, Role, and Rule), and other features like the Authority model.',
+      'Understand the structure of a flake: Subject, Predicate, Object, Time and Operation, as well as the blocks that contain them.',
     link: '/docs/guides/advanced/flakes-and-blocks/1/',
   },
   {
     title: 'Smart Functions',
     description:
-      'Learn how to create a smart function, their role in setting permissions in Fluree, where they are stored within Fluree and how they are referenced, and resources to help build a smart function.',
+      'Learn how to build a smart function, issue it in a transaction to execute during a specific query or a transcation, and understand how smart functions are tied to rules.',
     link: '/docs/guides/advanced/smart-functions/1/',
   },
   {
     title: 'Tools',
     description:
-      'How inner joins work in Fluree, using Full Text Search with analytical queries, how to optimize your analytical queries with the available optional clauses.',
+      'Discover the various tools to help guide using Fluree for your specific use case. Fluree Docker, Fluree CLI, and Fluree VS code extension.',
     link: '/docs/guides/tools/',
   },
 ];
