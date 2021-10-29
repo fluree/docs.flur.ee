@@ -10,8 +10,8 @@ For now, it has the content from the Getting Started Intro page copied into it.
 There are other resources in this documentation website, such as:
 
 - [What is Fluree?](/concepts/what-is-fluree.md)
-- [Guides and Lessons](/guides/guides.md): Walkthroughs and How-to's of important areas of Fluree.
-- [Reference](/reference/reference.md): Reference docs for our Javascript, NodeJS, FlureeWorker, and
+- [Guides and Lessons](/guides/guides.mdx): Walkthroughs and How-to's of important areas of Fluree.
+- [Reference](/reference/reference.mdx): Reference docs for our Javascript, NodeJS, FlureeWorker, and
   other libraries.
 - [Concepts](/concepts/concepts.mdx): Discussions of key concepts in Fluree.
 
