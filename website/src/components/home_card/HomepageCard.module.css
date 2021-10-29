@@ -1,14 +1,14 @@
-h6 {
+#homepageH6 {
     margin-top: 3rem;
     margin-bottom: .5rem;
     text-align: center;
     color: var(--ifm-color-primary);
 }
-h2 {
+#homepageH2 {
     text-align: center;
 }
 
-aside {
+#homepageAside {
     text-align: center;
     color: var(--ifm-color-gray-600);
 }
