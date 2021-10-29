@@ -21,32 +21,37 @@ function NotFound() {
       <main className='container margin-vert--xl'>
         <div className='row'>
           <div className='col col--6 col--offset-3'>
-            <img src={Freddy404Image} />
-            <h1 className='hero__title'>
-              <Translate
-                id='theme.NotFound.title'
-                description='The title of the 404 page'
-              >
-                404 Page Not Found
-              </Translate>
-            </h1>
-            <p>
-              <Translate
-                id='theme.NotFound.p1'
-                description='The first paragraph of the 404 page'
-              >
-                Sorry about that.
-              </Translate>
-            </p>
-            <p>
-              <Translate
-                id='theme.NotFound.p2'
-                description='The 2nd paragraph of the 404 page'
-              >
-                While Freddy tries try to uncover this mystery, please navigate
-                back to our home page <Link to='/'>here</Link>.
-              </Translate>
-            </p>
+            <div className='row--nowrap'>
+              <img src={Freddy404Image} width='250' height='250' />
+              <div className='hero__text__404'>
+                <h4>
+                  <Translate
+                    id='theme.NotFound.title'
+                    description='The title of the 404 page'
+                  >
+                    404 Page Not Found
+                  </Translate>
+                </h4>
+
+                <p>
+                  <Translate
+                    id='theme.NotFound.p1'
+                    description='The first paragraph of the 404 page'
+                  >
+                    Sorry about that.
+                  </Translate>
+                </p>
+                <p>
+                  <Translate
+                    id='theme.NotFound.p2'
+                    description='The 2nd paragraph of the 404 page'
+                  >
+                    While Freddy tries try to uncover this mystery, please
+                    navigate back to our home page.
+                  </Translate>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </main>
