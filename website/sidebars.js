@@ -236,7 +236,7 @@ module.exports = {
   ],
   concepts: [
     'concepts/concepts',
-    // 'concepts/what-is-fluree',
+    'concepts/technical_overview',
     {
       type: 'category',
       label: 'Core Concepts',
