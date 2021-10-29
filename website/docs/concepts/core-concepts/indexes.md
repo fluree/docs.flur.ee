@@ -11,9 +11,9 @@ keywords:
 
 _This guide is a work in progress, additional details will be added._
 
-[Flakes](concepts/architecture/flakes.md) are placed into up to 4 indexes
+[Flakes](concepts/core-concepts/flakes.md) are placed into up to 4 indexes
 (+ optionally a Lucene index if full text searching is used). The [guide about
-Flakes](concepts/architecture/flakes.md) describes in more detail the anatomy of a
+Flakes](concepts/core-concepts/flakes.md) describes in more detail the anatomy of a
 Flake and how it is used, which can help greatly when understanding indexes. In
 summary, a Flake is a 6-tuple that contain a subject ID (`s`), precicate ID (`p`),
 object/value (`o`), a reference to the transaction/time it was created at (`t`),
@@ -90,7 +90,7 @@ are always maintained, and most Fluree operators will not need to concern themse
 with this.
 
 As new transactions happen against a ledger, the results of the transactions are
-[Flakes](concepts/architecture/flakes.md), which are the deltas from the prior version
+[Flakes](concepts/core-concepts/flakes.md), which are the deltas from the prior version
 of the ledger. The result of applying the Flakes from a transaction result to the
 prior state is a new immutable database. New Flakes are streamed to query
 servers up-stream (and permissioned in the process) where the query servers store
@@ -110,7 +110,7 @@ any index node not affected by new data remains untouched and can also remain ac
 in any upstream cache.
 
 The immutability guarantee around the storage, combined with the Fluree's
-[Flake partitioning](concepts/architecture/flakes.md#flake-partitioning) strategy
+[Flake partitioning](concepts/core-concepts/flakes.md#flake-partitioning) strategy
 minimizes the number of affected index nodes as new transaction Flakes are applied.
 This gives Fluree the ability to linearly scale its query servers while allowing
 them to effectively run at in-memory speeds -- even with a fraction of memory that
@@ -137,7 +137,7 @@ which are sorted in `spo` order:
 
 Note that the `s` value is sorted in descending order. This sort order means the
 most recently added subjects are always going to come first based on how Fluree
-[partitions data within a collection](concepts/architecture/flakes.md#flake-partitioning).
+[partitions data within a collection](concepts/core-concepts/flakes.md#flake-partitioning).
 Therefore, the query of `{"select": ["*"], "from": "person", "limit": 10}` would
 return the 10 most recently added people without requring any additional sorting.
 
@@ -250,7 +250,7 @@ The `post` index includes only flakes that whose predicate is `unique: true`,
 ```
 
 You can see this index would be able to quickly find any predicate's value. When
-using a [Subject Identity](concepts/architecture/flakes.md#subject-identity) to
+using a [Subject Identity](concepts/core-concepts/flakes.md#subject-identity) to
 reference a subject in Fluree this is the index that would be used.
 
 For example, if I was looking for the `s` value for the Subject Identity of

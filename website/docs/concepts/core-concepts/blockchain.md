@@ -34,7 +34,7 @@ problems around data which will vary from use case to use case, and for that rea
 customers have a large amount of control of how these technologies are utilized.
 Where a capability is transparent, it is 'always on' (like
 [merkle tree](https://en.wikipedia.org/wiki/Merkle_tree) generation from new
-[Flakes](docs/concepts/architecture/flakes)). Other capabilities have tradeoffs, and Fluree
+[Flakes](docs/concepts/core-concepts/flakes)). Other capabilities have tradeoffs, and Fluree
 tries to give the end user a large degree of control on what they feel is important
 for their use case, letting them focus on the parts that are important to them and
 keeping the parts that are not out of the way.
@@ -168,7 +168,7 @@ from the beginning of the ledger, but Fluree makes this instantly accessible and
 queryable via its Time Travel capability - made possibly by Fluree's special bi-temporal
 indexing method.
 
-### SmartFunctions (customizable rules) {#smartfunctions-customizable-rules}
+### SmartFunctions (customizable rules) {#smartfunctions}
 
 SmartFunctions are the way in which end users can build custom rules that govern
 the ledger. They can be utilized for both permissioning and enforcing query (view)
@@ -190,5 +190,5 @@ parties, test different methods of optimization, or other capabilities.
 ### Consensus {#consensus}
 
 Fluree uses the Raft protocol for consensus. While we previously suported PBFT,
-it was not being utilized. The code base has a pluggable protocol for consensus
+it was not being utilized and has been removed for the time being. The code base has a pluggable protocol for consensus
 and new consensus protocols can be added.
