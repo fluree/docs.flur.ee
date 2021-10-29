@@ -16,7 +16,7 @@ export const HomepageCardDetails: CardDetails[] = [
     {
         title: 'Fluree Architecture',
         description: 'Read more about the components which comprise Fluree.',
-        link: '/docs/concepts/architecture/flakes/',
+        link: '/docs/concepts/core-concepts/flakes/',
         Svg: require('../../../static/img/heroicons/library.svg').default
     },
     {

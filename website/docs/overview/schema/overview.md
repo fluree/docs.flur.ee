@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Much like a relational database, before storing your records in a Fluree ledger, you must first register a schema which consists of collections (similar to tables) and predicates (similar to columns).
 
-Defining and updating schemas is done through regular ledger transactions (in JSON) by writing to the special pre-defined system collections. This also means that all information regarding the schema is stored in the ledger as [flakes](/concepts/what-is-fluree.md#flakes), in the same way as any other type of information.
+Defining and updating schemas is done through regular ledger transactions (in JSON) by writing to the special pre-defined system collections. This also means that all information regarding the schema is stored in the ledger as [flakes](/concepts/technical_overview.md#flakes), in the same way as any other type of information.
 
 Most examples in the documentation use the [Basic Schema](/guides/schema/1.md). The Basic Schema section provides an introduction to schema, but this section goes into more detail.
 
