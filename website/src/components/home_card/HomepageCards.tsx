@@ -1,7 +1,7 @@
 import React from 'react';
 import HomepageCard from '../../components/home_card/HomepageCard';
 import { HomepageCardDetails } from '../../components/home_card/HomepageCardDetails';
-import styles from './homepagecard.module.css';
+import styles from './HomepageCard.module.css';
 
 export default function HomepageCards(): JSX.Element {
     return (
