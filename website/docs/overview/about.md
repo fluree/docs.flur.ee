@@ -32,7 +32,8 @@ The Fluree system consists of a cryptographically-secure ledger to handle state 
 
 There are other resources in this documentation website, such as:
 
-- [What is Fluree?](/concepts/technical_overview.md)
+- [Technical Overview](/concepts/technical_overview.md): An explanatory document about the main
+  components in Fluree.
 - [Guides and Lessons](/guides/guides.mdx): Walkthroughs and How-to's of important areas of Fluree.
 - [Reference](/reference/reference.mdx): Reference docs for our Javascript, NodeJS, FlureeWorker, and
   other libraries.

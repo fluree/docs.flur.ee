@@ -106,7 +106,7 @@ Each where-array item is resolved and then inner joined with the resultset up un
 
 ### Three Tuple {#three-tuple}
 
-Every piece of data in Fluree can be expressed as `[ subject, predicate, object ]`. To read more about this, see the [Subject-Predicate-Object Model](/concepts/technical_overview.md#subject-predicate-object-model) in the `What is Fluree?` guide.
+Every piece of data in Fluree can be expressed as `[ subject, predicate, object ]`. To read more about this, see the [Subject-Predicate-Object Model](/concepts/technical_overview.md#subject-predicate-object-model) in the `Technical Overview` document.
 
 When you include a three-tuple in your where-array, you specify the values for one or two parts of the tuple. The parts you don't specify are either `null` or variables. For example, in this three tuple, `["?person", "person/handle", "?handle"]`, only the predicate `person/handle` is specified. The subject `?person` and the object `?handle` are variables. You can also look-up a data for a known id using the pattern ["?s", "_id", 351843720888320].
 
