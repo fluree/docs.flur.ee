@@ -5,7 +5,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 module.exports = {
 	title: 'Fluree Developers',
 	tagline: 'Semantic graph data management system built with web3 tech',
-	url: 'https://docs.dev.flur.ee',
+	url: 'https://developers.flur.ee',
 	baseUrl: '/',
 	trailingSlash: true,
 	onBrokenLinks: 'throw',
@@ -177,9 +177,9 @@ module.exports = {
 			additionalLanguages: ['turtle', 'sparql', 'clojure', 'http', 'xml-doc']
 		},
 		algolia: {
-			apiKey: 'fa7cc560f2dd3b1ea562bb88583144e2',
-			appId: 'R1SW8X3WU6',
-			indexName: 'flureedocs'
+			apiKey: 'ddaedd196fe7a6c9072a37b94a11aa13',
+			appId: 'N3MISUHO2H',
+			indexName: 'prod_dev_site'
 		},
 		baseUrlIssueBanner: false, // Defaults to `true`
 	},
