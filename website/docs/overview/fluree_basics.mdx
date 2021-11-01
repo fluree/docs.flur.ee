@@ -1,56 +1,38 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # Fluree Basics
 
-Once you've successfully downloaded Fluree, we recommend that you start with this
-section using 'FlureeQL' as your language setting (in the top left).
+This section shows you how to create a simple schema and populate your ledger with sample data. All of the examples in the Query and Transact sections of the Documentation use the schema located here, so we recommend that you populate a ledger with this sample data.
 
-This section shows you how to create a simple schema and populate your ledger with
-sample data. All of the examples in the Query and Transact sections of the Documentation
-use the schema located here, so we recommend that you populate a ledger with this
-sample data.
+If you are using the [Admin UI](/overview/getting_started.mdx#admin-ui), you can issue all of the code on this page directly on the 'FlureeQL' page of your user interface. Make sure that you select 'Transact'.
 
-If you are using the user interface, you can issue all of the code on this page
-directly on the 'FlureeQL' page of your user interface. Make sure that you select
-'Transact'.
-
-If you are using the API, you can issue all these transactions to endpoints ending
-with `/transact`.
+If you are connecting to Fluree via an the HTTP API, you can issue all these transactions to the `/transact` endpoint.
 
 To view an example application that uses Fluree for data management, visit the
 [to-do list generator](https://github.com/fluree/to-do-lists-generator) repository.
 
 ## New Ledger {#new-ledger}
 
-Make sure that you have a new ledger.
+The first thing you will need to have is a ledger.
 
-You can either create a new ledger through the Admin UI or via the
-[HTTP API](/reference/http/examples.md#new-db).
+You can either create a new ledger through Dashboard page the [Admin UI](/overview/getting_started.mdx#admin-ui) or via the
+HTTP API using the [`/new-db`](/reference/http/examples.md#new-db) endpoint.
 
 ## Overview {#overview}
 
-In Fluree, schema are comprised of collections and predicates. While Fluree is a
-graph database, if you come from the relational world you can think of a
+In Fluree, a schema is comprised of collections and predicates. While Fluree is a graph database, if you come from the relational world you can think of a
 [collection](/overview/schema/collections.mdx) sort of like a database table.
-Every time you want a new type of item in your ledger, you would create a new collection.
-For example, collections in your ledger might be person, company, and city.
+Every time you want a new type of item in your ledger, you would create a new collection. For example, collections in your ledger might be person, company, or city.
 
-Every collection has [predicates](/overview/schema/predicates.mdx). Predicates are analogous
-to relational database columns. The features of a collection are its predicates.
-For example, the person collection might have the following predicates: person/firstName,
-person/lastName, and person/age. The value of those predicates are called, objects
-(read more about the [subject-predicate-object model](/concepts/technical_overview.md#subject-predicate-object-model)).
+Every collection has [predicates](/overview/schema/predicates.mdx). Predicates are analogous to relational database columns. The features of a collection are its predicates.
+For example, the person collection might have the following predicates: `person/firstName`, `person/lastName`, and `person/age`. The value of those predicates are called objects. You can read more about the [subject-predicate-object model](/concepts/technical_overview.md#subject-predicate-object-model) if you would like the get a deeper understanding of how RDF works in Fluree.
 
-Note that many of the transactions in this section can be combined, but are separated
-for clarity.
+> Many of the transactions on this page can be combined, but are separated for clarity.
 
 ## Adding Collections {#adding-collections}
 
-The below transaction adds five new collections: `person`, `chat`, `comment`, `artist`,
-and `movie`. You can issue this transaction in your user interface. The syntax is
-explained in the [Transact](/overview/transact/basics.md) section. For now, we recommend
-you adding this basic schema and walking through the documentation section-by-section.
+The below transaction adds five new collections: `person`, `chat`, `comment`, `artist`, and `movie`. You can issue this transaction in your user interface. The syntax is explained in the [Transact](/overview/transact/basics.md) section. For now, we recommend you add this basic schema and walk through the documentation section-by-section.
 
 <Tabs
   groupId="fluree-lang-options"
@@ -143,12 +125,9 @@ Transactions not supported in SPARQL
 
 ## Adding Predicates {#adding-predicates}
 
-Schema predicates are similar to relational ledger columns. More information about
-predicates can be found in the [Predicates](/overview/schema/predicates.mdx) section. For
-now, we recommend you adding this basic schema and walking through the documentation
-section-by-section without concerning yourself too much with the syntax.
+Schema predicates are similar to relational ledger columns. More information about predicates can be found in the [Predicates](/overview/schema/predicates.mdx) section. For now, we recommend you add this basic schema and walk through the documentation section-by-section without concerning yourself too much with the syntax.
 
-The below transaction creates the following predicates:
+The transaction below creates the following predicates:
 
 - `person/handle`
 - `person/fullName`
@@ -481,8 +460,7 @@ Transactions not supported in SPARQL.
 
 ## Adding Sample Data {#adding-sample-data}
 
-You can issue the below transaction to add some sample data into your ledger. The
-below transaction adds four users, three chats, four comments, three artists, and
+You can issue the below transaction to add some sample data into your ledger. This transaction adds four users, three chats, four comments, three artists, and
 three movies.
 
 <Tabs

@@ -2,25 +2,25 @@ export const RefCardDetails = [
   {
     title: 'Startup Config',
     description:
-      "Understand and make changes to Fluree's configurable properties like Base settings, Transactor groups, HTTP API settings, Decentralized Ledger settings and Password and JWT settings.",
+      "Fluree's configurable properties. All the options available to customize a Fluree instance at startup.",
     link: '/docs/reference/fluree_config/',
   },
   {
     title: 'HTTP endpoints',
     description:
-      'Learn how to leverage all the available endpoints such as Main endpoints, Test endpoints, Password Authentication endpoints, and others. Along with example for each.',
+      'Reference Docs on the HTTP endpoints exposed by the Fluree application',
     link: '/docs/reference/http/overview/',
   },
   {
     title: 'Clojure',
     description:
-      "Access Fluree's Clojure Client, learn setup and async modifications, how to transact schema and data, and issue different types of queries like analytical queries, historical queries, and block queries.",
+      "Visit this section for docs on running the Fluree Clojure client; to be used in a Clojure app or via the REPL.",
     link: '/docs/reference/clojure/',
   },
   {
     title: 'Crypto',
     description:
-      'Issue signed queries and transactions in closed-api-mode by using the crypto-utils and crypto-base JS librares. For the ClojureScript use the fluree.crypto library.',
+      'Documentation for the crypto libraries used by Fluree made public by the Fluree team.',
     link: '/docs/reference/crypto/',
   },
 ];

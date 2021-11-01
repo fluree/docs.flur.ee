@@ -2,7 +2,23 @@
 
 ## Fluree on Docker {#docker}
 
-You can use Fluree through Docker (see [Github repo](https://github.com/fluree/fluree-docker-example)).
+You can use Fluree in Docker. Visit the [Docker Example repo on Github](https://github.com/fluree/ledger-docker-compose-example) to get started with an example.
+
+Or issue:
+
+```bash
+docker pull fluree/ledger:latest
+```
+
+then
+
+```bash
+docker run -p 8090:8090 fluree/ledger
+```
+
+from a terminal to get started right away.
+
+More about this subject coming to the developer's site soon...
 
 ## Fluree CLI {#fluree-cli}
 

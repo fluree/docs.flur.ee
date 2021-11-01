@@ -9,7 +9,7 @@ export const HomepageCardDetails: CardDetails[] = [
     },
     {
         title: 'Analytical Queries',
-        description: 'Learn how to really leverage Fluree with Analytical Queries.',
+        description: 'Learn how to fully leverage Fluree with Analytical Queries.',
         link: '/docs/guides/querying/query-advanced/5/',
         Svg: require('../../../static/img/heroicons/search-circle.svg').default
     },
