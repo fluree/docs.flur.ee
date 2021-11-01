@@ -2,25 +2,25 @@ export const ConceptCardDetails = [
   {
     title: 'Network Infrastructure',
     description:
-      "Understanding Fluree's network infrastructure, different server types, query peers and transactor groups, as well as Consensus algorithms when running a decentralized Fluree.",
+      "Query peers and clients, transactor groups, and consensus algorithms. The Infrastructure of a Fluree deployment.",
     link: '/docs/concepts/infrastructure/network_infrastructure/',
   },
   {
-    title: 'Auth',
+    title: 'Auth in Fluree',
     description:
-      'How to generate a Public-Private Key, understand the relationship of the different collections that enable persmissioning (Auth, Role, and Rule), and other features like the Authority model.',
+      "Identity and Access Management in Fluree. How Fluree handles and uses asymmetric encryption and keys to provide privacy and security to data.",
     link: '/docs/concepts/identity/auth_records/',
   },
   {
     title: 'Smart Functions',
     description:
-      'Learn how to create a smart function, their role in setting permissions in Fluree, where they are stored within Fluree and how they are referenced, and resources to help build a smart function.',
+      'SmartFunctions are foundational. They are key to setting and enforcing permissions as well as several types of data validation in Fluree',
     link: '/docs/concepts/smart-functions/smartfunctions/',
   },
   {
     title: 'Analytical Queries',
     description:
-      'How inner joins work in Fluree, using Full Text Search with analytical queries, how to optimize your analytical queries with the available optional clauses.',
+      'Fluree\'s unique architecture enables functionality not available to other platforms. Analytical queries unlock almost all of that power.',
     link: '/docs/concepts/analytical-queries/inner-joins-in-fluree/',
   },
 ];
