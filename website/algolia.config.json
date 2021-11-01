@@ -1,7 +1,7 @@
 {
-  "index_name": "flureedocs",
+  "index_name": "prod_dev_site",
   "start_urls": [
-    "http://docs.dev.flur.ee/"
+    "http://developers.flur.ee/"
   ],
   "stop_urls": [],
   "use_anchors": true,
