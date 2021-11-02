@@ -21,17 +21,17 @@ function NotFound() {
       <main className='container margin-vert--xl'>
         <div className='row'>
           <div className='col col--6 col--offset-3'>
-            <div className='row--nowrap'>
+            <div className='row--nowrap sm-device-col-wrap'>
               <img src={Freddy404Image} width='250' height='250' />
               <div className='hero__text__404'>
-                <h4>
+                <h1>
                   <Translate
                     id='theme.NotFound.title'
                     description='The title of the 404 page'
                   >
                     404 Page Not Found
                   </Translate>
-                </h4>
+                </h1>
 
                 <p>
                   <Translate
