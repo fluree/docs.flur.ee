@@ -14,7 +14,7 @@ const CommunityList: CardDetails[] = [
   },
   {
     title: 'Community Forum',
-    svgPath: '/img/forum.svg',
+    svgPath: '/img/heroicons/chat-alt-2.svg',
     description: 'Long-lived conversations about Fluree, feature requests, ideas, Fluree love, etc.',
     link: 'https://github.com/fluree/db/discussions'
   },
@@ -48,7 +48,7 @@ export default function Community(): JSX.Element {
               <CommunityCard key={idx} {...props} />
             ))}
           </section>
-        </div>
+		</div>
       </main>
     </Layout>
   );
