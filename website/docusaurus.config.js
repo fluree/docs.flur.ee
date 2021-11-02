@@ -108,22 +108,22 @@ module.exports = {
 				{
 					title: 'Docs',
 					items: [
-					  {
-					    label: 'Get Started',
-					    to: 'docs/overview/getting_started',
-					  },
-					  {
-					    label: 'Guides',
-					    to: 'docs/guides/guides',
-					  },
-					  {
-					    label: 'Tools',
-					    to: '/docs/guides/tools',
-					  },
-					  {
-						label: 'Dev Hub',
-						to: '/docs/overview/demos/developer-hub'
-					  },
+						{
+							label: 'Get Started',
+							to: 'docs/overview/getting_started',
+						},
+						{
+							label: 'Guides',
+							to: 'docs/guides/guides',
+						},
+						{
+							label: 'Tools',
+							to: '/docs/guides/tools',
+						},
+						{
+							label: 'Dev Hub',
+							to: '/docs/overview/demos/developer-hub'
+						},
 					],
 				},
 				{
@@ -186,7 +186,7 @@ module.exports = {
 			trackingID: 'G-XDLKYE388T',
 			// Optional fields.
 			anonymizeIP: true, // Should IPs be anonymized?
-		  },
+		},
 		baseUrlIssueBanner: false, // Defaults to `true`
 	},
 	presets: [
