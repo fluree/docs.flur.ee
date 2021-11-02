@@ -181,6 +181,12 @@ module.exports = {
 			appId: 'N3MISUHO2H',
 			indexName: 'prod_dev_site'
 		},
+		gtag: {
+			// You can also use your "G-" Measurement ID here.
+			trackingID: 'G-XDLKYE388T',
+			// Optional fields.
+			anonymizeIP: true, // Should IPs be anonymized?
+		  },
 		baseUrlIssueBanner: false, // Defaults to `true`
 	},
 	presets: [

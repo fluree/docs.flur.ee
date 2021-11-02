@@ -22,7 +22,7 @@ const HomepageHeader = () => {
 								to="/docs/overview/getting_started"
 								style={{
 									backgroundColor: 'rgb(245, 246, 248)'
-								}}	
+								}}
 							>
 
 								<div className="card__header">
@@ -52,7 +52,7 @@ const HomepageHeader = () => {
 								to="/docs/overview/fluree_basics"
 								style={{
 									backgroundColor: 'rgb(245, 246, 248)'
-								}}	
+								}}
 							>
 
 								<div className="card__header">
