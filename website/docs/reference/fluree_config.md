@@ -60,6 +60,7 @@ Property | Options | Description
 `fdb-group-private-key-file` | `file path` | If fdb-group-private-key is not provided, we'll look for it in this file. If not found in this file, we'll generate a default one and place it in this file.
 `fdb-group-servers` | `server-id@host:port, server-id@host:port` | List all servers participating in ledger-group with format of server-id@host:port. All tx-group servers should have this same config.
 `fdb-group-this-server` | `server-id` | Specify which of the above listed server-ids is _this_ server. Note this must be unique for every server in the tx-group, and is likely easiest to supply this setting via environment variable.
+`fdb-group-port`| `int` | (Optional) Only needed, if fdb-this-server is not set or or does not point to one of the group-servers. External port to listen on for ledger communication i.e. fdb-group-port=9795.
 `fdb-group-timeout` | `int` | Tx group's internal communication timeout threshold. Will initiate a leader election between this value and 2x this value if the leader hasn't been heard from. Specify as number of milliseconds, or can use units as well such as 1000ms or 1s. Assuming your tx-group network is local, 1000-3000 ms is a good range. Adjust as needed to avoid unintended leader elections.
 `fdb-group-heartbeat` | `int` | Tx group leader will send out a heartbeat at this interval. By default, will be 1/2 of fdb-group-timeout. This can never be more than fdb-group-timeout, and ideally should be 1/3 to 1/2 of that value. A number in milliseconds can be provided, or can be used with units such as 1000ms or 1s.
 `fdb-group-log-directory` | `file path` | Where to store tx-group raft log files. These logs have fairly frequent disk access. This is always a local filesystem path and must start with either `/` or `./`. Defaults to ./data/group
@@ -84,7 +85,6 @@ Property | Options | Description
 
 Property | Options | Description
 -- | -- | --
-`fdb-ledger-port`| `int` | External port to expose for external ledger communication. If using a ledger group behind a load balancer then this should be consistent across the ledger group, i.e. fdb-ledger-port=9795
 `fdb-ledger-private-keys` | `key@network/dbname,` `key@network/dbname` | List each auth identity private key at each network and/or ledger you are participating in. Format is private-key1@network/db,private-key2@network/db2 where the db is optional and multiple dbs or networks are separated by commas. If only a network is specified, the private key will be used as a default for all ledgers on that network and it is assumed this server is participating with every ledger, i.e. `fdb-ledger-private-keys=5...3@networka/dbname`
 `fdb-ledger-servers` | `networka@some-domain.com:9795,` `networka@10.1.1.2:9795,` `networkb/db@ext.dot.com:9795` | List of seed servers to contact for each network/db. Like fdb-ledger-identities, the db is optional. Every network/db + server address combination should be separated by a comma, i.e. `fdb-ledger-servers=` `networka@domain.com:9795,` `networka@10.1.1.2:9795,networkb/` `db@ext.dot.com:9795`
 
