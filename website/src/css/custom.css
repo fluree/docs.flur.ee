@@ -194,6 +194,13 @@ html[data-theme='dark'] .card__header {
   margin: 2rem;
 }
 
-.hero__text__404 h4 {
-  font-size: 2rem;
+.hero__text__404 p {
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 1040px) {
+  .sm-device-col-wrap {
+    flex-direction: column;
+    white-space: normal;
+  }
 }
