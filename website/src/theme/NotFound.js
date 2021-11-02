@@ -46,8 +46,8 @@ function NotFound() {
                     id='theme.NotFound.p2'
                     description='The 2nd paragraph of the 404 page'
                   >
-                    While Freddy tries try to uncover this mystery, please
-                    navigate back to our home page.
+                    While Freddy tries to uncover this mystery, please navigate
+                    back to our home page.
                   </Translate>
                 </p>
               </div>
