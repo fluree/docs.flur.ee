@@ -15,16 +15,16 @@ jobs:
                 
         - name: Install dependencies
           run: npm ci
-          working-directory: website/
+          working-directory: /
           
         - name: Build
           run: npm run build
-          working-directory: website/
+          working-directory: /
 
         - name: Deploy
           uses: reggionick/s3-deploy@v3
           with:
-            folder: website/build
+            folder: /build
             bucket: ${{ secrets.DEVSITE_S3_BUCKET }}
             bucket-region: ${{ secrets.DEVSITE_S3_BUCKET_REGION }}
             dist-id: ${{ secrets.DEVSITE_CLOUDFRONT_DISTRIBUTION_ID }}
