@@ -8,7 +8,7 @@ raise an issue, and submit changes.
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/fluree/developers-site
 ```
 
 Go to the project directory
