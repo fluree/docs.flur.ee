@@ -37,7 +37,7 @@
 
 .navbar__logo {
   height: 1.5rem;
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.35rem;
   margin-right: 0;
   margin-left: 0.8rem;
 }
@@ -47,7 +47,7 @@
   color: var(--ifm-color-primary);
   padding-right: 0.6rem;
   padding-left: 0.8rem;
-  padding-bottom: 0.4rem;
+  padding-bottom: 0.5rem;
   font-weight: 600;
   font-size: 1.2rem;
 }
