@@ -28,7 +28,6 @@
 }
 
 .navbar {
-  padding-top: 0.1rem;
   padding-left: 0.3rem;
 }
 
@@ -38,10 +37,9 @@
 
 .navbar__logo {
   height: 1.5rem;
-  align-self: baseline;
-  justify-self: right;
+  padding-bottom: 0.25rem;
   margin-right: 0;
-  margin-left: 1rem;
+  margin-left: 0.8rem;
 }
 
 .navbar-home-link {
@@ -49,9 +47,9 @@
   color: var(--ifm-color-primary);
   padding-right: 0.6rem;
   padding-left: 0.8rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .navbar-home-link:hover {
@@ -149,10 +147,6 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   text-decoration: none;
   color: var(--ifm-color-gray-900);
 }
-
-/* .card {
-  height: 100%;
-} */
 
 html[data-theme='dark'] .card {
   background-color: #22272e;
