@@ -12,7 +12,7 @@ module.exports = {
 	onBrokenMarkdownLinks: 'throw',
 	favicon: 'img/favicon.ico',
 	organizationName: 'fluree', 		// GitHub org name.
-	projectName: 'docs.flur.ee', 		// Repo name.
+	projectName: 'developers-site', 		// Repo name.
 	/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 	themeConfig: {
 		image: './static/img/Dark Stacked.png',
@@ -84,7 +84,7 @@ module.exports = {
 
 				// Navbar links - right aligned
 				{
-					href: 'https://github.com/fluree/docs.flur.ee',
+					href: 'https://github.com/fluree/developers-site',
 					className: 'header-github-link',
 					position: 'right',
 					'aria-label': 'Github repository'
@@ -197,7 +197,7 @@ module.exports = {
 				docs: {
 					sidebarPath: require.resolve('./sidebars.js'),
 					editUrl:
-						'https://github.com/fluree/docs.flur.ee/tree/docs-overhaul/website',
+						'https://github.com/fluree/developers-site',
 				},
 				// blog: {
 				//   showReadingTime: true,

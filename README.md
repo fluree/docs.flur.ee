@@ -1,44 +1,62 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Fluree Developer Docs
 
-## Available Scripts
+Welcome to the Fluree docs! This readme will detail how to run the docs,
+raise an issue, and submit changes.
 
-In the project directory, you can run:
+## Run the Docs Locally
 
-### `npm start`
+Clone the project
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+  git clone https://github.com/fluree/developers-site
+```
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Go to the project directory
 
-### `npm test`
+```bash
+  cd my-project
+```
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Install dependencies
 
-### `npm run build`
+```bash
+  npm install
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Start the server
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+```bash
+  npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Contributing
 
-### `npm run eject`
+If you notice any issues on the mark down files please feel free to open an issue
+on GitHub, contributions are always welcome!
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Steps on opening an issue:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Navigate the repository on GitHub
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2. Click on the 'Issues' tab at the top.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+3. [Open](https://github.com/fluree/docs.flur.ee/issues/new) a new issue, please
+   include a title and description, along with any screenshots or references to
+   a particular page or section.
 
-## Learn More
+### Submitting Changes
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+For errors or issues on a particular page you can also click on the 'Edit this
+page' link on the bottom of the page. This will open the page in Github, create
+a new branch
+and implement your changes then open a PR to be reviewed. As mentioned above
+include a title and description along with any other useful files.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+> Before submitting changes run `npm run build` to check for errors during the
+> build process
+
+## Connect with the Fluree Team
+
+To connect directly with the Fluree team join our [Slack](https://launchpass.com/flureedb).
+
+Visit our [Fluree](http://flur.ee/) website.
