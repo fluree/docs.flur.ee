@@ -123,7 +123,7 @@ class Header extends React.Component {
           <h3>
             This site only contains archived documentation. For current
             resources visit{' '}
-            <a style={{ color: 'white' }} href='developers.flur.ee'>
+            <a style={{ color: 'white' }} href='https://developers.flur.ee'>
               developers.flur.ee
             </a>
             <span
