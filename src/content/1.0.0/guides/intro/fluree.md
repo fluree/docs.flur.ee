@@ -89,7 +89,7 @@ All together, a subject, predicate, and object together is called a triple. Thes
 
 ### Flakes
 
-Flakes are modified RDF triples. Because each block in a Fluree represents the ledger at a different point in time, flakes not only contain a subject-object-predicate, but also a time `t`, and a boolean (`true`/`false`). The sixth element of a  flake is a JSON-object for metadata. It is not fully implemented.
+Flakes are modified RDF triples. Because each block in a Fluree ledger represents the ledger at a different point in time, flakes not only contain a subject-object-predicate, but also a time `t`, and a boolean (`true`/`false`). The sixth element of a  flake is a JSON-object for metadata. It is not fully implemented.
 
 The `t` is a negative integer. `t` is a more granular notion of time than a block. A block with multiple transactions will have multiple `t`s. Each block has a [metadata flake](#block-metadata) with the predicate `_block/number` that links a `t` with a positive block integer. 
 
