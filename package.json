@@ -11,7 +11,7 @@
     "i": "^0.3.6",
     "isomorphic-fetch": "^2.2.1",
     "lodash.get": "^4.4.2",
-    "marked": "^0.7.0",
+    "marked": "^4.0.10",
     "measure": "^0.1.1",
     "react": "^16.6.3",
     "react-ace": "^6.2.0",
